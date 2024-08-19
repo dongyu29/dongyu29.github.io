@@ -11,7 +11,7 @@
   <meta itemprop="name" content="XPATH注入基础">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="476">
+  <meta itemprop="wordCount" content="466">
   <meta itemprop="keywords" content="OWASP,XPATH注入"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/xpath%E6%B3%A8%E5%85%A5/122/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="XPATH注入基础">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/xpath%E6%B3%A8%E5%85%A5\/122\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, XPATH注入","wordcount":  476 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, XPATH注入","wordcount":  466 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/xpath%E6%B3%A8%E5%85%A5\/122\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>XPATH注入基础</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="476 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="466 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,38 +152,41 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
+    <li><a href="#1查询基本语句">(1)查询基本语句</a></li>
+    <li><a href="#2节点类型">(2)节点类型</a></li>
+    <li><a href="#3表达式">(3)表达式</a></li>
+    <li><a href="#4限定语">(4)限定语</a></li>
+    <li><a href="#5通配符">(5)通配符</a></li>
+    <li><a href="#6-选取多个路径">(6) 选取多个路径</a></li>
+    <li><a href="#7-运算符">(7) 运算符</a></li>
+    <li><a href="#8-函数">(8) 函数</a></li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="什么是xpath" class="heading-element"><span>0.0.0.1  什么是xpath</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="什么是xpath" class="heading-element"><span>什么是xpath</span>
   <a href="#%e4%bb%80%e4%b9%88%e6%98%afxpath" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>XPath 即为 XML 路径语言，是 W3C XSLT 标准的主要元素，它是一种用来确定 XML（标准通用标记语言的子集）文档中某部分位置的语言。</p>
+</h1><p>XPath 即为 XML 路径语言，是 W3C XSLT 标准的主要元素，它是一种用来确定 XML（标准通用标记语言的子集）文档中某部分位置的语言。</p>
 <p>XPath 基于 XML 的树状结构，有不同类型的节点，包括元素节点，属性节点和文本节点，提供在数据结构树中找寻节点的能力，可用来在 XML 文档中对元素和属性进行遍历。</p>
 <p>XPath 使用路径表达式来选取 XML 文档中的节点或者节点集。这些路径表达式和我们在常规的电脑文件系统中看到的表达式非常相似。</p>
 <p>XPath是一种用来在内存中导航整个XML树的语言,它的设计初衷是作为一种面向XSLT和XPointer的语言,后来独立成了一种W3C标准.</p>
-<h5 id="xpath基础语法" class="heading-element"><span>0.0.0.2  XPath基础语法</span>
+<h1 id="xpath基础语法" class="heading-element"><span>XPath基础语法</span>
   <a href="#xpath%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p><a href="https://www.w3school.com.cn/xpath/index.asp"target="_blank" rel="external nofollow noopener noreferrer">W3C  XPath教程</a></p>
-<h6 id="1查询基本语句" class="heading-element"><span>0.0.0.2.1  (1)查询基本语句</span>
+</h1><p><a href="https://www.w3school.com.cn/xpath/index.asp"target="_blank" rel="external nofollow noopener noreferrer">W3C  XPath教程</a></p>
+<h2 id="1查询基本语句" class="heading-element"><span>(1)查询基本语句</span>
   <a href="#1%e6%9f%a5%e8%af%a2%e5%9f%ba%e6%9c%ac%e8%af%ad%e5%8f%a5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>//users/user[loginID/text()=’abc’ and password/text()=’test123’] 。</p>
+</h2><p>//users/user[loginID/text()=’abc’ and password/text()=’test123’] 。</p>
 <p>这是一个XPath查询语句，获取loginID为abc的所有user数据，用户需要提交正确的loginID和password才能返回结果。如果黑客在 loginID 字段中输入：&rsquo; or 1=1 并在 password 中输入：&rsquo; or 1=1  就能绕过校验，成功获取所有user数据</p>
 <p>//users/user[LoginID/text()=&lsquo;&lsquo;or 1=1 and password/text()=&lsquo;&lsquo;or 1=1]</p>
-<h6 id="2节点类型" class="heading-element"><span>0.0.0.2.2  (2)节点类型</span>
+<h2 id="2节点类型" class="heading-element"><span>(2)节点类型</span>
   <a href="#2%e8%8a%82%e7%82%b9%e7%b1%bb%e5%9e%8b" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在XPath中,XML文档被作为节点树对待,XPath中有七种结点类型：元素、属性、文本、命名空间、处理指令、注释以及文档节点（或成为根节点）。 文档的根节点即是文档结点；对应属性有属性结点，元素有元素结点。</p>
+</h2><p>在XPath中,XML文档被作为节点树对待,XPath中有七种结点类型：元素、属性、文本、命名空间、处理指令、注释以及文档节点（或成为根节点）。 文档的根节点即是文档结点；对应属性有属性结点，元素有元素结点。</p>
 <blockquote>
 <p>element (元素)</p>
 <p>attribute (属性)</p>
@@ -205,11 +208,11 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/bookstore&gt;</span></span></span></code></pre></div><p><!-- raw HTML omitted -->根节点</p>
 <p><!-- raw HTML omitted -->J K. Rowling<!-- raw HTML omitted -->  元素节点</p>
 <p>lang=&ldquo;en&quot;属性节点</p>
-<h6 id="3表达式" class="heading-element"><span>0.0.0.2.3  (3)表达式</span>
+<h2 id="3表达式" class="heading-element"><span>(3)表达式</span>
   <a href="#3%e8%a1%a8%e8%be%be%e5%bc%8f" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>XPath通过路径表达式(Path Expression)来选取节点,基本规则:</p>
+</h2><p>XPath通过路径表达式(Path Expression)来选取节点,基本规则:</p>
 <table>
 <thead>
 <tr>
@@ -295,11 +298,11 @@
 </tr>
 </tbody>
 </table>
-<h6 id="4限定语" class="heading-element"><span>0.0.0.2.4  (4)限定语</span>
+<h2 id="4限定语" class="heading-element"><span>(4)限定语</span>
   <a href="#4%e9%99%90%e5%ae%9a%e8%af%ad" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>限定语是对路径表达式的附加条件,用来查找某个特定的节点或者包含某个指定的值的节点.限定语被嵌在方括号中.</p>
+</h2><p>限定语是对路径表达式的附加条件,用来查找某个特定的节点或者包含某个指定的值的节点.限定语被嵌在方括号中.</p>
 <p>路径表达式结果：</p>
 <table>
 <thead>
@@ -331,11 +334,11 @@
 </tr>
 </tbody>
 </table>
-<h6 id="5通配符" class="heading-element"><span>0.0.0.2.5  (5)通配符</span>
+<h2 id="5通配符" class="heading-element"><span>(5)通配符</span>
   <a href="#5%e9%80%9a%e9%85%8d%e7%ac%a6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>XPath 通配符可用来选取未知的 XML 元素.</p>
+</h2><p>XPath 通配符可用来选取未知的 XML 元素.</p>
 <table>
 <thead>
 <tr>
@@ -391,11 +394,11 @@
 </tr>
 </tbody>
 </table>
-<h6 id="6-选取多个路径" class="heading-element"><span>0.0.0.2.6  (6) 选取多个路径</span>
+<h2 id="6-选取多个路径" class="heading-element"><span>(6) 选取多个路径</span>
   <a href="#6-%e9%80%89%e5%8f%96%e5%a4%9a%e4%b8%aa%e8%b7%af%e5%be%84" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>可以在路径表达式中使用”|”运算符来选取若干路径.</p>
+</h2><p>可以在路径表达式中使用”|”运算符来选取若干路径.</p>
 <p>实例,</p>
 <table>
 <thead>
@@ -415,11 +418,11 @@
 </tr>
 </tbody>
 </table>
-<h6 id="7-运算符" class="heading-element"><span>0.0.0.2.7  (7) 运算符</span>
+<h2 id="7-运算符" class="heading-element"><span>(7) 运算符</span>
   <a href="#7-%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>路径表达式中可以使用一些常见的数学运算符和逻辑运算符,</p>
+</h2><p>路径表达式中可以使用一些常见的数学运算符和逻辑运算符,</p>
 <table>
 <thead>
 <tr>
@@ -516,11 +519,11 @@
 </tr>
 </tbody>
 </table>
-<h6 id="8-函数" class="heading-element"><span>0.0.0.2.8  (8) 函数</span>
+<h2 id="8-函数" class="heading-element"><span>(8) 函数</span>
   <a href="#8-%e5%87%bd%e6%95%b0" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><table>
+</h2><table>
 <thead>
 <tr>
 <th style="text-align:center">名称</th>

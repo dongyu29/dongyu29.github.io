@@ -11,7 +11,7 @@
   <meta itemprop="name" content="windows内网知识大纲">
   <meta itemprop="datePublished" content="2024-08-15T10:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T10:31:01+08:00">
-  <meta itemprop="wordCount" content="1493">
+  <meta itemprop="wordCount" content="1406">
   <meta itemprop="keywords" content="攻防,内网渗透"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/53/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="windows内网知识大纲">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/53\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  1493 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  1406 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/53\/","datePublished": "2024-08-15T10:31:01+08:00","dateModified": "2024-08-15T10:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Windows内网知识大纲</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 10:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1493 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>8 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 10:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1406 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>7 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,46 +152,184 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#sid">SID</a></li>
+    <li><a href="#spn">SPN</a>
       <ul>
-        <li></li>
+        <li><a href="#是什么">是什么</a></li>
+        <li><a href="#例子">例子</a></li>
+        <li><a href="#类型">类型</a></li>
+        <li><a href="#格式">格式</a></li>
+        <li><a href="#spn发现">SPN发现</a></li>
       </ul>
     </li>
   </ul>
+
+  <ul>
+    <li><a href="#用户">用户</a></li>
+    <li><a href="#ou">OU</a></li>
+    <li><a href="#安全组">安全组</a></li>
+    <li><a href="#组策略">组策略</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#hash">Hash</a>
+      <ul>
+        <li><a href="#hash背景">Hash背景</a></li>
+        <li><a href="#hash示例">Hash示例</a></li>
+        <li><a href="#hash产生">Hash产生：</a></li>
+        <li><a href="#认证过程">认证过程</a></li>
+        <li><a href="#hash传递攻击">hash传递攻击</a></li>
+        <li><a href="#获取hash方法">获取Hash方法</a></li>
+        <li><a href="#破解hash">破解Hash</a></li>
+      </ul>
+    </li>
+    <li><a href="#lsass进程">LSASS进程</a></li>
+    <li><a href="#sam">SAM</a></li>
+    <li><a href="#ntdsdit">NTDS.DIT</a></li>
+    <li><a href="#ntlm">NTLM</a></li>
+    <li><a href="#kerberos">Kerberos</a>
+      <ul>
+        <li><a href="#协议内容">协议内容</a></li>
+        <li><a href="#哈希票据传递攻击">（哈希）票据传递攻击</a></li>
+        <li><a href="#域用户名枚举">域用户名枚举</a></li>
+        <li><a href="#密码喷洒攻击password-spraying">密码喷洒攻击（Password Spraying）</a></li>
+        <li><a href="#as-reproasting">AS-REPRoasting</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#windows-access-token">Windows Access Token</a>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+        <li><a href="#组成">组成</a></li>
+        <li><a href="#sid-1">SID</a></li>
+        <li><a href="#windows-access-token产生过程">Windows Access Token产生过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#安全描述符security-descriptor">安全描述符(Security Descriptor)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#active-directory活动目录">Active Directory(活动目录)</a>
+      <ul>
+        <li><a href="#简介-1">简介</a></li>
+        <li><a href="#活动目录功能">活动目录功能</a></li>
+        <li><a href="#存储方式">存储方式</a></li>
+        <li><a href="#攻击活动目录">攻击活动目录</a></li>
+      </ul>
+    </li>
+    <li><a href="#ldap">LDAP</a></li>
+    <li><a href="#ipc进程间通信">IPC(进程间通信)</a>
+      <ul>
+        <li><a href="#简介-2">简介</a></li>
+        <li><a href="#作用">作用</a></li>
+        <li><a href="#功能">功能</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#smb">SMB</a>
+      <ul>
+        <li><a href="#主要功能">主要功能</a></li>
+        <li><a href="#原理">原理</a></li>
+        <li><a href="#历史版本">历史版本</a></li>
+        <li><a href="#简介-3">简介</a></li>
+        <li><a href="#工作流程">工作流程</a></li>
+      </ul>
+    </li>
+    <li><a href="#ldap-1">LDAP</a></li>
+    <li><a href="#rpc">RPC</a></li>
+    <li><a href="#netbios">NETBIOS</a>
+      <ul>
+        <li><a href="#简介-4">简介</a></li>
+        <li><a href="#类型-1">类型</a></li>
+      </ul>
+    </li>
+    <li><a href="#wmi">WMI</a></li>
+    <li><a href="#winrm">WinRm</a></li>
+    <li><a href="#com">COM</a>
+      <ul>
+        <li><a href="#com-的核心概念">COM 的核心概念</a></li>
+        <li><a href="#com-的用途">COM 的用途</a></li>
+        <li><a href="#具体例子">具体例子</a></li>
+      </ul>
+    </li>
+    <li><a href="#dcom">DCOM</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#工作组">工作组</a></li>
+    <li><a href="#本地认证流程">本地认证流程</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#内网渗透流程">内网渗透流程</a>
+      <ul>
+        <li><a href="#initial-access">Initial Access</a></li>
+        <li><a href="#网络位置判断">网络位置判断</a></li>
+        <li><a href="#信息收集">信息收集</a></li>
+        <li><a href="#内网穿透常见协议及利用">内网穿透常见协议及利用</a></li>
+        <li><a href="#内网渗透常用端口">内网渗透常用端口</a></li>
+        <li><a href="#权限提升">权限提升</a></li>
+      </ul>
+    </li>
+    <li><a href="#内网横向渗透方法">内网横向渗透方法</a>
+      <ul>
+        <li><a href="#内网渗透持久化">内网渗透持久化</a></li>
+        <li><a href="#miti">MITI</a></li>
+        <li><a href="#日志清理">日志清理</a></li>
+      </ul>
+    </li>
+    <li><a href="#内网渗透常用工具和方式">内网渗透常用工具和方式</a></li>
+  </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="前言" class="heading-element"><span>0.0.0.1  前言</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="前言" class="heading-element"><span>前言</span>
   <a href="#%e5%89%8d%e8%a8%80" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>现在网上内网渗透、域渗透文章很多，大多数人只知道如何进行操作获取全新，不知使用该技术的原理和该技术操作影响Windows何种功能，Windows何种机制对内网渗透产生的影响。本文按照数个Windows系统的功能进行讲解，完善内网渗透知识结构。</p>
-<h5 id="目录" class="heading-element"><span>0.0.0.2  目录</span>
+</h1><p>现在网上内网渗透、域渗透文章很多，大多数人只知道如何进行操作获取全新，不知使用该技术的原理和该技术操作影响Windows何种功能，Windows何种机制对内网渗透产生的影响。本文按照数个Windows系统的功能进行讲解，完善内网渗透知识结构。</p>
+<h1 id="目录" class="heading-element"><span>目录</span>
   <a href="#%e7%9b%ae%e5%bd%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>[TOC]</p>
-<h5 id="概念" class="heading-element"><span>0.0.0.3  概念</span>
+</h1><p>[TOC]</p>
+<h1 id="概念" class="heading-element"><span>概念</span>
   <a href="#%e6%a6%82%e5%bf%b5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="sid" class="heading-element"><span>0.0.0.3.1  SID</span>
+</h1><h2 id="sid" class="heading-element"><span>SID</span>
   <a href="#sid" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>安全标识符（security identifier）用于唯一标识安全主体或安全组。安全主体可以表示任何可由操作系统进行安全身份验证的主体，例如用户账户、计算机账户或在用户或计算机账户的安全上下文中运行的线程或进程</p>
-<pre tabindex="0"><code>wmic useraccount get name,sid</code></pre><h6 id="spn" class="heading-element"><span>0.0.0.3.2  SPN</span>
+</h2><p>安全标识符（security identifier）用于唯一标识安全主体或安全组。安全主体可以表示任何可由操作系统进行安全身份验证的主体，例如用户账户、计算机账户或在用户或计算机账户的安全上下文中运行的线程或进程</p>
+<pre tabindex="0"><code>wmic useraccount get name,sid</code></pre><h2 id="spn" class="heading-element"><span>SPN</span>
   <a href="#spn" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 是什么</p>
-<p><strong>SPN</strong>(ServicePrincipal Names)服务主体名称，是服务实例(比如：HTTP、SMB、MySQL等服务)的唯一标识符。</p>
+</h2><h3 id="是什么" class="heading-element"><span>是什么</span>
+  <a href="#%e6%98%af%e4%bb%80%e4%b9%88" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><strong>SPN</strong>(ServicePrincipal Names)服务主体名称，是服务实例(比如：HTTP、SMB、MySQL等服务)的唯一标识符。</p>
 <p>如果在计算机的整个目录林上安装多个服务实例，那么每个实例都必须有自己的 SPN。 如果客户可以使用多个名称进行身份验证，则一个服务实例可以有多个 SPN。</p>
-<pre tabindex="0"><code>Kerberos认证过程使用SPN将服务实例与服务登录账户相关联，如果想使用 Kerberos 协议来认证服务，那么必须正确配置SPN。如果在整个林或域中的计算机上安装多个服务实例，则每个实例都必须具有自己的 SPN。如果客户端可能使用多个名称进行身份验证，则给定服务实例可以具有多个SPN。SPN 始终包含运行服务实例的主机的名称，因此服务实例可以为其主机的每个名称或别名注册SPN。一个用户账户下可以有多个SPN，但一个SPN只能注册到一个账户。在内网中，SPN扫描通过查询向域控服务器执行服务发现。这对于红队而言，可以帮助他们识别正在运行重要服务的主机，如终端，交换机等。SPN的识别是kerberoasting攻击的第一步。</code></pre><p>####### 例子</p>
-<p>当某用户需要访问MySQL服务时，系统会以当前用户的身份向域控查询SPN为MySQL的记录。当找到该SPN记录后，用户会再次与KDC通信，将KDC发放的TGT作为身份凭据发送给KDC，并将需要访问的SPN发送给KDC。KDC中的TGS服务对TGT进行解密。确认无误后，由TGS将一张允许访问该SPN所对应的服务的ST服务票据和该SPN所对应的服务的地址发送给用户，用户使用该票据即可访问MySQL服务。</p>
-<p>####### 类型</p>
-<p>一种是注册在活动目录的机器帐户(Computers)下，当一个服务的权限为 Local System 或 Network Service，则SPN注册在机器帐户(Computers)下。域中的每个机器都会有注册两个2.SPN：HOST/主机名 和 HOST/主机名.xie.com</p>
+<pre tabindex="0"><code>Kerberos认证过程使用SPN将服务实例与服务登录账户相关联，如果想使用 Kerberos 协议来认证服务，那么必须正确配置SPN。如果在整个林或域中的计算机上安装多个服务实例，则每个实例都必须具有自己的 SPN。如果客户端可能使用多个名称进行身份验证，则给定服务实例可以具有多个SPN。SPN 始终包含运行服务实例的主机的名称，因此服务实例可以为其主机的每个名称或别名注册SPN。一个用户账户下可以有多个SPN，但一个SPN只能注册到一个账户。在内网中，SPN扫描通过查询向域控服务器执行服务发现。这对于红队而言，可以帮助他们识别正在运行重要服务的主机，如终端，交换机等。SPN的识别是kerberoasting攻击的第一步。</code></pre><h3 id="例子" class="heading-element"><span>例子</span>
+  <a href="#%e4%be%8b%e5%ad%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>当某用户需要访问MySQL服务时，系统会以当前用户的身份向域控查询SPN为MySQL的记录。当找到该SPN记录后，用户会再次与KDC通信，将KDC发放的TGT作为身份凭据发送给KDC，并将需要访问的SPN发送给KDC。KDC中的TGS服务对TGT进行解密。确认无误后，由TGS将一张允许访问该SPN所对应的服务的ST服务票据和该SPN所对应的服务的地址发送给用户，用户使用该票据即可访问MySQL服务。</p>
+<h3 id="类型" class="heading-element"><span>类型</span>
+  <a href="#%e7%b1%bb%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>一种是注册在活动目录的机器帐户(Computers)下，当一个服务的权限为 Local System 或 Network Service，则SPN注册在机器帐户(Computers)下。域中的每个机器都会有注册两个2.SPN：HOST/主机名 和 HOST/主机名.xie.com</p>
 <p>另一种是注册在活动目录的域用户帐户(Users)下，当一个服务的权限为一个域用户，则SPN注册在域用户帐户(Users)下。</p>
-<p>####### 格式</p>
-<pre tabindex="0"><code>SPN格式：&lt;service class&gt;/&lt;host&gt;:&lt;port&gt;/&lt;service name&gt;
+<h3 id="格式" class="heading-element"><span>格式</span>
+  <a href="#%e6%a0%bc%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><pre tabindex="0"><code>SPN格式：&lt;service class&gt;/&lt;host&gt;:&lt;port&gt;/&lt;service name&gt;
 
 &lt;service class&gt;：标识服务类的字符串，可以理解为服务的名称，常见的有WWW、MySQL、SMTP、MSSQL等；必须元素
 &lt;host&gt;：服务所在主机名，host有两种形式，FQDN(win7.xie.com)和NetBIOS(win7)名；必须元素
@@ -199,20 +337,23 @@
 &lt;service name&gt;：服务名称,可以省略；额外元素
 
 一些服务的SPN示例：
-#####Exchange服务
+#Exchange服务
 exchangeMDB/ex01.xie.com
-#####RDP服务
+#RDP服务
 TERMSERV/te01.xie.com
-#####WSMan/WinRM/PSRemoting服务
-WSMAN/ws01.xie.com</code></pre><p>####### SPN发现</p>
-<p>windows系统自带的setspn可以查询域内的SPN。</p>
+#WSMan/WinRM/PSRemoting服务
+WSMAN/ws01.xie.com</code></pre><h3 id="spn发现" class="heading-element"><span>SPN发现</span>
+  <a href="#spn%e5%8f%91%e7%8e%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>windows系统自带的setspn可以查询域内的SPN。</p>
 <pre tabindex="0"><code>查看当前域内所有的SPN：setspn  -Q  */*
 查看指定域xie.com注册的SPN：setspn -T xie.com -Q */*      如果指定域不存在，则默认切换到查找本域的SPN
 查找本域内重复的SPN：setspn -X
 删除指定SPN：setspn -D MySQL/win7.xie.com:1433/MSSQL hack
 查找指定用户/主机名注册的SPN：setspn -L username/hostname</code></pre><p><strong>PowerShell-AD-Recon：</strong></p>
 <p>该工具包提供了一些探测指定SPN的脚本，例如Exchange，Microsoft SQLServer，Terminal等</p>
-<pre tabindex="0"><code>#####Discover-PSMSSQLServers.ps1的使用,扫描MSSQL服务 Import-Module .\Discover-PSMSSQLServers.ps1;Discover-PSMSSQLServers #Discover-PSMSExchangeServers.ps1的使用，扫描Exchange服务 Import-Module .\Discover-PSMSExchangeServers.ps1;Discover-PSMSExchangeServers #扫描域中所有的SPN信息 Import-Module .\Discover-PSInterestingServices.ps1;Discover-PSInterestingServices</code></pre><p><strong>GetUserSPNs.ps1：</strong></p>
+<pre tabindex="0"><code>#Discover-PSMSSQLServers.ps1的使用,扫描MSSQL服务 Import-Module .\Discover-PSMSSQLServers.ps1;Discover-PSMSSQLServers #Discover-PSMSExchangeServers.ps1的使用，扫描Exchange服务 Import-Module .\Discover-PSMSExchangeServers.ps1;Discover-PSMSExchangeServers #扫描域中所有的SPN信息 Import-Module .\Discover-PSInterestingServices.ps1;Discover-PSInterestingServices</code></pre><p><strong>GetUserSPNs.ps1：</strong></p>
 <p>GetUserSPNs 是 Kerberoast 工具集中的一个 powershell 脚本，用来查询域内用户注册的 SPN。</p>
 <pre tabindex="0"><code>Import-Module .\GetUserSPNs.ps1</code></pre><p><strong>GetUserSPNs.vbs：</strong></p>
 <p>GetUserSPNs 是 Kerberoast 工具集中的一个 vbs 脚本，用来查询域内用户注册的 SPN。</p>
@@ -221,23 +362,23 @@ WSMAN/ws01.xie.com</code></pre><p>####### SPN发现</p>
 <pre tabindex="0"><code>Import-Module .\PowerView.ps1
 Get-NetUser -SPN</code></pre><p><strong>PowerShellery：</strong></p>
 <p>PowerShellery下有各种各样针对服务SPN探测的脚本。其中一些需要PowerShell v2.0的环境，还有一些则需要PowerShell v3.0环境。</p>
-<pre tabindex="0"><code>#####Powershellery/Stable-ish/Get-SPN/ 下Get-SPN.psm1脚本的使用,需要powershell3.0及以上版本才能使用
+<pre tabindex="0"><code>#Powershellery/Stable-ish/Get-SPN/ 下Get-SPN.psm1脚本的使用,需要powershell3.0及以上版本才能使用
 Import-Module .\Get-SPN.psm1
 Get-SPN -type service -search &#34;*&#34;
 Get-SPN -type service -search &#34;*&#34; -List yes | Format-Table
 
-#####Powershellery/Stable-ish/ADS/ 下Get-DomainSpn.psm1脚本的使用
+#Powershellery/Stable-ish/ADS/ 下Get-DomainSpn.psm1脚本的使用
 Import-Module .\Get-DomainSpn.psm1
-Get-DomainSpn</code></pre><h5 id="组" class="heading-element"><span>0.0.0.4  组</span>
+Get-DomainSpn</code></pre><h1 id="组" class="heading-element"><span>组</span>
   <a href="#%e7%bb%84" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p><a href="https://cloud.tencent.com/developer/article/1937695"target="_blank" rel="external nofollow noopener noreferrer">https://cloud.tencent.com/developer/article/1937695</a></p>
-<h6 id="用户" class="heading-element"><span>0.0.0.4.1  用户</span>
+</h1><p><a href="https://cloud.tencent.com/developer/article/1937695"target="_blank" rel="external nofollow noopener noreferrer">https://cloud.tencent.com/developer/article/1937695</a></p>
+<h2 id="用户" class="heading-element"><span>用户</span>
   <a href="#%e7%94%a8%e6%88%b7" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>Active Directory 有两种形式的常见安全主体：用户帐户和计算机帐户。</p>
+</h2><p>Active Directory 有两种形式的常见安全主体：用户帐户和计算机帐户。</p>
 <p>域用户账户是在域内全局组 Domain Users 组中，本地用户账户在本地 User 组中。==当计算机加入域时，会把 Domain Users 组添加到本地的 User 组中==。因此域用户可以在域中的任何一台计算机上登录。</p>
 <p>即机器账号、计算机账号，所有加入域的主机都会有一个机器用户，用户名为机器名加<code>$</code>，如：<code>WIN7$</code>、<code>WINXP$</code>。在域环境中，==普通域用户最多可以创建 10 个计算机账户，但是本地账号不能创建计算机账户==。</p>
 <p>本地用户 SYSTEM 就对应于域内的机器用户，在域内的用户名就是机器名加<code>$</code>，比如 WIN7，他的机器名是 WIN7，那么他在域内登录的用户名就是<code>WIN7$</code>。当我们拿下一台内网主机后，发现没有域内用户，这个时候我们将当前用户提升到 SYSTEM，就可以在域内充当机器用户了。</p>
@@ -247,19 +388,19 @@ Get-DomainSpn</code></pre><h5 id="组" class="heading-element"><span>0.0.0.4  �
 <li>Administrator的用户ID：500</li>
 <li>普通用户的用户ID：1000开始</li>
 </ul>
-<h6 id="ou" class="heading-element"><span>0.0.0.4.2  OU</span>
+<h2 id="ou" class="heading-element"><span>OU</span>
   <a href="#ou" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>OU，即组织单位（Organization Unit），将域中的对象组织成==逻辑组==，帮助网络管理员简化管理组。</p>
+</h2><p>OU，即组织单位（Organization Unit），将域中的对象组织成==逻辑组==，帮助网络管理员简化管理组。</p>
 <p>组织单位包含下列类型的对象：用户，计算机，工作组，打印机，安全策略以及其他组织单位等。可以在组织单位基础上部署组策略，统一管理组织单位中的域对象。 在企业域环境里面，我们经常可以看到按照部门划分的一个个 OU</p>
 <p>管理员可以将组策略应用于 OU，然后系统将其下推到 OU 中的所有计算机</p>
 <p>组织单位跟组是两个完全不同的概念。OU 是管理对象的集合，而组是权限的集合。举个前面举过的例子，运维需要对公司的网络进行管理，需要一些特殊的管理权限，我们就可以设置个组，对这个组配置权限，然后再将运维拉进这个组里面，这样组里面的运维就拥有了该组的权限。又比如我们需要对财务部里面的用户进行统一管理，那我们便可以设置个 OU，然后把财务部的用户拉进这个 OU，这样就可以对财务部里面的用户进行集中管理，比如下发组策略等。</p>
-<h6 id="安全组" class="heading-element"><span>0.0.0.4.3  安全组</span>
+<h2 id="安全组" class="heading-element"><span>安全组</span>
   <a href="#%e5%ae%89%e5%85%a8%e7%bb%84" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在域环境中，并不建议直接给某个用户赋予特定的权限，而是通过一个域用户组，对这个域用户组赋予一个组权限，然后再将该用户拉进这个域用户组中，这样该用户便有了这个域用户组的权限。</p>
+</h2><p>在域环境中，并不建议直接给某个用户赋予特定的权限，而是通过一个域用户组，对这个域用户组赋予一个组权限，然后再将该用户拉进这个域用户组中，这样该用户便有了这个域用户组的权限。</p>
 <p>按照用途分类，域组分为通讯组和安全组。</p>
 <p>对于通讯组，我们接触的比较多的就是邮件组，将若干个人划分到一个通讯组，给这个通讯组发件，那组内用户都能收到。</p>
 <table>
@@ -355,11 +496,11 @@ Get-DomainSpn</code></pre><h5 id="组" class="heading-element"><span>0.0.0.4  �
 </ul>
 </li>
 </ul>
-<h6 id="组策略" class="heading-element"><span>0.0.0.4.4  组策略</span>
+<h2 id="组策略" class="heading-element"><span>组策略</span>
   <a href="#%e7%bb%84%e7%ad%96%e7%95%a5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://xz.aliyun.com/t/7784"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/7784</a></p>
+</h2><p><a href="https://xz.aliyun.com/t/7784"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/7784</a></p>
 <p><a href="https://ruyueattention.github.io/2022/04/27/%E7%BB%84%E7%AD%96%E7%95%A5%E4%B8%8E%E6%9C%AC%E5%9C%B0%E7%BB%84%E7%AD%96%E7%95%A5/"target="_blank" rel="external nofollow noopener noreferrer">https://ruyueattention.github.io/2022/04/27/%E7%BB%84%E7%AD%96%E7%95%A5%E4%B8%8E%E6%9C%AC%E5%9C%B0%E7%BB%84%E7%AD%96%E7%95%A5/</a></p>
 <p>组策略（Group Policy）是 Microsoft Windows 系统管理员为用户和计算机定义并控制程序、网络资源及操作系统行为的主要工具。通过使用组策略可以设置各种软件、计算机和用户策略。</p>
 <p>使用组策略可以给同工作组的计算机或用户强加一套统一的标准，如用户的桌面环境，计算机启动，关机注销等所执行的脚本文件、软件分发、安全设置等。</p>
@@ -375,23 +516,32 @@ Get-DomainSpn</code></pre><h5 id="组" class="heading-element"><span>0.0.0.4  �
 （即如果我们在域控的本地组策略设置了密码复杂度要求，然后又在域组策略上禁止了密码复杂度要求。
 那么最终起效果的将会是域控的本地策略。）</p>
 <p>常见的域下，我们一般只有本地组策略和域组策略。因此当他们冲突时，就是域策略起效。</p>
-<h5 id="密码hash" class="heading-element"><span>0.0.0.5  密码hash</span>
+<h1 id="密码hash" class="heading-element"><span>密码hash</span>
   <a href="#%e5%af%86%e7%a0%81hash" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="hash" class="heading-element"><span>0.0.0.5.1  Hash</span>
+</h1><h2 id="hash" class="heading-element"><span>Hash</span>
   <a href="#hash" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>Windows系统为了保证用户明文密码不会被泄漏，将明文密码转换为Hash值进行身份验证，被保存在SAM或ntds.dit中。</p>
-<p>####### Hash背景</p>
-<p>1.LM Hash（LAN Manager），在早期的Windows操作系统中将明文密码转换为LM Hash保存在SAM文件中，因为LM Hash使用DES加密，密钥为硬编码，算法又存在缺陷，所以被废弃，为了保证系统兼容性可以自行开启。</p>
+</h2><p>Windows系统为了保证用户明文密码不会被泄漏，将明文密码转换为Hash值进行身份验证，被保存在SAM或ntds.dit中。</p>
+<h3 id="hash背景" class="heading-element"><span>Hash背景</span>
+  <a href="#hash%e8%83%8c%e6%99%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1.LM Hash（LAN Manager），在早期的Windows操作系统中将明文密码转换为LM Hash保存在SAM文件中，因为LM Hash使用DES加密，密钥为硬编码，算法又存在缺陷，所以被废弃，为了保证系统兼容性可以自行开启。</p>
 <p>2.NTLM Hash（NT LAN Manager），在LM Hash算法被弃用时，NTLM Hash被用来进行Windows本地及远程身份验证的凭据，长度为32bit、由数字和字母组成。</p>
-<p>####### Hash示例</p>
-<p>冒号前半段为LM Hash，冒号后半段为NTLM Hash aad3b435b51404eeaad3b435b51404ee:e19ccf75ee54e06b06a5907af13cef42 net-NTLM Hash：</p>
+<h3 id="hash示例" class="heading-element"><span>Hash示例</span>
+  <a href="#hash%e7%a4%ba%e4%be%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>冒号前半段为LM Hash，冒号后半段为NTLM Hash aad3b435b51404eeaad3b435b51404ee:e19ccf75ee54e06b06a5907af13cef42 net-NTLM Hash：</p>
 <p>admin::N46iSNekpT:08ca45b7d7ea58ee:88dcbe4446168966a153a0064958dac6:5c7830315c7830310000000000000b45c67103d07d7b95acd12ffa11230e0000000052920b85f78d013c31cdb3b92f5d765c783030</p>
-<p>####### Hash产生：</p>
-<p>1.LM Hash：</p>
+<h3 id="hash产生" class="heading-element"><span>Hash产生：</span>
+  <a href="#hash%e4%ba%a7%e7%94%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1.LM Hash：</p>
 <pre tabindex="0"><code>admin1-ADMIN1(将密码转换为大写字母 )
 ADMIN1-41444d494e31(16进制转换)
 41444d494e31-41444d494e310000000000000000(密码未到7位，在末尾补0，填充为14个字符，补16个0)
@@ -419,8 +569,11 @@ ADMIN1-41444d494e31(16进制转换)
 
 admin1-61646d696e31(将明文转换为16进制编码)
 61646d696e31-610064006d0069006e003100(ASCII转Unicode)
-610064006d0069006e003100-74561893ea1e32f1fab1691c56f6c7a5(md4加密得到NTLM Hash)</code></pre><p>####### 认证过程</p>
-<p>NTLM验证是一种==Challenge/Response== 验证机制，由三种消息组成:通常称为type 1(协商)，类型type 2(质询)和type 3(身份验证)。</p>
+610064006d0069006e003100-74561893ea1e32f1fab1691c56f6c7a5(md4加密得到NTLM Hash)</code></pre><h3 id="认证过程" class="heading-element"><span>认证过程</span>
+  <a href="#%e8%ae%a4%e8%af%81%e8%bf%87%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>NTLM验证是一种==Challenge/Response== 验证机制，由三种消息组成:通常称为type 1(协商)，类型type 2(质询)和type 3(身份验证)。</p>
 <p>它基本上是这样工作的:</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201029983.webp" alt="image-20231020102923009" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201029983.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201029983.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201029983.webp?size=large 2x" data-title="image-20231020102923009" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <ol>
@@ -431,8 +584,11 @@ admin1-61646d696e31(将明文转换为16进制编码)
 <li>服务器拿到type 3之后，使用challenge和用户hash进行加密得到response2与type 3发来的response进行比较。如果用户hash是存储在域控里面的话，那么没有用户hash，也就没办法计算response2。也就没法验证。这个时候用户服务器就会通过netlogon协议联系域控，建立一个安全通道,然后将type 1,type 2，type3 全部发给域控(这个过程也叫作Pass Through Authentication认证流程)</li>
 <li>域控使用challenge和用户hash进行加密得到response2，与type 3的response进行比较</li>
 </ol>
-<p>####### hash传递攻击</p>
-<p>hash传递攻击也叫pass the hash,简称PTH。</p>
+<h3 id="hash传递攻击" class="heading-element"><span>hash传递攻击</span>
+  <a href="#hash%e4%bc%a0%e9%80%92%e6%94%bb%e5%87%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>hash传递攻击也叫pass the hash,简称PTH。</p>
 <p>在type3计算response的时候，客户端是使用用户的hash进行计算的，而不是用户密码进行计算的。因此在模拟用户登录的时候。是不需要用户明文密码的，只需要用户hash。微软在2014年5月13日发布了针对Pass The Hash的更新补丁kb2871997，标题为<code>&quot;Update to fix the Pass-The-Hash Vulnerability&quot;</code>,而在一周后却把标题改成了<code>&quot;Update to improve credentials protection and management&quot;</code>。(事实上，这个补丁不仅能够缓解PTH,还能阻止mimikatz 抓取明文密码)。</p>
 <ul>
 <li>mimikatz</li>
@@ -456,12 +612,18 @@ sekurlsa::pth /user:win10 /domain:test.local /ntlm:6a6293bc0c56d7b9731e2d5506065
 <p>msf的<code>exploit/windows/smb/psexec_psh</code>模块是支持对一个网段进行pth的，在横向移动中撞密码hash中特别有效</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201037865.webp" alt="image-20231020103715667" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201037865.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201037865.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201037865.webp?size=large 2x" data-title="image-20231020103715667" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201038881.webp" alt="image-20231020103801774" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201038881.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201038881.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201038881.webp?size=large 2x" data-title="image-20231020103801774" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### 获取Hash方法</p>
-<p>1.使用卷影副本将SAM文件导出，配合SYSKEY利用mimikatz等工具获得NTLM Hash</p>
+<h3 id="获取hash方法" class="heading-element"><span>获取Hash方法</span>
+  <a href="#%e8%8e%b7%e5%8f%96hash%e6%96%b9%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1.使用卷影副本将SAM文件导出，配合SYSKEY利用mimikatz等工具获得NTLM Hash</p>
 <p>2.使用mimikatz等工具读取lsass.exe进程，获取Hash</p>
 <p>3.配合其他漏洞和手法获取net-NTLM Hash 4.net-NTLM Hash可以使用Responder或Inveigh等工具获取</p>
-<p>####### 破解Hash</p>
-<ul>
+<h3 id="破解hash" class="heading-element"><span>破解Hash</span>
+  <a href="#%e7%a0%b4%e8%a7%a3hash" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>LM Hash
 1.john –format=lm hash.txt
 2.hashcat -m 3000 -a 3 hash.txt</li>
@@ -475,16 +637,16 @@ sekurlsa::pth /user:win10 /domain:test.local /ntlm:6a6293bc0c56d7b9731e2d5506065
 1.john –format=netntlmv2 hash.txt
 2.hashcat -m 5600 -a 3 hash.txt</li>
 </ul>
-<h6 id="lsass进程" class="heading-element"><span>0.0.0.5.2  LSASS进程</span>
+<h2 id="lsass进程" class="heading-element"><span>LSASS进程</span>
   <a href="#lsass%e8%bf%9b%e7%a8%8b" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>lsass (Local Security Authority Subsystem Service)是一个 Windows 进程，负责处理操作系统的安全策略。例如，当您登录到 Windows 用户帐户或服务器时，lsass.exe 会验证登录名和密码。</p>
-<h6 id="sam" class="heading-element"><span>0.0.0.5.3  SAM</span>
+</h2><p>lsass (Local Security Authority Subsystem Service)是一个 Windows 进程，负责处理操作系统的安全策略。例如，当您登录到 Windows 用户帐户或服务器时，lsass.exe 会验证登录名和密码。</p>
+<h2 id="sam" class="heading-element"><span>SAM</span>
   <a href="#sam" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>SAM(安全账户管理器)，SAM是用来==存储Windows操作系统密码==的数据库文件，为了避免明文密码泄漏，SAM文件中保存的是明文密码经过一系列算法处理过的Hash值，被保存的Hash分为LM Hash、NTLMHash。==在用户在本地或远程登陆系统时，会将Hash值与SAM文件中保存的Hash值进行对比==。在后期的Windows系统中，SAM文件中被保存的密码Hash都被密钥SYSKEY加密。</p>
+</h2><p>SAM(安全账户管理器)，SAM是用来==存储Windows操作系统密码==的数据库文件，为了避免明文密码泄漏，SAM文件中保存的是明文密码经过一系列算法处理过的Hash值，被保存的Hash分为LM Hash、NTLMHash。==在用户在本地或远程登陆系统时，会将Hash值与SAM文件中保存的Hash值进行对比==。在后期的Windows系统中，SAM文件中被保存的密码Hash都被密钥SYSKEY加密。</p>
 <p>SAM文件在磁盘中的位置在C:\windows\system32\config\sam SAM文件在Windows系统启动后被系统锁定，无法进行移动和复制</p>
 <p>SAM存放本地用户HASH。</p>
 <ul>
@@ -493,20 +655,20 @@ sekurlsa::pth /user:win10 /domain:test.local /ntlm:6a6293bc0c56d7b9731e2d5506065
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JS" data-lang="JS"><span style="display:flex;"><span><span style="color:#58a1dd">mimikatz</span> <span style="color:#58a1dd">lsadump</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">sam</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">reg</span> <span style="color:#58a1dd">save</span> <span style="color:#58a1dd">HKLM</span>\<span style="color:#58a1dd">SYSTEM</span> <span style="color:#58a1dd">system</span>.<span style="color:#58a1dd">hiv</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">reg</span> <span style="color:#58a1dd">save</span> <span style="color:#58a1dd">HKLM</span>\<span style="color:#58a1dd">SAM</span> <span style="color:#58a1dd">sam</span>.<span style="color:#58a1dd">hiv</span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">reg</span> <span style="color:#58a1dd">save</span> <span style="color:#58a1dd">HKLM</span>\<span style="color:#58a1dd">SECURITY</span> <span style="color:#58a1dd">security</span>.<span style="color:#58a1dd">hiv</span></span></span></code></pre></div><h6 id="ntdsdit" class="heading-element"><span>0.0.0.5.4  NTDS.DIT</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">reg</span> <span style="color:#58a1dd">save</span> <span style="color:#58a1dd">HKLM</span>\<span style="color:#58a1dd">SECURITY</span> <span style="color:#58a1dd">security</span>.<span style="color:#58a1dd">hiv</span></span></span></code></pre></div><h2 id="ntdsdit" class="heading-element"><span>NTDS.DIT</span>
   <a href="#ntdsdit" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>NTDS.DIT存放域内所有用户HASH。</p>
+</h2><p>NTDS.DIT存放域内所有用户HASH。</p>
 <ul>
 <li>提取NTDS.DIT</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JS" data-lang="JS"><span style="display:flex;"><span><span style="color:#58a1dd">ntdsutil</span> <span style="color:#a6be9d">&#34;ac i ntds&#34;</span> <span style="color:#58a1dd">ifm</span> <span style="color:#a6be9d">&#34;create full c:\\users\\tmp&#34;</span> <span style="color:#58a1dd">q</span> <span style="color:#58a1dd">q</span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ntdsdumpex</span>.<span style="color:#58a1dd">exe</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">d</span> <span style="color:#a6be9d">&#34;C:\Users\tmp\Active Directory\ntds.dit&#34;</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">o</span> <span style="color:#58a1dd">hash</span>.<span style="color:#58a1dd">txt</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">s</span> <span style="color:#58a1dd">C</span><span style="color:#ff636f">:</span>\<span style="color:#58a1dd">Users</span>\<span style="color:#58a1dd">vagrant</span>\<span style="color:#58a1dd">Desktop</span>\<span style="color:#58a1dd">syste</span></span></span></code></pre></div><h6 id="ntlm" class="heading-element"><span>0.0.0.5.5  NTLM</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ntdsdumpex</span>.<span style="color:#58a1dd">exe</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">d</span> <span style="color:#a6be9d">&#34;C:\Users\tmp\Active Directory\ntds.dit&#34;</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">o</span> <span style="color:#58a1dd">hash</span>.<span style="color:#58a1dd">txt</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">s</span> <span style="color:#58a1dd">C</span><span style="color:#ff636f">:</span>\<span style="color:#58a1dd">Users</span>\<span style="color:#58a1dd">vagrant</span>\<span style="color:#58a1dd">Desktop</span>\<span style="color:#58a1dd">syste</span></span></span></code></pre></div><h2 id="ntlm" class="heading-element"><span>NTLM</span>
   <a href="#ntlm" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://www.4hou.com/posts/RjgE"target="_blank" rel="external nofollow noopener noreferrer">https://www.4hou.com/posts/RjgE</a></p>
+</h2><p><a href="https://www.4hou.com/posts/RjgE"target="_blank" rel="external nofollow noopener noreferrer">https://www.4hou.com/posts/RjgE</a></p>
 <blockquote>
 <p>在Kerberos出现之前，NTLM被广泛应用于工作组和域环境，是更早的用于对用户进行身份验证的协议。</p>
 <p>相比于Kerberos，NTLM的认证原理比较简单，主要通过对比客户端和服务端加密后的数据，判断其是否一致，以确定用户身份。</p>
@@ -537,18 +699,21 @@ sekurlsa::pth /user:win10 /domain:test.local /ntlm:6a6293bc0c56d7b9731e2d5506065
 <p>DC根据用户名获取该帐号的密码哈希值，对原始的Challenge进行加密。如果加密后的Challenge和服务器发送的一致，则意味着用户拥有正确的密码，验证通过，否则验证失败。DC将验证结果发给服务器，并最终反馈给客户端</p>
 </li>
 </ul>
-<h6 id="kerberos" class="heading-element"><span>0.0.0.5.6  Kerberos</span>
+<h2 id="kerberos" class="heading-element"><span>Kerberos</span>
   <a href="#kerberos" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://www.bilibili.com/video/BV1884y1H7aG"target="_blank" rel="external nofollow noopener noreferrer">https://www.bilibili.com/video/BV1884y1H7aG</a></p>
+</h2><p><a href="https://www.bilibili.com/video/BV1884y1H7aG"target="_blank" rel="external nofollow noopener noreferrer">https://www.bilibili.com/video/BV1884y1H7aG</a></p>
 <p><a href="https://www.cnblogs.com/artech/archive/2011/01/24/kerberos.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/artech/archive/2011/01/24/kerberos.html</a></p>
 <p><a href="https://juejin.cn/post/6844903955416219661"target="_blank" rel="external nofollow noopener noreferrer">https://juejin.cn/post/6844903955416219661</a></p>
 <p>==Windows认证协议有两种NTLM（NT LAN Manager）和Kerberos==，前者主要应用于用于Windows NT 和 Windows 2000 Server（or Later） 工作组环境，而后者则主要应用于Windows 2000 Server（or Later） 域（Domain）环境。Kerberos较之NTLM更高效、更安全，同时认证过程也相对复杂。</p>
 <p>Kerberos是一种网络认证协议，对个人通信以安全的手段进行身份认证。其设计目标是通过密钥系统为客户机/服务器应用程序提供强大的认证服务。 ==它允许某实体在非安全网络环境下通信，向另一个实体以一种安全的方式证明自己的身份==。该认证过程的实现不依赖于主机操作系统的认证，无需基于主机地址的信任，不要求网络上所有主机的物理安全，并假定网络上传送的数据包可以被任意地读取、修改和插入数据。在以上情况下， Kerberos 作为一种可信任的第三方认证服务，是通过传统的密码技术(如:共享密钥)执行认证服务的。</p>
 <p>Kerberos实际上是一种==基于票据（Ticket）==的认证方式。客户端要访问服务器的资源，需要首先购买服务端认可的票据。也就是说，客户端在访问服务器之前需要预先买好票，等待服务验票之后才能入场。在这之前，客户端需要先买票，但是这张票不能直接购买，需要一张认购权证。客户端在买票之前需要预先获得一张认购权证。这张认购权证和进入服务器的入场券均有KDC发售</p>
-<p>####### 协议内容</p>
-<ul>
+<h3 id="协议内容" class="heading-element"><span>协议内容</span>
+  <a href="#%e5%8d%8f%e8%ae%ae%e5%86%85%e5%ae%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>AS：认证服务器</li>
 <li>KDC：密钥分发中心</li>
 <li>TGT：票据授权票据，票据的票据</li>
@@ -611,26 +776,38 @@ TGS向Client发送两条消息</p>
 <hr>
 <p>Kerberos的攻击有如下：</p>
 <!-- raw HTML omitted -->
-<p>####### （哈希）票据传递攻击</p>
-<p><a href="https://www.freebuf.com/articles/245872.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.freebuf.com/articles/245872.html</a></p>
-<p>####### 域用户名枚举</p>
-<p>这里比较多文章可以参考：</p>
+<h3 id="哈希票据传递攻击" class="heading-element"><span>（哈希）票据传递攻击</span>
+  <a href="#%e5%93%88%e5%b8%8c%e7%a5%a8%e6%8d%ae%e4%bc%a0%e9%80%92%e6%94%bb%e5%87%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><a href="https://www.freebuf.com/articles/245872.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.freebuf.com/articles/245872.html</a></p>
+<h3 id="域用户名枚举" class="heading-element"><span>域用户名枚举</span>
+  <a href="#%e5%9f%9f%e7%94%a8%e6%88%b7%e5%90%8d%e6%9e%9a%e4%b8%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>这里比较多文章可以参考：</p>
 <p><a href="https://link.zhihu.com/?target=https%3A//cloud.tencent.com/developer/article/1180848"target="_blank" rel="external nofollow noopener noreferrer">https://cloud.tencent.com/developer/article/1180848</a> 从暴力枚举用户到获取域所有信息</p>
 <p><a href="https://link.zhihu.com/?target=http%3A//hackergu.com/kerberos-sec-list-brute-user/"target="_blank" rel="external nofollow noopener noreferrer">http://hackergu.com/kerberos-sec-list-brute-user/</a> 域安全-域用户的枚举与爆破</p>
 <p><a href="https://link.zhihu.com/?target=https%3A//www.secpulse.com/archives/68628.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.secpulse.com/archives/68628.html</a> Kerberos域用户名枚举</p>
-<p>####### 密码喷洒攻击（Password Spraying）</p>
-<p>这个可以看倾旋大佬的啦：<a href="https://link.zhihu.com/?target=https%3A//payloads.online/archivers/2018-05-02/1"target="_blank" rel="external nofollow noopener noreferrer">https://payloads.online/archivers/2018-05-02/1</a> Windows域渗透 - 用户密码枚举</p>
-<p>####### AS-REPRoasting</p>
-<p>看<a href="https://link.zhihu.com/?target=https%3A//www.harmj0y.net/blog"target="_blank" rel="external nofollow noopener noreferrer">harmj0y</a>大佬的分析文章：<a href="https://link.zhihu.com/?target=https%3A//www.harmj0y.net/blog/activedirectory/roasting-as-reps/"target="_blank" rel="external nofollow noopener noreferrer">https://www.harmj0y.net/blog/activedirectory/roasting-as-reps/</a></p>
+<h3 id="密码喷洒攻击password-spraying" class="heading-element"><span>密码喷洒攻击（Password Spraying）</span>
+  <a href="#%e5%af%86%e7%a0%81%e5%96%b7%e6%b4%92%e6%94%bb%e5%87%bbpassword-spraying" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>这个可以看倾旋大佬的啦：<a href="https://link.zhihu.com/?target=https%3A//payloads.online/archivers/2018-05-02/1"target="_blank" rel="external nofollow noopener noreferrer">https://payloads.online/archivers/2018-05-02/1</a> Windows域渗透 - 用户密码枚举</p>
+<h3 id="as-reproasting" class="heading-element"><span>AS-REPRoasting</span>
+  <a href="#as-reproasting" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>看<a href="https://link.zhihu.com/?target=https%3A//www.harmj0y.net/blog"target="_blank" rel="external nofollow noopener noreferrer">harmj0y</a>大佬的分析文章：<a href="https://link.zhihu.com/?target=https%3A//www.harmj0y.net/blog/activedirectory/roasting-as-reps/"target="_blank" rel="external nofollow noopener noreferrer">https://www.harmj0y.net/blog/activedirectory/roasting-as-reps/</a></p>
 <p>主要是因为域账号开启了下面这个选项：</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201047555.webp" alt="image-20231020104739373" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201047555.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201047555.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310201047555.webp?size=large 2x" data-title="image-20231020104739373" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>它的验证方式变的不一样了，不再需要用户的hash去请求就能返回TGT票据和用户session部分的内容。</p>
 <p>攻击方法参考：[https://blog.csdn.net/shuteer_x](</p>
-<h5 id="访问控制模型" class="heading-element"><span>0.0.0.6  访问控制模型</span>
+<h1 id="访问控制模型" class="heading-element"><span>访问控制模型</span>
   <a href="#%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6%e6%a8%a1%e5%9e%8b" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>Windows访问控制模型有两个基本组成部分：</p>
+</h1><p>Windows访问控制模型有两个基本组成部分：</p>
 <ul>
 <li>访问令牌(Access Token)：包含有关登录用户的信息</li>
 <li>安全描述符(Security Descriptor)：包含用于保护安全对象的安全信息</li>
@@ -643,16 +820,22 @@ TGS向Client发送两条消息</p>
 <li>一条或多条允许类型的ACE允许令牌中列出的受信者的所有访问权限</li>
 <li>检查完所有ACE但没有一个权限显式允许，那么系统会隐式拒绝该访问</li>
 </ul>
-<h6 id="windows-access-token" class="heading-element"><span>0.0.0.6.1  Windows Access Token</span>
+<h2 id="windows-access-token" class="heading-element"><span>Windows Access Token</span>
   <a href="#windows-access-token" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 简介</p>
-<p>Windows Access Token(访问令牌)，它是一个描述进程或者线程安全上下文的一个对象。不同的用户登录计算机后， 都会生成一个Access Token，这个Token在==用户创建进程或者线程时会被使用==，不断的拷贝，这也就解释了A用户创建一个进程而该进程没有B用户的权限。当用户注销后，系统将会使主令牌切换为模拟令牌，不会将令牌清除，只有在重启机器后才会清除 Access Token分为两种(主令牌、模拟令牌)</p>
+</h2><h3 id="简介" class="heading-element"><span>简介</span>
+  <a href="#%e7%ae%80%e4%bb%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Windows Access Token(访问令牌)，它是一个描述进程或者线程安全上下文的一个对象。不同的用户登录计算机后， 都会生成一个Access Token，这个Token在==用户创建进程或者线程时会被使用==，不断的拷贝，这也就解释了A用户创建一个进程而该进程没有B用户的权限。当用户注销后，系统将会使主令牌切换为模拟令牌，不会将令牌清除，只有在重启机器后才会清除 Access Token分为两种(主令牌、模拟令牌)</p>
 <p>当线程与安全对象进行交互或尝试执行需要特权的系统任务时，系统使用访问令牌来标识用户。使用windbg查看进程的token，其包含信息如下图所示：</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091049038.webp" alt="image-20240609104957847" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091049038.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091049038.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091049038.webp?size=large 2x" data-title="image-20240609104957847" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### 组成</p>
-<ul>
+<h3 id="组成" class="heading-element"><span>组成</span>
+  <a href="#%e7%bb%84%e6%88%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>用户帐户的安全标识符(SID)</li>
 <li>用户所属的组的SID</li>
 <li>用于标识当前登录会话的登录SID</li>
@@ -666,18 +849,24 @@ TGS向Client发送两条消息</p>
 <li>目前的模拟等级</li>
 <li>其他统计数据</li>
 </ul>
-<p>####### SID</p>
-<p>安全标识符是一个唯一的字符串，它可以代表一个账户、一个用户 组、或者是一次登录。通常它还有一个SID固定列表，例如 Everyone这种已经内置的账户，默认拥有固定的SID。</p>
+<h3 id="sid-1" class="heading-element"><span>SID</span>
+  <a href="#sid-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>安全标识符是一个唯一的字符串，它可以代表一个账户、一个用户 组、或者是一次登录。通常它还有一个SID固定列表，例如 Everyone这种已经内置的账户，默认拥有固定的SID。</p>
 <p>SID表现形式:</p>
 <p>域SID-用户ID
 计算机SID-用户ID</p>
-<p>####### Windows Access Token产生过程</p>
-<p>每个进程创建时都会根据登录会话权限由LSA(Local Security Authority)分配一个Token(如果CreaetProcess时自己指定了 Token, LSA会用该Token， 否则就用父进程Token的一份拷贝。</p>
-<h6 id="安全描述符security-descriptor" class="heading-element"><span>0.0.0.6.2  安全描述符(Security Descriptor)</span>
+<h3 id="windows-access-token产生过程" class="heading-element"><span>Windows Access Token产生过程</span>
+  <a href="#windows-access-token%e4%ba%a7%e7%94%9f%e8%bf%87%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>每个进程创建时都会根据登录会话权限由LSA(Local Security Authority)分配一个Token(如果CreaetProcess时自己指定了 Token, LSA会用该Token， 否则就用父进程Token的一份拷贝。</p>
+<h2 id="安全描述符security-descriptor" class="heading-element"><span>安全描述符(Security Descriptor)</span>
   <a href="#%e5%ae%89%e5%85%a8%e6%8f%8f%e8%bf%b0%e7%ac%a6security-descriptor" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>安全描述符(Security Descriptor)包含与安全对象有关的安全信息，这些信息规定了哪些用户/组可以对这个对象执行哪些操作，安全描述符主要由以下部分构成：</p>
+</h2><p>安全描述符(Security Descriptor)包含与安全对象有关的安全信息，这些信息规定了哪些用户/组可以对这个对象执行哪些操作，安全描述符主要由以下部分构成：</p>
 <ul>
 <li>所有者的SID</li>
 <li>组SID</li>
@@ -686,29 +875,41 @@ TGS向Client发送两条消息</p>
 </ul>
 <p>在windbg中查看一个安全对象的安全描述符，可以清晰的看到安全描述符的组成：</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091050781.webp" alt="image-20240609105042612" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091050781.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091050781.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091050781.webp?size=large 2x" data-title="image-20240609105042612" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="域环境" class="heading-element"><span>0.0.0.7  域环境</span>
+<h1 id="域环境" class="heading-element"><span>域环境</span>
   <a href="#%e5%9f%9f%e7%8e%af%e5%a2%83" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="active-directory活动目录" class="heading-element"><span>0.0.0.7.1  Active Directory(活动目录)</span>
+</h1><h2 id="active-directory活动目录" class="heading-element"><span>Active Directory(活动目录)</span>
   <a href="#active-directory%e6%b4%bb%e5%8a%a8%e7%9b%ae%e5%bd%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 简介</p>
-<p>Active Directory，活动目录简称AD，是一个基于DNS并以树状的数据结构来组成==网络服务==存储了有关网络对象的信息，并以此作为基础对目录信息进行合乎逻辑的分层组织，让管理员和用户能够轻松地查找和使用这些信息。常网域都只有一个，在中型或大型的网络中，网域可能会有很多个，或是和其他公司或组织的AD相互链接。</p>
+</h2><h3 id="简介-1" class="heading-element"><span>简介</span>
+  <a href="#%e7%ae%80%e4%bb%8b-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Active Directory，活动目录简称AD，是一个基于DNS并以树状的数据结构来组成==网络服务==存储了有关网络对象的信息，并以此作为基础对目录信息进行合乎逻辑的分层组织，让管理员和用户能够轻松地查找和使用这些信息。常网域都只有一个，在中型或大型的网络中，网域可能会有很多个，或是和其他公司或组织的AD相互链接。</p>
 <p>活动目录是一个==分层数据库==( hierarchical database)，在活动目录表中你可以查询到计算机网络中所有的用户帐户、计算机名称、证书、安全策略及其他信息。</p>
-<p>####### 活动目录功能</p>
-<ul>
+<h3 id="活动目录功能" class="heading-element"><span>活动目录功能</span>
+  <a href="#%e6%b4%bb%e5%8a%a8%e7%9b%ae%e5%bd%95%e5%8a%9f%e8%83%bd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>服务器及客户端计算机管理</li>
 <li>用户服务</li>
 <li>资源管理</li>
 <li>桌面配置</li>
 <li>应用系统支撑</li>
 </ul>
-<p>####### 存储方式</p>
-<p>ntds.dit是AD中的数据库文件，它被保存在域控制器==c:\windows\system32\ntds\NTDS.DIT==位置。活动目录的数据库文件（ntds.dit）包含有关活动目录域中所有对象的所有信息，其中包含所有域用户和计算机帐户的密码哈希值。该文件在所有域控制器之间自动同步，它只能被域管理员访问和修改。</p>
-<p>####### 攻击活动目录</p>
-<ul>
+<h3 id="存储方式" class="heading-element"><span>存储方式</span>
+  <a href="#%e5%ad%98%e5%82%a8%e6%96%b9%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>ntds.dit是AD中的数据库文件，它被保存在域控制器==c:\windows\system32\ntds\NTDS.DIT==位置。活动目录的数据库文件（ntds.dit）包含有关活动目录域中所有对象的所有信息，其中包含所有域用户和计算机帐户的密码哈希值。该文件在所有域控制器之间自动同步，它只能被域管理员访问和修改。</p>
+<h3 id="攻击活动目录" class="heading-element"><span>攻击活动目录</span>
+  <a href="#%e6%94%bb%e5%87%bb%e6%b4%bb%e5%8a%a8%e7%9b%ae%e5%bd%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>利用常规Web渗透进行横向渗透</li>
 <li>常规Dump Hash后进行PTH，循环操作，直到获取Domain Admins</li>
 <li>利用SYSVOL和组策略首选项(GPP)</li>
@@ -720,11 +921,11 @@ TGS向Client发送两条消息</p>
 <li>MS17-010</li>
 </ul>
 <p><a href="https://link.zhihu.com/?target=https%3A//blog.csdn.net/shuteer_xu/article/details/106066628"target="_blank" rel="external nofollow noopener noreferrer">https://link.zhihu.com/?target=https%3A//blog.csdn.net/shuteer_xu/article/details/106066628</a>)</p>
-<h6 id="ldap" class="heading-element"><span>0.0.0.7.2  LDAP</span>
+<h2 id="ldap" class="heading-element"><span>LDAP</span>
   <a href="#ldap" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>LDAP（Lightweight Directory Access Protocol）轻量目录访问<code>协议</code>，Active Directory是LDAP协议open in new window在Windows上的实现。</p>
+</h2><p>LDAP（Lightweight Directory Access Protocol）轻量目录访问<code>协议</code>，Active Directory是LDAP协议open in new window在Windows上的实现。</p>
 <p>LDAP攻击基础语法</p>
 <pre tabindex="0"><code>(&amp;(A)(B))
 
@@ -742,21 +943,30 @@ TGS向Client发送两条消息</p>
 
 (A&gt;B)
 
-(A&lt;=B)</code></pre><h6 id="ipc进程间通信" class="heading-element"><span>0.0.0.7.3  IPC(进程间通信)</span>
+(A&lt;=B)</code></pre><h2 id="ipc进程间通信" class="heading-element"><span>IPC(进程间通信)</span>
   <a href="#ipc%e8%bf%9b%e7%a8%8b%e9%97%b4%e9%80%9a%e4%bf%a1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 简介</p>
-<p>指至少两个进程或线程间传送数据或信号的一些技术或方法。</p>
-<p>####### 作用</p>
-<ul>
+</h2><h3 id="简介-2" class="heading-element"><span>简介</span>
+  <a href="#%e7%ae%80%e4%bb%8b-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>指至少两个进程或线程间传送数据或信号的一些技术或方法。</p>
+<h3 id="作用" class="heading-element"><span>作用</span>
+  <a href="#%e4%bd%9c%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>信息共享：Web服务器，通过网页浏览器使用进程间通信来共享web文件（网页等）和多媒体</li>
 <li>加速：维基百科使用通过进程间通信进行交流的多服务器来满足用户的请求</li>
 <li>模块化</li>
 <li>私有权分离</li>
 </ul>
-<p>####### 功能</p>
-<p><strong>IPC$</strong></p>
+<h3 id="功能" class="heading-element"><span>功能</span>
+  <a href="#%e5%8a%9f%e8%83%bd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><strong>IPC$</strong></p>
 <p>简介</p>
 <p>IPC$是共享“命名管道”的资源，为了让进程间通信而开放的命名管道，通过提供可信任的用户名和口令，连接双方可以建立安全的通道并以此通道进行加密数据的交换，从而实现对远程计算机的访问，从NT/2000开始使用。</p>
 <p>IPC$在同一时间内，两个IP之间只允许建立一个连接。</p>
@@ -778,22 +988,28 @@ TGS向Client发送两条消息</p>
 </span></span><span style="display:flex;"><span>关闭IPC默认共享：net use ipc$ /del</span></span></code></pre></div><p>注：</p>
 <p>1.现在绝大多数的Windows操作系统默认策略不允许来自远程网络验证的空密码，所以IPC空连接已经被废弃。</p>
 <p>2.如果远程服务端未开启139、445端口，无法使用IPC$进行连接。</p>
-<h5 id="内网协议" class="heading-element"><span>0.0.0.8  内网协议</span>
+<h1 id="内网协议" class="heading-element"><span>内网协议</span>
   <a href="#%e5%86%85%e7%bd%91%e5%8d%8f%e8%ae%ae" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="smb" class="heading-element"><span>0.0.0.8.1  SMB</span>
+</h1><h2 id="smb" class="heading-element"><span>SMB</span>
   <a href="#smb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://www.cnblogs.com/yuzly/p/10480438.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/yuzly/p/10480438.html</a></p>
+</h2><p><a href="https://www.cnblogs.com/yuzly/p/10480438.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/yuzly/p/10480438.html</a></p>
 <p>SMB(Server Message Block)被称为服务器消息块，又叫网络文件共享系统(CIFS)。在Windows2000中，SMB除了基于NBT实现，还可以直接通过445端口实现。</p>
 <p>它运行在应用层，可以使用不同的传输层协议，如TCP（传输控制协议）或NetBIOS（网络基本输入/输出系统）来实际传输数据。</p>
-<p>####### 主要功能</p>
-<p>使网络上的机器能够共享计算机文件、打印机、串行端口和通讯等资源。</p>
+<h3 id="主要功能" class="heading-element"><span>主要功能</span>
+  <a href="#%e4%b8%bb%e8%a6%81%e5%8a%9f%e8%83%bd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>使网络上的机器能够共享计算机文件、打印机、串行端口和通讯等资源。</p>
 <p>局域网共享文件夹：https://blog.csdn.net/qq_20191467/article/details/113032642</p>
-<p>####### 原理</p>
-<p>CIFS消息一般使用NetBIOS或TCP协议发送，分别使用不同的端口139或445，当前倾向于使用445端口。</p>
+<h3 id="原理" class="heading-element"><span>原理</span>
+  <a href="#%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>CIFS消息一般使用NetBIOS或TCP协议发送，分别使用不同的端口139或445，当前倾向于使用445端口。</p>
 <ul>
 <li>直接运行在 TCP 上 port 445</li>
 <li>通过使用 NetBIOS API
@@ -803,18 +1019,27 @@ TGS向Client发送两条消息</p>
 </ul>
 </li>
 </ul>
-<p>####### 历史版本</p>
-<p>1.SMB 1.0 没有数字签名功能</p>
+<h3 id="历史版本" class="heading-element"><span>历史版本</span>
+  <a href="#%e5%8e%86%e5%8f%b2%e7%89%88%e6%9c%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1.SMB 1.0 没有数字签名功能</p>
 <p>2.SMB 2.0</p>
 <p>3.SMB 2.1</p>
 <p>4.SMB 3.0</p>
 <p>LLMNR</p>
-<p>####### 简介</p>
-<ul>
+<h3 id="简介-3" class="heading-element"><span>简介</span>
+  <a href="#%e7%ae%80%e4%bb%8b-3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>LLMNR是链路本地多播名称解析，当==局域网中的DNS服务器不可用时，可以使用LLMNR解析本地网段上机器名称==，只有Windows Vista和更高版本才支持LLMNR，支持IPV6</li>
 </ul>
-<p>####### 工作流程</p>
-<ul>
+<h3 id="工作流程" class="heading-element"><span>工作流程</span>
+  <a href="#%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>通过UDP发送到组播地址224.0.0.252:5355，查询主机名对应的IP，使用的是DNS格式数据包，数据包会被限制在本地子网中。</li>
 <li>本地子网中所有支持LLMNR的主机在受到查询请求时，会对比自己的主机名是否相同，不同就丢弃，相同就发送包含自己IP的单播信息给查询主机。</li>
 </ul>
@@ -824,11 +1049,11 @@ TGS向Client发送两条消息</p>
 <li>在备用DNS查询名称</li>
 <li>使用LLMNR查询名称</li>
 </ol>
-<h6 id="ldap-1" class="heading-element"><span>0.0.0.8.2  LDAP</span>
+<h2 id="ldap-1" class="heading-element"><span>LDAP</span>
   <a href="#ldap-1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://www.4hou.com/posts/j6ZP"target="_blank" rel="external nofollow noopener noreferrer">https://www.4hou.com/posts/j6ZP</a></p>
+</h2><p><a href="https://www.4hou.com/posts/j6ZP"target="_blank" rel="external nofollow noopener noreferrer">https://www.4hou.com/posts/j6ZP</a></p>
 <blockquote>
 <p>LDAP是一种目录访问协议，它规定了以树状结构的方式来存储和访问数据。</p>
 <p>然而协议是抽象的，要产生具体的功效，必须在应用中实现，比如AD域服务就实现了LDAP协议。</p>
@@ -849,11 +1074,11 @@ TGS向Client发送两条消息</p>
 <p>==RDN加CN==就形成了数据名称，用==DN==来表示，张三的DN就是：DC=test20，DC=local，OU=信息部，CN=张三。</p>
 <p>正是这样的名字结构提升了LDAP的读取效率，因为DN就是那张标识了出口路线的地图，只要我们顺着名称往下寻找，就能直接找到所需数据。</p>
 <p>树叶内容主要是描述这片树叶的颜色、形状、气味等独特的信息，对应到系统中，就是资源的属性，比如用户的属性有性别，身份证号，电话等，计算机的属性有操作系统类型、账号密码等。一片树叶名称加上它的属性就形成完整的数据信息，在系统中被称为条目。</p>
-<h6 id="rpc" class="heading-element"><span>0.0.0.8.3  RPC</span>
+<h2 id="rpc" class="heading-element"><span>RPC</span>
   <a href="#rpc" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://bbs.huaweicloud.com/blogs/337073"target="_blank" rel="external nofollow noopener noreferrer">https://bbs.huaweicloud.com/blogs/337073</a></p>
+</h2><p><a href="https://bbs.huaweicloud.com/blogs/337073"target="_blank" rel="external nofollow noopener noreferrer">https://bbs.huaweicloud.com/blogs/337073</a></p>
 <p>RPC（Remote Procedure Call）远程过程调用协议是一个用于建立适当框架的协议。从本质上讲，==它使一台机器上的程序能够调用另一台机器上的子程序，而不会意识到它是远程的==。</p>
 <p>RPC 是==一种软件通信协议==，一个程序可以用来向位于网络上另一台计算机的程序请求服务，而不必了解网络的细节。RPC 被用来像本地系统一样调用远程系统上的其他进程。过程调用有时也被称为函数调用或子程序调用。</p>
 <p>常见 RPC 实现</p>
@@ -864,17 +1089,23 @@ TGS向Client发送两条消息</p>
 <li>XML-RPC</li>
 <li>gRPC</li>
 </ul>
-<h6 id="netbios" class="heading-element"><span>0.0.0.8.4  NETBIOS</span>
+<h2 id="netbios" class="heading-element"><span>NETBIOS</span>
   <a href="#netbios" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 简介</p>
-<p>自从诞生，Netbois成为许多其他网络应用程序的基础。严格意义上，Netbios是接入网络服务的接口标准。</p>
+</h2><h3 id="简介-4" class="heading-element"><span>简介</span>
+  <a href="#%e7%ae%80%e4%bb%8b-4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>自从诞生，Netbois成为许多其他网络应用程序的基础。严格意义上，Netbios是接入网络服务的接口标准。</p>
 <ul>
 <li>NETBIOS(网络基本输入输出系统),严格讲不属于网络协议，NETBIOS是==应用程序接口==(API),早期使用NetBIOS Frames(NBF)协议进行运作,是一种非路由网络协议，==位于传输层==；后期NetBIOS over TCP/IP（缩写为NBT、NetBT）出现，使之可以连接到TCP/IP，是一种网络协议，位于==会话层==。基于NETBIOS协议广播获得计算机名称——解析为相应IP地址，WindowsNT以后的所有操作系统上均可用，不支持IPV6</li>
 </ul>
-<p>####### 类型</p>
-<p>NETBIOS提供三种服务</p>
+<h3 id="类型-1" class="heading-element"><span>类型</span>
+  <a href="#%e7%b1%bb%e5%9e%8b-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>NETBIOS提供三种服务</p>
 <ul>
 <li>NetBIOS-NS（==名称服务==）：为了启动会话和分发数据报，程序需要使用Name Server注册NETBIOS名称，可以告诉其他应用程序提供什么服务，默认监听UDP137端口，也可以使用==TCP 137==端口。</li>
 <li>Datagram distribution service（==数据报服务==）：无连接，负责错误检测和恢复，默认在==UDP 138==端口。</li>
@@ -890,17 +1121,17 @@ TGS向Client发送两条消息</p>
 <p>nbtscan.exe 192.168.100.1/24</p>
 <p><img loading="lazy" src="https://p3.ssl.qhimg.com/t01c57ea1062c7e4155.png" alt="标题: fig:" srcset="https://p3.ssl.qhimg.com/t01c57ea1062c7e4155.png?size=small, https://p3.ssl.qhimg.com/t01c57ea1062c7e4155.png?size=medium 1.5x, https://p3.ssl.qhimg.com/t01c57ea1062c7e4155.png?size=large 2x" data-title="标题: fig:" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>SHARING表示开放，DC 表示可能是域控</p>
-<h6 id="wmi" class="heading-element"><span>0.0.0.8.5  WMI</span>
+<h2 id="wmi" class="heading-element"><span>WMI</span>
   <a href="#wmi" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>是一个服务。想象你有一把神奇的钥匙，可以打开你家中每个房间的门，查看房间内的状态并进行调整。WMI 就像是这把钥匙，让你可以从一处地方访问和管理整个Windows系统的各个方面。</p>
+</h2><p>是一个服务。想象你有一把神奇的钥匙，可以打开你家中每个房间的门，查看房间内的状态并进行调整。WMI 就像是这把钥匙，让你可以从一处地方访问和管理整个Windows系统的各个方面。</p>
 <p>WMI(Windows管理规范)，由一系列对Windows Driver Model的扩展组成，它通过仪器组件提供信息和通知，提供了一个操作系统的接口。在渗透测试过程中，==攻击者往往使用脚本通过WMI接口完成对Windows操作系统的操作，远程WMI连接通过DCOM进行==。例如：WMIC、Invoke-WmiCommand、Invoke-WMIMethod等。另一种方法是使用Windows远程管理（WinRM）。</p>
-<h6 id="winrm" class="heading-element"><span>0.0.0.8.6  WinRm</span>
+<h2 id="winrm" class="heading-element"><span>WinRm</span>
   <a href="#winrm" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>Windows远程管理（WinRM）服务是Windows Server 2003 R2以上版本中一种新式的方便远程管理的服务。通过WinRM服务，便于在日常工作中远程管理服务器，或通过脚本同时管理多台服务器，来提高工作效率。</p>
+</h2><p>Windows远程管理（WinRM）服务是Windows Server 2003 R2以上版本中一种新式的方便远程管理的服务。通过WinRM服务，便于在日常工作中远程管理服务器，或通过脚本同时管理多台服务器，来提高工作效率。</p>
 <p>WinRM服务基于HTTP（HTTPS）协议，使用5985端口（HTTPS使用5986端口）。按照微软官方的介绍：Windows2008 R2以上版本的操作系统，默认开启WinRM服务，因此，在使用时只需将防火墙相应的5985（或5986）端口开放即可；</p>
 <p>（1）如何确认WinRM服务是否开放？</p>
 <p>以管理员身份在CMD中执行以下命令：</p>
@@ -908,18 +1139,21 @@ TGS向Client发送两条消息</p>
 <p>（2）如何开启WinRM服务？</p>
 <p>若WinRM未启用，以管理员权限运行PowerShell，然后输入以下命令：</p>
 <pre tabindex="0"><code>enable-psremoting</code></pre><p>利用 WinRM 进行横向渗透：https://www.wangan.com/p/7fygfg3e497a3528</p>
-<h6 id="com" class="heading-element"><span>0.0.0.8.7  COM</span>
+<h2 id="com" class="heading-element"><span>COM</span>
   <a href="#com" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>com官方文档https://learn.microsoft.com/zh-cn/windows/win32/com/com-fundamentals</p>
+</h2><p>com官方文档https://learn.microsoft.com/zh-cn/windows/win32/com/com-fundamentals</p>
 <blockquote>
 <p>com是一种接口标准，windows下的软件开发可以遵从com标准，也可以不遵从，对于遵从com标准的软件，我们创建它的com对象后可以通过com接口规定的方法进行一些操作，而不遵从的就不能通过com进行操作。此外，例如word = win32com.client.Dispatch(&ldquo;Word.Application&rdquo;)，这里面的Word.Application通过注册表进行注册</p>
 <p>开发者使用编程语言（如 C++、C# 等）实现 COM 对象，定义接口并实现这些接口的方法。</p>
 <p>使用工具（如 <code>regsvr32</code>）或安装程序将 COM 对象的信息注册到 Windows 注册表中。注册信息包括：CLSID（类标识符），ProgID（程序标识符），接口ID，组件的文件路径等。</p>
 </blockquote>
-<p>####### COM 的核心概念</p>
-<ol>
+<h3 id="com-的核心概念" class="heading-element"><span>COM 的核心概念</span>
+  <a href="#com-%e7%9a%84%e6%a0%b8%e5%bf%83%e6%a6%82%e5%bf%b5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ol>
 <li><strong>接口（Interface）</strong>：
 <ul>
 <li>COM 组件通过接口暴露其功能。接口是一个方法的集合，不包含实现细节。</li>
@@ -943,8 +1177,11 @@ TGS向Client发送两条消息</p>
 </ul>
 </li>
 </ol>
-<p>####### COM 的用途</p>
-<ol>
+<h3 id="com-的用途" class="heading-element"><span>COM 的用途</span>
+  <a href="#com-%e7%9a%84%e7%94%a8%e9%80%94" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ol>
 <li><strong>操作系统服务</strong>：
 <ul>
 <li>Windows 提供了大量通过 COM 接口访问的系统服务，如文件操作、网络通信等。</li>
@@ -967,22 +1204,25 @@ TGS向Client发送两条消息</p>
 </li>
 </ol>
 <p><strong>COM 就是计算机世界中的“标准接口”</strong>： 在计算机中，COM（组件对象模型）就是一种类似的“标准接口”。它允许不同的软件部件（或称为组件）之间进行通信和协作，而不需要了解对方的内部实现细节。这些组件可以用不同的编程语言编写，但只要它们遵循COM标准，它们就可以互相交流。</p>
-<p>####### 具体例子</p>
-<p>例子1：Microsoft Office自动化</p>
+<h3 id="具体例子" class="heading-element"><span>具体例子</span>
+  <a href="#%e5%85%b7%e4%bd%93%e4%be%8b%e5%ad%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>例子1：Microsoft Office自动化</p>
 <p>假设你想写一个程序自动打开Microsoft Word，并在文档中输入一些文字。Microsoft Word提供了一个COM接口，让你可以通过程序控制它。</p>
 <p>用Python来实现：</p>
 <pre tabindex="0"><code>import win32com.client
 
-##### 创建一个Word应用程序的COM对象
+# 创建一个Word应用程序的COM对象
 word = win32com.client.Dispatch(&#34;Word.Application&#34;)
 
-##### 使Word应用程序可见
+# 使Word应用程序可见
 word.Visible = True
 
-##### 创建一个新文档
+# 创建一个新文档
 doc = word.Documents.Add()
 
-##### 在文档中输入文字
+# 在文档中输入文字
 doc.Content.Text = &#34;Hello, COM world!&#34;</code></pre><p>在这个例子中，我们通过COM接口创建了一个Word对象，控制它打开了一个文档并输入了文字。</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151726835.webp" alt="image-20240715172600633" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151726835.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151726835.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151726835.webp?size=large 2x" data-title="image-20240715172600633" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>例子2：创建快捷方式</p>
@@ -990,21 +1230,21 @@ doc.Content.Text = &#34;Hello, COM world!&#34;</code></pre><p>在这个例子中
 <p>用Python来实现：</p>
 <pre tabindex="0"><code>import win32com.client
 
-##### 创建Shell对象
+# 创建Shell对象
 shell = win32com.client.Dispatch(&#34;WScript.Shell&#34;)
 
-##### 创建快捷方式对象
+# 创建快捷方式对象
 shortcut = shell.CreateShortcut(&#34;C:\\path\\to\\shortcut.lnk&#34;)
 
-##### 设置快捷方式目标路径
+# 设置快捷方式目标路径
 shortcut.TargetPath = &#34;C:\\path\\to\\target.exe&#34;
 
-##### 保存快捷方式
-shortcut.save()</code></pre><h6 id="dcom" class="heading-element"><span>0.0.0.8.8  DCOM</span>
+# 保存快捷方式
+shortcut.save()</code></pre><h2 id="dcom" class="heading-element"><span>DCOM</span>
   <a href="#dcom" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>COM就像是家中的家电，它们都通过标准插座获取电力。DCOM则是一个扩展，它允许你在不同的房间甚至不同的房子之间传递电力。</p>
 <p>可以把它认为是一种应用协议，但它更准确地说是一套技术和规范的集合。在网络协议上它基于RPC，同时也包括大量其他技术。</p>
 </blockquote>
@@ -1013,15 +1253,15 @@ shortcut.save()</code></pre><h6 id="dcom" class="heading-element"><span>0.0.0.8.
 <p>DCOM（分布式组件对象模型）是微软基于组件对象模型（COM）的一系列概念和程序接口，它==支持不同的两台机器上的组件间的通信==，不论它们是运行在局域网、广域网、还是Internet上。利用这个接口，客户端程序对象能够向网络中另一台计算机上的服务器程序对象发送请求。</p>
 <p>DCOM是COM（组件对象模型）的扩展，它允许应用程序实例化和访问远程计算机上COM对象的属性和方法。DCOM 使用远程过程调用（RPC）技术将组件对象模型（COM）的功能扩展到本地计算机之外，因此，在远程系统上托管COM服务器端的软件（通常在DLL或exe中）可以通过RPC向客户端公开其方法。</p>
 <p>使用DCOM进行横向移动的优势之一在于，<strong>在远程主机上执行的进程将会是托管COM服务器端的软件</strong>。这无疑能够增强隐蔽性，由于有大量程序都会向DCOM公开方法，因此防御者可能难以全面监测所有程序的执行。</p>
-<h5 id="windows网络认证" class="heading-element"><span>0.0.0.9  Windows网络认证</span>
+<h1 id="windows网络认证" class="heading-element"><span>Windows网络认证</span>
   <a href="#windows%e7%bd%91%e7%bb%9c%e8%ae%a4%e8%af%81" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="工作组" class="heading-element"><span>0.0.0.9.1  工作组</span>
+</h1><h2 id="工作组" class="heading-element"><span>工作组</span>
   <a href="#%e5%b7%a5%e4%bd%9c%e7%bb%84" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><strong>简介</strong></p>
+</h2><p><strong>简介</strong></p>
 <p>工作组是指数台计算机在同一个内网中，在逻辑上都属于工作组，但是在工作组中的机器之间相互没有信任关系，每台机器的账号密码只是保存在自己的SAM文件中。那就意味着如果需要共享资源只能新建一个账号并指定相关资源授予该账号权限才可以完成共享。早期利用SMB协议在内网中传输明文口令，后为了安全出现LM Challenge/Response 验证机制，再之后LM Challenge/Response 验证机制因为安全性问题，从Windows Vista / Server 2008开始LM就被弃用，改用Windows NT挑战/响应验证机制，常被人称为NTLM，现在被更新到NTLMv2</p>
 <p><strong>历史版本</strong></p>
 <p>NTLMv1：服务器通过发送一个8字节的随机数（挑战）来验证客户端，客户端返回两个24字节Hash进行计算并返回计算结果。
@@ -1037,39 +1277,51 @@ Client使用发送的用户名对应的NTLM Hash加密Challenge，将结果(Resp
 Server收到Client发送的Response，将接收的Response与Net-NTLM Hash进行比较，如果相同，则认证通过。
 注：每次生成的16字节的Challenge都不同，保证的安全性。</li>
 </ul>
-<h6 id="本地认证流程" class="heading-element"><span>0.0.0.9.2  本地认证流程</span>
+<h2 id="本地认证流程" class="heading-element"><span>本地认证流程</span>
   <a href="#%e6%9c%ac%e5%9c%b0%e8%ae%a4%e8%af%81%e6%b5%81%e7%a8%8b" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>Windows Logon Process(即 winlogon.exe)，Winlogon 是负责处理安全相关的用户交互界面的组件。Winlogon的工作包括加载其他用户身份安全组件、提供图形化的登录界面，以及创建用户会话。</li>
 <li>LSASS(本地安全认证子系统服务)用于微软Windows系统的安全机制。它负责Windows系统安全策略。它负责用户在本地验证或远程登陆时验证用户身份，管理用户密码变更，并产生访问日志。</li>
 </ul>
 <p>用户注销、重启、锁屏后，操作系统会让winlogon显示图形化登录界面，也就是输入框，接收域名、用户名、密码后交给lsass进程，将明文密码加密成NTLM Hash，对SAM数据库比较认证，相同则认证成功。</p>
-<h5 id="内网渗透" class="heading-element"><span>0.0.0.10  内网渗透</span>
+<h1 id="内网渗透" class="heading-element"><span>内网渗透</span>
   <a href="#%e5%86%85%e7%bd%91%e6%b8%97%e9%80%8f" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="内网渗透流程" class="heading-element"><span>0.0.0.10.1  内网渗透流程</span>
+</h1><h2 id="内网渗透流程" class="heading-element"><span>内网渗透流程</span>
   <a href="#%e5%86%85%e7%bd%91%e6%b8%97%e9%80%8f%e6%b5%81%e7%a8%8b" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### Initial Access</p>
-<ul>
+</h2><h3 id="initial-access" class="heading-element"><span>Initial Access</span>
+  <a href="#initial-access" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>Webshell</li>
 <li>个人机Beacon</li>
 <li>VPN</li>
 </ul>
-<p>####### 网络位置判断</p>
-<ul>
+<h3 id="网络位置判断" class="heading-element"><span>网络位置判断</span>
+  <a href="#%e7%bd%91%e7%bb%9c%e4%bd%8d%e7%bd%ae%e5%88%a4%e6%96%ad" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>网络区域</li>
 <li>主机角色</li>
 <li>连通性判断</li>
 </ul>
-<p>####### 信息收集</p>
-<p>信息收集常分为工作组信息收集、域信息收集，管理员、非管理员。信息收集范围包括但不限于对权限信息，机器信息，进程端口，网络连接，共享、会话、敏感文件、密码文件、配置文件、浏览器记录、远程连接工具如xshell等工具记录等信息进行详细收集并加以合理运用，将已有信息最大程度利用，如某大佬所说，渗透的本质是信息收集。具体信息收集命令可以查阅参考链接，不再赘述。</p>
-<p>####### 内网穿透常见协议及利用</p>
-<ul>
+<h3 id="信息收集" class="heading-element"><span>信息收集</span>
+  <a href="#%e4%bf%a1%e6%81%af%e6%94%b6%e9%9b%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>信息收集常分为工作组信息收集、域信息收集，管理员、非管理员。信息收集范围包括但不限于对权限信息，机器信息，进程端口，网络连接，共享、会话、敏感文件、密码文件、配置文件、浏览器记录、远程连接工具如xshell等工具记录等信息进行详细收集并加以合理运用，将已有信息最大程度利用，如某大佬所说，渗透的本质是信息收集。具体信息收集命令可以查阅参考链接，不再赘述。</p>
+<h3 id="内网穿透常见协议及利用" class="heading-element"><span>内网穿透常见协议及利用</span>
+  <a href="#%e5%86%85%e7%bd%91%e7%a9%bf%e9%80%8f%e5%b8%b8%e8%a7%81%e5%8d%8f%e8%ae%ae%e5%8f%8a%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>TCP</li>
 <li>UDP</li>
 <li>Http</li>
@@ -1085,8 +1337,11 @@ Server收到Client发送的Response，将接收的Response与Net-NTLM Hash进行
 <p>2.反向sockets代理，可以将流量全局带入</p>
 <p>常用文件类型:</p>
 <p>exe/ps1/python</p>
-<p>####### 内网渗透常用端口</p>
-<ul>
+<h3 id="内网渗透常用端口" class="heading-element"><span>内网渗透常用端口</span>
+  <a href="#%e5%86%85%e7%bd%91%e6%b8%97%e9%80%8f%e5%b8%b8%e7%94%a8%e7%ab%af%e5%8f%a3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>53
 DNS服务，在使用中需要用到TCP/UDP 53端口，AD域的核心就是DNS服务器，AD通过DNS服务器定位资源</li>
 <li>88
@@ -1103,8 +1358,11 @@ LDAP服务(轻量级目录访问协议)，在使用中需要用到TCP/UDP 389端
 主要用于共享文件夹或共享打印，存在较多漏洞，如MS08-067、MS17-010</li>
 <li>3268 Global Catalog(全局编录服务器)，如果需要使用SSL，需要用到3269端口，主要用于用户登录时，负责验证用户身份的域控制器需要通过防火墙，来向“全局编录”查询用户所隶属的通用组</li>
 </ul>
-<p>####### 权限提升</p>
-<p>1.EXP提权
+<h3 id="权限提升" class="heading-element"><span>权限提升</span>
+  <a href="#%e6%9d%83%e9%99%90%e6%8f%90%e5%8d%87" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1.EXP提权
 利用已公开EXP进行溢出提权可参照windows-kernel-exploits，可以配合Windows-Exploit-Suggeste进行辅助提权。</p>
 <p>2.利用AD特性提权
 如MS14-068、GPP等</p>
@@ -1114,11 +1372,11 @@ LDAP服务(轻量级目录访问协议)，在使用中需要用到TCP/UDP 389端
 当用户注销后，系统将会使主令牌切换为模拟令牌，不会将令牌清 除，只有在重启机器后才会清除。</p>
 <p>5.Bypass UAC
 Windows系统中Administrators组非SID为500的用户必须Bypass Uac才可以获得特权令牌，具体方法可以使用Windows自带程序进行Bypass，可以参考UACME项目。</p>
-<h6 id="内网横向渗透方法" class="heading-element"><span>0.0.0.10.2  内网横向渗透方法</span>
+<h2 id="内网横向渗透方法" class="heading-element"><span>内网横向渗透方法</span>
   <a href="#%e5%86%85%e7%bd%91%e6%a8%aa%e5%90%91%e6%b8%97%e9%80%8f%e6%96%b9%e6%b3%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>ipc$+计划任务</li>
 <li>PTH</li>
 <li>Wmi</li>
@@ -1128,8 +1386,11 @@ Windows系统中Administrators组非SID为500的用户必须Bypass Uac才可以�
 <li>ps1</li>
 </ul>
 <p>在无法抓取用户明文密码的情况下可以使用Hash注入登陆系统或登陆服务</p>
-<p>####### 内网渗透持久化</p>
-<p>1.利用活动目录</p>
+<h3 id="内网渗透持久化" class="heading-element"><span>内网渗透持久化</span>
+  <a href="#%e5%86%85%e7%bd%91%e6%b8%97%e9%80%8f%e6%8c%81%e4%b9%85%e5%8c%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1.利用活动目录</p>
 <ul>
 <li>Golden Ticket</li>
 <li>Silver Ticket</li>
@@ -1150,17 +1411,23 @@ Windows系统中Administrators组非SID为500的用户必须Bypass Uac才可以�
 <li>wmi事件</li>
 <li>COM劫持</li>
 </ul>
-<p>####### MITI</p>
-<p>1.Responder responder.py –A 分析模式</p>
+<h3 id="miti" class="heading-element"><span>MITI</span>
+  <a href="#miti" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1.Responder responder.py –A 分析模式</p>
 <p>2.Impacket Relay attacks Tools，该工具可以进行SMB Relay、NTLM Relay。</p>
 <p>3.smb relay ntlmv2 使用Impacket中的ntlmrelayx.py和Responder中的MultiRelay.py配合使用。在SMB签名关闭的情况下将net-ntlm Hash中继进行攻击，SMB签名默认在非Windows Server系统中关闭。</p>
-<p>####### 日志清理</p>
-<p>Windows EventLog、Application Log、Session、进程、物理存储中的二进制文件</p>
-<h6 id="内网渗透常用工具和方式" class="heading-element"><span>0.0.0.10.3  内网渗透常用工具和方式</span>
+<h3 id="日志清理" class="heading-element"><span>日志清理</span>
+  <a href="#%e6%97%a5%e5%bf%97%e6%b8%85%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Windows EventLog、Application Log、Session、进程、物理存储中的二进制文件</p>
+<h2 id="内网渗透常用工具和方式" class="heading-element"><span>内网渗透常用工具和方式</span>
   <a href="#%e5%86%85%e7%bd%91%e6%b8%97%e9%80%8f%e5%b8%b8%e7%94%a8%e5%b7%a5%e5%85%b7%e5%92%8c%e6%96%b9%e5%bc%8f" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>1.渗透框架</p>
+</h2><p>1.渗透框架</p>
 <ul>
 <li>Cobalt Strike</li>
 <li>Empire</li>

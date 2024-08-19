@@ -11,7 +11,7 @@
   <meta itemprop="name" content="PNG文件结构">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="143">
+  <meta itemprop="wordCount" content="135">
   <meta itemprop="keywords" content="MISC"><meta property="og:url" content="https://dongyu29.github.io/posts/misc/107/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="PNG文件结构">
@@ -36,7 +36,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/misc\/107\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "MISC","wordcount":  143 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "MISC","wordcount":  135 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/misc\/107\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -143,7 +143,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>PNG文件结构</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/misc/" class="post-category" title="Category - MISC"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> MISC</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="143 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 200 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>One minute</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/misc/" class="post-category" title="Category - MISC"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> MISC</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="135 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 200 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>One minute</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -153,31 +153,38 @@
   <ul>
     <li>
       <ul>
-        <li></li>
+        <li><a href="#1-特点">1. 特点</a></li>
+        <li><a href="#2-文件结构">2. 文件结构</a></li>
+        <li><a href="#3-数据块结构">3. 数据块结构</a></li>
+        <li><a href="#4-几种png格式">4. 几种PNG格式</a></li>
+        <li><a href="#5-与gif比较">5. 与GIF比较</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="前言" class="heading-element"><span>0.0.0.1  前言</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="前言" class="heading-element"><span>前言</span>
   <a href="#%e5%89%8d%e8%a8%80" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>只要是做图片的或者与图片相关的，那么图片的格式就是一个不可以绕过的问题，我们见过很多的图片格式，但是具体不同的图片格式是如何定义的，又具有什么特点，很多时候我们都没有深入研究过，下面我们就开始深入研究。</p>
 </blockquote>
-<h5 id="几种图片格式" class="heading-element"><span>0.0.0.2  几种图片格式</span>
+<h1 id="几种图片格式" class="heading-element"><span>几种图片格式</span>
   <a href="#%e5%87%a0%e7%a7%8d%e5%9b%be%e7%89%87%e6%a0%bc%e5%bc%8f" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>图片有很多的格式，包括<code>PNG</code>、<code>JPEG</code>、<code>JPG</code>、<code>BMP</code>等，下面我们就详细的说一下这几张图片的格式，并进行详细的对比。</p>
+</h1><p>图片有很多的格式，包括<code>PNG</code>、<code>JPEG</code>、<code>JPG</code>、<code>BMP</code>等，下面我们就详细的说一下这几张图片的格式，并进行详细的对比。</p>
 <hr>
-<h5 id="png" class="heading-element"><span>0.0.0.3  PNG</span>
+<h1 id="png" class="heading-element"><span>PNG</span>
   <a href="#png" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>便携式网络图形<code>（Portable Network Graphics）</code>是一种无损压缩的位图图形格式  。其设计目的是试图替代<code>GIF</code>和<code>TIFF</code>文件格式，同时增加一些GIF文件格式所不具备的特性。PNG的名称来源于“可移植网络图形格式<code>(Portable Network Graphic Format，PNG)</code>”，也有一个非官方解释<code>“PNG's Not GIF”</code>。PNG使用从<code>LZ77</code>派生的无损数据压缩算法，一般应用于JAVA程序、网页或S60程序中，原因是它压缩比高，生成文件体积小。</p>
-<p>####### 1. 特点</p>
-<p>PNG格式的图片具有如下特点：</p>
+</h1><p>便携式网络图形<code>（Portable Network Graphics）</code>是一种无损压缩的位图图形格式  。其设计目的是试图替代<code>GIF</code>和<code>TIFF</code>文件格式，同时增加一些GIF文件格式所不具备的特性。PNG的名称来源于“可移植网络图形格式<code>(Portable Network Graphic Format，PNG)</code>”，也有一个非官方解释<code>“PNG's Not GIF”</code>。PNG使用从<code>LZ77</code>派生的无损数据压缩算法，一般应用于JAVA程序、网页或S60程序中，原因是它压缩比高，生成文件体积小。</p>
+<h3 id="1-特点" class="heading-element"><span>1. 特点</span>
+  <a href="#1-%e7%89%b9%e7%82%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>PNG格式的图片具有如下特点：</p>
 <ul>
 <li>体积小：网络通讯中因受带宽制约，在保证图片清晰、逼真的前提下，网页中不可能大范围的使用文件较大的<code>bmp</code>格式文件。</li>
 <li>无损压缩：<code>PNG</code>文件采用<code>LZ77</code>算法的派生算法进行压缩，其结果是获得高的压缩比，不损失数据。它利用特殊的编码方法标记重复出现的数据，因而对图像的颜色没有影响，也不可能产生颜色的损失，这样就可以重复保存而不降低图像质量。</li>
@@ -193,8 +200,11 @@
 <li>使用<code>CRC</code>防止文件出错。</li>
 <li>最新的<code>PNG</code>标准允许在一个文件内存储多幅图像。</li>
 </ul>
-<p>####### 2. 文件结构</p>
-<p>PNG图像格式文件（或者称为数据流）由一个8字节的PNG文件署名<code>（PNG file signature）</code>域和按照特定结构组织的3个以上的数据块<code>（chunk）</code>组成。</p>
+<h3 id="2-文件结构" class="heading-element"><span>2. 文件结构</span>
+  <a href="#2-%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>PNG图像格式文件（或者称为数据流）由一个8字节的PNG文件署名<code>（PNG file signature）</code>域和按照特定结构组织的3个以上的数据块<code>（chunk）</code>组成。</p>
 <p><strong>文件署名域</strong></p>
 <p>8字节的PNG文件署名域用来识别该文件是不是PNG文件。该域的值是：</p>
 <ul>
@@ -216,8 +226,11 @@
 </ul>
 </li>
 </ul>
-<p>####### 3. 数据块结构</p>
-<p>PNG定义了两种类型的数据块，一种是称为关键数据块<code>（critical chunk）</code>，这是必需的数据块，另一种叫做辅助数据块<code>（ancillary chunks）</code>，这是可选的数据块。关键数据块定义了4个标准数据块，每个PNG文件都必须包含它们，PNG读写软件也都必须要支持这些数据块。虽然PNG文件规范没有要求PNG编译码器对可选数据块进行编码和译码，但规范提倡支持可选数据块。</p>
+<h3 id="3-数据块结构" class="heading-element"><span>3. 数据块结构</span>
+  <a href="#3-%e6%95%b0%e6%8d%ae%e5%9d%97%e7%bb%93%e6%9e%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>PNG定义了两种类型的数据块，一种是称为关键数据块<code>（critical chunk）</code>，这是必需的数据块，另一种叫做辅助数据块<code>（ancillary chunks）</code>，这是可选的数据块。关键数据块定义了4个标准数据块，每个PNG文件都必须包含它们，PNG读写软件也都必须要支持这些数据块。虽然PNG文件规范没有要求PNG编译码器对可选数据块进行编码和译码，但规范提倡支持可选数据块。</p>
 <p>数据块的4个域组成如下图所示。</p>
 <p><img loading="lazy" src="https:////upload-images.jianshu.io/upload_images/3691932-197719a7a05d7331.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/662/format/webp" alt="img" srcset="https:////upload-images.jianshu.io/upload_images/3691932-197719a7a05d7331.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/662/format/webp&amp;size=small, https:////upload-images.jianshu.io/upload_images/3691932-197719a7a05d7331.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/662/format/webp&amp;size=medium 1.5x, https:////upload-images.jianshu.io/upload_images/3691932-197719a7a05d7331.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/662/format/webp&amp;size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>下面我们就分析下这个结构。</p>
@@ -240,13 +253,19 @@
 <p><strong>辅助数据块</strong></p>
 <p>看下面这个数据结构图。</p>
 <p><img loading="lazy" src="https:////upload-images.jianshu.io/upload_images/3691932-7a8d9d86905e491e.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/662/format/webp" alt="img" srcset="https:////upload-images.jianshu.io/upload_images/3691932-7a8d9d86905e491e.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/662/format/webp&amp;size=small, https:////upload-images.jianshu.io/upload_images/3691932-7a8d9d86905e491e.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/662/format/webp&amp;size=medium 1.5x, https:////upload-images.jianshu.io/upload_images/3691932-7a8d9d86905e491e.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/662/format/webp&amp;size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### 4. 几种PNG格式</p>
-<p>PNG格式有8位、24位、32位三种形式，其中8位PNG支持两种不同的透明形式（索引透明和alpha透明），24位PNG不支持透明，32位PNG在24位基础上增加了8位透明通道，因此可展现256级透明程度。
+<h3 id="4-几种png格式" class="heading-element"><span>4. 几种PNG格式</span>
+  <a href="#4-%e5%87%a0%e7%a7%8dpng%e6%a0%bc%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>PNG格式有8位、24位、32位三种形式，其中8位PNG支持两种不同的透明形式（索引透明和alpha透明），24位PNG不支持透明，32位PNG在24位基础上增加了8位透明通道，因此可展现256级透明程度。
 PNG8和PNG24后面的数字则是代表这种PNG格式最多可以索引和存储的颜色值。”8″代表2的8次方也就是256色，而24则代表2的24次方大概有1600多万色。</p>
 <p>具体如下图所示。</p>
 <p><img loading="lazy" src="https:////upload-images.jianshu.io/upload_images/3691932-f70662382576e713.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/696/format/webp" alt="img" srcset="https:////upload-images.jianshu.io/upload_images/3691932-f70662382576e713.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/696/format/webp&amp;size=small, https:////upload-images.jianshu.io/upload_images/3691932-f70662382576e713.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/696/format/webp&amp;size=medium 1.5x, https:////upload-images.jianshu.io/upload_images/3691932-f70662382576e713.png?imageMogr2/auto-orient/strip%7cimageView2/2/w/696/format/webp&amp;size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### 5. 与GIF比较</p>
-<ul>
+<h3 id="5-与gif比较" class="heading-element"><span>5. 与GIF比较</span>
+  <a href="#5-%e4%b8%8egif%e6%af%94%e8%be%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>一般情况下将静态GIF图像无损转换为PNG后可以压缩率会略为提高（前提是同样采用8位索引模式）。</li>
 <li>PNG可提供更大颜色深度的支持，包括24位（8位3通道）和48位（16位3通道）真彩色。加入α通道后可进一步支持每像素64位的表示。</li>
 <li>超过8位色深的PNG图像转换为GIF时，图像质量会由于分色（颜色数减少）而下降。</li>

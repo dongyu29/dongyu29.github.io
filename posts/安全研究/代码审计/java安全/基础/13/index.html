@@ -11,7 +11,7 @@
   <meta itemprop="name" content="java反射">
   <meta itemprop="datePublished" content="2024-08-15T09:32:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:32:01+08:00">
-  <meta itemprop="wordCount" content="464">
+  <meta itemprop="wordCount" content="442">
   <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/13/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="java反射">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%9F%BA%E7%A1%80\/13\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  464 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  442 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%9F%BA%E7%A1%80\/13\/","datePublished": "2024-08-15T09:32:01+08:00","dateModified": "2024-08-15T09:32:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Java反射</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:32:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="464 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:32:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="442 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,9 +152,35 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#获取类">获取类</a>
       <ul>
-        <li></li>
+        <li><a href="#forname方法">forName()方法</a></li>
+        <li><a href="#class直接获取">.class直接获取</a></li>
+        <li><a href="#getclass方法">getClass()方法</a></li>
+        <li><a href="#getsystemclassloaderloadclass">getSystemClassLoader().loadClass()</a></li>
+      </ul>
+    </li>
+    <li><a href="#获取类方法">获取类方法</a>
+      <ul>
+        <li><a href="#getdeclaredmethods">getDeclaredMethods</a></li>
+        <li><a href="#getdeclaredmethod">getDeclaredMethod</a></li>
+        <li><a href="#getmethods">getMethods</a></li>
+        <li><a href="#getmethod">getMethod</a></li>
+      </ul>
+    </li>
+    <li><a href="#获取成员变量类属性">获取成员变量（类属性）</a>
+      <ul>
+        <li><a href="#getdeclaredfields">getDeclaredFields</a></li>
+        <li><a href="#getdeclaredfieldstring-name">getDeclaredField(String name)</a></li>
+        <li><a href="#getfields">getFields()</a></li>
+        <li><a href="#getfieldstring-name">getField(String name)</a></li>
+      </ul>
+    </li>
+    <li><a href="#获取构造函数constructor">获取构造函数Constructor</a></li>
+    <li><a href="#反射创建类对象">反射创建类对象</a>
+      <ul>
+        <li><a href="#newinstance">newInstance</a></li>
+        <li><a href="#invoke">invoke</a></li>
       </ul>
     </li>
   </ul>
@@ -177,11 +203,11 @@
  
 7，对对象进行对应的构造函数初始化。 
  
-8，将内存地址付给栈内存中的p变量。</code></pre><h5 id="反射应用" class="heading-element"><span>0.0.0.1  反射应用</span>
+8，将内存地址付给栈内存中的p变量。</code></pre><h1 id="反射应用" class="heading-element"><span>反射应用</span>
   <a href="#%e5%8f%8d%e5%b0%84%e5%ba%94%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>在正常情况下，除了系统类，如果我们想拿到一个类，需要先import才能使用，而使用forName就不需要，这样对于我们的攻击者来说就十分有利，我们可以加载任意类，而这正是反射的妙用，可以通过精妙的构造执行恶意的代码。获得类以后之后我们可以使用反射获取类里的属性、方法，也可以实例化类来调用方法。</p>
 </blockquote>
 <ul>
@@ -198,26 +224,35 @@
 <p>通过invoke调用除了同名函数以外的函数通过Class类创建对象，引入不能序列化的类</p>
 </li>
 </ul>
-<h6 id="获取类" class="heading-element"><span>0.0.0.1.1  获取类</span>
+<h2 id="获取类" class="heading-element"><span>获取类</span>
   <a href="#%e8%8e%b7%e5%8f%96%e7%b1%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### forName()方法</p>
-<p>==只需要知道类名==，在加载JDBC的时候会采用</p>
+</h2><h3 id="forname方法" class="heading-element"><span>forName()方法</span>
+  <a href="#forname%e6%96%b9%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>==只需要知道类名==，在加载JDBC的时候会采用</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">test1</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#a6be9d">&#34;java.lang.Runtime&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">name</span>);
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>####### .class直接获取</p>
-<p>使用<code>.class</code>去获取对象</p>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 id="class直接获取" class="heading-element"><span>.class直接获取</span>
+  <a href="#class%e7%9b%b4%e6%8e%a5%e8%8e%b7%e5%8f%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>使用<code>.class</code>去获取对象</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">test1</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Runtime</span>.<span style="color:#58a1dd">class</span>;
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">name</span>);
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>####### getClass()方法</p>
-<p><code>obj.getClass()</code> 如果==上下⽂中存在某个类的实例 obj== ，那么我们可以直接通过 obj.getClass() 来获取它的类</p>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 id="getclass方法" class="heading-element"><span>getClass()方法</span>
+  <a href="#getclass%e6%96%b9%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><code>obj.getClass()</code> 如果==上下⽂中存在某个类的实例 obj== ，那么我们可以直接通过 obj.getClass() 来获取它的类</p>
 <p>这个方法返回的是Class，第一个字母是大写的这种，Class是class的抽象，class是Class的实例</p>
 <p>getClass是一个final方法返回Class的泛型</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">test1</span> {
@@ -226,19 +261,25 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">rt</span>.<span style="color:#58a1dd">getClass</span>();
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">name</span>);
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>####### getSystemClassLoader().loadClass()</p>
-<p>这个方法和forName类似，只要有类名就可以了，但是区别在于，==forName的静态JVM会装载类，并执行static()中的代码==</p>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 id="getsystemclassloaderloadclass" class="heading-element"><span>getSystemClassLoader().loadClass()</span>
+  <a href="#getsystemclassloaderloadclass" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>这个方法和forName类似，只要有类名就可以了，但是区别在于，==forName的静态JVM会装载类，并执行static()中的代码==</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">getSystemClassLoader</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ClassLoader</span>.<span style="color:#58a1dd">getSystemClassLoader</span>().<span style="color:#58a1dd">loadClass</span>(<span style="color:#a6be9d">&#34;java.lang.Runtime&#34;</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">name</span>);
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h6 id="获取类方法" class="heading-element"><span>0.0.0.1.2  获取类方法</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h2 id="获取类方法" class="heading-element"><span>获取类方法</span>
   <a href="#%e8%8e%b7%e5%8f%96%e7%b1%bb%e6%96%b9%e6%b3%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### getDeclaredMethods</p>
-<p>返回类或接口声明的所有方法，包括public、protected、private和默认方法，但是==不包括继承的方法==</p>
+</h2><h3 id="getdeclaredmethods" class="heading-element"><span>getDeclaredMethods</span>
+  <a href="#getdeclaredmethods" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>返回类或接口声明的所有方法，包括public、protected、private和默认方法，但是==不包括继承的方法==</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Method</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">getDeclaredMethods</span> {
@@ -249,8 +290,11 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#ff636f">for</span>(<span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">x</span>:<span style="color:#58a1dd">m</span>)
 </span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">x</span>);
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>####### getDeclaredMethod</p>
-<p>获取特定的方法，第一个参数是方法名，第二个参数是该方法的参数对应的class对象，例如这里Runtime的exec方法参数为一个String，所以这里的第二个参数是String.class</p>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 id="getdeclaredmethod" class="heading-element"><span>getDeclaredMethod</span>
+  <a href="#getdeclaredmethod" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>获取特定的方法，第一个参数是方法名，第二个参数是该方法的参数对应的class对象，例如这里Runtime的exec方法参数为一个String，所以这里的第二个参数是String.class</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Method</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">getDeclaredMethod</span> {
@@ -259,48 +303,72 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">name</span>.<span style="color:#58a1dd">getDeclaredMethod</span>(<span style="color:#a6be9d">&#34;exec&#34;</span>,<span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">class</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">m</span>);
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>####### getMethods</p>
-<p>返回某个类==所有的public方法，包括继承类的public方法==</p>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 id="getmethods" class="heading-element"><span>getMethods</span>
+  <a href="#getmethods" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>返回某个类==所有的public方法，包括继承类的public方法==</p>
 <p>getMethod的作用是通过反射获取一个类的某个特定的公有方法，在调用 getMethod 的时候，我们要注意传给他你需要获取的函数的参数类型列表。</p>
-<p>####### getMethod</p>
-<p>参数同理getDeclaredMethod</p>
-<h6 id="获取成员变量类属性" class="heading-element"><span>0.0.0.1.3  获取成员变量（类属性）</span>
+<h3 id="getmethod" class="heading-element"><span>getMethod</span>
+  <a href="#getmethod" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>参数同理getDeclaredMethod</p>
+<h2 id="获取成员变量类属性" class="heading-element"><span>获取成员变量（类属性）</span>
   <a href="#%e8%8e%b7%e5%8f%96%e6%88%90%e5%91%98%e5%8f%98%e9%87%8f%e7%b1%bb%e5%b1%9e%e6%80%a7" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>同理Method的那几个方法</p>
+</h2><p>同理Method的那几个方法</p>
 <p>获取属性以后可以用set、setAccessiable方法对属性进行修改</p>
-<p>####### getDeclaredFields</p>
-<p>获取类的成员的所有变量数组，但是不包括父类的</p>
-<p>####### getDeclaredField(String name)</p>
-<p>获取特定的，参数是想要的方法的名称</p>
-<p>####### getFields()</p>
-<p>同理，只能获得public的，但是包括了父类的</p>
-<p>####### getField(String name)</p>
-<p>同理，参数是想要的方法的名称</p>
-<h6 id="获取构造函数constructor" class="heading-element"><span>0.0.0.1.4  获取构造函数Constructor</span>
+<h3 id="getdeclaredfields" class="heading-element"><span>getDeclaredFields</span>
+  <a href="#getdeclaredfields" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>获取类的成员的所有变量数组，但是不包括父类的</p>
+<h3 id="getdeclaredfieldstring-name" class="heading-element"><span>getDeclaredField(String name)</span>
+  <a href="#getdeclaredfieldstring-name" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>获取特定的，参数是想要的方法的名称</p>
+<h3 id="getfields" class="heading-element"><span>getFields()</span>
+  <a href="#getfields" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>同理，只能获得public的，但是包括了父类的</p>
+<h3 id="getfieldstring-name" class="heading-element"><span>getField(String name)</span>
+  <a href="#getfieldstring-name" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>同理，参数是想要的方法的名称</p>
+<h2 id="获取构造函数constructor" class="heading-element"><span>获取构造函数Constructor</span>
   <a href="#%e8%8e%b7%e5%8f%96%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0constructor" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">Constructor</span><span style="color:#ff636f">&lt;?&gt;[]</span> <span style="color:#58a1dd">getConstructors</span>() ：<span style="color:#58a1dd">只返回public构造函数</span>
+</h2><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">Constructor</span><span style="color:#ff636f">&lt;?&gt;[]</span> <span style="color:#58a1dd">getConstructors</span>() ：<span style="color:#58a1dd">只返回public构造函数</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">Constructor</span><span style="color:#ff636f">&lt;?&gt;[]</span> <span style="color:#58a1dd">getDeclaredConstructors</span>() ：<span style="color:#58a1dd">返回所有构造函数</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">Constructor</span><span style="color:#ff636f">&lt;&gt;</span> <span style="color:#58a1dd">getConstructor</span>(<span style="color:#58a1dd">类</span><span style="color:#ff636f">&lt;?&gt;</span>... <span style="color:#58a1dd">parameterTypes</span>) : <span style="color:#58a1dd">匹配和参数配型相符的public构造函数</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">Constructor</span><span style="color:#ff636f">&lt;&gt;</span> <span style="color:#58a1dd">getDeclaredConstructor</span>(<span style="color:#58a1dd">类</span><span style="color:#ff636f">&lt;?&gt;</span>... <span style="color:#58a1dd">parameterTypes</span>) ： <span style="color:#58a1dd">匹配和参数配型相符的构造函数</span></span></span></code></pre></div><p>后面两个方法的参数是对于方法的参数的类型的class对象，和Method的那个类似，例如<code>String.class</code></p>
-<h6 id="反射创建类对象" class="heading-element"><span>0.0.0.1.5  反射创建类对象</span>
+<h2 id="反射创建类对象" class="heading-element"><span>反射创建类对象</span>
   <a href="#%e5%8f%8d%e5%b0%84%e5%88%9b%e5%bb%ba%e7%b1%bb%e5%af%b9%e8%b1%a1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### newInstance</p>
-<p>可以通过反射来生成实例化对象，一般我们使用Class对象的<code>newInstance()</code>方法来进行创建类对象</p>
+</h2><h3 id="newinstance" class="heading-element"><span>newInstance</span>
+  <a href="#newinstance" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>可以通过反射来生成实例化对象，一般我们使用Class对象的<code>newInstance()</code>方法来进行创建类对象</p>
 <p>创建的方法就是：只需要通过forname方法获取到的class对象中进行newInstance方法创建即可</p>
 <p>class.newInstance()的作用就是==调用这个类的无参构造函数==，有时候使用newInstance不成功可能是因为类没有无参构造函数或者类构造函数是私有的，想要调用有参构造函数的话可以先去获取它的构造函数</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">Class</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#a6be9d">&#34;com.reflect.MethodTest&#34;</span>); <span style="color:#828b96;font-style:italic">// 创建Class对象</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">m1</span> <span style="color:#ff636f">=</span>  <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">newInstance</span>(); <span style="color:#ff636f">//</span> <span style="color:#58a1dd">创建类对象</span></span></span></code></pre></div><p>ps:<code>Class.newInstance()</code> 已被弃用，建议使用 <code>c.getDeclaredConstructor().newInstance()</code> 代替。</p>
-<p>####### invoke</p>
-<p>invoke方法位于java.lang.reflect.Method类中，用于执行某个的对象的目标方法,一般会和getMethod方法配合进行调用。</p>
+<h3 id="invoke" class="heading-element"><span>invoke</span>
+  <a href="#invoke" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>invoke方法位于java.lang.reflect.Method类中，用于执行某个的对象的目标方法,一般会和getMethod方法配合进行调用。</p>
 <p>使用用法：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">obj</span>, <span style="color:#58a1dd">Object</span>... <span style="color:#58a1dd">args</span>)</span></span></code></pre></div><p>第一个参数为类的实例，第二个参数为相应函数中的参数</p>
 <p>obj：从中调用底层方法的对象，必须是实例化对象 args： 用于方法的调用，是一个object的数组，参数有可能是多个</p>
@@ -329,11 +397,11 @@
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>简单来说就是这样  <code>方法.invoke(类或类对象)</code></p>
 <p>==先forName拿到Class，再newInstance获取类对象，再getMethod获取方法，然后调用==</p>
-<h5 id="runtime的rce例子访问限制突破" class="heading-element"><span>0.0.0.2  Runtime的rce例子（访问限制突破）</span>
+<h1 id="runtime的rce例子访问限制突破" class="heading-element"><span>Runtime的rce例子（访问限制突破）</span>
   <a href="#runtime%e7%9a%84rce%e4%be%8b%e5%ad%90%e8%ae%bf%e9%97%ae%e9%99%90%e5%88%b6%e7%aa%81%e7%a0%b4" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>Runtime类里面有一个exec方法，可以执行命令</p>
+</h1><p>Runtime类里面有一个exec方法，可以执行命令</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.InvocationTargetException</span>;
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Method</span>;
 </span></span><span style="display:flex;"><span>
@@ -382,11 +450,11 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">getMethod</span>(<span style="color:#a6be9d">&#34;exec&#34;</span>,<span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">class</span>);
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">m</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">o</span>,<span style="color:#a6be9d">&#34;/System/Applications/Calculator.app/Contents/MacOS/Calculator&#34;</span>);
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h5 id="总结" class="heading-element"><span>0.0.0.3  总结</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h1 id="总结" class="heading-element"><span>总结</span>
   <a href="#%e6%80%bb%e7%bb%93" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>反射中常用的几个重要方法：</p>
+</h1><p>反射中常用的几个重要方法：</p>
 <ul>
 <li>获取类的⽅法： forName</li>
 <li>实例化类对象的⽅法： newInstance  (调用无参构造函数)</li>

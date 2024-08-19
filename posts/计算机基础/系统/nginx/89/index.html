@@ -11,7 +11,7 @@
   <meta itemprop="name" content="nginx学习">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="1646">
+  <meta itemprop="wordCount" content="1606">
   <meta itemprop="keywords" content="计算机基础,操作系统"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/nginx/89/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="nginx学习">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E7%B3%BB%E7%BB%9F\/nginx\/89\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 操作系统","wordcount":  1646 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 操作系统","wordcount":  1606 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E7%B3%BB%E7%BB%9F\/nginx\/89\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Nginx学习</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1646 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1700 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>8 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1606 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1700 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>8 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,27 +152,86 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#what-is-nginx">What is Nginx?</a></li>
+    <li><a href="#nginx特点">Nginx特点</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#安装">安装</a>
       <ul>
-        <li></li>
+        <li><a href="#windows安装">windows安装</a></li>
+        <li><a href="#linux安装">Linux安装</a></li>
+      </ul>
+    </li>
+    <li><a href="#使用">使用</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#虚拟主机">虚拟主机</a></li>
+    <li><a href="#静态站点">静态站点</a></li>
+    <li><a href="#反向代理">反向代理</a>
+      <ul>
+        <li><a href="#七层反向代理">七层反向代理</a></li>
+        <li><a href="#四层反向代理">四层反向代理</a></li>
+      </ul>
+    </li>
+    <li><a href="#负载均衡">负载均衡</a>
+      <ul>
+        <li><a href="#upstream模块">upstream模块</a></li>
+        <li><a href="#负载均衡算法">负载均衡算法</a></li>
+        <li><a href="#对上游服务器返回异常时的处理"><strong>「对上游服务器返回异常时的处理」</strong></a></li>
+        <li><a href="#配置样例">配置样例</a></li>
+      </ul>
+    </li>
+    <li><a href="#https加密传输">HTTPS加密传输</a></li>
+    <li><a href="#文件服务器">文件服务器</a></li>
+    <li><a href="#限速">限速</a></li>
+    <li><a href="#限流">限流</a>
+      <ul>
+        <li><a href="#limit_conn">limit_conn</a></li>
+        <li><a href="#limit_req">limit_req</a></li>
+      </ul>
+    </li>
+    <li><a href="#黑白名单">黑白名单</a>
+      <ul>
+        <li><a href="#access">access</a></li>
+        <li><a href="#规则示例">规则示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#请求拦截">请求拦截</a>
+      <ul>
+        <li><a href="#auth_request">auth_request</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#全局配置main段">全局配置main段</a></li>
+    <li><a href="#events段">events段</a></li>
+    <li><a href="#http段">http段</a></li>
+    <li><a href="#nginx变量分类">Nginx变量分类</a></li>
+    <li><a href="#时间空间单位">时间空间单位</a>
+      <ul>
+        <li><a href="#时间单位">时间单位</a></li>
+        <li><a href="#空间单位">空间单位</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="概述" class="heading-element"><span>0.0.0.1  概述</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="概述" class="heading-element"><span>概述</span>
   <a href="#%e6%a6%82%e8%bf%b0" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="what-is-nginx" class="heading-element"><span>0.0.0.1.1  What is Nginx?</span>
+</h1><h2 id="what-is-nginx" class="heading-element"><span>What is Nginx?</span>
   <a href="#what-is-nginx" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>Nginx（发音同“engine x”）是一个高性能的==反向代理==和 ==Web 服务器软件==，因其系统资源消耗低、运行稳定且具有高性能的==并发==处理能力等特性，Nginx 在互联网企业中得到广泛应用。</p>
-<h6 id="nginx特点" class="heading-element"><span>0.0.0.1.2  Nginx特点</span>
+</h2><p>Nginx（发音同“engine x”）是一个高性能的==反向代理==和 ==Web 服务器软件==，因其系统资源消耗低、运行稳定且具有高性能的==并发==处理能力等特性，Nginx 在互联网企业中得到广泛应用。</p>
+<h2 id="nginx特点" class="heading-element"><span>Nginx特点</span>
   <a href="#nginx%e7%89%b9%e7%82%b9" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>
 <p>高性能、高并发</p>
 </li>
@@ -201,21 +260,27 @@
 </table>
 </li>
 </ul>
-<h5 id="安装使用" class="heading-element"><span>0.0.0.2  安装&amp;使用</span>
+<h1 id="安装使用" class="heading-element"><span>安装&amp;使用</span>
   <a href="#%e5%ae%89%e8%a3%85%e4%bd%bf%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="安装" class="heading-element"><span>0.0.0.2.1  安装</span>
+</h1><h2 id="安装" class="heading-element"><span>安装</span>
   <a href="#%e5%ae%89%e8%a3%85" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### windows安装</p>
-<ul>
+</h2><h3 id="windows安装" class="heading-element"><span>windows安装</span>
+  <a href="#windows%e5%ae%89%e8%a3%85" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>下载官方稳定版：<code>https://nginx.org/download/nginx-1.20.0.zip</code></li>
 <li>解压到本地，直接运行<code>nginx.exe</code>即可</li>
 </ul>
-<p>####### Linux安装</p>
-<ul>
+<h3 id="linux安装" class="heading-element"><span>Linux安装</span>
+  <a href="#linux%e5%ae%89%e8%a3%85" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>rpm包安装</li>
 </ul>
 <blockquote>
@@ -230,11 +295,11 @@
 <pre tabindex="0"><code>$ firewall-cmd --zone=public --add-port=80/tcp --permanent
 $ firewall-cmd --reload</code></pre><p><img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPErt72fnibGRVX43TrVJyhpECgyNfE603BrDaxboIVmVKwUYES5sZOicw/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片" srcset="https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPErt72fnibGRVX43TrVJyhpECgyNfE603BrDaxboIVmVKwUYES5sZOicw/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=small, https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPErt72fnibGRVX43TrVJyhpECgyNfE603BrDaxboIVmVKwUYES5sZOicw/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=medium 1.5x, https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPErt72fnibGRVX43TrVJyhpECgyNfE603BrDaxboIVmVKwUYES5sZOicw/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=large 2x" data-title="图片" class="suffix-invalid suffix-invalid__small suffix-invalid__large" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>rpm包中已包含了大量常用模块，推荐使用rpm包方式安装，简单快速</p>
-<h6 id="使用" class="heading-element"><span>0.0.0.2.2  使用</span>
+<h2 id="使用" class="heading-element"><span>使用</span>
   <a href="#%e4%bd%bf%e7%94%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><table>
+</h2><table>
 <thead>
 <tr>
 <th style="text-align:center">命令参数</th>
@@ -268,40 +333,40 @@ $ firewall-cmd --reload</code></pre><p><img loading="lazy" src="https://mmbiz.qp
 </tr>
 </tbody>
 </table>
-<h5 id="实用场景" class="heading-element"><span>0.0.0.3  实用场景</span>
+<h1 id="实用场景" class="heading-element"><span>实用场景</span>
   <a href="#%e5%ae%9e%e7%94%a8%e5%9c%ba%e6%99%af" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="虚拟主机" class="heading-element"><span>0.0.0.3.1  虚拟主机</span>
+</h1><h2 id="虚拟主机" class="heading-element"><span>虚拟主机</span>
   <a href="#%e8%99%9a%e6%8b%9f%e4%b8%bb%e6%9c%ba" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>server {
-##### 1: 基于多ip的虚拟主机：listen监听不同网卡的ip，端口可相同
+</h2><pre tabindex="0"><code>server {
+    # 1: 基于多ip的虚拟主机：listen监听不同网卡的ip，端口可相同
     listen 8000;
     server_name 172.17.1.1;
     
     listen 8000;
     server_name 172.17.1.2;
     
-##### 2: 基于多端口的虚拟主机：listen监听不同端口
+    # 2: 基于多端口的虚拟主机：listen监听不同端口
     listen 8001;
     server_name localhost;
     
     listen 8002;
     server_name localhost;
     
-#####3: 基于域名的虚拟主机：端口可相同，server_name为不同域名
+    #3: 基于域名的虚拟主机：端口可相同，server_name为不同域名
     listen 8003;
     server_name www.test1.com;
     
     listen 8003;
     server_name www.test2.com;
-}</code></pre><h6 id="静态站点" class="heading-element"><span>0.0.0.3.2  静态站点</span>
+}</code></pre><h2 id="静态站点" class="heading-element"><span>静态站点</span>
   <a href="#%e9%9d%99%e6%80%81%e7%ab%99%e7%82%b9" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>为了加快网站解析速度，可以将动态资源交给后端服务器，纯前端的静态页面放在系统目录下，交给Nginx来解析。</p>
+</h2><p>为了加快网站解析速度，可以将动态资源交给后端服务器，纯前端的静态页面放在系统目录下，交给Nginx来解析。</p>
 <p><img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPVWUKMlicwhOKXHHlpERyibfTwsQfSd6M7qhjvLia6U1WtHGqscvhpLXTA/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片" srcset="https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPVWUKMlicwhOKXHHlpERyibfTwsQfSd6M7qhjvLia6U1WtHGqscvhpLXTA/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=small, https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPVWUKMlicwhOKXHHlpERyibfTwsQfSd6M7qhjvLia6U1WtHGqscvhpLXTA/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=medium 1.5x, https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPVWUKMlicwhOKXHHlpERyibfTwsQfSd6M7qhjvLia6U1WtHGqscvhpLXTA/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=large 2x" data-title="图片" class="suffix-invalid suffix-invalid__small suffix-invalid__large" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <pre tabindex="0"><code>server {
     listen 80;
@@ -311,14 +376,17 @@ $ firewall-cmd --reload</code></pre><p><img loading="lazy" src="https://mmbiz.qp
           root   /opt/nginx/html;
           index  index.html index.htm;
       }
-}</code></pre><h6 id="反向代理" class="heading-element"><span>0.0.0.3.3  反向代理</span>
+}</code></pre><h2 id="反向代理" class="heading-element"><span>反向代理</span>
   <a href="#%e5%8f%8d%e5%90%91%e4%bb%a3%e7%90%86" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>反向代理是用户客户端访问代理服务器后，被反向代理服务器按照一定的规则从一个或多个被代理服务器中获取响应资源并返回给客户端的代理模式，客户端只知道代理服务器的 IP，并不知道后端服务器的 IP，原因是代理服务器隐藏了被代理服务器的信息。</p>
+</h2><p>反向代理是用户客户端访问代理服务器后，被反向代理服务器按照一定的规则从一个或多个被代理服务器中获取响应资源并返回给客户端的代理模式，客户端只知道代理服务器的 IP，并不知道后端服务器的 IP，原因是代理服务器隐藏了被代理服务器的信息。</p>
 <p><img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/nSKPL4wv6DysLmCfrVvreng4p0vDSSfP9uqryypC5lR7ic8Jf70uvKKB6P4vTQEibM96VWwXJqKUP4t4o1VwTWnA/640?wx_fmt=jpeg&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片" srcset="https://mmbiz.qpic.cn/mmbiz_jpg/nSKPL4wv6DysLmCfrVvreng4p0vDSSfP9uqryypC5lR7ic8Jf70uvKKB6P4vTQEibM96VWwXJqKUP4t4o1VwTWnA/640?wx_fmt=jpeg&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=small, https://mmbiz.qpic.cn/mmbiz_jpg/nSKPL4wv6DysLmCfrVvreng4p0vDSSfP9uqryypC5lR7ic8Jf70uvKKB6P4vTQEibM96VWwXJqKUP4t4o1VwTWnA/640?wx_fmt=jpeg&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=medium 1.5x, https://mmbiz.qpic.cn/mmbiz_jpg/nSKPL4wv6DysLmCfrVvreng4p0vDSSfP9uqryypC5lR7ic8Jf70uvKKB6P4vTQEibM96VWwXJqKUP4t4o1VwTWnA/640?wx_fmt=jpeg&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=large 2x" data-title="图片" class="suffix-invalid suffix-invalid__small suffix-invalid__large" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### 七层反向代理</p>
-<p>在配置文件nginx.conf中的http段中，写入如下格式的配置，即可将本地8088端口代理到百度：</p>
+<h3 id="七层反向代理" class="heading-element"><span>七层反向代理</span>
+  <a href="#%e4%b8%83%e5%b1%82%e5%8f%8d%e5%90%91%e4%bb%a3%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在配置文件nginx.conf中的http段中，写入如下格式的配置，即可将本地8088端口代理到百度：</p>
 <pre tabindex="0"><code>server {
     listen       8088;
     server_name  localhost;
@@ -326,25 +394,31 @@ $ firewall-cmd --reload</code></pre><p><img loading="lazy" src="https://mmbiz.qp
     location / {
         proxy_pass   https://www.baidu.com;
     }
-}</code></pre><p>####### 四层反向代理</p>
-<p>Nginx除了可以代理HTTP七层流量，还可以代理 TCP/UDP 四层流量，核心模块 stream 需要在编译配置时增加“&ndash;with-stream”参数进行编译（rpm包已包含）。</p>
+}</code></pre><h3 id="四层反向代理" class="heading-element"><span>四层反向代理</span>
+  <a href="#%e5%9b%9b%e5%b1%82%e5%8f%8d%e5%90%91%e4%bb%a3%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Nginx除了可以代理HTTP七层流量，还可以代理 TCP/UDP 四层流量，核心模块 stream 需要在编译配置时增加“&ndash;with-stream”参数进行编译（rpm包已包含）。</p>
 <p>配置文件如下（需写在main段中）：</p>
 <pre tabindex="0"><code>stream {
     server {
         listen 3306;
-##### 访问本机的3306，就被转发到了远程的3306
+        # 访问本机的3306，就被转发到了远程的3306
         proxy_pass 172.17.0.1:3306;
     }
-}</code></pre><h6 id="负载均衡" class="heading-element"><span>0.0.0.3.4  负载均衡</span>
+}</code></pre><h2 id="负载均衡" class="heading-element"><span>负载均衡</span>
   <a href="#%e8%b4%9f%e8%bd%bd%e5%9d%87%e8%a1%a1" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>当出现高并发大流量的业务场景时，单台后端服务器已无法支撑业务正常运行，需要将请求流量按照一定规则分发到多台服务节点上，即使某个节点宕机，系统依然能够对外正常提供服务，以此来提高系统的性能和稳定性。</p>
+</h2><p>当出现高并发大流量的业务场景时，单台后端服务器已无法支撑业务正常运行，需要将请求流量按照一定规则分发到多台服务节点上，即使某个节点宕机，系统依然能够对外正常提供服务，以此来提高系统的性能和稳定性。</p>
 <p><img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfP0p2WiczKjQJ2IkkEyGHtM0YA0iaialWmndiaYKic4EV9ia6TMvcpkFtNph2g/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片" srcset="https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfP0p2WiczKjQJ2IkkEyGHtM0YA0iaialWmndiaYKic4EV9ia6TMvcpkFtNph2g/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=small, https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfP0p2WiczKjQJ2IkkEyGHtM0YA0iaialWmndiaYKic4EV9ia6TMvcpkFtNph2g/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=medium 1.5x, https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfP0p2WiczKjQJ2IkkEyGHtM0YA0iaialWmndiaYKic4EV9ia6TMvcpkFtNph2g/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=large 2x" data-title="图片" class="suffix-invalid suffix-invalid__small suffix-invalid__large" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>支持协议图</p>
 <p><img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPm7IPl96ZVH0jBlHia4cQdBianqPQxnRQ3VUocUuatY0VuQNygATT8hPw/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片" srcset="https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPm7IPl96ZVH0jBlHia4cQdBianqPQxnRQ3VUocUuatY0VuQNygATT8hPw/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=small, https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPm7IPl96ZVH0jBlHia4cQdBianqPQxnRQ3VUocUuatY0VuQNygATT8hPw/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=medium 1.5x, https://mmbiz.qpic.cn/mmbiz_png/nSKPL4wv6DysLmCfrVvreng4p0vDSSfPm7IPl96ZVH0jBlHia4cQdBianqPQxnRQ3VUocUuatY0VuQNygATT8hPw/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1&amp;size=large 2x" data-title="图片" class="suffix-invalid suffix-invalid__small suffix-invalid__large" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>####### upstream模块</p>
-<ul>
+<h3 id="upstream模块" class="heading-element"><span>upstream模块</span>
+  <a href="#upstream%e6%a8%a1%e5%9d%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>定义上游服务器</li>
 </ul>
 <table>
@@ -401,8 +475,11 @@ $ firewall-cmd --reload</code></pre><p><img loading="lazy" src="https://mmbiz.qp
 </tr>
 </tbody>
 </table>
-<p>######## server可选参数</p>
-<table>
+<h4 id="server可选参数" class="heading-element"><span>server可选参数</span>
+  <a href="#server%e5%8f%af%e9%80%89%e5%8f%82%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><table>
 <thead>
 <tr>
 <th style="text-align:left">参数</th>
@@ -436,8 +513,11 @@ $ firewall-cmd --reload</code></pre><p><img loading="lazy" src="https://mmbiz.qp
 </tr>
 </tbody>
 </table>
-<p>####### 负载均衡算法</p>
-<ul>
+<h3 id="负载均衡算法" class="heading-element"><span>负载均衡算法</span>
+  <a href="#%e8%b4%9f%e8%bd%bd%e5%9d%87%e8%a1%a1%e7%ae%97%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>
 <p>轮询（默认）</p>
 </li>
@@ -448,7 +528,7 @@ $ firewall-cmd --reload</code></pre><p><img loading="lazy" src="https://mmbiz.qp
 </li>
 </ul>
 <pre tabindex="0"><code>upstream backend {
-##### 默认所有服务器权重为 1
+    # 默认所有服务器权重为 1
     server 192.168.1.1:8080;
     server 192.168.1.2:8080;
     server 192.168.1.3:8080;
@@ -465,7 +545,7 @@ $ firewall-cmd --reload</code></pre><p><img loading="lazy" src="https://mmbiz.qp
 <pre tabindex="0"><code>upstream backend {
     server 192.168.1.1:8080 weight=3;
     server 192.168.1.2:8080 weight=2;
-##### default weight=1
+    # default weight=1
     server 192.168.1.3:8080;  
 }</code></pre><ul>
 <li>
@@ -521,8 +601,11 @@ $ firewall-cmd --reload</code></pre><p><img loading="lazy" src="https://mmbiz.qp
     server 192.168.1.1:8080;
     server 192.168.1.2:8080;
     server 192.168.1.3:8080; 
-}</code></pre><p>####### <strong>「对上游服务器返回异常时的处理」</strong></p>
-<blockquote>
+}</code></pre><h3 id="对上游服务器返回异常时的处理" class="heading-element"><span><strong>「对上游服务器返回异常时的处理」</strong></span>
+  <a href="#%e5%af%b9%e4%b8%8a%e6%b8%b8%e6%9c%8d%e5%8a%a1%e5%99%a8%e8%bf%94%e5%9b%9e%e5%bc%82%e5%b8%b8%e6%97%b6%e7%9a%84%e5%a4%84%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><blockquote>
 <p>❝</p>
 <p><strong>「遇到这些情况下执行失败转发」</strong></p>
 <p>语法：  <strong>「proxy_next_upstream error」</strong> | timeout | invalid_header | http_500 | http_502 | http_503 | http_504 | http_403 | http_404 | http_429 | non_idempotent| off</p>
@@ -574,8 +657,11 @@ $ firewall-cmd --reload</code></pre><p><img loading="lazy" src="https://mmbiz.qp
 </tr>
 </tbody>
 </table>
-<p>####### 配置样例</p>
-<pre tabindex="0"><code>upstream backend {
+<h3 id="配置样例" class="heading-element"><span>配置样例</span>
+  <a href="#%e9%85%8d%e7%bd%ae%e6%a0%b7%e4%be%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><pre tabindex="0"><code>upstream backend {
     zone upstream_backend 64k;
     
     server 127.0.0.1:8080 weight=2 max_conns=1000 fail_timeout=10s max_fails=5;
@@ -589,29 +675,29 @@ $ firewall-cmd --reload</code></pre><p><img loading="lazy" src="https://mmbiz.qp
 server {
     location /test {
         proxy_pass http://backend/test;
-##### 如果不配置proxy_next_upstream，当遇到上游返回http错误状态码时，nginx会直接返回给客户端
+        # 如果不配置proxy_next_upstream，当遇到上游返回http错误状态码时，nginx会直接返回给客户端
         proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504 http_403 http_404 http_429; 
     }
-}</code></pre><h6 id="https加密传输" class="heading-element"><span>0.0.0.3.5  HTTPS加密传输</span>
+}</code></pre><h2 id="https加密传输" class="heading-element"><span>HTTPS加密传输</span>
   <a href="#https%e5%8a%a0%e5%af%86%e4%bc%a0%e8%be%93" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>HTTPS 通过加密通道保护客户端与服务端之间的数据传输，已成为当前网站部署的必选配置。在部署有 Nginx 代理集群的 HTTPS 站点，通常会把 SSL 证书部署在 Nginx 的服务器上，然后把请求代理到后端的上游服务器。这种部署方式由 Nginx 服务器负责 SSL 请求的运算，相对减轻了后端上游服务器的 CPU 运算量。</p>
+</h2><p>HTTPS 通过加密通道保护客户端与服务端之间的数据传输，已成为当前网站部署的必选配置。在部署有 Nginx 代理集群的 HTTPS 站点，通常会把 SSL 证书部署在 Nginx 的服务器上，然后把请求代理到后端的上游服务器。这种部署方式由 Nginx 服务器负责 SSL 请求的运算，相对减轻了后端上游服务器的 CPU 运算量。</p>
 <ul>
 <li>生成自签名HTTPS证书</li>
 </ul>
-<pre tabindex="0"><code>##### 配置https签名证书
-##### 1、创建https证书存放目录：
+<pre tabindex="0"><code>  # 配置https签名证书
+  # 1、创建https证书存放目录：
   cd /usr/local/nginx/conf/
   mkdir ssl
-##### 2、创建私钥：
+  # 2、创建私钥：
   openssl genrsa -des3 -out https.key 1024
-##### 3、创建签名请求证书：
+  # 3、创建签名请求证书：
   openssl req -new -key https.key -out https.csr
-##### 4、在加载SSL支持的Nginx并使用上述私钥时除去必须的口令：
+  # 4、在加载SSL支持的Nginx并使用上述私钥时除去必须的口令：
   cp https.key https.key.org
   openssl rsa -in https.key.org -out https.key
-##### 5、最后标记证书使用上述私钥和CSR和有效期：
+  # 5、最后标记证书使用上述私钥和CSR和有效期：
   openssl x509 -req -days 365 -in https.csr -signkey https.key -out https.crt</code></pre><ul>
 <li>server配置</li>
 </ul>
@@ -619,14 +705,14 @@ server {
     listen       443 ssl;
     server_name  localhost;
 
-##### 证书部分
+    # 证书部分
     ssl_certificate     /usr/local/nginx/conf/ssl/https.crt; #RSA证书
     ssl_certificate_key  /usr/local/nginx/conf/ssl/https.key; #RSA密钥
     
-##### TLS 握手优化
-##### 会话缓存的存储大小为1MB
+    # TLS 握手优化
+    # 会话缓存的存储大小为1MB
     ssl_session_cache    shared:SSL:1m;
-##### 会话缓存的超时时间为5分钟
+    # 会话缓存的超时时间为5分钟
     ssl_session_timeout  5m;
     keepalive_timeout    75s;
     keepalive_requests   100;
@@ -634,11 +720,11 @@ server {
         root   html;
         index  index.html index.htm;
     }
-}</code></pre><h6 id="文件服务器" class="heading-element"><span>0.0.0.3.6  文件服务器</span>
+}</code></pre><h2 id="文件服务器" class="heading-element"><span>文件服务器</span>
   <a href="#%e6%96%87%e4%bb%b6%e6%9c%8d%e5%8a%a1%e5%99%a8" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>要归档一些数据或资料，那么文件服务器必不可少。使用 Nginx 可以非常快速便捷的搭建一个简易的文件服务。</p>
+</h2><p>要归档一些数据或资料，那么文件服务器必不可少。使用 Nginx 可以非常快速便捷的搭建一个简易的文件服务。</p>
 <ul>
 <li>效果</li>
 </ul>
@@ -650,40 +736,40 @@ server {
     listen 8004;
     server_name localhost;
     
-##### 正常显示中文，windows服务器下中文目录无法下钻，目前无解
+    # 正常显示中文，windows服务器下中文目录无法下钻，目前无解
     charset gbk,utf-8;
 
-##### 打开autoindex功能，以/结尾的请求
+    # 打开autoindex功能，以/结尾的请求
     autoindex on;
     
-##### 显示文件的大小，
-##### on：以字节显示
-##### off：人性化显示，文件过大会显示为mb或gb
+    # 显示文件的大小，
+    # on：以字节显示
+    # off：人性化显示，文件过大会显示为mb或gb
     autoindex_exact_size off;
     
-##### 以哪种格式返回：html | xml | json | jsonp
-##### 默认值：autoindex_format html
+    # 以哪种格式返回：html | xml | json | jsonp
+    # 默认值：autoindex_format html
     autoindex_format html;
     
-##### 显示时间格式
-##### on: 12-Jul-2019 10:11（当前时区）
-##### off: 12-Jul-2019 02:11(0时区，GMT)
+    # 显示时间格式
+    # on: 12-Jul-2019 10:11（当前时区）
+    # off: 12-Jul-2019 02:11(0时区，GMT)
     autoindex_localtime on;
 
     location / {
         root /data/files/;
-##### 如果a.html文件存在，则会返回a.html内容，否则才会返回目录内容
+        # 如果a.html文件存在，则会返回a.html内容，否则才会返回目录内容
         index a.html;
     } 
-}</code></pre><h6 id="限速" class="heading-element"><span>0.0.0.3.7  限速</span>
+}</code></pre><h2 id="限速" class="heading-element"><span>限速</span>
   <a href="#%e9%99%90%e9%80%9f" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>location /rate {
-##### 定义响应数据的传输速度，默认bytes/s
+</h2><pre tabindex="0"><code>location /rate {
+ # 定义响应数据的传输速度，默认bytes/s
     limit_rate 20;
 
-##### 这些是Nginx处理请求时相关变量，加大返回数据量更好地看到限速效果
+    # 这些是Nginx处理请求时相关变量，加大返回数据量更好地看到限速效果
  return 200 &#39;request_time  $request_time
 request_id   $request_id
 server_name   $server_name
@@ -692,17 +778,23 @@ document_root  $document_root
 realpath_root  $realpath_root
 request_completion $request_completion
 &#39;;
-}</code></pre><h6 id="限流" class="heading-element"><span>0.0.0.3.8  限流</span>
+}</code></pre><h2 id="限流" class="heading-element"><span>限流</span>
   <a href="#%e9%99%90%e6%b5%81" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### limit_conn</p>
-<ul>
+</h2><h3 id="limit_conn" class="heading-element"><span>limit_conn</span>
+  <a href="#limit_conn" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>用于限制客户端并发连接数</li>
 <li>使用共享内存，对所有的worker子进程生效（需要保存客户端连接数）</li>
 </ul>
-<p>####### limit_req</p>
-<ul>
+<h3 id="limit_req" class="heading-element"><span>limit_req</span>
+  <a href="#limit_req" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>
 <p>用于限制客户端处理请求的**「平均速率」**</p>
 </li>
@@ -723,16 +815,16 @@ request_completion $request_completion
     include       mime.types;
     default_type  application/json;
     
-##### limit_conn_zone key zone=name:size
-##### key：用于定义客户端的唯一标识来限速，如remote_addr
-##### name：任意名称
-##### size：共享内存大小空间，m为单位
-##### binary_remote_addr 使用4个字节空间，高效;remote_addr 使用7-15个字节空间
+    # limit_conn_zone key zone=name:size
+    # key：用于定义客户端的唯一标识来限速，如remote_addr
+    # name：任意名称
+    # size：共享内存大小空间，m为单位
+    # binary_remote_addr 使用4个字节空间，高效;remote_addr 使用7-15个字节空间
     limit_conn_zone $binary_remote_addr zone=limit_addr:10m;
     
-##### limit_req_zone key zone=name:size rate=rate;
-##### 上下文：http
-##### rate:表示允许相同标识的客户端的访问频次，12r/m的，即限制每5秒访问一次，每5秒才处理一个请求。
+    # limit_req_zone key zone=name:size rate=rate;
+    # 上下文：http
+    # rate:表示允许相同标识的客户端的访问频次，12r/m的，即限制每5秒访问一次，每5秒才处理一个请求。
     limit_req_zone  $binary_remote_addr zone=limit_req:15m rate=12r/m;
 
     server {
@@ -743,50 +835,53 @@ request_completion $request_completion
            root   html;
            index  index.html index.htm;
             
-##### 触发限速后，返回状态码,默认503
-##### 上下文：http, server, location
+            # 触发限速后，返回状态码,默认503
+            # 上下文：http, server, location
             limit_conn_status 503;
             
-##### 当触发限速后，错误日志出记录一条日志， 这里用于定义日志等级
-##### info|notice|warn|error
-##### 上下文：http, server, location
-##### 默认值：error
+            # 当触发限速后，错误日志出记录一条日志， 这里用于定义日志等级
+            # info|notice|warn|error
+            # 上下文：http, server, location
+            # 默认值：error
             limit_conn_log_level warn;
             
-##### limit_conn zone number;
-##### zone：用limit_conn_zone中定义的zone名称
-##### number：以zone为标识的客户端被允许的同时最大连接数
+            # limit_conn zone number;
+            # zone：用limit_conn_zone中定义的zone名称
+            # number：以zone为标识的客户端被允许的同时最大连接数
             limit_conn limit_addr 2;
             
-##### 定义响应数据的传输速度，bytes/s
-##### 本指令属于ngx_http_core_module，不属于ngx_http_limit_conn_module
+            # 定义响应数据的传输速度，bytes/s
+            # 本指令属于ngx_http_core_module，不属于ngx_http_limit_conn_module
             limit_rate 50;
 
-##### limit_req_status code（http的状态码） 
-##### 默认值：503
-##### 上下文：http, server, location
+            # limit_req_status code（http的状态码） 
+            # 默认值：503
+            # 上下文：http, server, location
             limit_req_status 504;
             
-##### 触发限速后，日志记录的等级 
-##### info|notice|warn|error
-##### 默认值：error
-##### 上下文：http, server, location
+            # 触发限速后，日志记录的等级 
+            # info|notice|warn|error
+            # 默认值：error
+            # 上下文：http, server, location
             limit_req_log_level notice;
             
-##### limit_req zone=name [burst=number] [nodelay | delay=number];
-##### burst：桶大小,设置一个大小为x的缓冲区,当有大量请求（爆发）过来时，超过了访问频次限制的请求可以先放到这个缓冲区内等待，但是这个等待区里的位置只有5个，超过的请求会直接报503的错误然后返回。
-##### nodelay：如果设置，会在瞬时提供处理(burst + rate)个请求的能力，请求超过（burst + rate）的时候就会直接返回503，永远不存在请求需要等待的情况。
-##### 上下文：http, server, location
-##### limit_req zone=limit_req burst=7 nodelay;
+            # limit_req zone=name [burst=number] [nodelay | delay=number];
+            # burst：桶大小,设置一个大小为x的缓冲区,当有大量请求（爆发）过来时，超过了访问频次限制的请求可以先放到这个缓冲区内等待，但是这个等待区里的位置只有5个，超过的请求会直接报503的错误然后返回。
+            # nodelay：如果设置，会在瞬时提供处理(burst + rate)个请求的能力，请求超过（burst + rate）的时候就会直接返回503，永远不存在请求需要等待的情况。
+            # 上下文：http, server, location
+            # limit_req zone=limit_req burst=7 nodelay;
             limit_req zone=limit_req;
         }
     }
-}</code></pre><h6 id="黑白名单" class="heading-element"><span>0.0.0.3.9  黑白名单</span>
+}</code></pre><h2 id="黑白名单" class="heading-element"><span>黑白名单</span>
   <a href="#%e9%bb%91%e7%99%bd%e5%90%8d%e5%8d%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### access</p>
-<ul>
+</h2><h3 id="access" class="heading-element"><span>access</span>
+  <a href="#access" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>限制特定IP或网段访问</li>
 <li>allow</li>
 <li>deny</li>
@@ -795,40 +890,46 @@ request_completion $request_completion
     listen       80;
     server_name  localhost;
     location / {
-##### allow address | CIDR | UNIX | all
-##### 默认值
-##### 上下文：http, server, location, limit_except
+        # allow address | CIDR | UNIX | all
+        # 默认值
+        # 上下文：http, server, location, limit_except
         allow 192.168.0.1/24;
         
-##### deny address | CIDR | UNIX | all
-##### 默认值
-##### 上下文：http, server, location, limit_except
+        # deny address | CIDR | UNIX | all
+        # 默认值
+        # 上下文：http, server, location, limit_except
         deny all;  
     }
-}</code></pre><p>####### 规则示例</p>
-<pre tabindex="0"><code>location / {
-##### 规则从上到下
+}</code></pre><h3 id="规则示例" class="heading-element"><span>规则示例</span>
+  <a href="#%e8%a7%84%e5%88%99%e7%a4%ba%e4%be%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><pre tabindex="0"><code>location / {
+    # 规则从上到下
     
-##### 拒绝
+    # 拒绝
     deny   192.168.1.1;
     
-##### 放行192.168.1.0网段，子网掩码24位（255.255.255.0），但是除了192.168.1.1
+    # 放行192.168.1.0网段，子网掩码24位（255.255.255.0），但是除了192.168.1.1
     allow  192.168.1.0/24;
     
-##### 放行10.1.1.0网段，子网掩码16位（255.255.0.0）
+    # 放行10.1.1.0网段，子网掩码16位（255.255.0.0）
     allow  10.1.1.0/16;
     
-##### 放行ipv6
+    # 放行ipv6
     allow  2001:0db8::/32;
     
-##### 除了上面放行的，其他全部拒绝
+    # 除了上面放行的，其他全部拒绝
     deny   all;
-}</code></pre><h6 id="请求拦截" class="heading-element"><span>0.0.0.3.10  请求拦截</span>
+}</code></pre><h2 id="请求拦截" class="heading-element"><span>请求拦截</span>
   <a href="#%e8%af%b7%e6%b1%82%e6%8b%a6%e6%88%aa" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### auth_request</p>
-<ul>
+</h2><h3 id="auth_request" class="heading-element"><span>auth_request</span>
+  <a href="#auth_request" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>
 <p>基于子请求收到的HTTP响应码做访问控制</p>
 </li>
@@ -839,9 +940,9 @@ request_completion $request_completion
 </li>
 </ul>
 <pre tabindex="0"><code>location /private {
-##### 默认值：off
-##### 上下文：http, server, location;
-##### 鉴权成功对会返回后面实际内容，鉴权失败会返回鉴权服务的返回内容
+    # 默认值：off
+    # 上下文：http, server, location;
+    # 鉴权成功对会返回后面实际内容，鉴权失败会返回鉴权服务的返回内容
     auth_request /auth;
     ...
 }
@@ -851,89 +952,89 @@ location /auth {
     proxy_set_header Content-Length &#34;&#34;;
     proxy_set_header X-Original-URI $request_uri;
     
-}</code></pre><h5 id="配置变量详解" class="heading-element"><span>0.0.0.4  配置&amp;变量详解</span>
+}</code></pre><h1 id="配置变量详解" class="heading-element"><span>配置&amp;变量详解</span>
   <a href="#%e9%85%8d%e7%bd%ae%e5%8f%98%e9%87%8f%e8%af%a6%e8%a7%a3" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="全局配置main段" class="heading-element"><span>0.0.0.4.1  全局配置main段</span>
+</h1><h2 id="全局配置main段" class="heading-element"><span>全局配置main段</span>
   <a href="#%e5%85%a8%e5%b1%80%e9%85%8d%e7%bd%aemain%e6%ae%b5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>核心参数（其他参数大部分情况下用不到）
+</h2><pre tabindex="0"><code>核心参数（其他参数大部分情况下用不到）
 
-##### user USERNAME [GROUP]
-##### 解释：指定运行nginx的worker子进程的属主和属组，其中属组可以不指定
+# user USERNAME [GROUP]
+# 解释：指定运行nginx的worker子进程的属主和属组，其中属组可以不指定
 user  nginx;
 
-##### worker_processes NUMBER | auto
-##### 解释：指定nginx启动的worker子进程数量
-##### 【*auto：自动设置为物理CPU核心数】
+# worker_processes NUMBER | auto
+# 解释：指定nginx启动的worker子进程数量
+# 【*auto：自动设置为物理CPU核心数】
 worker_processes  auto;
 
-##### pid DIR
-##### 解释：指定运行nginx的master主进程的pid文件存放路径
+# pid DIR
+# 解释：指定运行nginx的master主进程的pid文件存放路径
 pid /opt/nginx/logs/nginx.pid;
 
-##### worker_rlimit_nofile NUMBER
-##### 解释：指定worker子进程可以打开的最大文件句柄数
-##### 【系统最大打开65535，每个子进程打开数乘子进程数，实际也不会超过65535】
-##### 这个值需要调大
+# worker_rlimit_nofile NUMBER
+# 解释：指定worker子进程可以打开的最大文件句柄数
+# 【系统最大打开65535，每个子进程打开数乘子进程数，实际也不会超过65535】
+# 这个值需要调大
 worker_rlimit_nofile 20480;
 
-##### worker_rlimit_core SIZE
-##### 指定worker子进程异常终止后的core文件，用于记录分析问题
+# worker_rlimit_core SIZE
+# 指定worker子进程异常终止后的core文件，用于记录分析问题
 worker_rlimit_core 50M;
 working_directory /opt/nginx/tmp;#【必须对子进程用户赋写权限】
 
-##### 解释：将每个worker子进程与CPU物理核心绑定
-##### 【master负责调度，worker负责处理请求】
-##### 【假设CPU有4个核心，某一时刻worker1获取到了CPU1的工作调度时间片，时间片过后worker1从CPU1上面撤下来，CPU1去处理其他事件，下一时刻可能是CPU2、CPU3的时间片调度到了worker1上面，那么worker1就会在其他CPU上面工作，进程与CPU的调度切换是有损耗的，worker1如果绑定了CPU1，worker1将永远等待CPU1的调度，充分利用CPU缓存】
-##### 【【主要作用：将每个worker子进程与特定CPU物理核心绑定，优势在于：避免同一个worker子进程在不同的CPU核心上切换，缓存失效，降低性能；其并不能真正避免进程切换（进程切换是CPU工作特性）】】
-##### -- worker_cpu_affinity 00000001 00000010 00000100 00001000 00010000 00100000 01000000 10000000;# 8核心，8个worker
-##### -- worker_cpu_affinity 01 10 01 10;# 2核心，4个worker
+# 解释：将每个worker子进程与CPU物理核心绑定
+# 【master负责调度，worker负责处理请求】
+# 【假设CPU有4个核心，某一时刻worker1获取到了CPU1的工作调度时间片，时间片过后worker1从CPU1上面撤下来，CPU1去处理其他事件，下一时刻可能是CPU2、CPU3的时间片调度到了worker1上面，那么worker1就会在其他CPU上面工作，进程与CPU的调度切换是有损耗的，worker1如果绑定了CPU1，worker1将永远等待CPU1的调度，充分利用CPU缓存】
+# 【【主要作用：将每个worker子进程与特定CPU物理核心绑定，优势在于：避免同一个worker子进程在不同的CPU核心上切换，缓存失效，降低性能；其并不能真正避免进程切换（进程切换是CPU工作特性）】】
+# -- worker_cpu_affinity 00000001 00000010 00000100 00001000 00010000 00100000 01000000 10000000;# 8核心，8个worker
+# -- worker_cpu_affinity 01 10 01 10;# 2核心，4个worker
 worker_cpu_affinity 0001 0010 0100 1000;# 4核心，4个worker
 
-##### 解释：指定worker子进程的nice值，以调整运行nginx的优先级，通常设定为“负值”，以优先调用nginx
-##### 【Linux默认进程的优先级值是120，值越小越优先；nice设定范围为-20到+19】
-##### 【对Linux来说，优先级值则是100到139】
+# 解释：指定worker子进程的nice值，以调整运行nginx的优先级，通常设定为“负值”，以优先调用nginx
+# 【Linux默认进程的优先级值是120，值越小越优先；nice设定范围为-20到+19】
+# 【对Linux来说，优先级值则是100到139】
 worker_priority -20;
 
-##### 指定worker子进程优雅退出时的超时时间，不管5秒内是否处理完，都强制退出
+# 指定worker子进程优雅退出时的超时时间，不管5秒内是否处理完，都强制退出
 worker_shutdown_timeout 5s;
 
-##### worker子进程内部使用的计时器精度，调整时间间隔越大，系统调用越少，有利于性能提升；反之，系统调用越多，性能下降
-##### 比如某些计时的操作，worker需要去获取内核时间，频繁跟内核打交道会降低性能
+# worker子进程内部使用的计时器精度，调整时间间隔越大，系统调用越少，有利于性能提升；反之，系统调用越多，性能下降
+# 比如某些计时的操作，worker需要去获取内核时间，频繁跟内核打交道会降低性能
 timer_resolution 100ms;
 
-##### daemon on | off
-##### 设定nginx的运行方式，前台还是后台，前台用户调试，后台用于生产
+# daemon on | off
+# 设定nginx的运行方式，前台还是后台，前台用户调试，后台用于生产
 daemon on;
 
-##### 负载均衡互斥锁文件存放路径
-lock_file logs/nginx.lock;</code></pre><h6 id="events段" class="heading-element"><span>0.0.0.4.2  events段</span>
+# 负载均衡互斥锁文件存放路径
+lock_file logs/nginx.lock;</code></pre><h2 id="events段" class="heading-element"><span>events段</span>
   <a href="#events%e6%ae%b5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>events {
-##### Nginx使用何种事件驱动模型,一般不指定这个参数
-##### use epoll;
+</h2><pre tabindex="0"><code>events {
+    # Nginx使用何种事件驱动模型,一般不指定这个参数
+    # use epoll;
     
-##### worker子进程能够处理的最大并发连接数，多核情况最大其实达不到65535，
+    # worker子进程能够处理的最大并发连接数，多核情况最大其实达不到65535，
     worker_connections  65535;
     
-##### 是否打开负载均衡互斥锁，默认off（当master接收到请求时，会给每个worker发送消息去唤醒，状态为on时，则会有一个负载均衡锁，master会轮流发给每一个）
+    # 是否打开负载均衡互斥锁，默认off（当master接收到请求时，会给每个worker发送消息去唤醒，状态为on时，则会有一个负载均衡锁，master会轮流发给每一个）
     accept_mutex on;
     
-##### 新连接分配给worker子进程的超时时间，默认500ms，超时后会转给下一个worker处理请求
+    # 新连接分配给worker子进程的超时时间，默认500ms，超时后会转给下一个worker处理请求
     accept_mutex_delay 100ms;
     
-##### worker子进程可以接收的新连接个数(这个参数对性能影响不太大)
+    # worker子进程可以接收的新连接个数(这个参数对性能影响不太大)
     multi_accept on;
-}</code></pre><h6 id="http段" class="heading-element"><span>0.0.0.4.3  http段</span>
+}</code></pre><h2 id="http段" class="heading-element"><span>http段</span>
   <a href="#http%e6%ae%b5" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><ul>
+</h2><ul>
 <li>server段</li>
 </ul>
 <pre tabindex="0"><code>server {
@@ -941,32 +1042,32 @@ lock_file logs/nginx.lock;</code></pre><h6 id="events段" class="heading-element
     server_name www.test.com; 
     location /picture {
      root /opt/nginx/html/picture;
-##### 客户端请求 www.test.com/picture/1.jpg；
-##### 对应磁盘映射路径为：/opt/nginx/html/picture/picture/1.jpg
+        # 客户端请求 www.test.com/picture/1.jpg；
+        # 对应磁盘映射路径为：/opt/nginx/html/picture/picture/1.jpg
         
  }
  location /picture {
      alias /opt/nginx/html/picture/;
-##### 客户端请求 www.test.com/picture/1.jpg；
-##### 对应磁盘映射路径为：/opt/nginx/html/picture/1.jpg
-##### 【末尾一定要加/】
+        # 客户端请求 www.test.com/picture/1.jpg；
+        # 对应磁盘映射路径为：/opt/nginx/html/picture/1.jpg
+        # 【末尾一定要加/】
  }
 }</code></pre><ul>
 <li>server_name的匹配规则</li>
 </ul>
-<pre tabindex="0"><code>##### 精确匹配，优先级最高，1
+<pre tabindex="0"><code># 精确匹配，优先级最高，1
 server_name www.test.com;
 
-##### 左通配，优先级2
+# 左通配，优先级2
 server_name *.test.com;
 
-##### 右通配，优先级3
+# 右通配，优先级3
 server_name www.test.*;
 
-##### 正则通配，优先级最低，4
+# 正则通配，优先级最低，4
 server_name ~^w\.test\..*$;
 
-##### 多个
+# 多个
 server_name www.test.com *.test.com www.test.* ~^w\.test\..*$;</code></pre><ul>
 <li>location段</li>
 </ul>
@@ -1018,7 +1119,7 @@ server_name www.test.com *.test.com www.test.* ~^w\.test\..*$;</code></pre><ul>
 </tr>
 </tbody>
 </table>
-<pre tabindex="0"><code>##### 测试样例
+<pre tabindex="0"><code># 测试样例
 location ~ /test/8005/t/$ {
   return 200 &#39;first regular expressions match!&#39;;
 }
@@ -1084,10 +1185,10 @@ location = /test/8005/t {
 </tbody>
 </table>
 <pre tabindex="0"><code>location /status {
-##### 监控模块
+ # 监控模块
     stub_status;
 }
-##### ------页面结果------
+# ------页面结果------
 Active connections: 2 
 server accepts handled requests
  16 16 26 
@@ -1183,16 +1284,16 @@ Reading: 0 Writing: 1 Waiting: 1 </code></pre><table>
 </ul>
 <pre tabindex="0"><code>location / {
     
-##### 上下文：server, location, if
-##### return code [text];
-##### text：响应体内容（如果code是200）
-##### return 200 &#34;return 200 HTTP Code&#34;;
-##### return code URL;
-##### URL：重定向
-##### return 302 /test;
-##### return URL;
-##### URL:直接跟URL的话必须是http/https开头的完整路径
-##### text：响应体内容
+    # 上下文：server, location, if
+    # return code [text];
+    # text：响应体内容（如果code是200）
+    # return 200 &#34;return 200 HTTP Code&#34;;
+    # return code URL;
+    # URL：重定向
+    # return 302 /test;
+    # return URL;
+    # URL:直接跟URL的话必须是http/https开头的完整路径
+    # text：响应体内容
     return http://localhost:8000/test;
 }
 
@@ -1202,31 +1303,31 @@ location /test {
 
 location /search {
     
-##### rewrite regex replacement [flag]
-##### 上下文：server, location, if
-##### flag: 
-#####     last: 重写后的url发起新请求，再次进入server段，重试location中的匹配
-#####     break: 直接使用重写后的url，不再匹配其他location中的语句
-#####     redirect: 返回302临时重定向
-#####     permanent: 返回301永久重定向
+    # rewrite regex replacement [flag]
+    # 上下文：server, location, if
+    # flag: 
+    #     last: 重写后的url发起新请求，再次进入server段，重试location中的匹配
+    #     break: 直接使用重写后的url，不再匹配其他location中的语句
+    #     redirect: 返回302临时重定向
+    #     permanent: 返回301永久重定向
     rewrite /(.*) https://www.baidu.com permanent;
 }
 
 location /test1 {
-##### 继续匹配location，
+    # 继续匹配location，
     rewrite /images/(.*) /test2/$1 last;
     return 200 &#34;return 200 in /test1&#34;;
 }
 
 location /test2 {
-##### 不会再匹配，直接找test3下面的文件
+    # 不会再匹配，直接找test3下面的文件
     rewrite /pics/(.*) /test3/$1 break;
     return 200 &#34;return 200 in /test2&#34;;
 }
 
 location /test3 {
-##### 请求：/test3/index.html,
-##### 结果：直接返回&#34;return 200 in /test3&#34;，不会再去找index.html文件
+    # 请求：/test3/index.html,
+    # 结果：直接返回&#34;return 200 in /test3&#34;，不会再去找index.html文件
     return 200 &#34;return 200 in /test3&#34;;
 }
 
@@ -1240,162 +1341,165 @@ location /test5 {
     if ( $uri = &#34;/images/&#34; ) {
         rewrite (.*) /test2/ break;
     }
-##### 执行了上面rewrite后，这里的return还会执行，通常不会联合一起写
+    # 执行了上面rewrite后，这里的return还会执行，通常不会联合一起写
     return 200 &#34;test5 if failed\n&#34;;
-}</code></pre><h6 id="nginx变量分类" class="heading-element"><span>0.0.0.4.4  Nginx变量分类</span>
+}</code></pre><h2 id="nginx变量分类" class="heading-element"><span>Nginx变量分类</span>
   <a href="#nginx%e5%8f%98%e9%87%8f%e5%88%86%e7%b1%bb" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><pre tabindex="0"><code>1、TCP连接相关变量
+</h2><pre tabindex="0"><code>1、TCP连接相关变量
       
-#####客户端地址，例如192.168.1.1
+ #客户端地址，例如192.168.1.1
  remote_addr     
  
-#####客户端端口，例如58473
+ #客户端端口，例如58473
  remote_port     
  
-#####客户端地址的整型格式
+ #客户端地址的整型格式
  binary_remote_addr   
  
-#####已处理连接，是一个递增的序号
+ #已处理连接，是一个递增的序号
  connection     
  
-#####当前连接上执行的请求数，对于keepalive连接有意义
+ #当前连接上执行的请求数，对于keepalive连接有意义
  connection_request   
  
-#####如果使用proxy_protocol协议，则返回原始用户的地址，否则为空
+ #如果使用proxy_protocol协议，则返回原始用户的地址，否则为空
  proxy_protocol_addr   
  
-#####如果使用proxy_protocol协议，则返回原始用户的端口，否则为空
+ #如果使用proxy_protocol协议，则返回原始用户的端口，否则为空
  proxy_protocol_port   
  
-#####服务器地址，例如192.168.184.240
+ #服务器地址，例如192.168.184.240
  server_addr     
  
-#####服务器端口,例如80
+ #服务器端口,例如80
  server_port     
  
-#####服务端协议，例如HTTP/1.1
+ #服务端协议，例如HTTP/1.1
  server_protocol  
                              
                                   
 2、HTTP请求相关变量             
    
-#####请求包体头部长度
+ #请求包体头部长度
  conten_length    
  
-#####请求包体类型
+ #请求包体类型
  content_type    
  
-#####URL中某个参数
+ #URL中某个参数
  arg_参数名     
  
-#####所有URL参数
+ #所有URL参数
  args      
  
-#####URL中有参数，则返回?；否则返回空
+ #URL中有参数，则返回?；否则返回空
  is_args      
  
-#####与args完全相同
+ #与args完全相同
  query_string    
  
-#####请求的URL，不包含参数
+ #请求的URL，不包含参数
  uri       
  
-#####请求的URL，包含参数
+ #请求的URL，包含参数
  request_uri     
  
-#####协议名，http或者https
+ #协议名，http或者https
  scheme      
  
-#####请求的方法，GET、HEAD、POST等
+ #请求的方法，GET、HEAD、POST等
  request_method    
  
-#####所有请求内容的大小，包含请求行，头部，请求体
+ #所有请求内容的大小，包含请求行，头部，请求体
  request_length    
  
-#####由HTTP Basic Authentication协议传入的用户名
+ #由HTTP Basic Authentication协议传入的用户名
  remote_user     
  
-#####客户端请求主体信息的临时文件名
+ #客户端请求主体信息的临时文件名
  request_body_file   
  
-#####包含请求的主要信息，在使用proxy_pass或fastcgi_pass指令的location中比较有意义
+ #包含请求的主要信息，在使用proxy_pass或fastcgi_pass指令的location中比较有意义
  request_body 
 
-#####先看请求行，再看请求头，最后找server_name
+ #先看请求行，再看请求头，最后找server_name
  host
 
-#####用户浏览器标识
+ #用户浏览器标识
  http_user_agent
 
-#####从哪些链接过来的请求
+ #从哪些链接过来的请求
  http_referer
 
-#####经过一层代表服务器，添加对应代理服务器的信息
+ #经过一层代表服务器，添加对应代理服务器的信息
  http_via
 
-#####获取用户真实IP
+ #获取用户真实IP
  http_x_forwarded_for
 
-#####用户cookie
+ #用户cookie
  http_cookie
 
 
                                   
 3、Nginx处理请求时相关变量      
                                   
-#####请求处理到现在所耗费的时间，单位为秒，例如0.03代表30毫秒
+ #请求处理到现在所耗费的时间，单位为秒，例如0.03代表30毫秒
  request_time    
  
-#####请求处理完成，则返回OK，否则为空
+ #请求处理完成，则返回OK，否则为空
  request_completion   
  
-#####16进制显示的请求id，随机生成的
+ #16进制显示的请求id，随机生成的
  request_id     
  
-#####匹配上请求的server_name值
+ #匹配上请求的server_name值
  server_name     
  
-#####若开启https，则值为on,否则为空
+ #若开启https，则值为on,否则为空
  https      
  
-#####待访问文件的完整路径
+ #待访问文件的完整路径
  request_filename   
  
-#####由URI和root/alias规则生成的文件夹路径
+ #由URI和root/alias规则生成的文件夹路径
  document_root    
  
-#####将document_root中的软链接换成真实路径
+ #将document_root中的软链接换成真实路径
  realpath_root    
  
-#####返回响应时的速度上限值
+ #返回响应时的速度上限值
  limit_rate     
                                   
 4、Nginx返回响应时相关变量      
    
-#####响应体中真实内容的大小 
+ #响应体中真实内容的大小 
  body_bytes_sent    
  
-#####全部响应体大小
+ #全部响应体大小
  body_sent     
  
-#####HTTP返回状态码
+ #HTTP返回状态码
  status      
    
   
 5、系统变量
 
-#####nginx系统版本
+ #nginx系统版本
  nginx_version
 
-#####服务器时间
- time_local</code></pre><h6 id="时间空间单位" class="heading-element"><span>0.0.0.4.5  时间空间单位</span>
+ #服务器时间
+ time_local</code></pre><h2 id="时间空间单位" class="heading-element"><span>时间空间单位</span>
   <a href="#%e6%97%b6%e9%97%b4%e7%a9%ba%e9%97%b4%e5%8d%95%e4%bd%8d" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 时间单位</p>
-<ul>
+</h2><h3 id="时间单位" class="heading-element"><span>时间单位</span>
+  <a href="#%e6%97%b6%e9%97%b4%e5%8d%95%e4%bd%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>ms：毫秒</li>
 <li>s：秒</li>
 <li>m：分钟</li>
@@ -1405,17 +1509,20 @@ location /test5 {
 <li>M：月</li>
 <li>y：年</li>
 </ul>
-<p>####### 空间单位</p>
-<ul>
+<h3 id="空间单位" class="heading-element"><span>空间单位</span>
+  <a href="#%e7%a9%ba%e9%97%b4%e5%8d%95%e4%bd%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>k/K：KB</li>
 <li>m/M：MB</li>
 <li>g/G：GB</li>
 </ul>
-<h5 id="http状态码" class="heading-element"><span>0.0.0.5  HTTP状态码</span>
+<h1 id="http状态码" class="heading-element"><span>HTTP状态码</span>
   <a href="#http%e7%8a%b6%e6%80%81%e7%a0%81" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><table>
+</h1><table>
 <thead>
 <tr>
 <th style="text-align:left">分类</th>

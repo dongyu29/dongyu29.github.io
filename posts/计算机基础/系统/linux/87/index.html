@@ -11,7 +11,7 @@
   <meta itemprop="name" content="linux-shell编程">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="838">
+  <meta itemprop="wordCount" content="817">
   <meta itemprop="keywords" content="计算机基础,操作系统"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/87/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="linux-shell编程">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E7%B3%BB%E7%BB%9F\/linux\/87\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 操作系统","wordcount":  838 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 操作系统","wordcount":  817 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E7%B3%BB%E7%BB%9F\/linux\/87\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Linux-Shell编程</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="838 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 900 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="817 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 900 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,18 +152,43 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#shebang">shebang</a></li>
+    <li><a href="#执行">执行</a></li>
+    <li><a href="#shell-变量">Shell 变量</a>
       <ul>
-        <li></li>
+        <li><a href="#定义变量">定义变量</a></li>
+        <li><a href="#使用变量">使用变量</a></li>
+        <li><a href="#变量类型">变量类型</a></li>
+        <li><a href="#shell-字符串">Shell 字符串</a></li>
+        <li><a href="#shell-数组">Shell 数组</a></li>
+        <li><a href="#多行注释">多行注释</a></li>
+      </ul>
+    </li>
+    <li><a href="#shell-传递参数">Shell 传递参数</a>
+      <ul>
+        <li><a href="#默认参数变量默认值">默认参数(变量默认值)</a></li>
+      </ul>
+    </li>
+    <li><a href="#shell-基本运算符">Shell 基本运算符</a>
+      <ul>
+        <li><a href="#算术运算符">算术运算符</a></li>
+        <li><a href="#关系运算符">关系运算符</a></li>
+        <li><a href="#布尔运算符">布尔运算符</a></li>
+        <li><a href="#逻辑运算符">逻辑运算符</a></li>
+      </ul>
+    </li>
+    <li><a href="#字符串运算符">字符串运算符</a>
+      <ul>
+        <li><a href="#文件测试运算符">文件测试运算符</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="认识shell" class="heading-element"><span>0.0.0.1  认识shell</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="认识shell" class="heading-element"><span>认识shell</span>
   <a href="#%e8%ae%a4%e8%af%86shell" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>shell  英文  贝壳</p>
+</h1><p>shell  英文  贝壳</p>
 <p>shell的作用是</p>
 <ul>
 <li>解释执行用户输入的命令或程序等</li>
@@ -173,11 +198,11 @@
 <!-- raw HTML omitted -->
 <p>shell就是包裹着系统核心的壳，处于操作系统的最外层，与用户直接对话，把用户的输入解释给操作系统，然后处理操作系统的输出结果，输出到屏幕给与用户看到的结果</p>
 <p>我们从登录linux，输入账号密码进入linux交互式界面，所有的操作都是交给shell解释并执行。</p>
-<h5 id="执行流程" class="heading-element"><span>0.0.0.2  执行流程</span>
+<h1 id="执行流程" class="heading-element"><span>执行流程</span>
   <a href="#%e6%89%a7%e8%a1%8c%e6%b5%81%e7%a8%8b" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><blockquote>
+</h1><blockquote>
 <p>shell是有不同版本的，bash解释器只是其中一种，还有sh、csh、ksh、zsh等</p>
 <p>Bash（Bourne Again SHell）是最常用的默认shell</p>
 </blockquote>
@@ -189,11 +214,11 @@
 <li>命令行操作，shell解释执行后，输出结果到黑屏命令行界面。</li>
 <li>图形化操作，shell接受点击动作，输出图案数据</li>
 </ul>
-<h5 id="shell脚本" class="heading-element"><span>0.0.0.3  shell脚本</span>
+<h1 id="shell脚本" class="heading-element"><span>shell脚本</span>
   <a href="#shell%e8%84%9a%e6%9c%ac" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>当命令或者程序语句写在文件中，我们执行文件，读取其中的代码，这个程序文件就称之为shell脚本。</p>
+</h1><p>当命令或者程序语句写在文件中，我们执行文件，读取其中的代码，这个程序文件就称之为shell脚本。</p>
 <p>在shell脚本里定义多条Linux命令以及循环控制语句，然后将这些Linux命令一次性执行完毕，执行脚本文件的方式称之为<code>非交互式方式</code>。</p>
 <ul>
 <li>windows中存在*.bat批处理脚本</li>
@@ -202,11 +227,11 @@
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306162251745.webp" alt="image-20230616225140565" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306162251745.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306162251745.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306162251745.webp?size=large 2x" data-title="image-20230616225140565" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>shell脚本规则</p>
 <p>在linux系统中，shell脚本或者称之为（bash shell程序）通常都是vim编辑，由linux命令、bash shell指令、逻辑控制语句和注释信息组成。</p>
-<h6 id="shebang" class="heading-element"><span>0.0.0.3.1  shebang</span>
+<h2 id="shebang" class="heading-element"><span>shebang</span>
   <a href="#shebang" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>在计算机程序中，<code>shebang</code>指的是出现在文本文件的第一行的前两个字符<code>#!</code></p>
+</h2><p>在计算机程序中，<code>shebang</code>指的是出现在文本文件的第一行的前两个字符<code>#!</code></p>
 <p>在unix系统中，程序会分析<code>shebang</code>后面的内容，作为解释器的指令，例如</p>
 <ul>
 <li>以<code>#!/bin/sh</code> 开头的文件，程序在执行的时候会调用<code>/bin/sh</code> ，也就是bash解释器。</li>
@@ -225,11 +250,11 @@
 <li>如果你使用<code>bash test.sh</code>这样的命令来执行脚本，那么<code>#!</code>这一行将会被忽略掉，解释器当然是用命令
 行中显式指定的bash。</li>
 </ul>
-<h6 id="执行" class="heading-element"><span>0.0.0.3.2  执行</span>
+<h2 id="执行" class="heading-element"><span>执行</span>
   <a href="#%e6%89%a7%e8%a1%8c" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>一、</p>
+</h2><p>一、</p>
 <p>将代码保存为test.sh，并 cd 到相应目录：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>chmod +x ./test.sh <span style="color:#828b96;font-style:italic">#使脚本具有执行权限</span>
 </span></span><span style="display:flex;"><span>./test.sh <span style="color:#828b96;font-style:italic">#执行脚本</span></span></span></code></pre></div><blockquote>
@@ -241,95 +266,113 @@
 <p>当然，也可以直接指定解释器</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>/bin/sh test.sh
 </span></span><span style="display:flex;"><span>/bin/php test.php</span></span></code></pre></div><p>三、</p>
-<pre tabindex="0"><code>bash &lt; test.sh</code></pre><h6 id="shell-变量" class="heading-element"><span>0.0.0.3.3  Shell 变量</span>
+<pre tabindex="0"><code>bash &lt; test.sh</code></pre><h2 id="shell-变量" class="heading-element"><span>Shell 变量</span>
   <a href="#shell-%e5%8f%98%e9%87%8f" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>####### 定义变量</p>
-<p>定义变量时，变量名不加美元符号（$，PHP语言中变量需要），如：</p>
+</h2><h3 id="定义变量" class="heading-element"><span>定义变量</span>
+  <a href="#%e5%ae%9a%e4%b9%89%e5%8f%98%e9%87%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>定义变量时，变量名不加美元符号（$，PHP语言中变量需要），如：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#58a1dd">your_name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;alvin&#34;</span></span></span></code></pre></div><p>注意，变量名和等号之间不能有空格，这可能和你熟悉的所有编程语言都不一样。</p>
 <p>除了显式地直接赋值，还可以用语句给变量赋值，如：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ff636f">for</span> file in <span style="color:#a6be9d">`</span>ls /etc<span style="color:#a6be9d">`</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">do</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">done</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### or</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># or</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> file in <span style="color:#ff636f">$(</span>ls /etc<span style="color:#ff636f">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">do</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff636f">done</span></span></span></code></pre></div><p>####### 使用变量</p>
-<p>使用一个定义过的变量，只要在变量名前面加美元符号即可，如：</p>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">done</span></span></span></code></pre></div><h3 id="使用变量" class="heading-element"><span>使用变量</span>
+  <a href="#%e4%bd%bf%e7%94%a8%e5%8f%98%e9%87%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>使用一个定义过的变量，只要在变量名前面加美元符号即可，如：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#58a1dd">your_name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;alvin&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">echo</span> <span style="color:#58a1dd">$your_name</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">${</span><span style="color:#58a1dd">your_name</span><span style="color:#a6be9d">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 使用 readonly 命令可以将变量定义为只读变量</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 使用 readonly 命令可以将变量定义为只读变量</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">my_name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;alvin&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">readonly</span> my_name
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 使用 unset 命令可以删除变量。</span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">unset</span> your_name</span></span></code></pre></div><p>####### 变量类型</p>
-<p>运行shell时，会同时存在三种变量：</p>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 使用 unset 命令可以删除变量。</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">unset</span> your_name</span></span></code></pre></div><h3 id="变量类型" class="heading-element"><span>变量类型</span>
+  <a href="#%e5%8f%98%e9%87%8f%e7%b1%bb%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>运行shell时，会同时存在三种变量：</p>
 <ol>
 <li><strong>局部变量</strong> 局部变量在脚本或命令中定义，仅在当前 Shell 实例中有效，其他 Shell 启动的程序不能访问局部变量。</li>
 <li><strong>环境变量</strong> 所有的程序，包括 Shell 启动的程序，都能访问环境变量，有些程序需要环境变量来保证其正常运行。必要的时候Shell 脚本也可以定义环境变量。</li>
 <li><strong>Shell 变量</strong> Shell 变量是由 Shell 程序设置的特殊变量。Shell 变量中有一部分是环境变量，有一部分是局部变量，这些变量保证了shell的正常运行</li>
 </ol>
-<p>####### Shell 字符串</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#58a1dd">str</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;this is a string&#39;</span>
+<h3 id="shell-字符串" class="heading-element"><span>Shell 字符串</span>
+  <a href="#shell-%e5%ad%97%e7%ac%a6%e4%b8%b2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#58a1dd">str</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;this is a string&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">str2</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;Hello, I know you are \&#34;</span><span style="color:#58a1dd">$your_name</span><span style="color:#a6be9d">\&#34;! \n&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">greeting</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;hello, &#34;</span><span style="color:#58a1dd">$your_name</span><span style="color:#a6be9d">&#34; !&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">greeting_1</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;hello, </span><span style="color:#a6be9d">${</span><span style="color:#58a1dd">your_name</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d"> !&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 获取字符串长度</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 获取字符串长度</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">string</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;abcd&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">${#</span><span style="color:#58a1dd">string</span><span style="color:#a6be9d">}</span> <span style="color:#828b96;font-style:italic">#输出 4</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 提取子字符串</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 以下实例从字符串第 2 个字符开始截取 4 个字符：</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 提取子字符串</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 以下实例从字符串第 2 个字符开始截取 4 个字符：</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">string</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;runoob is a great site&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">${</span><span style="color:#58a1dd">string</span>:<span style="color:#58a1dd">1</span>:<span style="color:#58a1dd">4</span><span style="color:#a6be9d">}</span> <span style="color:#828b96;font-style:italic"># 输出 unoo</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 查找子字符串</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 查找字符 i 或 o 的位置(哪个字母先出现就计算哪个)：</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 查找子字符串</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 查找字符 i 或 o 的位置(哪个字母先出现就计算哪个)：</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">string</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;runoob is a great site&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">`</span>expr index <span style="color:#a6be9d">&#34;</span><span style="color:#58a1dd">$string</span><span style="color:#a6be9d">&#34;</span> io<span style="color:#a6be9d">`</span>  <span style="color:#828b96;font-style:italic"># 输出 4</span></span></span></code></pre></div><ul>
 <li>单引号里的任何字符都会原样输出，单引号字符串中的变量是无效的；</li>
 <li>双引号里可以有变量，可以出现转义字符</li>
 </ul>
-<p>####### Shell 数组</p>
-<p>bash 支持一维数组（不支持多维数组），并且没有限定数组的大小。在 Shell 中，用括号来表示数组，数组元素用 &ldquo;空格&rdquo; 符号分割开。定义数组的一般形式为:</p>
+<h3 id="shell-数组" class="heading-element"><span>Shell 数组</span>
+  <a href="#shell-%e6%95%b0%e7%bb%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>bash 支持一维数组（不支持多维数组），并且没有限定数组的大小。在 Shell 中，用括号来表示数组，数组元素用 &ldquo;空格&rdquo; 符号分割开。定义数组的一般形式为:</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#58a1dd">array_name</span><span style="color:#ff636f">=(</span>value0 value1 value2 value3<span style="color:#ff636f">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### or</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># or</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">array_name</span><span style="color:#ff636f">=(</span>
 </span></span><span style="display:flex;"><span>value0
 </span></span><span style="display:flex;"><span>value1
 </span></span><span style="display:flex;"><span>value2
 </span></span><span style="display:flex;"><span>value3
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### or</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># or</span>
 </span></span><span style="display:flex;"><span>array_name<span style="color:#ff636f">[</span>0<span style="color:#ff636f">]=</span>value0
 </span></span><span style="display:flex;"><span>array_name<span style="color:#ff636f">[</span>1<span style="color:#ff636f">]=</span>value1
 </span></span><span style="display:flex;"><span>array_name<span style="color:#ff636f">[</span>n<span style="color:#ff636f">]=</span>valuen
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 读取数组 ${数组名[下标]}</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 读取数组 ${数组名[下标]}</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">valuen</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">${</span><span style="color:#58a1dd">array_name</span>[n]<span style="color:#a6be9d">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 使用 @ 符号可以获取数组中的所有元素</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 使用 @ 符号可以获取数组中的所有元素</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">${</span><span style="color:#58a1dd">array_name</span>[@]<span style="color:#a6be9d">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 取得数组元素的个数</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 取得数组元素的个数</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">length</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">${#</span><span style="color:#58a1dd">array_name</span>[@]<span style="color:#a6be9d">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 或者</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 或者</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">length</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">${#</span><span style="color:#58a1dd">array_name</span>[*]<span style="color:#a6be9d">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 取得数组单个元素的长度</span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">lengthn</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">${#</span><span style="color:#58a1dd">array_name</span>[n]<span style="color:#a6be9d">}</span></span></span></code></pre></div><p>####### 多行注释</p>
-<p>多行注释还可以使用以下格式：</p>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 取得数组单个元素的长度</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">lengthn</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">${#</span><span style="color:#58a1dd">array_name</span>[n]<span style="color:#a6be9d">}</span></span></span></code></pre></div><h3 id="多行注释" class="heading-element"><span>多行注释</span>
+  <a href="#%e5%a4%9a%e8%a1%8c%e6%b3%a8%e9%87%8a" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>多行注释还可以使用以下格式：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>:<span style="color:#a6be9d">&lt;&lt;EOF
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">注释内容...
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">注释内容...
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">注释内容...
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">EOF</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### EOF 也可以使用其他符号:</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># EOF 也可以使用其他符号:</span>
 </span></span><span style="display:flex;"><span>:&lt;&lt;<span style="color:#a6be9d">&#39;
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">注释内容...
 </span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">注释内容...
@@ -339,13 +382,13 @@
 </span></span><span style="display:flex;"><span>注释内容...
 </span></span><span style="display:flex;"><span>注释内容...
 </span></span><span style="display:flex;"><span>注释内容...
-</span></span><span style="display:flex;"><span>!</span></span></code></pre></div><h6 id="shell-传递参数" class="heading-element"><span>0.0.0.3.4  Shell 传递参数</span>
+</span></span><span style="display:flex;"><span>!</span></span></code></pre></div><h2 id="shell-传递参数" class="heading-element"><span>Shell 传递参数</span>
   <a href="#shell-%e4%bc%a0%e9%80%92%e5%8f%82%e6%95%b0" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>我们可以在执行 Shell 脚本时，向脚本传递参数，脚本内获取参数的格式为：$n。n 代表一个数字，1 为执行脚本的第一个参数，2 为执行脚本的第二个参数，以此类推</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####!/bin/bash</span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Shell 传递参数实例！&#34;</span>;
+</h2><p>我们可以在执行 Shell 脚本时，向脚本传递参数，脚本内获取参数的格式为：$n。n 代表一个数字，1 为执行脚本的第一个参数，2 为执行脚本的第二个参数，以此类推</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Shell 传递参数实例！&#34;</span>;
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;执行的文件名：</span><span style="color:#58a1dd">$0</span><span style="color:#a6be9d">&#34;</span>;
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;第一个参数为：</span><span style="color:#58a1dd">$1</span><span style="color:#a6be9d">&#34;</span>;
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;第二个参数为：</span><span style="color:#58a1dd">$2</span><span style="color:#a6be9d">&#34;</span>;
@@ -387,8 +430,11 @@
 </tr>
 </tbody>
 </table>
-<p>####### 默认参数(变量默认值)</p>
-<p>if 繁琐方式</p>
+<h3 id="默认参数变量默认值" class="heading-element"><span>默认参数(变量默认值)</span>
+  <a href="#%e9%bb%98%e8%ae%a4%e5%8f%82%e6%95%b0%e5%8f%98%e9%87%8f%e9%bb%98%e8%ae%a4%e5%80%bc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>if 繁琐方式</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#ff636f">[</span> ! <span style="color:#58a1dd">$1</span> <span style="color:#ff636f">]</span>; <span style="color:#ff636f">then</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$1</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;default&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#ff636f">fi</span></span></span></code></pre></div><p>==-==:变量为 null, 取默认值</p>
@@ -397,18 +443,21 @@
 <li>:? 变量为null 或 空字符串时报错并退出 <code>${name:?yjx}</code></li>
 <li>:+ 变量不为空时使用默认值 <code>${name:+yjx}</code></li>
 </ul>
-<h6 id="shell-基本运算符" class="heading-element"><span>0.0.0.3.5  Shell 基本运算符</span>
+<h2 id="shell-基本运算符" class="heading-element"><span>Shell 基本运算符</span>
   <a href="#shell-%e5%9f%ba%e6%9c%ac%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>Shell 和其他编程语言一样，支持多种运算符，==原生 bash 不支持简单的数学运算，但是可以通过其他命令来实现==，例如 awk 和 expr，expr 最常用。expr 是一款表达式计算工具，使用它能完成表达式的求值操作。</p>
+</h2><p>Shell 和其他编程语言一样，支持多种运算符，==原生 bash 不支持简单的数学运算，但是可以通过其他命令来实现==，例如 awk 和 expr，expr 最常用。expr 是一款表达式计算工具，使用它能完成表达式的求值操作。</p>
 <ul>
 <li>表达式和运算符之间要有空格，例如 2+2 是不对的，必须写成 2 + 2，这与我们熟悉的大多数编程语言不一样。</li>
 <li>完整的表达式要被 `` 包含，注意这个字符不是常用的单引号，在 Esc 键下边。</li>
 </ul>
-<p>####### 算术运算符</p>
-<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####!/bin/bash</span>
-</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">10</span>
+<h3 id="算术运算符" class="heading-element"><span>算术运算符</span>
+  <a href="#%e7%ae%97%e6%9c%af%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">a</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">10</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">b</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">20</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">val</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">`</span>expr <span style="color:#58a1dd">$a</span> + <span style="color:#58a1dd">$b</span><span style="color:#a6be9d">`</span>
@@ -438,8 +487,11 @@
 <li>乘号 (*) 前边必须加反斜杠 () 才能实现乘法运算；</li>
 <li>在 MAC 中 shell 的 expr 语法是：$((表达式))，此处表达式中的 &ldquo;*&rdquo; 不需要转义符号 &ldquo;&quot; 。</li>
 </ul>
-<p>####### 关系运算符</p>
-<p>关系运算符==只支持数字，不支持字符串==，除非字符串的值是数字。下表列出了常用的关系运算符，假定变量 a 为 10，变量 b 为 20：</p>
+<h3 id="关系运算符" class="heading-element"><span>关系运算符</span>
+  <a href="#%e5%85%b3%e7%b3%bb%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>关系运算符==只支持数字，不支持字符串==，除非字符串的值是数字。下表列出了常用的关系运算符，假定变量 a 为 10，变量 b 为 20：</p>
 <table>
 <thead>
 <tr>
@@ -481,8 +533,11 @@
 </tr>
 </tbody>
 </table>
-<p>####### 布尔运算符</p>
-<table>
+<h3 id="布尔运算符" class="heading-element"><span>布尔运算符</span>
+  <a href="#%e5%b8%83%e5%b0%94%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><table>
 <thead>
 <tr>
 <th>运算符</th>
@@ -508,8 +563,11 @@
 </tr>
 </tbody>
 </table>
-<p>####### 逻辑运算符</p>
-<table>
+<h3 id="逻辑运算符" class="heading-element"><span>逻辑运算符</span>
+  <a href="#%e9%80%bb%e8%be%91%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><table>
 <thead>
 <tr>
 <th>运算符</th>
@@ -530,11 +588,11 @@
 </tr>
 </tbody>
 </table>
-<h6 id="字符串运算符" class="heading-element"><span>0.0.0.3.6  字符串运算符</span>
+<h2 id="字符串运算符" class="heading-element"><span>字符串运算符</span>
   <a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>下表列出了常用的字符串运算符，假定变量 a 为 &ldquo;abc&rdquo;，变量 b 为 &ldquo;efg&rdquo;：</p>
+</h2><p>下表列出了常用的字符串运算符，假定变量 a 为 &ldquo;abc&rdquo;，变量 b 为 &ldquo;efg&rdquo;：</p>
 <table>
 <thead>
 <tr>
@@ -571,8 +629,11 @@
 </tr>
 </tbody>
 </table>
-<p>####### 文件测试运算符</p>
-<p>文件测试运算符用于检测 Unix 文件的各种属性。</p>
+<h3 id="文件测试运算符" class="heading-element"><span>文件测试运算符</span>
+  <a href="#%e6%96%87%e4%bb%b6%e6%b5%8b%e8%af%95%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>文件测试运算符用于检测 Unix 文件的各种属性。</p>
 <table>
 <thead>
 <tr>

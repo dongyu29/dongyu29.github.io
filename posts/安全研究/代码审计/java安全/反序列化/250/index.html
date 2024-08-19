@@ -11,7 +11,7 @@
   <meta itemprop="name" content="Shiro反序列化初探 CC6改TemplatesImpl">
   <meta itemprop="datePublished" content="2024-08-16T17:20:01+08:00">
   <meta itemprop="dateModified" content="2024-08-16T17:20:01+08:00">
-  <meta itemprop="wordCount" content="606">
+  <meta itemprop="wordCount" content="596">
   <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/250/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="Shiro反序列化初探 CC6改TemplatesImpl">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/250\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  606 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  596 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/250\/","datePublished": "2024-08-16T17:20:01+08:00","dateModified": "2024-08-16T17:20:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Shiro反序列化初探 CC6改TemplatesImpl</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-16 17:20:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-16">2024-08-16</time></span>&nbsp;<span title="606 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 700 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-16 17:20:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-16">2024-08-16</time></span>&nbsp;<span title="596 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 600 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,34 +152,37 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
+    <li><a href="#cc1-tf">cc1 tf</a></li>
+    <li><a href="#cc1-lz">cc1 lz</a></li>
+    <li><a href="#cc6">cc6</a></li>
+    <li><a href="#cc3">cc3</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#结论">结论</a></li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="回顾" class="heading-element"><span>0.0.0.1  回顾</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="回顾" class="heading-element"><span>回顾</span>
   <a href="#%e5%9b%9e%e9%a1%be" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>至此已经学习了urldns、cc1 tf、cc1 lz、cc6、cc3，当然urldns只算初探java反序列化，先做一个简单的总结回顾吧</p>
-<h6 id="cc1-tf" class="heading-element"><span>0.0.0.1.1  cc1 tf</span>
+</h1><p>至此已经学习了urldns、cc1 tf、cc1 lz、cc6、cc3，当然urldns只算初探java反序列化，先做一个简单的总结回顾吧</p>
+<h2 id="cc1-tf" class="heading-element"><span>cc1 tf</span>
   <a href="#cc1-tf" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>这是踏足java反序列化的第一条链子，也是我花时间最多的链子，麻烦的一批，它的执行点是InvokerTransformer，就像一个写好的后门，是梦的起点，这里我费好大力气分析通了数组中插入一条数据是怎么触发链子的，最麻烦的还是AnnotationInvocationHandler#readObject，是反序列化的起点，需要去反编译的代码里分析</p>
+</h2><p>这是踏足java反序列化的第一条链子，也是我花时间最多的链子，麻烦的一批，它的执行点是InvokerTransformer，就像一个写好的后门，是梦的起点，这里我费好大力气分析通了数组中插入一条数据是怎么触发链子的，最麻烦的还是AnnotationInvocationHandler#readObject，是反序列化的起点，需要去反编译的代码里分析</p>
 <p>它的历史任务是开启了java反序列化rce的篇章</p>
 <p>但是这个反序列化的起点很快就被修复了，所以需要cc1 lz</p>
 <pre tabindex="0"><code>反序列化#readObject-&gt;
 	AnnotationInvocationHandler#readObject(存在setValue)
 		MapEntry#setValue(存在checkSetValue)
 			transformedMap#checkSetValue(存在transform)
-				InvokerTransformer.transform(就可以调用任意方法执行任意操作)</code></pre><h6 id="cc1-lz" class="heading-element"><span>0.0.0.1.2  cc1 lz</span>
+				InvokerTransformer.transform(就可以调用任意方法执行任意操作)</code></pre><h2 id="cc1-lz" class="heading-element"><span>cc1 lz</span>
   <a href="#cc1-lz" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>cc1 tf的触发需要写入数组，但是被修复了，lazymap中的get方法也可以触发到ChainedTransformer.transform()，所以我们重新寻找了哪里能触发get，发现cc1 tf的反序列化触发点AnnotationInvocationHandler中有一个invoke方法会调用get，而这个类还继承了InvocationHandler接口，所以我们能用==动态代理==的方法去触发这个invoke方法，而它的反序列化方法中的操作又恰好能让我们跳过种种判断成功触发get，这样一个cc1的升级版就完成了</p>
+</h2><p>cc1 tf的触发需要写入数组，但是被修复了，lazymap中的get方法也可以触发到ChainedTransformer.transform()，所以我们重新寻找了哪里能触发get，发现cc1 tf的反序列化触发点AnnotationInvocationHandler中有一个invoke方法会调用get，而这个类还继承了InvocationHandler接口，所以我们能用==动态代理==的方法去触发这个invoke方法，而它的反序列化方法中的操作又恰好能让我们跳过种种判断成功触发get，这样一个cc1的升级版就完成了</p>
 <p>它的历史任务是绕过了对cc1 tf反序列化触发点的修复。</p>
 <pre tabindex="0"><code>	Gadget chain:
 		ObjectInputStream.readObject()
@@ -197,11 +200,11 @@
 										Runtime.getRuntime()
 								InvokerTransformer.transform()
 									Method.invoke()
-										Runtime.exec()</code></pre><h6 id="cc6" class="heading-element"><span>0.0.0.1.3  cc6</span>
+										Runtime.exec()</code></pre><h2 id="cc6" class="heading-element"><span>cc6</span>
   <a href="#cc6" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>Java 8u71以后，cc1就不能用了，这次对AnnotationInvocationHandler的readObject()进行了全面修复，所以需要新的反序列化触发点，这次就找到了TiedMapEntry简称tme，它的getValue方法也能调用lazymap的get方法，然后就是网上找调用链了</p>
+</h2><p>Java 8u71以后，cc1就不能用了，这次对AnnotationInvocationHandler的readObject()进行了全面修复，所以需要新的反序列化触发点，这次就找到了TiedMapEntry简称tme，它的getValue方法也能调用lazymap的get方法，然后就是网上找调用链了</p>
 <p>它的历史任务其实和cc1 lz类似，是完成了对==jdk高版本修复的绕过==，看起来是一条通杀的链子。</p>
 <pre tabindex="0"><code>/*
 Gadget chain:
@@ -216,11 +219,11 @@ org.apache.commons.collections.functors.ChainedTransformer.transform()
 org.apache.commons.collections.functors.InvokerTransformer.transform()
 java.lang.reflect.Method.invoke()
 java.lang.Runtime.exec()
-*/</code></pre><h6 id="cc3" class="heading-element"><span>0.0.0.1.4  cc3</span>
+*/</code></pre><h2 id="cc3" class="heading-element"><span>cc3</span>
   <a href="#cc3" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>cc3之前我们的反序列化链执行点都是InvokerTransformer，这里就产生了历史性变革，就是有了新的执行点：==字节码执行==，而且字节码执行的灵活性和危害更大，后半段链子直接改换了，执行的地方是TemplatesImpl。并且此时InvokerTransformer已经被一众waf拉黑，所以也急需其他的链条补充进来。</p>
+</h2><p>cc3之前我们的反序列化链执行点都是InvokerTransformer，这里就产生了历史性变革，就是有了新的执行点：==字节码执行==，而且字节码执行的灵活性和危害更大，后半段链子直接改换了，执行的地方是TemplatesImpl。并且此时InvokerTransformer已经被一众waf拉黑，所以也急需其他的链条补充进来。</p>
 <p>因为要对接上TemplatesImpl的newTransformer，所以前半段链子也进行了改变，找到了两个新的类InstantiateTransformer和TrAXFilter，然后再去往前承接TransformedMap-&gt;transformerChain</p>
 <p>它的历史任务是开创了新的执行点和寻找了新的中间段的利用链。但是CC3依然有版本限制，是不能在8u71以上利用的</p>
 <pre tabindex="0"><code>TransformedMap-&gt;transformerChain的transform-&gt;
@@ -231,11 +234,11 @@ TemplatesImpl#getTransletInstance() -&gt; TemplatesImpl#defineTransletClasses()
 -&gt; TransletClassLoader#defineClass()</code></pre><p>至此可以发现这些利用链就像积木一样，或者更像那种玩具水管道，可以相互拼接，只要保证最终从反序列化触发点串联到执行点，就是一条可用的链子</p>
 <p>接下来cc家族还有cc4、cc2、cc5还没学习，这里先初步接触shiro，以及学习如何灵活拼接这些链子。</p>
 <p>p神的文章名字叫TemplatesImpl在Shiro中的利用，执行点应该就是cc3的后半段，前半段不知道进行了什么拼接。</p>
-<h5 id="shiro初识" class="heading-element"><span>0.0.0.2  shiro初识</span>
+<h1 id="shiro初识" class="heading-element"><span>shiro初识</span>
   <a href="#shiro%e5%88%9d%e8%af%86" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>对shiro的漏洞早有耳闻，16年的时候，shiro爆出了一个默认key的反序列化漏洞，它有一个rememberMe字段，在Shiro 1.2.4版本之前甚至是默认且固定的key，这个key应该就是用来对rememberMe传递的数据进行加密的，然后shiro会对解密以后的序列化数据进行反序列化，我们学了这么久的序列化，要是目标没有可用的反序列化点也是徒劳，shiro就提供了一个覆盖面很广的反序列化点，拿到key=rce</p>
+</h1><p>对shiro的漏洞早有耳闻，16年的时候，shiro爆出了一个默认key的反序列化漏洞，它有一个rememberMe字段，在Shiro 1.2.4版本之前甚至是默认且固定的key，这个key应该就是用来对rememberMe传递的数据进行加密的，然后shiro会对解密以后的序列化数据进行反序列化，我们学了这么久的序列化，要是目标没有可用的反序列化点也是徒劳，shiro就提供了一个覆盖面很广的反序列化点，拿到key=rce</p>
 <p>还是跟着p神的思路，他搭建了一个简单的应用使用了shiro</p>
 <blockquote>
 <p>shiro-core、shiro-web，这是shiro本身的依赖</p>
@@ -297,17 +300,17 @@ TemplatesImpl#getTransletInstance() -&gt; TemplatesImpl#defineTransletClasses()
 <p>在捕获异常的地方下断点看是哪个类报的异常</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161253789.webp" alt="image-20240816125326559" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161253789.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161253789.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161253789.webp?size=large 2x" data-title="image-20240816125326559" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>出异常时加载的类名为[Lorg.apache.commons.collections.Transformer;</p>
-<h6 id="结论" class="heading-element"><span>0.0.0.2.1  结论</span>
+<h2 id="结论" class="heading-element"><span>结论</span>
   <a href="#%e7%bb%93%e8%ae%ba" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>如果反序列化流中包含<strong>非Java自身的数组</strong>，则会出现无法加载类的错误。</p>
+</h2><p>如果反序列化流中包含<strong>非Java自身的数组</strong>，则会出现无法加载类的错误。</p>
 <p>这就解释了为什么CommonsCollections6无法利用了，因为其中用到了Transformer数组。</p>
-<h5 id="构造不含数组的反序列化gadget" class="heading-element"><span>0.0.0.3  构造不含数组的反序列化Gadget</span>
+<h1 id="构造不含数组的反序列化gadget" class="heading-element"><span>构造不含数组的反序列化Gadget</span>
   <a href="#%e6%9e%84%e9%80%a0%e4%b8%8d%e5%90%ab%e6%95%b0%e7%bb%84%e7%9a%84%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96gadget" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>为解决这个问题，Orange在其文章中给出了使用JRMP的利用方法：http://blog.orange.tw/2018/03/pwn-ctf-platform-with-java-jrmp-gadget.html。</p>
+</h1><p>为解决这个问题，Orange在其文章中给出了使用JRMP的利用方法：http://blog.orange.tw/2018/03/pwn-ctf-platform-with-java-jrmp-gadget.html。</p>
 <p>这里还有其他方法</p>
 <p>cc3中的TemplatesImpl可以执行字节码，使用<code>TemplatesImpl.newTransformer</code>函数来动态<code>loadClass</code>构造好的evil class bytes这部分利用链上是不存在数组类型的对象的。这里我们的后半段依然采用这个方法</p>
 <p>那么，接下来的重点就是找一个如何触发<code>TemplatesImpl.newTransformer</code>的方法了：</p>
@@ -349,11 +352,11 @@ TemplatesImpl#getTransletInstance() -&gt; TemplatesImpl#defineTransletClasses()
 <p>但是此时我们无法使用Transformer数组了，也就不能再用ConstantTransformer了。此时我们却惊奇的发现，这个LazyMap#get 的参数key，会被传进transform()，实际上它可以扮演ConstantTransformer的角色——一个简单的对象传递者。</p>
 </blockquote>
 <p>这里也是很好理解，ConstantTransformer是返回类里面构造好的一个对象，这里getkey依然可以完成这个功能，那么这里相当于ConstantTransformer“复活”了。再去看看别的地方是怎么打通的。</p>
-<h5 id="改造cc6为cc-shiro" class="heading-element"><span>0.0.0.4  改造CC6为CC Shiro</span>
+<h1 id="改造cc6为cc-shiro" class="heading-element"><span>改造CC6为CC Shiro</span>
   <a href="#%e6%94%b9%e9%80%a0cc6%e4%b8%bacc-shiro" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>首先还是创建TemplatesImpl 对象：</p>
+</h1><p>首先还是创建TemplatesImpl 对象：</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">TemplatesImpl</span> <span style="color:#58a1dd">obj</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TemplatesImpl</span>();
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_bytecodes&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[][]</span> {<span style="color:#a6be9d">&#34;...bytescode&#34;</span>});
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_name&#34;</span>, <span style="color:#a6be9d">&#34;HelloTemplatesImpl&#34;</span>);
@@ -400,11 +403,11 @@ TemplatesImpl#getTransletInstance() -&gt; TemplatesImpl#defineTransletClasses()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">barr</span>.<span style="color:#58a1dd">toByteArray</span>();
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h5 id="调试" class="heading-element"><span>0.0.0.5  调试</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h1 id="调试" class="heading-element"><span>调试</span>
   <a href="#%e8%b0%83%e8%af%95" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>让我们开始调试吧</p>
+</h1><p>让我们开始调试吧</p>
 <p>又给我跳过断点，留意一下</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161442640.webp" alt="image-20240816144234490" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161442640.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161442640.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161442640.webp?size=large 2x" data-title="image-20240816144234490" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>这里的反序列化入口点用的是HashMap，梦回CC6</p>

