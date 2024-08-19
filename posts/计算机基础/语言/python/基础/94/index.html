@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Python 常用库和方法 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 语言' />
+  <meta itemprop="name" content="python 常用库和方法">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="723">
+  <meta itemprop="keywords" content="计算机基础,语言"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/%E5%9F%BA%E7%A1%80/94/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="python 常用库和方法">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="语言">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="python 常用库和方法">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/%E5%9F%BA%E7%A1%80/94/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/97/" /><link rel="next" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/%E5%9F%BA%E7%A1%80/96/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "python 常用库和方法",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/%E5%9F%BA%E7%A1%80\/94\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 语言","wordcount":  723 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/%E5%9F%BA%E7%A1%80\/94\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Python 常用库和方法</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Python 常用库和方法</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="723 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="库" class="heading-element"><span>0.0.0.1  库</span>
+  <a href="#%e5%ba%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="re" class="heading-element"><span>0.0.0.1.1  re</span>
+  <a href="#re" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### match对象</p>
+<p>Match对象是一次匹配的结果，包含匹配的很多信息</p>
+<p>属性</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.string</td>
+<td>待匹配的文本</td>
+</tr>
+<tr>
+<td>.re</td>
+<td>匹配时使用的patter对象（正则表达式）</td>
+</tr>
+<tr>
+<td>.pos</td>
+<td>正则表达式搜索文本的开始位置</td>
+</tr>
+<tr>
+<td>.endpos</td>
+<td>正则表达式搜索文本的结束位置</td>
+</tr>
+</tbody>
+</table>
+<p>方法</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.group(0)</td>
+<td>获得匹配后的字符串</td>
+</tr>
+<tr>
+<td>.start()</td>
+<td>匹配字符串在原始字符串的开始位置</td>
+</tr>
+<tr>
+<td>.end()</td>
+<td>匹配字符串在原始字符串的结束位置</td>
+</tr>
+<tr>
+<td>.span()</td>
+<td>返回(.start(), .end())</td>
+</tr>
+</tbody>
+</table>
+<p>修饰符</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">修饰符</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">re.I</td>
+<td style="text-align:left">使匹配对大小写不敏感</td>
+</tr>
+<tr>
+<td style="text-align:left">re.L</td>
+<td style="text-align:left">做本地化识别（locale-aware）匹配</td>
+</tr>
+<tr>
+<td style="text-align:left">re.M</td>
+<td style="text-align:left">多行匹配，影响 ^ 和 $</td>
+</tr>
+<tr>
+<td style="text-align:left">re.S</td>
+<td style="text-align:left">使 . 匹配包括换行在内的所有字符</td>
+</tr>
+<tr>
+<td style="text-align:left">re.U</td>
+<td style="text-align:left">根据Unicode字符集解析字符。这个标志影响 \w, \W, \b, \B.</td>
+</tr>
+<tr>
+<td style="text-align:left">re.X</td>
+<td style="text-align:left">该标志通过给予你更灵活的格式以便你将正则表达式写得更易于理解。</td>
+</tr>
+</tbody>
+</table>
+<p>####### 主要方法</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>re.search()</td>
+<td>从一个字符串中搜索匹配正则表达式的==第一个==位置，返回==match对象==</td>
+</tr>
+<tr>
+<td>re.match()</td>
+<td>从一个字符串的开始位置起匹配正则表达式，返回match对象</td>
+</tr>
+<tr>
+<td>re.findall()</td>
+<td>搜索字符串，以==列表==类型返回==全部==能匹配的子串</td>
+</tr>
+<tr>
+<td>re.split()</td>
+<td>将一个字符串按照正则表达式匹配结果进行==分割==，返回==列表==类型</td>
+</tr>
+<tr>
+<td>re.finditer()</td>
+<td>搜索字符串，返回一个匹配结果的迭代类型，==每个迭代元素是match对象==</td>
+</tr>
+<tr>
+<td>re.sub()</td>
+<td>在一个字符串中替换所有匹配正则表达式的子串，返回替换后的字符串</td>
+</tr>
+<tr>
+<td>re.compile()</td>
+<td>compile 函数用于编译正则表达式，生成一个正则表达式（ Pattern ）对象，供 match() 和 search() 这两个函数使用。</td>
+</tr>
+</tbody>
+</table>
+<p>####### 正则表达式</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>说明</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.</td>
+<td>表示任何单个字符（默认除换行符）</td>
+<td></td>
+</tr>
+<tr>
+<td>[]</td>
+<td>字符集，对单个字符给出取值范围</td>
+<td>[abc]表示a、b、c，[a-z]表示a到z的单个字符</td>
+</tr>
+<tr>
+<td>[^]</td>
+<td>非字符集，对单个字符给出排除范围</td>
+<td>[^abc]表示非a或非b或非c的单个字符</td>
+</tr>
+<tr>
+<td>*</td>
+<td>前一个字符==0次或无限次==扩展，*<code>等价于</code>{0,}</td>
+<td>abc*表示ab、abc、abcc、abccc等</td>
+</tr>
+<tr>
+<td>+</td>
+<td>前一个字符==1次或无限次==扩展，+<code>等价于</code>{1,}</td>
+<td>abc+表示abc、abcc、abccc等</td>
+</tr>
+<tr>
+<td>?</td>
+<td>前一个字符==0次或1次==扩展；当使用<strong>非贪婪模式</strong>，我们要在<strong>表达式后面加上 <code>?</code>号</strong>。</td>
+<td>abc*表示ab、abc</td>
+</tr>
+<tr>
+<td>|</td>
+<td>左右表达式任意一个</td>
+<td>abc|def表示abc、def</td>
+</tr>
+<tr>
+<td>{m}</td>
+<td>扩展前一个字符m次</td>
+<td>ab{2}c表示abbc</td>
+</tr>
+<tr>
+<td>{m,n}</td>
+<td>扩展前一个字符m至n次（含n）</td>
+<td>ab{1,2}c表示abc,abbc</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配字符串开头</td>
+<td>abc且在一个字符串的开头</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配字符串结尾</td>
+<td>abc且在一个字符串的结尾</td>
+</tr>
+<tr>
+<td>()</td>
+<td>分组标记，内部只能使用|操作符</td>
+<td>(abc)表示abc,(abc|def)表示abc、def</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>数字，等价于[0-9]</td>
+<td></td>
+</tr>
+<tr>
+<td>\w</td>
+<td>单词字符，等价于’<code>[A-Za-z0-9_]</code>’。</td>
+<td></td>
+</tr>
+<tr>
+<td>\s</td>
+<td>快捷方式可以匹配空白字符</td>
+<td></td>
+</tr>
+<tr>
+<td>\b</td>
+<td>匹配的是单词的边界</td>
+<td></td>
+</tr>
+<tr>
+<td>大写取反</td>
+<td>快捷方式大写可以取反</td>
+<td>\D匹配一个非数字字符。等价于 [^0-9]。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>经典实例</strong></p>
+<table>
+<thead>
+<tr>
+<th>正则表达式</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^[A-Za-z]+$</td>
+<td>由26个字母组成的字符串</td>
+</tr>
+<tr>
+<td>^[A-Za-z0-9]+$</td>
+<td>由26个字母和数字组成的字符串</td>
+</tr>
+<tr>
+<td>^-?\d+$</td>
+<td>整数形式的字符串</td>
+</tr>
+<tr>
+<td>^ [1-9]*[0-9]*$</td>
+<td>正整数形式的字符串</td>
+</tr>
+<tr>
+<td>[1-9]\d{5}</td>
+<td>中国境内邮政编码，6位</td>
+</tr>
+<tr>
+<td>[\u4e00-\u9fa5]</td>
+<td>匹配中文字符</td>
+</tr>
+<tr>
+<td>\d{3}-\d{8}|\d{4}-\d{7}</td>
+<td>国内电话号码 3位-8位或4位-7位</td>
+</tr>
+</tbody>
+</table>
+<p>例子</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">re</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">line</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;order date: 31-08-2019  delivery date: 15-09-2019&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">pattern</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">r</span><span style="color:#a6be9d">&#39;\d{1,2}-\d{1,2}-\d</span><span style="color:#a6be9d">{4}</span><span style="color:#a6be9d">&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">rs</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">re</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">finditer</span>(<span style="color:#58a1dd">pattern</span>, <span style="color:#58a1dd">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">r</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">rs</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">r</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">group</span>())       <span style="color:#58a1dd">匹配到的</span>      
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">r</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">span</span>())        <span style="color:#58a1dd">切片范围</span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">r</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>(), <span style="color:#58a1dd">r</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">end</span>())  <span style="color:#58a1dd">开始和结束的范围</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">31</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">08</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">2019</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#a6be9d">12</span>, <span style="color:#a6be9d">22</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">12</span> <span style="color:#a6be9d">22</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">15</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">09</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">2019</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#a6be9d">39</span>, <span style="color:#a6be9d">49</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">39</span> <span style="color:#a6be9d">49</span></span></span></code></pre></div><h6 id="math" class="heading-element"><span>0.0.0.1.2  math</span>
+  <a href="#math" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">数学常量</span>：
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">pi</span>：<span style="color:#58a1dd">π的值</span>，<span style="color:#58a1dd">约为</span> <span style="color:#a6be9d">3.141592653589793</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">e</span>：<span style="color:#58a1dd">自然常数</span> <span style="color:#58a1dd">e</span> <span style="color:#58a1dd">的值</span>，<span style="color:#58a1dd">约为</span> <span style="color:#a6be9d">2.718281828459045</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">inf</span>：<span style="color:#58a1dd">正无穷大的表示方式</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">nan</span>：<span style="color:#58a1dd">非数字的表示方式</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">对数和指数函数</span>：
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求以</span> <span style="color:#58a1dd">e</span> <span style="color:#58a1dd">为底数的自然对数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">log10</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求以</span> <span style="color:#a6be9d">10</span> <span style="color:#58a1dd">为底数的对数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">exp</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求</span> <span style="color:#58a1dd">e</span> <span style="color:#58a1dd">的</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">次幂</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">pow</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>)：<span style="color:#58a1dd">求</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">的</span> <span style="color:#58a1dd">y</span> <span style="color:#58a1dd">次幂</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">数值函数</span>：
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sqrt</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求平方根</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">floor</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求不大于</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">的最大整数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ceil</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求不小于</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">的最小整数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">trunc</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">的整数部分</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">fmod</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>)：<span style="color:#58a1dd">求</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">除以</span> <span style="color:#58a1dd">y</span> <span style="color:#58a1dd">的余数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">其他函数</span>：
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">degrees</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">将</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">从弧度转换为角度</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">radians</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">将</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">从角度转换为弧度</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">hypot</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>)：<span style="color:#58a1dd">求直角三角形的斜边长度</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">isfinite</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">判断</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">是否为有限数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">isinf</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">判断</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">是否为正无穷大或负无穷大</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">isnan</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">判断</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">是否为非数字</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">factorial</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求</span> <span style="color:#58a1dd">x</span> <span style="color:#58a1dd">的阶乘</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">三角函数</span>：
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sin</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求正弦值</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">cos</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求余弦值</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">tan</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求正切值</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">asin</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求反正弦值</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">acos</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求反余弦值</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">atan</span>(<span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求反正切值</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">math</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">atan2</span>(<span style="color:#58a1dd">y</span>, <span style="color:#58a1dd">x</span>)：<span style="color:#58a1dd">求以弧度为单位的反正切值</span>。</span></span></code></pre></div><h6 id="fractions" class="heading-element"><span>0.0.0.1.3  fractions</span>
+  <a href="#fractions" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>是Python中一个内置模块，用于处理有理数。比如想表示五分之一这种的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span>()：<span style="color:#58a1dd">创建一个有理数对象</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">gcd</span>(<span style="color:#58a1dd">a</span>, <span style="color:#58a1dd">b</span>)：<span style="color:#58a1dd">计算a和b的最大公约数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">from_float</span>(<span style="color:#58a1dd">f</span>)：<span style="color:#58a1dd">将一个浮点数f转换为最简分数的有理数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">limit_denominator</span>(<span style="color:#58a1dd">max_denominator</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1000000</span>)：<span style="color:#58a1dd">返回最接近当前有理数且分母不超过max_denominator的有理数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">numerator</span>：<span style="color:#58a1dd">返回有理数的分子</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">denominator</span>：<span style="color:#58a1dd">返回有理数的分母</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">__float__</span>()：<span style="color:#58a1dd">将有理数转换为浮点数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">__str__</span>()：<span style="color:#58a1dd">将有理数转换为字符串</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">__eq__</span>(<span style="color:#58a1dd">other</span>)：<span style="color:#58a1dd">判断两个有理数是否相等</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">__lt__</span>(<span style="color:#58a1dd">other</span>)：<span style="color:#58a1dd">判断一个有理数是否小于另一个有理数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">__add__</span>(<span style="color:#58a1dd">other</span>)：<span style="color:#58a1dd">将一个有理数加上另一个有理数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">__sub__</span>(<span style="color:#58a1dd">other</span>)：<span style="color:#58a1dd">将一个有理数减去另一个有理数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">__mul__</span>(<span style="color:#58a1dd">other</span>)：<span style="color:#58a1dd">将一个有理数乘以另一个有理数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">__truediv__</span>(<span style="color:#58a1dd">other</span>)：<span style="color:#58a1dd">将一个有理数除以另一个有理数</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Fraction</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">__pow__</span>(<span style="color:#58a1dd">n</span>)：<span style="color:#58a1dd">将一个有理数的n次幂</span>。</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">fractions</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">range</span>(<span style="color:#a6be9d">4</span>,<span style="color:#a6be9d">10</span>):
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">m</span> <span style="color:#ff636f">+=</span> <span style="color:#58a1dd">fractions</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Fraction</span>(<span style="color:#a6be9d">1</span>,<span style="color:#58a1dd">i</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">等价于</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">1</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">1</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">1</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.</span><span style="color:#ff636f">.....-</span><span style="color:#a6be9d">1</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">9</span></span></span></code></pre></div><h6 id="itertools" class="heading-element"><span>0.0.0.1.4  itertools</span>
+  <a href="#itertools" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">itertools</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">chain</span>()：<span style="color:#58a1dd">将多个迭代器连接成一个迭代器</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">itertools</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">combinations</span>()：<span style="color:#58a1dd">返回可迭代对象中所有长度为</span> <span style="color:#58a1dd">n</span> <span style="color:#58a1dd">的组合</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">itertools</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">count</span>()：<span style="color:#58a1dd">从指定的起始数字开始返回连续的数字</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">itertools</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">cycle</span>()：<span style="color:#58a1dd">将一个可迭代对象无限重复</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">itertools</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dropwhile</span>()：<span style="color:#58a1dd">返回可迭代对象中第一个不符合条件的元素之后的所有元素</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">itertools</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">groupby</span>()：<span style="color:#58a1dd">将可迭代对象分组</span>，<span style="color:#58a1dd">返回一个由键值对组成的迭代器</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">itertools</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">islice</span>()：<span style="color:#58a1dd">返回可迭代对象的切片</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">itertools</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">permutations</span>()：<span style="color:#58a1dd">返回可迭代对象中所有长度为</span> <span style="color:#58a1dd">n</span> <span style="color:#58a1dd">的排列</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">itertools</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">product</span>()：<span style="color:#58a1dd">返回可迭代对象的笛卡尔积</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">itertools</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">repeat</span>()：<span style="color:#58a1dd">重复一个元素若干次</span>，<span style="color:#58a1dd">返回一个迭代器</span>。</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">itertools</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">permutations</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span><span style="color:#ff636f">=</span>[<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">3</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">permutations</span>(<span style="color:#58a1dd">a</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">i</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">3</span>)
+</span></span><span style="display:flex;"><span>(<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">3</span>, <span style="color:#a6be9d">2</span>)
+</span></span><span style="display:flex;"><span>(<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">3</span>)
+</span></span><span style="display:flex;"><span>(<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">3</span>, <span style="color:#a6be9d">1</span>)
+</span></span><span style="display:flex;"><span>(<span style="color:#a6be9d">3</span>, <span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>)
+</span></span><span style="display:flex;"><span>(<span style="color:#a6be9d">3</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">1</span>)</span></span></code></pre></div><h6 id="datetime" class="heading-element"><span>0.0.0.1.5  datetime</span>
+  <a href="#datetime" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span>(<span style="color:#58a1dd">year</span>, <span style="color:#58a1dd">month</span>, <span style="color:#58a1dd">day</span>, <span style="color:#58a1dd">hour</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">minute</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">second</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">microsecond</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>)：<span style="color:#58a1dd">创建一个</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象</span>，<span style="color:#58a1dd">表示一个日期和时间</span>。<span style="color:#58a1dd">参数</span> <span style="color:#58a1dd">year</span>、<span style="color:#58a1dd">month</span> <span style="color:#58a1dd">和</span> <span style="color:#58a1dd">day</span> <span style="color:#58a1dd">表示日期</span>，<span style="color:#58a1dd">参数</span> <span style="color:#58a1dd">hour</span>、<span style="color:#58a1dd">minute</span>、<span style="color:#58a1dd">second</span> <span style="color:#58a1dd">和</span> <span style="color:#58a1dd">microsecond</span> <span style="color:#58a1dd">表示时间</span>，<span style="color:#58a1dd">默认为</span> <span style="color:#a6be9d">0</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">date</span>(<span style="color:#58a1dd">year</span>, <span style="color:#58a1dd">month</span>, <span style="color:#58a1dd">day</span>)：<span style="color:#58a1dd">创建一个</span> <span style="color:#58a1dd">date</span> <span style="color:#58a1dd">对象</span>，<span style="color:#58a1dd">表示一个日期</span>。<span style="color:#58a1dd">参数</span> <span style="color:#58a1dd">year</span>、<span style="color:#58a1dd">month</span> <span style="color:#58a1dd">和</span> <span style="color:#58a1dd">day</span> <span style="color:#58a1dd">表示日期</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">time</span>(<span style="color:#58a1dd">hour</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">minute</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">second</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">microsecond</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>)：<span style="color:#58a1dd">创建一个</span> <span style="color:#58a1dd">time</span> <span style="color:#58a1dd">对象</span>，<span style="color:#58a1dd">表示一个时间</span>。<span style="color:#58a1dd">参数</span> <span style="color:#58a1dd">hour</span>、<span style="color:#58a1dd">minute</span>、<span style="color:#58a1dd">second</span> <span style="color:#58a1dd">和</span> <span style="color:#58a1dd">microsecond</span> <span style="color:#58a1dd">表示时间</span>，<span style="color:#58a1dd">默认为</span> <span style="color:#a6be9d">0</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">now</span>()：<span style="color:#58a1dd">返回当前日期和时间的</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">today</span>()：<span style="color:#58a1dd">返回当前日期和时间的</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象</span>（<span style="color:#58a1dd">同</span> <span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">now</span>()）。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">strptime</span>(<span style="color:#58a1dd">date_string</span>, <span style="color:#58a1dd">format</span>)：<span style="color:#58a1dd">将一个字符串按照指定的格式转换为</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象</span>。<span style="color:#58a1dd">参数</span> <span style="color:#58a1dd">date_string</span> <span style="color:#58a1dd">是要转换的字符串</span>，<span style="color:#58a1dd">参数</span> <span style="color:#58a1dd">format</span> <span style="color:#58a1dd">是转换格式</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">strftime</span>(<span style="color:#58a1dd">format</span>)：<span style="color:#58a1dd">将一个</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象按照指定的格式转换为字符串</span>。<span style="color:#58a1dd">参数</span> <span style="color:#58a1dd">format</span> <span style="color:#58a1dd">是转换格式</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">timedelta</span>(<span style="color:#58a1dd">days</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">seconds</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">microseconds</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">milliseconds</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">minutes</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">hours</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">weeks</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>)：<span style="color:#58a1dd">创建一个时间差对象</span>，<span style="color:#58a1dd">表示两个时间之间的差距</span>。<span style="color:#58a1dd">参数</span> <span style="color:#58a1dd">days</span>、<span style="color:#58a1dd">seconds</span>、<span style="color:#58a1dd">microseconds</span>、<span style="color:#58a1dd">milliseconds</span>、<span style="color:#58a1dd">minutes</span>、<span style="color:#58a1dd">hours</span> <span style="color:#58a1dd">和</span> <span style="color:#58a1dd">weeks</span> <span style="color:#58a1dd">分别表示相差的天数</span>、<span style="color:#58a1dd">秒数</span>、<span style="color:#58a1dd">微秒数</span>、<span style="color:#58a1dd">毫秒数</span>、<span style="color:#58a1dd">分钟数</span>、<span style="color:#58a1dd">小时数和周数</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">date</span>()：<span style="color:#58a1dd">返回</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象所表示的日期的</span> <span style="color:#58a1dd">date</span> <span style="color:#58a1dd">对象</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">time</span>()：<span style="color:#58a1dd">返回</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象所表示的时间的</span> <span style="color:#58a1dd">time</span> <span style="color:#58a1dd">对象</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">timestamp</span>()：<span style="color:#58a1dd">返回</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象所表示的</span> <span style="color:#58a1dd">Unix</span> <span style="color:#58a1dd">时间戳</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">fromtimestamp</span>(<span style="color:#58a1dd">timestamp</span>)：<span style="color:#58a1dd">将一个</span> <span style="color:#58a1dd">Unix</span> <span style="color:#58a1dd">时间戳转换为</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">combine</span>(<span style="color:#58a1dd">date</span>, <span style="color:#58a1dd">time</span>)：<span style="color:#58a1dd">将一个</span> <span style="color:#58a1dd">date</span> <span style="color:#58a1dd">对象和一个</span> <span style="color:#58a1dd">time</span> <span style="color:#58a1dd">对象合并为一个</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">astimezone</span>(<span style="color:#58a1dd">tz</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>)：<span style="color:#58a1dd">将一个</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象转换为指定时区的时间</span>。<span style="color:#58a1dd">参数</span> <span style="color:#58a1dd">tz</span> <span style="color:#58a1dd">是一个</span> <span style="color:#58a1dd">tzinfo</span> <span style="color:#58a1dd">对象</span>，<span style="color:#58a1dd">表示目标时区</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">replace</span>(<span style="color:#58a1dd">year</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">month</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">day</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">hour</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">minute</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">second</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">microsecond</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">tzinfo</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>)：<span style="color:#58a1dd">创建一个新的</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象</span>，<span style="color:#58a1dd">将指定的属性替换为新的值</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">datetime</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">weekday</span>()：<span style="color:#58a1dd">返回</span> <span style="color:#58a1dd">datetime</span> <span style="color:#58a1dd">对象所表示的日期是星期几</span>（<span style="color:#a6be9d">0</span> <span style="color:#58a1dd">表示星期一</span>，<span style="color:#a6be9d">6</span> <span style="color:#58a1dd">表示星期日</span>）。</span></span></code></pre></div><h6 id="string" class="heading-element"><span>0.0.0.1.6  string</span>
+  <a href="#string" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h6 id="uuid" class="heading-element"><span>0.0.0.1.7  uuid</span>
+  <a href="#uuid" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h6 id="random" class="heading-element"><span>0.0.0.1.8  random</span>
+  <a href="#random" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>抽奖</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">random</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">values</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">3</span>, <span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">5</span>, <span style="color:#a6be9d">6</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">choice</span>(<span style="color:#58a1dd">values</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">choice</span>(<span style="color:#58a1dd">values</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">choice</span>(<span style="color:#58a1dd">values</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">choice</span>(<span style="color:#58a1dd">values</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">choice</span>(<span style="color:#58a1dd">values</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">6</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span></span></span></code></pre></div><p>提取</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sample</span>(<span style="color:#58a1dd">values</span>, <span style="color:#a6be9d">2</span>)
+</span></span><span style="display:flex;"><span>[<span style="color:#a6be9d">6</span>, <span style="color:#a6be9d">2</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sample</span>(<span style="color:#58a1dd">values</span>, <span style="color:#a6be9d">2</span>)
+</span></span><span style="display:flex;"><span>[<span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">3</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sample</span>(<span style="color:#58a1dd">values</span>, <span style="color:#a6be9d">3</span>)
+</span></span><span style="display:flex;"><span>[<span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">3</span>, <span style="color:#a6be9d">1</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sample</span>(<span style="color:#58a1dd">values</span>, <span style="color:#a6be9d">3</span>)
+</span></span><span style="display:flex;"><span>[<span style="color:#a6be9d">5</span>, <span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">1</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span></span></span></code></pre></div><p>打乱顺序</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">shuffle</span>(<span style="color:#58a1dd">values</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">values</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">6</span>, <span style="color:#a6be9d">5</span>, <span style="color:#a6be9d">3</span>, <span style="color:#a6be9d">1</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">shuffle</span>(<span style="color:#58a1dd">values</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">values</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6be9d">3</span>, <span style="color:#a6be9d">5</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">6</span>, <span style="color:#a6be9d">4</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span></span></span></code></pre></div><p>生成随机整数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">randint</span>(<span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">randint</span>(<span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">randint</span>(<span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">randint</span>(<span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">7</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">randint</span>(<span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">randint</span>(<span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span></span></span></code></pre></div><p>生成0到1范围内浮点数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0.9406677561675867</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0.133129581343897</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0.4144991136919316</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span></span></span></code></pre></div><h5 id="方法" class="heading-element"><span>0.0.0.2  方法</span>
+  <a href="#%e6%96%b9%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="len" class="heading-element"><span>0.0.0.2.1  len</span>
+  <a href="#len" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>返回字符串、列表、字典、元组等长度</p>
+<h6 id="split" class="heading-element"><span>0.0.0.2.2  split</span>
+  <a href="#split" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>语法：str.split(str=&quot;&quot;,num=string.count(str))[n]</p>
+<p>参数说明：
+str:表示为分隔符，==默认为空格==，但是不能为空(’’)。若字符串中没有分隔符，则把整个字符串作为列表的一个元素
+num:表示分割次数。如果存在参数num，则仅分隔成 num+1 个子字符串，并且每一个子字符串可以赋给新的变量</p>
+<p>n:表示选取第n个分片</p>
+<p>注意：当使用空格作为分隔符时，对于中间为空的项会自动忽略</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">input</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">split</span>()</span></span></code></pre></div><h6 id="map" class="heading-element"><span>0.0.0.2.3  map</span>
+  <a href="#map" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>map(function,iterable,&hellip;)
+第一个参数接受一个函数名，后面的参数接受一个或多个可迭代的序列，返回的是一个==集合==。</p>
+<p>map不改变原list，而是返回一个==新==list。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">del</span> <span style="color:#58a1dd">square</span>(<span style="color:#58a1dd">x</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">x</span> <span style="color:#ff636f">**</span> <span style="color:#a6be9d">2</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">map</span>(<span style="color:#58a1dd">square</span>,[<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">3</span>,<span style="color:#a6be9d">4</span>,<span style="color:#a6be9d">5</span>])
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 结果如下:</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">4</span>,<span style="color:#a6be9d">9</span>,<span style="color:#a6be9d">16</span>,<span style="color:#a6be9d">25</span>]</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">a</span>,<span style="color:#58a1dd">b</span>,<span style="color:#58a1dd">c</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">map</span>(<span style="color:#58a1dd">int</span>,<span style="color:#58a1dd">input</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">split</span>())</span></span></code></pre></div><h6 id="zip" class="heading-element"><span>0.0.0.2.4  zip</span>
+  <a href="#zip" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><code>zip()</code> 是一个内置函数，用于将多个可迭代对象（如列表、元组等）的对应元素打包成==元组==的序列。它返回一个迭代器，可以用于遍历这些打包后的元组序列。</p>
+<p>列表合并转字典</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">teams</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#34;A&#34;</span>, <span style="color:#a6be9d">&#34;B&#34;</span>, <span style="color:#a6be9d">&#34;C&#34;</span>, <span style="color:#a6be9d">&#34;D&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">captains</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#34;X&#34;</span>,<span style="color:#a6be9d">&#34;Y&#34;</span>,<span style="color:#a6be9d">&#34;Z&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ziplist</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">list</span>(<span style="color:#58a1dd">zip</span>(<span style="color:#58a1dd">teams</span>,<span style="color:#58a1dd">captains</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">zipdict</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">dict</span>(<span style="color:#58a1dd">zip</span>(<span style="color:#58a1dd">teams</span>,<span style="color:#58a1dd">captains</span>))</span></span></code></pre></div><h6 id="sortsorted" class="heading-element"><span>0.0.0.2.5  sort&amp;sorted</span>
+  <a href="#sortsorted" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>都用来排序列表，不同的是sort直接改变原列表，sorted是返回新的列表</p>
+<h6 id="ord" class="heading-element"><span>0.0.0.2.6  ord</span>
+  <a href="#ord" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>返回字符的ascii值</p>
+<h6 id="join" class="heading-element"><span>0.0.0.2.7  join</span>
+  <a href="#join" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>str.join(sequence)
+sequence -- 要连接的元素序列。</code></pre><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">parts</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;Is&#39;</span>, <span style="color:#a6be9d">&#39;Chicago&#39;</span>, <span style="color:#a6be9d">&#39;Not&#39;</span>, <span style="color:#a6be9d">&#39;Chicago?&#39;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#a6be9d">&#39; &#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">join</span>(<span style="color:#58a1dd">parts</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#39;Is Chicago Not Chicago?&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#a6be9d">&#39;,&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">join</span>(<span style="color:#58a1dd">parts</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#39;Is,Chicago,Not,Chicago?&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#a6be9d">&#39;&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">join</span>(<span style="color:#58a1dd">parts</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#39;IsChicagoNotChicago?&#39;</span></span></span></code></pre></div><h6 id="count" class="heading-element"><span>0.0.0.2.8  count</span>
+  <a href="#count" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>str.count(sub, start= 0,end=len(string))</code></pre><ul>
+<li>sub &ndash; 搜索的子字符串</li>
+<li>start &ndash; 字符串开始搜索的位置。默认为第一个字符,第一个字符索引值为0。</li>
+<li>end &ndash; 字符串中结束搜索的位置。字符中第一个字符的索引为 0。默认为字符串的最后一个位置。</li>
+</ul>
+<p>该方法返回子字符串在字符串中出现的次数。</p>
+<h6 id="dedupe" class="heading-element"><span>0.0.0.2.9  dedupe</span>
+  <a href="#dedupe" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>消除重复元素</p>
+<pre tabindex="0"><code>&gt;&gt;&gt; a = [1, 5, 2, 1, 9, 1, 5, 10]
+&gt;&gt;&gt; list(dedupe(a))
+[1, 5, 2, 9, 10]</code></pre><h6 id="replace" class="heading-element"><span>0.0.0.2.10  replace</span>
+  <a href="#replace" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">str</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">replace</span>(<span style="color:#58a1dd">old</span>, <span style="color:#58a1dd">new</span>[, <span style="color:#58a1dd">max</span>])</span></span></code></pre></div><ul>
+<li>old &ndash; 将被替换的子字符串。</li>
+<li>new &ndash; 新字符串，用于替换old子字符串。</li>
+<li>max &ndash; 可选字符串, 替换不超过 max 次</li>
+</ul>
+<h6 id="startswith" class="heading-element"><span>0.0.0.2.11  startswith</span>
+  <a href="#startswith" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><code>startswith()</code> 是 Python 字符串对象的一个内置方法，用于检查字符串是否以指定的前缀开头。它的语法如下：</p>
+<p>python</p>
+<p>复制</p>
+<pre tabindex="0"><code>str.startswith(prefix[, start[, end]])</code></pre><p>其中，<code>str</code> 是要检查的字符串对象，<code>prefix</code> 是要检查的前缀字符串。可选的参数 <code>start</code> 和 <code>end</code> 指定了要在字符串中进行检查的起始和结束位置，默认为整个字符串。</p>
+<p><code>startswith()</code> 方法返回一个布尔值，如果字符串以指定的前缀开头，则返回 <code>True</code>，否则返回 <code>False</code>。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E8%AF%AD%E8%A8%80/" class="post-tag" title="Tags - 语言">语言</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/97/" class="post-nav-item" rel="prev" title="Python 并发学习"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Python 并发学习</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/%E5%9F%BA%E7%A1%80/96/" class="post-nav-item" rel="next" title="Python 学习">Python 学习<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

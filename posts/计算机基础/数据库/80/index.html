@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>SQL进阶操作 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 数据库' />
+  <meta itemprop="name" content="SQL进阶操作">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="1937">
+  <meta itemprop="keywords" content="计算机基础,数据库"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/80/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="SQL进阶操作">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="数据库">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SQL进阶操作">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/80/" /><link rel="prev" href="https://dongyu29.github.io/posts/owasp/ssrf/120/" /><link rel="next" href="https://dongyu29.github.io/posts/owasp/sql%E6%B3%A8%E5%85%A5/116/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "SQL进阶操作",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E6%95%B0%E6%8D%AE%E5%BA%93\/80\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 数据库","wordcount":  1937 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E6%95%B0%E6%8D%AE%E5%BA%93\/80\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">SQL进阶操作</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>SQL进阶操作</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1937 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 2000 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>10 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="数据类型" class="heading-element"><span>0.0.0.1  数据类型</span>
+  <a href="#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><table>
+<thead>
+<tr>
+<th>CHARACTER(n)</th>
+<th>字符/字符串。固定长度 n。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VARCHAR(n) 或 CHARACTER VARYING(n)</td>
+<td>字符/字符串。可变长度。最大长度 n。</td>
+</tr>
+<tr>
+<td>BINARY(n)</td>
+<td>二进制串。固定长度 n。</td>
+</tr>
+<tr>
+<td>BOOLEAN</td>
+<td>存储 TRUE 或 FALSE 值</td>
+</tr>
+<tr>
+<td>VARBINARY(n) 或 BINARY VARYING(n)</td>
+<td>二进制串。可变长度。最大长度 n。</td>
+</tr>
+<tr>
+<td>INTEGER(p)</td>
+<td>整数值（没有小数点）。精度 p。</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>整数值（没有小数点）。精度 5。</td>
+</tr>
+<tr>
+<td>INTEGER</td>
+<td>整数值（没有小数点）。精度 10。</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>整数值（没有小数点）。精度 19。</td>
+</tr>
+<tr>
+<td>DECIMAL(p,s)</td>
+<td>精确数值，精度 p，小数点后位数 s。例如：decimal(5,2) 是一个小数点前有 3 位数，小数点后有 2 位数的数字。</td>
+</tr>
+<tr>
+<td>NUMERIC(p,s)</td>
+<td>精确数值，精度 p，小数点后位数 s。（与 DECIMAL 相同）</td>
+</tr>
+<tr>
+<td>FLOAT(p)</td>
+<td>近似数值，尾数精度 p。一个采用以 10 为基数的指数计数法的浮点数。该类型的 size 参数由一个指定最小精度的单一数字组成。</td>
+</tr>
+<tr>
+<td>REAL</td>
+<td>近似数值，尾数精度 7。</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td>近似数值，尾数精度 16。</td>
+</tr>
+<tr>
+<td>DOUBLE PRECISION</td>
+<td>近似数值，尾数精度 16。</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td>存储年、月、日的值。</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>存储小时、分、秒的值。</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>存储年、月、日、小时、分、秒的值。</td>
+</tr>
+<tr>
+<td>INTERVAL</td>
+<td>由一些整数字段组成，代表一段时间，取决于区间的类型。</td>
+</tr>
+<tr>
+<td>ARRAY</td>
+<td>元素的固定长度的有序集合</td>
+</tr>
+<tr>
+<td>MULTISET</td>
+<td>元素的可变长度的无序集合</td>
+</tr>
+<tr>
+<td>XML</td>
+<td>存储 XML 数据</td>
+</tr>
+</tbody>
+</table>
+<h5 id="关键字" class="heading-element"><span>0.0.0.2  关键字</span>
+  <a href="#%e5%85%b3%e9%94%ae%e5%ad%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="index" class="heading-element"><span>0.0.0.2.1  INDEX</span>
+  <a href="#index" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在不读取整个表的情况下，索引使数据库应用程序可以更快地查找数据。</p>
+<p>用户无法看到索引，它们只能被用来加速搜索/查询。</p>
+<p>**注释：**更新一个包含索引的表需要比更新一个没有索引的表花费更多的时间，这是由于索引本身也需要更新。因此，理想的做法是仅仅在常常被搜索的列（以及表）上面创建索引。</p>
+<p>SQL CREATE INDEX 语法</p>
+<p>在表上创建一个简单的索引。允许使用重复的值：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">INDEX</span> <span style="color:#58a1dd">index_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ON</span> <span style="color:#ff636f">table_name</span> (<span style="color:#ff636f">column_name</span>)</span></span></code></pre></div><p>SQL CREATE UNIQUE INDEX 语法</p>
+<p>在表上创建一个唯一的索引。不允许使用重复的值：唯一的索引意味着两个行不能拥有相同的索引值。Creates a unique index on a table. Duplicate values are not allowed:</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">UNIQUE</span> <span style="color:#ff636f">INDEX</span> <span style="color:#58a1dd">index_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ON</span> <span style="color:#ff636f">table_name</span> (<span style="color:#ff636f">column_name</span>)</span></span></code></pre></div><p>**注释：**用于创建索引的语法在不同的数据库中不一样。因此，检查您的数据库中创建索引的语法。</p>
+<p>CREATE INDEX 实例</p>
+<p>下面的 SQL 语句在 &ldquo;Persons&rdquo; 表的 &ldquo;LastName&rdquo; 列上创建一个名为 &ldquo;PIndex&rdquo; 的索引：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">INDEX</span> <span style="color:#58a1dd">PIndex</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ON</span> <span style="color:#58a1dd">Persons</span> (<span style="color:#58a1dd">LastName</span>)</span></span></code></pre></div><p>如果您希望索引不止一个列，您可以在括号中列出这些列的名称，用逗号隔开：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">INDEX</span> <span style="color:#58a1dd">PIndex</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ON</span> <span style="color:#58a1dd">Persons</span> (<span style="color:#58a1dd">LastName</span>, <span style="color:#58a1dd">FirstName</span>)</span></span></code></pre></div><h6 id="distinct" class="heading-element"><span>0.0.0.2.2  DISTINCT</span>
+  <a href="#distinct" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在表中，一个列可能会包含多个重复值，有时您也许希望仅仅列出不同（distinct）的值。</p>
+<p>DISTINCT 关键词用于返回唯一不同的值。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">DISTINCT</span> <span style="color:#58a1dd">column1</span>, <span style="color:#58a1dd">column2</span>, ...
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>;</span></span></code></pre></div><h6 id="order-by" class="heading-element"><span>0.0.0.2.3  ORDER BY</span>
+  <a href="#order-by" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>ORDER BY 关键字用于对结果集按照一个列或者多个列进行排序。</p>
+<p>ORDER BY 关键字默认按照升序对记录进行排序。如果需要按照降序对记录进行排序，您可以使用 DESC 关键字。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">column1</span>, <span style="color:#58a1dd">column2</span>, ...
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ORDER</span> <span style="color:#ff636f">BY</span> <span style="color:#58a1dd">column1</span>, <span style="color:#58a1dd">column2</span>, ... <span style="color:#ff636f">ASC</span><span style="color:#ff636f">|</span><span style="color:#ff636f">DESC</span>;</span></span></code></pre></div><ul>
+<li><strong>column1, column2, &hellip;</strong>：要排序的字段名称，可以为多个字段。</li>
+<li><strong>ASC</strong>：表示按升序排序。</li>
+<li><strong>DESC</strong>：表示按降序排序。</li>
+</ul>
+<p>演示</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">Websites</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ORDER</span> <span style="color:#ff636f">BY</span> <span style="color:#58a1dd">country</span>,<span style="color:#58a1dd">alexa</span>;</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401030921870.webp" alt="image-20240103092157228" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401030921870.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401030921870.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401030921870.webp?size=large 2x" data-title="image-20240103092157228" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="insert-into" class="heading-element"><span>0.0.0.2.4  INSERT INTO</span>
+  <a href="#insert-into" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">INSERT</span> <span style="color:#ff636f">INTO</span> <span style="color:#ff636f">table_name</span> (<span style="color:#58a1dd">column1</span>,<span style="color:#58a1dd">column2</span>,<span style="color:#58a1dd">column3</span>,...)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">VALUES</span> (<span style="color:#58a1dd">value1</span>,<span style="color:#58a1dd">value2</span>,<span style="color:#58a1dd">value3</span>,...);</span></span></code></pre></div><h6 id="update" class="heading-element"><span>0.0.0.2.5  UPDATE</span>
+  <a href="#update" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">UPDATE</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">SET</span> <span style="color:#58a1dd">column1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">value1</span>, <span style="color:#58a1dd">column2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">value2</span>, ...
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">condition</span>;</span></span></code></pre></div><h6 id="delete" class="heading-element"><span>0.0.0.2.6  DELETE</span>
+  <a href="#delete" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">DELETE</span> <span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">condition</span>;</span></span></code></pre></div><h6 id="top" class="heading-element"><span>0.0.0.2.7  TOP</span>
+  <a href="#top" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>SELECT TOP 子句用于规定要返回的记录的数目</p>
+<p>SQL Server / MS Access 语法</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">TOP</span> <span style="color:#58a1dd">number</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">percent</span> <span style="color:#ff636f">column_name</span>(<span style="color:#58a1dd">s</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>;</span></span></code></pre></div><p>MySQL 语法</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">column_name</span>(<span style="color:#58a1dd">s</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">LIMIT</span> <span style="color:#58a1dd">number</span>;</span></span></code></pre></div><p>Oracle 语法</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">column_name</span>(<span style="color:#58a1dd">s</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">ROWNUM</span> <span style="color:#ff636f">&lt;=</span> <span style="color:#58a1dd">number</span>;</span></span></code></pre></div><h6 id="like" class="heading-element"><span>0.0.0.2.8  LIKE</span>
+  <a href="#like" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>LIKE 操作符用于在 WHERE 子句中搜索列中的指定模式。</p>
+<p>平替：<strong>REGEXP</strong> 或 <strong>NOT REGEXP</strong> 运算符 (或 RLIKE 和 NOT RLIKE)</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">column1</span>, <span style="color:#58a1dd">column2</span>, ...
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#ff636f">column</span> <span style="color:#ff636f">LIKE</span> <span style="color:#58a1dd">pattern</span>;</span></span></code></pre></div><p>在 SQL 中，可使用以下通配符：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">通配符</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">%</td>
+<td style="text-align:left">替代 0 个或多个字符</td>
+</tr>
+<tr>
+<td style="text-align:left">_</td>
+<td style="text-align:left">替代一个字符</td>
+</tr>
+<tr>
+<td style="text-align:left">[<em>charlist</em>]</td>
+<td style="text-align:left">字符列中的任何单一字符</td>
+</tr>
+<tr>
+<td style="text-align:left">[^<em>charlist</em>] 或 [!<em>charlist</em>]</td>
+<td style="text-align:left">不在字符列中的任何单一字符</td>
+</tr>
+</tbody>
+</table>
+<h6 id="in" class="heading-element"><span>0.0.0.2.9  IN</span>
+  <a href="#in" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>IN 操作符允许您在 WHERE 子句中规定多个值。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">column1</span>, <span style="color:#58a1dd">column2</span>, ...
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#ff636f">column</span> <span style="color:#ff636f">IN</span> (<span style="color:#58a1dd">value1</span>, <span style="color:#58a1dd">value2</span>, ...);</span></span></code></pre></div><h6 id="between" class="heading-element"><span>0.0.0.2.10  BETWEEN</span>
+  <a href="#between" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>BETWEEN 操作符用于选取介于两个值之间的数据范围内的值。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">column1</span>, <span style="color:#58a1dd">column2</span>, ...
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#ff636f">column</span> <span style="color:#ff636f">BETWEEN</span> <span style="color:#58a1dd">value1</span> <span style="color:#ff636f">AND</span> <span style="color:#58a1dd">value2</span>;</span></span></code></pre></div><p>示例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">Websites</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> (<span style="color:#58a1dd">alexa</span> <span style="color:#ff636f">BETWEEN</span> <span style="color:#a6be9d">1</span> <span style="color:#ff636f">AND</span> <span style="color:#a6be9d">20</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">AND</span> <span style="color:#58a1dd">country</span> <span style="color:#ff636f">NOT</span> <span style="color:#ff636f">IN</span> (<span style="color:#a6be9d">&#39;USA&#39;</span>, <span style="color:#a6be9d">&#39;IND&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>下面的 <span style="color:#ff636f">SQL</span> 语句选取 <span style="color:#58a1dd">name</span> 以介于 <span style="color:#a6be9d">&#39;A&#39;</span> 和 <span style="color:#a6be9d">&#39;H&#39;</span> 之间字母开始的所有网站：
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">Websites</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">BETWEEN</span> <span style="color:#a6be9d">&#39;A&#39;</span> <span style="color:#ff636f">AND</span> <span style="color:#a6be9d">&#39;H&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>下面的 <span style="color:#ff636f">SQL</span> 语句选取 <span style="color:#58a1dd">name</span> 不介于 <span style="color:#a6be9d">&#39;A&#39;</span> 和 <span style="color:#a6be9d">&#39;H&#39;</span> 之间字母开始的所有网站：
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">Websites</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">NOT</span> <span style="color:#ff636f">BETWEEN</span> <span style="color:#a6be9d">&#39;A&#39;</span> <span style="color:#ff636f">AND</span> <span style="color:#a6be9d">&#39;H&#39;</span>;</span></span></code></pre></div><h6 id="group-by" class="heading-element"><span>0.0.0.2.11  GROUP BY</span>
+  <a href="#group-by" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>GROUP BY 语句用于结合==聚合函数==，根据一个或多个列对结果集进行分组</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">column_name</span>, <span style="color:#58a1dd">aggregate_function</span>(<span style="color:#ff636f">column_name</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#ff636f">column_name</span> <span style="color:#ff636f">operator</span> <span style="color:#58a1dd">value</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">GROUP</span> <span style="color:#ff636f">BY</span> <span style="color:#ff636f">column_name</span>;</span></span></code></pre></div><p>示例</p>
+<p>下面是选自 &ldquo;Websites&rdquo; 表的数据：</p>
+<pre tabindex="0"><code>+----+--------------+---------------------------+-------+---------+
+| id | name         | url                       | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | Google       | https://www.google.cm/    | 1     | USA     |
+| 2  | 淘宝          | https://www.taobao.com/   | 13    | CN      |
+| 3  | 菜鸟教程      | http://www.runoob.com/    | 4689  | CN      |
+| 4  | 微博          | http://weibo.com/         | 20    | CN      |
+| 5  | Facebook     | https://www.facebook.com/ | 3     | USA     |
+| 7  | stackoverflow | http://stackoverflow.com/ |   0 | IND     |
++----+---------------+---------------------------+-------+---------+</code></pre><p>下面是 &ldquo;access_log&rdquo; 网站访问记录表的数据：</p>
+<pre tabindex="0"><code>mysql&gt; SELECT * FROM access_log;
++-----+---------+-------+------------+
+| aid | site_id | count | date       |
++-----+---------+-------+------------+
+|   1 |       1 |    45 | 2016-05-10 |
+|   2 |       3 |   100 | 2016-05-13 |
+|   3 |       1 |   230 | 2016-05-14 |
+|   4 |       2 |    10 | 2016-05-14 |
+|   5 |       5 |   205 | 2016-05-14 |
+|   6 |       4 |    13 | 2016-05-15 |
+|   7 |       3 |   220 | 2016-05-15 |
+|   8 |       5 |   545 | 2016-05-16 |
+|   9 |       3 |   201 | 2016-05-17 |
++-----+---------+-------+------------+
+9 rows in set (0.00 sec)</code></pre><p>单表</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">site_id</span>, <span style="color:#ff636f">SUM</span>(<span style="color:#58a1dd">access_log</span>.<span style="color:#ff636f">count</span>) <span style="color:#ff636f">AS</span> <span style="color:#58a1dd">nums</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">access_log</span> <span style="color:#ff636f">GROUP</span> <span style="color:#ff636f">BY</span> <span style="color:#58a1dd">site_id</span>;</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401031047822.webp" alt="image-20240103104725198" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401031047822.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401031047822.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401031047822.webp?size=large 2x" data-title="image-20240103104725198" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>多表</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">name</span>,<span style="color:#ff636f">COUNT</span>(<span style="color:#58a1dd">access_log</span>.<span style="color:#58a1dd">aid</span>) <span style="color:#ff636f">AS</span> <span style="color:#58a1dd">nums</span> <span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">access_log</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">LEFT</span> <span style="color:#ff636f">JOIN</span> <span style="color:#58a1dd">Websites</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ON</span> <span style="color:#58a1dd">access_log</span>.<span style="color:#58a1dd">site_id</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">id</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">GROUP</span> <span style="color:#ff636f">BY</span> <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">name</span>;</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401031047394.webp" alt="image-20240103104715699" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401031047394.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401031047394.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401031047394.webp?size=large 2x" data-title="image-20240103104715699" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="having" class="heading-element"><span>0.0.0.2.12  HAVING</span>
+  <a href="#having" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在 SQL 中增加 HAVING 子句原因是，WHERE 关键字无法与聚合函数一起使用。</p>
+<p>HAVING 子句可以让我们筛选分组后的各组数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">column1</span>, <span style="color:#58a1dd">aggregate_function</span>(<span style="color:#58a1dd">column2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">GROUP</span> <span style="color:#ff636f">BY</span> <span style="color:#58a1dd">column1</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">HAVING</span> <span style="color:#58a1dd">condition</span>;</span></span></code></pre></div><p>示例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">name</span>, <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">url</span>, <span style="color:#ff636f">SUM</span>(<span style="color:#58a1dd">access_log</span>.<span style="color:#ff636f">count</span>) <span style="color:#ff636f">AS</span> <span style="color:#58a1dd">nums</span> <span style="color:#ff636f">FROM</span> (<span style="color:#58a1dd">access_log</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">INNER</span> <span style="color:#ff636f">JOIN</span> <span style="color:#58a1dd">Websites</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ON</span> <span style="color:#58a1dd">access_log</span>.<span style="color:#58a1dd">site_id</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">id</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">GROUP</span> <span style="color:#ff636f">BY</span> <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">HAVING</span> <span style="color:#ff636f">SUM</span>(<span style="color:#58a1dd">access_log</span>.<span style="color:#ff636f">count</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">200</span>;</span></span></code></pre></div><h6 id="别名" class="heading-element"><span>0.0.0.2.13  别名</span>
+  <a href="#%e5%88%ab%e5%90%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>通过使用 SQL，可以为表名称或列名称指定别名。</p>
+<p>基本上，创建别名是为了让列名称的可读性更强。</p>
+</blockquote>
+<p>列的 SQL 别名语法</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">column_name</span> <span style="color:#ff636f">AS</span> <span style="color:#58a1dd">alias_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>;</span></span></code></pre></div><p>表的 SQL 别名语法</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">column_name</span>(<span style="color:#58a1dd">s</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span> <span style="color:#ff636f">AS</span> <span style="color:#58a1dd">alias_name</span>;</span></span></code></pre></div><p>示例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">name</span>, <span style="color:#58a1dd">CONCAT</span>(<span style="color:#58a1dd">url</span>, <span style="color:#a6be9d">&#39;, &#39;</span>, <span style="color:#58a1dd">alexa</span>, <span style="color:#a6be9d">&#39;, &#39;</span>, <span style="color:#58a1dd">country</span>) <span style="color:#ff636f">AS</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#58a1dd">site_info</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">Websites</span>;</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401030934049.webp" alt="image-20240103093446504" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401030934049.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401030934049.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202401030934049.webp?size=large 2x" data-title="image-20240103093446504" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>不带别名
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">name</span>, <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">url</span>, <span style="color:#58a1dd">access_log</span>.<span style="color:#ff636f">count</span>, <span style="color:#58a1dd">access_log</span>.<span style="color:#58a1dd">date</span> <span style="color:#ff636f">FROM</span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Websites</span>, <span style="color:#58a1dd">access_log</span>  
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">access_log</span>.<span style="color:#58a1dd">site_id</span> <span style="color:#ff636f">and</span> <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;菜鸟教程&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>带别名
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">w</span>.<span style="color:#58a1dd">name</span>, <span style="color:#58a1dd">w</span>.<span style="color:#58a1dd">url</span>, <span style="color:#58a1dd">a</span>.<span style="color:#ff636f">count</span>, <span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">date</span> <span style="color:#ff636f">FROM</span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Websites</span> <span style="color:#ff636f">AS</span> <span style="color:#58a1dd">w</span>, <span style="color:#58a1dd">access_log</span> <span style="color:#ff636f">AS</span> <span style="color:#58a1dd">a</span>  
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">site_id</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">w</span>.<span style="color:#58a1dd">id</span> <span style="color:#ff636f">and</span> <span style="color:#58a1dd">w</span>.<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;菜鸟教程&#34;</span>;</span></span></code></pre></div><h6 id="join" class="heading-element"><span>0.0.0.2.14  JOIN</span>
+  <a href="#join" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>SQL join 用于把来自两个或多个表的行结合起来。</p>
+<p>下图展示了 LEFT JOIN、RIGHT JOIN、INNER JOIN、OUTER JOIN 相关的 7 种用法。</p>
+<!-- raw HTML omitted -->
+<p>SQL JOIN 子句用于把来自两个或多个表的行结合起来，基于这些表之间的共同字段。</p>
+<p>最常见的 JOIN 类型：<strong>SQL INNER JOIN（简单的 JOIN）</strong>。 SQL INNER JOIN 从多个表中返回满足 JOIN 条件的所有行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">column1</span>, <span style="color:#58a1dd">column2</span>, ...
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">table1</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">JOIN</span> <span style="color:#58a1dd">table2</span> <span style="color:#ff636f">ON</span> <span style="color:#58a1dd">condition</span>;</span></span></code></pre></div><p>示例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">id</span>, <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">name</span>, <span style="color:#58a1dd">access_log</span>.<span style="color:#ff636f">count</span>, <span style="color:#58a1dd">access_log</span>.<span style="color:#58a1dd">dateFROM</span> 
+</span></span><span style="display:flex;"><span>	<span style="color:#58a1dd">WebsitesINNER</span> <span style="color:#ff636f">JOIN</span> <span style="color:#58a1dd">access_logON</span> <span style="color:#58a1dd">Websites</span>.<span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">access_log</span>.<span style="color:#58a1dd">site_id</span>;</span></span></code></pre></div><h6 id="select-into" class="heading-element"><span>0.0.0.2.15  SELECT INTO</span>
+  <a href="#select-into" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>SELECT INTO 语句从一个表复制数据，然后把数据插入到另一个新表中。</p>
+<p>我们可以复制所有的列插入到新表中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">INTO</span> <span style="color:#58a1dd">newtable</span> [<span style="color:#ff636f">IN</span> <span style="color:#58a1dd">externaldb</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">table1</span>;</span></span></code></pre></div><p>或者只复制希望的列插入到新表中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">column_name</span>(<span style="color:#58a1dd">s</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">INTO</span> <span style="color:#58a1dd">newtable</span> [<span style="color:#ff636f">IN</span> <span style="color:#58a1dd">externaldb</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">table1</span>;</span></span></code></pre></div><h6 id="auto_increment" class="heading-element"><span>0.0.0.2.16  AUTO_INCREMENT</span>
+  <a href="#auto_increment" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>Auto-increment 会在新记录插入表中时生成一个唯一的数字。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">TABLE</span> <span style="color:#58a1dd">Persons</span>
+</span></span><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ID</span> <span style="color:#58a1dd">int</span> <span style="color:#ff636f">NOT</span> <span style="color:#ff636f">NULL</span> <span style="color:#58a1dd">AUTO_INCREMENT</span>,
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">LastName</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>) <span style="color:#ff636f">NOT</span> <span style="color:#ff636f">NULL</span>,
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">FirstName</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>),
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Address</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>),
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">City</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>),
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">PRIMARY</span> <span style="color:#ff636f">KEY</span> (<span style="color:#58a1dd">ID</span>)
+</span></span><span style="display:flex;"><span>)</span></span></code></pre></div><h6 id="exists" class="heading-element"><span>0.0.0.2.17  EXISTS</span>
+  <a href="#exists" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>EXISTS 运算符用于判断查询子句是否有记录，如果有一条或多条记录存在返回 True，否则返回 False。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">column_name</span>(<span style="color:#58a1dd">s</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#ff636f">EXISTS</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">column_name</span> <span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span> <span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">condition</span>);</span></span></code></pre></div><p>示例</p>
+<p>显示所有已经选修了课程的学生信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">student</span> <span style="color:#58a1dd">s</span> <span style="color:#ff636f">where</span> <span style="color:#ff636f">exists</span> (<span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">sc</span> <span style="color:#ff636f">where</span> <span style="color:#58a1dd">s</span>.<span style="color:#58a1dd">sno</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">sc</span>);</span></span></code></pre></div><h5 id="函数" class="heading-element"><span>0.0.0.3  函数</span>
+  <a href="#%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="sql-aggregate-函数" class="heading-element"><span>0.0.0.3.1  SQL Aggregate 函数</span>
+  <a href="#sql-aggregate-%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>SQL Aggregate 函数计算从列中取得的值，返回一个单一的值。</p>
+<p>有用的 Aggregate 函数：</p>
+<ul>
+<li>AVG() - 返回平均值</li>
+<li>COUNT() - 返回行数</li>
+<li>FIRST() - 返回第一个记录的值</li>
+<li>LAST() - 返回最后一个记录的值</li>
+<li>MAX() - 返回最大值</li>
+<li>MIN() - 返回最小值</li>
+<li>SUM() - 返回总和</li>
+</ul>
+<hr>
+<h6 id="sql-scalar-函数" class="heading-element"><span>0.0.0.3.2  SQL Scalar 函数</span>
+  <a href="#sql-scalar-%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>SQL Scalar 函数基于输入值，返回一个单一的值。</p>
+<p>有用的 Scalar 函数：</p>
+<ul>
+<li>UCASE() - 将某个字段转换为大写</li>
+<li>LCASE() - 将某个字段转换为小写</li>
+<li>MID() - 从某个文本字段提取字符，MySql 中使用</li>
+<li>SubString(字段，1，end) - 从某个文本字段提取字符</li>
+<li>LEN() - 返回某个文本字段的长度</li>
+<li>ROUND() - 对某个数值字段进行指定小数位数的四舍五入</li>
+<li>NOW() - 返回当前的系统日期和时间</li>
+<li>FORMAT() - 格式化某个字段的显示方式</li>
+</ul>
+<h5 id="视图-view" class="heading-element"><span>0.0.0.4  视图 VIEW</span>
+  <a href="#%e8%a7%86%e5%9b%be-view" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>视图包含行和列，就像一个真实的表。视图中的字段就是来自一个或多个数据库中的真实的表中的字段。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">VIEW</span> <span style="color:#58a1dd">view_name</span> <span style="color:#ff636f">AS</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">column_name</span>(<span style="color:#58a1dd">s</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#ff636f">table_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">condition</span></span></span></code></pre></div><p>SQL SERVER</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-SQL" data-lang="SQL"><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">VIEW</span> [ <span style="color:#ff636f">schema_name</span> . ] <span style="color:#58a1dd">view_name</span> [ ( <span style="color:#ff636f">column</span> [ ,...<span style="color:#58a1dd">n</span> ] ) ] 
+</span></span><span style="display:flex;"><span>[ <span style="color:#ff636f">WITH</span> <span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">view_attribute</span><span style="color:#ff636f">&gt;</span> [ ,...<span style="color:#58a1dd">n</span> ] ] 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">AS</span> <span style="color:#58a1dd">select_statement</span> 
+</span></span><span style="display:flex;"><span>[ <span style="color:#ff636f">WITH</span> <span style="color:#ff636f">CHECK</span> <span style="color:#ff636f">OPTION</span> ] [ ; ]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">view_attribute</span><span style="color:#ff636f">&gt;</span> ::<span style="color:#ff636f">=</span> 
+</span></span><span style="display:flex;"><span>{ 
+</span></span><span style="display:flex;"><span>    [ <span style="color:#58a1dd">ENCRYPTION</span> ]
+</span></span><span style="display:flex;"><span>    [ <span style="color:#58a1dd">SCHEMABINDING</span> ]
+</span></span><span style="display:flex;"><span>    [ <span style="color:#58a1dd">VIEW_METADATA</span> ]     
+</span></span><span style="display:flex;"><span>} </span></span></code></pre></div><ul>
+<li><strong>schema_name:</strong> 视图所属架构的名称。</li>
+<li><strong>view_name:</strong> 要更改的视图。</li>
+<li><strong>column:</strong> 将成为指定视图的一部分的一个或多个列的名称（以逗号分隔）。</li>
+</ul>
+<p>删除视图</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">DROP</span> <span style="color:#ff636f">VIEW</span> <span style="color:#58a1dd">view_name</span></span></span></code></pre></div><p>修改视图</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">VIEW</span> <span style="color:#58a1dd">my_view</span> <span style="color:#ff636f">AS</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#58a1dd">column1</span>, <span style="color:#58a1dd">column2</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">my_table</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">new_condition</span>;</span></span></code></pre></div><p>插入数据到视图</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">INSERT</span> <span style="color:#ff636f">INTO</span> <span style="color:#58a1dd">my_view</span> (<span style="color:#58a1dd">column1</span>, <span style="color:#58a1dd">column2</span>) <span style="color:#ff636f">VALUES</span> (<span style="color:#58a1dd">value1</span>, <span style="color:#58a1dd">value2</span>);</span></span></code></pre></div><p>更新视图</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">UPDATE</span> <span style="color:#58a1dd">my_view</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">SET</span> <span style="color:#58a1dd">column1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">new_value</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">condition</span>;</span></span></code></pre></div><p>删除数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">DELETE</span> <span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">my_view</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">WHERE</span> <span style="color:#58a1dd">condition</span>;</span></span></code></pre></div><p>查询视图</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">FROM</span> <span style="color:#58a1dd">my_view</span>;</span></span></code></pre></div><h5 id="权限" class="heading-element"><span>0.0.0.5  权限</span>
+  <a href="#%e6%9d%83%e9%99%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="grant" class="heading-element"><span>0.0.0.5.1  GRANT</span>
+  <a href="#grant" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>发出如下语句的可以是数据库管理员、也可以是数据库对象创建者、也可以是已经拥有该权限的用户</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">GRANT</span> 权限 <span style="color:#ff636f">ON</span> 对象类型对象名 <span style="color:#ff636f">TO</span> 用户名 [<span style="color:#ff636f">WITH</span> <span style="color:#ff636f">GRANT</span> <span style="color:#ff636f">OPTION</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>权限:查询权限<span style="color:#ff636f">SELECT</span>，全部操作权限<span style="color:#ff636f">ALL</span> <span style="color:#ff636f">PRIVILEGES</span>
+</span></span><span style="display:flex;"><span>对象类型<span style="color:#ff636f">&amp;</span>对象名:对象类型可以是<span style="color:#58a1dd">TABLE也可以是VIEW</span>，对象名为对应的表名或者视图名
+</span></span><span style="display:flex;"><span>用户名:可以是指定用户，也可以是全体用户<span style="color:#ff636f">PUBLIC</span></span></span></code></pre></div><p>如果没有指定WITH GRANT OPTION子句，则获得某种权限的用户只能使用该权限，不能传播该权限</p>
+<p>注意:SQL不允许循环授权，即被授权者不能把权限再授回给授权者或其祖先</p>
+<p>eg.把查询权限授给用户U1</p>
+<p>GRANT SELECT ON TABLE Student TO U1;</p>
+<h6 id="revoke" class="heading-element"><span>0.0.0.5.2  REVOKE</span>
+  <a href="#revoke" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">REVOKE</span>  权限 <span style="color:#ff636f">ON</span>  对象类型 对象名  <span style="color:#ff636f">FROM</span>  用户名 [<span style="color:#ff636f">CASCADE</span><span style="color:#ff636f">|</span><span style="color:#ff636f">RESTRICT</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">CASCADE</span>:级联回收。将用户传播出去的权限─并收回
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">RESTRICT</span>:受限回收。若用户传播过该权限，回收将会失败</span></span></code></pre></div><p>eg.把用户U4修改学生学号的权限收回</p>
+<p>REVOKE UPDATE(Sno) ON TABLE Student FROM U4;</p>
+<h5 id="约束constraints" class="heading-element"><span>0.0.0.6  约束Constraints</span>
+  <a href="#%e7%ba%a6%e6%9d%9fconstraints" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://www.jb51.net/article/248801.htm"target="_blank" rel="external nofollow noopener noreferrer">https://www.jb51.net/article/248801.htm</a></p>
+<blockquote>
+<p>SQL 约束用于规定表中的数据规则。</p>
+<p>如果存在违反约束的数据行为，行为会被约束终止。</p>
+<p>约束可以在创建表时规定（通过 CREATE TABLE 语句），或者在表创建之后规定（通过 ALTER TABLE 语句）。</p>
+<p>在 SQL 中，我们有如下约束：</p>
+<ul>
+<li><strong>NOT NULL</strong> - 指示某列不能存储 NULL 值。</li>
+<li><strong>UNIQUE</strong> - 保证某列的每行必须有唯一的值。</li>
+<li><strong>PRIMARY KEY</strong> - NOT NULL 和 UNIQUE 的结合。确保某列（或两个列多个列的结合）有唯一标识，有助于更容易更快速地找到表中的一个特定的记录。</li>
+<li><strong>FOREIGN KEY</strong> - 保证一个表中的数据匹配另一个表中的值的参照完整性。</li>
+<li><strong>CHECK</strong> - 保证列中的值符合指定的条件。</li>
+<li><strong>DEFAULT</strong> - 规定没有给列赋值时的默认值。</li>
+</ul>
+</blockquote>
+<h6 id="关键字-1" class="heading-element"><span>0.0.0.6.1  关键字</span>
+  <a href="#%e5%85%b3%e9%94%ae%e5%ad%97-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### CONSTRAINT</p>
+<ol>
+<li>
+<p>创建表时定义约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">TABLE</span> 表名 (
+</span></span><span style="display:flex;"><span>  列名 数据类型 <span style="color:#ff636f">CONSTRAINT</span> 约束名 约束规则,
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>在上述示例中，您可以在列定义之后使用<span style="color:#58a1dd">CONSTRAINT来为该列定义一个约束</span>。约束规则可以是主键约束、唯一约束、外键约束、检查约束等。</span></span></code></pre></div></li>
+<li>
+<p>在已存在的表上添加约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">TABLE</span> 表名
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ADD</span> <span style="color:#ff636f">CONSTRAINT</span> 约束名 约束规则;
+</span></span><span style="display:flex;"><span>使用<span style="color:#ff636f">ALTER</span> <span style="color:#58a1dd">TABLE语句</span>，您可以在已存在的表上添加新的约束。约束规则的类型可以是上述列出的任何一种。</span></span></code></pre></div></li>
+<li>
+<p>修改或删除约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">TABLE</span> 表名
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">DROP</span> <span style="color:#ff636f">CONSTRAINT</span> 约束名;
+</span></span><span style="display:flex;"><span>使用<span style="color:#ff636f">ALTER</span> <span style="color:#58a1dd">TABLE语句</span>，您可以修改或删除已存在的约束。通过指定约束名，您可以删除特定的约束。</span></span></code></pre></div></li>
+</ol>
+<p>####### ALTER</p>
+<p>ALTER是SQL语句中用于修改数据库对象（如表、列、约束等）的关键字</p>
+<ol>
+<li>
+<p>ALTER TABLE（修改表）：</p>
+<ul>
+<li>
+<p>添加列：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+ADD 列名 数据类型;</code></pre></li>
+<li>
+<p>修改列的数据类型：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+ALTER COLUMN 列名 TYPE 新数据类型;</code></pre></li>
+<li>
+<p>修改列名：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+RENAME COLUMN 旧列名 TO 新列名;</code></pre></li>
+<li>
+<p>删除列：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+DROP COLUMN 列名;</code></pre></li>
+</ul>
+</li>
+<li>
+<p>ALTER CONSTRAINT（修改约束）：</p>
+<ul>
+<li>
+<p>修改约束名：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+RENAME CONSTRAINT 旧约束名 TO 新约束名;</code></pre></li>
+<li>
+<p>禁用约束：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+DISABLE CONSTRAINT 约束名;</code></pre></li>
+<li>
+<p>启用约束：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+ENABLE CONSTRAINT 约束名;</code></pre></li>
+</ul>
+</li>
+<li>
+<p>ALTER INDEX（修改索引）：</p>
+<ul>
+<li>
+<p>重命名索引：</p>
+<pre tabindex="0"><code>ALTER INDEX 旧索引名
+RENAME TO 新索引名;</code></pre></li>
+<li>
+<p>重建索引：</p>
+<pre tabindex="0"><code>ALTER INDEX 索引名
+REBUILD;</code></pre></li>
+</ul>
+</li>
+</ol>
+<h6 id="一分类" class="heading-element"><span>0.0.0.6.2  一、分类</span>
+  <a href="#%e4%b8%80%e5%88%86%e7%b1%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在SQL Server中，有3种不同类型的约束。</p>
+<ul>
+<li>实体约束
+实体约束是关于行的，比如某一行出现的值就不允许出现在其他行，例如==主键==。</li>
+<li>域约束
+域约束是关于列的，对于所有行，某一列有那些约束，例如CHECK约束。</li>
+<li>参照完整性约束
+如果某列的值必须与其他列的值匹配，那就意味着需要一个参照完整性约束，例如外键。</li>
+</ul>
+<h6 id="二约束命名" class="heading-element"><span>0.0.0.6.3  二、约束命名</span>
+  <a href="#%e4%ba%8c%e7%ba%a6%e6%9d%9f%e5%91%bd%e5%90%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在学习约束之前，首先来了解下为约束命名需要注意哪些地方。</p>
+<p>SQL Server在我们不提供名称时，会自动创建名称，但是由系统自动创建的名称并不是特别有用。</p>
+<p>例如，系统生成的主键名称可能是这样的：PK_Employees_145C0A3F。</p>
+<p>PK代表主键(primary key)，Employees代表在Employees表中，而剩下的“145C0A3F”部分是为了保证唯一性而随机生成的值。只有通过脚本创建才会得到这种值，如果是通过Managerment Studio创建表，那么就直接是PK_Employees。</p>
+<p>对于系统自动生成的Check约束名称如：CK_Customers_22AA2996。CK代表这是一个Check约束,Customers代表是在Customers表中，后面的22AA2996还是一个随机数。如果一个表中有多个Check约束，则命名可能如下：</p>
+<p>CK_Customers_22AA2996</p>
+<p>CK_Customers_25869641</p>
+<p>CK_Customers_267ABA7A</p>
+<p>如果你需要修改这些约束其中的一个，那么你很难分辨这些约束到底是哪一个。</p>
+<p>因此，为了能够一眼看上去就知道这个约束是用来干什么的，我们应该使用一种简单明了的短语来进行命名。</p>
+<p>例如要确保某一列电话号码格式正确的约束，我们可以使用命名CK_Customers_PhoneNo这样的短语来命名。</p>
+<p>总之命名要做到以下几点：</p>
+<ul>
+<li>一致性</li>
+<li>通俗易懂</li>
+<li>满足以上两个条件的情况下简化名称。</li>
+</ul>
+<h6 id="三主键约束" class="heading-element"><span>0.0.0.6.4  三、<strong>主键约束</strong></span>
+  <a href="#%e4%b8%89%e4%b8%bb%e9%94%ae%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>主键是每行的唯一标识符，仅仅通过它就能准确定位到一行，其中主键列在整个表中不能有重复，必须包含唯一的值(不能为NULL)。由于主键在关系数据库中的重要性，因此它是所有键和约束中最重要的。</p>
+<p>下面来说说主键的创建方式</p>
+<p>####### 1、在创建表的时候创建主键约束。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">customer</span>
+</span></span><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">customerId</span>        <span style="color:#58a1dd">int</span> <span style="color:#ff636f">identity</span>    <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>  <span style="color:#ff636f">primary</span> <span style="color:#ff636f">key</span>,<span style="color:#828b96;font-style:italic">--创建主键约束
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">CustomerName</span>    <span style="color:#58a1dd">nvarchar</span>(<span style="color:#a6be9d">30</span>)    <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>
+</span></span><span style="display:flex;"><span>);</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">TABLE</span> <span style="color:#58a1dd">Persons</span>
+</span></span><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">Id_P</span> <span style="color:#58a1dd">int</span> <span style="color:#ff636f">NOT</span> <span style="color:#ff636f">NULL</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">LastName</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>) <span style="color:#ff636f">NOT</span> <span style="color:#ff636f">NULL</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">FirstName</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">Address</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">City</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">PRIMARY</span> <span style="color:#ff636f">KEY</span> (<span style="color:#58a1dd">Id_P</span>)  <span style="color:#ff636f">//</span><span style="color:#ff636f">PRIMARY</span> <span style="color:#58a1dd">KEY约束</span>
+</span></span><span style="display:flex;"><span>)</span></span></code></pre></div><p>####### 2、在已存在的表上创建主键约束</p>
+<p>现在假设已经存在了一张表，但是还没有主键约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">person</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">PK_Employee_Id</span>  <span style="color:#828b96;font-style:italic">--外键名称
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#ff636f">primary</span> <span style="color:#ff636f">key</span>(<span style="color:#58a1dd">personId</span>)          <span style="color:#828b96;font-style:italic">--personId 字段名</span></span></span></code></pre></div><p>alter名称告诉SQL Server如下信息：</p>
+<ul>
+<li>添加了一些内容到表中(也可以删除表中的某些内容)</li>
+<li>添加了什么内容(一个约束)</li>
+<li>对约束的命名(允许以后直接访问约束)</li>
+<li>约束的类型(主键约束)</li>
+<li>约束应用于哪个列。</li>
+</ul>
+<blockquote>
+<p><code>ALTER</code> 是用于修改数据库表的关键字。它允许你对现有表进行结构上的更改，包括添加、修改或删除列，修改表的约束条件，以及修改表的其他属性。</p>
+</blockquote>
+<p>####### 3、复合主键的创建</p>
+<blockquote>
+<p>复合主键（Composite Primary Key）是指由多个列组成的主键，用于唯一标识数据库表中的每一行数据。与单一主键不同，复合主键由两个或多个列的组合形成，并且每个列的值都必须唯一。</p>
+</blockquote>
+<p>创建表的时候</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">TABLE</span> 表名 (
+</span></span><span style="display:flex;"><span>    列<span style="color:#a6be9d">1</span> 数据类型,
+</span></span><span style="display:flex;"><span>    列<span style="color:#a6be9d">2</span> 数据类型,
+</span></span><span style="display:flex;"><span>    列<span style="color:#a6be9d">3</span> 数据类型,
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">PRIMARY</span> <span style="color:#ff636f">KEY</span> (列<span style="color:#a6be9d">1</span>, 列<span style="color:#a6be9d">2</span>)
+</span></span><span style="display:flex;"><span>);</span></span></code></pre></div><p>如果实在Management Studio中，创建复合主键，只需要按住Ctrl键，选中两个列，然后设置为主键就OK了，非常简单。下面主要讲述使用T-SQL创建复合主键的方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">TABLE</span> 表名 <span style="color:#ff636f">WITH</span> <span style="color:#58a1dd">NOCHECK</span> 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ADD</span> <span style="color:#ff636f">CONSTRAINT</span> [<span style="color:#58a1dd">PK_表名</span>] 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">PRIMARY</span> <span style="color:#ff636f">KEY</span> <span style="color:#58a1dd">NONCLUSTERED</span> ( [字段名<span style="color:#a6be9d">1</span>], [字段名<span style="color:#a6be9d">2</span>] )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">TABLE</span> <span style="color:#58a1dd">users</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ADD</span> <span style="color:#ff636f">CONSTRAINT</span> <span style="color:#58a1dd">pk_users</span> <span style="color:#ff636f">PRIMARY</span> <span style="color:#ff636f">KEY</span> (<span style="color:#58a1dd">id</span>, <span style="color:#58a1dd">username</span>);</span></span></code></pre></div><p>在 SQL Server 中，<code>NONCLUSTERED</code> 是用于创建非聚集索引的关键字。</p>
+<p>在多对多联系中，常常会有一张表来描述其他两张表的关系，就以此读者和书为例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">TABLE</span> <span style="color:#58a1dd">ReaderAndBook</span> 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ADD</span> <span style="color:#ff636f">CONSTRAINT</span> [<span style="color:#58a1dd">PK_ReaderAndBook</span>] 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">PRIMARY</span> <span style="color:#ff636f">KEY</span> <span style="color:#58a1dd">NONCLUSTERED</span> ( <span style="color:#58a1dd">ReaderId</span>, <span style="color:#58a1dd">BookId</span> )</span></span></code></pre></div><h6 id="四外键约束" class="heading-element"><span>0.0.0.6.5  四、外键约束</span>
+  <a href="#%e5%9b%9b%e5%a4%96%e9%94%ae%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>一个表中的 <code>FOREIGN KEY</code> 指向另一个表中的 <code>UNIQUE KEY</code>(唯一约束的键)。</p>
+<p>FOREIGN KEY 约束用于预防破坏表之间连接的行为。</p>
+<p>FOREIGN KEY 约束也能防止非法数据插入外键列，因为它必须是它指向的那个表中的值之一。</p>
+<blockquote>
+<p>外键既能确保数据完整性，也能表现表之间的关系。添加了外键之后，插入引用表的记录要么必须被引用表中被引用列的某条记录匹配，要么外键列的值必须设置为NULL。</p>
+<p>外键和主键不一样，每个表中的外键数目不限制唯一性。在每个表中，每一有-~253个外键。唯一的限制是一个列只能引用一个外键。一个列可以被多个外键引用。</p>
+</blockquote>
+<p>####### 4.1、创建表的时候创建外键</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">orders</span>
+</span></span><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">orderId</span>       <span style="color:#58a1dd">int</span> <span style="color:#ff636f">identity</span>    <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>   <span style="color:#ff636f">primary</span> <span style="color:#ff636f">key</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">customerId</span>    <span style="color:#58a1dd">int</span>             <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>   <span style="color:#ff636f">foreign</span> <span style="color:#ff636f">key</span> <span style="color:#ff636f">references</span> <span style="color:#58a1dd">customer</span>(<span style="color:#58a1dd">customerId</span>)<span style="color:#828b96;font-style:italic">--约束类型-外键-引用表(列名)
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>);</span></span></code></pre></div><p>####### 4.2、在已存在的表中添加一个外键</p>
+<p>假设上面的代码去掉了添加外键行，那么可以书写代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">orders</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">FK_Orders_CustomerId</span>        <span style="color:#828b96;font-style:italic">--添加约束 名称
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#ff636f">foreign</span> <span style="color:#ff636f">key</span> (<span style="color:#58a1dd">customerId</span>)   <span style="color:#ff636f">references</span> <span style="color:#58a1dd">customer</span>(<span style="color:#58a1dd">customerId</span>)    <span style="color:#828b96;font-style:italic">--外键约束，外键列名，被引用列名</span></span></span></code></pre></div><p>刚添加的约束和之前添加的约束一样生效，如果某行引用customerId不存在，那么就不允许把该行添加到Orders表中。</p>
+<p>####### 4.3、级联动作</p>
+<p>外键和其他类型键的一个重要区别是：外键是双向的，即不仅是限制子表的值必须存在于父表中，还在每次对父表操作后检查子行(这样避免了孤行)。SQL Server的默认行为是在子行存在时“限制”父行被删除。然而，有时会自动删除任何依赖的记录，而不是防止删除被引用的记录。同样在更新记录时，可能希望依赖的记录自动引用刚刚更新的记录。比较少见的情况是，你可能希望将引用行改变为某个已知的状态。为此，可以选择将依赖行的值设置为NULL或者那个列的默认值。</p>
+<p>这种进行自动删除和自动更新的过程称为级联。这种过程，特别是删除过程，可以经过几层的依赖关系(一条记录依赖于另一条记录，而这另一条记录又依赖其他记录)。</p>
+<p>在SQL Server中实现级联动作需要做的就是修改外键语法-只需要在添加前面加上ON子句。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">orders</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">FK_Orders_CustomerId</span>        <span style="color:#828b96;font-style:italic">--添加约束 名称
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>        <span style="color:#ff636f">foreign</span> <span style="color:#ff636f">key</span> (<span style="color:#58a1dd">customerId</span>)    <span style="color:#ff636f">references</span> <span style="color:#58a1dd">customer</span>(<span style="color:#58a1dd">customerId</span>)    <span style="color:#828b96;font-style:italic">--外键约束，外键列名，被引用列名
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>        <span style="color:#ff636f">on</span> <span style="color:#ff636f">update</span>     <span style="color:#ff636f">no</span> <span style="color:#58a1dd">action</span>    <span style="color:#828b96;font-style:italic">--默认修改时不级联更新子表
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>        <span style="color:#ff636f">on</span> <span style="color:#ff636f">delete</span>     <span style="color:#ff636f">cascade</span>      <span style="color:#828b96;font-style:italic">--删除时级联删除依赖行</span></span></span></code></pre></div><p>当在进行级联删除时，如果一个表级联了另一个表，而另一个表又级联了其他表，这种级联会一直下去，不受限制，这其实是级联的一个危险之处，很容易一个不小心删掉大量数据。</p>
+<p>级联动作除了no action，cascade之外，还有set null和set default。后两个是在SQL Server2005中引入的，如果要兼容到SQL Server2000的话，要避免使用这两个级联动作。但是他们的才做是非常简单的：如果执行更新而改变了一个父行的值，那么子行的值将被设置为NULL，或者设置为该列的默认值(不管SET NULL还是SET DEFAULT)。</p>
+<h6 id="五唯一约束" class="heading-element"><span>0.0.0.6.6  五、唯一约束</span>
+  <a href="#%e4%ba%94%e5%94%af%e4%b8%80%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>唯一约束与主键比较相似，共同点在于它们都要求表中指定的列(或者列的组合)上有一个唯一值，区别是唯一约束没有被看作表中记录的唯一标识符(即使你可以按这样的方式使用也有效)，而且==可以有多个唯一约束==(而在每个表中只能有一个主键)。</p>
+<p>一旦建立了唯一约束，那么==指定列中的每个值必须是唯一的==。如果更新或者插入一条记录在带唯一约束的列上有已经存在的值的记录，SQL Server将抛出错误，拒绝这个记录。</p>
+<p>和主键不同，唯一约束不会自动防止设置一个NULL值，是否允许为NULL由表中相应列的NULL选项的设置决定，但即使确实允许NULL值，一张表中也只能够插入一个NULL值(如果允许多个，那就不叫唯一了)。</p>
+<p>在已存在的表上创建唯一约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">AK_AccountName</span>    <span style="color:#828b96;font-style:italic">--约束名
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#ff636f">unique</span> (<span style="color:#58a1dd">Account_Name</span>)    <span style="color:#828b96;font-style:italic">-- 列名</span></span></span></code></pre></div><p>AK代表替换键(Alternate Key)，唯一约束也叫替换键。</p>
+<p>####### 主键和唯一约束的区别：</p>
+<ul>
+<li>主键约束不允许出现NULL值。任何索引的索引键都不允许包含null值。但唯一约束允许包含NULL值，但唯一约束把两个NULL值当作重复值，所以施加了唯一约束的每一列只允许包含一个NULL值。</li>
+<li>创建主键时会自动创建聚集索引，除非当前表中已经含有了聚集索引或是创建主键时指定了NONCLUSTERED关键字。</li>
+<li>创建唯一约束时会自动创建非聚集索引，除非你指定了CLUSTERED关键字并且当前表中还没有聚集索引。</li>
+<li>每个表中只能有一个主键，但可以由多个唯一约束。</li>
+</ul>
+<h6 id="六check约束" class="heading-element"><span>0.0.0.6.7  六、CHECK约束</span>
+  <a href="#%e5%85%adcheck%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>CHECK约束约束可以和一个列关联，也可以和一个表关联，因为它们可以检查一个列的值相对于另外一个列的值，只要这些列都在同一个表中以及值是在更新或者插入的同一行中。CHECK约束还可以用于检查列值组合是否满足某一个标准。</p>
+<p>可以像使用where子句一样的规则来定义CHECK约束。CHECK约束条件的示例如下：</p>
+<ul>
+<li>限制Month列为合适的数字：BETWEEN 1 AND 12</li>
+<li>正确的SSN格式：LIKE&rsquo;[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]'</li>
+<li>限制为一个快递公司的特定列表：IN(&lsquo;UPS&rsquo;,&lsquo;Fed Ex&rsquo;,EMS&rsquo;)</li>
+<li>价格必须为正数：UnitPrice &gt;= 0</li>
+<li>引用同一行中的另外一列：ShipDate &gt;= OrderDate</li>
+</ul>
+<p>上面给出的列表只是一小部分，而条件实际上市无限多的。几乎所有可以放到where子句的条件都可以放到该约束中。而且和其他选择(规则和触发器)相比，CHECK约束执行速度更快。</p>
+<p>创建表的时候创建check约束</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">TABLE</span> <span style="color:#58a1dd">Persons</span>
+</span></span><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">P_Id</span> <span style="color:#58a1dd">int</span> <span style="color:#ff636f">NOT</span> <span style="color:#ff636f">NULL</span> <span style="color:#ff636f">CHECK</span> (<span style="color:#58a1dd">P_Id</span><span style="color:#ff636f">&gt;</span><span style="color:#a6be9d">0</span>),
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">LastName</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>) <span style="color:#ff636f">NOT</span> <span style="color:#ff636f">NULL</span>,
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">FirstName</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>),
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Address</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>),
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">City</span> <span style="color:#58a1dd">varchar</span>(<span style="color:#a6be9d">255</span>)
+</span></span><span style="display:flex;"><span>)</span></span></code></pre></div><p>在已存在的表中添加一个CHECK约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">check</span>  (<span style="color:#58a1dd">Account_Age</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">18</span>);    <span style="color:#828b96;font-style:italic">-- 插入年龄必须大于18</span></span></span></code></pre></div><p>如果此时视图添加一条不满足的记录，将报如下错误：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">insert</span> <span style="color:#ff636f">into</span> <span style="color:#58a1dd">Account</span> <span style="color:#ff636f">values</span> (<span style="color:#a6be9d">22</span>,<span style="color:#a6be9d">&#39;洪&#39;</span>,<span style="color:#a6be9d">17</span>)
+</span></span><span style="display:flex;"><span>消息 <span style="color:#a6be9d">547</span>，级别 <span style="color:#a6be9d">16</span>，状态 <span style="color:#a6be9d">0</span>，第 <span style="color:#a6be9d">1</span> 行
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">INSERT</span> 语句与 <span style="color:#ff636f">CHECK</span> 约束<span style="color:#a6be9d">&#34;CN_AccountAge&#34;</span>冲突。该冲突发生于数据库<span style="color:#a6be9d">&#34;Nx&#34;</span>，表<span style="color:#a6be9d">&#34;dbo.Account&#34;</span>, <span style="color:#ff636f">column</span> <span style="color:#a6be9d">&#39;Account_Age&#39;</span>。
+</span></span><span style="display:flex;"><span>语句已终止。</span></span></code></pre></div><h6 id="七default约束" class="heading-element"><span>0.0.0.6.8  七、DEFAULT约束</span>
+  <a href="#%e4%b8%83default%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>和所有约束一样，DEFAULT约束也是表定义的一个组成部分，它定义了当插入的新行对于定义了默认约束的列未提供相应数据时该怎么办。可以定义它为一个字面值(例如，设置默认薪水为0，或者设置字符串列为&quot;UNKNOWN&quot;)，或者某个系统值(getdate())。</p>
+<p>对于DEFAULT约束，要了解以下几个特性：</p>
+<p>1、默认值只在insert语句中使用。在update语句和delete语句中被忽略。</p>
+<p>2、如果在insert语句中提供了任意值，那就不使用默认值。</p>
+<p>3、如果没有提供值，那么总是使用默认值。</p>
+<p>值得注意的是，update命令的规则有一个例外，如果显示说明使用默认值就是例外。可以通过使用关键字DEFAULT表示更新的值设置为默认值。</p>
+<p>####### 7.1在创建表时定义DEFAULT约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">person</span>
+</span></span><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">person_id</span> <span style="color:#58a1dd">int</span> <span style="color:#ff636f">identity</span> <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>  <span style="color:#ff636f">primary</span> <span style="color:#ff636f">key</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">person_name</span> <span style="color:#58a1dd">nvarchar</span>(<span style="color:#a6be9d">30</span>) <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>   <span style="color:#ff636f">default</span> <span style="color:#a6be9d">&#39;无名氏&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">person_age</span> <span style="color:#58a1dd">int</span> <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>
+</span></span><span style="display:flex;"><span>)</span></span></code></pre></div><p>在执行语句后：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">insert</span> <span style="color:#ff636f">into</span> <span style="color:#58a1dd">person</span> (<span style="color:#58a1dd">person_age</span>) <span style="color:#ff636f">values</span>(<span style="color:#a6be9d">24</span>)</span></span></code></pre></div><p>表中被插入一条记录如下：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281600960.webp" alt="image-20230928160054367" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281600960.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281600960.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281600960.webp?size=large 2x" data-title="image-20230928160054367" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>####### 7.2在已存在的表上添加DEFAULT约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">person</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_DefaultName</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">default</span>    <span style="color:#a6be9d">&#39;无名氏&#39;</span>  <span style="color:#ff636f">for</span> <span style="color:#58a1dd">person_name</span></span></span></code></pre></div><h6 id="八禁用约束" class="heading-element"><span>0.0.0.6.9  八、禁用约束</span>
+  <a href="#%e5%85%ab%e7%a6%81%e7%94%a8%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>有时我们想暂时或永久地消除约束。但是SQL Server并没有提供删除约束的方法。SQL Server只允许禁用外键约束或CHECK约束，而同时保持约束的完整性。</p>
+<p>禁用一个数据完整性规则通常是因为已经有无效数据了。这样的数据通常分为以下两类：</p>
+<p>1、在创建约束时已经在数据库中的数据</p>
+<p>2、在约束创建以后希望添加的数据</p>
+<p>SQL Server允许禁用完整性检查一段时间来对例外的无效数据作处理，然后再重新启用完整性(不是物理删除数据完整性约束)。</p>
+<p>注意：不能禁用主键约束或者唯一约束</p>
+<p>####### 8.1、在创建约束时，忽略检查之前的不满足数据</p>
+<p>要添加一个约束，但是有不应用到已存在的数据中，可以再执行Alter Table语句添加约束时使用WITH NOCHECK选项。</p>
+<p>按照上面创建Check约束的方法，已经Alter Table时，表中本身已经存在不符合的数据，那么Alter Table操作将被SQL Server拒绝执行。除非已经存在的所有数据都满足CHECK约束的条件，否则SQL Server不会执行创建约束的命令。要解决这个问题，我们可以添加WITH NOCHECK。</p>
+<p>我们先新建一个表只有3个字段的表，Id、姓名、年龄，并在里面插入一条不满足要求的数据：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">insert</span> <span style="color:#ff636f">into</span> <span style="color:#58a1dd">Account</span> <span style="color:#ff636f">values</span> (<span style="color:#a6be9d">23</span>,<span style="color:#a6be9d">&#39;洪&#39;</span>,<span style="color:#a6be9d">17</span>)</span></span></code></pre></div><p>然后执行添加约束命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge18</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">check</span> (<span style="color:#58a1dd">Account_Age</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">18</span>);    <span style="color:#828b96;font-style:italic">-- 插入年龄必须大于18</span></span></span></code></pre></div><p>SQL Server报一下错误：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>消息 <span style="color:#a6be9d">547</span>，级别 <span style="color:#a6be9d">16</span>，状态 <span style="color:#a6be9d">0</span>，第 <span style="color:#a6be9d">1</span> 行
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">TABLE</span> 语句与 <span style="color:#ff636f">CHECK</span> 约束<span style="color:#a6be9d">&#34;CN_AccountAge18&#34;</span>冲突。该冲突发生于数据库<span style="color:#a6be9d">&#34;Nx&#34;</span>，表<span style="color:#a6be9d">&#34;dbo.Account&#34;</span>, <span style="color:#ff636f">column</span> <span style="color:#a6be9d">&#39;Account_Age&#39;</span>。</span></span></code></pre></div><p>这时候我们换一种方式去执行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">WITH</span> <span style="color:#58a1dd">NOCHECK</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge18</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">check</span>  (<span style="color:#58a1dd">Account_Age</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">18</span>);    <span style="color:#828b96;font-style:italic">-- 插入年龄必须大于18</span></span></span></code></pre></div><p>以上代码就能够成功执行，并且只有以后添加的数据具备约束，之前添加的不符合条件的数据记录依然存在。</p>
+<p>####### 8.2、临时禁用已存在的约束</p>
+<p>当我们需要从另一数据库中导入数据到表中，而表中已建立了约束的时候，可能会存在一些数据和规则不匹配。当然有一个解决方式是先删除约束，添加需要的数据，然后WITH NOCHECK再添加回去。但是这样做太麻烦了。我们不需要这么做。我们可以采用名为NOCHECK的选项来运行ALTER语句，这样就能够取消需要的约束。</p>
+<p>先来看看上节中创建的这个约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge18</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">check</span>   (<span style="color:#58a1dd">Account_Age</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">18</span>);    <span style="color:#828b96;font-style:italic">-- 插入年龄必须大于18</span></span></span></code></pre></div><p>要取消以上约束可以这样来：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">Alter</span> <span style="color:#ff636f">Table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">NOCHECK</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge18</span></span></span></code></pre></div><p>执行命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">insert</span> <span style="color:#ff636f">into</span> <span style="color:#58a1dd">Account</span> <span style="color:#ff636f">values</span> (<span style="color:#a6be9d">25</span>,<span style="color:#a6be9d">&#39;取消了约束&#39;</span>,<span style="color:#a6be9d">17</span>)</span></span></code></pre></div><p>执行成功，成功添加了一行数据。</p>
+<p>留意到又能够向表中插入格式不匹配的数据了。</p>
+<p>这里要说明下，如何知道一个约束是否是启用还是禁用呢？sp_helpconstraint命令，当我们执行sp_helpconstraint的时候，会有一列status_enabled显示该约束的启用状态：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">sp_helpconstraint</span> <span style="color:#58a1dd">Account</span></span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601215.webp" alt="image-20230928160121087" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601215.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601215.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601215.webp?size=large 2x" data-title="image-20230928160121087" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>留意到status_enabled列为Disabled说明是禁用的意思。</p>
+<p>当要启用约束时，只需要用将语句中的NO CHECK替换为CHECK就可以了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">Alter</span> <span style="color:#ff636f">Table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">CHECK</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge18</span></span></span></code></pre></div><p>执行之后，约束又启用了：再来sp_helpconstraint看下：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601152.webp" alt="image-20230928160143007" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601152.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601152.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601152.webp?size=large 2x" data-title="image-20230928160143007" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>留意到status_enabled列变成了Enabled。</p>
+<p>status_enabled的两种状态如下：</p>
+<p>Enabled:启用；</p>
+<p>Disabled:禁用；</p>
+<h6 id="九规则和默认值已淘汰" class="heading-element"><span>0.0.0.6.10  九、规则和默认值（已淘汰）</span>
+  <a href="#%e4%b9%9d%e8%a7%84%e5%88%99%e5%92%8c%e9%bb%98%e8%ae%a4%e5%80%bc%e5%b7%b2%e6%b7%98%e6%b1%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>规则和默认值的应用要早于CHECK和DEFAULT约束。他们是较老的SQL Server备用约束的一部分，当然也不是没有优点。</p>
+<p>自7.0版本之后，MicroSoft指出规则和默认值只是为了向后兼容，而不准备在以后继续支持这个特性。因此对于生成新代码时，应该使用约束。</p>
+<p>规则、默认值与约束的本质区别是：约束是一个表的特征，本身没有存在形式，而规则和默认值是表和自身的实际对象，本身存在。约束是在表定义中定义的，而规则和默认值是单独定义，然后&quot;绑定到&quot;表上。</p>
+<p>规则和默认值的独立对象特性使得它们可以在重用时不用重新定义。实际上，规则和默认值不限于被绑定到表上，它们也可以绑定到数据类型上。</p>
+<p>####### 9.1、规则</p>
+<p>规则和CHECK约束非常相似。它们之间的唯一区别是规则每次只能作用于一个列。可以将同一规则分别绑定到一个表中的多个列，但是规则分别作用于每个列，根本不会意识到其他列的存在。像QtyShipped</p>
+<p>&lt;= QtyOrdered这样的约束不适用于规则(它引用多个列)，而LIKE([0-9][0-9][0-9])这样的定义适用于规则。</p>
+<p><strong>定义规则：</strong></p>
+<p>下面定义一个规则，这样就可以首先看到区别所在：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">RULE</span> <span style="color:#58a1dd">Age18Rule</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">AS</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">Age</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">18</span></span></span></code></pre></div><p>这里比较的是一个变量，不管被检查的列是什么值，这个值将用于替换@Age。因此在这个示例中，规则所绑定的任何列的值都必须大于18。</p>
+<p>到目前为止，只是创建了一个规则，但这个规则还没对任何表的任何列起作用，要激活这个规则需要使用一个存储过程：sp_bindrule。</p>
+<p>将规则Age18绑定到表person的person_age列：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">EXEC</span> <span style="color:#58a1dd">sp_bindrule</span> <span style="color:#a6be9d">&#39;Age18Rule&#39;</span>,<span style="color:#a6be9d">&#39;person.person_age&#39;</span>;</span></span></code></pre></div><p>此时，如果我们执行不满足规则的插入操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">insert</span> <span style="color:#ff636f">into</span> <span style="color:#58a1dd">person</span> <span style="color:#ff636f">values</span> (<span style="color:#a6be9d">&#39;绑定规则&#39;</span>,<span style="color:#a6be9d">17</span>)</span></span></code></pre></div><p>将返回如下报错信息：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>消息 <span style="color:#a6be9d">513</span>，级别 <span style="color:#a6be9d">16</span>，状态 <span style="color:#a6be9d">0</span>，第 <span style="color:#a6be9d">1</span> 行
+</span></span><span style="display:flex;"><span>列的插入或更新与先前的 <span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">RULE</span> 语句所指定的规则发生冲突。该语句已终止。冲突发生于数据库 <span style="color:#a6be9d">&#39;Nx&#39;</span>，表 <span style="color:#a6be9d">&#39;dbo.person&#39;</span>，列 <span style="color:#a6be9d">&#39;person_age&#39;</span>。
+</span></span><span style="display:flex;"><span>语句已终止。</span></span></code></pre></div><p>很明显，规则已经生效。</p>
+<p>要特别注意的是，在绑定之前，规则与任何表，任何列都没有关系，因此在绑定的时候，第二个参数要加.指定表名与列名(tablename.column)。</p>
+<p><strong>解除绑定规则：</strong></p>
+<p>当我们需要在一个列上解除绑定规则的时候，只要执行sp_unbindrule</p>
+<p>删除刚才绑定的规则：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">EXEC</span> <span style="color:#58a1dd">sp_unbindrule</span> <span style="color:#a6be9d">&#39;person.person_age&#39;</span>;</span></span></code></pre></div><p>这时候，执行刚才的插入操作，就不会报错了。</p>
+<p><strong>删除规则：</strong></p>
+<p>如果希望将规则从数据库中彻底删除，那么可以在表中使用非常熟悉的DROP语法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">DROP</span> <span style="color:#ff636f">RULE</span> <span style="color:#ff636f">&lt;</span><span style="color:#ff636f">rule</span> <span style="color:#58a1dd">name</span><span style="color:#ff636f">&gt;</span></span></span></code></pre></div><p>如删除刚才创建的那条规则：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">DROP</span><span style="color:#ff636f">`</span> <span style="color:#ff636f">`</span><span style="color:#ff636f">RULE</span><span style="color:#ff636f">`</span> <span style="color:#ff636f">`</span><span style="color:#58a1dd">Age18Rule</span></span></span></code></pre></div><p>####### 9.2、默认值</p>
+<p>默认值类似于DEFAULT。实际上默认值-DEFAULT约束的关系与规则-CHECK约束的关系差不多。区别在于它们被追加到表中的方式和对用户自定义数据类型的默认值(<strong>是对象，而不是约束</strong>)支持。</p>
+<p>定义默认值的语法和定义规则类似：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">DEFAULT</span> <span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">default_name</span><span style="color:#ff636f">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">AS</span> <span style="color:#ff636f">&lt;</span><span style="color:#ff636f">default</span> <span style="color:#58a1dd">value</span><span style="color:#ff636f">&gt;</span></span></span></code></pre></div><p><strong>创建默认值：</strong></p>
+<p>因此，假设要为Age定义一个值为0的默认值:</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">DEFAULT</span> <span style="color:#58a1dd">AgeDefault</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">AS</span> <span style="color:#a6be9d">0</span></span></span></code></pre></div><p><strong>绑定默认值：</strong></p>
+<p>同样，如果不绑定到一个对象上，则默认值是不起作用的。要绑定的话，使用存储过程sp_bindefault。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">EXEC</span> <span style="color:#58a1dd">sp_bindefault</span> <span style="color:#a6be9d">&#39;AgeDefault&#39;</span>,<span style="color:#a6be9d">&#39;person.person_age&#39;</span>;</span></span></code></pre></div><p>要从表中解决默认值的绑定，使用sp_unbindefault:</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">sp_unbindefault</span> <span style="color:#a6be9d">&#39;person.person_age&#39;</span>;</span></span></code></pre></div><p><strong>删除默认值：</strong></p>
+<p>如果要从数据库中彻底删除一个默认值，则可以使用DROP语法，与删除规则相同：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">DROP</span> <span style="color:#ff636f">DEFAULT</span> <span style="color:#58a1dd">AgeDefault</span></span></span></code></pre></div><p>####### 9.3确定哪个表和数据类型使用给定的规则或默认值</p>
+<p>如果希望删除或者修改规则或默认值。那么您可以先看看哪些表和数据类型在使用它们。SQL Server还是采用系统存储过程解决这个问题。这个存储过程是sp_depends。其语法如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">EXEC</span> <span style="color:#58a1dd">sp_depends</span> <span style="color:#ff636f">&lt;</span><span style="color:#ff636f">object</span> <span style="color:#58a1dd">name</span><span style="color:#ff636f">&gt;</span></span></span></code></pre></div><p>sp_depends提供了依赖于你所查询对象的所有对象列表。</p>
+<h6 id="十系统视图" class="heading-element"><span>0.0.0.6.11  十、系统视图</span>
+  <a href="#%e5%8d%81%e7%b3%bb%e7%bb%9f%e8%a7%86%e5%9b%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--CHECK约束，数据来源sys.objects.type=&#39;C&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--兼容性视图SYSCONSTRAINTS
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span>, ( <span style="color:#ff636f">select</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">name</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">syscolumns</span> <span style="color:#ff636f">c</span> <span style="color:#ff636f">where</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">colid</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">t</span>.<span style="color:#58a1dd">parent_column_id</span> <span style="color:#ff636f">and</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>)) <span style="color:#ff636f">as</span> 列名
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span>   <span style="color:#58a1dd">sys</span>.<span style="color:#58a1dd">check_constraints</span> <span style="color:#58a1dd">t</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">where</span>  <span style="color:#58a1dd">parent_object_id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--默认约束，数据来源sys.objects.type=D,
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--兼容性视图SYSCONSTRAINTS
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span>, ( <span style="color:#ff636f">select</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">name</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">syscolumns</span> <span style="color:#ff636f">c</span> <span style="color:#ff636f">where</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">colid</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">t</span>.<span style="color:#58a1dd">parent_column_id</span> <span style="color:#ff636f">and</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>)) <span style="color:#ff636f">as</span> 列名
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span>   <span style="color:#58a1dd">sys</span>.<span style="color:#58a1dd">default_constraints</span> <span style="color:#58a1dd">t</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">where</span>  <span style="color:#58a1dd">parent_object_id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--主键或唯一约束,数据来源sys.objects.type PK 和UQ,
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--兼容性视图SYSCONSTRAINTS
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">sys</span>.<span style="color:#58a1dd">key_constraints</span> <span style="color:#58a1dd">t</span> <span style="color:#ff636f">where</span> <span style="color:#58a1dd">parent_object_id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--外键，数据来源sys.object.type=F,
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--兼容性视图SYSREFERENCES
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">sys</span>.<span style="color:#58a1dd">foreign_keys</span> <span style="color:#58a1dd">t</span> <span style="color:#ff636f">where</span> <span style="color:#58a1dd">parent_object_id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--根据表名和列名查询列上的约束
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">select</span> <span style="color:#58a1dd">sysobjects</span>.<span style="color:#58a1dd">name</span>, <span style="color:#58a1dd">sysobjects</span>.<span style="color:#58a1dd">xtype</span>, <span style="color:#58a1dd">sysobjects</span>.<span style="color:#58a1dd">id</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span>   <span style="color:#58a1dd">sysobjects</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#ff636f">join</span> <span style="color:#58a1dd">sysconstraints</span> <span style="color:#ff636f">on</span> <span style="color:#58a1dd">sysobjects</span>.<span style="color:#58a1dd">id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">sysconstraints</span>.<span style="color:#58a1dd">constid</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">where</span>  <span style="color:#58a1dd">sysobjects</span>.<span style="color:#58a1dd">parent_obj</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>) <span style="color:#ff636f">and</span> <span style="color:#58a1dd">sysconstraints</span>.<span style="color:#58a1dd">colid</span> <span style="color:#ff636f">in</span> ( <span style="color:#ff636f">select</span> <span style="color:#58a1dd">colid</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">syscolumns</span> <span style="color:#ff636f">where</span> <span style="color:#58a1dd">id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>)  <span style="color:#ff636f">AND</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">like</span>  <span style="color:#a6be9d">&#39;%&#39;</span> );</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-tag" title="Tags - 数据库">数据库</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/owasp/ssrf/120/" class="post-nav-item" rel="prev" title="SSRF-Bypass"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>SSRF-Bypass</a>
+      <a href="/posts/owasp/sql%E6%B3%A8%E5%85%A5/116/" class="post-nav-item" rel="next" title="SQL注入-常用姿势">SQL注入-常用姿势<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

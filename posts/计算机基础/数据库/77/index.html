@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Hbase学习 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 数据库' />
+  <meta itemprop="name" content="hbase学习">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="1724">
+  <meta itemprop="keywords" content="计算机基础,数据库"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/77/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="hbase学习">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="数据库">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="hbase学习">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/77/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/104/" /><link rel="next" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/103/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "hbase学习",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E6%95%B0%E6%8D%AE%E5%BA%93\/77\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 数据库","wordcount":  1724 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E6%95%B0%E6%8D%AE%E5%BA%93\/77\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Hbase学习</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Hbase学习</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1724 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>9 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="一简介" class="heading-element"><span>0.0.0.1  一：简介</span>
+  <a href="#%e4%b8%80%e7%ae%80%e4%bb%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>HBase的名字的来源于Hadoop database，即hadoop数据库，不同于一般的关系数据库，它是非结构化<a href="https://cloud.tencent.com/product/cdcs?from_column=20065&amp;from=20065"target="_blank" rel="external nofollow noopener noreferrer">数据存储</a>的数据库，而且它是基于列的而不是基于行的模式。</p>
+<p>HBase是一个分布式的、面向列的、基于Google Bigtable的开源实现。 利用Hadoop HDFS作为其文件存储系统， 利用Hadoop MapReduce来处理HBase中的海量数据， 利用Zookeeper作为协同服务。</p>
+<h5 id="二hbase重要概念" class="heading-element"><span>0.0.0.2  二：HBase重要概念</span>
+  <a href="#%e4%ba%8chbase%e9%87%8d%e8%a6%81%e6%a6%82%e5%bf%b5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><strong>HBase的表结构</strong></p>
+<p>HBase以表的形式存储数据。表有行和列组成。列划分为若干个列族/列簇(column family)，每个列族/列簇下面可以有多个普通列。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406241058992.webp" alt="image-20240624105805806" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406241058992.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406241058992.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406241058992.webp?size=large 2x" data-title="image-20240624105805806" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><strong>表Table</strong></p>
+<p>HBase是用表来存储数据的。</p>
+<p><strong>命名空间namespace</strong></p>
+<p>namespace命名空间指对<strong>一组表的逻辑分组</strong>，类似RDBMS中的database，方便对表在业务上划分。 HBase系统默认定义了两个缺省的namespace：</p>
+<ul>
+<li>hbase：系统内建表，包含namespace和meta表</li>
+<li>default：用户建表时未指定namespace的表都创建在此</li>
+</ul>
+<p><strong>行键 Row Key</strong></p>
+<p>行键，每一行的主键列，每行的行键要唯一，行键的值为任意字符串(最大长度是 64KB，实际应用中长度一般为 10-100bytes),<code>在HBase内部,rowKey保存为字节数组byte[]</code>。 行的一次读写是原子操作 (不论一次读写多少列)</p>
+<p><strong>区域Region</strong></p>
+<p>Table在行的方向上分割为多个Region。</p>
+<p>Region是按大小分割的，每个表开始只有一个region，随着数据的增多，region不断增大，当增大到一个阀值的时候，region就会等分为两个新的region,之后会有越来越多的region。</p>
+<p>Region是HBase中==分布式存储和负载均衡的最小单元==。不同的Region分布到不同的RegionServer上。</p>
+<p>Region由一个或者多个Store组成, 每个Store保存一个column family, 每个Store又由==一个==MemStore(存储在内存中)和0到==多个==StoreFile(存储在HDFS上)组成</p>
+<p><strong>列族 column family</strong></p>
+<p>列族是每个子列的父级，每个子列都属于一个列族,一个列族包含一个或者多个相关列，==创建表的时候需要指定列族，而列不需要必须指定==。通过“列族名:列名”来表示某个具体的子列。</p>
+<p>HBase中的Schema就是 TableName + Column Family Name</p>
+<p><strong>列限定符</strong></p>
+<p>就是列族下的每个子列名称，或者称为相关列，或者称为限定符，只是翻译不同。 通过<code>columnFamily:column</code>来定位某个子列。</p>
+<p><strong>存储单元 cell</strong></p>
+<p>我们外观看到的每个单元格其实都对应着多个存储单元，默认情况下一个单元格对应着一个存储单元，一个存储单元可以存储一份数据，如果一个单元格有多个存储单元就表示一个单元格可以存储多个值。可以通过version来设置存储单元个数。可以通过 <code>rowKey + columnFamily + column + timestamp</code>来唯一确定一个存储单元。cell中的数据是没有类型的，全部是字节码形式存贮。</p>
+<p>hbase按照时间戳<strong>降序</strong>排列各时间版本，其他映射建按照升序排序。</p>
+<p><strong>时间戳版本号 timestamp</strong></p>
+<p>每个cell都保存着同一份数据的多个版本。版本通过时间戳来索引。时间戳的类型是 64位整型。时间戳可以由hbase(在数据写入时自动 )赋值，此时时间戳是精确到毫秒的当前系统时间。==时间戳也可以由客户显式赋值==。如果应用程序要避免数据版本冲突，就必须自己生成具有唯一性的时间戳。每个cell中，不同版本的数据按照时间倒序排序，即最新的数据排在最前面。</p>
+<p>为了避免数据存在过多版本造成的的管理 (包括存贮和索引)负担，hbase提供了两种数据版本回收方式。一是保存数据的最后n个版本，二是保存最近一段时间内的版本（比如最近七天）。用户可以针对每个列族进行设置。</p>
+<h5 id="三hbase-shell" class="heading-element"><span>0.0.0.3  三：HBase Shell</span>
+  <a href="#%e4%b8%89hbase-shell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>HBase Shell 是官方提供的一组命令，用于操作HBase。如果配置了HBase的环境变量了，就可以知己在命令行中输入hbase shell 命令进入命令行。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命名</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">语法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">help ‘命名名’</td>
+<td style="text-align:left">查看命令的使用描述</td>
+<td style="text-align:left">help ‘命令名’</td>
+</tr>
+<tr>
+<td style="text-align:left">whoami</td>
+<td style="text-align:left">我是谁</td>
+<td style="text-align:left">whoami</td>
+</tr>
+<tr>
+<td style="text-align:left">version</td>
+<td style="text-align:left">返回hbase版本信息</td>
+<td style="text-align:left">version</td>
+</tr>
+<tr>
+<td style="text-align:left">status</td>
+<td style="text-align:left">返回hbase集群的状态信息</td>
+<td style="text-align:left">status</td>
+</tr>
+<tr>
+<td style="text-align:left">table_help</td>
+<td style="text-align:left">查看如何操作表</td>
+<td style="text-align:left">table_help</td>
+</tr>
+<tr>
+<td style="text-align:left">create</td>
+<td style="text-align:left">创建表</td>
+<td style="text-align:left">create ‘表名’, ‘列族名1’, ‘列族名2’, ‘列族名N’</td>
+</tr>
+<tr>
+<td style="text-align:left">alter</td>
+<td style="text-align:left">修改列族</td>
+<td style="text-align:left">添加一个列族：alter ‘表名’, ‘列族名’  。删除列族：alter ‘表名’, {NAME=&gt; ‘列族名’, METHOD=&gt; ‘delete’}</td>
+</tr>
+<tr>
+<td style="text-align:left">describe</td>
+<td style="text-align:left">显示表相关的详细信息</td>
+<td style="text-align:left">describe ‘表名’</td>
+</tr>
+<tr>
+<td style="text-align:left">list</td>
+<td style="text-align:left">列出hbase中存在的所有表</td>
+<td style="text-align:left">list</td>
+</tr>
+<tr>
+<td style="text-align:left">exists</td>
+<td style="text-align:left">测试表是否存在</td>
+<td style="text-align:left">exists ‘表名’</td>
+</tr>
+<tr>
+<td style="text-align:left">put</td>
+<td style="text-align:left">添加或修改的表的值</td>
+<td style="text-align:left">put ‘表名’, ‘行键’, ‘列族名’, ‘列值’                   put ‘表名’, ‘行键’, ‘列族名:列名’, ‘列值’</td>
+</tr>
+<tr>
+<td style="text-align:left">scan</td>
+<td style="text-align:left">通过对表的扫描来获取对用的值</td>
+<td style="text-align:left">scan ‘表名’  扫描某个列族： scan ‘表名’, {COLUMN=&gt;‘列族名’} 扫描某个列族的某个列： scan ‘表名’, {COLUMN=&gt;‘列族名:列名’}  查询同一个列族的多个列： scan ‘表名’, {COLUMNS =&gt; [ ‘列族名1:列名1’, ‘列族名1:列名2’, …]}</td>
+</tr>
+<tr>
+<td style="text-align:left">get</td>
+<td style="text-align:left">获取行或单元（cell）的值</td>
+<td style="text-align:left">get ‘表名’, ‘行键’  get ‘表名’, ‘行键’, ‘列族名’</td>
+</tr>
+<tr>
+<td style="text-align:left">count</td>
+<td style="text-align:left">统计表中行的数量</td>
+<td style="text-align:left">count ‘表名’</td>
+</tr>
+<tr>
+<td style="text-align:left">incr</td>
+<td style="text-align:left">增加指定表行或列的值</td>
+<td style="text-align:left">incr ‘表名’, ‘行键’, ‘列族:列名’, 步长值</td>
+</tr>
+<tr>
+<td style="text-align:left">get_counter</td>
+<td style="text-align:left">获取计数器</td>
+<td style="text-align:left">get_counter ‘表名’, ‘行键’, ‘列族:列名’</td>
+</tr>
+<tr>
+<td style="text-align:left">delete</td>
+<td style="text-align:left">删除指定对象的值（可以为表，行，列对应的值，另外也可以指定时间戳的值）</td>
+<td style="text-align:left">删除列族的某个列： delete ‘表名’, ‘行键’, ‘列族名:列名’</td>
+</tr>
+<tr>
+<td style="text-align:left">deleteall</td>
+<td style="text-align:left">删除指定行的所有元素值</td>
+<td style="text-align:left">deleteall ‘表名’, ‘行键’</td>
+</tr>
+<tr>
+<td style="text-align:left">truncate</td>
+<td style="text-align:left">重新创建指定表</td>
+<td style="text-align:left">truncate ‘表名’</td>
+</tr>
+<tr>
+<td style="text-align:left">enable</td>
+<td style="text-align:left">使表有效</td>
+<td style="text-align:left">enable ‘表名’</td>
+</tr>
+<tr>
+<td style="text-align:left">is_enabled</td>
+<td style="text-align:left">是否启用</td>
+<td style="text-align:left">is_enabled ‘表名’</td>
+</tr>
+<tr>
+<td style="text-align:left">disable</td>
+<td style="text-align:left">使表无效</td>
+<td style="text-align:left">disable ‘表名’</td>
+</tr>
+<tr>
+<td style="text-align:left">is_disabled</td>
+<td style="text-align:left">是否无效</td>
+<td style="text-align:left">is_disabled ‘表名’</td>
+</tr>
+<tr>
+<td style="text-align:left">drop</td>
+<td style="text-align:left">删除表</td>
+<td style="text-align:left">drop的表必须是disable的 disable ‘表名’ drop ‘表名’</td>
+</tr>
+<tr>
+<td style="text-align:left">shutdown</td>
+<td style="text-align:left">关闭hbase集群（与exit不同）</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">tools</td>
+<td style="text-align:left">列出hbase所支持的工具</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">exit</td>
+<td style="text-align:left">退出hbase shell</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<h6 id="namespace" class="heading-element"><span>0.0.0.3.1  namespace</span>
+  <a href="#namespace" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>列举命名空间 list_namespace</p>
+<p>获取命名空间描述 describe_namespace</p>
+<p>查看命名空间下的所有表 list_namespace_tables</p>
+<p>创建命名空间create_namespace</p>
+<p>删除命名空间drop_namespace</p>
+<p>修改属性</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> <span style="color:#ff636f">add</span><span style="color:#ff636f">/</span><span style="color:#ff636f">modify</span> <span style="color:#58a1dd">a</span> <span style="color:#58a1dd">property</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">alter_namespace</span> <span style="color:#a6be9d">&#39;ns1&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#ff636f">METHOD</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;set&#39;</span>, <span style="color:#a6be9d">&#39;PROPERTY_NAME&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;PROPERTY_VALUE&#39;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> <span style="color:#ff636f">delete</span> <span style="color:#58a1dd">a</span> <span style="color:#58a1dd">property</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">alter_namespace</span> <span style="color:#a6be9d">&#39;ns1&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#ff636f">METHOD</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;unset&#39;</span>, <span style="color:#58a1dd">NAME</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;PROPERTY_NAME&#39;</span>}</span></span></code></pre></div><h6 id="表" class="heading-element"><span>0.0.0.3.2  表</span>
+  <a href="#%e8%a1%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 创建表</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;列族名1&#39;</span>}, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;列族名2&#39;</span>}, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;列族名3&#39;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 此种方式是上上面的简写方式，使用上面方式可以为列族指定更多的属性，如<span style="color:#58a1dd">VERSIONS</span>、<span style="color:#58a1dd">TTL</span>、<span style="color:#58a1dd">BLOCKCACHE</span>、<span style="color:#58a1dd">CONFIGURATION等属性</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#a6be9d">&#39;列族名1&#39;</span>, <span style="color:#a6be9d">&#39;列族名2&#39;</span>, <span style="color:#a6be9d">&#39;列族名3&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;列族名1&#39;</span>, <span style="color:#58a1dd">VERSIONS</span> <span style="color:#ff636f">=&gt;</span> 版本号, <span style="color:#58a1dd">TTL</span> <span style="color:#ff636f">=&gt;</span> 过期时间, <span style="color:#58a1dd">BLOCKCACHE</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#ff636f">true</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;info&#39;</span>, <span style="color:#a6be9d">&#39;detail&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#a6be9d">&#39;t1&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;f1&#39;</span>, <span style="color:#58a1dd">VERSIONS</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">1</span>, <span style="color:#58a1dd">TTL</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">2592000</span>, <span style="color:#58a1dd">BLOCKCACHE</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#ff636f">true</span>}</span></span></code></pre></div><p>####### 表结构</p>
+<p>添加一个列族</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 语法 </span>
+</span></span><span style="display:flex;"><span>alter <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#a6be9d">&#39;列族名&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 示例</span>
+</span></span><span style="display:flex;"><span>alter <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;address&#39;</span></span></span></code></pre></div><p>删除一个列族</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span><span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;列族名&#39;</span>, <span style="color:#ff636f">METHOD</span><span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;delete&#39;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span><span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;address&#39;</span>, <span style="color:#ff636f">METHOD</span><span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;delete&#39;</span>}</span></span></code></pre></div><p>修改列族的属性 可以修改列族的VERSIONS、IN_MEMORY</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 修改<span style="color:#58a1dd">f1列族的版本为5</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;f1&#39;</span>, <span style="color:#58a1dd">VERSIONS</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 修改多个列族，修改<span style="color:#58a1dd">f2为内存</span>，版本号为<span style="color:#a6be9d">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;f1&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;f2&#39;</span>, <span style="color:#58a1dd">IN_MEMORY</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#ff636f">true</span>}, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;f3&#39;</span>, <span style="color:#58a1dd">VERSIONS</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">5</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 也可以修改<span style="color:#ff636f">table</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">scope属性</span>，例如<span style="color:#58a1dd">MAX_FILESIZE</span>, <span style="color:#58a1dd">READONLY</span>,<span style="color:#58a1dd">MEMSTORE_FLUSHSIZE</span>, <span style="color:#58a1dd">DEFERRED_LOG_FLUSH等</span>。
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 例如，修改<span style="color:#58a1dd">region的最大大小为128MB</span>：
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#58a1dd">MAX_FILESIZE</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;134217728&#39;</span></span></span></code></pre></div><p>异步修改Schema alter_async</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> <span style="color:#58a1dd">change</span> <span style="color:#ff636f">or</span> <span style="color:#ff636f">add</span> <span style="color:#58a1dd">the</span> <span style="color:#a6be9d">&#39;f1&#39;</span> <span style="color:#ff636f">column</span> <span style="color:#58a1dd">family</span> <span style="color:#ff636f">in</span> <span style="color:#ff636f">table</span> <span style="color:#a6be9d">&#39;t1&#39;</span> <span style="color:#ff636f">from</span> <span style="color:#ff636f">defaults</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">to</span> <span style="color:#ff636f">instead</span> <span style="color:#58a1dd">keep</span> <span style="color:#58a1dd">a</span> <span style="color:#58a1dd">maximum</span> <span style="color:#ff636f">of</span> <span style="color:#a6be9d">5</span> <span style="color:#58a1dd">cell</span> <span style="color:#58a1dd">VERSIONS</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">alter_async</span> <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;f1&#39;</span>, <span style="color:#58a1dd">VERSIONS</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> <span style="color:#ff636f">delete</span> <span style="color:#58a1dd">the</span> <span style="color:#a6be9d">&#39;f1&#39;</span> <span style="color:#ff636f">column</span> <span style="color:#58a1dd">family</span> <span style="color:#ff636f">in</span> <span style="color:#ff636f">table</span> <span style="color:#a6be9d">&#39;ns1:t1&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">alter_async</span> <span style="color:#a6be9d">&#39;ns1:t1&#39;</span>, <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;f1&#39;</span>, <span style="color:#ff636f">METHOD</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;delete&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">alter_async</span> <span style="color:#a6be9d">&#39;ns1:t1&#39;</span>, <span style="color:#a6be9d">&#39;delete&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;f1&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> <span style="color:#58a1dd">change</span> <span style="color:#58a1dd">the</span> <span style="color:#ff636f">max</span> <span style="color:#ff636f">size</span> <span style="color:#ff636f">of</span> <span style="color:#58a1dd">a</span> <span style="color:#58a1dd">family</span> <span style="color:#ff636f">to</span> <span style="color:#a6be9d">128</span><span style="color:#58a1dd">MB</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#ff636f">METHOD</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;table_att&#39;</span>, <span style="color:#58a1dd">MAX_FILESIZE</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;134217728&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;t1&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;f1&#39;</span>}, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;f2&#39;</span>, <span style="color:#ff636f">METHOD</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;delete&#39;</span>}</span></span></code></pre></div><p>####### 增删改查</p>
+<p>######### 插入或者修改数据put</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 当列族中只有一个列时<span style="color:#a6be9d">&#39;列族名:列名&#39;</span>使用<span style="color:#a6be9d">&#39;列族名&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#a6be9d">&#39;行键&#39;</span>, <span style="color:#a6be9d">&#39;列族名&#39;</span>, <span style="color:#a6be9d">&#39;列值&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#a6be9d">&#39;行键&#39;</span>, <span style="color:#a6be9d">&#39;列族名:列名&#39;</span>, <span style="color:#a6be9d">&#39;列值&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 创建表
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;info&#39;</span>, <span style="color:#a6be9d">&#39;detail&#39;</span>, <span style="color:#a6be9d">&#39;address&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 第一行数据
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;mengday&#39;</span>, <span style="color:#a6be9d">&#39;info:id&#39;</span>, <span style="color:#a6be9d">&#39;1&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;mengday&#39;</span>, <span style="color:#a6be9d">&#39;info:name&#39;</span>, <span style="color:#a6be9d">&#39;张三&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;mengday&#39;</span>, <span style="color:#a6be9d">&#39;info:age&#39;</span>, <span style="color:#a6be9d">&#39;28&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;mengday&#39;</span>, <span style="color:#a6be9d">&#39;detail:birthday&#39;</span>, <span style="color:#a6be9d">&#39;1990-06-26&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;mengday&#39;</span>, <span style="color:#a6be9d">&#39;detail:email&#39;</span>, <span style="color:#a6be9d">&#39;abc@163.com&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;mengday&#39;</span>, <span style="color:#a6be9d">&#39;detail:create_time&#39;</span>, <span style="color:#a6be9d">&#39;2019-03-04 14:26:10&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;mengday&#39;</span>, <span style="color:#a6be9d">&#39;address&#39;</span>, <span style="color:#a6be9d">&#39;上海市&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 第二行数据
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;vbirdbest&#39;</span>, <span style="color:#a6be9d">&#39;info:id&#39;</span>, <span style="color:#a6be9d">&#39;2&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;vbirdbest&#39;</span>, <span style="color:#a6be9d">&#39;info:name&#39;</span>, <span style="color:#a6be9d">&#39;李四&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;vbirdbest&#39;</span>, <span style="color:#a6be9d">&#39;info:age&#39;</span>, <span style="color:#a6be9d">&#39;27&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;vbirdbest&#39;</span>, <span style="color:#a6be9d">&#39;detail:birthday&#39;</span>, <span style="color:#a6be9d">&#39;1990-06-27&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;vbirdbest&#39;</span>, <span style="color:#a6be9d">&#39;detail:email&#39;</span>, <span style="color:#a6be9d">&#39;xxx@gmail.com&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;vbirdbest&#39;</span>, <span style="color:#a6be9d">&#39;detail:create_time&#39;</span>, <span style="color:#a6be9d">&#39;2019-03-05 14:26:10&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;vbirdbest&#39;</span>, <span style="color:#a6be9d">&#39;address&#39;</span>, <span style="color:#a6be9d">&#39;北京市&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 第一行数据
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;xiaoming&#39;</span>, <span style="color:#a6be9d">&#39;info:id&#39;</span>, <span style="color:#a6be9d">&#39;3&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;xiaoming&#39;</span>, <span style="color:#a6be9d">&#39;info:name&#39;</span>, <span style="color:#a6be9d">&#39;王五&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;xiaoming&#39;</span>, <span style="color:#a6be9d">&#39;info:age&#39;</span>, <span style="color:#a6be9d">&#39;26&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;xiaoming&#39;</span>, <span style="color:#a6be9d">&#39;detail:birthday&#39;</span>, <span style="color:#a6be9d">&#39;1990-06-28&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;xiaoming&#39;</span>, <span style="color:#a6be9d">&#39;detail:email&#39;</span>, <span style="color:#a6be9d">&#39;xyz@qq.com&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;xiaoming&#39;</span>, <span style="color:#a6be9d">&#39;detail:create_time&#39;</span>, <span style="color:#a6be9d">&#39;2019-03-06 14:26:10&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;xiaoming&#39;</span>, <span style="color:#a6be9d">&#39;address&#39;</span>, <span style="color:#a6be9d">&#39;杭州市&#39;</span></span></span></code></pre></div><p>######### 全表扫描scan</p>
+<p>获取表的所有数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;表名&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>扫描整个列簇
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#ff636f">COLUMN</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;列族名&#39;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#ff636f">COLUMN</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;info&#39;</span>}
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>扫描整个列簇的某个列
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#ff636f">COLUMN</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;列族名:列名&#39;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#ff636f">COLUMN</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;info:age&#39;</span>}</span></span></code></pre></div><p>######### 获取数据get</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">get</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#a6be9d">&#39;行键&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">get</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;mengday&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>根据某一行某列族的数据
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">get</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#a6be9d">&#39;行键&#39;</span>, <span style="color:#a6be9d">&#39;列族名&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">get</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#a6be9d">&#39;mengday&#39;</span>, <span style="color:#a6be9d">&#39;info&#39;</span></span></span></code></pre></div><p>示例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建表，c1版本为4， 元数据mykey=myvalue</span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:009:0&gt; create <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#ff636f">{</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#a6be9d">&#39;c1&#39;</span>, <span style="color:#58a1dd">VERSIONS</span> <span style="color:#ff636f">=</span>&gt; 4<span style="color:#ff636f">}</span>, <span style="color:#58a1dd">METADATA</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#ff636f">{</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;mykey&#39;</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#a6be9d">&#39;myvalue&#39;</span> <span style="color:#ff636f">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 2.2810 <span style="color:#58a1dd">seconds</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">=</span>&gt; Hbase::Table - t1
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 添加列族c2, c3</span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:010:0&gt; alter <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;c2&#39;</span>, <span style="color:#a6be9d">&#39;c3&#39;</span>
+</span></span><span style="display:flex;"><span>Updating all regions with the new schema...
+</span></span><span style="display:flex;"><span>1/1 regions updated.
+</span></span><span style="display:flex;"><span>Done.
+</span></span><span style="display:flex;"><span>Updating all regions with the new schema...
+</span></span><span style="display:flex;"><span>1/1 regions updated.
+</span></span><span style="display:flex;"><span>Done.
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 3.8320 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 出入数据，c1 插入4个版本的值</span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:011:0&gt; put <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#a6be9d">&#39;c1&#39;</span>, <span style="color:#a6be9d">&#39;v1&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.1000 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:012:0&gt; put <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#a6be9d">&#39;c1&#39;</span>, <span style="color:#a6be9d">&#39;v11&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0180 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:013:0&gt; put <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#a6be9d">&#39;c1&#39;</span>, <span style="color:#a6be9d">&#39;v111&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0140 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:014:0&gt; put <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#a6be9d">&#39;c1&#39;</span>, <span style="color:#a6be9d">&#39;v1111&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0140 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 插入c2、c3的值</span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:015:0&gt; put <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#a6be9d">&#39;c2&#39;</span>, <span style="color:#a6be9d">&#39;v2&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0140 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:016:0&gt; put <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#a6be9d">&#39;c3&#39;</span>, <span style="color:#a6be9d">&#39;v3&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0210 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 获取rowKey=r1的一行记录</span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:017:0&gt; get <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>
+</span></span><span style="display:flex;"><span>COLUMN                                              CELL
+</span></span><span style="display:flex;"><span> c1:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819382575, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v1111
+</span></span><span style="display:flex;"><span> c2:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819392398, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v2
+</span></span><span style="display:flex;"><span> c3:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819398244, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v3
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">3</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0550 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 获取rowKey=r1并且 1552819392398 &lt;= 时间戳范围 &lt; 1552819398244</span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:018:0&gt; get <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#ff636f">{</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">TIMERANGE</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#ff636f">[</span>1552819392398, 1552819398244<span style="color:#ff636f">]}</span>
+</span></span><span style="display:flex;"><span>COLUMN                                              CELL
+</span></span><span style="display:flex;"><span> c2:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819392398, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v2
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">1</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0090 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 获取指定列的值</span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:019:0&gt; get <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#ff636f">{</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">COLUMN</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#a6be9d">&#39;c1&#39;</span><span style="color:#ff636f">}</span>
+</span></span><span style="display:flex;"><span>COLUMN                                              CELL
+</span></span><span style="display:flex;"><span> c1:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819382575, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v1111
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">1</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0160 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 获取指定列的值，多个值使用数组表示</span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:020:0&gt; get <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#ff636f">{</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">COLUMN</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#ff636f">[</span><span style="color:#a6be9d">&#39;c1&#39;</span>, <span style="color:#a6be9d">&#39;c2&#39;</span>, <span style="color:#a6be9d">&#39;c3&#39;</span><span style="color:#ff636f">]}</span>
+</span></span><span style="display:flex;"><span>COLUMN                                              CELL
+</span></span><span style="display:flex;"><span> c1:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819382575, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v1111
+</span></span><span style="display:flex;"><span> c2:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819392398, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v2
+</span></span><span style="display:flex;"><span> c3:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819398244, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v3
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">3</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0170 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 获取c1的值，获取4个版本的值，默认是按照时间戳降续排序的</span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:021:0&gt; get <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#ff636f">{</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">COLUMN</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#a6be9d">&#39;c1&#39;</span>, <span style="color:#58a1dd">VERSIONS</span> <span style="color:#ff636f">=</span>&gt; 4<span style="color:#ff636f">}</span>
+</span></span><span style="display:flex;"><span>COLUMN                                              CELL
+</span></span><span style="display:flex;"><span> c1:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819382575, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v1111
+</span></span><span style="display:flex;"><span> c1:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819376343, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v111
+</span></span><span style="display:flex;"><span> c1:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819368993, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v11
+</span></span><span style="display:flex;"><span> c1:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819362975, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v1
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0180 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 获取指定时间戳版本的列</span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:022:0&gt; get <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#ff636f">{</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">COLUMN</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#a6be9d">&#39;c1&#39;</span>, <span style="color:#58a1dd">TIMESTAMP</span> <span style="color:#ff636f">=</span>&gt; 1552819376343<span style="color:#ff636f">}</span>
+</span></span><span style="display:flex;"><span>COLUMN                                              CELL
+</span></span><span style="display:flex;"><span> c1:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819376343, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v111
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">1</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0170 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:023:0&gt; get <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#ff636f">{</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">COLUMN</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#a6be9d">&#39;c1&#39;</span>, <span style="color:#58a1dd">TIMESTAMP</span> <span style="color:#ff636f">=</span>&gt; 1552819376343, <span style="color:#58a1dd">VERSIONS</span> <span style="color:#ff636f">=</span>&gt; 4<span style="color:#ff636f">}</span>
+</span></span><span style="display:flex;"><span>COLUMN                                              CELL
+</span></span><span style="display:flex;"><span> c1:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819376343, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v111
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">1</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0130 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 获取rowKey=r1中的值等于v2的所有列</span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:024:0&gt; get <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#ff636f">{</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">FILTER</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#a6be9d">&#34;ValueFilter(=, &#39;binary:v2&#39;)&#34;</span><span style="color:#ff636f">}</span>
+</span></span><span style="display:flex;"><span>COLUMN                                              CELL
+</span></span><span style="display:flex;"><span> c2:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819392398, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v2
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">1</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0510 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hbase<span style="color:#ff636f">(</span>main<span style="color:#ff636f">)</span>:025:0&gt; get <span style="color:#a6be9d">&#39;t1&#39;</span>, <span style="color:#a6be9d">&#39;r1&#39;</span>, <span style="color:#ff636f">{</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">COLUMN</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#a6be9d">&#39;c1&#39;</span>, <span style="color:#58a1dd">ATTRIBUTES</span> <span style="color:#ff636f">=</span>&gt; <span style="color:#ff636f">{</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">&#39;mykey&#39;</span><span style="color:#ff636f">=</span>&gt;<span style="color:#a6be9d">&#39;myvalue&#39;</span><span style="color:#ff636f">}}</span>
+</span></span><span style="display:flex;"><span>COLUMN                                              CELL
+</span></span><span style="display:flex;"><span> c1:                                                <span style="color:#58a1dd">timestamp</span><span style="color:#ff636f">=</span>1552819382575, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span>v1111
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">1</span> row<span style="color:#ff636f">(</span>s<span style="color:#ff636f">)</span> in 0.0100 seconds</span></span></code></pre></div><p>######### 删除某个列族中的某个列delete</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">delete</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#a6be9d">&#39;行键&#39;</span>, <span style="color:#a6be9d">&#39;列族名:列名&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>, <span style="color:#a6be9d">&#39;columnFamily1&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>, <span style="color:#a6be9d">&#39;rowKey1&#39;</span>, <span style="color:#a6be9d">&#39;columnFamily1:column1&#39;</span>, <span style="color:#a6be9d">&#39;value1&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>, <span style="color:#a6be9d">&#39;rowKey1&#39;</span>, <span style="color:#a6be9d">&#39;columnFamily1:column2&#39;</span>, <span style="color:#a6be9d">&#39;value2&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">delete</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>, <span style="color:#a6be9d">&#39;rowKey1&#39;</span>, <span style="color:#a6be9d">&#39;columnFamily1:column1&#39;</span></span></span></code></pre></div><p>######### 删除某行数据deleteall</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">deleteall</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#a6be9d">&#39;行键&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">deleteall</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>, <span style="color:#a6be9d">&#39;rowKey1&#39;</span></span></span></code></pre></div><p>#########  清空整个表的数据truncate</p>
+<p>先disable表，然后再drop表，最后重新create表</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">truncate</span> <span style="color:#a6be9d">&#39;表名&#39;</span></span></span></code></pre></div><p>######### 查询表中有多少行count</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">count</span> <span style="color:#a6be9d">&#39;表名&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">count</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span></span></span></code></pre></div><p>######### 自增incr</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">incr</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#a6be9d">&#39;行键&#39;</span>, <span style="color:#a6be9d">&#39;列族:列名&#39;</span>, 步长值
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 注意：<span style="color:#58a1dd">incr</span> 可以对不存的行键操作，如果行键已经存在会报错，如果使用<span style="color:#58a1dd">put修改了incr的值再使用incr也会报错</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> <span style="color:#58a1dd">ERROR</span>: <span style="color:#58a1dd">org</span>.<span style="color:#58a1dd">apache</span>.<span style="color:#58a1dd">hadoop</span>.<span style="color:#58a1dd">hbase</span>.<span style="color:#58a1dd">DoNotRetryIOException</span>: <span style="color:#58a1dd">Field</span> <span style="color:#ff636f">is</span> <span style="color:#ff636f">not</span> <span style="color:#58a1dd">a</span> <span style="color:#58a1dd">long</span>, <span style="color:#58a1dd">it</span><span style="color:#a6be9d">&#39;s 2 bytes wide
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">incr &#39;</span><span style="color:#58a1dd">tbl_user</span><span style="color:#a6be9d">&#39;, &#39;</span><span style="color:#58a1dd">xiaohong</span><span style="color:#a6be9d">&#39;, &#39;</span><span style="color:#58a1dd">info</span>:<span style="color:#58a1dd">age</span><span style="color:#a6be9d">&#39;, 1</span></span></span></code></pre></div><p>######### 计数器get_counter</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 点击量：日、周、月
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#a6be9d">&#39;counters&#39;</span>, <span style="color:#a6be9d">&#39;daily&#39;</span>, <span style="color:#a6be9d">&#39;weekly&#39;</span>, <span style="color:#a6be9d">&#39;monthly&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">incr</span> <span style="color:#a6be9d">&#39;counters&#39;</span>, <span style="color:#a6be9d">&#39;20110101&#39;</span>, <span style="color:#a6be9d">&#39;daily:hits&#39;</span>, <span style="color:#a6be9d">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">incr</span> <span style="color:#a6be9d">&#39;counters&#39;</span>, <span style="color:#a6be9d">&#39;20110101&#39;</span>, <span style="color:#a6be9d">&#39;daily:hits&#39;</span>, <span style="color:#a6be9d">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">get_counter</span> <span style="color:#a6be9d">&#39;counters&#39;</span>, <span style="color:#a6be9d">&#39;20110101&#39;</span>, <span style="color:#a6be9d">&#39;daily:hits&#39;</span></span></span></code></pre></div><h6 id="修饰词" class="heading-element"><span>0.0.0.3.3  修饰词</span>
+  <a href="#%e4%bf%ae%e9%a5%b0%e8%af%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### <strong>COLUMNS: 查询同一个列族的多个列</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">COLUMNS</span> <span style="color:#ff636f">=&gt;</span> [ <span style="color:#a6be9d">&#39;列族名1:列名1&#39;</span>, <span style="color:#a6be9d">&#39;列族名1:列名2&#39;</span>, ...]}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">COLUMNS</span> <span style="color:#ff636f">=&gt;</span> [ <span style="color:#a6be9d">&#39;info:id&#39;</span>, <span style="color:#a6be9d">&#39;info:age&#39;</span>]}</span></span></code></pre></div><p>####### <strong>TIMESTAMP 指定时间戳</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;t1&#39;</span>, { 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">COLUMNS</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;c2&#39;</span>, <span style="color:#ff636f">TIMESTAMP</span><span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">1552819392398</span>}</span></span></code></pre></div><p><strong>TIMERANGE表示的是”&gt;=开始时间 and &lt;结束时间“</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;表名&#39;</span>,{ 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">TIMERANGE</span><span style="color:#ff636f">=&gt;</span>[<span style="color:#58a1dd">timestamp1</span>, <span style="color:#58a1dd">timestamp2</span>]}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>,{ 
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">TIMERANGE</span><span style="color:#ff636f">=&gt;</span>[<span style="color:#a6be9d">1551938004321</span>, <span style="color:#a6be9d">1551938036450</span>]}</span></span></code></pre></div><p>####### VERSIONS</p>
+<p>默认情况下一个列只能存储一个数据，后面如果修改数据就会将原来的覆盖掉，可以通过指定VERSIONS时HBase一列能存储多个值</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>, <span style="color:#a6be9d">&#39;columnFamily1&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">describe</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> <span style="color:#a6be9d">00</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>, { 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">NAME</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;columnFamily1&#39;</span>, <span style="color:#58a1dd">VERSIONS</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">3</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>, <span style="color:#a6be9d">&#39;rowKey1&#39;</span>, <span style="color:#a6be9d">&#39;columnFamily1:column1&#39;</span>, <span style="color:#a6be9d">&#39;value1&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>, <span style="color:#a6be9d">&#39;rowKey1&#39;</span>, <span style="color:#a6be9d">&#39;columnFamily1:column1&#39;</span>, <span style="color:#a6be9d">&#39;value2&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>, <span style="color:#a6be9d">&#39;rowKey1&#39;</span>, <span style="color:#a6be9d">&#39;columnFamily1:column1&#39;</span>, <span style="color:#a6be9d">&#39;value3&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 默认返回最新的一条数据
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">get</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>,<span style="color:#a6be9d">&#39;rowKey1&#39;</span>,<span style="color:#a6be9d">&#39;columnFamily1:column1&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 返回<span style="color:#a6be9d">3</span>个
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">get</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>,<span style="color:#a6be9d">&#39;rowKey1&#39;</span>,{ 
+</span></span><span style="display:flex;"><span>   <span style="color:#ff636f">COLUMN</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;columnFamily1:column1&#39;</span>, <span style="color:#58a1dd">VERSIONS</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">3</span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 返回<span style="color:#a6be9d">2</span>个
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">get</span> <span style="color:#a6be9d">&#39;tbl_test&#39;</span>,<span style="color:#a6be9d">&#39;rowKey1&#39;</span>,{ 
+</span></span><span style="display:flex;"><span>   <span style="color:#ff636f">COLUMN</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;columnFamily1:column1&#39;</span>, <span style="color:#58a1dd">VERSIONS</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">2</span>}</span></span></code></pre></div><p>####### STARTROW</p>
+<p>ROWKEY起始行。会先根据这个key定位到region，再向后扫描</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, { 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">STARTROW</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;行键名&#39;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, { 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">STARTROW</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;vbirdbest&#39;</span>}</span></span></code></pre></div><p>####### **STOPROW **</p>
+<p>截止到STOPROW行，STOPROW行之前的数据，不包括STOPROW这行数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, { 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">STOPROW</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;行键名&#39;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, { 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">STOPROW</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;vbirdbest&#39;</span>}</span></span></code></pre></div><p>####### **LIMIT **</p>
+<p>返回的行数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, { 
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">LIMIT</span> <span style="color:#ff636f">=&gt;</span> 行数}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, { 
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">LIMIT</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">2</span> }</span></span></code></pre></div><h6 id="filter条件过滤器" class="heading-element"><span>0.0.0.3.4  FILTER条件过滤器</span>
+  <a href="#filter%e6%9d%a1%e4%bb%b6%e8%bf%87%e6%bb%a4%e5%99%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>过滤器之间可以使用AND、OR连接多个过滤器。</p>
+<p>####### ValueFilter 值过滤器</p>
+<p><code>ValueFilter</code> 会对每行的每一列的值都进行匹配。它会检查整行中所有列的值，如果有任何一个列的值与指定的条件匹配，该行将被返回。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法：<span style="color:#58a1dd">binary</span> 等于某个值
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#58a1dd">FILTER</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#34;ValueFilter(=,&#39;binary:列值&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法 <span style="color:#ff636f">substring</span>:包含某个值
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#58a1dd">FILTER</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#34;ValueFilter(=,&#39;substring:列值&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#58a1dd">FILTER</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#34;ValueFilter(=, &#39;binary:26&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#58a1dd">FILTER</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#34;ValueFilter(=, &#39;substring:6&#39;)&#34;</span></span></span></code></pre></div><p>ps:<code>SingleColumnValueFilter</code> 用于基于单个列的值进行过滤，如果该列的值与指定条件匹配，则包括该行。否则，排除该行。</p>
+<p>​     <code>ValueFilter</code> 用于基于整行中任意一个值进行过滤。</p>
+<p>####### <strong>ColumnPrefixFilter 列名前缀过滤器</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法 <span style="color:#ff636f">substring</span>:包含某个值
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;表名&#39;</span>, <span style="color:#58a1dd">FILTER</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#34;ColumnPrefixFilter(&#39;列名前缀&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#58a1dd">FILTER</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#34;ColumnPrefixFilter(&#39;birth&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 通过括号、<span style="color:#58a1dd">AND和OR的条件组合多个过滤器</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#58a1dd">FILTER</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#34;ColumnPrefixFilter(&#39;birth&#39;) AND ValueFilter(=,&#39;substring:26&#39;)&#34;</span></span></span></code></pre></div><p>rowKey字典排序</p>
+<p>Table中的所有行都是按照row key的字典排序的</p>
+<p><strong>ColumnPrefixFilter</strong>：过滤列名以指定前缀开始的列。</p>
+<pre tabindex="0"><code>scan &#39;Students&#39;, {FILTER =&gt; &#34;ColumnPrefixFilter(&#39;Big&#39;)&#34;}</code></pre><p><strong>MultipleColumnPrefixFilter</strong>：过滤列名以多个指定前缀开始的列。</p>
+<pre tabindex="0"><code>scan &#39;Students&#39;, {FILTER =&gt; &#34;MultipleColumnPrefixFilter(&#39;Big&#39;, &#39;Com&#39;)&#34;}</code></pre><p><strong>ColumnRangeFilter</strong>：过滤列名在指定范围内的列。</p>
+<pre tabindex="0"><code>scan &#39;Students&#39;, {FILTER =&gt; &#34;ColumnRangeFilter(&#39;BigData&#39;, true, &#39;Math&#39;, true)&#34;}</code></pre><p><strong>SingleColumnValueFilter</strong>：过滤列的值等于或不等于指定值的列。</p>
+<pre tabindex="0"><code>scan &#39;Students&#39;, {FILTER =&gt; &#34;SingleColumnValueFilter(&#39;StuInfo&#39;, &#39;Name&#39;, =, &#39;binary:Tom Green&#39;)&#34;}</code></pre><p><strong>PrefixFilter</strong>：过滤行键以指定前缀开始的行。</p>
+<pre tabindex="0"><code>scan &#39;Students&#39;, {FILTER =&gt; &#34;PrefixFilter(&#39;0001&#39;)&#34;}</code></pre><p><strong>PageFilter</strong>：限制返回结果的行数，用于分页。</p>
+<pre tabindex="0"><code>scan &#39;Students&#39;, {FILTER =&gt; &#34;PageFilter(1)&#34;}</code></pre><p><strong>InclusiveStopFilter</strong>：在扫描时包含指定的结束行键。</p>
+<pre tabindex="0"><code>scan &#39;Students&#39;, {FILTER =&gt; &#34;InclusiveStopFilter(&#39;0002&#39;)&#34;}</code></pre><p><strong>RowFilter</strong>：基于正则表达式、二进制比较等对行键进行过滤。</p>
+<pre tabindex="0"><code>scan &#39;Students&#39;, {FILTER =&gt; &#34;RowFilter(=, &#39;regexstring:^0001&#39;)&#34;}</code></pre><p><strong>ValueFilter</strong>：基于值的比较进行过滤。</p>
+<pre tabindex="0"><code>scan &#39;Students&#39;, {FILTER =&gt; &#34;ValueFilter(=, &#39;binary:18&#39;)&#34;}</code></pre><h6 id="其他" class="heading-element"><span>0.0.0.3.5  其他</span>
+  <a href="#%e5%85%b6%e4%bb%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>获取表的描述describe</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">describe</span> <span style="color:#a6be9d">&#39;表名&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">describe</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span></span></span></code></pre></div><p>列举所有表list</p>
+<p>.</p>
+<p>是否存在表</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">exists</span> <span style="color:#a6be9d">&#39;表名&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">exists</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span></span></span></code></pre></div><p>启用表enable和禁用表disable</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 语法
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">enable</span> <span style="color:#a6be9d">&#39;表名&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">is_enabled</span> <span style="color:#a6be9d">&#39;表名&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">disable</span> <span style="color:#a6be9d">&#39;表名&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">is_disabled</span> <span style="color:#a6be9d">&#39;表名&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 示例
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">disable</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">is_disabled</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">enable</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">is_enabled</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span></span></span></code></pre></div><p>删除表drop</p>
+<pre tabindex="0"><code>##### 语法
+disable &#39;表名&#39;
+drop &#39;表名&#39;
+
+##### 示例
+disable &#39;tbl_user&#39;
+drop &#39;tbl_user&#39;
+
+drop_all &#39;t.*&#39;
+drop_all &#39;ns:t.*&#39;
+drop_all &#39;ns:.*&#39;</code></pre><h5 id="四实验" class="heading-element"><span>0.0.0.4  四：实验</span>
+  <a href="#%e5%9b%9b%e5%ae%9e%e9%aa%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="一-hbase表操作" class="heading-element"><span>0.0.0.4.1  一 hbase表操作</span>
+  <a href="#%e4%b8%80-hbase%e8%a1%a8%e6%93%8d%e4%bd%9c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在Linux环境下操作HBase数据库。</p>
+<p>1）创建如下Students数据表，并将数据填入表中：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406242103623.webp" alt="img" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406242103623.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406242103623.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406242103623.webp?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 创建表，包含两个列族：<span style="color:#58a1dd">StuInfo</span> 和 <span style="color:#58a1dd">Grades</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo&#39;</span>, <span style="color:#a6be9d">&#39;Grades&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 插入数据
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0001&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Name&#39;</span>, <span style="color:#a6be9d">&#39;Tom Green&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0001&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Age&#39;</span>, <span style="color:#a6be9d">&#39;18&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0001&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Sex&#39;</span>, <span style="color:#a6be9d">&#39;Male&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0001&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Class&#39;</span>, <span style="color:#a6be9d">&#39;01&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0001&#39;</span>, <span style="color:#a6be9d">&#39;Grades:BigData&#39;</span>, <span style="color:#a6be9d">&#39;80&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0001&#39;</span>, <span style="color:#a6be9d">&#39;Grades:Computer&#39;</span>, <span style="color:#a6be9d">&#39;90&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0001&#39;</span>, <span style="color:#a6be9d">&#39;Grades:Math&#39;</span>, <span style="color:#a6be9d">&#39;85&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0002&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Name&#39;</span>, <span style="color:#a6be9d">&#39;Amy&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0002&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Age&#39;</span>, <span style="color:#a6be9d">&#39;19&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0002&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Sex&#39;</span>, <span style="color:#a6be9d">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0002&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Class&#39;</span>, <span style="color:#a6be9d">&#39;01&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0002&#39;</span>, <span style="color:#a6be9d">&#39;Grades:BigData&#39;</span>, <span style="color:#a6be9d">&#39;95&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0002&#39;</span>, <span style="color:#a6be9d">&#39;Grades:Computer&#39;</span>, <span style="color:#a6be9d">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0002&#39;</span>, <span style="color:#a6be9d">&#39;Grades:Math&#39;</span>, <span style="color:#a6be9d">&#39;89&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0003&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Name&#39;</span>, <span style="color:#a6be9d">&#39;Allen&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0003&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Age&#39;</span>, <span style="color:#a6be9d">&#39;19&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0003&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Sex&#39;</span>, <span style="color:#a6be9d">&#39;Male&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0003&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Class&#39;</span>, <span style="color:#a6be9d">&#39;02&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0003&#39;</span>, <span style="color:#a6be9d">&#39;Grades:BigData&#39;</span>, <span style="color:#a6be9d">&#39;90&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0003&#39;</span>, <span style="color:#a6be9d">&#39;Grades:Computer&#39;</span>, <span style="color:#a6be9d">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0003&#39;</span>, <span style="color:#a6be9d">&#39;Grades:Math&#39;</span>, <span style="color:#a6be9d">&#39;88&#39;</span></span></span></code></pre></div><p>2）更改列族StudInfo，使得其可以存储3个版本的数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;StuInfo&#39;</span>, <span style="color:#58a1dd">VERSIONS</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">3</span></span></span></code></pre></div><p>3）新增一个Hobby列族</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;Hobby&#39;</span>, <span style="color:#58a1dd">VERSIONS</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">1</span></span></span></code></pre></div><p>4）删除Hobby列族</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;Hobby&#39;</span>, <span style="color:#ff636f">METHOD</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;delete&#39;</span></span></span></code></pre></div><p>5）删除Students数据表</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 先禁用表
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">disable</span> <span style="color:#a6be9d">&#39;Students&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">#####</span> 再删除表
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">drop</span> <span style="color:#a6be9d">&#39;Students&#39;</span></span></span></code></pre></div><h6 id="二--scan" class="heading-element"><span>0.0.0.4.2  二  scan</span>
+  <a href="#%e4%ba%8c--scan" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>1）创建如下Students数据表，并将数据填入表中，在实验5的基础上进行如下操作：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406242109982.webp" alt="img" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406242109982.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406242109982.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406242109982.webp?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>2）输出行键为0001的数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">get</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0001&#39;</span></span></span></code></pre></div><p>3）输出行键中大于0002的数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#58a1dd">STARTROW</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;0003&#39;</span>}</span></span></code></pre></div><p>4）输出行键前缀为0003的数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;tbl_user&#39;</span>, <span style="color:#58a1dd">FILTER</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#34;RowPrefixFilter(&#39;0003&#39;)&#34;</span></span></span></code></pre></div><p>5）只对单元格的键进行过滤和显示，不显示值(行键过滤器)</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#58a1dd">FILTER</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#34;KeyOnlyFilter()&#34;</span>}</span></span></code></pre></div><p>6）相同行键只显示第一个单元格，显示值</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#58a1dd">FILTER</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#34;FirstKeyOnlyFilter()&#34;</span>}</span></span></code></pre></div><p>7）输出列标识前缀为“A”的数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#58a1dd">FILTER</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#34;ColumnPrefixFilter(&#39;A&#39;)&#34;</span>}</span></span></code></pre></div><p>8）输出列标识前缀为“A”或“B”的数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#58a1dd">FILTER</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#34;MultipleColumnPrefixFilter(&#39;A&#39;, &#39;B&#39;)&#34;</span>}</span></span></code></pre></div><p>9）输出单元格值为18的元组</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#58a1dd">FILTER</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#34;ValueFilter(=, &#39;binary:18&#39;)&#34;</span>}</span></span></code></pre></div><p>10）输出名字不是为Amy的元组</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#58a1dd">FILTER</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#34;SingleColumnValueFilter(&#39;StuInfo&#39;, &#39;Name&#39;, !=, &#39;binary:Amy&#39;)&#34;</span>}</span></span></code></pre></div><h6 id="三-过滤" class="heading-element"><span>0.0.0.4.3  三 过滤</span>
+  <a href="#%e4%b8%89-%e8%bf%87%e6%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>2）将行键0001，列名称Name的数据改为自己的名字（StuInfo列族版本数为3）</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#58a1dd">NAME</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;StuInfo&#39;</span>, <span style="color:#58a1dd">VERSIONS</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">put</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, <span style="color:#a6be9d">&#39;0001&#39;</span>, <span style="color:#a6be9d">&#39;StuInfo:Name&#39;</span>, <span style="color:#a6be9d">&#39;Your Name&#39;</span></span></span></code></pre></div><p>3）输出行键中包含01子串的，且版本大于2的数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#58a1dd">FILTER</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#34;RowFilter(=, &#39;substring:01&#39;) AND VersionsFilter(&gt;2)&#34;</span>}</span></span></code></pre></div><p>4）输出行键中大于0001的数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#58a1dd">STARTROW</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;0002&#39;</span>}</span></span></code></pre></div><p>5）输出行键在0001到0002区间的数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#58a1dd">STARTROW</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;0001&#39;</span>, <span style="color:#58a1dd">STOPROW</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;0003&#39;</span>}</span></span></code></pre></div><p>6）限制每个逻辑行返回键值对的个数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>例如限制每行最多返回<span style="color:#a6be9d">2</span>个键值对：
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#ff636f">LIMIT</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">2</span>}</span></span></code></pre></div><p>7）输出列名称范围在“BigData”和“Math”之间的数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#58a1dd">COLUMNS</span> <span style="color:#ff636f">=&gt;</span> [<span style="color:#a6be9d">&#39;Grades:BigData&#39;</span>, <span style="color:#a6be9d">&#39;Grades:Math&#39;</span>]}</span></span></code></pre></div><p>8）显示结果按行进行分页显示</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scan</span> <span style="color:#a6be9d">&#39;Students&#39;</span>, {<span style="color:#ff636f">LIMIT</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">1</span>}  <span style="color:#ff636f">#</span> 每次显示<span style="color:#a6be9d">1</span>行</span></span></code></pre></div><p>9）对行键0001的所有列进行分页，只返回第2页和第3页的值</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">scna</span> <span style="color:#a6be9d">&#39;Students&#39;</span>,{<span style="color:#ff636f">LIMIT</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;2&#39;</span>,<span style="color:#58a1dd">STARTROW</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;0003&#39;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scna</span> <span style="color:#a6be9d">&#39;Students&#39;</span>,{<span style="color:#ff636f">LIMIT</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;2&#39;</span>,<span style="color:#58a1dd">STARTROW</span><span style="color:#ff636f">=&gt;</span><span style="color:#a6be9d">&#39;0005&#39;</span>}</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-tag" title="Tags - 数据库">数据库</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/104/" class="post-nav-item" rel="prev" title="Hexo报错解决"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Hexo报错解决</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/103/" class="post-nav-item" rel="next" title="Git学习">Git学习<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

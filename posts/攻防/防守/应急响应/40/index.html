@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>应急响应-Webshell流量特征 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 应急响应' />
+  <meta itemprop="name" content="应急响应-webshell流量特征">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="971">
+  <meta itemprop="keywords" content="攻防,应急响应"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/40/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="应急响应-webshell流量特征">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="应急响应">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="应急响应-webshell流量特征">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/40/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/38/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/39/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "应急响应-webshell流量特征",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E9%98%B2%E5%AE%88\/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94\/40\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 应急响应","wordcount":  971 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E9%98%B2%E5%AE%88\/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94\/40\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">应急响应-Webshell流量特征</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>应急响应-Webshell流量特征</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="971 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1000 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>常见Webshell工具的流量特征包括：</p>
+<ol>
+<li>网络通信模式：Webshell工具通常会与控制服务器进行通信，通过特定的网络协议传输数据。这些通信模式与正常的网络通信模式存在差异，如使用非标准端口、频繁的连接和断开等。</li>
+<li>数据传输方式：Webshell工具可能使用加密或编码的方式传输数据，以隐藏其真实目的和内容。对于电子数据取证来说，需要解密或解码这些数据，以还原其原始内容。</li>
+<li>文件操作行为：Webshell工具通常会对服务器上的文件进行读取、写入、删除等操作。这些文件操作行为可能涉及到敏感文件、系统文件或与被攻击的Web服务器相关的文件。通过分析这些文件操作行为，可以发现潜在的Webshell存在。</li>
+<li>系统调用和命令执行：Webshell工具可能会利用系统调用和命令执行来执行一些恶意操作，如执行命令、修改系统配置等。通过监测和分析系统调用和命令执行的行为，可以发现Webshell的存在。</li>
+</ol>
+<h5 id="菜刀" class="heading-element"><span>0.0.0.1  菜刀</span>
+  <a href="#%e8%8f%9c%e5%88%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>payload特征</p>
+<pre tabindex="0"><code>payload特征：
+PHP: &lt;?php @eval($_POST[&#39;caidao&#39;]);?&gt;
+
+ASP: &lt;%eval request(“caidao”)%&gt;
+
+ASP.NET: &lt;%@ Page
+Language=“Jscript”%&gt;&lt;%eval(Request.Item[“caidao”],“unsafe”);%&gt;</code></pre><p>数据包流量特征：</p>
+<ol>
+<li>请求包中：ua头为百度</li>
+<li>请求体中有eval，base64等特征字符</li>
+<li>请求体中传递的payload为base64编码，并且是固定的</li>
+<li>会伪造 X-Forwarded-For 头，且每一次利用菜刀与webshell建立连接，X-Forwarded-For 都会变化</li>
+</ol>
+<h5 id="蚁剑" class="heading-element"><span>0.0.0.2  蚁剑</span>
+  <a href="#%e8%9a%81%e5%89%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>蚁剑同样是一款webshell管理工具，它的优点有许多，功能比菜刀还完善。与冰蝎不同的是，蚁剑没有单独的蚁剑木马，它采用的是跟中国菜刀一样原始的一句话木马。</p>
+</blockquote>
+<h6 id="payload的特征" class="heading-element"><span>0.0.0.2.1  payload的特征</span>
+  <a href="#payload%e7%9a%84%e7%89%b9%e5%be%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ol>
+<li>php中使用assert，eval执行</li>
+<li>asp使用eval执行</li>
+<li>jsp中使用的是Java类加载（ClassLoader），同时会带有base64编码解码等字符特征</li>
+</ol>
+<h6 id="数据包流量特征" class="heading-element"><span>0.0.0.2.2  数据包流量特征</span>
+  <a href="#%e6%95%b0%e6%8d%ae%e5%8c%85%e6%b5%81%e9%87%8f%e7%89%b9%e5%be%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ol>
+<li>请求体中一定有@in_set(&ldquo;display_errors&rdquo;,&ldquo;0&rdquo;);@set_time_limit(0)开头，后面存在base64等字符</li>
+<li>中国蚁剑默认状态下的通信数据包仅仅做了URL编码处理，与明文无异，想过WAF基本上不可能。</li>
+<li>蚁剑所有脚本的源代码（php/asp/aspx等）均来自菜刀，所以流量特征也和菜刀差不多，过WAF基本不用想了。所以有了编码器和解码器，进行流量混淆可绕过WAF，并且编码器和解码器可以自定义，使用nodejs 编写即可，类似于插件很容易上手</li>
+<li>默认的 user-agent 请求头是 antsword xxx（可修改）</li>
+<li>蚁剑的正文内容用URL加密，解密后流量最中明显的特征为<code>ini_set(&quot;display_errors&quot;,&quot;0&quot;);</code>这段代码基本是所有WebShell客户端链接PHP类WebShell都有的一种代码，但是有的客户端会将这段编码或者加密，而蚁剑是明文，所以较好发现，同时蚁剑也有eval这种明显的特征。</li>
+</ol>
+<p>先简单说明下编码器和解码器的作用。</p>
+<ul>
+<li>编码器：对发送流量进行编码，服务端进行解码。</li>
+<li>解码器：服务端对返回流量编码，需要客户端通过解码器解码还原流量接收。</li>
+</ul>
+<p>但是蚁剑自带的编码器其实过WAF还是比较勉强的，因为它的webshell脚本是最原始的一句话，如</p>
+<pre tabindex="0"><code>&lt;?php @eval($_POST[&#39;cmd&#39;]);?&gt;</code></pre><p>根据上面提到的编码器作用，可以知道，服务端得进行解码才能正常接收，那像这种一句话是没法解码的（观察一下冰蝎马，发现冰蝎马中包含了加解密函数，因此可以直接解码，而蚁剑只有这一个一句话，没有函数服务端是一定不会加解密的），所以<strong>实际上是将解码函数一同发送到服务端，那几个解码函数是没法加密的，这就是一个很明显的特征</strong>。</p>
+<h6 id="蚁剑绕过特征流量" class="heading-element"><span>0.0.0.2.3  蚁剑绕过特征流量</span>
+  <a href="#%e8%9a%81%e5%89%91%e7%bb%95%e8%bf%87%e7%89%b9%e5%be%81%e6%b5%81%e9%87%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>由于蚁剑中包含了很多加密、绕过插件，所以导致很多流量被加密后无法识别，但是蚁剑混淆加密后还有一个比较明显的特征，即为参数名大多以<code>0x.....=</code>这种形式（下划线可替换为其他）所以，以0x开头的参数名，后面为加密数据的数据包也可识别为蚁剑的流量特征。</p>
+<h6 id="蚁剑攻与防" class="heading-element"><span>0.0.0.2.4  蚁剑攻与防</span>
+  <a href="#%e8%9a%81%e5%89%91%e6%94%bb%e4%b8%8e%e9%98%b2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><strong>1、编码器改造</strong></p>
+<p>上面已经提到，蚁剑在数据包中实际上是将解码函数一同发送到服务端，那几个解码函数是没法加密的，所以产生一个很明显的流量特征。</p>
+<p>蚁剑也支持使用者自定义编码器和解码器</p>
+<p><strong>2、请求头修改</strong></p>
+<p>蚁剑默认的数据包里都携带了特别明显的请求头信息：<code>User-Agent: antSword/v2.1</code>。</p>
+<p>我们需要将请求包中的 User-Agent 修改为正常的浏览器标识</p>
+<p>修改位置在蚁剑的本地源码文件夹中，对<code>antSword\modules\request.js</code> 文件修改<code>USER_AGENT</code>变量值。</p>
+<h5 id="冰蝎" class="heading-element"><span>0.0.0.3  冰蝎</span>
+  <a href="#%e5%86%b0%e8%9d%8e" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>在现实生活中，网络之间的通信大部分是加密过的，webshell也是如此，老牌的webshell管理工具——中国菜刀因为其攻击流量特征明显，容易被各类安全设备检测，实际场景用的越来越少，现在用的比较多的就是加密webshell。对于加密webshell，如果我们想通过流量分析得到具体信息，需要知道webshell所采用的加密方式以及密钥。</p>
+<p>冰蝎就是一款使用AES 128位对称加密的加密webshell。</p>
+</blockquote>
+<h6 id="冰蝎20" class="heading-element"><span>0.0.0.3.1  冰蝎2.0</span>
+  <a href="#%e5%86%b0%e8%9d%8e20" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 通信过程</p>
+<p>加密通信流程即：</p>
+<p>1.首先客户端以Get形式发起带密码的请求（形如 http://192.168.43.11/dvwa/shell.php?pass=645 的请求）；
+2.服务端产生随机密钥（使用随机数MD5的高16位作为密钥），将密钥写入Session并将密钥返回客户端；
+3.客户端获取密钥后，将Poyload（待执行的攻击命令）用AES算法（或者XOR运算）加密，用POST形式发送请求；
+4.服务端收到请求，用Session中的密钥解密请求的Body部分，之后执行Payload，将直接结果返回到客户端。
+5.客户端获取服务端返回结果，回显到客户端UI界面上。</p>
+<p>通常AES加密前会进行一次Base64编码。</p>
+<p>####### payload特征：</p>
+<p>先base64加密，再经过AES对称加密全部代码，最后传输</p>
+<p>######### 1、 Accept字段</p>
+<p>Accept是HTTP协议常用的字段，但冰蝎默认的Accept字段的值很特殊，而且存在于冰蝎的任何一个通讯阶段</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Accept: text/html,image/gif, image/jpeg, *; <span style="color:#58a1dd">q</span><span style="color:#ff636f">=</span>.2, */*; <span style="color:#58a1dd">q</span><span style="color:#ff636f">=</span>.2</span></span></code></pre></div><p>######### 2、 User agent字段</p>
+<p>冰蝎内置了17种ua头，每次连接shell都会随机一个进行使用，如果发现历史流量中同一个IP访问URL的时候，命令了以下列表中的多个ua头，可以基本确定为冰蝎</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectivec" data-lang="objectivec"><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>) <span style="color:#58a1dd">AppleWebKit</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">535.1</span> (<span style="color:#58a1dd">KHTML</span>, <span style="color:#58a1dd">like</span> <span style="color:#58a1dd">Gecko</span>) <span style="color:#58a1dd">Chrome</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">14.0.835.163</span> <span style="color:#58a1dd">Safari</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">535.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>; <span style="color:#58a1dd">rv</span>:<span style="color:#a6be9d">6.0</span>) <span style="color:#58a1dd">Gecko</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">20100101</span> <span style="color:#58a1dd">Firefox</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">6.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>) <span style="color:#58a1dd">AppleWebKit</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.50</span> (<span style="color:#58a1dd">KHTML</span>, <span style="color:#58a1dd">like</span> <span style="color:#58a1dd">Gecko</span>) <span style="color:#58a1dd">Version</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.1</span> <span style="color:#58a1dd">Safari</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.50</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Opera</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">9.80</span> (<span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">U</span>; <span style="color:#58a1dd">zh</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">cn</span>) <span style="color:#58a1dd">Presto</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">2.9.168</span> <span style="color:#58a1dd">Version</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">11.50</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">9.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">Win64</span>; <span style="color:#58a1dd">x64</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">2.0.50727</span>; <span style="color:#58a1dd">SLCC2</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.5.30729</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.0.30729</span>; <span style="color:#58a1dd">Media</span> <span style="color:#58a1dd">Center</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">6.0</span>; <span style="color:#58a1dd">InfoPath</span><span style="color:#a6be9d">.3</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">C</span>; <span style="color:#58a1dd">Tablet</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">2.0</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">E</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">8.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span>; <span style="color:#58a1dd">SLCC2</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">2.0.50727</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.5.30729</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.0.30729</span>; <span style="color:#58a1dd">Media</span> <span style="color:#58a1dd">Center</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">6.0</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">C</span>; <span style="color:#58a1dd">InfoPath</span><span style="color:#a6be9d">.3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">8.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">5.1</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span>; <span style="color:#58a1dd">GTB7</span><span style="color:#a6be9d">.0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">7.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">5.1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">6.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">5.1</span>; <span style="color:#58a1dd">SV1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span>; <span style="color:#58a1dd">U</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; ) <span style="color:#58a1dd">AppleWebKit</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.12</span> (<span style="color:#58a1dd">KHTML</span>, <span style="color:#58a1dd">like</span> <span style="color:#58a1dd">Gecko</span>) <span style="color:#58a1dd">Maxthon</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">3.0</span> <span style="color:#58a1dd">Safari</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.12</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">7.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span>; <span style="color:#58a1dd">SLCC2</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">2.0.50727</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.5.30729</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.0.30729</span>; <span style="color:#58a1dd">Media</span> <span style="color:#58a1dd">Center</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">6.0</span>; <span style="color:#58a1dd">InfoPath</span><span style="color:#a6be9d">.3</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">C</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">E</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">7.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span>; <span style="color:#58a1dd">SLCC2</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">2.0.50727</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.5.30729</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.0.30729</span>; <span style="color:#58a1dd">Media</span> <span style="color:#58a1dd">Center</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">6.0</span>; <span style="color:#58a1dd">InfoPath</span><span style="color:#a6be9d">.3</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">C</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">E</span>; <span style="color:#58a1dd">SE</span> <span style="color:#a6be9d">2.</span><span style="color:#58a1dd">X</span> <span style="color:#58a1dd">MetaSr</span> <span style="color:#a6be9d">1.0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span>; <span style="color:#58a1dd">U</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">en</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">US</span>) <span style="color:#58a1dd">AppleWebKit</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.3</span> (<span style="color:#58a1dd">KHTML</span>, <span style="color:#58a1dd">like</span> <span style="color:#58a1dd">Gecko</span>) <span style="color:#58a1dd">Chrome</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">6.0.472.33</span> <span style="color:#58a1dd">Safari</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.3</span> <span style="color:#58a1dd">SE</span> <span style="color:#a6be9d">2.</span><span style="color:#58a1dd">X</span> <span style="color:#58a1dd">MetaSr</span> <span style="color:#a6be9d">1.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">9.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span>; <span style="color:#58a1dd">SLCC2</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">2.0.50727</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.5.30729</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.0.30729</span>; <span style="color:#58a1dd">Media</span> <span style="color:#58a1dd">Center</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">6.0</span>; <span style="color:#58a1dd">InfoPath</span><span style="color:#a6be9d">.3</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">C</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">E</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>) <span style="color:#58a1dd">AppleWebKit</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">535.1</span> (<span style="color:#58a1dd">KHTML</span>, <span style="color:#58a1dd">like</span> <span style="color:#58a1dd">Gecko</span>) <span style="color:#58a1dd">Chrome</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">13.0.782.41</span> <span style="color:#58a1dd">Safari</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">535.1</span> <span style="color:#58a1dd">QQBrowser</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">6.9.11079.201</span></span></span></code></pre></div><p>但是用户可以很容易的修改</p>
+<p>######### 3、 长连接</p>
+<p>默认情况下，请求头和响应头里会有Connection。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-makefile" data-lang="makefile"><span style="display:flex;"><span><span style="color:#58a1dd">Connection</span><span style="color:#ff636f">:</span> <span style="color:#58a1dd">Keep</span>-<span style="color:#58a1dd">Alive</span></span></span></code></pre></div><p>######### 4、 密钥传递时URL参数</p>
+<p>密钥传递的时候，URI只有一个key-value型参数，Key是黑客给shell设置的密码，一般为10位以下字母和数字<code>?pass=[三位数字]</code></p>
+<p>可以使用正则防守</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fsharp" data-lang="fsharp"><span style="display:flex;"><span>\<span style="color:#ff636f">.(</span><span style="color:#58a1dd">php</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">jsp</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">asp</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">aspx</span><span style="color:#ff636f">)</span>\<span style="color:#ff636f">?(</span>\<span style="color:#58a1dd">w</span><span style="color:#ff636f">){</span><span style="color:#58a1dd">1</span><span style="color:#ff636f">,</span><span style="color:#58a1dd">10</span><span style="color:#ff636f">}=</span>\<span style="color:#58a1dd">d</span><span style="color:#ff636f">{</span><span style="color:#58a1dd">2</span><span style="color:#ff636f">,</span><span style="color:#58a1dd">3</span><span style="color:#ff636f">}</span>  <span style="color:#58a1dd">HTTP</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">1</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">1</span></span></span></code></pre></div><p>######### 5、 传递的密钥</p>
+<p>加密所使用的密钥长度为16位随机字符串，小写+数字组成</p>
+<p>####### 检测</p>
+<p>检测思路可以从流量、应用、主机三个层面入手。</p>
+<p>######## <strong>思路一：流量侧</strong></p>
+<p>（1）虽然冰蝎的通讯流量都是加密的，但是在第一步，冰蝎必须需要获得密钥，具体流量特征：</p>
+<p><strong>1、是一个get请求，url中带上参数?pass（参数名称可变）</strong></p>
+<p>对应的检测正则表达式：</p>
+<pre tabindex="0"><code>PLAINTEXT
+/[\w.]*.[a-zA-Z]{3,4}\?\w{0,20}=\d{0,10}</code></pre><p>由于该请求特征不明显，此正则会产生较多误报。</p>
+<p><strong>2、返回包状态码为200，返回内容必定是16位的密钥</strong></p>
+<p>对应的检测正则表达式：</p>
+<pre tabindex="0"><code>PLAINTEXT
+^[a-fA-F0-9]{16}$</code></pre><p>返回包特征相对明显，针对这一特征可以在WebIDS、全流量检测等安全设备中对返回包制定相应的特征检测规则。</p>
+<p><strong>3、通过Shell交互过程中的HTTP请求特征来检测</strong></p>
+<p>冰蝎在发送HTTP请求时存在一些特征，例如其工具中内置了17个User-Agent头，在用户没有自定义的情况下会随机选择一个发送。但是这些User-Agent头大部分是一些老版本的浏览器或设备。</p>
+<p>这个类型检测的优势是检测方式比较简单，但是在大流量的环境下很容易引起误报，一般使用多个特征相结合的方法来改善误报的情况，并且这部分的特征通常是一些弱特征，攻击者可以通过定制请求头、使用代理等方式修改冰蝎的请求包很轻易的来绕过这类的检测。</p>
+<p><strong>4.header中的Content-Type</strong></p>
+<p>默认在header中的Content-type字段，在一般情况下的GET形式访问是没有该字段的，只有POST形式的访问才会有。但”冰蝎”不论是GET形式还是POST形式的访问均包含此字段。此处露出了较大破绽，而且该字段的大小写有点问题，所以基于这个规则基本可以秒杀。</p>
+<p>（2）我们已经知道冰蝎建立通信时会发送两个连续的GET请求了，那么Waf可以对一个ip连续访问2次的数据包进行截取，比对相同字符，比对之后，截取两次不同的数据，如果剩下的是16位的key，就可以证明这两个数据包就是冰蝎发出的，第三个数据包通过 0x02,0x03 中的一些bug，可以100%的匹配到冰蝎流量,不会误报</p>
+<p>######## <strong>思路二：应用侧——OpenRASP检测</strong></p>
+<p><strong>1、什么是OpenRASP？</strong></p>
+<p>随着Web应用攻击手段变得复杂，基于请求特征的防护手段，已经不能满足企业安全防护需求。Gartner在2014年提出了应用自我保护技术（RASP）的概念，即将防护引擎嵌入到应用内部，不再依赖外部防护设备。OpenRASP是该技术的开源实现，可以在不依赖请求特征的情况下，准确的识别代码注入、反序列化等应用异常，很好的弥补了传统设备防护滞后的问题。更多细节，请参考[《OpenRASP 最佳实践》](<a href="https://rasp.baidu.com/download/OpenRASP"target="_blank" rel="external nofollow noopener noreferrer">https://rasp.baidu.com/download/OpenRASP</a> Internals.pdf?from=header)</p>
+<p><strong>2、RASP 技术和现有方案主要区别</strong>
+首先，RASP 几乎没有误报情况。边界设备基于请求特征检测攻击，通常无法得知攻击是否成功。对于扫描器的踩点行为、nday 扫描，一般会产生大量报警。RASP 运行在应用内部，失败的攻击不会触发检测逻辑，所以每条攻击都是成功的报警。</p>
+<p>其次，RASP 可以发现更多攻击。以SQL注入为例，边界设备只能看到请求信息。RASP 不但能够看到请求信息，还能看到完整的SQL语句，并进行关联。如果SQL注入让服务器产生了语法错误或者其他异常，RASP引擎也能够识别和处理。</p>
+<p>最后，RASP 可以对抗未知漏洞。发生攻击时，边界防护设备无法掌握应用下一步的动向。RASP技术可以识别出异常的程序逻辑，比如反序列化漏洞导致的命令执行，因此可以对抗未知漏洞。</p>
+<p>######## <strong>思路三：主机侧</strong></p>
+<p><strong>（1）定期对服务器进行webshell文件扫描查杀</strong>
+这里用D盾、河马和OpenRASP团队开发的下一代WebShell检测引擎<a href="https://scanner.baidu.com/#/pages/intro"target="_blank" rel="external nofollow noopener noreferrer">webdir+</a>进行测试，检测结果都比较一般。</p>
+<p><strong>（2）Linux audit日志检测</strong></p>
+<p>虽然冰蝎通讯流量是加密的，但落到主机侧，还是会调用系统命令，所以可以在主机审计日志层面定制检测规则，监控冰蝎对系统命令的调用。Linux审计系统提供了一种跟踪系统上与安全相关的信息的方法。基于预先配置的规则，审核生成日志条目以记录尽可能多的关于系统上发生的事件信息，参考<a href="https://www.secpulse.com/archives/62113.html"target="_blank" rel="external nofollow noopener noreferrer">《另类WebShell监测机制–基于auditd》</a>思路。</p>
+<p>以root身份执行如下命令，可实现对执行系统命令这一个SYSCALL行为的监控审计。</p>
+<pre tabindex="0"><code>auditctl -D # 用于测试，清除已有规则  
+
+ auditctl -a always,exit -F arch=b64 -S execve -k rule01_exec_command</code></pre><p>上述命令在系统审计规则中增加了一条监控调用命令执行监控规则，并且定义规则名为rule01_exec_command。</p>
+<p>在冰蝎中执行命令whoami，在Linux审计日志中发现记录：</p>
+<p>type=SYSCALL：日志规则“rule01_exec_command”被触发，uid=33的用户，通过父进程ppid=597，调用/usr/bin/bash，执行了命令sh，进程pid=8380。</p>
+<p>type=SYSCALL和type=EXECVE都能看到执行的程序名称和参数。</p>
+<p>type=CWD则说明了，命令执行所在的目录cwd=”/var/www/html”。</p>
+<p>一般cwd在web目下的，又执行了系统命令，则这个行为是比较可疑的。</p>
+<p>当然基于审计日志的检测思路也存在一定问题，包括：合理配置auditd的运行参数，准确评估审计功能对系统性能的影响；如何主动识别Web进程和Web目录信息；如何实时收集操作系统进程和进程PID等信息；如何关联分析Web访问日志； Windows平台是否有同样的检测机制等等。</p>
+<h6 id="冰蝎30" class="heading-element"><span>0.0.0.3.2  冰蝎3.0</span>
+  <a href="#%e5%86%b0%e8%9d%8e30" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>在上面的介绍中，我们了解到冰蝎建立通信时会进行明文传输密钥，这使得它可以被检测到。在密码学中，我们知道密码可分为对称密码和非对称密码（公钥密码），其中对称密码包括DES、AES等等，但是对称密码始终绕不过去的难题是密钥的分配，从而才引申出了公钥密码。</p>
+<p>对于冰蝎密钥分配的问题，冰蝎作者采用将密钥”写死“，也就是在上传的shell文件中将密钥确定为一个固定的值，这样在以后通信时，不必再分配AES密钥，因为密钥已经提前确定好了，这样直接通信即可。</p>
+</blockquote>
+<p>payload特征：</p>
+<p>先base64加密，再经过AES对称加密全部代码，最后传输</p>
+<p>AES加密的密钥为<code>webshell连接密码的MD5的前16位，默认连接密码是&quot;rebeyond&quot;(即密钥是md5('rebeyond')[0:16]=e45e329feb5d925b)</code></p>
+<p>######### 1、 Accept&amp;Cache-Control</p>
+<pre tabindex="0"><code>Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: java/1.8</code></pre><p>######### 2、 User agent字段</p>
+<p>冰蝎内置了17种ua头，每次连接shell都会随机一个进行使用，如果发现历史流量中同一个IP访问URL的时候，命令了以下列表中的多个ua头，可以基本确定为冰蝎</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-objectivec" data-lang="objectivec"><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>) <span style="color:#58a1dd">AppleWebKit</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">535.1</span> (<span style="color:#58a1dd">KHTML</span>, <span style="color:#58a1dd">like</span> <span style="color:#58a1dd">Gecko</span>) <span style="color:#58a1dd">Chrome</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">14.0.835.163</span> <span style="color:#58a1dd">Safari</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">535.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>; <span style="color:#58a1dd">rv</span>:<span style="color:#a6be9d">6.0</span>) <span style="color:#58a1dd">Gecko</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">20100101</span> <span style="color:#58a1dd">Firefox</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">6.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>) <span style="color:#58a1dd">AppleWebKit</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.50</span> (<span style="color:#58a1dd">KHTML</span>, <span style="color:#58a1dd">like</span> <span style="color:#58a1dd">Gecko</span>) <span style="color:#58a1dd">Version</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.1</span> <span style="color:#58a1dd">Safari</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.50</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Opera</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">9.80</span> (<span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">U</span>; <span style="color:#58a1dd">zh</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">cn</span>) <span style="color:#58a1dd">Presto</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">2.9.168</span> <span style="color:#58a1dd">Version</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">11.50</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">9.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">Win64</span>; <span style="color:#58a1dd">x64</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">2.0.50727</span>; <span style="color:#58a1dd">SLCC2</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.5.30729</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.0.30729</span>; <span style="color:#58a1dd">Media</span> <span style="color:#58a1dd">Center</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">6.0</span>; <span style="color:#58a1dd">InfoPath</span><span style="color:#a6be9d">.3</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">C</span>; <span style="color:#58a1dd">Tablet</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">2.0</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">E</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">8.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span>; <span style="color:#58a1dd">SLCC2</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">2.0.50727</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.5.30729</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.0.30729</span>; <span style="color:#58a1dd">Media</span> <span style="color:#58a1dd">Center</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">6.0</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">C</span>; <span style="color:#58a1dd">InfoPath</span><span style="color:#a6be9d">.3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">8.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">5.1</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span>; <span style="color:#58a1dd">GTB7</span><span style="color:#a6be9d">.0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">7.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">5.1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">6.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">5.1</span>; <span style="color:#58a1dd">SV1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span>; <span style="color:#58a1dd">U</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; ) <span style="color:#58a1dd">AppleWebKit</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.12</span> (<span style="color:#58a1dd">KHTML</span>, <span style="color:#58a1dd">like</span> <span style="color:#58a1dd">Gecko</span>) <span style="color:#58a1dd">Maxthon</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">3.0</span> <span style="color:#58a1dd">Safari</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.12</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">7.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span>; <span style="color:#58a1dd">SLCC2</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">2.0.50727</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.5.30729</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.0.30729</span>; <span style="color:#58a1dd">Media</span> <span style="color:#58a1dd">Center</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">6.0</span>; <span style="color:#58a1dd">InfoPath</span><span style="color:#a6be9d">.3</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">C</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">E</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">4.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">7.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span>; <span style="color:#58a1dd">SLCC2</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">2.0.50727</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.5.30729</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.0.30729</span>; <span style="color:#58a1dd">Media</span> <span style="color:#58a1dd">Center</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">6.0</span>; <span style="color:#58a1dd">InfoPath</span><span style="color:#a6be9d">.3</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">C</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">E</span>; <span style="color:#58a1dd">SE</span> <span style="color:#a6be9d">2.</span><span style="color:#58a1dd">X</span> <span style="color:#58a1dd">MetaSr</span> <span style="color:#a6be9d">1.0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span>; <span style="color:#58a1dd">U</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">en</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">US</span>) <span style="color:#58a1dd">AppleWebKit</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.3</span> (<span style="color:#58a1dd">KHTML</span>, <span style="color:#58a1dd">like</span> <span style="color:#58a1dd">Gecko</span>) <span style="color:#58a1dd">Chrome</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">6.0.472.33</span> <span style="color:#58a1dd">Safari</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">534.3</span> <span style="color:#58a1dd">SE</span> <span style="color:#a6be9d">2.</span><span style="color:#58a1dd">X</span> <span style="color:#58a1dd">MetaSr</span> <span style="color:#a6be9d">1.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">compatible</span>; <span style="color:#58a1dd">MSIE</span> <span style="color:#a6be9d">9.0</span>; <span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>; <span style="color:#58a1dd">WOW64</span>; <span style="color:#58a1dd">Trident</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span>; <span style="color:#58a1dd">SLCC2</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">2.0.50727</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.5.30729</span>; .<span style="color:#58a1dd">NET</span> <span style="color:#58a1dd">CLR</span> <span style="color:#a6be9d">3.0.30729</span>; <span style="color:#58a1dd">Media</span> <span style="color:#58a1dd">Center</span> <span style="color:#58a1dd">PC</span> <span style="color:#a6be9d">6.0</span>; <span style="color:#58a1dd">InfoPath</span><span style="color:#a6be9d">.3</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">C</span>; .<span style="color:#58a1dd">NET4</span><span style="color:#a6be9d">.0</span><span style="color:#58a1dd">E</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Mozilla</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5.0</span> (<span style="color:#58a1dd">Windows</span> <span style="color:#58a1dd">NT</span> <span style="color:#a6be9d">6.1</span>) <span style="color:#58a1dd">AppleWebKit</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">535.1</span> (<span style="color:#58a1dd">KHTML</span>, <span style="color:#58a1dd">like</span> <span style="color:#58a1dd">Gecko</span>) <span style="color:#58a1dd">Chrome</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">13.0.782.41</span> <span style="color:#58a1dd">Safari</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">535.1</span> <span style="color:#58a1dd">QQBrowser</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">6.9.11079.201</span></span></span></code></pre></div><p>但是用户可以很容易的修改</p>
+<p>######### 3、content-type</p>
+<p>该请求头是冰蝎3.0中写死的部分，除非反编译，不然很难修改</p>
+<pre tabindex="0"><code>Content-Type: application/octet-stream</code></pre><p>######### 4、 请求中content-length</p>
+<p>为5740或5720（可能会根据Java版本而改变）</p>
+<h6 id="冰蝎40" class="heading-element"><span>0.0.0.3.3  冰蝎4.0</span>
+  <a href="#%e5%86%b0%e8%9d%8e40" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>在前面我们介绍的2.0和3.0都是使用AES 128位加密，到了4.0版本，加密方式不再是单一的AES，多出来了几种用户可选加密方式，甚至可以自定义。</p>
+</blockquote>
+<p>第一阶段：密钥协商
+1）攻击者通过 GET 或者 POST 方法，形如 http://127.0.0.1/shell.aspx?pass=645 的请求服务器密钥；
+2）服务器使用随机数 MD5 的高16位作为密钥，存储到会话的 $_SESSION 变量中，并返回密钥给攻击者。
+第二阶段-加密传输
+1）客户端把待执行命令作为输入，利用 AES 算法或 XOR 运算进行加密，并发送至服务端；
+2）服务端接受密文后进行 AES 或 XOR 运算解密，执行相应的命令；
+3）执行结果通过AES加密后返回给攻击者。</p>
+<p>######### 1、Accept字段</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Accept: application/json, text/javascript, */*; <span style="color:#58a1dd">q</span><span style="color:#ff636f">=</span>0.01</span></span></code></pre></div><p>######### 2、流量特征Content-Type字段</p>
+<p>PHP站点：Application/x-www-form-urlencoded
+ASP站点：Application/octet-stream</p>
+<p>######### 3、流量特征User-agent 字段</p>
+<p>冰蝎设置了10种User-Agent,每次连接shell时会随机选择一个进行使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#a6be9d">&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:87.0) Gecko/20100101 Firefox/87.0&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36 Edg/99.0.1150.55&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:79.0) Gecko/20100101 Firefox/79.0&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko&#34;</span></span></span></code></pre></div><p>######### 4、 流量特征长连接</p>
+<p>冰蝎通讯默认使用长连接，避免了频繁的握手造成的资源开销。默认情况下，请求头和响应头里会带有 Connection。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-makefile" data-lang="makefile"><span style="display:flex;"><span><span style="color:#58a1dd">Connection</span><span style="color:#ff636f">:</span> <span style="color:#58a1dd">Keep</span>-<span style="color:#58a1dd">Alive</span></span></span></code></pre></div><p>######### 5、流量特征固定的请求头和响应头</p>
+<p>PHP站点默认口令Default_xor_base64协议加密流量特征，请求字节头：
+dFAXQV1LORcHRQtLRlwMAhwFTAg/M</p>
+<p>响应字节头：
+TxcWR1NNExZAD0ZaAWMIPAZjH1BFBFtHThcJSlUXWEd</p>
+<p>PHP站点默认口令Default_aes协议加密流量特征，请求字节头：
+m7nCS8n4OZG9akdDlxm6OdJevs/jYQ5/IcXK</p>
+<p>响应字节头：
+mAUYLzmqn5QPDkyI5lvSp6DmrC24FW39Y4YsJhUqS7</p>
+<p>JSP站点默认口令Default_xor_base64协议，aes_with_magic协议，Default_aes协议,加密流量特征，响应字节头：
+QhoVQgMXEUcUCBMHAGFZaQtuHFUVXlkWGhBcF1QVCRJ</p>
+<p>######### 6、流量特征连接密码</p>
+<p>默认时，所有冰蝎4.* webshell都有“e45e329feb5d925b” 一串密钥。该密钥为连接密码32位md5值的前16位，默认连接密码rebeyond</p>
+<p>####### 哥斯拉</p>
+<p>哥斯拉(Godzilla)是一款国内流行且优秀的红队 webshell 权限管理工具，使用 java 开发的可视化客户端，shell 支持 java、php、asp 环境，通信流量使用 AES 算法加密，具有文件管理、数据库操作、命令执行、内存马、隧道反弹等后门功能。</p>
+<p>######### 1、cookie</p>
+<p>在Cookie中有一个很明显的特征：最后有一个分号</p>
+<p>######### 2、响应体</p>
+<p>从代码中可以看到会把一个32位的md5字符串按照一半拆分，分别放在base64编码的数据的前后两部分</p>
+<p>整个响应包的结构体征为：<strong>md5前十六位+base64+md5后十六位</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6be9d">72</span><span style="color:#58a1dd">a9c691ccdaab98fL1tMGI4YTljO</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">5</span><span style="color:#ff636f">+</span>/PlQm9MGV7lTjFUKUdfQMDL/j64wJ2UwYg==b4c4e1f6ddd2a488</span></span></code></pre></div><p>按照这样我们分开表示：</p>
+<ol>
+<li>md5前十六位：72a9c691ccdaab98</li>
+<li>base64：fL1tMGI4YTljO/5+/PlQm9MGV7lTjFUKUdfQMDL/j64wJ2UwYg==</li>
+<li>md5后十六位：b4c4e1f6ddd2a488</li>
+</ol>
+<p>我们可以根据这个特征对其所以的数据流量进行分析甄别筛查，符合此格式的统统筛选为威胁来源</p>
+<p>######### 3、连接特征</p>
+<ol>
+<li>请求1：发送一段固定代码（payload），返回内容为空</li>
+<li>请求2：发送一段固定代码（test），返回内容为固定字符串，如下：<code>72a9c691ccdaab98fL1tMGI4YTljO/79NDQm7r9PZzBiOA==b4c4e1f6ddd2a488</code>，解密后即为<strong>ok</strong>。如果连接失败返回内容为空，且不发起请求3</li>
+<li>请求3：发送一段固定代码（getBacisInfo），返回内容为固定字符串（对应服务器信息）</li>
+</ol>
+<h5 id="哥斯拉" class="heading-element"><span>0.0.0.4  哥斯拉</span>
+  <a href="#%e5%93%a5%e6%96%af%e6%8b%89" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>哥斯拉是继冰蝎之后出现的又一款webshell管理工具，与冰蝎类似，哥斯拉也采用了加密流量通信来躲避WAF等安全设备的检测。其特点有：</p>
+<pre tabindex="0"><code>1. 哥斯拉全部类型的shell均过市面所有静态查杀
+2. 哥斯拉流量加密过市面全部流量waf
+3. 哥斯拉的自带的插件是冰蝎、蚁剑不能比拟的</code></pre><h6 id="webshell上传特征" class="heading-element"><span>0.0.0.4.1  Webshell上传特征</span>
+  <a href="#webshell%e4%b8%8a%e4%bc%a0%e7%89%b9%e5%be%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>哥斯拉默认的webshell生成支持JAVA、C#以及PHP三种类型，其中JAVA支持生成jsp以及jspx两种后缀webshell，C#支持aspx、asmx、ashx后缀，PHP就支持php后缀webshell（PHP环境可能支持解析很多后缀类型的文件，如php3、php5、phtml、pht，但是语法都是兼容的）。</p>
+<p>先看JAVA的，主要原理和冰蝎的差不多。关键在于加密、类加载和反射，可以提取关键操作的代码作为静态检测的特征，如：
+AES加/解密：javax.crypto.Cipher.getInstance(“AES”)
+类加载：ClassLoader
+反射：Class.forName</p>
+<p>C#的webshell核心在于使用Assembly来动态解析执行已编译的DLL二进制文件，以及流量加密。使用Assembly的特征为System.Reflection.Assembly，实现加/解密：System.Security.Cryptography.RijndaelManaged()</p>
+<p>PHP没有沿用AES加密的流量，而是通过异或实现自定义的加密，并且直接使用eval函数进行代码执行。</p>
+<h6 id="webshell通信特征" class="heading-element"><span>0.0.0.4.2  Webshell通信特征</span>
+  <a href="#webshell%e9%80%9a%e4%bf%a1%e7%89%b9%e5%be%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 1.User-Agent（弱特征）</p>
+<p>哥斯拉客户端使用JAVA语言编写，在默认的情况下，如果不修改User-Agent，User-Agent会类似于Java/1.8.0_121（具体什么版本取决于JDK环境版本）。但是哥斯拉支持自定义HTTP头部，这个默认特征是可以很容易去除的。</p>
+<p>####### 2.Accept（弱特征）</p>
+<p>Accept为text/html, image/gif, image/jpeg, *; q=.2, <em>/</em>; q=.2
+对这个默认特征应该很熟悉了，之前冰蝎也出现过同样的Accept。为什么会这么巧合出现两个工具都会出现这个特征呢，其实这个也是JDK引入的一个特征，并不是作者自定义的Accept（参考：<code>https://bugs.openjdk.java.net/browse/JDK-8177439</code>）。同样的这个默认特征也可以通过自定义头部去除，只能作为默认情况下的辅助检测特征。</p>
+<p>####### 3.Cookie (强特征)</p>
+<p>哥斯拉的作者应该还没有意识到，在请求包的Cookie中有一个非常致命的特征，最后的分号。标准的HTTP请求中最后一个Cookie的值是不应该出现;的，这个可以作为现阶段的一个辅助识别特征。后面如果作者意识到这个问题的话应该会发布新版本修复这个问题。</p>
+<p>####### 4.请求体特征 (较强特征)</p>
+<p>因为无法准确识别加密的请求体，所以只能采用比较宽泛的匹配条件去匹配请求体特征，宽泛的匹配思路其实就是基于区别大部分正常的数据包，加密数据包自身体现的特征。这种宽泛的匹配在一些情况下可能会带来误报，因此有时候难以作为一种非常有效的检测手法。</p>
+<p>哥斯拉支持对加密的数据进行base64编码以及原始的加密raw两种形式的通讯数据，对于请求体的检测也要考虑两种情况。</p>
+<p>首先看一下base64编码的数据包，对于这种数据包唯一的识别方法就是识别流量中的base64编码。当然不能仅仅去识别数据包中存在base64编码就拦截，因为很多应用正常的参数也会采用base64编码加密。哥斯拉在进行初始化时会产生一个比较大的数据包，后面进行命令执行等操作时产生的base64数据包会比较比较小。在长度上做一个匹配条件在一定程度上也可以降低误报率。</p>
+<p>对于原始加密raw请求体，没想到比较好的方法，目前只想到到了匹配较多的不可见字符的思路。同样的，这种检测方法也会产生误报，像一些对传输安全要求比较高的金融机构，不少应用也会实现一些加密的通讯流量。需要注意的是，在匹配不可见字符时，需要排除文件上传，也就是multipart/form-data数据包，因为文件上传的流量也会包含大量的不可见字符。</p>
+<p>####### 5.响应体特征 (强特征)</p>
+<p>和请求体一样，请求响应体也分两个格式，base64编码的和原始加密raw数据。如果请求体采用base64编码，响应体返回的也是base64编码的数据。在使用base64编码时，响应体会出现一个很明显的固定特征。这个特征是客户端和服务端编写的时候引入的。</p>
+<p>从代码可以看到会把一个32位的md5字符串按照一半拆分，分别放在base64编码的数据的前后两部分。整个响应包的结构体征为：md5前十六位+base64+md5后十六位。</p>
+<p>从响应数据包可以明显看到这个特征，检测时匹配这个特征可以达到比较高的检出率，同时也只可以结合前面的一些弱特征进行检查，进一步提高检出率。因为md5的字符集范围在只落在0123456789ABCDEF范围内，因此很容易去匹配，正则匹配类似于(?i:[0-9A-F]{16})[\w+/]{4,}=?=?(?i:[0-9A-F]{16})。需要注意的是md5需要同时匹配字母大小写两种情况，因为在JAVA版webshell响应中为大写字母，在PHP版中为小写字母。</p>
+<p>编写对应检测规则，在ModSecurity上测试成功拦截。</p>
+<p>但是比较遗憾的是对于原始加密数据的raw形式响应包并没有比较好的检测思路，只能和请求体检测一样，匹配不可见字符。</p>
+<h6 id="哥斯拉解密过程" class="heading-element"><span>0.0.0.4.3  哥斯拉解密过程</span>
+  <a href="#%e5%93%a5%e6%96%af%e6%8b%89%e8%a7%a3%e5%af%86%e8%bf%87%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>1.请求包解密，<code>CyberChef</code> 配方</p>
+<pre tabindex="0"><code>PLAINTEXT
+URL_Decode()
+From_Base64(&#39;A-Za-z0-9+/=&#39;,true,false)
+AES_Decrypt({&#39;option&#39;:&#39;UTF8&#39;,&#39;string&#39;:&#39;3c6e0b8a9c15224a&#39;},{&#39;option&#39;:&#39;Hex&#39;,&#39;string&#39;:&#39;&#39;},&#39;ECB&#39;,&#39;Raw&#39;,&#39;Raw&#39;,{&#39;option&#39;:&#39;Hex&#39;,&#39;string&#39;:&#39;&#39;},{&#39;option&#39;:&#39;Hex&#39;,&#39;string&#39;:&#39;&#39;})
+Gunzip()</code></pre><p>2.返回包解密，<code>CyberChef </code>配方</p>
+<p>自己先手动删掉前16和后16的字符串</p>
+<pre tabindex="0"><code>PLAINTEXT
+From_Base64(&#39;A-Za-z0-9+/=&#39;,true,false)
+AES_Decrypt({&#39;option&#39;:&#39;UTF8&#39;,&#39;string&#39;:&#39;3c6e0b8a9c15224a&#39;},{&#39;option&#39;:&#39;Hex&#39;,&#39;string&#39;:&#39;&#39;},&#39;ECB&#39;,&#39;Raw&#39;,&#39;Raw&#39;,{&#39;option&#39;:&#39;Hex&#39;,&#39;string&#39;:&#39;&#39;},{&#39;option&#39;:&#39;Hex&#39;,&#39;string&#39;:&#39;&#39;})
+Gunzip()</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/" class="post-tag" title="Tags - 应急响应">应急响应</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/38/" class="post-nav-item" rel="prev" title="应急响应-入侵排查"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>应急响应-入侵排查</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/39/" class="post-nav-item" rel="next" title="应急响应">应急响应<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

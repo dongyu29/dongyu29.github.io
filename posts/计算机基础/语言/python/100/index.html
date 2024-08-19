@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Python 脚本编写 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 语言' />
+  <meta itemprop="name" content="python 脚本编写">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="783">
+  <meta itemprop="keywords" content="计算机基础,语言"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/100/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="python 脚本编写">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="语言">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="python 脚本编写">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/100/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/66/" /><link rel="next" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/99/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "python 脚本编写",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/100\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 语言","wordcount":  783 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/100\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Python 脚本编写</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Python 脚本编写</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="783 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="requests问题解决" class="heading-element"><span>0.0.0.1  requests问题解决</span>
+  <a href="#requests%e9%97%ae%e9%a2%98%e8%a7%a3%e5%86%b3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><ul>
+<li>
+<p>request超时error Read timed out. 可以尝试：</p>
+<ul>
+<li><code>headers={'Connection':'close'}</code></li>
+<li>try  except语句</li>
+</ul>
+</li>
+<li>
+<p>写脚本的时候在前面加一行<code>requests.packages.urllib3.disable_warnings()</code>可以去掉requests 警告：InsecureRequestWarning: Unverified HTTPS request is being made.</p>
+</li>
+<li>
+<p>verify=False可以忽略ssl验证（https）</p>
+</li>
+</ul>
+<h5 id="进制转换" class="heading-element"><span>0.0.0.2  进制转换</span>
+  <a href="#%e8%bf%9b%e5%88%b6%e8%bd%ac%e6%8d%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="int-转10" class="heading-element"><span>0.0.0.2.1  int 转10</span>
+  <a href="#int-%e8%bd%ac10" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">s</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;1001&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">int</span>(<span style="color:#58a1dd">s</span>,<span style="color:#a6be9d">2</span>)) <span style="color:#828b96;font-style:italic">#二进制转10进制</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">int</span>(<span style="color:#58a1dd">s</span>,<span style="color:#a6be9d">8</span>)) <span style="color:#828b96;font-style:italic">#八进制转10进制</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">int</span>(<span style="color:#58a1dd">s</span>,<span style="color:#a6be9d">16</span>)) <span style="color:#828b96;font-style:italic">#十六进制转10进制</span></span></span></code></pre></div><h6 id="hex-转16" class="heading-element"><span>0.0.0.2.2  hex 转16</span>
+  <a href="#hex-%e8%bd%ac16" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">hex</span>(<span style="color:#a6be9d">1033</span>)) <span style="color:#828b96;font-style:italic">#十进制转十六进制</span></span></span></code></pre></div><h6 id="bin-转2" class="heading-element"><span>0.0.0.2.3  bin 转2</span>
+  <a href="#bin-%e8%bd%ac2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">bin</span>(<span style="color:#a6be9d">10</span>)) <span style="color:#828b96;font-style:italic">#十进制转二进制</span></span></span></code></pre></div><h6 id="oct-转8" class="heading-element"><span>0.0.0.2.4  oct 转8</span>
+  <a href="#oct-%e8%bd%ac8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">oct</span>(<span style="color:#a6be9d">100</span>))</span></span></code></pre></div><h5 id="格式化" class="heading-element"><span>0.0.0.3  格式化</span>
+  <a href="#%e6%a0%bc%e5%bc%8f%e5%8c%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="format" class="heading-element"><span>0.0.0.3.1  format</span>
+  <a href="#format" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>关键字</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;</span><span style="color:#a6be9d">{name}</span><span style="color:#a6be9d"> is </span><span style="color:#a6be9d">{age}</span><span style="color:#a6be9d"> years old!&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;xiaoming&#39;</span>,<span style="color:#58a1dd">age</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">10</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">输出</span>: <span style="color:#58a1dd">xiaoming</span> <span style="color:#ff636f">is</span> <span style="color:#a6be9d">10</span> <span style="color:#58a1dd">years</span> <span style="color:#58a1dd">old</span>!</span></span></code></pre></div><p>位置</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;</span><span style="color:#a6be9d">{0}</span><span style="color:#a6be9d"> is </span><span style="color:#a6be9d">{1}</span><span style="color:#a6be9d"> years old&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#a6be9d">&#39;xiaohua&#39;</span>,<span style="color:#a6be9d">&#39;21&#39;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 输出: xiaohua is 21 years old</span></span></span></code></pre></div><p>精度</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;</span><span style="color:#a6be9d">{:.1f}</span><span style="color:#a6be9d">&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#a6be9d">4.234324525254</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;</span><span style="color:#a6be9d">{:.4f}</span><span style="color:#a6be9d">&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#a6be9d">4.1</span>))
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 输出</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4.1000</span></span></span></code></pre></div><h6 id="heading" class="heading-element"><span>0.0.0.3.2  %</span>
+  <a href="#heading" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>进制</p>
+</blockquote>
+<p>%o ——八进制</p>
+<p>%d ——十进制</p>
+<p>%x ——十六进制</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;</span><span style="color:#a6be9d">%o</span><span style="color:#a6be9d">&#39;</span> <span style="color:#ff636f">%</span> <span style="color:#a6be9d">20</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">24</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;</span><span style="color:#a6be9d">%d</span><span style="color:#a6be9d">&#39;</span> <span style="color:#ff636f">%</span> <span style="color:#a6be9d">20</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">20</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;</span><span style="color:#a6be9d">%x</span><span style="color:#a6be9d">&#39;</span> <span style="color:#ff636f">%</span> <span style="color:#a6be9d">20</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">14</span></span></span></code></pre></div><blockquote>
+<p>浮点数</p>
+</blockquote>
+<p>%f ——保留小数点后面六位有效数字
+%.3f ——保留小数点后面三位有效数字
+%e ——保留小数点后面六位有效数字,科学计数法输出
+%.3e ——保留3位小数位,科学计数法输出
+%g ——在保证六位有效数字的前提下,使用小数方式,否则使用科学计数法
+%.3g保留3位有效数字,使用小数或科学计数法</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">%.2f</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">%</span><span style="color:#58a1dd">m</span>)</span></span></code></pre></div><h5 id="zipfile" class="heading-element"><span>0.0.0.4  ZipFile</span>
+  <a href="#zipfile" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>常用于批量处理压缩包、解压目录穿越</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">zipfile</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">z</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">zipfile</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ZipFile</span>(<span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#39;test.zip&#39;</span>, <span style="color:#a6be9d">&#39;w&#39;</span>, <span style="color:#58a1dd">zipfile</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ZIP_DEFLATED</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">z</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">writestr</span>(<span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#39;../../../test.txt&#39;</span>, <span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#39;qwe&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">z</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">url</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;http://x.x.x.x:8888/file-unarchiver&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">files</span> <span style="color:#ff636f">=</span> [(<span style="color:#a6be9d">&#39;file&#39;</span>, (<span style="color:#a6be9d">&#39;test.tar.gz&#39;</span>, <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;test.zip&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>), <span style="color:#a6be9d">&#39;application/zip&#39;</span>))]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">resp</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">post</span>(<span style="color:#58a1dd">url</span>, <span style="color:#58a1dd">files</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">files</span>)</span></span></code></pre></div><h5 id="binascii" class="heading-element"><span>0.0.0.5  binascii</span>
+  <a href="#binascii" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>读取文件的16进制</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">binascii</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">read_hex_file</span>(<span style="color:#58a1dd">file_path</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">file_path</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">file</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">hex_data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">binascii</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">hexlify</span>(<span style="color:#58a1dd">file</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">read</span>())
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">hex_data</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">decode</span>(<span style="color:#a6be9d">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 替换为你要读取的文件路径</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">file_path</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;data&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">hex_data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">read_hex_file</span>(<span style="color:#58a1dd">file_path</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">hex_data</span>)</span></span></code></pre></div><h5 id="argparse--解析命令行选项" class="heading-element"><span>0.0.0.6  argparse  解析命令行选项</span>
+  <a href="#argparse--%e8%a7%a3%e6%9e%90%e5%91%bd%e4%bb%a4%e8%a1%8c%e9%80%89%e9%a1%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>为了解析命令行选项，你首先要创建一个 <code>ArgumentParser</code> 实例， 并使用 <code>add_argument()</code> 方法声明你想要支持的选项。 在每个 <code>add_argument()</code> 调用中，<code>dest</code> 参数指定解析结果被指派给属性的名字。 <code>metavar</code> 参数被用来生成帮助信息。<code>action</code> 参数指定跟属性对应的处理逻辑， 通常的值为 <code>store</code> ,被用来存储某个值或将多个参数值收集到一个列表中。 下面的参数收集所有剩余的命令行参数到一个列表中。在本例中它被用来构造一个文件名列表：</p>
+<pre tabindex="0"><code>parser.add_argument(dest=&#39;filenames&#39;,metavar=&#39;filename&#39;, nargs=&#39;*&#39;)</code></pre><p>下面的参数根据参数是否存在来设置一个 <code>Boolean</code> 标志：</p>
+<pre tabindex="0"><code>parser.add_argument(&#39;-v&#39;, dest=&#39;verbose&#39;, action=&#39;store_true&#39;,
+                    help=&#39;verbose mode&#39;)</code></pre><p>下面的参数接受一个单独值并将其存储为一个字符串：</p>
+<pre tabindex="0"><code>parser.add_argument(&#39;-o&#39;, dest=&#39;outfile&#39;, action=&#39;store&#39;,
+                    help=&#39;output file&#39;)</code></pre><p>下面的参数说明允许某个参数重复出现多次，并将它们追加到一个列表中去。 <code>required</code> 标志表示该参数至少要有一个。<code>-p</code> 和 <code>--pat</code> 表示两个参数名形式都可使用。</p>
+<pre tabindex="0"><code>parser.add_argument(&#39;-p&#39;, &#39;--pat&#39;,metavar=&#39;pattern&#39;, required=True,
+                    dest=&#39;patterns&#39;, action=&#39;append&#39;,
+                    help=&#39;text pattern to search for&#39;)</code></pre><p>最后，下面的参数说明接受一个值，但是会将其和可能的选择值做比较，以检测其合法性：</p>
+<pre tabindex="0"><code>parser.add_argument(&#39;--speed&#39;, dest=&#39;speed&#39;, action=&#39;store&#39;,
+                    choices={&#39;slow&#39;,&#39;fast&#39;}, default=&#39;slow&#39;,
+                    help=&#39;search speed&#39;)</code></pre><p>一旦参数选项被指定，你就可以执行 <code>parser.parse()</code> 方法了。 它会处理 <code>sys.argv</code> 的值并返回一个结果实例。 每个参数值会被设置成该实例中 <code>add_argument()</code> 方法的 <code>dest</code> 参数指定的属性值。</p>
+<p>还很多种其他方法解析命令行选项。 例如，你可能会手动的处理 <code>sys.argv</code> 或者使用 <code>getopt</code> 模块。 但是，如果你采用本节的方式，将会减少很多冗余代码，底层细节 <code>argparse</code> 模块已经帮你处理了。 你可能还会碰到使用 <code>optparse</code> 库解析选项的代码。 尽管 <code>optparse</code> 和 <code>argparse</code> 很像，但是后者更先进</p>
+<p><code>nargs</code>参数用于指定命令行参数的数量。它可以接受以下几种不同的取值：</p>
+<ol>
+<li><code>nargs=None</code>（默认值）：表示参数接受一个值，并将其存储为单个值。这是默认的行为。</li>
+<li><code>nargs='?'</code>：表示参数可以接受零个或一个值。如果命令行中没有提供该参数，则使用默认值（如果已设置），否则将其存储为一个值。</li>
+<li><code>nargs='*'</code>：表示参数可以接受零个或多个值。命令行中提供的所有值将被存储为列表。</li>
+<li><code>nargs='+'</code>：表示参数必须接受一个或多个值。命令行中提供的所有值将被存储为列表。</li>
+<li><code>nargs=N</code>：其中N是一个整数值。表示参数必须接受N个值。命令行中提供的所有值将被存储为列表。</li>
+</ol>
+<p>下面一个简单例子演示了最基本的用法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### search.py</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#39;&#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">Hypothetical command-line tool for searching a collection of
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">files for one or more text patterns.
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#39;&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">argparse</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">parser</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">argparse</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ArgumentParser</span>(<span style="color:#58a1dd">description</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;Search some files&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">parser</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">add_argument</span>(<span style="color:#58a1dd">dest</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;filenames&#39;</span>,<span style="color:#58a1dd">metavar</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;filename&#39;</span>, <span style="color:#58a1dd">nargs</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;*&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">parser</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">add_argument</span>(<span style="color:#a6be9d">&#39;-p&#39;</span>, <span style="color:#a6be9d">&#39;--pat&#39;</span>,<span style="color:#58a1dd">metavar</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;pattern&#39;</span>, <span style="color:#58a1dd">required</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">dest</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;patterns&#39;</span>, <span style="color:#58a1dd">action</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;append&#39;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">help</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;text pattern to search for&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">parser</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">add_argument</span>(<span style="color:#a6be9d">&#39;-v&#39;</span>, <span style="color:#58a1dd">dest</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;verbose&#39;</span>, <span style="color:#58a1dd">action</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;store_true&#39;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">help</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;verbose mode&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">parser</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">add_argument</span>(<span style="color:#a6be9d">&#39;-o&#39;</span>, <span style="color:#58a1dd">dest</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;outfile&#39;</span>, <span style="color:#58a1dd">action</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;store&#39;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">help</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;output file&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">parser</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">add_argument</span>(<span style="color:#a6be9d">&#39;--speed&#39;</span>, <span style="color:#58a1dd">dest</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;speed&#39;</span>, <span style="color:#58a1dd">action</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;store&#39;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">choices</span><span style="color:#ff636f">=</span>{<span style="color:#a6be9d">&#39;slow&#39;</span>,<span style="color:#a6be9d">&#39;fast&#39;</span>}, <span style="color:#58a1dd">default</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;slow&#39;</span>,
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">help</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;search speed&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">args</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">parser</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">parse_args</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Output the collected arguments</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">args</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">filenames</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">args</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">patterns</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">args</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">verbose</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">args</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">outfile</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">args</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">speed</span>)</span></span></code></pre></div><p>该程序定义了一个如下使用的命令行解析器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">python3</span> <span style="color:#58a1dd">search</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">py</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">h</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">usage</span>: <span style="color:#58a1dd">search</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">py</span> [<span style="color:#ff636f">-</span><span style="color:#58a1dd">h</span>] [<span style="color:#ff636f">-</span><span style="color:#58a1dd">p</span> <span style="color:#58a1dd">pattern</span>] [<span style="color:#ff636f">-</span><span style="color:#58a1dd">v</span>] [<span style="color:#ff636f">-</span><span style="color:#58a1dd">o</span> <span style="color:#58a1dd">OUTFILE</span>] [<span style="color:#ff636f">--</span><span style="color:#58a1dd">speed</span> {<span style="color:#58a1dd">slow</span>,<span style="color:#58a1dd">fast</span>}]
+</span></span><span style="display:flex;"><span>                 [<span style="color:#58a1dd">filename</span> [<span style="color:#58a1dd">filename</span> <span style="color:#ff636f">...</span>]]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Search</span> <span style="color:#58a1dd">some</span> <span style="color:#58a1dd">files</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">positional</span> <span style="color:#58a1dd">arguments</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">filename</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">optional</span> <span style="color:#58a1dd">arguments</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">-</span><span style="color:#58a1dd">h</span>, <span style="color:#ff636f">--</span><span style="color:#58a1dd">help</span>            <span style="color:#58a1dd">show</span> <span style="color:#58a1dd">this</span> <span style="color:#58a1dd">help</span> <span style="color:#58a1dd">message</span> <span style="color:#ff636f">and</span> <span style="color:#58a1dd">exit</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">-</span><span style="color:#58a1dd">p</span> <span style="color:#58a1dd">pattern</span>, <span style="color:#ff636f">--</span><span style="color:#58a1dd">pat</span> <span style="color:#58a1dd">pattern</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">text</span> <span style="color:#58a1dd">pattern</span> <span style="color:#58a1dd">to</span> <span style="color:#58a1dd">search</span> <span style="color:#ff636f">for</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">-</span><span style="color:#58a1dd">v</span>                    <span style="color:#58a1dd">verbose</span> <span style="color:#58a1dd">mode</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">-</span><span style="color:#58a1dd">o</span> <span style="color:#58a1dd">OUTFILE</span>            <span style="color:#58a1dd">output</span> <span style="color:#58a1dd">file</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">--</span><span style="color:#58a1dd">speed</span> {<span style="color:#58a1dd">slow</span>,<span style="color:#58a1dd">fast</span>}   <span style="color:#58a1dd">search</span> <span style="color:#58a1dd">speed</span></span></span></code></pre></div><h5 id="pty" class="heading-element"><span>0.0.0.7  pty</span>
+  <a href="#pty" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h5 id="socket" class="heading-element"><span>0.0.0.8  socket</span>
+  <a href="#socket" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h5 id="字符串处理" class="heading-element"><span>0.0.0.9  字符串处理</span>
+  <a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%a4%84%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="ord" class="heading-element"><span>0.0.0.9.1  ord</span>
+  <a href="#ord" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>ascii值</p>
+<h6 id="len" class="heading-element"><span>0.0.0.9.2  len</span>
+  <a href="#len" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>返回字符串、列表、字典、元组等长度</p>
+<h6 id="split" class="heading-element"><span>0.0.0.9.3  split</span>
+  <a href="#split" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>语法：str.split(str=&quot;&quot;,num=string.count(str))[n]</p>
+<p>参数说明：
+str:表示为分隔符，==默认为空格==，但是不能为空(’’)。若字符串中没有分隔符，则把整个字符串作为列表的一个元素
+num:表示分割次数。如果存在参数num，则仅分隔成 num+1 个子字符串，并且每一个子字符串可以赋给新的变量</p>
+<p>n:表示选取第n个分片</p>
+<p>注意：当使用空格作为分隔符时，对于中间为空的项会自动忽略</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">input</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">split</span>()</span></span></code></pre></div><h6 id="去掉换行和空格" class="heading-element"><span>0.0.0.9.4  去掉换行和空格</span>
+  <a href="#%e5%8e%bb%e6%8e%89%e6%8d%a2%e8%a1%8c%e5%92%8c%e7%a9%ba%e6%a0%bc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6be9d">&#34;···xyz···&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">strip</span>()            <span style="color:#828b96;font-style:italic"># returns &#34;xyz&#34;  </span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;···xyz···&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">lstrip</span>()           <span style="color:#828b96;font-style:italic"># returns &#34;xyz···&#34;  </span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;···xyz···&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rstrip</span>()           <span style="color:#828b96;font-style:italic"># returns &#34;···xyz&#34;  </span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;··x·y·z··&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">replace</span>(<span style="color:#a6be9d">&#39; &#39;</span>, <span style="color:#a6be9d">&#39;&#39;</span>)   <span style="color:#828b96;font-style:italic"># returns &#34;xyz&#34; </span></span></span></code></pre></div><h6 id="替换" class="heading-element"><span>0.0.0.9.5  替换</span>
+  <a href="#%e6%9b%bf%e6%8d%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">str</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">replace</span>(<span style="color:#58a1dd">old</span>, <span style="color:#58a1dd">new</span>[, <span style="color:#58a1dd">max</span>])</span></span></code></pre></div><ul>
+<li>old &ndash; 将被替换的子字符串。</li>
+<li>new &ndash; 新字符串，用于替换old子字符串。</li>
+<li>max &ndash; 可选字符串, 替换不超过 max 次</li>
+</ul>
+<h6 id="string爆破" class="heading-element"><span>0.0.0.9.6  string（爆破）</span>
+  <a href="#string%e7%88%86%e7%a0%b4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>letters = string.printable</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">letters</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">string</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">printable</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0123456789</span><span style="color:#58a1dd">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</span>!<span style="color:#a6be9d">&#34;#$%&amp;&#39;()*+,-./:;&lt;=&gt;?@[\]^_`{|}~</span></span></span></code></pre></div><h6 id="count" class="heading-element"><span>0.0.0.9.7  count</span>
+  <a href="#count" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>str.count(sub, start= 0,end=len(string))</code></pre><ul>
+<li>sub &ndash; 搜索的子字符串</li>
+<li>start &ndash; 字符串开始搜索的位置。默认为第一个字符,第一个字符索引值为0。</li>
+<li>end &ndash; 字符串中结束搜索的位置。字符中第一个字符的索引为 0。默认为字符串的最后一个位置。</li>
+</ul>
+<p>该方法返回子字符串在字符串中出现的次数。</p>
+<h6 id="dedupe" class="heading-element"><span>0.0.0.9.8  dedupe</span>
+  <a href="#dedupe" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>消除重复元素</p>
+<pre tabindex="0"><code>&gt;&gt;&gt; a = [1, 5, 2, 1, 9, 1, 5, 10]
+&gt;&gt;&gt; list(dedupe(a))
+[1, 5, 2, 9, 10]</code></pre><h6 id="replace" class="heading-element"><span>0.0.0.9.9  replace</span>
+  <a href="#replace" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>Python replace() 方法把字符串中的 old（旧字符串） 替换成 new(新字符串)，如果指定第三个参数max，则替换不超过 max 次。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">str</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">replace</span>(<span style="color:#58a1dd">old</span>, <span style="color:#58a1dd">new</span>[, <span style="color:#58a1dd">max</span>])</span></span></code></pre></div><ul>
+<li>old &ndash; 将被替换的子字符串。</li>
+<li>new &ndash; 新字符串，用于替换old子字符串。</li>
+<li>max &ndash; 可选字符串, 替换不超过 max 次</li>
+</ul>
+<h6 id="re" class="heading-element"><span>0.0.0.9.10  re</span>
+  <a href="#re" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### match对象</p>
+<p>Match对象是一次匹配的结果，包含匹配的很多信息</p>
+<p>属性</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.string</td>
+<td>待匹配的文本</td>
+</tr>
+<tr>
+<td>.re</td>
+<td>匹配时使用的patter对象（正则表达式）</td>
+</tr>
+<tr>
+<td>.pos</td>
+<td>正则表达式搜索文本的开始位置</td>
+</tr>
+<tr>
+<td>.endpos</td>
+<td>正则表达式搜索文本的结束位置</td>
+</tr>
+</tbody>
+</table>
+<p>方法</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.group(0)</td>
+<td>获得匹配后的字符串</td>
+</tr>
+<tr>
+<td>.start()</td>
+<td>匹配字符串在原始字符串的开始位置</td>
+</tr>
+<tr>
+<td>.end()</td>
+<td>匹配字符串在原始字符串的结束位置</td>
+</tr>
+<tr>
+<td>.span()</td>
+<td>返回(.start(), .end())</td>
+</tr>
+</tbody>
+</table>
+<p>####### 主要方法</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>re.search()</td>
+<td>从一个字符串中搜索匹配正则表达式的==第一个==位置，返回match对象</td>
+</tr>
+<tr>
+<td>re.match()</td>
+<td>从一个字符串的开始位置起匹配正则表达式，返回match对象</td>
+</tr>
+<tr>
+<td>re.findall()</td>
+<td>搜索字符串，以==列表==类型返回==全部==能匹配的子串</td>
+</tr>
+<tr>
+<td>re.split()</td>
+<td>将一个字符串按照正则表达式匹配结果进行==分割==，返回==列表==类型</td>
+</tr>
+<tr>
+<td>re.finditer()</td>
+<td>搜索字符串，返回一个匹配结果的迭代类型，每个迭代元素是match对象</td>
+</tr>
+<tr>
+<td>re.sub()</td>
+<td>在一个字符串中替换所有匹配正则表达式的子串，返回替换后的字符串</td>
+</tr>
+</tbody>
+</table>
+<p>####### 正则表达式</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>说明</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.</td>
+<td>表示任何单个字符（默认除换行符）</td>
+<td></td>
+</tr>
+<tr>
+<td>[]</td>
+<td>字符集，对单个字符给出取值范围</td>
+<td>[abc]表示a、b、c，[a-z]表示a到z的单个字符</td>
+</tr>
+<tr>
+<td>[^]</td>
+<td>非字符集，对单个字符给出排除范围</td>
+<td>[^abc]表示非a或非b或非c的单个字符</td>
+</tr>
+<tr>
+<td>*</td>
+<td>前一个字符0次或无限次扩展</td>
+<td>abc*表示ab、abc、abcc、abccc等</td>
+</tr>
+<tr>
+<td>+</td>
+<td>前一个字符1次或无限次扩展</td>
+<td>abc+表示abc、abcc、abccc等</td>
+</tr>
+<tr>
+<td>?</td>
+<td>前一个字符0次或1次扩展</td>
+<td>abc*表示ab、abc</td>
+</tr>
+<tr>
+<td>|</td>
+<td>左右表达式任意一个</td>
+<td>abc|def表示abc、def</td>
+</tr>
+<tr>
+<td>{m}</td>
+<td>扩展前一个字符m次</td>
+<td>ab{2}c表示abbc</td>
+</tr>
+<tr>
+<td>{m,n}</td>
+<td>扩展前一个字符m至n次（含n）</td>
+<td>ab{1,2}c表示abc,abbc</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配字符串开头</td>
+<td>abc且在一个字符串的开头</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配字符串结尾</td>
+<td>abc且在一个字符串的结尾</td>
+</tr>
+<tr>
+<td>()</td>
+<td>分组标记，内部只能使用|操作符</td>
+<td>(abc)表示abc,(abc|def)表示abc、def</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>数字，等价于[0-9]</td>
+<td></td>
+</tr>
+<tr>
+<td>\w</td>
+<td>单词字符，等价于[A-Za-z0-9_]</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>经典实例</strong></p>
+<table>
+<thead>
+<tr>
+<th>正则表达式</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^[A-Za-z]+$</td>
+<td>由26个字母组成的字符串</td>
+</tr>
+<tr>
+<td>^[A-Za-z0-9]+$</td>
+<td>由26个字母和数字组成的字符串</td>
+</tr>
+<tr>
+<td>^-?\d+$</td>
+<td>整数形式的字符串</td>
+</tr>
+<tr>
+<td>^ [1-9]*[0-9]*$</td>
+<td>正整数形式的字符串</td>
+</tr>
+<tr>
+<td>[1-9]\d{5}</td>
+<td>中国境内邮政编码，6位</td>
+</tr>
+<tr>
+<td>[\u4e00-\u9fa5]</td>
+<td>匹配中文字符</td>
+</tr>
+<tr>
+<td>\d{3}-\d{8}|\d{4}-\d{7}</td>
+<td>国内电话号码 3位-8位或4位-7位</td>
+</tr>
+</tbody>
+</table>
+<h5 id="编码" class="heading-element"><span>0.0.0.10  编码</span>
+  <a href="#%e7%bc%96%e7%a0%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>str1.decode(&lsquo;utf-8&rsquo;)</p>
+<h5 id="排序" class="heading-element"><span>0.0.0.11  排序</span>
+  <a href="#%e6%8e%92%e5%ba%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="sorted" class="heading-element"><span>0.0.0.11.1  sorted</span>
+  <a href="#sorted" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>对列表排序</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">list</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span> ,<span style="color:#a6be9d">5</span>, <span style="color:#a6be9d">7</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">4</span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">sorted</span>(<span style="color:#58a1dd">list</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Output</span>：
+</span></span><span style="display:flex;"><span>[<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">5</span>, <span style="color:#a6be9d">7</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">list</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;d&#39;</span>, <span style="color:#a6be9d">&#39;c&#39;</span>, <span style="color:#a6be9d">&#39;f&#39;</span>, <span style="color:#a6be9d">&#39;a&#39;</span>, <span style="color:#a6be9d">&#39;z&#39;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">sorted</span>(<span style="color:#58a1dd">list</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Output</span>：
+</span></span><span style="display:flex;"><span>[<span style="color:#a6be9d">&#39;a&#39;</span>, <span style="color:#a6be9d">&#39;c&#39;</span>, <span style="color:#a6be9d">&#39;d&#39;</span>, <span style="color:#a6be9d">&#39;f&#39;</span>, <span style="color:#a6be9d">&#39;z&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">list</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;vz&#39;</span>, <span style="color:#a6be9d">&#39;1bf&#39;</span>, <span style="color:#a6be9d">&#39;gc&#39;</span>, <span style="color:#a6be9d">&#39;ak&#39;</span>, <span style="color:#a6be9d">&#39;2qz&#39;</span>]<span style="color:#828b96;font-style:italic">#若为字符串，则跟据第一位的数字-字母顺序来排列</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">sorted</span>(<span style="color:#58a1dd">list</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Output</span>：
+</span></span><span style="display:flex;"><span>[<span style="color:#a6be9d">&#39;1bf&#39;</span>, <span style="color:#a6be9d">&#39;2qz&#39;</span>, <span style="color:#a6be9d">&#39;ak&#39;</span>, <span style="color:#a6be9d">&#39;gc&#39;</span>, <span style="color:#a6be9d">&#39;vz&#39;</span>]</span></span></code></pre></div><h5 id="数据类型" class="heading-element"><span>0.0.0.12  数据类型</span>
+  <a href="#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>python有6大数据类型:Numbers（数字）String（字符串）List（列表）Tuple（元组）Dictionary（字典）Set（集合）</p>
+<blockquote>
+<p>不可变数据（3 个）：Number（数字）、String（字符串）、Tuple（元组）；
+可变数据（3 个）：List（列表）、Dictionary（字典）、Set（集合）。</p>
+</blockquote>
+<blockquote>
+<p>列表[ ]（list）：有序可改变集合，允许重复数据。
+元组( )（tuple）：有序不可改变集合，允许重复数据。
+集合{ }（set）：无序无索引（索引为键值）集合，无重复数据。
+字典{ }（dictionary）：无序，可变，有索引集合，无重复数据。</p>
+</blockquote>
+<blockquote>
+<p>转换</p>
+<p>int(x)</p>
+<p>float(x)</p>
+<p>str(x)</p>
+<p>tuple(s)</p>
+<p>list(s)</p>
+<p>set(s)</p>
+<p>dict()</p>
+</blockquote>
+<h6 id="set-转换为集合" class="heading-element"><span>0.0.0.12.1  set-转换为集合</span>
+  <a href="#set-%e8%bd%ac%e6%8d%a2%e4%b8%ba%e9%9b%86%e5%90%88" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">list</span><span style="color:#ff636f">=</span>[<span style="color:#a6be9d">&#39;1&#39;</span>,<span style="color:#a6be9d">&#39;1&#39;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">set</span>(<span style="color:#58a1dd">list</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{<span style="color:#a6be9d">&#39;1&#39;</span>}</span></span></code></pre></div><h6 id="列表转字符串" class="heading-element"><span>0.0.0.12.2  列表转字符串</span>
+  <a href="#%e5%88%97%e8%a1%a8%e8%bd%ac%e5%ad%97%e7%ac%a6%e4%b8%b2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">my_list</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;apple&#39;</span>, <span style="color:#a6be9d">&#39;banana&#39;</span>, <span style="color:#a6be9d">&#39;orange&#39;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">my_string</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">join</span>(<span style="color:#58a1dd">my_list</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">my_string</span>)</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">list</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">i</span>,<span style="color:#58a1dd">end</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;&#34;</span>)</span></span></code></pre></div><h5 id="切片" class="heading-element"><span>0.0.0.13  切片</span>
+  <a href="#%e5%88%87%e7%89%87" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>切片可以应用于任何序列类型，切片的索引是从0开始的。如果你想要获取从第二个元素到第四个元素，应该使用切片<code>my_list[1:4]</code>，而不是<code>my_list[2:4]</code>。</p>
+<pre tabindex="0"><code>sequence[start:stop:step]</code></pre><p>其中，<code>start</code> 表示起始位置（默认为 0），<code>stop</code> 表示结束位置（默认为序列的长度），<code>step</code> 表示步长（默认为 1）。</p>
+<p>例如，对于一个列表 <code>my_list</code>，可以使用以下语法来获取前 3 个元素：</p>
+<pre tabindex="0"><code>my_list[:3]</code></pre><p>如果要获取从第 3 个元素到第 6 个元素（不包括第 6 个元素），可以使用以下语法：</p>
+<pre tabindex="0"><code>my_list[2:5]</code></pre><p>如果要获取从第 1 个元素到最后一个元素，可以省略 <code>stop</code> 参数：</p>
+<pre tabindex="0"><code>my_list[1:]</code></pre><p>如果要获取从第 2 个元素到倒数第 2 个元素，可以使用以下语法：</p>
+<pre tabindex="0"><code>my_list[1:-1]</code></pre><p>如果要以步长为 2 获取所有元素，可以使用以下语法：</p>
+<pre tabindex="0"><code>my_list[::2]</code></pre><p>需要注意的是，切片语法中的 <code>stop</code> 参数所指定的位置是不包括在切片结果中的。因此，如果要获取所有元素，可以省略 <code>start</code> 和 <code>stop</code> 参数，而只指定步长。</p>
+<p>切片也可以用于字符串和元组等序列类型，语法和使用方法与列表类似。</p>
+<h5 id="精确浮点数运算" class="heading-element"><span>0.0.0.14  精确浮点数运算</span>
+  <a href="#%e7%b2%be%e7%a1%ae%e6%b5%ae%e7%82%b9%e6%95%b0%e8%bf%90%e7%ae%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">decimal</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">Decimal</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Decimal</span>(<span style="color:#a6be9d">&#39;4.2&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">b</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Decimal</span>(<span style="color:#a6be9d">&#39;2.1&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">a</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">b</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Decimal</span>(<span style="color:#a6be9d">&#39;6.3&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">a</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">b</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">6.3</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;&gt;&gt;</span> (<span style="color:#58a1dd">a</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">b</span>) <span style="color:#ff636f">==</span> <span style="color:#58a1dd">Decimal</span>(<span style="color:#a6be9d">&#39;6.3&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">True</span></span></span></code></pre></div><h5 id="json" class="heading-element"><span>0.0.0.15  json</span>
+  <a href="#json" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E8%AF%AD%E8%A8%80/" class="post-tag" title="Tags - 语言">语言</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/66/" class="post-nav-item" rel="prev" title="Redis未授权"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Redis未授权</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/99/" class="post-nav-item" rel="next" title="Python 爬虫">Python 爬虫<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

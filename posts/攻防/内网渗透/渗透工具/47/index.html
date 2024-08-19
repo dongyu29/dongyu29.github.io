@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Wfuzz - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 工具' />
+  <meta itemprop="name" content="wfuzz">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="317">
+  <meta itemprop="keywords" content="攻防,工具"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/%E6%B8%97%E9%80%8F%E5%B7%A5%E5%85%B7/47/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="wfuzz">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="工具">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="wfuzz">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/%E6%B8%97%E9%80%8F%E5%B7%A5%E5%85%B7/47/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/56/" /><link rel="next" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E5%BC%80%E5%8F%91/76/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "wfuzz",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/%E6%B8%97%E9%80%8F%E5%B7%A5%E5%85%B7\/47\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 工具","wordcount":  317 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/%E6%B8%97%E9%80%8F%E5%B7%A5%E5%85%B7\/47\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Wfuzz</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Wfuzz</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="317 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="简介" class="heading-element"><span>0.0.0.1  简介</span>
+  <a href="#%e7%ae%80%e4%bb%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>在刷src时候我们经常会对一些的参数进行fuzz，WFuzz是用于Python的Web应用程序安全性模糊工具和库。它基于一个简单的概念：它将给定有效负载的值替换对FUZZ关键字的任何引用。是一款很好的辅助模糊测试工具。它允许在HTTP请求里注入任何输入的值，针对不同的WEB应用组件进行多种复杂的爆破攻击。比如：参数、认证、表单、目录/文件、头部等等。</p>
+<p>wfuzz提供了简洁的编程语言接口来处理wfuzz或Burpsuite获取到的HTTP请求和响应。这使得你能够在一个良好的上下文环境中进行手工测试或半自动化的测试，而不需要依赖web形式的扫描器。</p>
+<ul>
+<li>递归（目录发掘）</li>
+<li>Post数据爆破</li>
+<li>头部爆破</li>
+<li>输出HTML（详细报告，点击链接查看内容，POST数据也能阅览）</li>
+<li>多彩输出</li>
+<li>返回码、词数、行数等等来隐藏结果。</li>
+<li>URL编码</li>
+<li>Cookie</li>
+<li>多线程</li>
+<li>代理支持</li>
+<li>多参数fuzz
+在平常的渗透测试中，用好Wfuzz对我们的帮助非常大。</li>
+</ul>
+<p>简单使用</p>
+<pre tabindex="0"><code>pip install wfuzz #安装wfuzz
+wfuzz -w test_dict.txt https://gh0st.cn/FUZZ 	#这里大写的FUZZ相当于burp的参数</code></pre><p><code>ID、Response、 Lines、Word、Chars、Payload</code>这一行，从左往右看，依次是<code>编号、响应状态码、响应报文行数、响应报文字数、响应报文正字符数、测试使用的Payload</code>。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308062011577.webp" alt="image-20230806201102080" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308062011577.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308062011577.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308062011577.webp?size=large 2x" data-title="image-20230806201102080" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h5 id="参数" class="heading-element"><span>0.0.0.2  参数</span>
+  <a href="#%e5%8f%82%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>wfuzz -h # 获取帮助
+
+--hc 	过滤状态码
+--sc 	需要显示的状态码
+-c 		带颜色显示
+-w		指定使用字典
+-z 		设置payload 【比如:字典】
+-z 	file,1.txt（以文件形式，导入1.txt）
+-z 	range,1-10（以范围形式，1到10）
+-z 	list,1-2-3-10（列表形式，1,2,3,10）
+-t 		设置线程 默认10
+-s 		请求间隔时间
+-d 		设定POST量
+-d 	“uname=admin&amp;passwd=admin”
+-b 		设定cookie量
+-b 	“cookie=”
+-H 		参数来指定HTTP请求的请求头，多次指定多次使用。
+-H 	“User-Agent: firfox”
+-f 		输出到文件的格式，格式有raw,json,csv,magictree,html
+-f 	/tmp/1,html （将结果输出到tmp目录下的1，以html格式）
+-X 		设定请求方法
+-X 	GET
+-R 		递归深度，探测目录很好
+递归深度为1也就是说当发现某一个目录存在的时候，在存在目录下再递归一次字典。
+-R 	1（深度为1）</code></pre><p><strong>显示或隐藏信息</strong>
+使用 &ndash;hc &ndash;hl &ndash;hw &ndash;hh 可以隐藏相应结果</p>
+<pre tabindex="0"><code>--hc 503	隐藏响应码为503的
+--hl 20		隐藏响应信息行数为20行的
+--hw 30		隐藏响应信息中字数为30的
+--hh 50		隐藏响应信息中字符数为50的
+
+使用 --sc --sl --sw --sh 可以特别显示相应结果
+--sc 405：显示响应码405</code></pre><h5 id="wfuzz常见用法" class="heading-element"><span>0.0.0.3  wfuzz常见用法</span>
+  <a href="#wfuzz%e5%b8%b8%e8%a7%81%e7%94%a8%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>##### 查找公共目录
+wfuzz -w wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ
+
+##### 查找文件
+wfuzz -w wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ.php
+
+##### 数据模糊测试
+wfuzz -z range,0-10 --hl 97 http://testphp.vulnweb.com/listproducts.php?cat=FUZZ
+
+##### 模糊 POST 请求
+wfuzz -z file,wordlist/others/common_pass.txt -d &#34;uname=FUZZ&amp;pass=FUZZ&#34;  --hc 302 http://testphp.vulnweb.com/userinfo.php
+
+##### 对各种 COOKIE 重复
+wfuzz -z file,wordlist/general/common.txt -b cookie=value1 -b cookie2=value2 http://testphp.vulnweb.com/FUZZ
+
+##### 模糊 COOKIE
+wfuzz -z file,wordlist/general/common.txt -b cookie=FUZZ http://testphp.vulnweb.com/
+
+##### 重复 HTTP头
+wfuzz -z file,wordlist/general/common.txt -H &#34;myheader: headervalue&#34; -H &#34;myheader2: headervalue2&#34; http://testphp.vulnweb.com/FUZZ
+
+##### 使用不同请求方法
+wfuzz -z list,GET-HEAD-POST-TRACE-OPTIONS -X FUZZ http://testphp.vulnweb.com/
+
+##### 使用代理
+wfuzz -z file,wordlist/general/common.txt -p localhost:2222:SOCKS5 -p localhost:9090 http://testphp.vulnweb.com/FUZZ
+
+##### 身份验证
+wfuzz -z list,nonvalid-httpwatch --basic FUZZ:FUZZ https://www.httpwatch.com/httpgallery/authentication/authenticatedimage/default.aspx
+
+##### 将结果写入 JSON 文件
+wfuzz -f /tmp/outfile,json -w wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ
+
+##### 以 JSON 格式输出
+wfuzz -o json -w wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ</code></pre><hr>
+<p>######## 模糊查询GET请求参数</p>
+<pre tabindex="0"><code class="language-none" data-lang="none">wfuzz -u &#34;http://192.168.1.104/test.php?FUZZ=/etc/passwd&#34; -w /usr/share/wfuzz/wordlist/general/common.txt --hh 80</code></pre><p><img loading="lazy" src="https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226142848547-223230452.png" alt="img" srcset="https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226142848547-223230452.png?size=small, https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226142848547-223230452.png?size=medium 1.5x, https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226142848547-223230452.png?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>######## 模糊查询POST请求参数</p>
+<pre tabindex="0"><code class="language-none" data-lang="none">wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt -d &#34;uname=FUZZ&amp;pass=FUZZ&#34;  --hc 302 http://192.168.1.102/user.php
+wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt -d &#34;payload=FUZZ&#34;  --hc 302 http://172.35.20.71/vul/test/post</code></pre><p>######## 添加cookie发起请求</p>
+<pre tabindex="0"><code class="language-none" data-lang="none">wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt -b cookie=value1 -b cookie2=value2 http://192.168.1.102/FUZZ</code></pre><p>######## 添加请求头</p>
+<pre tabindex="0"><code class="language-none" data-lang="none">wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt -H &#34;Referer: 127.0.0.1&#34; http://192.168.1.102/FUZZ</code></pre><p>######## 子域名扫描</p>
+<pre tabindex="0"><code class="language-none" data-lang="none">wfuzz -w /usr/share/amass/wordlists/subdomains-top1mil-5000.txt -u cc123.com -H &#34;Host:FUZZ.cc123.com&#34; --hw 53</code></pre><p><img loading="lazy" src="https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226143021514-991814098.png" alt="img" srcset="https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226143021514-991814098.png?size=small, https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226143021514-991814098.png?size=medium 1.5x, https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226143021514-991814098.png?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>######## 爆破401认证界面</p>
+<pre tabindex="0"><code class="language-none" data-lang="none">wfuzz -c -w /usr/share/wordlists/rockyou.txt --basic mum:FUZZ -u http://192.168.1.106:631/admin/ -b &#34;org.cups.sid=f607a41978fbca423d4de60f686fe8f5&#34; -d &#34;org.cups.sid=f607a41978fbca423d4de60f686fe8f5&amp;OP=add-printer&#34; -Z --hc 401</code></pre><p><img loading="lazy" src="https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226143331996-581483830.png" alt="img" srcset="https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226143331996-581483830.png?size=small, https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226143331996-581483830.png?size=medium 1.5x, https://img2023.cnblogs.com/blog/2328330/202212/2328330-20221226143331996-581483830.png?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>######## 多个载荷</p>
+<pre tabindex="0"><code>##### 指定多个有效负载  FUZnZ : n 是指有效负载编号
+wfuzz -w wordlist/general/common.txt -w wordlist/general/common.txt -w wordlist/general/extensions_common.txt --hc 404 http://testphp.vulnweb.com/FUZZ/FUZ2ZFUZ3Z</code></pre><p>######## 遍历枚举</p>
+<pre tabindex="0"><code>wfuzz -z range,000-999 --hl 20 http://127.0.0.1/getuser.php?uid=FUZZ</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E5%B7%A5%E5%85%B7/" class="post-tag" title="Tags - 工具">工具</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/56/" class="post-nav-item" rel="prev" title="Windows Hash抓取"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Windows Hash抓取</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E5%BC%80%E5%8F%91/76/" class="post-nav-item" rel="next" title="Websocket在线聊天">Websocket在线聊天<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

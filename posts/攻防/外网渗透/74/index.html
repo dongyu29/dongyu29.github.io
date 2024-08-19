@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>端口渗透 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防' />
+  <meta itemprop="name" content="端口渗透">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="822">
+  <meta itemprop="keywords" content="攻防"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F/74/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="端口渗透">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="端口渗透">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F/74/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/64/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/%E6%B8%97%E9%80%8F%E5%B7%A5%E5%85%B7/42/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "端口渗透",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F\/74\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防","wordcount":  822 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F\/74\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">端口渗透</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>端口渗透</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="822 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 900 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>端口渗透过程中我们需要关注几个问题：</p>
+<p>1、 端口的banner信息</p>
+<p>2、 端口上运行的服务</p>
+<p>3、 常见应用的默认端口</p>
+<p>公认端口(Well Known Ports)：0-1023，他们紧密绑定了一些服务；</p>
+<p>注册端口(Registered Ports)：1024-49151，他们松散的绑定了一些服务；</p>
+<p>动态/私有：49152-65535，不为服务分配这些端口；</p>
+<p>当然这些端口都可以通过修改来达到欺骗攻击者的目的</p>
+<table>
+<thead>
+<tr>
+<th><strong>端口号</strong></th>
+<th><strong>端口说明</strong></th>
+<th><strong>攻击技巧</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>21/22/69</strong></td>
+<td><strong>ftp/tftp</strong>：文件传输协议</td>
+<td>爆破   嗅探   溢出   后门</td>
+</tr>
+<tr>
+<td><strong>22</strong></td>
+<td><strong>ssh</strong>：远程连接</td>
+<td>爆破      OpenSSH</td>
+</tr>
+<tr>
+<td><strong>23</strong></td>
+<td><strong>telnet</strong>：远程连接</td>
+<td>爆破  嗅探</td>
+</tr>
+<tr>
+<td><strong>25</strong></td>
+<td><strong>smtp</strong>：邮件服务</td>
+<td>邮件伪造</td>
+</tr>
+<tr>
+<td><strong>53</strong></td>
+<td><strong>DNS</strong>：域名系统</td>
+<td>DNS区域传输     DNS劫持      DNS缓存投毒    DNS欺骗                  深度利用： 利用DNS隧道技术刺透防火墙</td>
+</tr>
+<tr>
+<td><strong>67/68</strong></td>
+<td><strong>dhcp</strong></td>
+<td>劫持  欺骗</td>
+</tr>
+<tr>
+<td><strong>110</strong></td>
+<td><strong>pop3</strong></td>
+<td>爆破</td>
+</tr>
+<tr>
+<td><strong>139</strong></td>
+<td><strong>samba</strong></td>
+<td>爆破    未授权访问  远程代码执行</td>
+</tr>
+<tr>
+<td><strong>143</strong></td>
+<td><strong>imap</strong></td>
+<td>爆破</td>
+</tr>
+<tr>
+<td><strong>161</strong></td>
+<td><strong>snmp</strong></td>
+<td>爆破</td>
+</tr>
+<tr>
+<td><strong>389</strong></td>
+<td><strong>ldap</strong></td>
+<td>注入攻击  未授权访问</td>
+</tr>
+<tr>
+<td><strong>512/513/514</strong></td>
+<td><strong>linux r</strong></td>
+<td>直接使用rlogin</td>
+</tr>
+<tr>
+<td><strong>873</strong></td>
+<td><strong>rsync</strong></td>
+<td>未授权访问</td>
+</tr>
+<tr>
+<td><strong>1080</strong></td>
+<td><strong>socket</strong></td>
+<td>爆破：进行内网渗透</td>
+</tr>
+<tr>
+<td><strong>1352</strong></td>
+<td><strong>lotus</strong></td>
+<td>爆破：弱口令 信息泄漏：源代码</td>
+</tr>
+<tr>
+<td><strong>1433</strong></td>
+<td><strong>mssql</strong></td>
+<td>爆破：使用系统用户登录  注入攻击</td>
+</tr>
+<tr>
+<td><strong>1521</strong></td>
+<td><strong>oracle</strong></td>
+<td>爆破：TNS  注入攻击</td>
+</tr>
+<tr>
+<td><strong>2049</strong></td>
+<td><strong>nfs</strong></td>
+<td>配置不当</td>
+</tr>
+<tr>
+<td><strong>2181</strong></td>
+<td><strong>zookeeper</strong></td>
+<td>未授权访问</td>
+</tr>
+<tr>
+<td><strong>3306</strong></td>
+<td><strong>mysql</strong></td>
+<td>爆破   拒绝服务   注入</td>
+</tr>
+<tr>
+<td><strong>3389</strong></td>
+<td><strong>rdp</strong></td>
+<td>爆破  后门</td>
+</tr>
+<tr>
+<td><strong>4848</strong></td>
+<td><strong>glassfish</strong></td>
+<td>爆破：控制台弱口令  认证绕过</td>
+</tr>
+<tr>
+<td><strong>5000</strong></td>
+<td><strong>sybase/DB2</strong></td>
+<td>爆破  注入</td>
+</tr>
+<tr>
+<td><strong>5432</strong></td>
+<td><strong>postgresql</strong></td>
+<td>缓冲区溢出  注入攻击  爆破：弱口令</td>
+</tr>
+<tr>
+<td><strong>5632</strong></td>
+<td><strong>pcanywhere</strong></td>
+<td>拒绝服务   代码执行</td>
+</tr>
+<tr>
+<td><strong>5900</strong></td>
+<td><strong>vnc</strong></td>
+<td>爆破：弱口令   认证绕过</td>
+</tr>
+<tr>
+<td><strong>6379</strong></td>
+<td><strong>redis</strong></td>
+<td>未授权访问   爆破：弱口令</td>
+</tr>
+<tr>
+<td><strong>7001</strong></td>
+<td><strong>weblogic</strong></td>
+<td>Java反序列化   控制台弱口令  控制台部署  webshell</td>
+</tr>
+<tr>
+<td><strong>80/443/8080</strong></td>
+<td><strong>web</strong></td>
+<td>常见web攻击   控制台爆破  对应服务器版本漏洞</td>
+</tr>
+<tr>
+<td><strong>8069</strong></td>
+<td><strong>zabbix</strong></td>
+<td>远程命令执行</td>
+</tr>
+<tr>
+<td><strong>9090</strong></td>
+<td><strong>websphere控制台</strong></td>
+<td>爆破：控制台弱口令   Java反序列化</td>
+</tr>
+<tr>
+<td><strong>9200/9300</strong></td>
+<td><strong>elasticsearch</strong></td>
+<td>远程代码执行</td>
+</tr>
+<tr>
+<td><strong>11211</strong></td>
+<td><strong>memcacache</strong></td>
+<td>未授权访问</td>
+</tr>
+<tr>
+<td><strong>27017</strong></td>
+<td><strong>mongodb</strong></td>
+<td>爆破   未授权访问</td>
+</tr>
+</tbody>
+</table>
+<h6 id="文件共享服务端口渗透" class="heading-element"><span>0.0.0.0.1  文件共享服务端口渗透</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%85%b1%e4%ba%ab%e6%9c%8d%e5%8a%a1%e7%ab%af%e5%8f%a3%e6%b8%97%e9%80%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### ftp服务</p>
+<p>FTP服务：ftp服务我分为两种情况，第一种是使用系统软件来配置，比如IIS中的FTP文件共享或Linux中的默认服务软件；第二种是通过第三方软件来配置，比如Serv-U还有一些网上写的简易ftp服务器等；</p>
+<p>默认端口：20（数据端口）；21（控制端口）；69（tftp小型文件传输协议）</p>
+<p>攻击方式：</p>
+<p>爆破：ftp的爆破工具有很多，这里我推荐owasp的<a href="https://sourceforge.net/projects/worawita/"target="_blank" rel="external nofollow noopener noreferrer">Bruter</a> 以及msf中ftp爆破模块；</p>
+<pre tabindex="0"><code>search type:auxiliary ftp
+
+auxiliary/scanner/ftp/anonymous
+auxiliary/scanner/ftp/ftp_login
+auxiliary/server/ftp
+auxiliary/scanner/tftp/tftpbrute</code></pre><p>匿名访问：用户名：anonymous 密码：为空或任意邮箱</p>
+<p>用户名：FTP      密码：FTP或为空</p>
+<p>用户名：USET     密码：pass</p>
+<p>当然还有不需要用户名密码直接访问的，一般出现在局域网中；</p>
+<p><img loading="lazy" src="https://images2015.cnblogs.com/blog/846822/201611/846822-20161106224013799-35817548.png" alt="img" srcset="https://images2015.cnblogs.com/blog/846822/201611/846822-20161106224013799-35817548.png?size=small, https://images2015.cnblogs.com/blog/846822/201611/846822-20161106224013799-35817548.png?size=medium 1.5x, https://images2015.cnblogs.com/blog/846822/201611/846822-20161106224013799-35817548.png?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>嗅探：ftp使用明文传输技术（但是嗅探给予局域网并需要欺骗或监听网关）</p>
+<p><img loading="lazy" src="https://images2015.cnblogs.com/blog/846822/201611/846822-20161106224030752-33122920.png" alt="img" srcset="https://images2015.cnblogs.com/blog/846822/201611/846822-20161106224030752-33122920.png?size=small, https://images2015.cnblogs.com/blog/846822/201611/846822-20161106224030752-33122920.png?size=medium 1.5x, https://images2015.cnblogs.com/blog/846822/201611/846822-20161106224030752-33122920.png?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>后门技术：在linux的vsftp某一版本中，存在着一个后门程序，只要在用户名后面加上 就会在6200上打开一个监听Shell，我们可以使用telnet直接连接；详细<a href="http://www.freebuf.com/articles/system/34571.html"target="_blank" rel="external nofollow noopener noreferrer">请点击</a></p>
+<p>远程溢出漏洞：6.10.1 IIS FTP远程溢出漏洞，在IIS FTP服务器中NLST命令存在一个缓冲区溢出漏洞，这个漏洞可能是攻击者在服务器运行一条非法命令。</p>
+<p>跳转攻击：（Bounce Attacks）攻击者发送一个FTP”PORT”命令给目标FTP服务器，其中包含该主机的网络地址和被攻击的服务的端口号。这样，客户端就能命令FTP服务器发一个文件给被攻击的服务。这个文件可能包括根被攻击的服务有关的命令（如SMTP,NNTP等）。由于是命令第三方去连接到一种服务，而不是直接连接，就使得跟踪攻击者变得困难，并且还避开了基于网络地址的访问限制。（注：此种情况小白并没有遇到过，只是总结一下，欢迎大牛指教）</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2015-0116499"target="_blank" rel="external nofollow noopener noreferrer">山东电信Serv-U Web客户端弱口令</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-0102552"target="_blank" rel="external nofollow noopener noreferrer">长虹ftp弱口令导致全网数据泄漏</a></p>
+<p>####### NFS服务</p>
+<p>nfs：网络文件系统，允许网络中的计算机通过TCP/IP网络共享资源。基于Linux系统，配置方面很简单，详细配置请参考案例分享。在nfs配置中，有不做任何限制的，有限制用户，有限制IP，以及在版本2.x中我们还可以使用证书来验证用户。当然不同的限制可以采用的攻击方式也不一样；就目前而言网上关于nfs的攻击还是比较少的!</p>
+<p>默认端口：2049</p>
+<p>攻击方式：</p>
+<p>未授权访问：未限制IP以及用户权限设置错误</p>
+<p>案例分享：</p>
+<p><a href="http://drops.wooyun.org/tips/8659"target="_blank" rel="external nofollow noopener noreferrer">Nfs配置不当导致被入侵</a></p>
+<p><a href="http://www.360doc.com/content/11/0410/14/2054285_108598426.shtml"target="_blank" rel="external nofollow noopener noreferrer">NFS服务全攻略</a></p>
+<p>####### Samba服务</p>
+<p>Samba服务：对于这个可以在windows与Linux之间进行共享文件的服务同样是我们攻击的关注点；samba登录分为两种方式，一种是需要用户名口令；另一种是不需要用户名口令。在很多时候不光是pc机，还有一些服务器，网络设备都开放着此服务，方便进行文件共享，但是同时也给攻击者提供了便利。</p>
+<p>SMB协议工作在应用层和会话层，可以用在TCP/IP协议之上，SMB使用TCP139端口和TCP445端口</p>
+<p>默认端口：137（主要用户NetBIOS Name Service；NetBIOS名称服务）、139（NetBIOS Session Service，主要提供samba服务）</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令（爆破工具采用hydra）hydra -l username -P</p>
+<p>PassFile IP smb</p>
+<p>爆破出以后</p>
+<pre tabindex="0"><code>windows   \\ip\share(共享目录名)
+linux      smbclient //192.168.xxx.xxx/test -U student</code></pre><p>未授权访问：给予public用户高权限</p>
+<p>远程代码执行漏洞：CVE-2015-0240等等</p>
+<p>案例分享：</p>
+<p><a href="http://www.secpulse.com/archives/5975.html"target="_blank" rel="external nofollow noopener noreferrer">Samba远程代码执行漏洞</a></p>
+<p><a href="http://tech.soft6.com/667/10/45861.html"target="_blank" rel="external nofollow noopener noreferrer">未授权访问文件系统漏洞</a></p>
+<p>加固：</p>
+<p><a href="https://post.smzdm.com/p/akxwkxqk/"target="_blank" rel="external nofollow noopener noreferrer">https://post.smzdm.com/p/akxwkxqk/</a></p>
+<p>####### LDAP协议</p>
+<p>ldap：轻量级目录访问协议，最近几年随着ldap的广泛使用被发现的漏洞也越来越多。但是毕竟主流的攻击方式仍旧是那些，比如注入，未授权等等；这些问题的出现也都是因为配置不当而造成的。</p>
+<p>默认端口：389</p>
+<p>攻击方式：</p>
+<ul>
+<li>
+<p>注入攻击</p>
+<p><a href="https://www.anquanke.com/post/id/212186"target="_blank" rel="external nofollow noopener noreferrer">https://www.anquanke.com/post/id/212186</a></p>
+<p>它的攻击手法和SQL注入的原理非常相似，在有漏洞的环境中，这些查询参数没有得到合适的过滤，因而攻击者可以注入任意恶意代码。由于比较简单，我这里就走马观花的方式来过一遍LDAP注入的不同类型。</p>
+</li>
+</ul>
+<p>####### AND注入</p>
+<p>这种情况，应用会构造由”&amp;”操作符和用户引入的的参数组成的正常查询在LDAP目录中搜索，例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span>(<span style="color:#ff636f">&amp;</span><span style="color:#ff636f">(</span><span style="color:#58a1dd">parameter1</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">value1</span><span style="color:#ff636f">)(</span><span style="color:#58a1dd">parameter2</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">value2</span><span style="color:#ff636f">))</span></span></span></code></pre></div><p>这里Value1和value2是在LDAP目录中搜索的值，攻击者可以注入代码，维持正确的过滤器结构但能使用查询实现他自己的目标。</p>
+<p>比如说，为了验证客户端提供的user/password对，构造如下LDAP过滤器并发送给LDAP服务器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span>(<span style="color:#ff636f">&amp;</span><span style="color:#ff636f">(</span><span style="color:#58a1dd">USER</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">Uname</span><span style="color:#ff636f">)(</span><span style="color:#58a1dd">PASSWORD</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">Pwd</span><span style="color:#ff636f">))</span></span></span></code></pre></div><p>如果攻击者输入一个有效地用户名，如r00tgrok，然后再这个名字后面注入恰当的语句，password检查就会被绕过。</p>
+<p>使得Uname=slisberger)(&amp;))，引入任何字符串作为Pwd值，构造如下查询并发送给服务器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span>(<span style="color:#ff636f">&amp;</span><span style="color:#ff636f">(</span><span style="color:#58a1dd">USER</span><span style="color:#ff636f">=</span> <span style="color:#58a1dd">slisberger</span><span style="color:#ff636f">)(</span><span style="color:#ff636f">&amp;</span><span style="color:#ff636f">)(</span><span style="color:#58a1dd">PASSWORD</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">Pwd</span><span style="color:#ff636f">))</span></span></span></code></pre></div><p>####### OR注入</p>
+<p>这种情况，应用会构造由”|”操作符和用户引入的的参数组成的正常查询在LDAP目录中搜索，例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span>(<span style="color:#ff636f">|(</span><span style="color:#58a1dd">parameter1</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">value1</span><span style="color:#ff636f">)(</span><span style="color:#58a1dd">parameter2</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">value2</span><span style="color:#ff636f">))</span></span></span></code></pre></div><p>这里Value1和value2是在LDAP目录中搜索的值，攻击者可以注入代码，维持正确的过滤器结构但能使用查询实现他自己的目标。</p>
+<p>类似的，加入现在用于展示可用资源的查询为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ff636f">(</span>|<span style="color:#ff636f">(</span><span style="color:#58a1dd">type</span><span style="color:#ff636f">=</span>Rsc1<span style="color:#ff636f">)(</span><span style="color:#58a1dd">type</span><span style="color:#ff636f">=</span>Rsc2<span style="color:#ff636f">))</span></span></span></code></pre></div><p>Rsc1和Rsc2表示系统中不同种类的资源。如果攻击者输入<code>Rsc=printer)(uid=*)</code>，则下面的查询被发送给服务器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span>(<span style="color:#ff636f">|(</span><span style="color:#58a1dd">type</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">printer</span><span style="color:#ff636f">)(</span><span style="color:#58a1dd">uid</span><span style="color:#ff636f">=*))(</span><span style="color:#58a1dd">type</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">scanner</span><span style="color:#ff636f">)</span></span></span></code></pre></div><p>这样也会造成注入的产生。</p>
+<p>####### 盲注</p>
+<p>SQL注入中有盲注，LDAP中也存在这种问题，包括下面介绍到的靶机用到的也是盲注的手法。</p>
+<p>假设攻击者可以从服务器响应中推测出什么，尽管应用没有报出错信息，LDAP过滤器中注入的代码却生成了有效的响应或错误。攻击者可以利用这一行为向服务器问正确的或错误的问题。</p>
+<p>还是用一个例子来说明。</p>
+<p>假设一个Web应用想从一个LDAP目录列出所有可用的Epson打印机，错误信息不会返回，应用发送如下的过滤器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span>(<span style="color:#ff636f">&amp;</span><span style="color:#ff636f">(</span><span style="color:#58a1dd">objectClass</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">printer</span><span style="color:#ff636f">)(</span><span style="color:#58a1dd">type</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">Epson</span><span style="color:#ff636f">*))</span></span></span></code></pre></div><p>使用这个查询，如果有可用的Epson打印机，其图标就会显示给客户端，否则没有图标出现。如果攻击者进行LDAP盲注入攻击</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#ff636f">*</span>)(<span style="color:#58a1dd">objectClass</span><span style="color:#ff636f">=*</span>))(<span style="color:#ff636f">&amp;</span>(<span style="color:#58a1dd">objectClass</span><span style="color:#ff636f">=</span><span style="color:#ff636f">void</span></span></span></code></pre></div><p>Web应用会构造如下查询：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span>(<span style="color:#ff636f">&amp;</span><span style="color:#ff636f">(</span><span style="color:#58a1dd">objectClass</span><span style="color:#ff636f">=*)(</span><span style="color:#58a1dd">objectClass</span><span style="color:#ff636f">=*))(</span><span style="color:#ff636f">&amp;</span><span style="color:#ff636f">(</span><span style="color:#58a1dd">objectClass</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">void</span><span style="color:#ff636f">)(</span><span style="color:#58a1dd">type</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">Epson</span><span style="color:#ff636f">*))</span></span></span></code></pre></div><p><strong>仅第一个LDAP过滤器会被处理</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scss" data-lang="scss"><span style="display:flex;"><span>(<span style="color:#ff636f">&amp;</span><span style="color:#ff636f">(</span><span style="color:#58a1dd">objectClass</span><span style="color:#ff636f">=*)(</span><span style="color:#58a1dd">objectClass</span><span style="color:#ff636f">=*))</span></span></span></code></pre></div><p>那么这样就和我们查询的初衷相违背了。</p>
+<p>接下来就是这篇文章的重头戏了，我们主要从这个靶机中学到两点：</p>
+<ul>
+<li>
+<p>怎么发现LDAP注入漏洞</p>
+</li>
+<li>
+<p>如何利用LDAP注入漏洞</p>
+</li>
+<li>
+<p>允许匿名访问</p>
+<p>未对LDAP的访问进行密码验证，导致未授权访问。</p>
+<p>这一般是大部分LDAP服务出现此漏洞的主要原因，导致可以使用ldapbrowser直接连接，获取目录内容。</p>
+</li>
+<li>
+<p>爆破弱口令</p>
+<p><a href="https://nmap.org/nsedoc/scripts/ldap-brute.html"target="_blank" rel="external nofollow noopener noreferrer">https://nmap.org/nsedoc/scripts/ldap-brute.html</a></p>
+<p>连接：ADExplorer.exe</p>
+</li>
+</ul>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202312040900711.webp" alt="image-20231204090011319" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202312040900711.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202312040900711.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202312040900711.webp?size=large 2x" data-title="image-20231204090011319" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>漏洞修复
+● 修改ldap的acl，禁止匿名访问。
+● 根据业务设置ldap访问白名单或黑名单；</p>
+<p>案例分享：</p>
+<p><a href="http://drops.wooyun.org/tips/967"target="_blank" rel="external nofollow noopener noreferrer">LDAP注入与防御剖析</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-051234"target="_blank" rel="external nofollow noopener noreferrer">欧朋LDAP服务匿名访问</a></p>
+<p><a href="http://drops.wooyun.org/pentesting/2125"target="_blank" rel="external nofollow noopener noreferrer">使用LDAP查询快速提升域权限</a></p>
+<h6 id="远程连接服务端口渗透" class="heading-element"><span>0.0.0.0.2  远程连接服务端口渗透</span>
+  <a href="#%e8%bf%9c%e7%a8%8b%e8%bf%9e%e6%8e%a5%e6%9c%8d%e5%8a%a1%e7%ab%af%e5%8f%a3%e6%b8%97%e9%80%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### SSH服务</p>
+<p>SSH服务：这个服务基本会出现在我们的Linux服务器，网络设备，安全设备等设备上，而且很多时候这个服务的配置都是默认的；对于SSH服务我们可能使用爆破攻击方式较多。</p>
+<p>默认端口：22</p>
+<p>攻击方式</p>
+<p>爆破：弱口令</p>
+<p>漏洞：OpenSSL漏洞</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2015-0135530"target="_blank" rel="external nofollow noopener noreferrer">安宇创新科技ssh弱口令</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-0154829"target="_blank" rel="external nofollow noopener noreferrer">宜信贷某站存在OpenSSL漏洞</a></p>
+<p>######## ssh爆破</p>
+<p>对手未更改默认密码或者存在其他账户，可以使用Msfconsole中的ssh_login模块去进行弱口令攻击</p>
+<blockquote>
+<p>ssh_login模块可以设定ip段作为目标 Example: 172.16.1.1-172.16.1.10 or 172.16.1-10.102</p>
+</blockquote>
+<pre tabindex="0"><code>use auxiliary/scanner/ssh/ssh_login
+
+set rhos
+set USER_FILE &lt;用户名文件路径&gt;
+set PASS_FILE &lt;密码文件路径&gt;</code></pre><p>查看已创建的Sessions</p>
+<pre tabindex="0"><code>sessions</code></pre><p>连接对方的服务器</p>
+<pre tabindex="0"><code>sessions -i Id</code></pre><p>查看flag</p>
+<pre tabindex="0"><code>cat /flag*</code></pre><p>hydra</p>
+<pre tabindex="0"><code>hydra -l 用户名 -p 密码字典 -t 线程 -vV -e ns ip ssh
+hydra -l 用户名 -p 密码字典 -t 线程 -o save.log -vV ip ssh
+hydra -L users.txt -P password.txt -vV -o ssh.log -e ns IP ssh
+hydra -l root -P password.txt 192.168.1.111 ssh
+
+hydra -l user.txt -P pass.txt 10.38.3.1 ssh</code></pre><p>####### Telnet服务</p>
+<p>Telnet服务：在SSH服务崛起的今天我们已经很难见到使用telnet的服务器，但是在很多设备上同样还是有这个服务的；比如cisco、华三，深信服等厂商的设备；我就有很多次通过telnet弱口令控制这些设备；</p>
+<p>默认端口：23</p>
+<p>攻击方式</p>
+<p>爆破：弱口令</p>
+<pre tabindex="0"><code>msf   search telnet_login
+配置参数RHOSTS目标IP，PASS_FILE 密码字典，USERNAME 用户名，THREADS 线程 配置完后 run 开始爆破
+
+或者
+使用hydra</code></pre><p>嗅探：此种情况一般发生在局域网；</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2015-0162704"target="_blank" rel="external nofollow noopener noreferrer">大量惠普打印机远程telnet可被查看和操作</a></p>
+<p>####### Windows远程连接</p>
+<p>远程桌面连接：作为windows上进行远程连接的端口，很多时候我们在得到系统为windows的shell的时候我们总是希望可以登录3389实际操作对方电脑；这个时候我们一般的情况分为两种。一种是内网，需要先将目标机3389端口反弹到外网；另一种就是外网，我们可以直接访问；当然这两种情况我们利用起来可能需要很苛刻的条件，比如找到登录密码等等；</p>
+<p>默认端口：3389</p>
+<p>攻击方式：</p>
+<ul>
+<li>
+<p>爆破：3389端口爆破工具就有点多了</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hydra <span style="color:#ff636f">[</span>目标主机IP<span style="color:#ff636f">]</span> rdp -L <span style="color:#ff636f">[</span>用户名字典<span style="color:#ff636f">]</span> -P<span style="color:#ff636f">[</span>密码字典<span style="color:#ff636f">]</span> -V -F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>连接：rdesktop ip</span></span></code></pre></div></li>
+<li>
+<p>3389漏洞攻击：利用ms12-020攻击3389端口，导致服务器关机</p>
+</li>
+</ul>
+<p>####### VNC服务</p>
+<p>VNC：一款优秀的远控工具，常用语类UNIX系统上，简单功能强大；也</p>
+<p>默认端口：5900+桌面ID（5901；5902）</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>msf5 &gt; use auxiliary/scanner/vnc/vnc_login
+</span></span><span style="display:flex;"><span>msf5 auxiliary<span style="color:#ff636f">(</span>scanner/vnc/vnc_login<span style="color:#ff636f">)</span> &gt; <span style="color:#58a1dd">set</span> RHOSTS 192.168.0.118
+</span></span><span style="display:flex;"><span>msf5 auxiliary<span style="color:#ff636f">(</span>scanner/vnc/vnc_login<span style="color:#ff636f">)</span> &gt; <span style="color:#58a1dd">set</span> RPORT <span style="color:#a6be9d">5900</span>
+</span></span><span style="display:flex;"><span>msf5 auxiliary<span style="color:#ff636f">(</span>scanner/vnc/vnc_login<span style="color:#ff636f">)</span> &gt; run
+</span></span><span style="display:flex;"><span>成功以后会到下面这个session
+</span></span><span style="display:flex;"><span>msf auxiliary<span style="color:#ff636f">(</span>vnc_login<span style="color:#ff636f">)</span> &gt; vncviewer 192.168.150.133
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>或者使用vncviewer连接</span></span></code></pre></div><p>认证口令绕过：</p>
+<p>拒绝服务攻击：（<a href="http://drops.wooyun.org/papers/9014"target="_blank" rel="external nofollow noopener noreferrer">CVE-2015-5239</a>）</p>
+<p>权限提升：（CVE-2013-6886）</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2015-0143044"target="_blank" rel="external nofollow noopener noreferrer">广西电信客服服务器使用VNC存在弱口令可直接控制</a></p>
+<p>####### Pcanywhere服务</p>
+<p>PyAnywhere服务：一款远控工具，有点类似vnc的功能；这个服务在以前很多黑客发的视频里面都有，利用pcanywhere来进行提权；</p>
+<p>默认端口：5632</p>
+<p>攻击方式：</p>
+<p>提权控制服务：</p>
+<p>拒绝服务攻击：</p>
+<p>代码执行：<a href="https://www.seebug.org/vuldb/ssvid-30050"target="_blank" rel="external nofollow noopener noreferrer">请参考</a></p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2013-034519/"target="_blank" rel="external nofollow noopener noreferrer">黑龙江物价局多处安全漏洞可能导致服务器沦陷(pcAnywhere提权+密码突破)</a></p>
+<h6 id="web应用服务端口渗透" class="heading-element"><span>0.0.0.0.3  Web应用服务端口渗透</span>
+  <a href="#web%e5%ba%94%e7%94%a8%e6%9c%8d%e5%8a%a1%e7%ab%af%e5%8f%a3%e6%b8%97%e9%80%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>HTTP服务：对于http服务其实是我们目前这几年比较常见的攻击入口，所以这里会针对http服务进行一个详细的详解；</p>
+<p>注：这个板块的所有攻击方式，如果涉及到常规的web漏洞不会提出来，除非是特定的服务器才会产生的漏洞；</p>
+<p>####### IIS服务</p>
+<p>默认端口：80/81/443</p>
+<p>攻击方式：</p>
+<p>IIS
+PUT写文件：利用IIS漏洞，put方法直接将文件放置到服务器上</p>
+<p>短文件名泄漏：这种一般没啥影响</p>
+<p>解析漏洞：详细见apache服务</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-047134"target="_blank" rel="external nofollow noopener noreferrer">徐州市教育系统大量IIS PUT漏洞</a></p>
+<p><a href="http://www.wooyun.org/bug.php?action=view&amp;id=27365"target="_blank" rel="external nofollow noopener noreferrer">用友软件IIS写权限(PUT)导致可获取webshell控制服务器</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-093865"target="_blank" rel="external nofollow noopener noreferrer">国家电网某分站存在iis短文件名漏洞</a></p>
+<p>####### Apache/Tomcat/Nginx/Axis2</p>
+<p>默认端口：80/8080</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令（爆破manager后台）</p>
+<p>HTTP慢速攻击：可以把服务器打死，对一些大型的网站有影响；</p>
+<p>解析漏洞：<a href="http://drops.wooyun.org/papers/539"target="_blank" rel="external nofollow noopener noreferrer">请参考</a></p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2013-018433"target="_blank" rel="external nofollow noopener noreferrer">安卓开发平台存在上传漏洞和Apache解析漏洞,成功获取webshell</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-06947"target="_blank" rel="external nofollow noopener noreferrer">腾讯分站 Apache 漏洞</a></p>
+<p>####### WebLogic</p>
+<p>默认端口：7001</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令  用户名密码均一致：system weblogic（密码可能weblogic123） portaladmin guest</p>
+<p>Congsole后台部署webshell</p>
+<p>Java反序列化</p>
+<p>泄漏源代码/列目录：这个太老了，估计网上都没有了吧！</p>
+<p>SSRF窥探内网：<a href="http://www.wooyun.org/bugs/wooyun-2015-0136698"target="_blank" rel="external nofollow noopener noreferrer">央视网SSRF可窥探内网</a></p>
+<p>案列分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-038214"target="_blank" rel="external nofollow noopener noreferrer">福建省人力资源和社会保障厅下属某WEBLOGIC弱口令</a></p>
+<p><a href="http://drops.wooyun.org/tips/8321"target="_blank" rel="external nofollow noopener noreferrer">利用Weblogic进行入侵的一些总结</a></p>
+<p>####### Jboss</p>
+<p>默认端口8080；其他端口1098/1099/4444/4445/8080/8009/8083/8093</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令（爆破jboss系统后台）</p>
+<p>远程代码执行：<a href="http://www.cnblogs.com/Safe3/archive/2010/01/08/1642371.html"target="_blank" rel="external nofollow noopener noreferrer">由于配置不当造成</a></p>
+<p>Java反序列化：</p>
+<p>案例分享</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-07409"target="_blank" rel="external nofollow noopener noreferrer">中华人民共和国民政部JBoss配置不当</a></p>
+<p><a href="http://drops.wooyun.org/papers/178"target="_blank" rel="external nofollow noopener noreferrer">JBOSS安全问题总结</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-0110279"target="_blank" rel="external nofollow noopener noreferrer">中国科学院某处jboss应用漏洞</a></p>
+<p>####### Websphere</p>
+<p>默认端口：908*；第一个应用就是9080，第二个就是9081；控制台9090</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令（控制台）</p>
+<p>任意文件泄漏：（CVE-2014-0823）</p>
+<p>Java反序列化</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-036803"target="_blank" rel="external nofollow noopener noreferrer">中国电信某通用型业务系统(Websphere)GetShell漏洞</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-0167244"target="_blank" rel="external nofollow noopener noreferrer">大汉网络有限公司远程命令执行漏洞(WebSphere案例)</a></p>
+<p>####### GlassFish</p>
+<p>默认端口：http 8080；IIOP 3700；控制台4848</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令（对于控制台）</p>
+<p>任意文件读取：</p>
+<p>认证绕过：</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-0144595/"target="_blank" rel="external nofollow noopener noreferrer">应用服务器glassfish存在通用任意文件读取漏洞</a></p>
+<p><a href="http://www.tuicool.com/articles/ZRJriy"target="_blank" rel="external nofollow noopener noreferrer">Oracle GlassFish Server认证绕过</a></p>
+<p>####### Jenkins</p>
+<p>默认端口：8080、8089</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令（默认管理员）</p>
+<p>未授权访问：</p>
+<p>反序列化：</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2014-062541"target="_blank" rel="external nofollow noopener noreferrer">酷6Jenkins系统未授权访问可执行系统命令</a></p>
+<p>####### Resin</p>
+<p>默认端口：8080</p>
+<p>攻击方式：</p>
+<p>目录遍历</p>
+<p>远程文件读取</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-017200"target="_blank" rel="external nofollow noopener noreferrer">爱奇艺Resin配置漏洞</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2015-0126353"target="_blank" rel="external nofollow noopener noreferrer">Resin漏洞利用案例之目录遍历/以金蝶某系统为例</a></p>
+<p>####### Jetty</p>
+<p>默认端口：8080</p>
+<p>攻击方式：</p>
+<p><a href="http://drops.wooyun.org/papers/4972"target="_blank" rel="external nofollow noopener noreferrer">远程共享缓冲区溢出</a></p>
+<p>####### Lotus</p>
+<p>影响的都是一些大型的企业，特别需要注意，经过以前的测试发现弱口令这个问题经常都存在，可能是很多管理员不知道如何去修改（不要打我）。</p>
+<p>默认端口：1352</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令（admin password）控制台</p>
+<p>信息泄露</p>
+<p>跨站脚本攻击</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-053881"target="_blank" rel="external nofollow noopener noreferrer">Lotus Domino WebMail一处越权访问</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-0134024"target="_blank" rel="external nofollow noopener noreferrer">中电投集团某系统弱口令直达内网涉及/OA系统/内部邮箱/财务系统/人力资源系统</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-0109008"target="_blank" rel="external nofollow noopener noreferrer">中国某大型金融机构地方业务弱口令导致数万商户信息泄露&amp;访问Lotus Domino后台</a></p>
+<h6 id="数据库服务端口渗透" class="heading-element"><span>0.0.0.0.4  数据库服务端口渗透</span>
+  <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e6%9c%8d%e5%8a%a1%e7%ab%af%e5%8f%a3%e6%b8%97%e9%80%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>针对所有的数据库攻击方式都存在SQL注入，这里先提出来在下面就不一一写了免得大家说我占篇幅；当然不同的数据库注入技巧可能不一样，特别是NoSQL与传统的SQL数据库不太一样。但是这不是本文需要介绍的重点，后面有时间会写一篇不同数据库的渗透技巧。</p>
+<p>####### MySQL数据库</p>
+<p>默认端口：3306</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令</p>
+<p>身份认证漏洞：<a href="http://www.freebuf.com/vuls/3815.html"target="_blank" rel="external nofollow noopener noreferrer">CVE-2012-2122</a></p>
+<p>拒绝服务攻击：利用sql语句是服务器进行死循环打死服务器</p>
+<p>Phpmyadmin万能密码绕过：用户名：‘localhost’@’@” 密码任意</p>
+<p>案例分享：</p>
+<p><a href="https://www.seebug.org/appdir/MySQL"target="_blank" rel="external nofollow noopener noreferrer">漏洞分享</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2015-0115534/"target="_blank" rel="external nofollow noopener noreferrer">和讯网某站点存在mysql注入漏洞</a></p>
+<p><a href="http://www.waitalone.cn/mysql-tiquan-summary.html?replytocom=390"target="_blank" rel="external nofollow noopener noreferrer">MySQL提权总结</a></p>
+<p>####### MSSQL数据库</p>
+<p>默认端口：1433（Server 数据库服务）、1434（Monitor 数据库监控）</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令/使用系统用户</p>
+<p>案例分享：</p>
+<p><a href="http://drops.wooyun.org/tips/1620"target="_blank" rel="external nofollow noopener noreferrer">MSSQL注射总结</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-0102404"target="_blank" rel="external nofollow noopener noreferrer">上海安脉综合管理系统mssql注射漏洞</a></p>
+<p><a href="http://drops.wooyun.org/tips/1067"target="_blank" rel="external nofollow noopener noreferrer">解密MSSQL连接数据库密码</a></p>
+<p><a href="http://www.freebuf.com/articles/database/22997.html"target="_blank" rel="external nofollow noopener noreferrer">从攻击MSSQL到提权</a>: 使用msf针对mssql的一次完整渗透</p>
+<p>####### Oracle数据库</p>
+<p>默认端口：1521（数据库端口）、1158（Oracle EMCTL端口）、8080（Oracle XDB数据库）、210（Oracle XDB FTP服务）</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令</p>
+<p>注入攻击；</p>
+<p>漏洞攻击；</p>
+<p>案例分享：</p>
+<p><a href="http://drops.wooyun.org/papers/6035"target="_blank" rel="external nofollow noopener noreferrer">Oracle盲注结合XXE漏洞远程获取数据</a></p>
+<p>####### PostgreSQL数据库</p>
+<p>PostgreSQL是一种特性非常齐全的自由软件的对象–关系型数据库管理系统，可以说是目前世界上最先进，功能最强大的自由数据库管理系统。包括我们kali系统中msf也使用这个数据库；<a href="http://lcx.cc/?i=1275"target="_blank" rel="external nofollow noopener noreferrer">浅谈postgresql数据库攻击技术</a> 大部分关于它的攻击依旧是sql注入，所以注入才是数据库不变的话题。</p>
+<p>默认端口：5432</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令：postgres postgres</p>
+<p>缓冲区溢出：CVE-2014-2669</p>
+<p>案例分享：</p>
+<p><a href="http://drops.wooyun.org/tips/6449"target="_blank" rel="external nofollow noopener noreferrer">Hacking postgresql</a></p>
+<p><a href="http://zone.wooyun.org/content/4971"target="_blank" rel="external nofollow noopener noreferrer">关于postgresql的那些事</a></p>
+<p>####### MongoDB数据库</p>
+<p>MongoDB：NoSQL数据库；攻击方法与其他数据库类似；关于它的安全讲解：<a href="http://drops.wooyun.org/%e8%bf%90%e7%bb%b4%e5%ae%89%e5%85%a8/2470"target="_blank" rel="external nofollow noopener noreferrer">请参考</a></p>
+<p>默认端口：27017</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令</p>
+<p>未授权访问；github有攻击代码；<a href="https://github.com/yangbh/Hammer/blob/master/plugins/System/mongodb_unauth_access.py"target="_blank" rel="external nofollow noopener noreferrer">请点击</a></p>
+<p>案例分享：</p>
+<p><a href="http://bobao.360.cn/learning/detail/274.html"target="_blank" rel="external nofollow noopener noreferrer">MongoDB phpMoAdmin远程代码执行</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2013-047153"target="_blank" rel="external nofollow noopener noreferrer">搜狐MongoDB未授权访问</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2014-066883"target="_blank" rel="external nofollow noopener noreferrer">新浪微米未授权访问</a></p>
+<p><a href="http://drops.wooyun.org/%e8%bf%90%e7%bb%b4%e5%ae%89%e5%85%a8/2470"target="_blank" rel="external nofollow noopener noreferrer">解决MongoDB各种隐患问题</a></p>
+<p>####### Redis数据库</p>
+<p>redis：是一个开源的使用c语言写的，支持网络、可基于内存亦可持久化的日志型、key-value数据库。关于这个数据库这两年还是很火的，暴露出来的问题也很多。特别是前段时间暴露的未授权访问。Exp：https://yunpan.cn/cYjzHxawFpyVt 访问密码 e547</p>
+<p>默认端口：6379</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令</p>
+<p>未授权访问+配合ssh key提权；</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2015-0152710/"target="_blank" rel="external nofollow noopener noreferrer">中国铁建网redis+ssh-keygen免认证登录</a></p>
+<p>####### SysBase数据库</p>
+<p>默认端口：服务端口5000；监听端口4100；备份端口：4200</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令</p>
+<p>命令注入：</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-083132"target="_blank" rel="external nofollow noopener noreferrer">广西自考信息系统Sybase数据库注入</a></p>
+<p><a href="http://www.venustech.com.cn/NewsInfo/124/22061.Html"target="_blank" rel="external nofollow noopener noreferrer">Sybase EAServer命令注入漏洞</a></p>
+<p>####### DB2数据库</p>
+<p>默认端口：5000</p>
+<p>攻击方式：</p>
+<p>安全限制绕过：成功后可执行未授权操作（CVE-2015-1922）</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2015-0113071"target="_blank" rel="external nofollow noopener noreferrer">哈尔滨银行主站DB2注入</a></p>
+<p>总结一下：对于数据库，我们得知端口很多时候可以帮助我们去渗透，比如得知mysql的 数据库，我们就可以使用SQL注入进行mof、udf等方式提权；如果是mssql我们就可以使用xp_cmdshell来进行提权；如果是其它的数据 库，我们也可以采用对应的方式；比如各大数据库对应它们的默认口令，版本对应的漏洞！</p>
+<p>顺便提一下：很多时候银行企业采用的都是oracle、db2等大型数据库；</p>
+<h6 id="邮件服务端口渗透" class="heading-element"><span>0.0.0.0.5  邮件服务端口渗透</span>
+  <a href="#%e9%82%ae%e4%bb%b6%e6%9c%8d%e5%8a%a1%e7%ab%af%e5%8f%a3%e6%b8%97%e9%80%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### SMTP协议</p>
+<p>smtp：邮件协议，在linux中默认开启这个服务，可以向对方发送钓鱼邮件！</p>
+<p>默认端口：25（smtp）、465（smtps）</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令</p>
+<p>未授权访问</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-025810"target="_blank" rel="external nofollow noopener noreferrer">腾讯邮箱smtp注册时间限制绕过漏洞</a></p>
+<p><a href="http://drops.wooyun.org/papers/534"target="_blank" rel="external nofollow noopener noreferrer">邮件伪造详解</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2011-03388"target="_blank" rel="external nofollow noopener noreferrer">qq邮箱伪造发件地址，容易被钓鱼利用</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-098813"target="_blank" rel="external nofollow noopener noreferrer">众多厂商邮件系统配置不当可伪造邮件人</a></p>
+<p>####### POP3协议</p>
+<p>默认端口：109（POP2）、110（POP3）、995（POP3S）</p>
+<p>攻击方式：</p>
+<p>爆破；弱口令</p>
+<p>未授权访问；</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bug.php?action=view&amp;id=147087"target="_blank" rel="external nofollow noopener noreferrer">中国联通沃邮箱等部分Android客户端免密码登陆（可获取任意联通用户pop3密码）</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2011-094877"target="_blank" rel="external nofollow noopener noreferrer">中航信邮箱密码泄漏及VPN账号和大量邮箱弱口令导致可内网漫游拿到域控</a></p>
+<p>####### IMAP协议</p>
+<p>默认端口：143（imap）、993（imaps）</p>
+<p>攻击方式：</p>
+<p>爆破：弱口令</p>
+<p>配置不当</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-022037"target="_blank" rel="external nofollow noopener noreferrer">163邮箱二次验证饶过缺陷</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-045426"target="_blank" rel="external nofollow noopener noreferrer">南方周末邮件服务器任意文件读取漏洞</a></p>
+<h6 id="网络常见协议端口渗透" class="heading-element"><span>0.0.0.0.6  网络常见协议端口渗透</span>
+  <a href="#%e7%bd%91%e7%bb%9c%e5%b8%b8%e8%a7%81%e5%8d%8f%e8%ae%ae%e7%ab%af%e5%8f%a3%e6%b8%97%e9%80%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### DNS服务</p>
+<p>默认端口：53</p>
+<p>攻击方式：</p>
+<p>区域传输漏洞</p>
+<p>见2中的总结</p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2014-061403"target="_blank" rel="external nofollow noopener noreferrer">全球Top1000Websites中存在DNS区域传送漏洞的网站列表</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-0132048"target="_blank" rel="external nofollow noopener noreferrer">团购王某站DNS域传送漏洞</a></p>
+<p><a href="http://drops.wooyun.org/tips/1354"target="_blank" rel="external nofollow noopener noreferrer">DNS泛解析与内容投毒</a></p>
+<p>####### DHCP服务</p>
+<p>默认端口：67&amp;68、546（DHCP Failover做双机热备的）</p>
+<p>攻击方式：</p>
+<p>DHCP劫持；</p>
+<p>见2中总结</p>
+<p>案例分享：</p>
+<p><a href="http://www.freebuf.com/articles/network/74995.html"target="_blank" rel="external nofollow noopener noreferrer">流氓DHCP服务器内网攻击测试</a></p>
+<p>####### SNMP协议</p>
+<p>默认端口：161</p>
+<p>攻击方式:</p>
+<p>爆破：弱口令</p>
+<p>案例分享：</p>
+<p><a href="http://drops.wooyun.org/tips/409"target="_blank" rel="external nofollow noopener noreferrer">snmp弱口令引起的信息泄漏</a></p>
+<p><a href="http://drops.wooyun.org/tips/2106"target="_blank" rel="external nofollow noopener noreferrer">基于snmp的反射攻击的理论及其实现</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-081037"target="_blank" rel="external nofollow noopener noreferrer">华为某服务器SNMP弱口令</a></p>
+<h6 id="其他端口渗透" class="heading-element"><span>0.0.0.0.7  其他端口渗透</span>
+  <a href="#%e5%85%b6%e4%bb%96%e7%ab%af%e5%8f%a3%e6%b8%97%e9%80%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### Hadoop文件服务</p>
+<p>默认端口：<a href="http://hsrong.iteye.com/blog/1374734"target="_blank" rel="external nofollow noopener noreferrer">请参考</a></p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-020282"target="_blank" rel="external nofollow noopener noreferrer">Apache Hadoop远程命令执行</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2013-022434"target="_blank" rel="external nofollow noopener noreferrer">新浪漏洞系列第六弹–大量hadoop应用对外访问</a></p>
+<p>####### Zookeeper服务</p>
+<p>zookeeper：分布式的，开放源码的分布式应用程序协调服务；提供功能包括：配置维护、域名服务、分布式同步、组服务等。详情请参考百度百科</p>
+<p>默认端口：2181</p>
+<p>攻击方式：</p>
+<p>未授权访问；</p>
+<p>案例分享：</p>
+<p><a href="http://tangscan.com/plugin/17261"target="_blank" rel="external nofollow noopener noreferrer">zookeeper未授权访问漏洞</a></p>
+<p>网上关于这方面的案例暂时不多，但是对于大数据逐渐泛滥的今天，这些漏洞未来会在乌云上出现一大波！</p>
+<p>####### Zabbix服务</p>
+<p>zabbix：基于Web界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。监视各种网络参数，保证服务器系统的安全运营。</p>
+<p>默认端口：8069</p>
+<p>攻击方式：</p>
+<p>远程命令执行：</p>
+<p>案例分享：</p>
+<p><a href="http://drops.wooyun.org/tips/68"target="_blank" rel="external nofollow noopener noreferrer">当渗透遇到zabbix–小谈zabbix安全</a></p>
+<p><a href="http://www.secpulse.com/archives/2089.html"target="_blank" rel="external nofollow noopener noreferrer">Zabbix的前台SQL注射漏洞利用</a></p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2013-025219"target="_blank" rel="external nofollow noopener noreferrer">网易zabbix运维不当，导致任意命令执行。(可提权、可内网渗透)</a></p>
+<p>####### elasticsearch服务</p>
+<p>elasticsearch：请百度（因为我觉得我解释不清楚）</p>
+<p>默认端口：9200（）、9300（）</p>
+<p>攻击方式：</p>
+<p>未授权访问；</p>
+<p>远程命令执行；</p>
+<p>文件遍历；</p>
+<p>低版本webshell植入；</p>
+<p>案例分享：</p>
+<p><a href="http://www.secpulse.com/archives/5401.html"target="_blank" rel="external nofollow noopener noreferrer">ElasticSearch 远程代码执行漏洞</a></p>
+<p><a href="http://www.freebuf.com/tools/38025.html"target="_blank" rel="external nofollow noopener noreferrer">elasticsearch 漏洞利用工具</a></p>
+<p>####### memcache服务</p>
+<p>默认端口：11211</p>
+<p>案例分享：</p>
+<p><a href="http://drops.wooyun.org/papers/865"target="_blank" rel="external nofollow noopener noreferrer">Memcache安全配置</a></p>
+<p><a href="https://help.aliyun.com/knowledge_detail/6936805.html"target="_blank" rel="external nofollow noopener noreferrer">memcache 未授权访问漏洞</a></p>
+<p>####### Linux R服务</p>
+<p>R服务：TCP端口512,513和514为著名的rlogin提供服务。在系统中被错误配置从而允许远程访问者从任何地方访问（标准的，rhosts + +）。</p>
+<p>默认端口：512（remote process execution）；513（remote login a la
+telnet）；514（cmd）</p>
+<p>攻击方式：</p>
+<p>使用rlogin直接登录对方系统；</p>
+<p>####### RMI</p>
+<p>RMI：我们使用这两个端口很少的原因是因为必须是java，而且rmi穿越防火墙并不好穿越；这里我不会去涉及其他的东西，这里提出RMI只是因为在前段时间的java反序列化中，我们的小伙伴Bird写过一个weblogic利用工具，里面涉及到了RMI的一些东西，在有的时候使用socket不能成功时，我们可以使用RMI方式来进行利用；</p>
+<p>默认端口：1090（）、1099（）</p>
+<p>攻击方式：</p>
+<p>远程命令执行（java反序列化，调用rmi方式执行命令）</p>
+<p>这就是RMI的魅力了！</p>
+<p>工具下载：<a href="http://www.heysec.org/archives/242"target="_blank" rel="external nofollow noopener noreferrer">请点我</a></p>
+<p>####### Rsync服务</p>
+<p>Rsync：类UNIX系统下的数据备份工具（remote sync），属于增量备份；关于它的功能，大家自行百度百科吧，其实上面很多大家也看到了说是端口渗透，其实就是端口对应服务的渗透，服务一般出错就在配置或者版本问题上，rsync也不例外。Rsync默认允许匿名访问，如果在配置文件中没有相关的用户认证以及文件授权，就会触发隐患。</p>
+<p>默认端口：873</p>
+<p>攻击方式：</p>
+<p>未授权访问；</p>
+<p>本地提权：rsync默认以root运行，利用rsync上传一个文件，只要这个文件具有s权限，我们执行我们的攻击脚本就可以具有root权限。详细<a href="https://www.91ri.org/11093.html"target="_blank" rel="external nofollow noopener noreferrer">请参考</a> 和 <a href="http://drops.wooyun.org/papers/161"target="_blank" rel="external nofollow noopener noreferrer">参考二</a></p>
+<p>案例分享：</p>
+<p><a href="http://www.wooyun.org/bugs/wooyun-2010-049993"target="_blank" rel="external nofollow noopener noreferrer">搜狐几处rsync未授权访问</a></p>
+<p>####### Socket代理</p>
+<p>默认端口：1080</p>
+<p>Socket代理针对代理来说没有什么漏洞，一般只是在渗透过程中作为我们的代理，进入内网，或者渗透域和林的时候有帮助。这里不做过多描述，但是可以尝试爆破一下代理的用户名和密码，万一运气好能登录，不也~~~~</p>
+<p>案例分享：</p>
+<p><a href="https://www.91ri.org/10238.html"target="_blank" rel="external nofollow noopener noreferrer">利用php socket5代理渗透内网</a></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/64/" class="post-nav-item" rel="prev" title="网络隧道"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>网络隧道</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/%E6%B8%97%E9%80%8F%E5%B7%A5%E5%85%B7/42/" class="post-nav-item" rel="next" title="渗透工具汇总">渗透工具汇总<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

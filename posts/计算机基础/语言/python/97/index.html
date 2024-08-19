@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Python 并发学习 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 语言' />
+  <meta itemprop="name" content="python 并发学习">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="986">
+  <meta itemprop="keywords" content="计算机基础,语言"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/97/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="python 并发学习">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="语言">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="python 并发学习">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/97/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/99/" /><link rel="next" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/%E5%9F%BA%E7%A1%80/94/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "python 并发学习",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/97\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 语言","wordcount":  986 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/97\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Python 并发学习</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Python 并发学习</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="986 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1000 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="前言" class="heading-element"><span>0.0.0.1  前言</span>
+  <a href="#%e5%89%8d%e8%a8%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>python并发编程分三个方面：多线程（threading）、多进程(multiprocessing)、多协程(asynico)</p>
+</blockquote>
+<p>CPU密集型计算：压缩/解压缩、加密解密、正则表达式搜索</p>
+<p>IO密集型计算：文件处理、网络爬虫、读写数据库</p>
+<h6 id="对比" class="heading-element"><span>0.0.0.1.1  对比</span>
+  <a href="#%e5%af%b9%e6%af%94" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>
+<p>进程：</p>
+<ul>
+<li>优点：可以实现并行，且只有多进程可以实现并行</li>
+<li>缺点：占用资源多，可启动数目最少</li>
+</ul>
+</li>
+<li>
+<p>线程：</p>
+<ul>
+<li>占用资源少，轻量级</li>
+<li>python的线程是无法并行的（占用多个cpu)，只能进行并发</li>
+<li>切换线程也是有开销的。</li>
+<li>适合IO密集型运算、同时运行任务不多(线程可启动数量也是有限制的)</li>
+</ul>
+</li>
+<li>
+<p>协程：</p>
+<ul>
+<li>
+<p>优点：内存开销最小，可启动数量最多</p>
+</li>
+<li>
+<p>缺点：支持的库比较少，代码复杂，例如爬虫不支持，所以想用多协程爬取的话，可以用aiohttp，不能用requests</p>
+</li>
+<li>
+<p>适用于：IO密集型、超多任务运行</p>
+</li>
+</ul>
+</li>
+</ul>
+<h6 id="关系" class="heading-element"><span>0.0.0.1.2  关系</span>
+  <a href="#%e5%85%b3%e7%b3%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>一个进程中可以启动很多线程</li>
+<li>一个线程中可以启动很多协程</li>
+</ul>
+<h6 id="怎样选择" class="heading-element"><span>0.0.0.1.3  怎样选择</span>
+  <a href="#%e6%80%8e%e6%a0%b7%e9%80%89%e6%8b%a9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>IO密集型运算优先选择多进程</li>
+<li>若满足三点：1、需要超多任务量  2、有现成协程库支持  3、代码复杂度可以接受，则选择协程，否则选择线程</li>
+</ul>
+<h6 id="python慢的原因" class="heading-element"><span>0.0.0.1.4  python慢的原因</span>
+  <a href="#python%e6%85%a2%e7%9a%84%e5%8e%9f%e5%9b%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>两个原因</p>
+<ul>
+<li>是解释型语言，边解释边执行</li>
+<li>GIL，无法利用多核CPU</li>
+</ul>
+<p>GIL是什么，为什么有GIL</p>
+<p>全局解释器锁，是计算机程序设计语言解释器用于==同步==线程的一种机制，它使得任何时刻只有一个线程在运行</p>
+<p>python设计初期为了解决线程并发的问题引入了GIL，但是现在很难去除，本质是一种锁，它的好处在于简化了Python对共享资源的管理</p>
+<p>怎样规避GIL带来的限制</p>
+<ul>
+<li>IO期间线程会释放GIL，实现CPU和IO的并行，因此GIL的存在对于IO密集型计算是友好的，但是对CPU密集型则会拖慢速度</li>
+<li>利用multiprocessing，可以利用多核CPU的优势</li>
+</ul>
+<h5 id="多线程" class="heading-element"><span>0.0.0.2  多线程</span>
+  <a href="#%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><!-- raw HTML omitted -->
+<h6 id="threading库" class="heading-element"><span>0.0.0.2.1  threading库</span>
+  <a href="#threading%e5%ba%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://jusene.github.io/2018/02/13/thread/"target="_blank" rel="external nofollow noopener noreferrer">https://jusene.github.io/2018/02/13/thread/</a></p>
+<ul>
+<li>**threading.active_count()：**返回当前存活的threading.Thread线程对象数量，等同于len(threading.enumerate())。</li>
+<li>**threading.current_thread()：**返回此函数的调用者控制的threading.Thread线程对象。如果当前调用者控制的线程不是通过threading.Thread创建的，则返回一个功能受限的虚拟线程对象。</li>
+<li>**threading.get_ident()：**返回当前线程的线程标识符。注意当一个线程退出时，它的线程标识符可能会被之后新创建的线程复用。</li>
+<li>**threading.enumerate()：**返回当前存活的threading.Thread线程对象列表。</li>
+<li>**threading.main_thread()：**返回主线程对象，通常情况下，就是程序启动时Python解释器创建的threading._MainThread线程对象。</li>
+<li>**threading.stack_size([size])：**返回创建线程时使用的堆栈大小。也可以使用可选参数size指定之后创建线程时的堆栈大小，size可以是0或者一个不小于32KiB的正整数。如果参数没有指定，则默认为0。如果系统或者其他原因不支持改变堆栈大小，则会报RuntimeError错误；如果指定的堆栈大小不合法，则会报ValueError，但并不会修改这个堆栈的大小。32KiB是保证能解释器运行的最小堆栈大小，当然这个值会因为系统或者其他原因有限制，比如它要求的值是大于32KiB的某个值，只需根据要求修改即可。</li>
+</ul>
+<p>####### **线程对象：**Thread类</p>
+<blockquote>
+<p>**守护线程：**只有所有守护线程都结束，整个Python程序才会退出，但并不是说Python程序会等待守护线程运行完毕，相反，当程序退出时，如果还有守护线程在运行，程序会去强制终结所有守护线程，当守所有护线程都终结后，程序才会真正退出。可以通过修改daemon属性或者初始化线程时指定daemon参数来指定某个线程为守护线程。</p>
+<p>**非守护线程：**一般创建的线程默认就是非守护线程，包括主线程也是，即在Python程序退出时，如果还有非守护线程在运行，程序会等待直到所有非守护线程都结束后才会退出。</p>
+<p>**注：**守护线程会在程序关闭时突然关闭（如果守护线程在程序关闭时还在运行），它们占用的资源可能没有被正确释放，比如正在修改文档内容等，需要谨慎使用。</p>
+</blockquote>
+<p>构造方法：</p>
+<p>Thread(group=None,target=None,name=None,arg=(),kwargs=None,*,daemon=None)</p>
+<ul>
+<li>
+<p>group: 线程组，目前还没有实现，库引用中必须是None</p>
+</li>
+<li>
+<p>target: 要执行的方法</p>
+</li>
+<li>
+<p>name: 线程名</p>
+</li>
+<li>
+<p>args/kwargs: 要传入方法的参数</p>
+</li>
+<li>
+<p>daemon:</p>
+<p>​      默认为false(不适用于IDLE的交互模式或脚本运行模式，因为交互模式下的主线程只有退出PYTHON时才终止)</p>
+<ul>
+<li>当子线程的daemon属性为false时，主线程结束时会检测子线程是否结束，如果子线程尚未完成，则主线程会等待子线程完成后再退出</li>
+<li>当子线程的daemon属性为true时，主线程运行结束时不对子线程进行检查而直接退出，同时子线程随主线程一起结束而不论是否运行完成</li>
+</ul>
+</li>
+</ul>
+<p>实例方法：</p>
+<ul>
+<li>
+<p>isAlive(): 返回线程是否在运行，正在运行指启动后、终止前</p>
+</li>
+<li>
+<p>getName(): 获取线程名</p>
+</li>
+<li>
+<p>isDaemon(): 获取是否为后台线程</p>
+</li>
+<li>
+<p>join(timeout=None): ==阻塞当前上下文环境的线程，直到调用此方法的线程终止或到达指定的timeout，说人话就是会把程序卡在这里，直到这个用了join的线程执行结束才可以执行其他线程,像join(5)就是等待这个线程运行5秒，不加参数就是一直等他运行结束。==</p>
+<p>这里也可以看出join也有一定的==同步==的作用</p>
+</li>
+<li>
+<p>setDaemon(): 设置为后台线程</p>
+</li>
+<li>
+<p>setName(name): 设置线程名</p>
+</li>
+<li>
+<p>start(): 启动线程</p>
+</li>
+</ul>
+<p>####### **锁对象：**Lock &amp; **递归锁对象：**Rlock类</p>
+<p>由于线程的随机调度：某线程可能在执行n条后，cpu接着执行其他线程。为了多个线程同时操作一个内存中的资源时不产生混乱，我们使用锁。</p>
+<p>实例方法：</p>
+<ul>
+<li>acquire([timeout]): 尝试获得锁定，使线程进入同步阻塞状态。</li>
+<li>release(): 释放锁，使用前线程必须已获得锁定，否则抛出异常。</li>
+</ul>
+<p>Lock属于全局，重复锁定会产生死锁；RLock属于线程，可重复施加锁，需要执行相同次数的锁释放。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">,</span><span style="color:#58a1dd">time</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">gl_num</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">lock</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">RLock</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">action</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">lock</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">acquire</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">global</span> <span style="color:#58a1dd">gl_num</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">gl_num</span><span style="color:#ff636f">+=</span><span style="color:#a6be9d">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">time</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sleep</span>(<span style="color:#a6be9d">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;gl_num&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">lock</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">release</span>()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">range</span>(<span style="color:#a6be9d">10</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">t</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">action</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">t</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()</span></span></code></pre></div><p>####### **条件变量对象：**Condition类</p>
+<p>Condition通常与一个锁关联，需要在多个Contidion中共享一个锁时，可以传递一个Lock/RLock实例给构造方法，否则它将自动生产一个RLock实例。
+可以认为，除了Lock带有的锁定池外，Condition还包含一个等待池，池中的线程处于等待阻塞状态，直到另一个线程调用notify()/notifyAll()通知；得到通知后线程进入锁定池等待锁定。</p>
+<p>实例方法:</p>
+<ul>
+<li>acquire([timeout])/release():调用关联的锁的相应方法</li>
+<li>wait([timeout]):调用这个方法将使线程进入Condition的等待池等待通知，并释放锁。使用前线程必须已获得锁定，否则将抛出异常</li>
+<li>notify():调用这个方法将从等待池挑选一个线程并通知，收到通知的线程将自动调用acquire()尝试获得锁定，其他线程仍然在等待池中
+-notifyAll():调用这个方法将通知等待池中所有的线程，这些线程都将进入锁定池尝试获得锁定</li>
+</ul>
+<p>####### **事件对象：**Event类</p>
+<p>Event是最简单的线程通信机制之一：一个线程通知事件，其他线程等待事件。Event内置了一个为False的标志，当调用set()时设为True,调用clear()时重置为False。wait()将阻塞线程至等待阻塞状态。</p>
+<p>实例方法:</p>
+<ul>
+<li>isSet(): 当内置标志为True时返回True</li>
+<li>set(): 将标志设为True,并通知所有处于等待阻塞状态的线程恢复运行状态</li>
+<li>clear(): 将标志设为False</li>
+<li>wait([timeout]): 如果标志True将立即返回，否则阻塞线程至等待阻塞状态，等待其他线程调用set()</li>
+</ul>
+<p>####### **定时器对象：**timer类</p>
+<p>Timer(定时器)是Thread的派生类，用于在指定时间后调用一个方法。</p>
+<p>构造方法:
+Timer(interval,function,args=[],kwarg={})</p>
+<ul>
+<li>interval:指定的时间</li>
+<li>function:要执行的方法</li>
+<li>args/kwargs:方法的参数</li>
+</ul>
+<p>####### local类</p>
+<p>local是一个小写字母开头的类，用于管理thread-local(线程局部)数据。对于同一个local，线程无法访问其他线程设置的属性；线程设置的属性不会被其他线程设置的同名属性替换。</p>
+<h6 id="创建多线程" class="heading-element"><span>0.0.0.2.2  创建多线程</span>
+  <a href="#%e5%88%9b%e5%bb%ba%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>1、准备一个函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">my_func</span>(<span style="color:#58a1dd">a</span>,<span style="color:#58a1dd">b</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">do_craw</span>(<span style="color:#58a1dd">a</span>,<span style="color:#58a1dd">b</span>)</span></span></code></pre></div><p>2、创建线程</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">threading</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">t</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">myfunc</span>,<span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#a6be9d">100</span>,<span style="color:#a6be9d">200</span>,))</span></span></code></pre></div><p>3、启动线程</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">t</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()</span></span></code></pre></div><p>4、等待结束</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">t</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">join</span>()</span></span></code></pre></div><h6 id="多线程爬虫" class="heading-element"><span>0.0.0.2.3  多线程爬虫</span>
+  <a href="#%e5%a4%9a%e7%ba%bf%e7%a8%8b%e7%88%ac%e8%99%ab" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>main.py</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">urls</span> <span style="color:#ff636f">=</span> [
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#34;https://test.com/#p</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">page</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">page</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">range</span>(<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">51</span>)
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">urls</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">craw</span>(<span style="color:#58a1dd">url</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">r</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">url</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">len</span>(<span style="color:#58a1dd">r</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">text</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">craw</span>(<span style="color:#58a1dd">urls</span>[<span style="color:#a6be9d">0</span>])</span></span></code></pre></div><p>test.py</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">main</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">threading</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">single_thread</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">url</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">main</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">urls</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">main</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">craw</span>(<span style="color:#58a1dd">url</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">multi_thread</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">threads</span> <span style="color:#ff636f">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">url</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">main</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">urls</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">threads</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">append</span>(
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">main</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">craw</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">url</span>,))
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">thread</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">threads</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">thread</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">thread</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">threads</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">thread</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">join</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#39;&#39;&#39;for thread in threads: thread.join() 的作用是等待每个线程执行结束。在多线程程序中，线程是并行执行的，如果不等待线程执行完成，程序可能会在某个线程还没有完成运行的情况下就结束了。&#39;&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">single_thread</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">multi_thread</span>()</span></span></code></pre></div><h6 id="线程安全-lock" class="heading-element"><span>0.0.0.2.4  线程安全 lock</span>
+  <a href="#%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8-lock" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>线程安全是指某个函数、函数库在多线程环境中被调用时，能够正确地处理多个线程之间的共享变量，使程序功能正确完成</p>
+<p>由于线程的执行会随时发生切换，造成不可预料的结果，出现线程不安全</p>
+</blockquote>
+<p>用法1：try-finally模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">threading</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">lock</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Lock</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">lock</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">acquire</span>()
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">try</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">do</span> <span style="color:#58a1dd">something</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">finally</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">lock</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">release</span>()</span></span></code></pre></div><p>用法2：with模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">threading</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">lock</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Lock</span>()
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">lock</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">do</span> <span style="color:#58a1dd">something</span></span></span></code></pre></div><p>线程不安全的代码：</p>
+<p>多线程并发的时候可能出现余额扣到负数的情况</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">threading</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">class</span> <span style="color:#58a1dd">Account</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">def</span> <span style="color:#58a1dd">__init__</span>(<span style="color:#58a1dd">self</span>, <span style="color:#58a1dd">balance</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">self</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">balance</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">balance</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">draw</span>(<span style="color:#58a1dd">acc</span>, <span style="color:#58a1dd">amount</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> <span style="color:#58a1dd">acc</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">balance</span> <span style="color:#ff636f">&gt;=</span> <span style="color:#58a1dd">amount</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">current_thread</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>, <span style="color:#a6be9d">&#34;取钱成功&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">acc</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">balance</span> <span style="color:#ff636f">-=</span> <span style="color:#58a1dd">amount</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">current_thread</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>, <span style="color:#a6be9d">&#34;余额&#34;</span>, <span style="color:#58a1dd">acc</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">balance</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">current_thread</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>, <span style="color:#a6be9d">&#34;取钱失败，余额不足&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#58a1dd">__name__</span> <span style="color:#ff636f">==</span> <span style="color:#a6be9d">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">account</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Account</span>(<span style="color:#a6be9d">1000</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ta</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;ta&#34;</span>, <span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">draw</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">account</span>, <span style="color:#a6be9d">800</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">tb</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;tb&#34;</span>, <span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">draw</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">account</span>, <span style="color:#a6be9d">800</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">tc</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;tc&#34;</span>, <span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">draw</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">account</span>, <span style="color:#a6be9d">800</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">td</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;td&#34;</span>, <span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">draw</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">account</span>, <span style="color:#a6be9d">800</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">te</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;te&#34;</span>, <span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">draw</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">account</span>, <span style="color:#a6be9d">800</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ta</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">tb</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">tc</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">td</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">te</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307121547576.webp" alt="image-20230712154715256" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307121547576.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307121547576.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307121547576.webp?size=large 2x" data-title="image-20230712154715256" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>而在draw函数加一个sleep，则100%触发，因为sleep会阻塞线程且发生线程切换</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">draw</span>(<span style="color:#58a1dd">acc</span>, <span style="color:#58a1dd">amount</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> <span style="color:#58a1dd">acc</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">balance</span> <span style="color:#ff636f">&gt;=</span> <span style="color:#58a1dd">amount</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">time</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sleep</span>(<span style="color:#a6be9d">0.1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">current_thread</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>, <span style="color:#a6be9d">&#34;取钱成功&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">acc</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">balance</span> <span style="color:#ff636f">-=</span> <span style="color:#58a1dd">amount</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">current_thread</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>, <span style="color:#a6be9d">&#34;余额&#34;</span>, <span style="color:#58a1dd">acc</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">balance</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">current_thread</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>, <span style="color:#a6be9d">&#34;取钱失败，余额不足&#34;</span>)</span></span></code></pre></div><p>引进lock就安全了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">threading</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">time</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">lock</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Lock</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">class</span> <span style="color:#58a1dd">Account</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">def</span> <span style="color:#58a1dd">__init__</span>(<span style="color:#58a1dd">self</span>, <span style="color:#58a1dd">balance</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">self</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">balance</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">balance</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">draw</span>(<span style="color:#58a1dd">acc</span>, <span style="color:#58a1dd">amount</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">with</span> <span style="color:#58a1dd">lock</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> <span style="color:#58a1dd">acc</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">balance</span> <span style="color:#ff636f">&gt;=</span> <span style="color:#58a1dd">amount</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">time</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sleep</span>(<span style="color:#a6be9d">0.1</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">current_thread</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>, <span style="color:#a6be9d">&#34;取钱成功&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">acc</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">balance</span> <span style="color:#ff636f">-=</span> <span style="color:#58a1dd">amount</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">current_thread</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>, <span style="color:#a6be9d">&#34;余额&#34;</span>, <span style="color:#58a1dd">acc</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">balance</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">else</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">current_thread</span>()<span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>, <span style="color:#a6be9d">&#34;取钱失败，余额不足&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#58a1dd">__name__</span> <span style="color:#ff636f">==</span> <span style="color:#a6be9d">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">account</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Account</span>(<span style="color:#a6be9d">1000</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ta</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;ta&#34;</span>, <span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">draw</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">account</span>, <span style="color:#a6be9d">800</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">tb</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;tb&#34;</span>, <span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">draw</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">account</span>, <span style="color:#a6be9d">800</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">tc</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;tc&#34;</span>, <span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">draw</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">account</span>, <span style="color:#a6be9d">800</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">td</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;td&#34;</span>, <span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">draw</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">account</span>, <span style="color:#a6be9d">800</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">te</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">threading</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;te&#34;</span>, <span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">draw</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">account</span>, <span style="color:#a6be9d">800</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ta</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">tb</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">tc</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">td</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">te</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()</span></span></code></pre></div><h6 id="queue库" class="heading-element"><span>0.0.0.2.5  queue库</span>
+  <a href="#queue%e5%ba%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>Python 的 Queue 模块中提供了同步的、线程安全的队列类，包括FIFO（先入先出)队列==Queue==，LIFO（后入先出）队列==LifoQueue==，和优先级队列 ==PriorityQueue==。</p>
+<pre tabindex="0"><code>Queue.qsize() 返回队列的大小
+Queue.empty() 如果队列为空，返回True,反之False
+Queue.full() 如果队列满了，返回True,反之False
+Queue.full 与 maxsize 大小对应
+Queue.get([block[, timeout]])获取队列，timeout等待时间
+Queue.get_nowait() 相当Queue.get(False)
+Queue.put(item) 写入队列，timeout等待时间
+Queue.put_nowait(item) 相当Queue.put(item, False)
+Queue.task_done() 在完成一项工作之后，Queue.task_done()函数向任务已经完成的队列发送一个信号
+Queue.join() 实际上意味着等到队列为空，再执行别的操作</code></pre><p>从一个线程向另一个线程发送数据最安全的方式可能就是使用 <code>queue</code> 库中的队列了。创建一个被多个线程共享的 <code>Queue</code> 对象，这些线程通过使用 <code>put()</code> 和 <code>get()</code> 操作来向队列中添加或者删除元素。 例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">queue</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">Queue</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">threading</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">Thread</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### A thread that produces data</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">producer</span>(<span style="color:#58a1dd">out_q</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">while</span> <span style="color:#ff636f">True</span>:
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Produce some data</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">...</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">out_q</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">put</span>(<span style="color:#58a1dd">data</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### A thread that consumes data</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">consumer</span>(<span style="color:#58a1dd">in_q</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">while</span> <span style="color:#ff636f">True</span>:
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Get some data</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">in_q</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get</span>()
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Process the data</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Create the shared queue and launch both threads</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">q</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Queue</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">t1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">consumer</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">q</span>,))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">t2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Thread</span>(<span style="color:#58a1dd">target</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">producer</span>, <span style="color:#58a1dd">args</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">q</span>,))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">t1</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">t2</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">start</span>()</span></span></code></pre></div><p>####### 生产者-消费者-队列</p>
+<p><a href="https://www.kancloud.cn/xmsumi/pythonspider/160105"target="_blank" rel="external nofollow noopener noreferrer">https://www.kancloud.cn/xmsumi/pythonspider/160105</a></p>
+<blockquote>
+<p>进程间通信：队列（queue)  管道（pipe）</p>
+<p><code>Queue</code>模块实现了多生产者多消费者队列, 尤其适合多线程编程.</p>
+<p>列表也可以用作队列，但是它第一个元素移出以后后面的数据都需要向前移动，导致效率很低</p>
+</blockquote>
+<p><code>Queue</code>类中<code>实现了所有需要的锁原语</code>(这句话非常重要), Queue模块实现了三种类型队列:</p>
+<ul>
+<li>FIFO(先进先出)队列, 第一加入队列的任务, 被第一个取出</li>
+<li>LIFO(后进先出)队列,最后加入队列的任务, 被第一个取出(操作类似与栈, 总是从栈顶取出, 这个队列还不清楚内部的实现)</li>
+<li>PriorityQueue(优先级)队列, 保持队列数据有序, 最小值被先取出(在C++中我记得优先级队列是可以自己重写排序规则的, Python不知道可以吗)</li>
+</ul>
+<p>==三个模块==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">Queue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####类</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Queue</span>(<span style="color:#58a1dd">maxsize</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span>)  <span style="color:#828b96;font-style:italic">#构造一个FIFO队列,maxsize设置队列大小的上界, 如果插入数据时, 达到上界会发生阻塞, 直到队列可以放入数据. 当maxsize小于或者等于0, 表示不限制队列的大小(默认)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">LifoQueue</span>(<span style="color:#58a1dd">maxsize</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span>)  <span style="color:#828b96;font-style:italic">#构造一LIFO队列,maxsize设置队列大小的上界, 如果插入数据时, 达到上界会发生阻塞, 直到队列可以放入数据. 当maxsize小于或者等于0, 表示不限制队列的大小(默认)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">PriorityQueue</span>(<span style="color:#58a1dd">maxsize</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span>)  <span style="color:#828b96;font-style:italic">#构造一个优先级队列,,maxsize设置队列大小的上界, 如果插入数据时, 达到上界会发生阻塞, 直到队列可以放入数据. 当maxsize小于或者等于0, 表示不限制队列的大小(默认). 优先级队列中, 最小值被最先取出</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####异常</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Empty</span>  <span style="color:#828b96;font-style:italic">#当调用非阻塞的get()获取空队列的元素时, 引发异常</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Full</span>  <span style="color:#828b96;font-style:italic">#当调用非阻塞的put()向满队列中添加元素时, 引发异常</span></span></span></code></pre></div><p>Queue</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">queue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">q</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Queue</span>()<span style="color:#828b96;font-style:italic">#创建Queue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">empty</span>()  <span style="color:#828b96;font-style:italic">#如果队列为空, 返回True(注意队列为空时, 并不能保证调用put()不会阻塞); 队列不空返回False(不空时, 不能保证调用get()不会阻塞)</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">full</span>()  <span style="color:#828b96;font-style:italic">#如果队列为满, 返回True(不能保证调用get()不会阻塞), 如果队列不满, 返回False(并不能保证调用put()不会阻塞)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">put</span>(<span style="color:#58a1dd">item</span>[, <span style="color:#58a1dd">block</span>[, <span style="color:#58a1dd">timeout</span>]])  <span style="color:#828b96;font-style:italic">#向队列中放入元素, 如果可选参数block为True并且timeout参数为None(默认), 为阻塞型put(). 如果timeout是正数, 会阻塞timeout时间并引发Queue.Full异常. 如果block为False为非阻塞put</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">put_nowait</span>(<span style="color:#58a1dd">item</span>)  <span style="color:#828b96;font-style:italic">#等价于put(itme, False)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get</span>([<span style="color:#58a1dd">block</span>[, <span style="color:#58a1dd">timeout</span>]])  <span style="color:#828b96;font-style:italic">#移除列队元素并将元素返回, block = True为阻塞函数, block = False为非阻塞函数. 可能返回Queue.Empty异常</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get_nowait</span>()  <span style="color:#828b96;font-style:italic">#等价于get(False)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">task_done</span>()  <span style="color:#828b96;font-style:italic">#在完成一项工作之后，Queue.task_done()函数向任务已经完成的队列发送一个信号</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Queue</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">join</span>()  <span style="color:#828b96;font-style:italic">#实际上意味着等到队列为空，再执行别的操作</span></span></span></code></pre></div><h6 id="线程池-threadpoolexecutor" class="heading-element"><span>0.0.0.2.6  线程池 threadpoolexecutor</span>
+  <a href="#%e7%ba%bf%e7%a8%8b%e6%b1%a0-threadpoolexecutor" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>线程池的基类是 concurrent.futures 模块中的 Executor，Executor 提供了两个子类，即 ThreadPoolExecutor 和 ProcessPoolExecutor，其中 ThreadPoolExecutor 用于创建线程池，而 ProcessPoolExecutor 用于创建进程池。</p>
+<p>线程池在系统启动时即创建大量空闲的线程，程序只要将一个函数提交给线程池，线程池就会启动一个空闲的线程来执行它。当该函数执行结束后，该线程并不会死亡，而是再次返回到线程池中变成空闲状态，等待执行下一个函数。</p>
+<p>如果使用线程池/进程池来管理并发编程，那么只要将相应的 task 函数提交给线程池/进程池，剩下的事情就由线程池/进程池来搞定。</p>
+</blockquote>
+<p>####### 用法</p>
+<p>==Exectuor 提供了如下常用方法==：</p>
+<ul>
+<li>submit(fn, *args, **kwargs)：将 fn 函数提交给线程池。*args 代表传给 fn 函数的参数，*kwargs 代表以关键字参数的形式为 fn 函数传入参数。</li>
+<li>map(func, *iterables, timeout=None, chunksize=1)：该函数类似于全局函数 map(func, *iterables)，只是该函数将会启动多个线程，以异步方式立即对 iterables 执行 map 处理。</li>
+<li>shutdown(wait=True)：关闭线程池。</li>
+</ul>
+<p>==Future 提供了如下方法==：(也就是submit打头，<code>ThreadPoolExecutor.submit()</code>方法将返回一个<code>future</code>对象)</p>
+<ul>
+<li>
+<p>cancel()：取消该 Future 代表的线程任务。如果该任务正在执行，不可取消，则该方法返回 False；否则，程序会取消该任务，并返回 True。</p>
+</li>
+<li>
+<p>cancelled()：返回 Future 代表的线程任务是否被成功取消。</p>
+</li>
+<li>
+<p>running()：如果该 Future 代表的线程任务正在执行、不可被取消，该方法返回 True。</p>
+</li>
+<li>
+<p>done()：如果该 Funture 代表的线程任务被成功取消或执行完成，则该方法返回 True。</p>
+</li>
+<li>
+<p>==result==(timeout=None)：获取该 Future 代表的线程任务最后返回的结果。如果 Future 代表的线程任务还未完成，该方法将会阻塞当前线程，其中 timeout 参数指定最多阻塞多少秒。</p>
+</li>
+<li>
+<p>exception(timeout=None)：获取该 Future 代表的线程任务所引发的异常。如果该任务成功完成，没有异常，则该方法返回 None。</p>
+</li>
+<li>
+<p>add_done_callback(fn)：为该 Future 代表的线程任务注册一个“回调函数”，当该任务成功完成时，程序会自动触发该 fn 函数。</p>
+<p><code>as_completed()</code><strong>方法用于将线程池返回的future对象按照线程完成的顺序排列</strong>，不加也可以，不加则返回的顺序为<strong>按线程创建顺序返回</strong>。</p>
+<p><code>with</code>语句将自动关闭线程池，也就是自动执行shutdown方法。</p>
+<blockquote>
+<p>在用完一个线程池后，应该调用该线程池的 <code>shutdown()</code> 方法，该方法将启动线程池的关闭序列。调用 <code>shutdown()</code> 方法后的线程池不再接收新任务，但会将以前所有的已提交任务执行完成。当线程池中的所有任务都执行完成后，该线程池中的所有线程都会死亡。</p>
+</blockquote>
+</li>
+</ul>
+<p>####### 步骤</p>
+<ol>
+<li>调用 ThreadPoolExecutor 类的构造器创建一个线程池。</li>
+<li>定义一个普通函数作为线程任务。</li>
+<li>调用 ThreadPoolExecutor 对象的 submit() 方法来提交线程任务。</li>
+<li>当不想提交任何任务时，调用 ThreadPoolExecutor 对象的 shutdown() 方法来关闭线程池。</li>
+</ol>
+<p>####### map 和 submit对比</p>
+<ul>
+<li>易用性</li>
+</ul>
+<p><code>map()</code>方法比较容易使用，它的参数是一个==可迭代对象==（如列表）和一个函数，函数将被应用于可迭代对象中的每个元素，然后返回一个生成器对象，生成器对象可以逐个访问结果。<code>submit()</code>方法的使用要稍微复杂一点，需要单独执行每个线程执行任务，并使用<code>Future</code>对象来管理和访问结果。</p>
+<ul>
+<li>控制方法</li>
+</ul>
+<p>使用<code>map()</code>方法时，线程的数量是由线程池中的工作线程数量决定的。如果你想要更细粒度的控制，可以使用<code>submit()</code>方法，使用<code>max_workers</code>参数来指定线程池的大小，使用<code>shutdown()</code>方法来关闭线程池。</p>
+<ul>
+<li>访问方法</li>
+</ul>
+<p>使用<code>map()</code>方法时，无法访问单独的线程和它们的结果，只能访问生成器对象中的一个接一个的结果。使用<code>submit()</code>方法时，可以访问每个线程的状态，可以使用<code>Future</code>对象的方法来检查和访问线程结果。例如，可以使用<code>done()</code>方法来检查线程是否完成，使用<code>result()</code>方法来访问线程的返回值，使用<code>exception()</code>方法来访问线程的异常。</p>
+<p>总的来说，<code>map()</code>方法更简单易用，并且适用于处理一组数据集。<code>submit()</code>方法更加灵活，允许你更好地控制线程池，并且可以访问单个线程状态和结果。</p>
+<p>####### 线程池原理 好处</p>
+<p>新建线程需要分配资源、终止线程需要回收资源，如果可以重用线程，则可以减去新建/终止的开销</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>提升性能：减去了大量新建、终止线程的开销，重用了线程资源</li>
+<li>适用场景：适合处理突发性大量请求或需要大量线程完成任务、但实际任务处理时间较短</li>
+<li>防御功能：能有效避免系统因为创建线程过多，从而导致系统负荷过大相应变慢等问题</li>
+<li>代码优势：使用线程池的语法比自己新建线程执行线程更加简洁</li>
+</ul>
+<p>####### 使用方法示例</p>
+<blockquote>
+<p>ThreadPoolExecutor()构造参数：</p>
+<ul>
+<li><code>max_workers</code> 设置线程池中最多能同时运行的线程数目。</li>
+<li><code>thread_name_prefix</code> 线程名字前缀</li>
+<li><code>initializer</code> 在每个工作线程启动之前，执行初始化函数，如果没有指定，默认为None。</li>
+<li><code>initargs</code> 传递给初始化函数的参数元组，如果没有指定，默认为空元组()。</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">concurrent.futures</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">ThreadPoolExecutor</span>,<span style="color:#58a1dd">as_completed</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 用法1：map函数，注意map的结果和入参顺序是对应的</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">ThreadPoolExecutor</span>() <span style="color:#ff636f">as</span> <span style="color:#58a1dd">pool</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">results</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">pool</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">map</span>(<span style="color:#58a1dd">func_name</span>,<span style="color:#58a1dd">args</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">result</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">results</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">result</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 用法2：future模式，更强大，注意如果用as_completed顺序是线程执行完成的顺序</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">ThreadPoolExecutor</span>() <span style="color:#ff636f">as</span> <span style="color:#58a1dd">pool</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">futures</span> <span style="color:#ff636f">=</span> [<span style="color:#58a1dd">pool</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">submit</span>(<span style="color:#58a1dd">func_name</span>,<span style="color:#58a1dd">args</span>) <span style="color:#ff636f">for</span> <span style="color:#58a1dd">args</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">urls</span>]
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 2.1用法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">future</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">futures</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">future</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">result</span>())
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 2.2用法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">future</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">as_completed</span>(<span style="color:#58a1dd">futures</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">future</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">result</span>())</span></span></code></pre></div><p>代码示例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">concurrent.futures</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">ThreadPoolExecutor</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">time</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 参数times用来模拟网络请求的时间</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">get_html</span>(<span style="color:#58a1dd">times</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">time</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sleep</span>(<span style="color:#58a1dd">times</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;get page </span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">s finished&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">format</span>(<span style="color:#58a1dd">times</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">times</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">executor</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ThreadPoolExecutor</span>(<span style="color:#58a1dd">max_workers</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 通过submit函数提交执行的函数到线程池中，submit函数立即返回，不阻塞</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">task1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">executor</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">submit</span>(<span style="color:#58a1dd">get_html</span>, (<span style="color:#a6be9d">3</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">task2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">executor</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">submit</span>(<span style="color:#58a1dd">get_html</span>, (<span style="color:#a6be9d">2</span>))
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### done方法用于判定某个任务是否完成</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">task1</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">done</span>())
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### cancel方法用于取消某个任务,该任务没有放入线程池中才能取消成功</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">task2</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">cancel</span>())
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">time</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sleep</span>(<span style="color:#a6be9d">4</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">task1</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">done</span>())
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### result方法可以获取task的执行结果</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">task1</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">result</span>())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 执行结果</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### False  # 表明task1未执行完成</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### False  # 表明task2取消失败，因为已经放入了线程池中</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### get page 2s finished</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### get page 3s finished</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### True  # 由于在get page 3s finished之后才打印，所以此时task1必然完成了</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 3     # 得到task1的任务返回值</span></span></span></code></pre></div><p>####### web服务使用线程池加速</p>
+<p>1)threaded : 多线程支持，默认为False，即不开启多线程;</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">app</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">run</span>(<span style="color:#58a1dd">threaded</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>)</span></span></code></pre></div><p>2)processes：进程数量，默认为1.</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">app</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">run</span>(<span style="color:#58a1dd">processes</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>)</span></span></code></pre></div><p>ps：多进程或多线程只能选择一个，不能同时开启</p>
+<p><strong>使用示例：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>  <span style="color:#58a1dd">app</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">run</span>(<span style="color:#58a1dd">host</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">myaddr</span>,<span style="color:#58a1dd">port</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">myport</span>,<span style="color:#58a1dd">debug</span><span style="color:#ff636f">=</span><span style="color:#ff636f">False</span>,<span style="color:#58a1dd">threaded</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>) <span style="color:#828b96;font-style:italic">### threaded开启以后 不需要等队列 threaded=True</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####或者</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####app.run(host=myaddr,port=myport,debug=False,processes=3) ### processes=N 进程数量，默认为1个</span></span></span></code></pre></div><p>flask加速</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">flask</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">Flask</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">time</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">sleep</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">concurrent.futures</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">ThreadPoolExecutor</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### DOCS https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">executor</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ThreadPoolExecutor</span>(<span style="color:#a6be9d">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">app</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Flask</span>(<span style="color:#58a1dd">__name__</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">@app.route</span>(<span style="color:#a6be9d">&#39;/jobs&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">run_jobs</span>():
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 通过submit函数提交执行的函数到线程池中，submit函数立即返回，不阻塞</span>
+</span></span><span style="display:flex;"><span> <span style="color:#58a1dd">executor</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">submit</span>(<span style="color:#58a1dd">long_task</span>, <span style="color:#a6be9d">&#39;hello&#39;</span>, <span style="color:#a6be9d">123</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#ff636f">return</span> <span style="color:#a6be9d">&#39;long task running.&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">long_task</span>(<span style="color:#58a1dd">arg1</span>, <span style="color:#58a1dd">arg2</span>):
+</span></span><span style="display:flex;"><span> <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;args: </span><span style="color:#a6be9d">%s</span><span style="color:#a6be9d"> </span><span style="color:#a6be9d">%s</span><span style="color:#a6be9d">!&#34;</span> <span style="color:#ff636f">%</span> (<span style="color:#58a1dd">arg1</span>, <span style="color:#58a1dd">arg2</span>))
+</span></span><span style="display:flex;"><span> <span style="color:#58a1dd">sleep</span>(<span style="color:#a6be9d">5</span>)
+</span></span><span style="display:flex;"><span> <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;Task is done!&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#58a1dd">__name__</span> <span style="color:#ff636f">==</span> <span style="color:#a6be9d">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span> <span style="color:#58a1dd">app</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">run</span>()</span></span></code></pre></div><h5 id="多进程" class="heading-element"><span>0.0.0.3  多进程</span>
+  <a href="#%e5%a4%9a%e8%bf%9b%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><strong>有了多线程为什么还要有多进程？</strong></p>
+<p>如果是CPU密集型计算，多线程反而会降低速度（多线程只占用一个处理机，它能实现CPU运算和IO同时运行，也就是一个线程进入IO后能直接转入下一个线程的执行，但是也因为它只占用一个处理机，同一时刻只能有一个线程进行CPU运算）</p>
+<p><strong>多进程知识梳理</strong></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122309457.webp" alt="image-20230712230951890" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122309457.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122309457.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122309457.webp?size=large 2x" data-title="image-20230712230951890" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><strong>对于CPU密集型计算的运行时间对比</strong></p>
+<!-- raw HTML omitted -->
+<h6 id="web服务使用进程池" class="heading-element"><span>0.0.0.3.1  web服务使用进程池</span>
+  <a href="#web%e6%9c%8d%e5%8a%a1%e4%bd%bf%e7%94%a8%e8%bf%9b%e7%a8%8b%e6%b1%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>和线程池类似，注意的地方就是flask使用进程池要傲娇一些</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#58a1dd">__name__</span> <span style="color:#ff636f">==</span> <span style="color:#a6be9d">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">process_pool</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ProcessPoolExecutor</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">app</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">run</span>()</span></span></code></pre></div><h5 id="协程-异步io" class="heading-element"><span>0.0.0.4  协程 异步IO</span>
+  <a href="#%e5%8d%8f%e7%a8%8b-%e5%bc%82%e6%ad%a5io" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>单线程爬虫的执行路径</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122338145.webp" alt="image-20230712233816775" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122338145.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122338145.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122338145.webp?size=large 2x" data-title="image-20230712233816775" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>协程：在单线程内实现并发</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122339446.webp" alt="image-20230712233955139" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122339446.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122339446.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307122339446.webp?size=large 2x" data-title="image-20230712233955139" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>异步IO库：asyncio</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">asyncio</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####获取事件循环</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">loop</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">asyncio</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get_event_loop</span>()
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####定义协程</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">async</span> <span style="color:#ff636f">def</span> <span style="color:#58a1dd">myfunc</span>(<span style="color:#58a1dd">url</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">await</span> <span style="color:#58a1dd">get_url</span>(<span style="color:#58a1dd">url</span>)
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####创建task列表</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">tasks</span> <span style="color:#ff636f">=</span> [<span style="color:#58a1dd">loop</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">create_task</span>(<span style="color:#58a1dd">myfunc</span>(<span style="color:#58a1dd">url</span>)) <span style="color:#ff636f">for</span> <span style="color:#58a1dd">url</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">urls</span>]
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####执行爬虫事件列表</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">loop</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">run_until_complete</span>(<span style="color:#58a1dd">asyncio</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">wait</span>(<span style="color:#58a1dd">tasks</span>))</span></span></code></pre></div><p>==注意:==</p>
+<p>要用在异步IO编程中,依赖的库必须支持异步IO特性</p>
+<p>爬虫引用中:requests 不支持异步需要用aiohttp</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E8%AF%AD%E8%A8%80/" class="post-tag" title="Tags - 语言">语言</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/99/" class="post-nav-item" rel="prev" title="Python 爬虫"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Python 爬虫</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/%E5%9F%BA%E7%A1%80/94/" class="post-nav-item" rel="next" title="Python 常用库和方法">Python 常用库和方法<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

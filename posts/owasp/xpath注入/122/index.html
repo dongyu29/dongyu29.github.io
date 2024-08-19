@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>XPATH注入基础 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='OWASP, XPATH注入' />
+  <meta itemprop="name" content="XPATH注入基础">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="476">
+  <meta itemprop="keywords" content="OWASP,XPATH注入"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/xpath%E6%B3%A8%E5%85%A5/122/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="XPATH注入基础">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="OWASP">
+    <meta property="article:tag" content="XPATH注入">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="XPATH注入基础">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/owasp/xpath%E6%B3%A8%E5%85%A5/122/" /><link rel="prev" href="https://dongyu29.github.io/posts/owasp/xpath%E6%B3%A8%E5%85%A5/121/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/59/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "XPATH注入基础",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/xpath%E6%B3%A8%E5%85%A5\/122\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, XPATH注入","wordcount":  476 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/xpath%E6%B3%A8%E5%85%A5\/122\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">XPATH注入基础</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>XPATH注入基础</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="476 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="什么是xpath" class="heading-element"><span>0.0.0.1  什么是xpath</span>
+  <a href="#%e4%bb%80%e4%b9%88%e6%98%afxpath" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>XPath 即为 XML 路径语言，是 W3C XSLT 标准的主要元素，它是一种用来确定 XML（标准通用标记语言的子集）文档中某部分位置的语言。</p>
+<p>XPath 基于 XML 的树状结构，有不同类型的节点，包括元素节点，属性节点和文本节点，提供在数据结构树中找寻节点的能力，可用来在 XML 文档中对元素和属性进行遍历。</p>
+<p>XPath 使用路径表达式来选取 XML 文档中的节点或者节点集。这些路径表达式和我们在常规的电脑文件系统中看到的表达式非常相似。</p>
+<p>XPath是一种用来在内存中导航整个XML树的语言,它的设计初衷是作为一种面向XSLT和XPointer的语言,后来独立成了一种W3C标准.</p>
+<h5 id="xpath基础语法" class="heading-element"><span>0.0.0.2  XPath基础语法</span>
+  <a href="#xpath%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://www.w3school.com.cn/xpath/index.asp"target="_blank" rel="external nofollow noopener noreferrer">W3C  XPath教程</a></p>
+<h6 id="1查询基本语句" class="heading-element"><span>0.0.0.2.1  (1)查询基本语句</span>
+  <a href="#1%e6%9f%a5%e8%af%a2%e5%9f%ba%e6%9c%ac%e8%af%ad%e5%8f%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>//users/user[loginID/text()=’abc’ and password/text()=’test123’] 。</p>
+<p>这是一个XPath查询语句，获取loginID为abc的所有user数据，用户需要提交正确的loginID和password才能返回结果。如果黑客在 loginID 字段中输入：&rsquo; or 1=1 并在 password 中输入：&rsquo; or 1=1  就能绕过校验，成功获取所有user数据</p>
+<p>//users/user[LoginID/text()=&lsquo;&lsquo;or 1=1 and password/text()=&lsquo;&lsquo;or 1=1]</p>
+<h6 id="2节点类型" class="heading-element"><span>0.0.0.2.2  (2)节点类型</span>
+  <a href="#2%e8%8a%82%e7%82%b9%e7%b1%bb%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在XPath中,XML文档被作为节点树对待,XPath中有七种结点类型：元素、属性、文本、命名空间、处理指令、注释以及文档节点（或成为根节点）。 文档的根节点即是文档结点；对应属性有属性结点，元素有元素结点。</p>
+<blockquote>
+<p>element (元素)</p>
+<p>attribute (属性)</p>
+<p>text (文本)</p>
+<p>namespace (命名空间)</p>
+<p>processing-instruction (处理指令)</p>
+<p>comment (注释)</p>
+<p>root (根节点)</p>
+</blockquote>
+<p>例如下面的XML文档</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-XML" data-lang="XML"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">&lt;?xml version=&#34;1.0&#34; encoding=&#34;ISO-8859-1&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;bookstore&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;book&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;title</span> <span style="color:#58a1dd">lang=</span><span style="color:#a6be9d">&#34;en&#34;</span><span style="color:#58a1dd">&gt;</span>Harry Potter<span style="color:#58a1dd">&lt;/title&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;author&gt;</span>J K. Rowling<span style="color:#58a1dd">&lt;/author&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;year&gt;</span>2005<span style="color:#58a1dd">&lt;/year&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;price&gt;</span>29.99<span style="color:#58a1dd">&lt;/price&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/book&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/bookstore&gt;</span></span></span></code></pre></div><p><!-- raw HTML omitted -->根节点</p>
+<p><!-- raw HTML omitted -->J K. Rowling<!-- raw HTML omitted -->  元素节点</p>
+<p>lang=&ldquo;en&quot;属性节点</p>
+<h6 id="3表达式" class="heading-element"><span>0.0.0.2.3  (3)表达式</span>
+  <a href="#3%e8%a1%a8%e8%be%be%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>XPath通过路径表达式(Path Expression)来选取节点,基本规则:</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nodename</td>
+<td>选取此节点的所有子节点</td>
+</tr>
+<tr>
+<td>/</td>
+<td>从根节点选取</td>
+</tr>
+<tr>
+<td>//</td>
+<td>从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置</td>
+</tr>
+<tr>
+<td>.</td>
+<td>选取当前节点</td>
+</tr>
+<tr>
+<td>..</td>
+<td>选取当前节点的父节点</td>
+</tr>
+<tr>
+<td>@</td>
+<td>选取属性或　@*：匹配任何属性节点</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配任何元素节点</td>
+</tr>
+</tbody>
+</table>
+<p>来看一个XML实例,</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-XML" data-lang="XML"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">&lt;?xml version=&#34;1.0&#34; encoding=&#34;ISO-8859-1&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;bookstore&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;book&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;title</span> <span style="color:#58a1dd">lang=</span><span style="color:#a6be9d">&#34;eng&#34;</span><span style="color:#58a1dd">&gt;</span>Harry Potter<span style="color:#58a1dd">&lt;/title&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;price&gt;</span>29.99<span style="color:#58a1dd">&lt;/price&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/book&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;book&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;title</span> <span style="color:#58a1dd">lang=</span><span style="color:#a6be9d">&#34;eng&#34;</span><span style="color:#58a1dd">&gt;</span>Learning XML<span style="color:#58a1dd">&lt;/title&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;price&gt;</span>39.95<span style="color:#58a1dd">&lt;/price&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/book&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/bookstore&gt;</span></span></span></code></pre></div><p>则：</p>
+<p>路径表达式 结果</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bookstore</td>
+<td>选取 bookstore 元素的所有子节点</td>
+</tr>
+<tr>
+<td>/bookstore</td>
+<td>选取根元素 bookstore</td>
+</tr>
+<tr>
+<td>bookstore/book</td>
+<td>选取属于 bookstore 的子元素的所有 book 元素</td>
+</tr>
+<tr>
+<td>//book</td>
+<td>选取所有 book 子元素,而不管它们在文档中的位置</td>
+</tr>
+<tr>
+<td>bookstore//book</td>
+<td>选择属于 bookstore 元素的后代的所有 book 元素,而不管它们位于 bookstore 之下的什么位置</td>
+</tr>
+<tr>
+<td>//@lang</td>
+<td>选取名为 lang 的所有属性</td>
+</tr>
+</tbody>
+</table>
+<h6 id="4限定语" class="heading-element"><span>0.0.0.2.4  (4)限定语</span>
+  <a href="#4%e9%99%90%e5%ae%9a%e8%af%ad" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>限定语是对路径表达式的附加条件,用来查找某个特定的节点或者包含某个指定的值的节点.限定语被嵌在方括号中.</p>
+<p>路径表达式结果：</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/bookstore/book[1]</td>
+<td>选取属于 bookstore 子元素的第一个 book 元素</td>
+</tr>
+<tr>
+<td>/bookstore/book[last()]</td>
+<td>选取属于 bookstore 子元素的最后一个 book 元素</td>
+</tr>
+<tr>
+<td>//title[@lang]</td>
+<td>选取所有拥有名为 lang 的属性的 title 元素</td>
+</tr>
+<tr>
+<td>//title[@lang=’eng’]</td>
+<td>选取所有 title 元素，且这些元素拥有值为 eng 的 lang 属性</td>
+</tr>
+<tr>
+<td>/bookstore/book[price&gt;35.00]/title</td>
+<td>选取 bookstore 元素中的 book 元素的所有 title 元素，且其中的 price 元素的值须大于 35.00</td>
+</tr>
+</tbody>
+</table>
+<h6 id="5通配符" class="heading-element"><span>0.0.0.2.5  (5)通配符</span>
+  <a href="#5%e9%80%9a%e9%85%8d%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>XPath 通配符可用来选取未知的 XML 元素.</p>
+<table>
+<thead>
+<tr>
+<th>通配符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td>匹配任何元素节点</td>
+</tr>
+<tr>
+<td>@*</td>
+<td>匹配任何属性节点</td>
+</tr>
+<tr>
+<td>node()</td>
+<td>匹配任何类型的节点</td>
+</tr>
+</tbody>
+</table>
+<p>实例<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->29.99<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->39.95<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/bookstore/*</td>
+<td>选取 bookstore 元素的所有子元素</td>
+</tr>
+<tr>
+<td>//*</td>
+<td>选取文档中的所有元素</td>
+</tr>
+<tr>
+<td>//title[@*]</td>
+<td>选取所有带有属性的 title 元素</td>
+</tr>
+</tbody>
+</table>
+<h6 id="6-选取多个路径" class="heading-element"><span>0.0.0.2.6  (6) 选取多个路径</span>
+  <a href="#6-%e9%80%89%e5%8f%96%e5%a4%9a%e4%b8%aa%e8%b7%af%e5%be%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>可以在路径表达式中使用”|”运算符来选取若干路径.</p>
+<p>实例,</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>//book/title|//book/price</td>
+<td>选取 book 元素的所有 title 和 price 元素</td>
+</tr>
+<tr>
+<td>bookstore/book/title|//price</td>
+<td>选取属于 bookstore 元素的 book 元素的所有 title 元素，以及文档中所有的 price 元素</td>
+</tr>
+</tbody>
+</table>
+<h6 id="7-运算符" class="heading-element"><span>0.0.0.2.7  (7) 运算符</span>
+  <a href="#7-%e8%bf%90%e7%ae%97%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>路径表达式中可以使用一些常见的数学运算符和逻辑运算符,</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">运算符</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">实例</th>
+<th style="text-align:left">返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">|</td>
+<td style="text-align:left">计算两个节点集</td>
+<td style="text-align:left">//book | //cd</td>
+<td style="text-align:left">返回所有拥有 book 和 cd 元素的节点集</td>
+</tr>
+<tr>
+<td style="text-align:left">+</td>
+<td style="text-align:left">加法</td>
+<td style="text-align:left">6 + 4</td>
+<td style="text-align:left">10</td>
+</tr>
+<tr>
+<td style="text-align:left">-</td>
+<td style="text-align:left">减法</td>
+<td style="text-align:left">6 - 4</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left">*</td>
+<td style="text-align:left">乘法</td>
+<td style="text-align:left">6 * 4</td>
+<td style="text-align:left">24</td>
+</tr>
+<tr>
+<td style="text-align:left">div</td>
+<td style="text-align:left">除法</td>
+<td style="text-align:left">8 div 4</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left">=</td>
+<td style="text-align:left">等于</td>
+<td style="text-align:left">price=9.80</td>
+<td style="text-align:left">如果 price 是 9.80，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">!=</td>
+<td style="text-align:left">不等于</td>
+<td style="text-align:left">price!=9.80</td>
+<td style="text-align:left">如果 price 是 9.90，则返回 true。如果 price 是 9.80，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;</td>
+<td style="text-align:left">小于</td>
+<td style="text-align:left">price&lt;9.80</td>
+<td style="text-align:left">如果 price 是 9.00，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;=</td>
+<td style="text-align:left">小于或等于</td>
+<td style="text-align:left">price&lt;=9.80</td>
+<td style="text-align:left">如果 price 是 9.00，则返回 true。如果 price 是 9.90，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;</td>
+<td style="text-align:left">大于</td>
+<td style="text-align:left">price&gt;9.80</td>
+<td style="text-align:left">如果 price 是 9.90，则返回 true。如果 price 是 9.80，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;=</td>
+<td style="text-align:left">大于或等于</td>
+<td style="text-align:left">price&gt;=9.80</td>
+<td style="text-align:left">如果 price 是 9.90，则返回 true。如果 price 是 9.70，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">or</td>
+<td style="text-align:left">或</td>
+<td style="text-align:left">price=9.80 or price=9.70</td>
+<td style="text-align:left">如果 price 是 9.80，则返回 true。如果 price 是 9.50，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">and</td>
+<td style="text-align:left">与</td>
+<td style="text-align:left">price&gt;9.00 and price&lt;9.90</td>
+<td style="text-align:left">如果 price 是 9.80，则返回 true。如果 price 是 8.50，则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">mod</td>
+<td style="text-align:left">计算除法的余数</td>
+<td style="text-align:left">5 mod 2</td>
+<td style="text-align:left">1</td>
+</tr>
+</tbody>
+</table>
+<h6 id="8-函数" class="heading-element"><span>0.0.0.2.8  (8) 函数</span>
+  <a href="#8-%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ancestor</td>
+<td style="text-align:center">选取当前节点的所有先辈（父、祖父等）</td>
+</tr>
+<tr>
+<td style="text-align:center">ancestor-or-self</td>
+<td style="text-align:center">选取当前节点的所有先辈（父、祖父等）以及当前节点本身</td>
+</tr>
+<tr>
+<td style="text-align:center">attribute</td>
+<td style="text-align:center">选取当前节点的所有属性</td>
+</tr>
+<tr>
+<td style="text-align:center">child</td>
+<td style="text-align:center">选取当前节点的所有子元素。</td>
+</tr>
+<tr>
+<td style="text-align:center">descendant</td>
+<td style="text-align:center">选取当前节点的所有后代元素（子、孙等）。</td>
+</tr>
+<tr>
+<td style="text-align:center">descendant-or-self</td>
+<td style="text-align:center">选取当前节点的所有后代元素（子、孙等）以及当前节点本身。</td>
+</tr>
+<tr>
+<td style="text-align:center">following</td>
+<td style="text-align:center">选取文档中当前节点的结束标签之后的所有节点。</td>
+</tr>
+<tr>
+<td style="text-align:center">namespace</td>
+<td style="text-align:center">选取当前节点的所有命名空间节点</td>
+</tr>
+<tr>
+<td style="text-align:center">parent</td>
+<td style="text-align:center">选取当前节点的父节点。</td>
+</tr>
+<tr>
+<td style="text-align:center">preceding</td>
+<td style="text-align:center">选取文档中当前节点的开始标签之前的所有节点。</td>
+</tr>
+<tr>
+<td style="text-align:center">preceding-sibling</td>
+<td style="text-align:center">选取当前节点之前的所有同级节点。</td>
+</tr>
+<tr>
+<td style="text-align:center">self</td>
+<td style="text-align:center">选取当前节点。</td>
+</tr>
+</tbody>
+</table>
+<p>路径表达式可以是绝对路径，也可以是相对路径。例如：</p>
+<p><strong>绝对位置路径：</strong></p>
+<p>/step/step/&hellip;</p>
+<p><strong>相对位置路径：</strong></p>
+<p>step/step/&hellip;</p>
+<p>其中的每一步又可以是一个表达式，包括：</p>
+<p>轴（函数）（axis）</p>
+<p>定义所选节点与当前节点之间的树关系</p>
+<p>节点测试（node-test）</p>
+<p>识别某个轴内部的节点</p>
+<p>零个或者更多谓语（predicate）</p>
+<p>更深入地提炼所选的节点集</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">child::book</td>
+<td style="text-align:center">选取所有属于当前节点的子元素的 book 节点</td>
+</tr>
+<tr>
+<td style="text-align:center">attribute::lang</td>
+<td style="text-align:center">选取当前节点的 lang 属性</td>
+</tr>
+<tr>
+<td style="text-align:center">child::*</td>
+<td style="text-align:center">选取当前节点的所有子元素</td>
+</tr>
+<tr>
+<td style="text-align:center">attribute::*</td>
+<td style="text-align:center">选取当前节点的所有属性</td>
+</tr>
+<tr>
+<td style="text-align:center">child::text()</td>
+<td style="text-align:center">选取当前节点的所有文本子节点</td>
+</tr>
+<tr>
+<td style="text-align:center">child::node()</td>
+<td style="text-align:center">选取当前节点的所有子节点</td>
+</tr>
+<tr>
+<td style="text-align:center">descendant::book</td>
+<td style="text-align:center">选取当前节点的所有 book 后代</td>
+</tr>
+<tr>
+<td style="text-align:center">ancestor::book</td>
+<td style="text-align:center">选择当前节点的所有 book 先辈</td>
+</tr>
+<tr>
+<td style="text-align:center">ancestor-or-self::book</td>
+<td style="text-align:center">选取当前节点的所有book先辈以及当前节点（假如此节点是book节点的话）</td>
+</tr>
+<tr>
+<td style="text-align:center">child::*/child::price</td>
+<td style="text-align:center">选取当前节点的所有 price 孙。</td>
+</tr>
+</tbody>
+</table></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/owasp/" class="post-tag" title="Tags - OWASP">OWASP</a><a href="/tags/xpath%E6%B3%A8%E5%85%A5/" class="post-tag" title="Tags - XPATH注入">XPATH注入</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/owasp/xpath%E6%B3%A8%E5%85%A5/121/" class="post-nav-item" rel="prev" title="XPATH注入姿势"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>XPATH注入姿势</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/59/" class="post-nav-item" rel="next" title="Windows经典漏洞">Windows经典漏洞<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

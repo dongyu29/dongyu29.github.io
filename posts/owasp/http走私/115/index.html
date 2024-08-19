@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>请求走私学习 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='OWASP, 请求走私' />
+  <meta itemprop="name" content="请求走私学习">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="411">
+  <meta itemprop="keywords" content="OWASP,请求走私"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/http%E8%B5%B0%E7%A7%81/115/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="请求走私学习">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="OWASP">
+    <meta property="article:tag" content="请求走私">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="请求走私学习">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/owasp/http%E8%B5%B0%E7%A7%81/115/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91%E5%8E%9F%E7%90%86/2/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/64/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "请求走私学习",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/http%E8%B5%B0%E7%A7%81\/115\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, 请求走私","wordcount":  411 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/http%E8%B5%B0%E7%A7%81\/115\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">请求走私学习</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>请求走私学习</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="411 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="http11-connection-mod" class="heading-element"><span>0.0.0.1  HTTP1.1 Connection Mod</span>
+  <a href="#http11-connection-mod" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>前置服务器与后端服务器往往是在可靠的网络域中，ip 也是相对固定的，所以可以重用 TCP 连接来减少频繁 TCP 握手带来的开销。这里就用到了 HTTP1.1 中的 <code>Keep-Alive</code> 和 <code>Pipeline</code> 特性：</p>
+<h6 id="keep-alive" class="heading-element"><span>0.0.0.1.1  Keep-Alive</span>
+  <a href="#keep-alive" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在 HTTP/1.1 中默认使⽤<code>Keep-Alive</code>，从⽽允许在单个连接上承载多个请求和响应告诉服务器，接收完这次HTTP请求后，不要关闭TCP链接，后⾯对相同⽬标服务器的HTTP请求，==重⽤==这⼀个TCP链接，这样只需要进⾏⼀次TCP握⼿的过程，可以减少服务器的开销，节约资源，还能加快访问速度</p>
+<h6 id="pipline" class="heading-element"><span>0.0.0.1.2  Pipline</span>
+  <a href="#pipline" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在⼀个Tcp连接中发送多个请求客户端可以像流⽔线⼀样发送⾃⼰的HTTP请求，⽽不需要等待服务器的响应，服务器那边接收到请求后，需要遵循先⼊先出机制，将请求和响应严格对应起来，再将响应发送给客户端。</p>
+<!-- raw HTML omitted -->
+<h5 id="message-body" class="heading-element"><span>0.0.0.2  Message Body</span>
+  <a href="#message-body" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="transfer-encoding" class="heading-element"><span>0.0.0.2.1  Transfer-Encoding</span>
+  <a href="#transfer-encoding" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在HTTP的情况下，<code>Transfer-Encoding</code> 的主要⽤来以指定的编码形式编码payload body 安全地传输给⽤户。在 HTTP/1.1 中引⼊，在 HTTP/2 中取消MDN 列举了⼏种属性：</p>
+<pre tabindex="0"><code>chunked | compress | deflate | gzip | identity</code></pre><p>我们这⾥主要关注 <code>chunked</code> 这⼀种传输编码⽅式，它在⽹络攻击中也不是第⼀次提及了，之前就有师傅利⽤这个字段去绕过⼀些 WAF，可以参考 <a href="https://www.freebuf.com/articles/web/194351.html"target="_blank" rel="external nofollow noopener noreferrer">利⽤分块传输吊打所有WAF</a></p>
+<p><code>Transfer-Encoding</code>标头⽤于指定消息体使⽤分块编码（Chunked Encode），也就是说消息报⽂由⼀个或多个数据块组成，每个数据块⼤⼩以字节为单位（⼗六进制表⽰） 衡量，后跟换⾏符，然后是块内容</p>
+<p>最重要的是：整个消息体以⼤⼩为0的块结束，也就是说==解析遇到0数据块就结束==。如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">POSTT</span> <span style="color:#a6be9d">/xxx HTTP/</span><span style="color:#a6be9d">1.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#58a1dd">xxx</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Type:</span> <span style="color:#58a1dd">text</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">plain</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Transfer</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Encoding:</span> <span style="color:#58a1dd">chunked</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Wiki</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">5</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">pedia</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">e</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">in</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">nchunks</span><span style="color:#ff636f">.\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span></span></span></code></pre></div><!-- raw HTML omitted -->
+<h6 id="content-length" class="heading-element"><span>0.0.0.2.2  Content-Length</span>
+  <a href="#content-length" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>HTTP包的⼀个标头，⽤来指明发送给接收⽅的消息的⼤⼩</p>
+<h5 id="请求私" class="heading-element"><span>0.0.0.3  请求⾛私</span>
+  <a href="#%e8%af%b7%e6%b1%82%e7%a7%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>为了提升⽤户的浏览速度，提⾼使⽤体验，减轻服务器的负担，很多⽹站都⽤了CDN加速服务</p>
+<p>最简单的加速服务，就是在源站的前⾯加上⼀个具有缓存功能的反向代理服务器</p>
+<p>⽤户在请求某些静态资源时，直接从代理服务器中就可以获取到，不⽤再从源站所在服务器获取。这就有了⼀个很典型的拓扑结构
+<!-- raw HTML omitted --></p>
+<p>⼀般来说，反向代理服务器与后端的源站服务器之间，会重⽤TCP链接。</p>
+<p>这也很容易理解，⽤户的分布范围是⼗分⼴泛，建⽴连接的时间也是不确定的，这样TCP链接就很难重⽤</p>
+<p>⽽代理服务器与后端的源站服务器的IP地址是相对固定，不同⽤户的请求通过代理服务器与源站服务器建⽴链接，这两者之间的TCP链接进⾏重⽤，也就顺理成章了</p>
+<h6 id="产原因" class="heading-element"><span>0.0.0.3.1  产⽣原因</span>
+  <a href="#%e4%ba%a7%e5%8e%9f%e5%9b%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>HTTP请求⾛私漏洞的原因是由于HTTP规范提供了两种不同⽅式来指定请求的结束位置，它们是<code>Content-Length</code>标头和<code>Transfer-Encoding</code>标头
+⼀般在前后端服务器分离或存在CDN加速服务的情况下
+⼀般是后端和前端==对于请求的结束认证不⼀致==导致的，相当于后端对于第⼀个包产⽣了截断，前者正常处理，后者就会和第⼆个包进⾏拼接，这样就对第⼆个包造成了影响</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171733605.webp" alt="image-20230617173316425" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171733605.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171733605.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171733605.webp?size=large 2x" data-title="image-20230617173316425" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>其实理解起来真的很简单，相当于我发送请求，包含<code>Content-Length</code>，前端服务器解析后没有问题发送给后端服务器</p>
+<p>但是我在请求时后⾯还包含了<code>Transfer-Encoding</code>，这样后端服务器进⾏解析便可执⾏我写在下⾯的⼀些命令，这样便可以绕过前端的waf</p>
+<h5 id="常私请求" class="heading-element"><span>0.0.0.4  常⻅⾛私请求</span>
+  <a href="#%e5%b8%b8%e7%a7%81%e8%af%b7%e6%b1%82" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="0x01-cl不为0的get请求" class="heading-element"><span>0.0.0.4.1  0x01 CL不为0的GET请求</span>
+  <a href="#0x01-cl%e4%b8%8d%e4%b8%ba0%e7%9a%84get%e8%af%b7%e6%b1%82" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>假设==前端代理服务器允许GET请求携带请求体，⽽后端服务器不允许GET请求携带请求体==，它会直接==忽略==掉GET请求中的<code>Content-Length</code>头，不进⾏处理。这就有可能导致请求⾛私</p>
+<p>==这⾥CL的计算，\r\n算两个⻓度的，可以直接bp⾃动计算==</p>
+<p>⽐如构造如下请求：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">GET</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#58a1dd">example</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">com</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Length:</span> <span style="color:#a6be9d">41</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">GET</span> <span style="color:#a6be9d">/secret HTTP/</span><span style="color:#a6be9d">1.1</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#58a1dd">example</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">com</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span></span></span></code></pre></div><p>⾸先前端接受到这个请求，然后读取CL，判断这是⼀个完整的请求</p>
+<p>portswigger的靶场试了⼀下，正常情况访问得到svg的内容</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171736440.webp" alt="image-20230617173641149" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171736440.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171736440.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171736440.webp?size=large 2x" data-title="image-20230617173641149" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>使⽤请求⾛私，可以看到成功请求到了admin</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171739937.webp" alt="image-20230617173946610" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171739937.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171739937.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171739937.webp?size=large 2x" data-title="image-20230617173946610" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="0x02-cl-te" class="heading-element"><span>0.0.0.4.2  0x02 CL-TE</span>
+  <a href="#0x02-cl-te" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>所谓CL-TE，就是当收到存在两个请求头的请求包时，==前端代理服务器只处理Content-Length这⼀请求头==，⽽==后端服务器会遵守RFC2616的规定，忽略掉Content-Length，处理Transfer-Encoding==这⼀请求头</p>
+<p>继续在实验靶场来做，⽬标是使⽤⼀个GPOST请求⽅法来对⽹站进⾏⼀次请求</p>
+<blockquote>
+<p>这个实验室涉及前端和后端服务器，前端服务器不⽀持分块编码。前端服务器拒绝不使⽤<code>GET</code>或<code>POST</code>⽅法的请求。</p>
+<p>要解决实验室问题，请将请求⾛私到后端服务器，以便后端服务器处理的下⼀个请求似乎使⽤<code>GPOST</code>⽅法</p>
+</blockquote>
+<p>我们发这样的包，第⼀次发，正常返回</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171743575.webp" alt="image-20230617174316298" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171743575.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171743575.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171743575.webp?size=large 2x" data-title="image-20230617174316298" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>我们再次发包，这⾥后端服务器读到0就会截⽌，前⼀次我们发的包就结束了。然后下⾯的G就拼接到我们第⼆次发的包⾥⾯了，也就变成了<code>GPOST /HTTP/1.1</code></p>
+<p>发包可以成功看到我们这⾥是成功发了GPOST请求⽅法的包</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171744212.webp" alt="image-20230617174402961" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171744212.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171744212.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171744212.webp?size=large 2x" data-title="image-20230617174402961" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>通过这个题⽬我们来细究⼀下过程</p>
+<p>⾸先这是我们发的包</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">POST</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#58a1dd">ac8f1fae1e6cd77b8073213100b500d6</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">web</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">security</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">academy</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">net</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Type:</span> <span style="color:#58a1dd">application</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">x</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">form</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">urlencoded</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Length:</span> <span style="color:#a6be9d">6</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Transfer</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Encoding:</span> <span style="color:#58a1dd">chunked</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">G</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span></span></span></code></pre></div><p>第⼀次发包，前端优先认CL，这⾥我们CL为6，所以前端会认为请求的body是下⾯的六个字节，然后会将这个请求当作⼀个完整的请求转发到后端</p>
+<pre tabindex="0"><code class="language-pascal" data-lang="pascal">0\r\n
+\r\n
+G</code></pre><p>由于后端优先认TE，我们这⾥设置的是chunked，表⽰可以分块传输，⽽且每⼀个完整包由⼀个0来结束，所以他接收到我们的包后，遇到0，截断包</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">POST</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#58a1dd">ac8f1fae1e6cd77b8073213100b500d6</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">web</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">security</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">academy</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">net</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Type:</span> <span style="color:#58a1dd">application</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">x</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">form</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">urlencoded</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Length:</span> <span style="color:#a6be9d">6</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Transfer</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Encoding:</span> <span style="color:#58a1dd">chunked</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span></span></span></code></pre></div><p>多出来的G，先放着，等待下⼀个包过来的时候进⾏拼接传输</p>
+<p>所以此时我们发送第⼆个包，G就会拼上POST，请求⽅式就变成了GPOST</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">G</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">POST</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#58a1dd">ac8f1fae1e6cd77b8073213100b500d6</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">web</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">security</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">academy</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">net</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Type:</span> <span style="color:#58a1dd">application</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">x</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">form</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">urlencoded</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Length:</span> <span style="color:#a6be9d">6</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Transfer</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Encoding:</span> <span style="color:#58a1dd">chunked</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">G</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span></span></span></code></pre></div><h6 id="0x03-te-cl" class="heading-element"><span>0.0.0.4.3  0x03 TE-CL</span>
+  <a href="#0x03-te-cl" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>前端服务器只处理Transfer-Encoding请求头，后端处理Content-Length请求头</p>
+<p>这样的话我们传这样的包</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">POST</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#a6be9d">0</span><span style="color:#58a1dd">ace000303500427c1ca9251007600ac</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">web</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">security</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">academy</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">net</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Cookie:</span> <span style="color:#58a1dd">session</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">JIdyZSjueulLj131gMLMFLVZZq4PQ1wH</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Length:</span> <span style="color:#a6be9d">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Transfer</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Encoding:</span> <span style="color:#58a1dd">chunked</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">12</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">GPOST</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span></span></span></code></pre></div><p>前端识别TE，把整个包传⼊到后端</p>
+<p>然后后端识别CL，这⾥为4，所以只识别到12</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">POST</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#a6be9d">0</span><span style="color:#58a1dd">ace000303500427c1ca9251007600ac</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">web</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">security</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">academy</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">net</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Cookie:</span> <span style="color:#58a1dd">session</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">JIdyZSjueulLj131gMLMFLVZZq4PQ1wH</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Length:</span> <span style="color:#a6be9d">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Transfer</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Encoding:</span> <span style="color:#58a1dd">chunked</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">12</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span></span></span></code></pre></div><p>后⾯的<code>GPOST / HTTP/1.1</code> 就作为下⼀个包发出，也就成功⾛私了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171748173.webp" alt="image-20230617174817887" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171748173.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171748173.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202306171748173.webp?size=large 2x" data-title="image-20230617174817887" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="0x04-te-te" class="heading-element"><span>0.0.0.4.4  0x04 TE-TE</span>
+  <a href="#0x04-te-te" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>其实这个场景也可以认为是相同字段的场景处理，⽐如说在处理两个 TE 字段，如果取第⼆个 TE 字段作为解析标准，⽽第⼆个字段值⾮正常或者解析出错，就可能会忽略掉 TE 字段，⽽使⽤ CL 字段进⾏解析</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">POST</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#58a1dd">acfd1f201f5fb528809b582e004200a3</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">web</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">security</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">academy</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">net</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">User</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Agent:</span> <span style="color:#58a1dd">Mozilla</span><span style="color:#a6be9d">/5.0 (Macintosh; Intel Mac OS X 10.15; rv:70.0) Gecko/</span><span style="color:#a6be9d">20100101</span> <span style="color:#58a1dd">Firefox</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">70.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Accept:</span> <span style="color:#58a1dd">text</span><span style="color:#a6be9d">/html,application/x</span><span style="color:#58a1dd">html</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">xml</span>,<span style="color:#58a1dd">application</span><span style="color:#a6be9d">/xml;q=0.9,*/</span><span style="color:#ff636f">*</span>;<span style="color:#a6be9d">q=0.8
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">Accept-Language: zh-CN,zh;q=</span><span style="color:#a6be9d">0.8</span>,<span style="color:#58a1dd">zh</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">TW</span>;<span style="color:#a6be9d">q=0.7,zh-HK;q=</span><span style="color:#a6be9d">0.5</span>,<span style="color:#58a1dd">en</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">US</span>;<span style="color:#a6be9d">q=0.3,en;q=</span><span style="color:#a6be9d">0.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Accept</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Encoding:</span> <span style="color:#58a1dd">gzip</span>, <span style="color:#58a1dd">deflate</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Connection:</span> <span style="color:#58a1dd">close</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Cookie:</span> <span style="color:#58a1dd">session</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">9</span><span style="color:#58a1dd">swxitdhJRXeFhq77wGSU7fKw0VTiuzQ</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Cache</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Control:</span> <span style="color:#58a1dd">max</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">age</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">length</span>: <span style="color:#a6be9d">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Transfer</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Encoding:</span> <span style="color:#58a1dd">chunked</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Transfer</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">encoding:</span> <span style="color:#58a1dd">nothing</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">12</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">GPOST</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span></span></span></code></pre></div><p>这⾥⽤了两个 TE 字段，并且第⼆个 TE 字段值⾮标准值，这⾥ 前端 选择对第⼀个 TE 进⾏优先处理，整个请求则为正常请求，会转发给 后端 服务器</p>
+<p>⽽ 后段 服务器以第⼆个 TE 进⾏优先处理，⽽第⼆个 TE 值⾮正常，则会取 CL 字段进⾏处理，这样这个请求就会因为 CL 字段设置的值 4 ⽽被拆分为两个请求</p>
+<p>第⼀个请求：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">POST</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#58a1dd">acfd1f201f5fb528809b582e004200a3</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">web</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">security</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">academy</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">net</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">User</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Agent:</span> <span style="color:#58a1dd">Mozilla</span><span style="color:#a6be9d">/5.0 (Macintosh; Intel Mac OS X 10.15; rv:70.0) Gecko/</span><span style="color:#a6be9d">20</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">100101</span> <span style="color:#58a1dd">Firefox</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">70.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Accept:</span> <span style="color:#58a1dd">text</span><span style="color:#a6be9d">/html,application/x</span><span style="color:#58a1dd">html</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">xml</span>,<span style="color:#58a1dd">application</span><span style="color:#a6be9d">/xml;q=0.9,*/</span><span style="color:#ff636f">*</span>;<span style="color:#a6be9d">q=0.8
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">Accept-Language: zh-CN,zh;q=</span><span style="color:#a6be9d">0.8</span>,<span style="color:#58a1dd">zh</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">TW</span>;<span style="color:#a6be9d">q=0.7,zh-HK;q=</span><span style="color:#a6be9d">0.5</span>,<span style="color:#58a1dd">en</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">US</span>;<span style="color:#a6be9d">q=0.3,en;q=</span><span style="color:#a6be9d">0</span><span style="color:#ff636f">.</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Accept</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Encoding:</span> <span style="color:#58a1dd">gzip</span>, <span style="color:#58a1dd">deflate</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Connection:</span> <span style="color:#58a1dd">close</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Cookie:</span> <span style="color:#58a1dd">session</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">9</span><span style="color:#58a1dd">swxitdhJRXeFhq77wGSU7fKw0VTiuzQ</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Cache</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Control:</span> <span style="color:#58a1dd">max</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">age</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">length</span>: <span style="color:#a6be9d">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Transfer</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Encoding:</span> <span style="color:#58a1dd">chunked</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Transfer</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">encoding:</span> <span style="color:#58a1dd">nothing</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">12</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span></span></span></code></pre></div><p>第二个请求</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">GPOST</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">0</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span></span></span></code></pre></div><h6 id="0x05-cl-cl" class="heading-element"><span>0.0.0.4.5  0x05 CL-CL</span>
+  <a href="#0x05-cl-cl" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>中间代理服务器按照第⼀个Content-Length的值对请求进⾏处理，⽽后端源站服务器按照第⼆个Content-Length的值进⾏处理</p>
+<p>例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">POST</span> <span style="color:#a6be9d">/ HTTP/</span><span style="color:#a6be9d">1.1</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#58a1dd">example</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">com</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Length:</span> <span style="color:#a6be9d">8</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Content</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">Length:</span> <span style="color:#a6be9d">7</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">12345</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span></span></span></code></pre></div><p>代理服务器识别第⼀个，⻓度为8，把完整的请求发送到后端后端识别第⼆个，⻓度为7，读到123456就截⽌，⽽此时的缓冲区去还剩余⼀个字⺟<code>a</code>，对于后端服务器来说，这个<code>a</code>是下⼀个请求的⼀部分，但是还没有传输完毕。此时恰巧有⼀个其他的正常⽤户对服务器进⾏了请求，假设请求如图所⽰。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">GET</span> <span style="color:#a6be9d">/index.html HTTP/</span><span style="color:#a6be9d">1.1</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#58a1dd">example</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">com</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span></span></span></code></pre></div><p>这时候正常⽤户的请求就拼接到了字⺟<code>a</code>的后⾯，当后端服务器接收完毕后，它实际处理的请求其实是</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#58a1dd">aGET</span> <span style="color:#a6be9d">/index.html HTTP/</span><span style="color:#a6be9d">1.1</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Host:</span> <span style="color:#58a1dd">example</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">com</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">r</span><span style="color:#ff636f">\</span><span style="color:#58a1dd">n</span></span></span></code></pre></div><h5 id="攻击面" class="heading-element"><span>0.0.0.5  攻击面</span>
+  <a href="#%e6%94%bb%e5%87%bb%e9%9d%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><ul>
+<li>绕过前置服务器的安全限制</li>
+<li>获取前置服务器修改过的请求字段</li>
+<li>获取其他用户的请求</li>
+<li>反射型 XSS 组合拳</li>
+<li>将 on-site 重定向变为开放式重定向</li>
+<li>缓存投毒</li>
+<li>缓存欺骗</li>
+</ul>
+<h5 id="防御" class="heading-element"><span>0.0.0.6  防御</span>
+  <a href="#%e9%98%b2%e5%be%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<ul>
+<li>禁用代理服务器与后端服务器之间的 TCP 连接重用</li>
+<li>使用 HTTP/2 协议</li>
+<li>前后端使用相同的服务器</li>
+</ul>
+<p>以上的措施有的不能从根本上解决问题，而且有着很多不足，就比如禁用代理服务器和后端服务器之间的 TCP 连接重用，会增大后端服务器的压力。使用 HTTP/2 在现在的网络条件下根本无法推广使用，哪怕支持 HTTP/2 协议的服务器也会兼容 HTTP/1.1。从本质上来说，==HTTP 请求走私出现的原因并不是协议设计的问题，而是不同服务器实现的问题==，个人认为最好的解决方案就是严格的实现 RFC7230-7235 中所规定的的标准，但这也是最难做到的。</p>
+</blockquote>
+<p>对于 HTTP/2 能避免请求走私的原理，根据 @ZeddYu 师傅的<a href="https://blog.zeddyu.info/2019/12/05/HTTP-Smuggling/#Defence"target="_blank" rel="external nofollow noopener noreferrer">描述</a>，我去查了一下<a href="https://developers.google.com/web/fundamentals/performance/http2"target="_blank" rel="external nofollow noopener noreferrer">HTTP/2 简介</a>，总结一下，HTTP/1.1 的一些特性为请求走私创造了条件：</p>
+<ol>
+<li>纯文本，以换行符作为分隔符</li>
+<li>序列和阻塞机制</li>
+</ol>
+<p>而在 HTTP/2 中已经没有了产生请求走私的机会：</p>
+<ol>
+<li>使用<strong>二进制编码</strong>且分割为更小的传输单位（帧，拥有编号，<strong>可乱序传输</strong>）</li>
+<li><strong>同一个来源的所有通信都在一个 TCP 连接上完成</strong>，此连接可以承载任意数量的双向数据流</li>
+</ol></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/owasp/" class="post-tag" title="Tags - OWASP">OWASP</a><a href="/tags/%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81/" class="post-tag" title="Tags - 请求走私">请求走私</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91%E5%8E%9F%E7%90%86/2/" class="post-nav-item" rel="prev" title="资产搜集"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>资产搜集</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/64/" class="post-nav-item" rel="next" title="网络隧道">网络隧道<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

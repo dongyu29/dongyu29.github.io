@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Php Phar反序列化 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, php安全' />
+  <meta itemprop="name" content="php phar反序列化">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="121">
+  <meta itemprop="keywords" content="代码审计,Php安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E/28/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="php phar反序列化">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Php安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="php phar反序列化">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E/28/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/php/93/" /><link rel="next" href="https://dongyu29.github.io/posts/misc/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E5%88%B7%E9%A2%98/106/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "php phar反序列化",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E\/28\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, php安全","wordcount":  121 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E\/28\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Php Phar反序列化</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Php Phar反序列化</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="121 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 200 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>One minute</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="文件结构" class="heading-element"><span>0.0.0.1  文件结构</span>
+  <a href="#%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>phar文件是php里类似于JAR的一种打包文件本质上是一种压缩文件，在PHP 5.3 或更高版本中默认开启，一个phar文件一个分为四部分</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#a6be9d">1</span>.<span style="color:#58a1dd">a</span> <span style="color:#58a1dd">stub</span>
+</span></span><span style="display:flex;"><span>可以理解为一个标志，格式为<span style="color:#58a1dd">xxx</span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> <span style="color:#58a1dd">xxx</span>; <span style="color:#58a1dd">__HALT_COMPILER</span>();<span style="color:#ff636f">?&gt;</span>，前面内容不限，但必须以<span style="color:#58a1dd">__HALT_COMPILER</span>();来结尾，否则<span style="color:#58a1dd">phar扩展将无法识别这个文件为phar文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">2</span>.<span style="color:#58a1dd">a</span> <span style="color:#58a1dd">manifest</span> <span style="color:#58a1dd">describing</span> <span style="color:#58a1dd">the</span> <span style="color:#58a1dd">contents</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">phar文件本质上是一种压缩文件</span>，其中每个被压缩文件的权限、属性等信息都放在这部分。这部分还会以序列化的形式存储用户自定义的<span style="color:#58a1dd">meta</span><span style="color:#ff636f">-</span><span style="color:#ff636f">data</span>，这是上述攻击手法最核心的地方
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">3</span>.<span style="color:#58a1dd">the</span> <span style="color:#58a1dd">file</span> <span style="color:#58a1dd">contents</span>
+</span></span><span style="display:flex;"><span>被压缩文件的内容
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4</span>.[<span style="color:#58a1dd">optional</span>] <span style="color:#58a1dd">a</span> <span style="color:#58a1dd">signature</span> <span style="color:#ff636f">for</span> <span style="color:#58a1dd">verifying</span> <span style="color:#58a1dd">Phar</span> <span style="color:#58a1dd">integrity</span> (<span style="color:#58a1dd">phar</span> <span style="color:#58a1dd">file</span> <span style="color:#58a1dd">format</span> <span style="color:#ff636f">only</span>)
+</span></span><span style="display:flex;"><span>签名，放在文件末尾</span></span></code></pre></div><h5 id="生成phar" class="heading-element"><span>0.0.0.2  生成phar</span>
+  <a href="#%e7%94%9f%e6%88%90phar" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>需要提前配置php.ini</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">class</span> <span style="color:#58a1dd">TestObject</span> {
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">@</span><span style="color:#58a1dd">unlink</span>(<span style="color:#a6be9d">&#34;phar.phar&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$phar</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Phar</span>(<span style="color:#a6be9d">&#34;phar.phar&#34;</span>); <span style="color:#828b96;font-style:italic">//后缀名必须为phar
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$phar</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">startBuffering</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$phar</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">setStub</span>(<span style="color:#a6be9d">&#34;&lt;?php __HALT_COMPILER(); ?&gt;&#34;</span>); <span style="color:#828b96;font-style:italic">//设置stub
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$o</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TestObject</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$phar</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">setMetadata</span>(<span style="color:#58a1dd">$o</span>); <span style="color:#828b96;font-style:italic">//将自定义的meta-data存入manifest 核心
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$phar</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">addFromString</span>(<span style="color:#a6be9d">&#34;test.txt&#34;</span>, <span style="color:#a6be9d">&#34;test&#34;</span>); <span style="color:#828b96;font-style:italic">//添加要压缩的文件
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#828b96;font-style:italic">//签名自动计算
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$phar</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">stopBuffering</span>();
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
+</span></span></code></pre></div><h5 id="利用" class="heading-element"><span>0.0.0.3  利用</span>
+  <a href="#%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="触发phar的函数" class="heading-element"><span>0.0.0.3.1  触发phar的函数</span>
+  <a href="#%e8%a7%a6%e5%8f%91phar%e7%9a%84%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">fopen</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">unlink</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">stat</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">fstat</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">rename</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">opendir</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">rmdir</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">mkdir</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">以及，基于文件操作的其他函数</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">file_put_contents</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">file_get_contents</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">file_exists</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">fileinode</span>()
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">include</span>()
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">require</span>()
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">include_once</span>()
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">require_once</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">filemtime</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">fileowner</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">fielperms</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">甚至看起来不行其实可以的函数，比如</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">filesize</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">is_dir</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scandir</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">更离谱的是这样也可以触发反序列化</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">class</span> <span style="color:#58a1dd">hack</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">public</span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">__destruct</span>(){
+</span></span><span style="display:flex;"><span>     <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;hack class destruct&#34;</span>;
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">new</span> <span style="color:#58a1dd">DirectoryIterator</span>(<span style="color:#a6be9d">&#34;phar://flag.phar&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">甚至</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">class</span> <span style="color:#58a1dd">hack</span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">public</span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">__destruct</span>(){
+</span></span><span style="display:flex;"><span>       <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;hack class destruct&#34;</span>;
+</span></span><span style="display:flex;"><span>     }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">highlight_file</span>(<span style="color:#a6be9d">&#34;phar://flag.phar&#34;</span>);</span></span></code></pre></div><h6 id="用法" class="heading-element"><span>0.0.0.3.2  用法</span>
+  <a href="#%e7%94%a8%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>上传phar文件的时候可以把后缀改成gif之类</li>
+<li>调用我们上传的phar文件的功能点文件前面加上phar://</li>
+</ul></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/php%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Php安全">Php安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/php/93/" class="post-nav-item" rel="prev" title="Php Socket学习"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Php Socket学习</a>
+      <a href="/posts/misc/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E5%88%B7%E9%A2%98/106/" class="post-nav-item" rel="next" title="NSS-蓝帽">NSS-蓝帽<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

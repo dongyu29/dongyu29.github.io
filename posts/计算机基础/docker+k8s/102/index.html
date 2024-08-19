@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Docker学习 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, docker' />
+  <meta itemprop="name" content="docker学习">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="478">
+  <meta itemprop="keywords" content="计算机基础,Docker"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/docker&#43;k8s/102/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="docker学习">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="Docker">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="docker学习">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/docker&#43;k8s/102/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F/%E4%BA%91%E5%AE%89%E5%85%A8/72/" /><link rel="next" href="https://dongyu29.github.io/posts/misc/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E5%88%B7%E9%A2%98/105/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "docker学习",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/docker\u002bk8s\/102\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, docker","wordcount":  478 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/docker\u002bk8s\/102\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Docker学习</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Docker学习</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="478 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="常用命令" class="heading-element"><span>0.0.0.1  常用命令</span>
+  <a href="#%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>docker ps -a 查看所有容器
+docker stop id 停止一个容器
+docker rm  ID  删除一个容器(先停在删)
+
+$抓取镜像
+docker pull tutum/lamp
+docker pull huamang/testdocker
+docker pull dongyu29/dongyu29
+library是 image 文件所在的组，hello-world是 image 文件的名字。Docker 官方提供的 image 文件，都放在library组里面，所以它的是默认组，可以省略
+
+$列出当前镜像
+docker image ls
+$列出本机正在运行的容器
+docker container ls
+
+$运行镜像
+docker create -p 1234:80 --name game tutum/lamp   !!!
+docker  start game  !!!
+
+docker container run hello-world    
+docker  run -p 1234:80 --name game tutum/lamp     
+docker container run命令会从 image 文件，生成一个正在运行的容器实例。注意，docker container run命令具有自动抓取 image 文件的功能。如果发现本地没有指定的 image 文件，就会从仓库自动抓取。因此，前面的docker image pull命令并不是必需的步骤。
+
+$安装运行 Ubuntu 的 image，就可以在命令行体验 Ubuntu 系统。
+docker container run -it ubuntu bash
+
+$手动终止容器运行
+docker container kill [containID]
+
+$image 文件生成的容器实例，本身也是一个文件，称为容器文件。
+也就是说，一旦容器生成，就会同时存在两个文件： 
+image 文件和容器文件。而且关闭容器并不会删除容器文件，只是容器停止运行而已。
+终止运行的容器文件，依然会占据硬盘空间，可以使用docker container rm命令删除。
+docker container rm [containerID]
+
+$生成容器
+docker container run -p 8000:3000 -it koa-demo /bin/bash
+##### 或者
+docker container run -p 8000:3000 -it koa-demo:0.0.1 /bin/bash
+-p参数：容器的 3000 端口映射到本机的 8000 端口。
+-it参数：容器的 Shell 映射到当前的 Shell，然后你在本机窗口输入的命令，就会传入容器。
+koa-demo:0.0.1：image 文件的名字（如果有标签，还需要提供标签，默认是 latest 标签）。
+/bin/bash：容器启动以后，内部第一个执行的命令。这里是启动 Bash，保证用户可以使用 Shell。
+
+$退出容器
+在容器的命令行，按下 Ctrl + c 停止 Node 进程，
+然后按下 Ctrl + d （或者输入 exit）退出容器。
+此外，也可以用docker container kill终止容器运行。
+
+$在容器终止运行后自动删除容器文件。
+docker container run --rm -p 8000:3000 -it koa-demo /bin/bash
+
+$其他
+前面的docker container run命令是新建容器，每运行一次，就会新建一个容器。
+如果希望重复使用容器，就要使用docker container start命令
+docker container start [containerID]
+前面的docker container kill就会强行立即终止，那些正在进行中的操作会全部丢失。
+应用程序收到stop以后，可以自行进行收尾清理工作
+docker container stop [containerID]</code></pre><h5 id="portainer-ce" class="heading-element"><span>0.0.0.2  portainer-ce</span>
+  <a href="#portainer-ce" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>中文图形化管理界面</p>
+<p><code>安装</code></p>
+<blockquote>
+<p>docker pull portainer/portainer-ce</p>
+</blockquote>
+<p><code>启动</code></p>
+<blockquote>
+<p>docker run -d -p 9000:9000 &ndash;restart=always -v /var/run/docker.sock:/var/run/docker.sock &ndash;name my-portainer portainer/portainer-ce:latest</p>
+</blockquote>
+<blockquote>
+<p>参数说明：</p>
+<p>-d：后台启动</p>
+<p>-p：端口映射</p>
+<p>&ndash;restart=always：开启自启动</p>
+<p>-v：数据卷映射</p>
+<p>&ndash;name：容器名称</p>
+</blockquote>
+<h5 id="提交镜像" class="heading-element"><span>0.0.0.3  提交镜像</span>
+  <a href="#%e6%8f%90%e4%ba%a4%e9%95%9c%e5%83%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>自己制作image文件需要用到 Dockerfile 文件。它是一个文本文件，用来配置 image。Docker 根据 该文件生成二进制的 image 文件。</p>
+<p>先登录：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>docker login</span></span></code></pre></div><p>登录完后，把所需上传的容器变为镜像</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>docker commit containerId dockerUserName/XXX
+</span></span><span style="display:flex;"><span>docker commit 7c94bbb39f40ebcfa41cf09 dongyu29/dongy</span></span></code></pre></div><p>注：containerId为你需要上传的容器id，可以用docker ps -aqf &ldquo;name=web9&quot;进行查询容器id</p>
+<p>dockerUserName为dockerHub的登录名，xxx为仓库名,当然也不一定非得是dockerUserName/xxx，只是为了方便起见</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>docker tag imageName dockerUserName/xxx[:tag]
+</span></span><span style="display:flex;"><span>docker tag awd12 dongyu29/awd:plus
+</span></span><span style="display:flex;"><span>docker push dongyu29/awd:plu</span></span></code></pre></div><p>注：imageName为你需要上传的镜像name，dockerUserName为dockerHub的登录名，xxx为仓库名，必须和你在dockerhub中新建的仓库名相同，tag不指定就是latest</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Plaintext" data-lang="Plaintext"><span style="display:flex;"><span>docker push dockerUserName/xxx[:tag]</span></span></code></pre></div><h5 id="dockerfile" class="heading-element"><span>0.0.0.4  dockerfile</span>
+  <a href="#dockerfile" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>Docker可以使用Dockerfile的内容来自动构建镜像。Dockerfile也是一个文件，其中有创建镜像、运行指令等一系列的命令，且每行只支持一个运行命令。</p>
+<p>Docker file分为四部分组成：</p>
+<ul>
+<li>基础镜像信息</li>
+<li>维护者信息</li>
+<li>镜像操作指令</li>
+<li>容器启动时执行指令</li>
+</ul>
+</blockquote>
+<p>常用命令</p>
+<p><code>FROM</code>  用来指定基础镜像，然后通过在基础镜像上构建新的镜像，Dockerfile文件第一行必须的FROM指令，如果一个Dockerfile需要创建多个镜像，可以使用多个FROM指令。</p>
+<p><code>MAINTAINER</code>  指定镜像的创建者信息</p>
+<p><code>RUN</code> 运行所有基础镜像能支持的命令，同样也可以使用多条RUN指令，可以使用\来换行</p>
+<p><code>CMD</code> 用于==容器启动==时的指定操作，它可以是命令，也可以是脚本，但只执行一次</p>
+<p><code>EXPOSE</code> 指定容器暴漏的端口(EXPOSE 80)</p>
+<p><code>ENV</code> 在镜像中用于设置环境变量</p>
+<p><code>COPY</code>复制本地主机的源（默认为==Dockerfile所在的目录==）到容器中的目标中，目标路径不存在时会自动创建。路径必须是绝对路径</p>
+<p>执行dockerfile</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>docker build -t &lt;镜像名&gt; .
+</span></span><span style="display:flex;"><span>docker run -d -p 1234:80 &lt;镜像名&gt;</span></span></code></pre></div><p>docker build -t hihi .</p>
+<p>docker run -d -p 1888:80 -p 1889:22 awd12</p>
+<p>实践</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#ff636f">FROM</span><span style="color:#a6be9d"> tutum/lamp</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">RUN</span> <span style="color:#58a1dd">cd</span> /var/www/ <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#a6be9d">\
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d"></span>    rm -rf html <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#a6be9d">\
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d"></span>    mkdir html <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#a6be9d">\
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d"></span>    chown -R root:root /var/www/html/ <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#a6be9d">\
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d"></span>    chmod -R <span style="color:#a6be9d">755</span> /var/www/html/ 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">COPY</span> src /var/www/html/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">EXPOSE</span><span style="color:#a6be9d"> 80</span></span></span></code></pre></div><p>成功</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305191438998.webp" alt="image-20230519143830152" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305191438998.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305191438998.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305191438998.webp?size=large 2x" data-title="image-20230519143830152" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h5 id="docker-compose" class="heading-element"><span>0.0.0.5  docker-compose</span>
+  <a href="#docker-compose" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>用一个 <code>Dockerfile</code> 模板文件，可以让用户很方便的定义一个单独的应用容器。然而，在日常工作中，经常会碰到需要多个容器相互配合来完成某项任务的情况。例如要实现一个 Web 项目，除了 Web 服务容器本身，往往还需要再加上后端的数据库服务容器</p>
+<p><code>Compose</code> 恰好满足了这样的需求。它允许用户通过一个单独的 <code>docker-compose.yml</code> 模板文件（YAML 格式）来定义一组相关联的应用容器为一个项目（project）。</p>
+</blockquote>
+<p><a href="https://yeasy.gitbook.io/docker_practice/compose"target="_blank" rel="external nofollow noopener noreferrer">https://yeasy.gitbook.io/docker_practice/compose</a></p>
+<p>例子</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#58a1dd">version</span>: <span style="color:#a6be9d">&#34;3&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">services</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">db</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">image</span>: <span style="color:#a6be9d">postgres</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">environment</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#a6be9d">FLAG=flag{test_flag}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">web</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">build</span>: <span style="color:#a6be9d">.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">command</span>: <span style="color:#a6be9d">python manage.py runserver 0.0.0.0:8000</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#a6be9d">.:/code</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#a6be9d">&#34;8000:8000&#34;</span></span></span></code></pre></div><blockquote>
+<p>容器的启动也可以根据已有的镜像,如果定义了image这个标签，就会从本地搜寻相关镜像构建容器，如果本地找不到相关的镜像，就会从网上数据库搜寻相关的镜像。但大家可能会产生疑问了，这里我们定义了build还有image两个不同的标签来构建镜像，那么容器到底要用build还是image来构建呢，这种情况下将==按照dockerfile的方式来构建镜像，并且把镜像的名称定义为image标签里面的名称==。</p>
+</blockquote>
+<p>version: &ldquo;3&quot;不变</p>
+<p>services:不变，下面是构成这个项目的几个子容器，首行缩进控制好，类似于python，这个例子就有db和web两个子容器</p>
+<p>子容器中：</p>
+<p>​      image指定使用的镜像，当然，完全可以不指定，只指定dockerfile的路径，在dockerfile里面指定</p>
+<p>​      build指定dockerfile的路径</p>
+<p>​      ports指定端口映射</p>
+<p>运行</p>
+<p>docker-compose up -d</p>
+<p>停止</p>
+<p>docker-compose down</p>
+<h5 id="本地镜像" class="heading-element"><span>0.0.0.6  本地镜像</span>
+  <a href="#%e6%9c%ac%e5%9c%b0%e9%95%9c%e5%83%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://www.jianshu.com/p/8c40e2d78e1b"target="_blank" rel="external nofollow noopener noreferrer">https://www.jianshu.com/p/8c40e2d78e1b</a></p>
+<pre tabindex="0"><code>docker save -o [导出的镜像名.tar] [本地镜像名]：[镜像标签]
+docker load -i [本地tar包文件]</code></pre><h5 id="ctf出题" class="heading-element"><span>0.0.0.7  CTF出题</span>
+  <a href="#ctf%e5%87%ba%e9%a2%98" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://www.v0n.top/2020/05/01/%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8Docker%E5%87%BA%E4%B8%80%E9%81%93CTF%E9%A2%98%E7%9B%AE/"target="_blank" rel="external nofollow noopener noreferrer">如何用docker出一道CTF题目</a></p>
+<p>dockerfile</p>
+<p>可以用这个镜像为基础</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#ff636f">FROM</span><span style="color:#a6be9d"> ctftraining/base_image_nginx_mysql_php_56</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">COPY</span> src /var/www/html
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">RUN</span> mv /var/www/html/flag.sh / <span style="color:#a6be9d">\
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d"></span>    <span style="color:#ff636f">&amp;&amp;</span> chmod +x /flag.sh</span></span></code></pre></div><p>docker-compose.yml</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#58a1dd">version</span>: <span style="color:#a6be9d">&#34;2&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">web</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">build</span>: <span style="color:#a6be9d">.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">image</span>: <span style="color:#a6be9d">ctftraining/0ctf_2016_unserialize</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">environment</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#a6be9d">FLAG=flag{test_flag}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#a6be9d">&#34;0.0.0.0:1949:80&#34;</span></span></span></code></pre></div><p>docker-compose up -d就可以在1949端口看到题目了</p>
+<p>从上面的过程中，我们看到对于一道题目来说，除了源码以外，最大的不方便之处就是还要有相关的nginx文件配置，在这里我推荐virink写的<a href="https://github.com/CTFTraining/base_image_nginx_mysql_php_56"target="_blank" rel="external nofollow noopener noreferrer">base_image_nginx_mysql_php_56</a>来辅助我们快速出题。 这个镜像主要好在不需要我们去配置其他的nginx设置，而且还支持自动导入db.sql文件,支持自动执行flag.sh文件。以我在minil出的一道题为例。题目中主要是需要配置数据库.
+我们只需要src文件夹中放入源码、flag.sh、db.sql(flag.sh、db.sql文件名不能变)，现在我们dockerfile只需要这么写:</p>
+<pre tabindex="0"><code>FROM ctftraining/base_image_nginx_mysql_php_56
+
+COPY src /var/www/html
+
+RUN mv /var/www/html/flag.sh / \
+    &amp;&amp; chmod +x /flag.sh</code></pre><p>这个镜像就会自动为我们配置相关的nginx文件，同时自动导入要执行的db.sql文件来配置数据库(==默认用户为root,密码也为root,执行后db.sql会被删掉==)
+同时镜像还会自动执行flag.sh来从环境变量中读取flag写入到flag.php中(需要注意的是，flag.sh必需在根目录下，也就是我们需要执行mv /var/www/html/flag.sh /这一步的原因所在)。 可以看到，这个镜像极大的方便了我们对Dockerfile的编写，把Dockerfile简化到只需要两三句话就能搞定。
+如果是要在php7的环境下出题,可以采用<a href="https://github.com/CTFTraining/base_image_nginx_mysql_php_73"target="_blank" rel="external nofollow noopener noreferrer">base_image_nginx_mysql_php_73</a></p>
+<p>ctftraining/base_image_nginx_mysql_php_56</p>
+<p>ctftraining/base_image_nginx_mysql_php_73</p>
+<p>docker  run -p 1238:80 &ndash;name iii ctftraining/base_image_nginx_mysql_php_56</p>
+<h5 id="连接docker容器" class="heading-element"><span>0.0.0.8  连接docker容器</span>
+  <a href="#%e8%bf%9e%e6%8e%a5docker%e5%ae%b9%e5%99%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>docker container ls
+docker exec -it &lt;容器id&gt;  /bin/bash
+docker exec -it awd  /bin/bash</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/docker/" class="post-tag" title="Tags - Docker">Docker</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F/%E4%BA%91%E5%AE%89%E5%85%A8/72/" class="post-nav-item" rel="prev" title="Docker逃逸"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Docker逃逸</a>
+      <a href="/posts/misc/%E7%94%B5%E5%AD%90%E5%8F%96%E8%AF%81/%E5%88%B7%E9%A2%98/105/" class="post-nav-item" rel="next" title="Ctfshow-取证">Ctfshow-取证<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

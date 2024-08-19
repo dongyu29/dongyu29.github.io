@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Python 可视化学习 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 语言' />
+  <meta itemprop="name" content="python 可视化学习">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="2703">
+  <meta itemprop="keywords" content="计算机基础,语言"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/98/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="python 可视化学习">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="语言">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="python 可视化学习">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/98/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/%E5%9F%BA%E7%A1%80/95/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/python/python%E5%AE%89%E5%85%A8/32/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "python 可视化学习",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/98\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 语言","wordcount":  2703 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/98\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Python 可视化学习</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Python 可视化学习</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="2703 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 2800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>13 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>下面是python五大可视化库的对比</p>
+<p>Seaborn就是个Matplotlib的封装，功能比较有限；Pyecharts虽然动效做的好看，但是控件无法定制；Bokeh控件玩法多样，但输在做3D和动画要装插件；相较之下Plotly在功能上完胜。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403101517247.webp" alt="image-20240310151727922" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403101517247.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403101517247.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202403101517247.webp?size=large 2x" data-title="image-20240310151727922" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h5 id="numpy" class="heading-element"><span>0.0.0.1  numpy</span>
+  <a href="#numpy" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://www.runoob.com/numpy/numpy-tutorial.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.runoob.com/numpy/numpy-tutorial.html</a></p>
+<p>NumPy 通常与 SciPy（Scientific Python）和 Matplotlib（绘图库）一起使用， 这种组合广泛用于替代 MatLab</p>
+<h6 id="ndarray-对象" class="heading-element"><span>0.0.0.1.1  Ndarray 对象</span>
+  <a href="#ndarray-%e5%af%b9%e8%b1%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>N 维数组对象 ndarray，它是一系列同类型数据的集合，以 0 下标为开始进行集合中元素的索引。是用于存放同类型元素的多维数组。</p>
+<p>ndarray 中的每个元素在内存中都有相同存储大小的区域。</p>
+<p>创建一个 ndarray 只需调用 NumPy 的 array 函数即可：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">numpy</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>(<span style="color:#58a1dd">object</span>, <span style="color:#58a1dd">dtype</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">None</span>, <span style="color:#58a1dd">copy</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">True</span>, <span style="color:#58a1dd">order</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">None</span>, <span style="color:#58a1dd">subok</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">False</span>, <span style="color:#58a1dd">ndmin</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span>)</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">object</td>
+<td style="text-align:left">数组或嵌套的数列</td>
+</tr>
+<tr>
+<td style="text-align:left">dtype</td>
+<td style="text-align:left">数组元素的数据类型，可选</td>
+</tr>
+<tr>
+<td style="text-align:left">copy</td>
+<td style="text-align:left">对象是否需要复制，可选</td>
+</tr>
+<tr>
+<td style="text-align:left">order</td>
+<td style="text-align:left">创建数组的样式，C为行方向，F为列方向，A为任意方向（默认）</td>
+</tr>
+<tr>
+<td style="text-align:left">subok</td>
+<td style="text-align:left">默认返回一个与基类类型一致的数组</td>
+</tr>
+<tr>
+<td style="text-align:left">ndmin</td>
+<td style="text-align:left">指定生成数组的最小维度</td>
+</tr>
+</tbody>
+</table>
+<p>NumPy 基本类型</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">bool_</td>
+<td style="text-align:left">布尔型数据类型（True 或者 False）</td>
+</tr>
+<tr>
+<td style="text-align:left">int_</td>
+<td style="text-align:left">默认的整数类型（类似于 C 语言中的 long，int32 或 int64）</td>
+</tr>
+<tr>
+<td style="text-align:left">intc</td>
+<td style="text-align:left">与 C 的 int 类型一样，一般是 int32 或 int 64</td>
+</tr>
+<tr>
+<td style="text-align:left">intp</td>
+<td style="text-align:left">用于索引的整数类型（类似于 C 的 ssize_t，一般情况下仍然是 int32 或 int64）</td>
+</tr>
+<tr>
+<td style="text-align:left">int8</td>
+<td style="text-align:left">字节（-128 to 127）</td>
+</tr>
+<tr>
+<td style="text-align:left">int16</td>
+<td style="text-align:left">整数（-32768 to 32767）</td>
+</tr>
+<tr>
+<td style="text-align:left">int32</td>
+<td style="text-align:left">整数（-2147483648 to 2147483647）</td>
+</tr>
+<tr>
+<td style="text-align:left">int64</td>
+<td style="text-align:left">整数（-9223372036854775808 to 9223372036854775807）</td>
+</tr>
+<tr>
+<td style="text-align:left">uint8</td>
+<td style="text-align:left">无符号整数（0 to 255）</td>
+</tr>
+<tr>
+<td style="text-align:left">uint16</td>
+<td style="text-align:left">无符号整数（0 to 65535）</td>
+</tr>
+<tr>
+<td style="text-align:left">uint32</td>
+<td style="text-align:left">无符号整数（0 to 4294967295）</td>
+</tr>
+<tr>
+<td style="text-align:left">uint64</td>
+<td style="text-align:left">无符号整数（0 to 18446744073709551615）</td>
+</tr>
+<tr>
+<td style="text-align:left">float_</td>
+<td style="text-align:left">float64 类型的简写</td>
+</tr>
+<tr>
+<td style="text-align:left">float16</td>
+<td style="text-align:left">半精度浮点数，包括：1 个符号位，5 个指数位，10 个尾数位</td>
+</tr>
+<tr>
+<td style="text-align:left">float32</td>
+<td style="text-align:left">单精度浮点数，包括：1 个符号位，8 个指数位，23 个尾数位</td>
+</tr>
+<tr>
+<td style="text-align:left">float64</td>
+<td style="text-align:left">双精度浮点数，包括：1 个符号位，11 个指数位，52 个尾数位</td>
+</tr>
+<tr>
+<td style="text-align:left">complex_</td>
+<td style="text-align:left">complex128 类型的简写，即 128 位复数</td>
+</tr>
+<tr>
+<td style="text-align:left">complex64</td>
+<td style="text-align:left">复数，表示双 32 位浮点数（实数部分和虚数部分）</td>
+</tr>
+<tr>
+<td style="text-align:left">complex128</td>
+<td style="text-align:left">复数，表示双 64 位浮点数（实数部分和虚数部分）</td>
+</tr>
+</tbody>
+</table>
+<p>NumPy 的数组中比较重要 ndarray 对象属性有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ndarray.ndim</td>
+<td style="text-align:left">秩，即轴的数量或维度的数量</td>
+</tr>
+<tr>
+<td style="text-align:left">ndarray.shape</td>
+<td style="text-align:left">数组的维度，对于矩阵，n 行 m 列</td>
+</tr>
+<tr>
+<td style="text-align:left">ndarray.size</td>
+<td style="text-align:left">数组元素的总个数，相当于 .shape 中 n*m 的值</td>
+</tr>
+<tr>
+<td style="text-align:left">ndarray.dtype</td>
+<td style="text-align:left">ndarray 对象的元素类型</td>
+</tr>
+<tr>
+<td style="text-align:left">ndarray.itemsize</td>
+<td style="text-align:left">ndarray 对象中每个元素的大小，以字节为单位</td>
+</tr>
+<tr>
+<td style="text-align:left">ndarray.flags</td>
+<td style="text-align:left">ndarray 对象的内存信息</td>
+</tr>
+<tr>
+<td style="text-align:left">ndarray.real</td>
+<td style="text-align:left">ndarray元素的实部</td>
+</tr>
+<tr>
+<td style="text-align:left">ndarray.imag</td>
+<td style="text-align:left">ndarray 元素的虚部</td>
+</tr>
+<tr>
+<td style="text-align:left">ndarray.data</td>
+<td style="text-align:left">包含实际数组元素的缓冲区，由于一般通过数组的索引获取元素，所以通常不需要使用这个属性。</td>
+</tr>
+</tbody>
+</table>
+<h6 id="numpy-创建数组" class="heading-element"><span>0.0.0.1.2  NumPy 创建数组</span>
+  <a href="#numpy-%e5%88%9b%e5%bb%ba%e6%95%b0%e7%bb%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>ndarray 数组除了可以使用底层 ndarray 构造器来创建外，也可以通过以下几种方式来创建。</p>
+<p>####### numpy.empty</p>
+<p>numpy.empty 方法用来创建一个指定形状（shape）、数据类型（dtype）且未初始化的数组：</p>
+<pre tabindex="0"><code>numpy.empty(shape, dtype = float, order = &#39;C&#39;)</code></pre><p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">shape</td>
+<td style="text-align:left">数组形状</td>
+</tr>
+<tr>
+<td style="text-align:left">dtype</td>
+<td style="text-align:left">数据类型，可选</td>
+</tr>
+<tr>
+<td style="text-align:left">order</td>
+<td style="text-align:left">有&quot;C&quot;和&quot;F&quot;两个选项,分别代表，行优先和列优先，在计算机内存中的存储元素的顺序。</td>
+</tr>
+</tbody>
+</table>
+<p>下面是一个创建空数组的实例：</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">x</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">empty</span>([<span style="color:#a6be9d">3</span>,<span style="color:#a6be9d">2</span>], <span style="color:#58a1dd">dtype</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">int</span>) 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span> (<span style="color:#58a1dd">x</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[[ 6917529027641081856  5764616291768666155]
+ [ 6917529027641081859 -5764598754299804209]
+ [          4497473538      844429428932120]]</code></pre><p><strong>注意</strong> − 数组元素为随机值，因为它们未初始化。</p>
+<p>####### numpy.zeros</p>
+<p>创建指定大小的数组，数组元素以 0 来填充：</p>
+<pre tabindex="0"><code>numpy.zeros(shape, dtype = float, order = &#39;C&#39;)</code></pre><p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">shape</td>
+<td style="text-align:left">数组形状</td>
+</tr>
+<tr>
+<td style="text-align:left">dtype</td>
+<td style="text-align:left">数据类型，可选</td>
+</tr>
+<tr>
+<td style="text-align:left">order</td>
+<td style="text-align:left">&lsquo;C&rsquo; 用于 C 的行数组，或者 &lsquo;F&rsquo; 用于 FORTRAN 的列数组</td>
+</tr>
+</tbody>
+</table>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 默认为浮点数</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">x</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">zeros</span>(<span style="color:#a6be9d">5</span>) 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">x</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 设置类型为整数</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">y</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">zeros</span>((<span style="color:#a6be9d">5</span>,), <span style="color:#58a1dd">dtype</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">int</span>) 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">y</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 自定义类型</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">z</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">zeros</span>((<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">2</span>), <span style="color:#58a1dd">dtype</span> <span style="color:#ff636f">=</span> [(<span style="color:#a6be9d">&#39;x&#39;</span>, <span style="color:#a6be9d">&#39;i4&#39;</span>), (<span style="color:#a6be9d">&#39;y&#39;</span>, <span style="color:#a6be9d">&#39;i4&#39;</span>)])  
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">z</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[0. 0. 0. 0. 0.]
+[0 0 0 0 0]
+[[(0, 0) (0, 0)]
+ [(0, 0) (0, 0)]]</code></pre><p>####### numpy.ones</p>
+<p>创建指定形状的数组，数组元素以 1 来填充：</p>
+<pre tabindex="0"><code>numpy.ones(shape, dtype = None, order = &#39;C&#39;)</code></pre><p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">shape</td>
+<td style="text-align:left">数组形状</td>
+</tr>
+<tr>
+<td style="text-align:left">dtype</td>
+<td style="text-align:left">数据类型，可选</td>
+</tr>
+<tr>
+<td style="text-align:left">order</td>
+<td style="text-align:left">&lsquo;C&rsquo; 用于 C 的行数组，或者 &lsquo;F&rsquo; 用于 FORTRAN 的列数组</td>
+</tr>
+</tbody>
+</table>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 默认为浮点数</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">x</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ones</span>(<span style="color:#a6be9d">5</span>) 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">x</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 自定义类型</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">x</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ones</span>([<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">2</span>], <span style="color:#58a1dd">dtype</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">int</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">x</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[1. 1. 1. 1. 1.]
+[[1 1]
+ [1 1]]</code></pre><p>####### numpy.zeros_like</p>
+<p>numpy.zeros_like 用于创建一个与给定数组具有相同形状的数组，数组元素以 0 来填充。</p>
+<p>numpy.zeros 和 numpy.zeros_like 都是用于创建一个指定形状的数组，其中所有元素都是 0。</p>
+<p>它们之间的区别在于：numpy.zeros 可以直接指定要创建的数组的形状，而 numpy.zeros_like 则是创建一个与给定数组具有相同形状的数组。</p>
+<pre tabindex="0"><code>numpy.zeros_like(a, dtype=None, order=&#39;K&#39;, subok=True, shape=None)</code></pre><p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">给定要创建相同形状的数组</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">dtype</td>
+<td style="text-align:left">创建的数组的数据类型</td>
+</tr>
+<tr>
+<td style="text-align:left">order</td>
+<td style="text-align:left">数组在内存中的存储顺序，可选值为 &lsquo;C&rsquo;（按行优先）或 &lsquo;F&rsquo;（按列优先），默认为 &lsquo;K&rsquo;（保留输入数组的存储顺序）</td>
+</tr>
+<tr>
+<td style="text-align:left">subok</td>
+<td style="text-align:left">是否允许返回子类，如果为 True，则返回一个子类对象，否则返回一个与 a 数组具有相同数据类型和存储顺序的数组</td>
+</tr>
+<tr>
+<td style="text-align:left">shape</td>
+<td style="text-align:left">创建的数组的形状，如果不指定，则默认为 a 数组的形状。</td>
+</tr>
+</tbody>
+</table>
+<p>创建一个与 arr 形状相同的，所有元素都为 0 的数组：</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建一个 3x3 的二维数组</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">arr</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>([[<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">3</span>], [<span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">5</span>, <span style="color:#a6be9d">6</span>], [<span style="color:#a6be9d">7</span>, <span style="color:#a6be9d">8</span>, <span style="color:#a6be9d">9</span>]])
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建一个与 arr 形状相同的，所有元素都为 0 的数组</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">zeros_arr</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">zeros_like</span>(<span style="color:#58a1dd">arr</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">zeros_arr</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[[0 0 0]
+ [0 0 0]
+ [0 0 0]]</code></pre><p>####### numpy.ones_like</p>
+<p>numpy.ones_like 用于创建一个与给定数组具有相同形状的数组，数组元素以 1 来填充。</p>
+<p>numpy.ones 和 numpy.ones_like 都是用于创建一个指定形状的数组，其中所有元素都是 1。</p>
+<p>它们之间的区别在于：numpy.ones 可以直接指定要创建的数组的形状，而 numpy.ones_like 则是创建一个与给定数组具有相同形状的数组。</p>
+<pre tabindex="0"><code>numpy.ones_like(a, dtype=None, order=&#39;K&#39;, subok=True, shape=None)</code></pre><p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">给定要创建相同形状的数组</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">dtype</td>
+<td style="text-align:left">创建的数组的数据类型</td>
+</tr>
+<tr>
+<td style="text-align:left">order</td>
+<td style="text-align:left">数组在内存中的存储顺序，可选值为 &lsquo;C&rsquo;（按行优先）或 &lsquo;F&rsquo;（按列优先），默认为 &lsquo;K&rsquo;（保留输入数组的存储顺序）</td>
+</tr>
+<tr>
+<td style="text-align:left">subok</td>
+<td style="text-align:left">是否允许返回子类，如果为 True，则返回一个子类对象，否则返回一个与 a 数组具有相同数据类型和存储顺序的数组</td>
+</tr>
+<tr>
+<td style="text-align:left">shape</td>
+<td style="text-align:left">创建的数组的形状，如果不指定，则默认为 a 数组的形状。</td>
+</tr>
+</tbody>
+</table>
+<p>创建一个与 arr 形状相同的，所有元素都为 1 的数组：</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建一个 3x3 的二维数组</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">arr</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>([[<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">3</span>], [<span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">5</span>, <span style="color:#a6be9d">6</span>], [<span style="color:#a6be9d">7</span>, <span style="color:#a6be9d">8</span>, <span style="color:#a6be9d">9</span>]])
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建一个与 arr 形状相同的，所有元素都为 1 的数组</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ones_arr</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ones_like</span>(<span style="color:#58a1dd">arr</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">ones_arr</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[[1 1 1]
+ [1 1 1]
+ [1 1 1]]</code></pre><h6 id="从数值范围创建数组" class="heading-element"><span>0.0.0.1.3  从数值范围创建数组</span>
+  <a href="#%e4%bb%8e%e6%95%b0%e5%80%bc%e8%8c%83%e5%9b%b4%e5%88%9b%e5%bb%ba%e6%95%b0%e7%bb%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>这一章节我们将学习如何从数值范围创建数组。</p>
+<p>####### numpy.arange</p>
+<p>numpy 包中的使用 arange 函数创建数值范围并返回 ndarray 对象，函数格式如下：</p>
+<pre tabindex="0"><code>numpy.arange(start, stop, step, dtype)</code></pre><p>根据 start 与 stop 指定的范围以及 step 设定的步长，生成一个 ndarray。</p>
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>start</code></td>
+<td style="text-align:left">起始值，默认为<code>0</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>stop</code></td>
+<td style="text-align:left">终止值（不包含）</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>step</code></td>
+<td style="text-align:left">步长，默认为<code>1</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>dtype</code></td>
+<td style="text-align:left">返回<code>ndarray</code>的数据类型，如果没有提供，则会使用输入数据的类型。</td>
+</tr>
+</tbody>
+</table>
+<p>####### numpy.linspace</p>
+<p>numpy.linspace 函数用于创建一个==一维数组==，数组是一个==等差数列==构成的，格式如下：</p>
+<pre tabindex="0"><code>np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)</code></pre><p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>start</code></td>
+<td style="text-align:left">序列的起始值</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>stop</code></td>
+<td style="text-align:left">序列的终止值，如果<code>endpoint</code>为<code>true</code>，该值包含于数列中</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>num</code></td>
+<td style="text-align:left">要生成的等步长的样本数量，默认为<code>50</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>endpoint</code></td>
+<td style="text-align:left">该值为 <code>true</code> 时，数列中包含<code>stop</code>值，反之不包含，默认是True。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>retstep</code></td>
+<td style="text-align:left">如果为 True 时，生成的数组中会显示间距，反之不显示。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>dtype</code></td>
+<td style="text-align:left"><code>ndarray</code> 的数据类型</td>
+</tr>
+</tbody>
+</table>
+<p>以下实例用到三个参数，设置起始点为 1 ，终止点为 10，数列个数为 10。</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">linspace</span>(<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">10</span>,<span style="color:#a6be9d">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">a</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[ 1.  2.  3.  4.  5.  6.  7.  8.  9. 10.]</code></pre><p>设置元素全部是1的等差数列：</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">linspace</span>(<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">a</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]</code></pre><p>将 endpoint 设为 false，不包含终止值：</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">linspace</span>(<span style="color:#a6be9d">10</span>, <span style="color:#a6be9d">20</span>,  <span style="color:#a6be9d">5</span>, <span style="color:#58a1dd">endpoint</span> <span style="color:#ff636f">=</span>  <span style="color:#ff636f">False</span>)  
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">a</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[10. 12. 14. 16. 18.]</code></pre><p>如果将 endpoint 设为 true，则会包含 20。</p>
+<p>以下实例设置间距。</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span><span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">linspace</span>(<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">10</span>,<span style="color:#a6be9d">10</span>,<span style="color:#58a1dd">retstep</span><span style="color:#ff636f">=</span> <span style="color:#ff636f">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">a</span>)
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 拓展例子</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">b</span> <span style="color:#ff636f">=</span><span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">linspace</span>(<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">10</span>,<span style="color:#a6be9d">10</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">reshape</span>([<span style="color:#a6be9d">10</span>,<span style="color:#a6be9d">1</span>])
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">b</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>(array([ 1.,  2.,  3.,  4.,  5.,  6.,  7.,  8.,  9., 10.]), 1.0)
+[[ 1.]
+ [ 2.]
+ [ 3.]
+ [ 4.]
+ [ 5.]
+ [ 6.]
+ [ 7.]
+ [ 8.]
+ [ 9.]
+ [10.]]</code></pre><p>####### numpy.logspace</p>
+<p>numpy.logspace 函数用于创建一个于==等比数列==。格式如下：</p>
+<pre tabindex="0"><code>np.logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None)</code></pre><p>base 参数意思是取对数的时候 log 的下标。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>start</code></td>
+<td style="text-align:left">序列的起始值为：base ** start</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>stop</code></td>
+<td style="text-align:left">序列的终止值为：base ** stop。如果<code>endpoint</code>为<code>true</code>，该值包含于数列中</td>
+</tr>
+<tr>
+<td style="text-align:left">num</td>
+<td style="text-align:left">要生成的等步长的样本数量，默认为<code>50</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>endpoint</code></td>
+<td style="text-align:left">该值为 <code>true</code> 时，数列中中包含<code>stop</code>值，反之不包含，默认是True。</td>
+</tr>
+<tr>
+<td style="text-align:left">==base==</td>
+<td style="text-align:left">对数 log 的底数。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>dtype</code></td>
+<td style="text-align:left"><code>ndarray</code> 的数据类型</td>
+</tr>
+</tbody>
+</table>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 默认底数是 10</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">logspace</span>(<span style="color:#a6be9d">1.0</span>,  <span style="color:#a6be9d">2.0</span>, <span style="color:#58a1dd">num</span> <span style="color:#ff636f">=</span>  <span style="color:#a6be9d">10</span>)  
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span> (<span style="color:#58a1dd">a</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[ 10.           12.91549665     16.68100537      21.5443469  27.82559402      
+  35.93813664   46.41588834     59.94842503      77.42636827    100.    ]</code></pre><p>将对数的底数设置为 2 :</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">logspace</span>(<span style="color:#a6be9d">0</span>,<span style="color:#a6be9d">9</span>,<span style="color:#a6be9d">10</span>,<span style="color:#58a1dd">base</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span> (<span style="color:#58a1dd">a</span>)</span></span></code></pre></div><p>输出如下：</p>
+<pre tabindex="0"><code>[  1.   2.   4.   8.  16.  32.  64. 128. 256. 512.]</code></pre><h6 id="numpy-切片和索引" class="heading-element"><span>0.0.0.1.4  NumPy 切片和索引</span>
+  <a href="#numpy-%e5%88%87%e7%89%87%e5%92%8c%e7%b4%a2%e5%bc%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>ndarray对象的内容可以通过索引或切片来访问和修改，与 Python 中 list 的切片操作一样。</p>
+<p>ndarray 数组可以基于 0 - n 的下标进行索引，切片对象可以通过内置的 slice 函数，并设置 start, stop 及 step 参数进行，从原数组中切割出一个新数组。</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">arange</span>(<span style="color:#a6be9d">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">slice</span>(<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">7</span>,<span style="color:#a6be9d">2</span>)   <span style="color:#828b96;font-style:italic"># 从索引 2 开始到索引 7 停止，间隔为2</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span> (<span style="color:#58a1dd">a</span>[<span style="color:#58a1dd">s</span>])</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[2  4  6]</code></pre><p>以上实例中，我们首先通过 arange() 函数创建 ndarray 对象。 然后，分别设置起始，终止和步长的参数为 2，7 和 2。</p>
+<p>我们也可以通过冒号分隔切片参数 <strong>start:stop:step</strong> 来进行切片操作：</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">arange</span>(<span style="color:#a6be9d">10</span>)  
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">b</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">a</span>[<span style="color:#a6be9d">2</span>:<span style="color:#a6be9d">7</span>:<span style="color:#a6be9d">2</span>]   <span style="color:#828b96;font-style:italic"># 从索引 2 开始到索引 7 停止，间隔为 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">b</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[2  4  6]</code></pre><p>冒号 <strong>:</strong> 的解释：如果只放置一个参数，如 <strong>[2]</strong>，将返回与该索引相对应的单个元素。如果为 <strong>[2:]</strong>，表示从该索引开始以后的所有项都将被提取。如果使用了两个参数，如 <strong>[2:7]</strong>，那么则提取两个索引(不包括停止索引)之间的项。</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">arange</span>(<span style="color:#a6be9d">10</span>)  <span style="color:#828b96;font-style:italic"># [0 1 2 3 4 5 6 7 8 9]</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">b</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">a</span>[<span style="color:#a6be9d">5</span>] 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">b</span>)</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>5</code></pre><p>实例</p>
+<p>import numpy as np  a = np.arange(10) print(a[2:])</p>
+<p>输出结果为：</p>
+<pre tabindex="0"><code>[2  3  4  5  6  7  8  9]</code></pre><p>实例</p>
+<p>import numpy as np  a = np.arange(10)  # [0 1 2 3 4 5 6 7 8 9] print(a[2:5])</p>
+<p>输出结果为：</p>
+<pre tabindex="0"><code>[2  3  4]</code></pre><p>多维数组同样适用上述索引提取方法：</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>([[<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">3</span>],[<span style="color:#a6be9d">3</span>,<span style="color:#a6be9d">4</span>,<span style="color:#a6be9d">5</span>],[<span style="color:#a6be9d">4</span>,<span style="color:#a6be9d">5</span>,<span style="color:#a6be9d">6</span>]])
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">a</span>)
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 从某个索引处开始切割</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;从数组索引 a[1:] 处开始切割&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">a</span>[<span style="color:#a6be9d">1</span>:])</span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[[1 2 3]
+ [3 4 5]
+ [4 5 6]]
+从数组索引 a[1:] 处开始切割
+[[3 4 5]
+ [4 5 6]]</code></pre><p>切片还可以包括省略号 <strong>…</strong>，来使选择元组的长度与数组的维度相同。 如果在行位置使用省略号，它将返回包含行中元素的 ndarray。</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>([[<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">3</span>],[<span style="color:#a6be9d">3</span>,<span style="color:#a6be9d">4</span>,<span style="color:#a6be9d">5</span>],[<span style="color:#a6be9d">4</span>,<span style="color:#a6be9d">5</span>,<span style="color:#a6be9d">6</span>]])  
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span> (<span style="color:#58a1dd">a</span>[<span style="color:#ff636f">...</span>,<span style="color:#a6be9d">1</span>])   <span style="color:#828b96;font-style:italic"># 第2列元素</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span> (<span style="color:#58a1dd">a</span>[<span style="color:#a6be9d">1</span>,<span style="color:#ff636f">...</span>])   <span style="color:#828b96;font-style:italic"># 第2行元素</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span> (<span style="color:#58a1dd">a</span>[<span style="color:#ff636f">...</span>,<span style="color:#a6be9d">1</span>:])  <span style="color:#828b96;font-style:italic"># 第2列及剩下的所有元素</span></span></span></code></pre></div><p>输出结果为：</p>
+<pre tabindex="0"><code>[2 4 5]
+[3 4 5]
+[[2 3]
+ [4 5]
+ [5 6]]</code></pre><h6 id="数学运算" class="heading-element"><span>0.0.0.1.5  数学运算</span>
+  <a href="#%e6%95%b0%e5%ad%a6%e8%bf%90%e7%ae%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><strong><code>np.sqrt</code></strong>: 平方根。</p>
+<pre tabindex="0"><code>sqrt_result = np.sqrt(a)</code></pre><p><code>np.power(a, 2)</code>幂运算</p>
+<p><strong><code>np.exp</code></strong>: 指数函数。 指数函数</p>
+<pre tabindex="0"><code>exp_result = np.exp(a)</code></pre><p><strong><code>np.log</code></strong>: 自然对数。</p>
+<pre tabindex="0"><code>log_result = np.log(a)
+
+np.log10: 常用对数（底数为10）
+log10_result = np.log10(a)
+##### 输出: array([0.        , 0.30103   , 0.47712125])</code></pre><p><strong><code>np.sin</code></strong>: 正弦函数。</p>
+<pre tabindex="0"><code>sin_result = np.sin(a)</code></pre><p><strong><code>np.cos</code></strong>: 余弦函数。</p>
+<pre tabindex="0"><code>cos_result = np.cos(a)</code></pre><p><code>np.tan(a)</code>正切函数</p>
+<ul>
+<li>
+<p><strong><code>np.add</code></strong>: 加法运算。</p>
+<pre tabindex="0"><code>a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+add_result = np.add(a, b)</code></pre></li>
+</ul>
+<h5 id="输出-array5-7-9" class="heading-element"><span>0.0.0.2  输出: array([5, 7, 9])</span>
+  <a href="#%e8%be%93%e5%87%ba-array5-7-9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>
+- **`np.subtract`**: 减法运算。</code></pre><p>subtract_result = np.subtract(a, b)</p>
+<h5 id="输出-array-3--3--3" class="heading-element"><span>0.0.0.3  输出: array([-3, -3, -3])</span>
+  <a href="#%e8%be%93%e5%87%ba-array-3--3--3" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>
+- **`np.multiply`**: 逐元素乘法。</code></pre><p>multiply_result = np.multiply(a, b)</p>
+<h5 id="输出-array-4-10-18" class="heading-element"><span>0.0.0.4  输出: array([ 4, 10, 18])</span>
+  <a href="#%e8%be%93%e5%87%ba-array-4-10-18" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>
+- **`np.divide`**: 逐元素除法。</code></pre><p>divide_result = np.divide(a, b)</p>
+<h5 id="输出-array025-04--05-" class="heading-element"><span>0.0.0.5  输出: array([0.25, 0.4 , 0.5 ])</span>
+  <a href="#%e8%be%93%e5%87%ba-array025-04--05-" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>
+
+
+###### 随机数
+
+- **`np.random.rand`**: 生成 [0, 1) 之间的均匀分布的随机数。</code></pre><p>rand_result = np.random.rand(3)</p>
+<h5 id="输出-array05488135--071518937-060276338-示例值" class="heading-element"><span>0.0.0.6  输出: array([0.5488135 , 0.71518937, 0.60276338]) (示例值)</span>
+  <a href="#%e8%be%93%e5%87%ba-array05488135--071518937-060276338-%e7%a4%ba%e4%be%8b%e5%80%bc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>
+- **`np.random.randn`**: 生成标准正态分布的随机数。</code></pre><p>randn_result = np.random.randn(3)</p>
+<h5 id="输出-array-176405235--040015721--097873798-示例值" class="heading-element"><span>0.0.0.7  输出: array([ 1.76405235,  0.40015721,  0.97873798]) (示例值)</span>
+  <a href="#%e8%be%93%e5%87%ba-array-176405235--040015721--097873798-%e7%a4%ba%e4%be%8b%e5%80%bc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>
+- **`np.random.randint`**: 生成指定范围内的随机整数。</code></pre><p>randint_result = np.random.randint(1, 10, 3)</p>
+<h5 id="输出-array3-7-2-示例值" class="heading-element"><span>0.0.0.8  输出: array([3, 7, 2]) (示例值)</span>
+  <a href="#%e8%be%93%e5%87%ba-array3-7-2-%e7%a4%ba%e4%be%8b%e5%80%bc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>
+- **`np.random.choice`**: 从给定数组中随机选择。</code></pre><p>choice_result = np.random.choice([1, 2, 3, 4, 5], 3)</p>
+<h5 id="输出-array4-1-3-示例值" class="heading-element"><span>0.0.0.9  输出: array([4, 1, 3]) (示例值)</span>
+  <a href="#%e8%be%93%e5%87%ba-array4-1-3-%e7%a4%ba%e4%be%8b%e5%80%bc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>
+##### matplotlib
+
+https://paul.pub/matplotlib-basics/
+
+https://www.runoob.com/matplotlib/matplotlib-tutorial.html
+
+###### 入门
+
+最简单的绘图：
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+data = np.arange(100, 201)
+plt.plot(data)
+plt.show()</code></pre><p>plot此处接受了一个数组作为参数，对应的是y轴，x轴我们未指定，默认为传入的数组的元素数量。除了xy轴，还可以传入第三个参数指定数据线的形状，如-r</p>
+<p>Pyplot 是 Matplotlib 的子库，提供了和 MATLAB 类似的绘图 API。</p>
+<ul>
+<li><code>plot()</code>：用于绘制线图和散点图</li>
+<li><code>scatter()</code>：用于绘制散点图</li>
+<li><code>bar()</code>：用于绘制垂直条形图和水平条形图</li>
+<li><code>hist()</code>：用于绘制直方图</li>
+<li><code>pie()</code>：用于绘制饼图</li>
+<li><code>imshow()</code>：用于绘制图像</li>
+<li><code>subplots()</code>：用于创建子图</li>
+</ul>
+<p>plot使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">画单条线</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plot</span>([<span style="color:#58a1dd">x</span>], <span style="color:#58a1dd">y</span>, [<span style="color:#58a1dd">fmt</span>], <span style="color:#ff636f">*</span>, <span style="color:#58a1dd">data</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#ff636f">**</span><span style="color:#58a1dd">kwargs</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">画多条线</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plot</span>([<span style="color:#58a1dd">x</span>], <span style="color:#58a1dd">y</span>, [<span style="color:#58a1dd">fmt</span>], [<span style="color:#58a1dd">x2</span>], <span style="color:#58a1dd">y2</span>, [<span style="color:#58a1dd">fmt2</span>], <span style="color:#ff636f">...</span>, <span style="color:#ff636f">**</span><span style="color:#58a1dd">kwargs</span>)</span></span></code></pre></div><h6 id="多图形" class="heading-element"><span>0.0.0.9.1  多图形</span>
+  <a href="#%e5%a4%9a%e5%9b%be%e5%bd%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### figure</p>
+<p>可以简单的理解为一个<code>figure</code>就是一个<code>图形窗口</code>。<code>matplotlib.pyplot</code>会有一个默认的<code>figure</code>，我们也可以通过<code>plt.figure()</code>创建更多个窗口，初始状态这两个窗口是完全重合的</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">arange</span>(<span style="color:#a6be9d">100</span>, <span style="color:#a6be9d">201</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">data</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">data2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">arange</span>(<span style="color:#a6be9d">200</span>, <span style="color:#a6be9d">301</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">figure</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">data2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>####### subplot</p>
+<p>在同一个窗口显示多个图形用多个subplot</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">arange</span>(<span style="color:#a6be9d">100</span>, <span style="color:#a6be9d">201</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplot</span>(<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">data</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">data2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">arange</span>(<span style="color:#a6be9d">200</span>, <span style="color:#a6be9d">301</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplot</span>(<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">data2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p><code>subplot</code>函数的前两个参数指定了subplot数量，即：它们是以矩阵的形式来分割当前图形，两个整数分别指定了矩阵的行数和列数。而第三个参数是指矩阵中的索引。</p>
+<p><code>subplot</code>还可以将三个整数（10之内的）合并一个整数。例如：<code>2, 1, 1</code>可以写成<code>211</code>，<code>2, 1, 2</code>可以写成<code>212</code>。</p>
+<p>####### subplots</p>
+<p><strong>subplot()</strong> 方法在绘图时需要指定位置，<strong>subplots()</strong> 方法可以一次生成多个，在调用时只需要调用生成对象的 ax 即可。</p>
+<p>subplots() 方法语法格式如下：</p>
+<pre tabindex="0"><code>matplotlib.pyplot.subplots(nrows=1, ncols=1, *, sharex=False, sharey=False, squeeze=True, subplot_kw=None, gridspec_kw=None, **fig_kw)</code></pre><p><strong>参数说明：</strong></p>
+<ul>
+<li><strong>nrows</strong>：默认为 1，设置图表的==行数==。</li>
+<li><strong>ncols</strong>：默认为 1，设置图表的==列数==。</li>
+<li>==<strong>sharex、sharey</strong>==：设置 x、y 轴是否共享属性，默认为 false，可设置为 &rsquo;none&rsquo;、&lsquo;all&rsquo;、&lsquo;row&rsquo; 或 &lsquo;col&rsquo;。 False 或 none 每个子图的 x 轴或 y 轴都是独立的，True 或 &lsquo;all&rsquo;：所有子图共享 x 轴或 y 轴，&lsquo;row&rsquo; 设置每个子图行共享一个 x 轴或 y 轴，&lsquo;col&rsquo;：设置每个子图列共享一个 x 轴或 y 轴。</li>
+<li><code>figsize</code> 参数设置整个图形的大小</li>
+<li><strong>squeeze</strong>：布尔值，默认为 True，表示额外的维度从返回的 Axes(轴)对象中挤出，对于 N<em>1 或 1</em>N 个子图，返回一个 1 维数组，对于 N*M，N&gt;1 和 M&gt;1 返回一个 2 维数组。如果设置为 False，则不进行挤压操作，返回一个元素为 Axes 实例的2维数组，即使它最终是1x1。</li>
+<li>==<strong>subplot_kw</strong>==：可选，字典类型。把字典的关键字传递给 add_subplot() 来创建每个子图。</li>
+<li><strong>gridspec_kw</strong>：可选，字典类型。把字典的关键字传递给 GridSpec 构造函数创建子图放在网格里(grid)。</li>
+<li><strong>fig_kw</strong>：把详细的关键字参数传给 figure() 函数。</li>
+</ul>
+<p>可以使用 <code>plt.subplots_adjust()</code> 来调整子图之间的间距和布局。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots_adjust</span>(<span style="color:#58a1dd">left</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0.1</span>, <span style="color:#58a1dd">bottom</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0.1</span>, <span style="color:#58a1dd">right</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0.9</span>, <span style="color:#58a1dd">top</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0.9</span>, <span style="color:#58a1dd">wspace</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0.4</span>, <span style="color:#58a1dd">hspace</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0.4</span>)</span></span></code></pre></div><p>######## fig和 axs</p>
+<p><code>fig</code> 和 <code>axs</code> 是 <code>matplotlib.pyplot.subplots</code> 函数返回的两个对象。</p>
+<p><code>fig</code> 是 <code>Figure</code> 对象的实例，表示整个绘图的顶层容器或画布。它包含了所有的子图。<code>Figure</code> 对象可以用来控制整个图形的布局、大小和保存等操作。</p>
+<p><strong>常见的 <code>Figure</code> 属性和方法</strong>：</p>
+<ul>
+<li>
+<p><code>fig.add_subplot(nrows, ncols, index)</code>：向图形==添加子图==。</p>
+</li>
+<li>
+<p><code>fig.suptitle(title)</code>：设置整个图形的总标题。</p>
+</li>
+<li>
+<p><code>fig.tight_layout()</code>：自动调整子图参数，以使子图适应图形区域。</p>
+</li>
+<li>
+<p><code>fig.subplots_adjust(left, bottom, right, top, wspace, hspace)</code>：手动调整子图之间的间距和位置。</p>
+</li>
+<li>
+<p><code>fig.savefig('filename.png')</code>：将图形保存为文件。</p>
+</li>
+</ul>
+<p><code>axs</code> 是一个包含多个 <code>Axes</code> 对象的二维数组（或者列表），每个 <code>Axes</code> 对象代表一个子图。<code>Axes</code> 对象是实际绘制数据的区域，它包含了坐标轴、刻度、线条、标签等。</p>
+<p><strong>常见的 <code>Axes</code> 属性和方法</strong>：</p>
+<ul>
+<li><code>ax.plot(x, y)</code>：在子图上绘制线条或数据。</li>
+<li><code>ax.set_title(title)</code>：设置子图的标题。</li>
+<li><code>ax.set_xlabel(label)</code> 和 <code>ax.set_ylabel(label)</code>：设置子图的 x 轴和 y 轴标签。</li>
+<li><code>ax.set_xlim(left, right)</code> 和 <code>ax.set_ylim(bottom, top)</code>：设置子图的 x 轴和 y 轴范围。</li>
+<li><code>ax.grid(True)</code>：显示网格线。</li>
+</ul>
+<p>示例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建一些测试数据 -- 图1</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">x</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">linspace</span>(<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">2</span><span style="color:#ff636f">*</span><span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">pi</span>, <span style="color:#a6be9d">400</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">y</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sin</span>(<span style="color:#58a1dd">x</span><span style="color:#ff636f">**</span><span style="color:#a6be9d">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建一个画像和子图 -- 图2</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">fig</span>, <span style="color:#58a1dd">ax</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ax</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ax</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">set_title</span>(<span style="color:#a6be9d">&#39;Simple plot&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建两个子图 -- 图3</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">f</span>, (<span style="color:#58a1dd">ax1</span>, <span style="color:#58a1dd">ax2</span>) <span style="color:#ff636f">=</span> <span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots</span>(<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>, <span style="color:#58a1dd">sharey</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ax1</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ax1</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">set_title</span>(<span style="color:#a6be9d">&#39;Sharing Y axis&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ax2</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">scatter</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建四个子图 -- 图4</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">fig</span>, <span style="color:#58a1dd">axs</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots</span>(<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">2</span>, <span style="color:#58a1dd">subplot_kw</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">dict</span>(<span style="color:#58a1dd">projection</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;polar&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">axs</span>[<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">0</span>]<span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">axs</span>[<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">1</span>]<span style="color:#ff636f">.</span><span style="color:#58a1dd">scatter</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 共享 x 轴</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots</span>(<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">2</span>, <span style="color:#58a1dd">sharex</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;col&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 共享 y 轴</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots</span>(<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">2</span>, <span style="color:#58a1dd">sharey</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;row&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 共享 x 轴和 y 轴</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots</span>(<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">2</span>, <span style="color:#58a1dd">sharex</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;all&#39;</span>, <span style="color:#58a1dd">sharey</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;all&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 这个也是共享 x 轴和 y 轴</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots</span>(<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">2</span>, <span style="color:#58a1dd">sharex</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>, <span style="color:#58a1dd">sharey</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建标识为 10 的图，已经存在的则删除</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">fig</span>, <span style="color:#58a1dd">ax</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots</span>(<span style="color:#58a1dd">num</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">10</span>, <span style="color:#58a1dd">clear</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><h6 id="绘图标记" class="heading-element"><span>0.0.0.9.2  绘图标记</span>
+  <a href="#%e7%bb%98%e5%9b%be%e6%a0%87%e8%ae%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### fmt 参数</p>
+<p>fmt 参数定义了基本格式，如标记、线条样式和颜色。</p>
+<pre tabindex="0"><code>fmt = &#39;[marker][line][color]&#39;</code></pre><p><strong>标记字符：</strong>&rsquo;.&rsquo; 点标记，&rsquo;,&rsquo; 像素标记(极小点)，&lsquo;o&rsquo; 实心圈标记，&lsquo;v&rsquo; 倒三角标记，&rsquo;^&rsquo; 上三角标记，&rsquo;&gt;&rsquo; 右三角标记，&rsquo;&lt;&rsquo; 左三角标记&hellip;等等。</p>
+<p><strong>线型参数：</strong>&rsquo;‐&rsquo; 实线，&rsquo;‐‐&rsquo; 长虚线，&rsquo;‐.&rsquo; 点划线，&rsquo;:&lsquo;短虚线。</p>
+<p><strong>颜色字符：</strong>&lsquo;b&rsquo; 蓝色，&rsquo;m&rsquo; 洋红色，&lsquo;g&rsquo; 绿色，&lsquo;y&rsquo; 黄色，&lsquo;r&rsquo; 红色，&lsquo;k&rsquo; 黑色，&lsquo;w&rsquo; 白色，&lsquo;c&rsquo; 青绿色，&rsquo;#008000&rsquo; RGB 颜色符串。多条曲线不指定颜色时，会自动选择不同颜色。</p>
+<p>如果我们要绘制坐标 (1, 3) 到 (8, 10) 的线，我们就需要传递两个数组 [1, 8] 和 [3, 10] 给 <strong>plot</strong> 函数：</p>
+<p>ps：:.就是这种</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406251018573.webp" alt="image-20240625101848404" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406251018573.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406251018573.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406251018573.webp?size=large 2x" data-title="image-20240625101848404" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>####### marker参数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ypoints</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>([<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">3</span>,<span style="color:#a6be9d">4</span>,<span style="color:#a6be9d">5</span>,<span style="color:#a6be9d">8</span>,<span style="color:#a6be9d">9</span>,<span style="color:#a6be9d">6</span>,<span style="color:#a6be9d">1</span>,<span style="color:#a6be9d">3</span>,<span style="color:#a6be9d">4</span>,<span style="color:#a6be9d">5</span>,<span style="color:#a6be9d">2</span>,<span style="color:#a6be9d">4</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">ypoints</span>, <span style="color:#58a1dd">marker</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;o&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p><strong>marker</strong> 可以定义的符号如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">标记</th>
+<th style="text-align:left">符号</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&ldquo;.&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m00.png" alt="m00" srcset="https://www.runoob.com/images/m00.png?size=small, https://www.runoob.com/images/m00.png?size=medium 1.5x, https://www.runoob.com/images/m00.png?size=large 2x" data-title="m00" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">点</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;,&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m01.png" alt="m01" srcset="https://www.runoob.com/images/m01.png?size=small, https://www.runoob.com/images/m01.png?size=medium 1.5x, https://www.runoob.com/images/m01.png?size=large 2x" data-title="m01" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">像素点</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;o&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m02.png" alt="m02" srcset="https://www.runoob.com/images/m02.png?size=small, https://www.runoob.com/images/m02.png?size=medium 1.5x, https://www.runoob.com/images/m02.png?size=large 2x" data-title="m02" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">实心圆</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;v&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m03.png" alt="m03" srcset="https://www.runoob.com/images/m03.png?size=small, https://www.runoob.com/images/m03.png?size=medium 1.5x, https://www.runoob.com/images/m03.png?size=large 2x" data-title="m03" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">下三角</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;^&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m04.png" alt="m04" srcset="https://www.runoob.com/images/m04.png?size=small, https://www.runoob.com/images/m04.png?size=medium 1.5x, https://www.runoob.com/images/m04.png?size=large 2x" data-title="m04" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">上三角</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;&lt;&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m05.png" alt="m05" srcset="https://www.runoob.com/images/m05.png?size=small, https://www.runoob.com/images/m05.png?size=medium 1.5x, https://www.runoob.com/images/m05.png?size=large 2x" data-title="m05" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">左三角</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;&gt;&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m06.png" alt="m06" srcset="https://www.runoob.com/images/m06.png?size=small, https://www.runoob.com/images/m06.png?size=medium 1.5x, https://www.runoob.com/images/m06.png?size=large 2x" data-title="m06" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">右三角</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;1&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m07.png" alt="m07" srcset="https://www.runoob.com/images/m07.png?size=small, https://www.runoob.com/images/m07.png?size=medium 1.5x, https://www.runoob.com/images/m07.png?size=large 2x" data-title="m07" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">下三叉</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;2&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m08.png" alt="m08" srcset="https://www.runoob.com/images/m08.png?size=small, https://www.runoob.com/images/m08.png?size=medium 1.5x, https://www.runoob.com/images/m08.png?size=large 2x" data-title="m08" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">上三叉</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;3&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m09.png" alt="m09" srcset="https://www.runoob.com/images/m09.png?size=small, https://www.runoob.com/images/m09.png?size=medium 1.5x, https://www.runoob.com/images/m09.png?size=large 2x" data-title="m09" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">左三叉</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;4&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m10.png" alt="m10" srcset="https://www.runoob.com/images/m10.png?size=small, https://www.runoob.com/images/m10.png?size=medium 1.5x, https://www.runoob.com/images/m10.png?size=large 2x" data-title="m10" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">右三叉</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;8&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m11.png" alt="m11" srcset="https://www.runoob.com/images/m11.png?size=small, https://www.runoob.com/images/m11.png?size=medium 1.5x, https://www.runoob.com/images/m11.png?size=large 2x" data-title="m11" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">八角形</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;s&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m12.png" alt="m12" srcset="https://www.runoob.com/images/m12.png?size=small, https://www.runoob.com/images/m12.png?size=medium 1.5x, https://www.runoob.com/images/m12.png?size=large 2x" data-title="m12" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">正方形</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;p&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m13.png" alt="m13" srcset="https://www.runoob.com/images/m13.png?size=small, https://www.runoob.com/images/m13.png?size=medium 1.5x, https://www.runoob.com/images/m13.png?size=large 2x" data-title="m13" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">五边形</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;P&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m23.png" alt="m23" srcset="https://www.runoob.com/images/m23.png?size=small, https://www.runoob.com/images/m23.png?size=medium 1.5x, https://www.runoob.com/images/m23.png?size=large 2x" data-title="m23" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">加号（填充）</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;*&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m14.png" alt="m14" srcset="https://www.runoob.com/images/m14.png?size=small, https://www.runoob.com/images/m14.png?size=medium 1.5x, https://www.runoob.com/images/m14.png?size=large 2x" data-title="m14" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">星号</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;h&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m15.png" alt="m15" srcset="https://www.runoob.com/images/m15.png?size=small, https://www.runoob.com/images/m15.png?size=medium 1.5x, https://www.runoob.com/images/m15.png?size=large 2x" data-title="m15" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">六边形 1</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;H&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m16.png" alt="m16" srcset="https://www.runoob.com/images/m16.png?size=small, https://www.runoob.com/images/m16.png?size=medium 1.5x, https://www.runoob.com/images/m16.png?size=large 2x" data-title="m16" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">六边形 2</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;+&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m17.png" alt="m17" srcset="https://www.runoob.com/images/m17.png?size=small, https://www.runoob.com/images/m17.png?size=medium 1.5x, https://www.runoob.com/images/m17.png?size=large 2x" data-title="m17" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">加号</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;x&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m18.png" alt="m18" srcset="https://www.runoob.com/images/m18.png?size=small, https://www.runoob.com/images/m18.png?size=medium 1.5x, https://www.runoob.com/images/m18.png?size=large 2x" data-title="m18" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">乘号 x</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;X&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m24.png" alt="m24" srcset="https://www.runoob.com/images/m24.png?size=small, https://www.runoob.com/images/m24.png?size=medium 1.5x, https://www.runoob.com/images/m24.png?size=large 2x" data-title="m24" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">乘号 x (填充)</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;D&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m19.png" alt="m19" srcset="https://www.runoob.com/images/m19.png?size=small, https://www.runoob.com/images/m19.png?size=medium 1.5x, https://www.runoob.com/images/m19.png?size=large 2x" data-title="m19" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">菱形</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;d&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m20.png" alt="m20" srcset="https://www.runoob.com/images/m20.png?size=small, https://www.runoob.com/images/m20.png?size=medium 1.5x, https://www.runoob.com/images/m20.png?size=large 2x" data-title="m20" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">瘦菱形</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;|&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m21.png" alt="m21" srcset="https://www.runoob.com/images/m21.png?size=small, https://www.runoob.com/images/m21.png?size=medium 1.5x, https://www.runoob.com/images/m21.png?size=large 2x" data-title="m21" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">竖线</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;_&rdquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m22.png" alt="m22" srcset="https://www.runoob.com/images/m22.png?size=small, https://www.runoob.com/images/m22.png?size=medium 1.5x, https://www.runoob.com/images/m22.png?size=large 2x" data-title="m22" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">横线</td>
+</tr>
+<tr>
+<td style="text-align:left">0 (TICKLEFT)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m25.png" alt="m25" srcset="https://www.runoob.com/images/m25.png?size=small, https://www.runoob.com/images/m25.png?size=medium 1.5x, https://www.runoob.com/images/m25.png?size=large 2x" data-title="m25" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">左横线</td>
+</tr>
+<tr>
+<td style="text-align:left">1 (TICKRIGHT)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m26.png" alt="m26" srcset="https://www.runoob.com/images/m26.png?size=small, https://www.runoob.com/images/m26.png?size=medium 1.5x, https://www.runoob.com/images/m26.png?size=large 2x" data-title="m26" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">右横线</td>
+</tr>
+<tr>
+<td style="text-align:left">2 (TICKUP)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m27.png" alt="m27" srcset="https://www.runoob.com/images/m27.png?size=small, https://www.runoob.com/images/m27.png?size=medium 1.5x, https://www.runoob.com/images/m27.png?size=large 2x" data-title="m27" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">上竖线</td>
+</tr>
+<tr>
+<td style="text-align:left">3 (TICKDOWN)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m28.png" alt="m28" srcset="https://www.runoob.com/images/m28.png?size=small, https://www.runoob.com/images/m28.png?size=medium 1.5x, https://www.runoob.com/images/m28.png?size=large 2x" data-title="m28" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">下竖线</td>
+</tr>
+<tr>
+<td style="text-align:left">4 (CARETLEFT)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m29.png" alt="m29" srcset="https://www.runoob.com/images/m29.png?size=small, https://www.runoob.com/images/m29.png?size=medium 1.5x, https://www.runoob.com/images/m29.png?size=large 2x" data-title="m29" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">左箭头</td>
+</tr>
+<tr>
+<td style="text-align:left">5 (CARETRIGHT)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m30.png" alt="m30" srcset="https://www.runoob.com/images/m30.png?size=small, https://www.runoob.com/images/m30.png?size=medium 1.5x, https://www.runoob.com/images/m30.png?size=large 2x" data-title="m30" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">右箭头</td>
+</tr>
+<tr>
+<td style="text-align:left">6 (CARETUP)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m31.png" alt="m31" srcset="https://www.runoob.com/images/m31.png?size=small, https://www.runoob.com/images/m31.png?size=medium 1.5x, https://www.runoob.com/images/m31.png?size=large 2x" data-title="m31" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">上箭头</td>
+</tr>
+<tr>
+<td style="text-align:left">7 (CARETDOWN)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m32.png" alt="m32" srcset="https://www.runoob.com/images/m32.png?size=small, https://www.runoob.com/images/m32.png?size=medium 1.5x, https://www.runoob.com/images/m32.png?size=large 2x" data-title="m32" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">下箭头</td>
+</tr>
+<tr>
+<td style="text-align:left">8 (CARETLEFTBASE)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m33.png" alt="m33" srcset="https://www.runoob.com/images/m33.png?size=small, https://www.runoob.com/images/m33.png?size=medium 1.5x, https://www.runoob.com/images/m33.png?size=large 2x" data-title="m33" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">左箭头 (中间点为基准)</td>
+</tr>
+<tr>
+<td style="text-align:left">9 (CARETRIGHTBASE)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m34.png" alt="m34" srcset="https://www.runoob.com/images/m34.png?size=small, https://www.runoob.com/images/m34.png?size=medium 1.5x, https://www.runoob.com/images/m34.png?size=large 2x" data-title="m34" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">右箭头 (中间点为基准)</td>
+</tr>
+<tr>
+<td style="text-align:left">10 (CARETUPBASE)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m35.png" alt="m35" srcset="https://www.runoob.com/images/m35.png?size=small, https://www.runoob.com/images/m35.png?size=medium 1.5x, https://www.runoob.com/images/m35.png?size=large 2x" data-title="m35" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">上箭头 (中间点为基准)</td>
+</tr>
+<tr>
+<td style="text-align:left">11 (CARETDOWNBASE)</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m36.png" alt="m36" srcset="https://www.runoob.com/images/m36.png?size=small, https://www.runoob.com/images/m36.png?size=medium 1.5x, https://www.runoob.com/images/m36.png?size=large 2x" data-title="m36" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">下箭头 (中间点为基准)</td>
+</tr>
+<tr>
+<td style="text-align:left">&ldquo;None&rdquo;, &quot; &quot; or &quot;&quot;</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">没有任何标记</td>
+</tr>
+<tr>
+<td style="text-align:left">&lsquo;$&hellip;$&rsquo;</td>
+<td style="text-align:left"><img loading="lazy" src="https://www.runoob.com/images/m37.png" alt="m37" srcset="https://www.runoob.com/images/m37.png?size=small, https://www.runoob.com/images/m37.png?size=medium 1.5x, https://www.runoob.com/images/m37.png?size=large 2x" data-title="m37" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></td>
+<td style="text-align:left">渲染指定的字符。例如 &ldquo;$f$&rdquo; 以字母 f 为标记。</td>
+</tr>
+</tbody>
+</table>
+<h6 id="辅助元素" class="heading-element"><span>0.0.0.9.3  辅助元素</span>
+  <a href="#%e8%be%85%e5%8a%a9%e5%85%83%e7%b4%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>label 图例</p>
+<p>xlabel()  ylabel()  坐标轴标签</p>
+<p>xlim()  ylim()刻度范围</p>
+<p>xtricks() ytricks() 刻度标签</p>
+<p>title()  标题</p>
+<p>legend() 图例</p>
+<p>grid() 网格</p>
+<p>annotate() 注释</p>
+<h6 id="绘图线" class="heading-element"><span>0.0.0.9.4  绘图线</span>
+  <a href="#%e7%bb%98%e5%9b%be%e7%ba%bf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>绘图过程如果我们自定义线的样式，包括线的类型、颜色和大小等。</p>
+<p>####### 线的类型</p>
+<p>线的类型可以使用 <strong>linestyle</strong> 参数来定义，简写为 <strong>ls</strong>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">简写</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lsquo;solid&rsquo; (默认)</td>
+<td style="text-align:left">&lsquo;-&rsquo;</td>
+<td style="text-align:left">实线</td>
+</tr>
+<tr>
+<td style="text-align:left">&lsquo;dotted&rsquo;</td>
+<td style="text-align:left">&lsquo;:&rsquo;</td>
+<td style="text-align:left">点虚线</td>
+</tr>
+<tr>
+<td style="text-align:left">&lsquo;dashed&rsquo;</td>
+<td style="text-align:left">&lsquo;&ndash;&rsquo;</td>
+<td style="text-align:left">破折线</td>
+</tr>
+<tr>
+<td style="text-align:left">&lsquo;dashdot&rsquo;</td>
+<td style="text-align:left">&lsquo;-.&rsquo;</td>
+<td style="text-align:left">点划线</td>
+</tr>
+<tr>
+<td style="text-align:left">&lsquo;None&rsquo;</td>
+<td style="text-align:left">&rsquo;&rsquo; 或 &rsquo; '</td>
+<td style="text-align:left">不画线</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ypoints</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>([<span style="color:#a6be9d">6</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">13</span>, <span style="color:#a6be9d">10</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">ypoints</span>, <span style="color:#58a1dd">linestyle</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;dotted&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>####### 线的颜色</p>
+<p>线的颜色可以使用 <strong>color</strong> 参数来定义，简写为 <strong>c</strong>。</p>
+<p>颜色类型：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">颜色标记</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">&lsquo;r&rsquo;</td>
+<td style="text-align:left">红色</td>
+</tr>
+<tr>
+<td style="text-align:left">&lsquo;g&rsquo;</td>
+<td style="text-align:left">绿色</td>
+</tr>
+<tr>
+<td style="text-align:left">&lsquo;b&rsquo;</td>
+<td style="text-align:left">蓝色</td>
+</tr>
+<tr>
+<td style="text-align:left">&lsquo;c&rsquo;</td>
+<td style="text-align:left">青色</td>
+</tr>
+<tr>
+<td style="text-align:left">&rsquo;m&rsquo;</td>
+<td style="text-align:left">品红</td>
+</tr>
+<tr>
+<td style="text-align:left">&lsquo;y&rsquo;</td>
+<td style="text-align:left">黄色</td>
+</tr>
+<tr>
+<td style="text-align:left">&lsquo;k&rsquo;</td>
+<td style="text-align:left">黑色</td>
+</tr>
+<tr>
+<td style="text-align:left">&lsquo;w&rsquo;</td>
+<td style="text-align:left">白色</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ypoints</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>([<span style="color:#a6be9d">6</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">13</span>, <span style="color:#a6be9d">10</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">ypoints</span>, <span style="color:#58a1dd">color</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;r&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><h6 id="轴标签和标题" class="heading-element"><span>0.0.0.9.5  轴标签和标题</span>
+  <a href="#%e8%bd%b4%e6%a0%87%e7%ad%be%e5%92%8c%e6%a0%87%e9%a2%98" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>使用 <strong>xlabel()</strong> 和 <strong>ylabel()</strong> 方法来设置 x 轴和 y 轴的标签。</p>
+<p>使用 <strong>title()</strong> 方法来设置标题。</p>
+<p>实例</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">x</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>([<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">3</span>, <span style="color:#a6be9d">4</span>])
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">y</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>([<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">9</span>, <span style="color:#a6be9d">16</span>])
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">xlabel</span>(<span style="color:#a6be9d">&#34;x - label&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ylabel</span>(<span style="color:#a6be9d">&#34;y - label&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><h6 id="网格线" class="heading-element"><span>0.0.0.9.6  网格线</span>
+  <a href="#%e7%bd%91%e6%a0%bc%e7%ba%bf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>我们可以使用 pyplot 中的 grid() 方法来设置图表中的网格线。</p>
+<p>grid() 方法语法格式如下：</p>
+<pre tabindex="0"><code>matplotlib.pyplot.grid(b=None, which=&#39;major&#39;, axis=&#39;both&#39;, )</code></pre><p><strong>参数说明：</strong></p>
+<ul>
+<li><strong>b</strong>：可选，默认为 None，可以设置布尔值，true 为显示网格线，false 为不显示，如果设置 **kwargs 参数，则值为 true。</li>
+<li><strong>which</strong>：可选，可选值有 &lsquo;major&rsquo;、&lsquo;minor&rsquo; 和 &lsquo;both&rsquo;，默认为 &lsquo;major&rsquo;，表示应用更改的网格线。</li>
+<li><strong>axis</strong>：可选，设置显示哪个方向的网格线，可以是取 &lsquo;both&rsquo;（默认），&lsquo;x&rsquo; 或 &lsquo;y&rsquo;，分别表示两个方向，x 轴方向或 y 轴方向。</li>
+<li>*<strong>*kwargs</strong>：可选，设置网格样式，可以是 ==color=&lsquo;r&rsquo;, linestyle=&rsquo;-&rsquo; 和 linewidth=2，分别表示网格线的颜色，样式和宽度==。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">x</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>([<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">3</span>, <span style="color:#a6be9d">4</span>])
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">y</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">array</span>([<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">9</span>, <span style="color:#a6be9d">16</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">title</span>(<span style="color:#a6be9d">&#34;RUNOOB grid() Test&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">xlabel</span>(<span style="color:#a6be9d">&#34;x - label&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ylabel</span>(<span style="color:#a6be9d">&#34;y - label&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">grid</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><h6 id="常用图形" class="heading-element"><span>0.0.0.9.7  常用图形</span>
+  <a href="#%e5%b8%b8%e7%94%a8%e5%9b%be%e5%bd%a2" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 线性图 plot</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>([<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">3</span>], [<span style="color:#a6be9d">3</span>, <span style="color:#a6be9d">6</span>, <span style="color:#a6be9d">9</span>], <span style="color:#a6be9d">&#39;-r&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>([<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">3</span>], [<span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">9</span>], <span style="color:#a6be9d">&#39;:g&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>####### 散点图 scatter</p>
+<p><code>scatter</code>函数用来绘制散点图</p>
+<ol>
+<li>这幅图包含了三组数据，每组数据都包含了20个随机坐标的位置</li>
+<li>参数<code>c</code>表示点的颜色，<code>s</code>是点的大小，<code>alpha</code>是透明度</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">N</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">20</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">scatter</span>(<span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#58a1dd">N</span>) <span style="color:#ff636f">*</span> <span style="color:#a6be9d">100</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#58a1dd">N</span>) <span style="color:#ff636f">*</span> <span style="color:#a6be9d">100</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">c</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;r&#39;</span>, <span style="color:#58a1dd">s</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">100</span>, <span style="color:#58a1dd">alpha</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0.5</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">scatter</span>(<span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#58a1dd">N</span>) <span style="color:#ff636f">*</span> <span style="color:#a6be9d">100</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#58a1dd">N</span>) <span style="color:#ff636f">*</span> <span style="color:#a6be9d">100</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">c</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;g&#39;</span>, <span style="color:#58a1dd">s</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">200</span>, <span style="color:#58a1dd">alpha</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0.5</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">scatter</span>(<span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#58a1dd">N</span>) <span style="color:#ff636f">*</span> <span style="color:#a6be9d">100</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#58a1dd">N</span>) <span style="color:#ff636f">*</span> <span style="color:#a6be9d">100</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">c</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;b&#39;</span>, <span style="color:#58a1dd">s</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">300</span>, <span style="color:#58a1dd">alpha</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0.5</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>####### 饼状图 pie</p>
+<p><code>pie</code>函数用来绘制饼状图</p>
+<ol>
+<li><code>data</code>是一组包含7个数据的随机数值</li>
+<li>图中的标签通过<code>labels</code>来指定</li>
+<li><code>autopct</code>指定了数值的精度格式</li>
+<li><code>plt.axis('equal')</code>设置了坐标轴大小一致</li>
+<li><code>plt.legend()</code>指明要绘制图例（见下图的右上角）</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>(每一块的比例，如果<code>sum(x) &gt; 1</code>会使用<code>sum(x)</code>归一化</td>
+</tr>
+<tr>
+<td><code>labels</code></td>
+<td>饼图外侧显示的说明文字</td>
+</tr>
+<tr>
+<td><code>explode</code></td>
+<td>(每一块)离开中心距离</td>
+</tr>
+<tr>
+<td><code>startangle</code></td>
+<td>起始绘制角度,默认图是从x轴正方向逆时针画起,如设定=90则从y轴正方向画起</td>
+</tr>
+<tr>
+<td><code>shadow</code></td>
+<td>在饼图下面画一个阴影。默认值：<code>False</code>，即不画阴影</td>
+</tr>
+<tr>
+<td><code>autopct</code></td>
+<td>控制饼图内百分比设置</td>
+</tr>
+<tr>
+<td><code>radius</code></td>
+<td>控制饼图半径，默认值为1</td>
+</tr>
+<tr>
+<td><code>wedgeprops</code></td>
+<td>字典类型，可选参数，默认值：<code>None</code>。参数字典传递给<code>wedge</code>对象用来画一个饼图。</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">labels</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;Mon&#39;</span>, <span style="color:#a6be9d">&#39;Tue&#39;</span>, <span style="color:#a6be9d">&#39;Wed&#39;</span>, <span style="color:#a6be9d">&#39;Thu&#39;</span>, <span style="color:#a6be9d">&#39;Fri&#39;</span>, <span style="color:#a6be9d">&#39;Sat&#39;</span>, <span style="color:#a6be9d">&#39;Sun&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#a6be9d">7</span>) <span style="color:#ff636f">*</span> <span style="color:#a6be9d">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">pie</span>(<span style="color:#58a1dd">data</span>, <span style="color:#58a1dd">labels</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">labels</span>, <span style="color:#58a1dd">autopct</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;</span><span style="color:#a6be9d">%1.1f%%</span><span style="color:#a6be9d">&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">axis</span>(<span style="color:#a6be9d">&#39;equal&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">legend</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>####### 柱形图 bar</p>
+<p><code>bar</code>函数用来绘制条形图。</p>
+<ol>
+<li>这幅图展示了一组包含7个随机数值的结果，每个数值是[0, 100]的随机数</li>
+<li>它们的颜色也是通过随机数生成的。<code>np.random.rand(N * 3).reshape(N, -1)</code>表示先生成21（N x 3）个随机数，然后将它们组装成7行，那么每行就是三个数，这对应了颜色的三个组成部分。如果不理解这行代码，请先学习一下<a href="https://paul.pub/numpy-tutorial/"target="_blank" rel="external nofollow noopener noreferrer">Python 机器学习库 NumPy 教程</a></li>
+<li><code>title</code>指定了图形的标题，<code>labels</code>指定了标签，<code>alpha</code>是透明度</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">N</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">7</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">x</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">arange</span>(<span style="color:#58a1dd">N</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">randint</span>(<span style="color:#58a1dd">low</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">high</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">100</span>, <span style="color:#58a1dd">size</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">N</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">colors</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#58a1dd">N</span> <span style="color:#ff636f">*</span> <span style="color:#a6be9d">3</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">reshape</span>(<span style="color:#58a1dd">N</span>, <span style="color:#ff636f">-</span><span style="color:#a6be9d">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">labels</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;Mon&#39;</span>, <span style="color:#a6be9d">&#39;Tue&#39;</span>, <span style="color:#a6be9d">&#39;Wed&#39;</span>, <span style="color:#a6be9d">&#39;Thu&#39;</span>, <span style="color:#a6be9d">&#39;Fri&#39;</span>, <span style="color:#a6be9d">&#39;Sat&#39;</span>, <span style="color:#a6be9d">&#39;Sun&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">title</span>(<span style="color:#a6be9d">&#34;Weekday Data&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">bar</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">data</span>, <span style="color:#58a1dd">alpha</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0.8</span>, <span style="color:#58a1dd">color</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">colors</span>, <span style="color:#58a1dd">tick_label</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">labels</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>####### 直方图 hist</p>
+<p><code>hist</code>函数用来绘制直方图。</p>
+<p><code>[np.random.randint(0, n, n) for n in [3000, 4000, 5000]]</code>生成了包含了三个数组的数组，这其中：</p>
+<ul>
+<li>第一个数组包含了3000个随机数，这些随机数的范围是 [0, 3000)</li>
+<li>第二个数组包含了4000个随机数，这些随机数的范围是 [0, 4000)</li>
+<li>第三个数组包含了5000个随机数，这些随机数的范围是 [0, 5000)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td>必选参数，绘图数据</td>
+</tr>
+<tr>
+<td><code>bins</code></td>
+<td>直方图的长条形数目，可选项，默认为<code>10</code></td>
+</tr>
+<tr>
+<td><code>normed</code></td>
+<td>是否将得到的直方图向量归一化，可选项，默认为<code>0</code>，代表不归一化，显示频数。<code>normed=1</code>，表示归一化，显示频率。</td>
+</tr>
+<tr>
+<td><code>facecolor</code></td>
+<td>长条形的颜色</td>
+</tr>
+<tr>
+<td><code>edgecolor</code></td>
+<td>长条形边框的颜色</td>
+</tr>
+<tr>
+<td><code>alpha</code></td>
+<td>透明度</td>
+</tr>
+</tbody>
+</table>
+<p>bins数组用来指定我们显示的直方图的边界，即：[0, 100) 会有一个数据点，[100, 500)会有一个数据点，以此类推。所以最终结果一共会显示7个数据点。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> [<span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">randint</span>(<span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">n</span>, <span style="color:#58a1dd">n</span>) <span style="color:#ff636f">for</span> <span style="color:#58a1dd">n</span> <span style="color:#ff636f">in</span> [<span style="color:#a6be9d">3000</span>, <span style="color:#a6be9d">4000</span>, <span style="color:#a6be9d">5000</span>]]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">labels</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;3K&#39;</span>, <span style="color:#a6be9d">&#39;4K&#39;</span>, <span style="color:#a6be9d">&#39;5K&#39;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">bins</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">100</span>, <span style="color:#a6be9d">500</span>, <span style="color:#a6be9d">1000</span>, <span style="color:#a6be9d">2000</span>, <span style="color:#a6be9d">3000</span>, <span style="color:#a6be9d">4000</span>, <span style="color:#a6be9d">5000</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">hist</span>(<span style="color:#58a1dd">data</span>, <span style="color:#58a1dd">bins</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">bins</span>, <span style="color:#58a1dd">label</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">labels</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">legend</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>####### 等高线图 contour</p>
+<p>创建等高线图主要使用 <code>contour</code> 和 <code>contourf</code> 函数。<code>contour</code> 函数绘制等高线，<code>contourf</code> 函数则会填充等高线之间的区域。</p>
+<p>contour</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">contour</span>(<span style="color:#58a1dd">X</span>, <span style="color:#58a1dd">Y</span>, <span style="color:#58a1dd">Z</span>, <span style="color:#58a1dd">levels</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">10</span>, <span style="color:#ff636f">**</span><span style="color:#58a1dd">kwargs</span>)</span></span></code></pre></div><p><strong><code>X, Y</code></strong>: 网格点坐标。</p>
+<p><strong><code>Z</code></strong>: 每个网格点的高度值。</p>
+<p><strong><code>levels</code></strong>: 等高线的数量或等高线的具体值列表。</p>
+<p>其他可选参数（<code>kwargs</code>）：线条样式、颜色等。</p>
+<p>contourf</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">contourf</span>(<span style="color:#58a1dd">X</span>, <span style="color:#58a1dd">Y</span>, <span style="color:#58a1dd">Z</span>, <span style="color:#58a1dd">levels</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">10</span>, <span style="color:#ff636f">**</span><span style="color:#58a1dd">kwargs</span>)</span></span></code></pre></div><p>与 <code>contour</code> 相同，但 <code>contourf</code> 会填充等高线之间的区域。</p>
+<p><strong><code>levels</code></strong>: 等高线的数量或等高线的具体值列表。</p>
+<ol>
+<li>
+<p>生成数据</p>
+<p>创建一个网格 <code>X</code>, <code>Y</code>，并计算对应的 <code>Z</code> 值。</p>
+</li>
+</ol>
+<pre tabindex="0"><code>##### 创建网格
+x = np.linspace(-5, 5, 100)
+y = np.linspace(-5, 5, 100)
+X, Y = np.meshgrid(x, y)  #它接受两个一维数组作为输入，并生成两个二维数组，分别表示在二维平面上的网格点的 X 坐标和 Y 坐标。
+
+##### 计算 Z 值
+Z = (X - 1)**2 + (Y - 1)**2</code></pre><ol>
+<li><strong>绘制等高线图</strong>：</li>
+</ol>
+<pre tabindex="0"><code>##### 绘制等高线图
+plt.contour(X, Y, Z)
+plt.title(&#39;Contour Plot&#39;)
+plt.xlabel(&#39;X axis&#39;)
+plt.ylabel(&#39;Y axis&#39;)
+plt.show()</code></pre><ol>
+<li><strong>绘制填充的等高线图</strong>：</li>
+</ol>
+<pre tabindex="0"><code>##### 绘制填充的等高线图
+plt.contourf(X, Y, Z)
+plt.title(&#39;Filled Contour Plot&#39;)
+plt.xlabel(&#39;X axis&#39;)
+plt.ylabel(&#39;Y axis&#39;)
+plt.colorbar()  # 添加颜色条
+plt.show()</code></pre><p>自定义等高线和颜色</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 自定义等高线级别和颜色</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">levels</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">linspace</span>(<span style="color:#58a1dd">Z</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">min</span>(), <span style="color:#58a1dd">Z</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">max</span>(), <span style="color:#a6be9d">7</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">contour</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">contour</span>(<span style="color:#58a1dd">X</span>, <span style="color:#58a1dd">Y</span>, <span style="color:#58a1dd">Z</span>, <span style="color:#58a1dd">levels</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">levels</span>, <span style="color:#58a1dd">colors</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;black&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">contourf</span>(<span style="color:#58a1dd">X</span>, <span style="color:#58a1dd">Y</span>, <span style="color:#58a1dd">Z</span>, <span style="color:#58a1dd">levels</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">levels</span>, <span style="color:#58a1dd">cmap</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;RdGy&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 添加颜色条</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">colorbar</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 添加等高线标签</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">clabel</span>(<span style="color:#58a1dd">contour</span>, <span style="color:#58a1dd">inline</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>, <span style="color:#58a1dd">fontsize</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">8</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">title</span>(<span style="color:#a6be9d">&#39;Custom Contour Plot&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">xlabel</span>(<span style="color:#a6be9d">&#39;X axis&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ylabel</span>(<span style="color:#a6be9d">&#39;Y axis&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>######## 绘制带有特定样式的等高线</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">contour</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">contour</span>(<span style="color:#58a1dd">X</span>, <span style="color:#58a1dd">Y</span>, <span style="color:#58a1dd">Z</span>, <span style="color:#58a1dd">levels</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">10</span>, <span style="color:#58a1dd">linewidths</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1.5</span>, <span style="color:#58a1dd">linestyles</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;dashed&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">contourf</span>(<span style="color:#58a1dd">X</span>, <span style="color:#58a1dd">Y</span>, <span style="color:#58a1dd">Z</span>, <span style="color:#58a1dd">levels</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">10</span>, <span style="color:#58a1dd">cmap</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;viridis&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 添加颜色条</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">colorbar</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 添加等高线标签</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">clabel</span>(<span style="color:#58a1dd">contour</span>, <span style="color:#58a1dd">inline</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>, <span style="color:#58a1dd">fontsize</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">8</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">title</span>(<span style="color:#a6be9d">&#39;Styled Contour Plot&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">xlabel</span>(<span style="color:#a6be9d">&#39;X axis&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ylabel</span>(<span style="color:#a6be9d">&#39;Y axis&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>######## 在等高线图上添加其他图形元素</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建等高线图</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">contour</span>(<span style="color:#58a1dd">X</span>, <span style="color:#58a1dd">Y</span>, <span style="color:#58a1dd">Z</span>, <span style="color:#58a1dd">levels</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">10</span>, <span style="color:#58a1dd">colors</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;black&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">contourf</span>(<span style="color:#58a1dd">X</span>, <span style="color:#58a1dd">Y</span>, <span style="color:#58a1dd">Z</span>, <span style="color:#58a1dd">levels</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">10</span>, <span style="color:#58a1dd">cmap</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;viridis&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 添加颜色条</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">colorbar</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 添加点和线</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">scatter</span>([<span style="color:#a6be9d">0</span>], [<span style="color:#a6be9d">0</span>], <span style="color:#58a1dd">color</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;red&#39;</span>)  <span style="color:#828b96;font-style:italic"># 在中心点绘制一个红色点</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>([<span style="color:#ff636f">-</span><span style="color:#a6be9d">5</span>, <span style="color:#a6be9d">5</span>], [<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">0</span>], <span style="color:#58a1dd">color</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;blue&#39;</span>, <span style="color:#58a1dd">linestyle</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;--&#39;</span>)  <span style="color:#828b96;font-style:italic"># 添加一条水平虚线</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">title</span>(<span style="color:#a6be9d">&#39;Contour Plot with Annotations&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">xlabel</span>(<span style="color:#a6be9d">&#39;X axis&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ylabel</span>(<span style="color:#a6be9d">&#39;Y axis&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>####### 雷达图 polar</p>
+<h6 id="animation-动态图" class="heading-element"><span>0.0.0.9.8  animation 动态图</span>
+  <a href="#animation-%e5%8a%a8%e6%80%81%e5%9b%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>1、初始化图形和数据</p>
+<p>创建图形对象，并设置初始数据。<code>plt.subplots()</code> 返回一个图形对象和一个坐标轴对象。<code>plt.plot([], [], 'ro')</code> 创建一个初始为空的红色圆点的 Line2D 对象。</p>
+<p>2、定义初始化函数</p>
+<p>初始化函数用于设置动画的背景，如==坐标轴范围==等。这里设置 x 轴范围为 <code>[0, 2π]</code>，y 轴范围为 <code>[-1, 1]</code>。</p>
+<p>3、定义更新函数</p>
+<p>更新函数在每一帧被调用，更新 xdata 和 ydata，并将新的数据设置到 Line2D 对象中。</p>
+<p>4、 创建动画对象</p>
+<p>使用 <code>FuncAnimation</code> 创建动画对象。参数包括图形对象、更新函数、帧序列、初始化函数和 blit 选项。</p>
+<p>5、 显示或保存动画</p>
+<p><code>plt.show()</code> 用于显示动画，<code>ani.save()</code> 用于保存动画。可以选择不同的 writer 保存不同格式的动画文件。</p>
+<p>####### 创建基本动画</p>
+<p>######## 1. 初始化图形和数据</p>
+<p>首先，我们需要设置图形对象和初始数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">fig</span>, <span style="color:#58a1dd">ax</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">xdata</span>, <span style="color:#58a1dd">ydata</span> <span style="color:#ff636f">=</span> [], []
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ln</span>, <span style="color:#ff636f">=</span> <span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>([], [], <span style="color:#a6be9d">&#39;ro&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">init</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ax</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">set_xlim</span>(<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">2</span><span style="color:#ff636f">*</span><span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">pi</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ax</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">set_ylim</span>(<span style="color:#ff636f">-</span><span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">ln</span>,</span></span></code></pre></div><p>######## 2. 更新函数</p>
+<p>更新函数用于更新每一帧中的数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">update</span>(<span style="color:#58a1dd">frame</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">xdata</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">append</span>(<span style="color:#58a1dd">frame</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ydata</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">append</span>(<span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sin</span>(<span style="color:#58a1dd">frame</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ln</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">set_data</span>(<span style="color:#58a1dd">xdata</span>, <span style="color:#58a1dd">ydata</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">ln</span>,</span></span></code></pre></div><p>######## 3. 创建动画对象</p>
+<p>使用 <code>FuncAnimation</code> 创建动画对象。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">ani</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">animation</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">FuncAnimation</span>(<span style="color:#58a1dd">fig</span>, 
+</span></span><span style="display:flex;"><span>                              <span style="color:#58a1dd">update</span>, 
+</span></span><span style="display:flex;"><span>                              <span style="color:#58a1dd">frames</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">linspace</span>(<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">2</span><span style="color:#ff636f">*</span><span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">pi</span>, <span style="color:#a6be9d">128</span>),   <span style="color:#58a1dd">frames作为参数传递到update函数</span>
+</span></span><span style="display:flex;"><span>                              <span style="color:#58a1dd">init_func</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">init</span>, 
+</span></span><span style="display:flex;"><span>                              <span style="color:#58a1dd">interval</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1000</span>，            <span style="color:#58a1dd">每帧之间的时间间隔</span>（<span style="color:#58a1dd">毫秒</span>）
+</span></span><span style="display:flex;"><span>                              <span style="color:#58a1dd">blit</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>,: <span style="color:#58a1dd">布尔值</span>，<span style="color:#58a1dd">表示是否只更新变化的部分</span>。
+</span></span><span style="display:flex;"><span>                              <span style="color:#58a1dd">repeat</span><span style="color:#ff636f">=</span><span style="color:#ff636f">False</span>,<span style="color:#58a1dd">不重复</span>，<span style="color:#58a1dd">画完就结束</span>，<span style="color:#58a1dd">默认重复</span>
+</span></span><span style="display:flex;"><span>                             )</span></span></code></pre></div><p>######## 4. 显示或保存动画</p>
+<p>可以使用 <code>plt.show()</code> 来显示动画，或者使用 <code>ani.save()</code> 将动画保存为视频文件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 保存动画为 mp4 文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ani</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">save</span>(<span style="color:#a6be9d">&#39;sine_wave_animation.mp4&#39;</span>, <span style="color:#58a1dd">writer</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;ffmpeg&#39;</span>)</span></span></code></pre></div><p>####### 高级用法</p>
+<p>######## 动画中的参数</p>
+<ul>
+<li><strong><code>fig</code></strong>: Matplotlib 图形对象。</li>
+<li><strong><code>func</code></strong>: 更新函数。</li>
+<li><strong><code>frames</code></strong>: 动画的帧数据，可以是整数或可迭代对象。</li>
+<li><strong><code>init_func</code></strong>: 初始化函数，用于设置背景。</li>
+<li><strong><code>blit</code></strong>: 布尔值，表示是否只更新变化的部分。</li>
+</ul>
+<p>######## 动画的间隔和重复</p>
+<p>可以控制每帧之间的间隔时间和动画是否重复。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">ani</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">animation</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">FuncAnimation</span>(<span style="color:#58a1dd">fig</span>, <span style="color:#58a1dd">update</span>, <span style="color:#58a1dd">frames</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">linspace</span>(<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">2</span><span style="color:#ff636f">*</span><span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">pi</span>, <span style="color:#a6be9d">128</span>),
+</span></span><span style="display:flex;"><span>                              <span style="color:#58a1dd">init_func</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">init</span>, <span style="color:#58a1dd">blit</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>, <span style="color:#58a1dd">interval</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">50</span>, <span style="color:#58a1dd">repeat</span><span style="color:#ff636f">=</span><span style="color:#ff636f">False</span>)</span></span></code></pre></div><ul>
+<li><strong><code>interval</code></strong>: 每帧之间的时间间隔（毫秒）。</li>
+<li><strong><code>repeat</code></strong>: 布尔值，表示动画是否循环播放。</li>
+</ul>
+<p>######## 使用不同的动画 Writer</p>
+<p>Matplotlib 支持多种动画 Writer，例如 <code>ffmpeg</code> 和 <code>imagemagick</code>。可以根据需要选择合适的 Writer。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">ani</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">save</span>(<span style="color:#a6be9d">&#39;sine_wave_animation.gif&#39;</span>, <span style="color:#58a1dd">writer</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;imagemagick&#39;</span>)</span></span></code></pre></div><p>####### 实例：创建一个散点动画</p>
+<p>下面是一个创建随机散点动画的实例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.animation</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">animation</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">fig</span>, <span style="color:#58a1dd">ax</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">x</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#a6be9d">100</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">y</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#a6be9d">100</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">scat</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ax</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">scatter</span>(<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">init</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ax</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">set_xlim</span>(<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ax</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">set_ylim</span>(<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">scat</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">update</span>(<span style="color:#58a1dd">frame</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">x</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#a6be9d">100</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">y</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rand</span>(<span style="color:#a6be9d">100</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">scat</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">set_offsets</span>(<span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">c_</span>[<span style="color:#58a1dd">x</span>, <span style="color:#58a1dd">y</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">scat</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ani</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">animation</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">FuncAnimation</span>(<span style="color:#58a1dd">fig</span>, <span style="color:#58a1dd">update</span>, <span style="color:#58a1dd">frames</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">50</span>, <span style="color:#58a1dd">init_func</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">init</span>, <span style="color:#58a1dd">blit</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>, <span style="color:#58a1dd">interval</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">100</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div><p>######## 创建一个沿着sin函数移动的点</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">numpy</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">np</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">matplotlib.pyplot</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">plt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">from</span> <span style="color:#58a1dd">matplotlib.animation</span> <span style="color:#ff636f">import</span> <span style="color:#58a1dd">FuncAnimation</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">fig</span>, <span style="color:#58a1dd">ax</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">subplots</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 初始化点的位置</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">xdata</span>, <span style="color:#58a1dd">ydata</span> <span style="color:#ff636f">=</span> [], []
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ln</span>, <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ax</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">plot</span>([], [], <span style="color:#a6be9d">&#39;ro&#39;</span>)  <span style="color:#828b96;font-style:italic"># 创建一个红色的点，必须</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 初始化函数</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">init</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ax</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">set_xlim</span>(<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">2</span> <span style="color:#ff636f">*</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">pi</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ax</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">set_ylim</span>(<span style="color:#ff636f">-</span><span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">ln</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 更新函数</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">update</span>(<span style="color:#58a1dd">frame</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">xdata</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">append</span>(<span style="color:#58a1dd">frame</span>) <span style="color:#828b96;font-style:italic">#增加点的数目</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ydata</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">append</span>(<span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">sin</span>(<span style="color:#58a1dd">frame</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ln</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">set_data</span>(<span style="color:#58a1dd">xdata</span>, <span style="color:#58a1dd">ydata</span>) <span style="color:#828b96;font-style:italic"># 更新点的数据</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 限制点的数量，以便在图上移动</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> <span style="color:#58a1dd">len</span>(<span style="color:#58a1dd">xdata</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">50</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">xdata</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">pop</span>(<span style="color:#a6be9d">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ydata</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">pop</span>(<span style="color:#a6be9d">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">ln</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 创建动画</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ani</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">FuncAnimation</span>(<span style="color:#58a1dd">fig</span>, <span style="color:#58a1dd">update</span>, <span style="color:#58a1dd">frames</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">linspace</span>(<span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">2</span> <span style="color:#ff636f">*</span> <span style="color:#58a1dd">np</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">pi</span>, <span style="color:#a6be9d">128</span>),
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">init_func</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">init</span>, <span style="color:#58a1dd">blit</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ani</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">save</span>(<span style="color:#a6be9d">&#39;sincurve.gif&#39;</span>) <span style="color:#828b96;font-style:italic">#保存动画</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 显示动画</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">plt</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">show</span>()</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E8%AF%AD%E8%A8%80/" class="post-tag" title="Tags - 语言">语言</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/%E5%9F%BA%E7%A1%80/95/" class="post-nav-item" rel="prev" title="Python 基础算法"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Python 基础算法</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/python/python%E5%AE%89%E5%85%A8/32/" class="post-nav-item" rel="next" title="Python SSTI Bypass">Python SSTI Bypass<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

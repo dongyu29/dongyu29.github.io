@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Java反射 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="java反射">
+  <meta itemprop="datePublished" content="2024-08-15T09:32:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:32:01+08:00">
+  <meta itemprop="wordCount" content="464">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/13/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="java反射">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:32:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:32:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="java反射">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/13/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/14/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/11/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "java反射",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%9F%BA%E7%A1%80\/13\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  464 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%9F%BA%E7%A1%80\/13\/","datePublished": "2024-08-15T09:32:01+08:00","dateModified": "2024-08-15T09:32:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Java反射</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Java反射</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:32:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="464 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>反射定义</p>
+<p>对象可以通过反射获取他的类，类可以通过反射拿到所有⽅法（包括私有） 通过java语言中的反射机制可以操作字节码文件，可以读和修改字节码文件</p>
+<p>Person p = new Person(&ldquo;zhangsan&rdquo;,20); 该句话都做了什么事情？</p>
+<p>ps:forname第二个参数为true时会加载执行静态函数的代码。</p>
+<pre tabindex="0"><code> 1，因为new用到了Person.class.所以会先找到Person.class文件并加载到内存中。 
+ 
+2，执行该类中的static代码块，如果有的话，给Person.class类进行初始化。 
+ 
+3，在堆内存中开辟空间，分配内存地址。 
+ 
+4，在堆内存中建立对象的特有属性。并进行默认初始化。 
+ 
+5，对属性进行显示初始化。 
+ 
+6，对对象进行构造代码块初始化。 
+ 
+7，对对象进行对应的构造函数初始化。 
+ 
+8，将内存地址付给栈内存中的p变量。</code></pre><h5 id="反射应用" class="heading-element"><span>0.0.0.1  反射应用</span>
+  <a href="#%e5%8f%8d%e5%b0%84%e5%ba%94%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>在正常情况下，除了系统类，如果我们想拿到一个类，需要先import才能使用，而使用forName就不需要，这样对于我们的攻击者来说就十分有利，我们可以加载任意类，而这正是反射的妙用，可以通过精妙的构造执行恶意的代码。获得类以后之后我们可以使用反射获取类里的属性、方法，也可以实例化类来调用方法。</p>
+</blockquote>
+<ul>
+<li>
+<p>反射的作用:</p>
+<p>让java具有动态性修改已有对象的属性</p>
+<p>动态生成对象</p>
+<p>动态调用方法</p>
+<p>操作内部类和私有方法</p>
+</li>
+<li>
+<p>在反序列化漏洞中的应用:</p>
+<p>定制需要的对象</p>
+<p>通过invoke调用除了同名函数以外的函数通过Class类创建对象，引入不能序列化的类</p>
+</li>
+</ul>
+<h6 id="获取类" class="heading-element"><span>0.0.0.1.1  获取类</span>
+  <a href="#%e8%8e%b7%e5%8f%96%e7%b1%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### forName()方法</p>
+<p>==只需要知道类名==，在加载JDBC的时候会采用</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">test1</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#a6be9d">&#34;java.lang.Runtime&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">name</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>####### .class直接获取</p>
+<p>使用<code>.class</code>去获取对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">test1</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Runtime</span>.<span style="color:#58a1dd">class</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">name</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>####### getClass()方法</p>
+<p><code>obj.getClass()</code> 如果==上下⽂中存在某个类的实例 obj== ，那么我们可以直接通过 obj.getClass() 来获取它的类</p>
+<p>这个方法返回的是Class，第一个字母是大写的这种，Class是class的抽象，class是Class的实例</p>
+<p>getClass是一个final方法返回Class的泛型</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">test1</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Runtime</span> <span style="color:#58a1dd">rt</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Runtime</span>.<span style="color:#58a1dd">getRuntime</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">rt</span>.<span style="color:#58a1dd">getClass</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">name</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>####### getSystemClassLoader().loadClass()</p>
+<p>这个方法和forName类似，只要有类名就可以了，但是区别在于，==forName的静态JVM会装载类，并执行static()中的代码==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">getSystemClassLoader</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ClassLoader</span>.<span style="color:#58a1dd">getSystemClassLoader</span>().<span style="color:#58a1dd">loadClass</span>(<span style="color:#a6be9d">&#34;java.lang.Runtime&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">name</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h6 id="获取类方法" class="heading-element"><span>0.0.0.1.2  获取类方法</span>
+  <a href="#%e8%8e%b7%e5%8f%96%e7%b1%bb%e6%96%b9%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### getDeclaredMethods</p>
+<p>返回类或接口声明的所有方法，包括public、protected、private和默认方法，但是==不包括继承的方法==</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Method</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">getDeclaredMethods</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#a6be9d">&#34;java.lang.Runtime&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">name</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Method</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">name</span>.<span style="color:#58a1dd">getDeclaredMethods</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">for</span>(<span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">x</span>:<span style="color:#58a1dd">m</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">x</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>####### getDeclaredMethod</p>
+<p>获取特定的方法，第一个参数是方法名，第二个参数是该方法的参数对应的class对象，例如这里Runtime的exec方法参数为一个String，所以这里的第二个参数是String.class</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Method</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">getDeclaredMethod</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span>, <span style="color:#58a1dd">NoSuchMethodException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#a6be9d">&#34;java.lang.Runtime&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">name</span>.<span style="color:#58a1dd">getDeclaredMethod</span>(<span style="color:#a6be9d">&#34;exec&#34;</span>,<span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">class</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">m</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>####### getMethods</p>
+<p>返回某个类==所有的public方法，包括继承类的public方法==</p>
+<p>getMethod的作用是通过反射获取一个类的某个特定的公有方法，在调用 getMethod 的时候，我们要注意传给他你需要获取的函数的参数类型列表。</p>
+<p>####### getMethod</p>
+<p>参数同理getDeclaredMethod</p>
+<h6 id="获取成员变量类属性" class="heading-element"><span>0.0.0.1.3  获取成员变量（类属性）</span>
+  <a href="#%e8%8e%b7%e5%8f%96%e6%88%90%e5%91%98%e5%8f%98%e9%87%8f%e7%b1%bb%e5%b1%9e%e6%80%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>同理Method的那几个方法</p>
+<p>获取属性以后可以用set、setAccessiable方法对属性进行修改</p>
+<p>####### getDeclaredFields</p>
+<p>获取类的成员的所有变量数组，但是不包括父类的</p>
+<p>####### getDeclaredField(String name)</p>
+<p>获取特定的，参数是想要的方法的名称</p>
+<p>####### getFields()</p>
+<p>同理，只能获得public的，但是包括了父类的</p>
+<p>####### getField(String name)</p>
+<p>同理，参数是想要的方法的名称</p>
+<h6 id="获取构造函数constructor" class="heading-element"><span>0.0.0.1.4  获取构造函数Constructor</span>
+  <a href="#%e8%8e%b7%e5%8f%96%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0constructor" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">Constructor</span><span style="color:#ff636f">&lt;?&gt;[]</span> <span style="color:#58a1dd">getConstructors</span>() ：<span style="color:#58a1dd">只返回public构造函数</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Constructor</span><span style="color:#ff636f">&lt;?&gt;[]</span> <span style="color:#58a1dd">getDeclaredConstructors</span>() ：<span style="color:#58a1dd">返回所有构造函数</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Constructor</span><span style="color:#ff636f">&lt;&gt;</span> <span style="color:#58a1dd">getConstructor</span>(<span style="color:#58a1dd">类</span><span style="color:#ff636f">&lt;?&gt;</span>... <span style="color:#58a1dd">parameterTypes</span>) : <span style="color:#58a1dd">匹配和参数配型相符的public构造函数</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Constructor</span><span style="color:#ff636f">&lt;&gt;</span> <span style="color:#58a1dd">getDeclaredConstructor</span>(<span style="color:#58a1dd">类</span><span style="color:#ff636f">&lt;?&gt;</span>... <span style="color:#58a1dd">parameterTypes</span>) ： <span style="color:#58a1dd">匹配和参数配型相符的构造函数</span></span></span></code></pre></div><p>后面两个方法的参数是对于方法的参数的类型的class对象，和Method的那个类似，例如<code>String.class</code></p>
+<h6 id="反射创建类对象" class="heading-element"><span>0.0.0.1.5  反射创建类对象</span>
+  <a href="#%e5%8f%8d%e5%b0%84%e5%88%9b%e5%bb%ba%e7%b1%bb%e5%af%b9%e8%b1%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### newInstance</p>
+<p>可以通过反射来生成实例化对象，一般我们使用Class对象的<code>newInstance()</code>方法来进行创建类对象</p>
+<p>创建的方法就是：只需要通过forname方法获取到的class对象中进行newInstance方法创建即可</p>
+<p>class.newInstance()的作用就是==调用这个类的无参构造函数==，有时候使用newInstance不成功可能是因为类没有无参构造函数或者类构造函数是私有的，想要调用有参构造函数的话可以先去获取它的构造函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">Class</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#a6be9d">&#34;com.reflect.MethodTest&#34;</span>); <span style="color:#828b96;font-style:italic">// 创建Class对象</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">m1</span> <span style="color:#ff636f">=</span>  <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">newInstance</span>(); <span style="color:#ff636f">//</span> <span style="color:#58a1dd">创建类对象</span></span></span></code></pre></div><p>ps:<code>Class.newInstance()</code> 已被弃用，建议使用 <code>c.getDeclaredConstructor().newInstance()</code> 代替。</p>
+<p>####### invoke</p>
+<p>invoke方法位于java.lang.reflect.Method类中，用于执行某个的对象的目标方法,一般会和getMethod方法配合进行调用。</p>
+<p>使用用法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">obj</span>, <span style="color:#58a1dd">Object</span>... <span style="color:#58a1dd">args</span>)</span></span></code></pre></div><p>第一个参数为类的实例，第二个参数为相应函数中的参数</p>
+<p>obj：从中调用底层方法的对象，必须是实例化对象 args： 用于方法的调用，是一个object的数组，参数有可能是多个</p>
+<p>但需要注意的是，invoke方法第一个参数并不是固定的：</p>
+<p>invoke 的作用是执行方法，它的==第一个参数不是固定的==，当这个方法是一个普通方法时，那么第一个参数是类对象；如果这个方法是一个静态方法，那么第一个参数是类。其实这是因为我们正常执行方法是 [1].method([2], [3], [4]…) ，而在反射里就是method.invoke([1], [2], [3], [4]…) 。</p>
+<ul>
+<li><strong>如果调用这个方法是普通方法，第一个参数就是类对象；</strong></li>
+<li><strong>如果调用这个方法是静态方法，第一个参数就是类；</strong></li>
+</ul>
+<p>通过一个例子去理解</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">com.test</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.InvocationTargetException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Method</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">Invoke</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span>, <span style="color:#58a1dd">InstantiationException</span>, <span style="color:#58a1dd">IllegalAccessException</span>, <span style="color:#58a1dd">NoSuchMethodException</span>, <span style="color:#58a1dd">InvocationTargetException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#a6be9d">&#34;com.test.Invoke&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">o</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">newInstance</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">getMethod</span>(<span style="color:#a6be9d">&#34;test&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">m</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">o</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">test</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;测试成功&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>简单来说就是这样  <code>方法.invoke(类或类对象)</code></p>
+<p>==先forName拿到Class，再newInstance获取类对象，再getMethod获取方法，然后调用==</p>
+<h5 id="runtime的rce例子访问限制突破" class="heading-element"><span>0.0.0.2  Runtime的rce例子（访问限制突破）</span>
+  <a href="#runtime%e7%9a%84rce%e4%be%8b%e5%ad%90%e8%ae%bf%e9%97%ae%e9%99%90%e5%88%b6%e7%aa%81%e7%a0%b4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>Runtime类里面有一个exec方法，可以执行命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.InvocationTargetException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Method</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">Exec</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span>, <span style="color:#58a1dd">InstantiationException</span>, <span style="color:#58a1dd">IllegalAccessException</span>, <span style="color:#58a1dd">NoSuchMethodException</span>, <span style="color:#58a1dd">InvocationTargetException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#a6be9d">&#34;java.lang.Runtime&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">o</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">newInstance</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">getMethod</span>(<span style="color:#a6be9d">&#34;exec&#34;</span>,<span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">class</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">m</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">o</span>,<span style="color:#a6be9d">&#34;/System/Applications/Calculator.app/Contents/MacOS/Calculator&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>但是发现报错了</p>
+<p>出现这个问题的原因：</p>
+<ol>
+<li>使用的类没有无参构造函数</li>
+<li>使用的类构造函数是私有的</li>
+</ol>
+<p>那么解决方案就是<code>setAccessible(true);</code>，用这个去突破访问限制</p>
+<blockquote>
+<p>Java.lang.reflect.AccessibleObject类是Field，Method和Constructor类对象的基类，可以提供将反射对象标记为使用它抑制摸人Java访问控制检查的功能，同时上述的反射类中的Field，Method和Constructor继承自AccessibleObject。所以我们在这些类方法基础上调用setAccessible()方法，既可对这些私有字段进行操作</p>
+</blockquote>
+<p>简单来说，私有的属性、方法、构造方法，可以通过这个去突破限制，<code>xxx.setAccessible(true)</code> 可以看到Runtime的构造方法是private的</p>
+<p>那么这里我们就可以这么去突破限制 先获取构造方法，然后setAccessible获取访问权限 然后再最后invoke里面，第一个参数写成con.newInstance()</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Constructor</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.InvocationTargetException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Method</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">Exec</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span>, <span style="color:#58a1dd">NoSuchMethodException</span>, <span style="color:#58a1dd">InvocationTargetException</span>, <span style="color:#58a1dd">IllegalAccessException</span>, <span style="color:#58a1dd">InstantiationException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#a6be9d">&#34;java.lang.Runtime&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Constructor</span> <span style="color:#58a1dd">con</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">getDeclaredConstructor</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">con</span>.<span style="color:#58a1dd">setAccessible</span>(<span style="color:#ff636f">true</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">getMethod</span>(<span style="color:#a6be9d">&#34;exec&#34;</span>,<span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">class</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">m</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">con</span>.<span style="color:#58a1dd">newInstance</span>(),<span style="color:#a6be9d">&#34;/System/Applications/Calculator.app/Contents/MacOS/Calculator&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>这里有一个疑问，如果把con.newInstance单独提取出来，他打开计算器不会显示出来，但是后台的确是启动了，不知道啥原因</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Constructor</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.InvocationTargetException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Method</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">Exec</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span>, <span style="color:#58a1dd">NoSuchMethodException</span>, <span style="color:#58a1dd">InvocationTargetException</span>, <span style="color:#58a1dd">IllegalAccessException</span>, <span style="color:#58a1dd">InstantiationException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">forName</span>(<span style="color:#a6be9d">&#34;java.lang.Runtime&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Constructor</span> <span style="color:#58a1dd">con</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">getDeclaredConstructor</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">con</span>.<span style="color:#58a1dd">setAccessible</span>(<span style="color:#ff636f">true</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">o</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">con</span>.<span style="color:#58a1dd">newInstance</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">getMethod</span>(<span style="color:#a6be9d">&#34;exec&#34;</span>,<span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">class</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">m</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">o</span>,<span style="color:#a6be9d">&#34;/System/Applications/Calculator.app/Contents/MacOS/Calculator&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h5 id="总结" class="heading-element"><span>0.0.0.3  总结</span>
+  <a href="#%e6%80%bb%e7%bb%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>反射中常用的几个重要方法：</p>
+<ul>
+<li>获取类的⽅法： forName</li>
+<li>实例化类对象的⽅法： newInstance  (调用无参构造函数)</li>
+<li>获取函数的⽅法： getMethod</li>
+<li>执⾏函数的⽅法： invoke</li>
+<li>限制突破方法：setAccessible</li>
+</ul>
+<p>在实际利用场景当中，我们利用利用Java反射机制来绕过一些安全权限机制检查，如获取private权限的方法和属性。本质就是我们绕过访问安全检查。所以通过java反射机制的学习，能够为我们为我们后面的java漏洞分析调试，java漏洞poc测试和服务端模板引擎注入等有着十分重要的意义。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:32:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/14/" class="post-nav-item" rel="prev" title="Java类加载"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Java类加载</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/11/" class="post-nav-item" rel="next" title="Java代理">Java代理<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

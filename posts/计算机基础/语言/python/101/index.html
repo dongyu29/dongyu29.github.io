@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Python IO - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 语言' />
+  <meta itemprop="name" content="python IO">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="699">
+  <meta itemprop="keywords" content="计算机基础,语言"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/101/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="python IO">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="语言">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="python IO">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/python/101/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/python/python%E5%AE%89%E5%85%A8/30/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/python/python%E5%AE%89%E5%85%A8/29/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "python IO",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/101\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 语言","wordcount":  699 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/python\/101\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Python IO</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Python IO</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="699 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 700 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="json" class="heading-element"><span>0.0.0.1  JSON</span>
+  <a href="#json" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>使用 JSON 函数需要导入 json 库：<strong>import json</strong>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">函数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">json.dumps</td>
+<td style="text-align:left">将 Python 对象编码成 JSON 字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">json.loads</td>
+<td style="text-align:left">将已编码的 JSON 字符串解码为 Python 对象</td>
+</tr>
+</tbody>
+</table>
+<h6 id="jsondumps" class="heading-element"><span>0.0.0.1.1  json.dumps</span>
+  <a href="#jsondumps" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>json.dumps 用于将 Python 对象编码成 JSON 字符串。</p>
+<p>语法</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">json</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dumps</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#58a1dd">skipkeys</span><span style="color:#ff636f">=</span><span style="color:#ff636f">False</span>, <span style="color:#58a1dd">ensure_ascii</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>, <span style="color:#58a1dd">check_circular</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>, <span style="color:#58a1dd">allow_nan</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>, <span style="color:#58a1dd">cls</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">indent</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">separators</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">encoding</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;utf-8&#34;</span>, <span style="color:#58a1dd">default</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">sort_keys</span><span style="color:#ff636f">=</span><span style="color:#ff636f">False</span>, <span style="color:#ff636f">**</span><span style="color:#58a1dd">kw</span>)</span></span></code></pre></div><p>python 原始类型向 json 类型的转化对照表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Python</th>
+<th style="text-align:left">JSON</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">dict</td>
+<td style="text-align:left">object</td>
+</tr>
+<tr>
+<td style="text-align:left">list, tuple</td>
+<td style="text-align:left">array</td>
+</tr>
+<tr>
+<td style="text-align:left">str, unicode</td>
+<td style="text-align:left">string</td>
+</tr>
+<tr>
+<td style="text-align:left">int, long, float</td>
+<td style="text-align:left">number</td>
+</tr>
+<tr>
+<td style="text-align:left">True</td>
+<td style="text-align:left">true</td>
+</tr>
+<tr>
+<td style="text-align:left">False</td>
+<td style="text-align:left">false</td>
+</tr>
+<tr>
+<td style="text-align:left">None</td>
+<td style="text-align:left">null</td>
+</tr>
+</tbody>
+</table>
+<h6 id="jsonloads" class="heading-element"><span>0.0.0.1.2  json.loads</span>
+  <a href="#jsonloads" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>json.loads 用于解码 JSON 数据。该函数返回 Python 字段的数据类型。</p>
+<p>语法</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">json</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">loads</span>(<span style="color:#58a1dd">s</span>[, <span style="color:#58a1dd">encoding</span>[, <span style="color:#58a1dd">cls</span>[, <span style="color:#58a1dd">object_hook</span>[, <span style="color:#58a1dd">parse_float</span>[, <span style="color:#58a1dd">parse_int</span>[, <span style="color:#58a1dd">parse_constant</span>[, <span style="color:#58a1dd">object_pairs_hook</span>[, <span style="color:#ff636f">**</span><span style="color:#58a1dd">kw</span>]]]]]]]])</span></span></code></pre></div><p>json 类型转换到 python 的类型对照表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">JSON</th>
+<th style="text-align:left">Python</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">object</td>
+<td style="text-align:left">dict</td>
+</tr>
+<tr>
+<td style="text-align:left">array</td>
+<td style="text-align:left">list</td>
+</tr>
+<tr>
+<td style="text-align:left">string</td>
+<td style="text-align:left">unicode</td>
+</tr>
+<tr>
+<td style="text-align:left">number (int)</td>
+<td style="text-align:left">int, long</td>
+</tr>
+<tr>
+<td style="text-align:left">number (real)</td>
+<td style="text-align:left">float</td>
+</tr>
+<tr>
+<td style="text-align:left">true</td>
+<td style="text-align:left">True</td>
+</tr>
+<tr>
+<td style="text-align:left">false</td>
+<td style="text-align:left">False</td>
+</tr>
+<tr>
+<td style="text-align:left">null</td>
+<td style="text-align:left">None</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">json</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">sampleJson</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;&#34;&#34;{
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">   &#34;company&#34;:{
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">      &#34;employee&#34;:{
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">         &#34;name&#34;:&#34;emma&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">         &#34;payble&#34;:{
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">            &#34;salary&#34;:7000,
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">            &#34;bonus&#34;:800
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">         }
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">      }
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">   }
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">}&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">json</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">loads</span>(<span style="color:#58a1dd">sampleJson</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">data</span>[<span style="color:#a6be9d">&#39;company&#39;</span>][<span style="color:#a6be9d">&#39;employee&#39;</span>][<span style="color:#a6be9d">&#39;payble&#39;</span>][<span style="color:#a6be9d">&#39;salary&#39;</span>])</span></span></code></pre></div><h5 id="文件读写" class="heading-element"><span>0.0.0.2  文件读写</span>
+  <a href="#%e6%96%87%e4%bb%b6%e8%af%bb%e5%86%99" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="文件操作模式" class="heading-element"><span>0.0.0.2.1  文件操作模式</span>
+  <a href="#%e6%96%87%e4%bb%b6%e6%93%8d%e4%bd%9c%e6%a8%a1%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><table>
+<thead>
+<tr>
+<th style="text-align:left">模式</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">t</td>
+<td style="text-align:left">文本模式 (默认)。</td>
+</tr>
+<tr>
+<td style="text-align:left">x</td>
+<td style="text-align:left">写模式，新建一个文件，如果==该文件已存在则会报错==。</td>
+</tr>
+<tr>
+<td style="text-align:left">b</td>
+<td style="text-align:left">二进制模式。</td>
+</tr>
+<tr>
+<td style="text-align:left">+</td>
+<td style="text-align:left">打开一个文件进行更新(==可读可写==)。</td>
+</tr>
+<tr>
+<td style="text-align:left">U</td>
+<td style="text-align:left">通用换行模式（不推荐）。</td>
+</tr>
+<tr>
+<td style="text-align:left">r</td>
+<td style="text-align:left">以只读方式打开文件。文件的指针将会放在文件的开头。这是默认模式。</td>
+</tr>
+<tr>
+<td style="text-align:left">rb</td>
+<td style="text-align:left">以二进制格式打开一个文件用于只读。文件指针将会放在文件的开头。这是默认模式。一般用于==非文本文件如图片==等。</td>
+</tr>
+<tr>
+<td style="text-align:left">r+</td>
+<td style="text-align:left">打开一个文件用于==读写==。文件指针将会放在文件的开头。</td>
+</tr>
+<tr>
+<td style="text-align:left">rb+</td>
+<td style="text-align:left">以二进制格式打开一个文件用于==读写==。文件指针将会放在文件的开头。一般用于非文本文件如图片等。</td>
+</tr>
+<tr>
+<td style="text-align:left">w</td>
+<td style="text-align:left">打开一个文件只用于写入。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td style="text-align:left">wb</td>
+<td style="text-align:left">以二进制格式打开一个文件只用于写入。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。一般用于非文本文件如图片等。</td>
+</tr>
+<tr>
+<td style="text-align:left">w+</td>
+<td style="text-align:left">打开一个文件用于==读写==。如果该文件已存在则打开文件，并从开头开始编辑，即==原有内容会被删除==。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td style="text-align:left">wb+</td>
+<td style="text-align:left">以二进制格式打开一个文件用于读写。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。一般用于非文本文件如图片等。</td>
+</tr>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</td>
+</tr>
+<tr>
+<td style="text-align:left">ab</td>
+<td style="text-align:left">以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</td>
+</tr>
+<tr>
+<td style="text-align:left">a+</td>
+<td style="text-align:left">打开一个文件用于读写。如果该文件已存在，文件指针将会放在文件的结尾。文件打开时会是追加模式。如果该文件不存在，创建新文件用于读写。</td>
+</tr>
+<tr>
+<td style="text-align:left">ab+</td>
+<td style="text-align:left">以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写。</td>
+</tr>
+</tbody>
+</table>
+<h6 id="读写text数据" class="heading-element"><span>0.0.0.2.2  读写text数据</span>
+  <a href="#%e8%af%bb%e5%86%99text%e6%95%b0%e6%8d%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">filename</span>, <span style="color:#a6be9d">&#39;rt&#39;</span>, <span style="color:#58a1dd">encoding</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;utf-8&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">f</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">read</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">filename</span>, <span style="color:#a6be9d">&#39;rt&#39;</span>, <span style="color:#58a1dd">encoding</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;utf-8&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">line</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">filename</span>, <span style="color:#a6be9d">&#39;wt&#39;</span>, <span style="color:#58a1dd">encoding</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;utf-8&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">f</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">write</span>(<span style="color:#58a1dd">text1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">filename</span>, <span style="color:#a6be9d">&#39;wt&#39;</span>, <span style="color:#58a1dd">encoding</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;utf-8&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 也可以使用print函数，指定file参数即可</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">text1</span>,<span style="color:#58a1dd">file</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">f</span>)</span></span></code></pre></div><p>如果是追加模式，<strong>wt</strong>换成<strong>at</strong>即可。</p>
+<p>使用<code>sys.getdefaultencoding()</code>可以获取到系统默认的编码方式，一般是<strong>utf-8</strong>，尽量使用<code>with</code>来操作文件，因为它自动帮你管理了文件的打开和关闭，如果不用with，自己不要忘记了关闭文件。</p>
+<h6 id="读写二进制数据" class="heading-element"><span>0.0.0.2.3  读写二进制数据</span>
+  <a href="#%e8%af%bb%e5%86%99%e4%ba%8c%e8%bf%9b%e5%88%b6%e6%95%b0%e6%8d%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>在Python中，<code>b'Hello World'</code> 表示一个字节字符串。字节字符串是类似于文本字符串的数据类型，但是它们以字节为单位存储数据，而不是Unicode字符。</p>
+<p>在Python 3中，所有的字符串都默认是Unicode字符串。如果你需要使用字节字符串，则需要在字符串前加上 <code>b</code> 字符来指明这是一个字节字符串。</p>
+<p>例如，以下两个字符串在 Python 中具有相同的值，但是不同的数据类型：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">python复制代码s1</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;Hello, world!&#39;</span>    <span style="color:#828b96;font-style:italic"># 文本字符串</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">s2</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#39;Hello, world!&#39;</span>   <span style="color:#828b96;font-style:italic"># 字节字符串</span></span></span></code></pre></div><p>在某些情况下，你需要使用到了底层 I/O 操作、网络编程或与其他语言通信时，需要使用字节字符串来处理二进制数据。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">filename</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">f</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">read</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">filename</span>, <span style="color:#a6be9d">&#39;wb&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">f</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">write</span>(<span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#39;Hello World&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">filename</span>, <span style="color:#a6be9d">&#39;rb&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">f</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">read</span>(<span style="color:#a6be9d">16</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">text</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">data</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">decode</span>(<span style="color:#a6be9d">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">filename</span>, <span style="color:#a6be9d">&#39;wb&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">text</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;Hello World&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">f</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">write</span>(<span style="color:#58a1dd">text</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">encode</span>(<span style="color:#a6be9d">&#39;utf-8&#39;</span>))</span></span></code></pre></div><h6 id="操作csv和excel" class="heading-element"><span>0.0.0.2.4  操作CSV和Excel</span>
+  <a href="#%e6%93%8d%e4%bd%9ccsv%e5%92%8cexcel" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>csv是最通用的文件格式，本质是文本文件，用记事本即可打开。同一行中每个字段间用逗号分隔，在csv中显示的是在不同单元格中，在记事本中显示的是一行中用逗号分隔。</p>
+<p>xls是excel专用格式，是二进制文件，只有excel才能打开。</p>
+</blockquote>
+<p>####### CSV</p>
+<p><strong>csv写入</strong></p>
+<p><strong>1.写入列表（list）数据</strong></p>
+<p>使用 csv.writer 对象</p>
+<p>delimiter 指定同一行每个字段的分隔字符。若不指定，默认以英文逗号(,)分隔，在csv文件中显示的是不同单元格，若以其他符号分隔，则显示在csv同一单元格中</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">csv</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">r</span><span style="color:#a6be9d">&#39;e:\zarten.csv&#39;</span>, <span style="color:#a6be9d">&#39;w&#39;</span>, <span style="color:#58a1dd">newline</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">csvfile</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">csv_writer</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">csv</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">writer</span>(<span style="color:#58a1dd">csvfile</span>, <span style="color:#58a1dd">delimiter</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">csv_writer</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">writerow</span>([<span style="color:#a6be9d">&#39;a&#39;</span>, <span style="color:#a6be9d">&#39;b&#39;</span>, <span style="color:#a6be9d">&#39;c&#39;</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">csv_writer</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">writerow</span>([<span style="color:#a6be9d">&#39;d&#39;</span>, <span style="color:#a6be9d">&#39;e&#39;</span>, <span style="color:#a6be9d">&#39;f&#39;</span>])</span></span></code></pre></div><p><strong>2.写入字典（dict）数据</strong></p>
+<p>使用 csv.DictWriter 对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">csv</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">r</span><span style="color:#a6be9d">&#39;e:\zarten.csv&#39;</span>, <span style="color:#a6be9d">&#39;w&#39;</span>, <span style="color:#58a1dd">newline</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">csvfile</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">fieldnames</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;name&#39;</span>, <span style="color:#a6be9d">&#39;age&#39;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">csv_writer</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">csv</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">DictWriter</span>(<span style="color:#58a1dd">csvfile</span>, <span style="color:#58a1dd">fieldnames</span><span style="color:#ff636f">=</span> <span style="color:#58a1dd">fieldnames</span>, <span style="color:#58a1dd">delimiter</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39; &#39;</span>)<span style="color:#828b96;font-style:italic">#csv中默认,分隔单元格，delimiter可以不指定</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">csv_writer</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">writeheader</span>()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">csv_writer</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">writerow</span>({<span style="color:#a6be9d">&#39;name&#39;</span> : <span style="color:#a6be9d">&#39;Zarten1&#39;</span>, <span style="color:#a6be9d">&#39;age&#39;</span> : <span style="color:#a6be9d">1</span>})
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">csv_writer</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">writerow</span>({<span style="color:#a6be9d">&#39;name&#39;</span> : <span style="color:#a6be9d">&#39;Zarten2&#39;</span>, <span style="color:#a6be9d">&#39;age&#39;</span> : <span style="color:#a6be9d">2</span>})</span></span></code></pre></div><p><strong>csv读取</strong></p>
+<p><strong>1.读取普通csv</strong></p>
+<p>使用 csv.reader 对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">csv</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">r</span><span style="color:#a6be9d">&#39;e:\zarten.csv&#39;</span>, <span style="color:#a6be9d">&#39;r&#39;</span>, <span style="color:#58a1dd">newline</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">csvfile</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">csv_reader</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">csv</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">reader</span>(<span style="color:#58a1dd">csvfile</span>, <span style="color:#58a1dd">delimiter</span><span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">headers</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">next</span>(<span style="color:#58a1dd">csv_reader</span>) <span style="color:#828b96;font-style:italic">#获取第一行，可能是头</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">headers</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">row</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">csv_reader</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">row</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####输出结果：</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### [&#39;name&#39;, &#39;age&#39;]</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### [&#39;Zarten1&#39;, &#39;1&#39;]</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### [&#39;Zarten2&#39;, &#39;2&#39;]</span></span></span></code></pre></div><p><strong>2.读取字典（dict）csv</strong></p>
+<p>使用 csv.DictReader 对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">csv</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">r</span><span style="color:#a6be9d">&#39;e:\zarten.csv&#39;</span>, <span style="color:#a6be9d">&#39;r&#39;</span>, <span style="color:#58a1dd">newline</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">csvfile</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">csv_reader</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">csv</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">DictReader</span>(<span style="color:#58a1dd">csvfile</span>, <span style="color:#58a1dd">delimiter</span><span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">row</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">csv_reader</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">row</span>[<span style="color:#a6be9d">&#39;name&#39;</span>], <span style="color:#58a1dd">row</span>[<span style="color:#a6be9d">&#39;age&#39;</span>])</span></span></code></pre></div><p>####### EXCEL</p>
+<p>之前写的</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####注意把母本excel和此脚本放在同一文件夹里！</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">openpyxl</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">random</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">wb</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">openpyxl</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">load_workbook</span>(<span style="color:#a6be9d">&#39;./母本.xlsx&#39;</span>)  <span style="color:#828b96;font-style:italic">#注意！这个名字是母本，自己根据自己的改一下</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">sheet</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">wb</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">worksheets</span>[<span style="color:#a6be9d">0</span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">num</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">int</span>(<span style="color:#58a1dd">input</span>(<span style="color:#a6be9d">&#39;请输入班级人数：&#39;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">def</span> <span style="color:#58a1dd">bilibili</span>(<span style="color:#58a1dd">abc</span>):
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">for</span> <span style="color:#58a1dd">n</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">range</span>(<span style="color:#a6be9d">5</span>,<span style="color:#58a1dd">num</span><span style="color:#ff636f">+</span><span style="color:#a6be9d">5</span>):
+</span></span><span style="display:flex;"><span>     <span style="color:#58a1dd">sheet</span>[<span style="color:#a6be9d">&#39;H&#39;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">n</span>)]<span style="color:#ff636f">.</span><span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">round</span>(<span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">uniform</span>(<span style="color:#a6be9d">36</span>,<span style="color:#a6be9d">37</span>),<span style="color:#a6be9d">1</span>))<span style="color:#ff636f">+</span><span style="color:#a6be9d">&#39;℃&#39;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#58a1dd">sheet</span>[<span style="color:#a6be9d">&#39;I&#39;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">n</span>)]<span style="color:#ff636f">.</span><span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">round</span>(<span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">uniform</span>(<span style="color:#a6be9d">36</span>,<span style="color:#a6be9d">37</span>),<span style="color:#a6be9d">1</span>))<span style="color:#ff636f">+</span><span style="color:#a6be9d">&#39;℃&#39;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#58a1dd">sheet</span>[<span style="color:#a6be9d">&#39;J&#39;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">n</span>)]<span style="color:#ff636f">.</span><span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">str</span>(<span style="color:#58a1dd">round</span>(<span style="color:#58a1dd">random</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">uniform</span>(<span style="color:#a6be9d">36</span>,<span style="color:#a6be9d">37</span>),<span style="color:#a6be9d">1</span>))<span style="color:#ff636f">+</span><span style="color:#a6be9d">&#39;℃&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">wb</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">save</span>(<span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#39;</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">abc</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">.xlsx&#39;</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">numm</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">int</span>(<span style="color:#58a1dd">input</span>(<span style="color:#a6be9d">&#39;请输入你希望创建的表的个数：&#39;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">w</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">range</span>(<span style="color:#a6be9d">1</span>,<span style="color:#58a1dd">numm</span><span style="color:#ff636f">+</span><span style="color:#a6be9d">1</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">abc</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#39;计算机信息工程学院学生体温监测表(</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">w</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">)&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">bilibili</span>(<span style="color:#58a1dd">abc</span>)</span></span></code></pre></div><p><strong>安装</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">pip3</span> <span style="color:#58a1dd">install</span> <span style="color:#58a1dd">openpyxl</span></span></span></code></pre></div><p><strong>excel写入</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">openpyxl</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">file_path</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">r</span><span style="color:#a6be9d">&#39;e:\zarten.xlsx&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">wb</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">openpyxl</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">Workbook</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">sheet</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">wb</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">active</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">sheet</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">title</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;Zarten_info&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">headers</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;name&#39;</span>, <span style="color:#a6be9d">&#34;age&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">sheet</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">cell</span>(<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">1</span>, <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">headers</span>[<span style="color:#a6be9d">0</span>])
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">sheet</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">cell</span>(<span style="color:#a6be9d">1</span>, <span style="color:#a6be9d">2</span> ,<span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">headers</span>[<span style="color:#a6be9d">1</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">rows1</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;Zarten1&#39;</span>, <span style="color:#a6be9d">1</span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">sheet</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">append</span>(<span style="color:#58a1dd">rows1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">rows2</span> <span style="color:#ff636f">=</span> [<span style="color:#a6be9d">&#39;Zarten2&#39;</span>, <span style="color:#a6be9d">2</span>]
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">sheet</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">append</span>(<span style="color:#58a1dd">rows2</span>)</span></span></code></pre></div><p><strong>excel读取</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">openpyxl</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">file_path</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">r</span><span style="color:#a6be9d">&#39;e:\zarten.xlsx&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">wb</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">openpyxl</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">load_workbook</span>(<span style="color:#58a1dd">file_path</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">sheet</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">wb</span>[<span style="color:#a6be9d">&#39;Zarten_info&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> <span style="color:#58a1dd">row</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">sheet</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rows</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">row_info</span> <span style="color:#ff636f">=</span> [<span style="color:#58a1dd">row</span>[<span style="color:#a6be9d">0</span>]<span style="color:#ff636f">.</span><span style="color:#58a1dd">value</span>, <span style="color:#58a1dd">row</span>[<span style="color:#a6be9d">1</span>]<span style="color:#ff636f">.</span><span style="color:#58a1dd">value</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">row_info</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> <span style="color:#58a1dd">cell</span> <span style="color:#ff636f">in</span> <span style="color:#58a1dd">row</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">cell</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">value</span>)</span></span></code></pre></div><h6 id="小技巧" class="heading-element"><span>0.0.0.2.5  小技巧</span>
+  <a href="#%e5%b0%8f%e6%8a%80%e5%b7%a7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>如果要求对一个不存在的文件进行写操作，而存在的文件则不进行操作。（这样可以防止覆盖了已存在文件的内容）</p>
+<p>常规写法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">os</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#ff636f">not</span> <span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">exists</span>(<span style="color:#58a1dd">filename</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">filename</span>, <span style="color:#a6be9d">&#39;wt&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">f</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">write</span>(<span style="color:#a6be9d">&#39;Hello</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">else</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;File already exists!&#39;</span>)</span></span></code></pre></div><p>更简单的写法，使用open的<strong>x模式</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">filename</span>, <span style="color:#a6be9d">&#39;xt&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">f</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">f</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">write</span>(<span style="color:#a6be9d">&#39;Hello</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#39;</span>)</span></span></code></pre></div><h5 id="文件压缩" class="heading-element"><span>0.0.0.3  文件压缩</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%8e%8b%e7%bc%a9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="zipfile" class="heading-element"><span>0.0.0.3.1  zipfile</span>
+  <a href="#zipfile" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://www.liujiangblog.com/course/python/62"target="_blank" rel="external nofollow noopener noreferrer">https://www.liujiangblog.com/course/python/62</a></p>
+<p>zipfile模块其实很简单，记住下面几个重要的方法就可以了。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>z = zipfile.ZipFile()</td>
+<td>打开或者新建一个zip文件对象</td>
+</tr>
+<tr>
+<td>z.write()</td>
+<td>添加文件到压缩包内</td>
+</tr>
+<tr>
+<td>z.infolist()</td>
+<td>查看压缩包内的文件信息</td>
+</tr>
+<tr>
+<td>z.extract()</td>
+<td>解压单个文件</td>
+</tr>
+<tr>
+<td>z.extractall()</td>
+<td>解压所有文件</td>
+</tr>
+<tr>
+<td>z.close()</td>
+<td>关闭压缩文件</td>
+</tr>
+<tr>
+<td>z.writestr()</td>
+<td>将字符串写入 ZIP 归档文件</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">class</span> <span style="color:#58a1dd">zipfile</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ZipFile</span>(<span style="color:#58a1dd">file</span>, <span style="color:#58a1dd">mode</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;r&#39;</span>, <span style="color:#58a1dd">compression</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">ZIP_STORED</span>, <span style="color:#58a1dd">allowZip64</span><span style="color:#ff636f">=</span><span style="color:#ff636f">True</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">打开一个ZIP文件</span>。<span style="color:#58a1dd">返回的也是一个类似文件的ZipFile对象</span>，<span style="color:#58a1dd">可以读写</span>。
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">file可以是一个文件地址字符串</span>、<span style="color:#58a1dd">文件类对象或地址类对象</span>。<span style="color:#58a1dd">compression指明压缩格式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">压缩方式</span>：
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ZIP_STORED</span>（<span style="color:#58a1dd">无压缩</span>）：<span style="color:#58a1dd">不对文件进行压缩</span>，<span style="color:#58a1dd">直接将原始文件存储到</span> <span style="color:#58a1dd">ZIP</span> <span style="color:#58a1dd">归档文件中</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ZIP_DEFLATED</span>（<span style="color:#58a1dd">默认压缩方式</span>）
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ZIP_BZIP2</span>（<span style="color:#58a1dd">BZIP2</span> <span style="color:#58a1dd">压缩</span>）
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ZIP_LZMA</span>（<span style="color:#58a1dd">LZMA</span> <span style="color:#58a1dd">压缩</span>）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">zipfile</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">is_zipfile</span>(<span style="color:#58a1dd">filename</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">如果文件是个ZIP文件则返回True</span>，<span style="color:#58a1dd">否则False</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ZipFile</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">write</span>(<span style="color:#58a1dd">filename</span>, <span style="color:#58a1dd">arcname</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">compress_type</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">往ZIP文件里添加新文件</span>，<span style="color:#58a1dd">单个文件可以重复添加</span>，<span style="color:#58a1dd">但是会弹出警告</span>。<span style="color:#58a1dd">如果指定arcname参数</span>，<span style="color:#58a1dd">则在ZIP文件内部将原来的filename改成arcname</span>。<span style="color:#58a1dd">例如z</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">write</span>(<span style="color:#a6be9d">&#34;test/111.txt&#34;</span>, <span style="color:#a6be9d">&#34;test22/111.txt&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ZipFile</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">close</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">确保压缩文件被正确关闭</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ZipFile</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">namelist</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">返回ZIP文件内所有成员名字列表</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ZipFile</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">open</span>(<span style="color:#58a1dd">name</span>, <span style="color:#58a1dd">mode</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;r&#39;</span>, <span style="color:#58a1dd">pwd</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#ff636f">*</span>, <span style="color:#58a1dd">force_zip64</span><span style="color:#ff636f">=</span><span style="color:#ff636f">False</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">访问档案中的指定文件</span>。<span style="color:#58a1dd">pwd是解压密码</span>。<span style="color:#58a1dd">该方法也是个上下文管理器</span>，<span style="color:#58a1dd">支持with语法</span>。
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">with</span> <span style="color:#58a1dd">ZipFile</span>(<span style="color:#a6be9d">&#39;spam.zip&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">myzip</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">with</span> <span style="color:#58a1dd">myzip</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">open</span>(<span style="color:#a6be9d">&#39;eggs.txt&#39;</span>) <span style="color:#ff636f">as</span> <span style="color:#58a1dd">myfile</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">myfile</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">read</span>())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ZipFile</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">extract</span>(<span style="color:#58a1dd">member</span>, <span style="color:#58a1dd">path</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">pwd</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">解压单个文件</span>。<span style="color:#58a1dd">核心方法之一</span>。<span style="color:#58a1dd">将ZIP文件中的某个成员解压到当前目录</span>。<span style="color:#58a1dd">member必须是完整名</span>，<span style="color:#58a1dd">path是指定的解压目录</span>。<span style="color:#58a1dd">解压的过程不会破坏原压缩文件</span>。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ZipFile</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">extractall</span>(<span style="color:#58a1dd">path</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">members</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>, <span style="color:#58a1dd">pwd</span><span style="color:#ff636f">=</span><span style="color:#ff636f">None</span>)
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">批量解压文件</span>。<span style="color:#58a1dd">默认是全部解压</span>。<span style="color:#58a1dd">核心方法之一</span>。</span></span></code></pre></div><h5 id="路径" class="heading-element"><span>0.0.0.4  路径</span>
+  <a href="#%e8%b7%af%e5%be%84" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="处理路径问题" class="heading-element"><span>0.0.0.4.1  处理路径问题</span>
+  <a href="#%e5%a4%84%e7%90%86%e8%b7%af%e5%be%84%e9%97%ae%e9%a2%98" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">os</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">path</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;C:</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">User</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">yan</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">paper.txt&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">basename</span>(<span style="color:#58a1dd">path</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">dirname</span>(<span style="color:#58a1dd">path</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">splitext</span>(<span style="color:#58a1dd">path</span>))</span></span></code></pre></div><p>Output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">paper</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">C</span>:\<span style="color:#58a1dd">User</span>\<span style="color:#58a1dd">yan</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#a6be9d">&#39;C:</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">User</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">yan</span><span style="color:#a6be9d">\\</span><span style="color:#a6be9d">paper&#39;</span>, <span style="color:#a6be9d">&#39;.txt&#39;</span>)</span></span></code></pre></div><h6 id="判断文件或文件夹是否存在" class="heading-element"><span>0.0.0.4.2  判断文件或文件夹是否存在</span>
+  <a href="#%e5%88%a4%e6%96%ad%e6%96%87%e4%bb%b6%e6%88%96%e6%96%87%e4%bb%b6%e5%a4%b9%e6%98%af%e5%90%a6%e5%ad%98%e5%9c%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">exists</span>(<span style="color:#58a1dd">filename</span>)<span style="color:#828b96;font-style:italic"># 检查文件或目录是否存在</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">isfile</span>(<span style="color:#58a1dd">filename</span>)<span style="color:#828b96;font-style:italic"># 判断路径是否为文件 </span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">isdir</span>(<span style="color:#58a1dd">dirname</span>)<span style="color:#828b96;font-style:italic"># 判断路径是否为目录 </span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">getsize</span>(<span style="color:#58a1dd">filename</span>)<span style="color:#828b96;font-style:italic"># 获取文件大小</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">getmtime</span>(<span style="color:#58a1dd">filename</span>) <span style="color:#828b96;font-style:italic">#文件修改时间</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">time</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">time</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ctime</span>(<span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">path</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">getmtime</span>(<span style="color:#58a1dd">filename</span>)) <span style="color:#828b96;font-style:italic">#转换为易读的方式</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">listdir</span>(<span style="color:#58a1dd">dirname</span>) <span style="color:#828b96;font-style:italic"># 列出dir所有的文件</span></span></span></code></pre></div><h5 id="查找文件名" class="heading-element"><span>0.0.0.5  查找文件名</span>
+  <a href="#%e6%9f%a5%e6%89%be%e6%96%87%e4%bb%b6%e5%90%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">glob</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">py_files</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">glob</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">glob</span>(<span style="color:#a6be9d">&#39;*.py&#39;</span>) <span style="color:#828b96;font-style:italic"># 以list输出当前路径下所有后缀名为py的文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">py_files</span>) <span style="color:#828b96;font-style:italic"># [&#39;hehe.py&#39;, &#39;haha.py&#39;]</span></span></span></code></pre></div><h5 id="复制和移动" class="heading-element"><span>0.0.0.6  复制和移动</span>
+  <a href="#%e5%a4%8d%e5%88%b6%e5%92%8c%e7%a7%bb%e5%8a%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">shutil</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">shutil</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">move</span>(<span style="color:#a6be9d">&#39;/tmp/20170223/new&#39;</span>,<span style="color:#a6be9d">&#39;/tmp/20170223/test&#39;</span>)   <span style="color:#828b96;font-style:italic"># 移动文件, 重命名等</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">shutil</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">copyfile</span>(<span style="color:#58a1dd">oldfilename</span>, <span style="color:#58a1dd">newfilename</span>) <span style="color:#828b96;font-style:italic">#从源src复制到dst中去。当然前提是目标地址是具备可写权限。</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">shutil</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">copy</span>(<span style="color:#58a1dd">oldfilename</span>, <span style="color:#58a1dd">newfilename</span>)<span style="color:#828b96;font-style:italic"># 复制一个文件到一个文件或一个目录.copy第二个参数既可以指定文件名，也可以指定文件夹名</span></span></span></code></pre></div><blockquote>
+<ol>
+<li><code>shutil.copyfile(src, dst)</code>函数用来复制单个文件的内容，并将其写入到另一个文件中。==仅复制源文件的内容数据==，不包括所有的元数据（如文件模式、访问时间和修改时间等）。目标文件存在，则覆盖目标文件。如果目标文件不存在，则新建目标文件。使用<code>shutil.copyfile</code>时，必须保证源文件和目标文件都是存在的。</li>
+<li><code>shutil.copy(src, dst)</code>函数用来复制单个文件。该函数复制了源文件的内容数据和所有元数据，如权限、时间戳等。与<code>shutil.copyfile</code>不同的是，目标文件已经存在时不会覆盖旧文件，而是会报错。如果目标文件不存在，则新建目标文件。</li>
+</ol>
+</blockquote>
+<h5 id="文件夹操作" class="heading-element"><span>0.0.0.7  文件夹操作</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%a4%b9%e6%93%8d%e4%bd%9c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>获取当前的工作文件夹</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">getcwd</span>()</span></span></code></pre></div><p>改变当前工作文件夹</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">chdir</span>(<span style="color:#58a1dd">dirname</span>)</span></span></code></pre></div><p>新建文件夹</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">mkdir</span>(<span style="color:#58a1dd">dirname</span>)  <span style="color:#828b96;font-style:italic">#创建单级目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">makedirs</span>(<span style="color:#58a1dd">dirname</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">subdirname</span>) <span style="color:#828b96;font-style:italic">#创建多级目录</span></span></span></code></pre></div><p>删除文件夹</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rmdir</span>(<span style="color:#58a1dd">dirname</span>) <span style="color:#828b96;font-style:italic">#删除单级空目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">os</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">removedirs</span>(<span style="color:#58a1dd">dirname</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">subdirname</span>) <span style="color:#828b96;font-style:italic">#删除多级空目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">shutil</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">shutil</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">rmtree</span>(<span style="color:#58a1dd">dirname</span>) <span style="color:#828b96;font-style:italic">#删除目录，不管是空还是非空，是单级目录还是多级目录</span></span></span></code></pre></div><p>复制文件夹</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">shutil</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">copytree</span>(<span style="color:#58a1dd">oldfoldername</span>, <span style="color:#58a1dd">newfoldername</span>)</span></span></code></pre></div><p>移动文件夹/文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">shutil</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">move</span>(<span style="color:#58a1dd">oldpos</span>, <span style="color:#58a1dd">newp</span>)</span></span></code></pre></div><h5 id="字符串字面值表示方式" class="heading-element"><span>0.0.0.8  字符串字面值表示方式</span>
+  <a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%ad%97%e9%9d%a2%e5%80%bc%e8%a1%a8%e7%a4%ba%e6%96%b9%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#58a1dd">字符串前面加</span>‘<span style="color:#58a1dd">u</span>’，<span style="color:#58a1dd">表示以Unicode格式进行编码</span>，<span style="color:#58a1dd">一般用在中文字符前面</span>，<span style="color:#58a1dd">防止因为源码储存问题</span>，<span style="color:#58a1dd">导致再次使用时出现乱码</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">u</span><span style="color:#a6be9d">&#39;好好学习&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">b</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">u</span><span style="color:#a6be9d">&#39;天天向上&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">字符串前面加</span>‘<span style="color:#58a1dd">b</span>’，<span style="color:#58a1dd">表示该字符串是bytes类型</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">type</span>(<span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#39;aaa&#39;</span>))     <span style="color:#828b96;font-style:italic"># &lt;class &#39;bytes&#39;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">type</span>(<span style="color:#a6be9d">&#39;aaa&#39;</span>))      <span style="color:#828b96;font-style:italic"># &lt;class &#39;str&#39;&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">字符串前面加</span>‘<span style="color:#58a1dd">r</span>’，<span style="color:#58a1dd">表示去掉字符串中反斜杠的转义机制</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">r</span><span style="color:#a6be9d">&#39;\n\b\t&#39;</span>)        <span style="color:#828b96;font-style:italic"># \n\b\t</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#39;</span><span style="color:#a6be9d">\n\b\t</span><span style="color:#a6be9d">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">在字符串前边加上</span>‘<span style="color:#58a1dd">f</span>’<span style="color:#58a1dd">表示字符串中可以使用</span>{}<span style="color:#58a1dd">括起来的变量</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">a</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;今天&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">b</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;晴天&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">f</span><span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">a</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">是</span><span style="color:#a6be9d">{</span><span style="color:#58a1dd">b</span><span style="color:#a6be9d">}</span><span style="color:#a6be9d">&#34;</span>)       <span style="color:#828b96;font-style:italic"># 今天是晴天</span></span></span></code></pre></div><p>参考：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/497988788"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/497988788</a></p>
+<p><a href="https://www.runoob.com/python/python-files-io.html"target="_blank" rel="external nofollow noopener noreferrer">https://www.runoob.com/python/python-files-io.html</a></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E8%AF%AD%E8%A8%80/" class="post-tag" title="Tags - 语言">语言</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/python/python%E5%AE%89%E5%85%A8/30/" class="post-nav-item" rel="prev" title="Python Pickle反序列化"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Python Pickle反序列化</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/python/python%E5%AE%89%E5%85%A8/29/" class="post-nav-item" rel="next" title="Python Flask SSTI">Python Flask SSTI<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

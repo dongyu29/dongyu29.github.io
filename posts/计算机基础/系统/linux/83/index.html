@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Linux-常用命令 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 操作系统' />
+  <meta itemprop="name" content="linux-常用命令">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="669">
+  <meta itemprop="keywords" content="计算机基础,操作系统"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/83/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="linux-常用命令">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="操作系统">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="linux-常用命令">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/83/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/86/" /><link rel="next" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/88/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "linux-常用命令",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E7%B3%BB%E7%BB%9F\/linux\/83\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 操作系统","wordcount":  669 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E7%B3%BB%E7%BB%9F\/linux\/83\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Linux-常用命令</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Linux-常用命令</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="669 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 700 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="前言" class="heading-element"><span>0.0.0.1  前言</span>
+  <a href="#%e5%89%8d%e8%a8%80" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>CTF比赛中经常遇到各种对linux命令的过滤，这个时候就要求我们掌握更多的这一类型命令的平替。这个文章进行了尽可能详尽的命令执行方面的技巧和姿势</p>
+<blockquote>
+<p>linux对大小写敏感，windows对大小写不敏感</p>
+</blockquote>
+<p>ls|dir|nl|nc|cat|tail|more|flag|sh|cut|awk|strings|od|curl|ping|*|sort|ch|zip|mod|sl|find|sed|cp|mv|ty|grep|fd|df|sudo|more|cc|tac|less|head|.|{|}|tar|zip|gcc|uniq|vi|vim|file|xxd|base64|date|bash|env|?|wget|'|&quot;|id|whoami/i</p>
+<h5 id="命令" class="heading-element"><span>0.0.0.2  命令</span>
+  <a href="#%e5%91%bd%e4%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="读文件" class="heading-element"><span>0.0.0.2.1  读文件</span>
+  <a href="#%e8%af%bb%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p><code>cat</code>  用于连接文件并显示输出到标准输出设备上。</p>
+<p><code>tac</code>  从最后一行到第一行的顺序读文件。</p>
+<p><code>nl</code>   为文件中的每一行加上行号。</p>
+<p><code>less</code> 用于在终端中分页显示文件内容，可以向上或向下滚动并搜索内容。</p>
+<p><code>strings</code> 打印文件中可打印的字符</p>
+<p><code>more</code> 也是用于在终端中分页显示文件内容，与<code>less</code>类似，但是不能向上滚动。</p>
+<p><code>head</code> 用于显示文件的前几行，默认显示文件的前10行。</p>
+<p><code>tail</code> 用于显示文件的后几行，默认显示文件的后10行。</p>
+<p><code>grep</code> 用于在文件中查找特定字符串并显示匹配的行。 可以用正则表达式的方式读flag</p>
+<p><code>awk</code>  用于处理文本文件中的数据，可以对文件内容进行格式化、统计和转换等操作。 <code>awk '{print $1}' filename</code></p>
+<p><code>sed</code>  用于流编辑器，可以对文件进行编辑、替换和删除等操作。  <code>sed 's/old/new/g' filename</code></p>
+<p><code>cut</code>  用于从文件中剪切文本，并按列或字段进行输出。  <code>cut -d&quot;,&quot; -f2 filename</code></p>
+<p><code>paste</code> 命令将多个文件的行合并为单个输出，每个文件的一行依次排列。</p>
+<p><code>sort</code> 命令按照字典顺序排序文件内容，并将其输出。</p>
+<p><code>uniq</code> 命令从输入中删除重复行，并将其输出。</p>
+<p><code>comm</code> 命令用于比较两个已排序的文件，并显示它们之间的差异。 <code>comm file1 file2</code></p>
+<p>​         <code> comm -3  文件1 文件2  打印在文件1 中有，而文件2 中没有的行。反之亦然。</code></p>
+<p><code>diff</code> 命令用于比较两个文件之间的差异，并将其输出。</p>
+<p><code>wc</code> 命令用于计算文件中的字节数、单词数和行数。</p>
+<p><code>od </code>以不同格式显示文件内容，如八进制，十进制，十六进制等，默认八进制。 <code>od -x fielname</code>输出16进制</p>
+<p><code>fold</code>  将长行折叠成短行。</p>
+<p><code>hexdump</code>以十六进制和ASCII码的形式显示文件内容。</p>
+<p><code>pr</code>将文件格式化为打印格式。</p>
+<p><code>rev</code> 反转文件中的每行字符顺序。</p>
+</blockquote>
+<h6 id="写文件" class="heading-element"><span>0.0.0.2.2  写文件</span>
+  <a href="#%e5%86%99%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p>在Linux中，&quot;&gt;&ldquo;和&rdquo;&raquo;&ldquo;都是输出重定向符号，它们用于将命令的输出重定向到文件或者其他命令中。</p>
+<ul>
+<li>
+<p>&ldquo;&gt;&ldquo;表示覆盖写入，如果输出重定向的文件已经存在，会将原有内容清空，然后将新的输出写入到文件中。</p>
+</li>
+<li>
+<p>&ldquo;&raquo;&ldquo;表示追加写入，如果输出重定向的文件已经存在，会将新的输出追加到文件末尾，而不会清空原有内容。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ol>
+<li>echo：将字符串或变量写入标准输出或文件中。 例如： echo &ldquo;Hello, world!&rdquo; &gt; hello.txt</li>
+<li>cat：将文件内容写入标准输出或文件中。 例如： cat file1.txt &gt; file2.txt</li>
+<li>touch：创建一个空文件或更改现有文件的访问和修改时间戳。 例如： touch newfile.txt</li>
+<li>printf：将格式化的字符串写入标准输出或文件中。 例如： printf &ldquo;The answer is %d\n&rdquo; 42 &gt; answer.txt</li>
+<li>tee：从标准输入读取数据并将其写入标准输出和一个或多个文件中。 例如： ls -l | tee filelist.txt</li>
+<li>dd：以指定的块大小从一个文件复制到另一个文件。 例如： dd if=inputfile of=outputfile bs=1M count=10</li>
+<li>cp：将一个或多个文件复制到目标目录或文件中。 例如： cp file1.txt file2.txt destination_folder/</li>
+<li>mv：移动一个或多个文件到目标目录或文件中，也可以用来更改文件名。 例如： mv file1.txt file2.txt destination_folder/</li>
+<li>nano：一个基本的文本编辑器，可以用来创建和编辑文本文件。 例如： nano newfile.txt</li>
+<li>vi：另一个文本编辑器，通常比nano更强大，但也更复杂。 例如： vi newfile.txt</li>
+<li>ed：一个类似vi的文本编辑器，但命令行更为简洁。 例如： ed newfile.txt</li>
+<li>sed：一个流编辑器，用于对文件中的文本进行替换、删除、添加等操作。 例如： sed &rsquo;s/oldtext/newtext/g&rsquo; file.txt &gt; newfile.txt</li>
+<li>awk：一个强大的文本处理工具，可以用于过滤和处理文本文件。 例如： awk &lsquo;{print $1}&rsquo; file.txt &gt; newfile.txt</li>
+<li>tee：将标准输入写入一个或多个文件，并同时将其发送到标准输出。 例如： ls -l | tee filelist.txt</li>
+<li>echo -e：可以使用转义字符来格式化字符串并将其写入文件。 例如： echo -e &ldquo;The answer is:\n42&rdquo; &gt; answer.txt</li>
+</ol>
+</blockquote>
+<h6 id="找文件" class="heading-element"><span>0.0.0.2.3  找文件</span>
+  <a href="#%e6%89%be%e6%96%87%e4%bb%b6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p><code>find</code> . -name &ldquo;fla*&rdquo;</p>
+<p><code>locate</code> fla* 这个命令无需指定路径直接搜索即可，他是在一个每天更新的数据库mlocate.db中查找的</p>
+<p><code>while</code>  查找可执行文件的位置</p>
+<p><code>whereis</code> 在系统默认安装目录查找二进制文件、源码、文档中给定查询关键词的文件</p>
+</blockquote>
+<h6 id="找内容" class="heading-element"><span>0.0.0.2.4  找内容</span>
+  <a href="#%e6%89%be%e5%86%85%e5%ae%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p><code>grep -ar fla* /</code>  递归的找根目录</p>
+<p><code>grep 'fla*' *</code>  不递归找当前目录</p>
+<ul>
+<li><code>-a</code> 参数表示将二进制文件视为文本文件进行搜索。</li>
+<li><code>-r</code> 参数表示递归地在目录及其子目录中搜索文件。</li>
+</ul>
+</blockquote>
+<h6 id="读目录" class="heading-element"><span>0.0.0.2.5  读目录</span>
+  <a href="#%e8%af%bb%e7%9b%ae%e5%bd%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><blockquote>
+<p><code>dir</code> 在Windows和DOS操作系统中，dir命令可以显示当前目录中的文件和子目录列表。</p>
+<p><code>ls</code>  读目录</p>
+<p><code>ll  </code>  ls的升级版</p>
+<p><code>la</code> 类似ls</p>
+<p><code>l</code>  类似ls</p>
+<p><code>vdir</code> 类似ll</p>
+<p><code>tree</code>：tree命令可以显示当前目录及其子目录的树形结构，可以方便地查看目录结构。</p>
+<p><code>lsof</code>：lsof命令可以列出当前系统上所有打开的文件和网络连接，可以查看进程所打开的文件和网络连接情况。</p>
+<p><code>lsattr</code>：lsattr命令可以列出当前目录中所有文件和目录的扩展属性，可以查看文件和目录的扩展属性情况。</p>
+</blockquote>
+<h6 id="查看当前可用命令" class="heading-element"><span>0.0.0.2.6  查看当前可用命令</span>
+  <a href="#%e6%9f%a5%e7%9c%8b%e5%bd%93%e5%89%8d%e5%8f%af%e7%94%a8%e5%91%bd%e4%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>compgen -c</p>
+<h5 id="管道符" class="heading-element"><span>0.0.0.3  管道符</span>
+  <a href="#%e7%ae%a1%e9%81%93%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>使用管道符可以将多个命令连接在一起，形成一个复杂的命令序列。例如，下面的命令将“ls”命令的输出通过管道符传递给“grep”命令，然后再将“grep”命令的输出通过管道符传递给“wc”命令，以计算包含“test”的文件数目：</p>
+<pre tabindex="0"><code>ls | grep test | wc -l</code></pre><p>需要注意的是，管道符连接的两个命令必须是可以通过标准输入输出进行通信的命令。此外，管道符连接的命令序列中，每个命令都是独立的，不会影响其他命令的执行。</p>
+<h6 id="xargs" class="heading-element"><span>0.0.0.3.1  xargs</span>
+  <a href="#xargs" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>xargs 是一个强有力的命令，它能够捕获一个命令的输出，然后传递给另外一个命令。</p>
+<p>之所以能用到这个命令，关键是由于很多命令不支持|管道来传递参数，而日常工作中有有这个必要，所以就有了 xargs 命令，例如：</p>
+<pre tabindex="0"><code>find /sbin -perm +700 |ls -l       #这个命令是错误的
+find /sbin -perm +700 |xargs ls -l   #这样才是正确的</code></pre><p>xargs 一般是和管道一起使用。</p>
+<p><strong>命令格式：</strong></p>
+<pre tabindex="0"><code>somecommand |xargs -item  command</code></pre><p><strong>参数：</strong></p>
+<ul>
+<li>-a file 从文件中读入作为 stdin</li>
+<li>-e flag ，注意有的时候可能会是-E，flag必须是一个以空格分隔的标志，当xargs分析到含有flag这个标志的时候就停止。</li>
+<li>-p 当每次执行一个argument的时候询问一次用户。</li>
+<li>-n num 后面加次数，表示命令在执行的时候一次用的argument的个数，默认是用所有的。</li>
+<li>-t 表示先打印命令，然后再执行。</li>
+<li>-i 或者是-I，这得看linux支持了，将xargs的每项名称，一般是一行一行赋值给 {}，可以用 {} 代替。</li>
+<li>-r no-run-if-empty 当xargs的输入为空的时候则停止xargs，不用再去执行了。</li>
+<li>-s num 命令行的最大字符数，指的是 xargs 后面那个命令的最大命令行字符数。</li>
+<li>-L num 从标准输入一次读取 num 行送给 command 命令。</li>
+<li>-l 同 -L。</li>
+<li>-d delim 分隔符，默认的xargs分隔符是回车，argument的分隔符是空格，这里修改的是xargs的分隔符。</li>
+<li>-x exit的意思，主要是配合-s使用。。</li>
+<li>-P 修改最大的进程数，默认是1，为0时候为as many as it can ，这个例子我没有想到，应该平时都用不到的吧。</li>
+</ul>
+<h5 id="软硬连接" class="heading-element"><span>0.0.0.4  软&amp;硬连接</span>
+  <a href="#%e8%bd%af%e7%a1%ac%e8%bf%9e%e6%8e%a5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://www.jianshu.com/p/b035d94fa959"target="_blank" rel="external nofollow noopener noreferrer">https://www.jianshu.com/p/b035d94fa959</a></p>
+<ul>
+<li>**链接：**一种在共享文件和访问它的用户的若干目录项之间建立联系的一种方法。</li>
+<li>**【硬链接】（hard link）：**指通过索引节点来进行连接，就是一个文件(不是文件夹)的别名，无论有多少各别名，但它其实是一个文件。
+可以这样理解：</li>
+</ul>
+<blockquote>
+<p>一面墙上有一个洞，洞里放着一个苹果。从墙的这一面看是这个苹果，从墙的另一面看还是同一个苹果
+也就是说同一块数据但有两个不同的名字，读写的时候本质上都是修改的同一块数据。</p>
+</blockquote>
+<p><strong>硬链接的删除：</strong></p>
+<blockquote>
+<p>硬链接在删除的时候只是删除了一个名字，只有一块数据的所有名字都删除了的时候，数据才会被删除。（删除的时候相当于把墙的这一面糊上，但苹果本身不动，只有两面都糊上了，你才会看不到）</p>
+</blockquote>
+<ul>
+<li><strong>【软链接】（又称符号链接，即 soft link 或 symbolic link）</strong>：相当于我们 Windows 中的快捷方式，即如果你软链接一个目录，只是一个目录的快捷方式到指定位置，操作系统找这个快捷方式会直接找到真实目录下的文件。
+可以这样理解：</li>
+</ul>
+<blockquote>
+<p>我声称我有一个苹果，但是当你找我要的时候，我对你说，到某个建筑物的仓库就可以拿到那个苹果了。可见我并不真正拥有一个苹果，我只是拥有“某个地方有一个苹果”这个信息。但对于外部的观察者来说，这跟我实际上拥有一个苹果并无差异。</p>
+</blockquote>
+<p><strong>软链接的删除：</strong></p>
+<blockquote>
+<p>假设我死了，不会影响到原始数据。假设原始数据没了，那我这个符号链接就变成了一张空头支票，也就是悬空的符号链接。</p>
+</blockquote>
+<p><strong>一个符号链接可以指向一个不存在的目标，而硬链接就表示肯定有文件存在。
+硬链接可以指向文件，也可以指向目录。可以跨越任何文件系统。拷贝删除原始文件或者链接文件，不会造成相互影响。</strong></p>
+<p><strong>软链接</strong>：</p>
+<ul>
+<li>1.软链接，以路径的形式存在。类似于Windows操作系统中的==快捷方式==</li>
+<li>2.软链接可以==跨文件系统== ，硬链接不可以</li>
+<li>3.软链接可以对一个==不存在==的文件名进行链接</li>
+<li>4.软链接可以对==目录==进行链接</li>
+</ul>
+<p><strong>硬链接</strong>：</p>
+<ul>
+<li>1.硬链接，以==文件副本==的形式存在。但不占用实际空间。</li>
+<li>2.不允许给目录创建硬链接</li>
+<li>3.硬链接只有在同一个文件系统中才能创建</li>
+</ul>
+<p>####### 语法</p>
+<pre tabindex="0"><code> ln [参数][源文件或目录][目标文件或目录]
+ ln -s [源文件或目录] [目标文件或目录]
+ 
+-f : 链结时先将与 dist 同档名的档案删除
+-d : 允许系统管理者硬链结自己的目录
+-i : 在删除与 dist 同档名的档案时先进行询问
+-n : 在进行软连结时，将 dist 视为一般的档案
+-s : 进行软链结(symbolic link)
+-v : 在连结之前显示其档名
+-b : 将在链结时会被覆写或删除的档案进行备份
+-S SUFFIX : 将备份的档案都加上 SUFFIX 的字尾
+-V METHOD : 指定备份的方式
+--help : 显示辅助说明
+　　--version : 显示版本</code></pre><h5 id="多命令执行符" class="heading-element"><span>0.0.0.5  多命令执行符</span>
+  <a href="#%e5%a4%9a%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p>多命令执行符              格式                        作用</p>
+<p>;                     命令1;命令2             不错的命令都会执行</p>
+<p>&amp;&amp;                  命令1&amp;&amp;命令2            逻辑与：当命令1正确执行后，命令2才会正确执行，否则命令2不会执行</p>
+<p>||                    命令1||命令2            逻辑或：当命令1不正确执行后，命令2才会正确执行，否则命令2不会执行</p>
+</blockquote>
+<blockquote>
+<p>windows:</p>
+<p>| 前后两个都执行</p>
+<p>||  执行前面的，前面的错误就执行后面的</p>
+<p>&amp;&amp;  前面的执行完执行后面的</p>
+</blockquote>
+<h5 id="通配符" class="heading-element"><span>0.0.0.6  通配符</span>
+  <a href="#%e9%80%9a%e9%85%8d%e7%ac%a6" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<p><code>*</code>：匹配任意字符</p>
+<ul>
+<li></li>
+</ul>
+<p><code>ls test*</code></p>
+<p><code>?</code>：匹配任意单个字符</p>
+<ul>
+<li></li>
+</ul>
+<p><code>ls test?</code></p>
+<p><code>[]</code>：匹配括号内的任意单个字符</p>
+<ul>
+<li></li>
+</ul>
+<p><code>ls test[123]</code></p>
+<p><code>[!]</code>：匹配除括号内字符以外的单个字符</p>
+<ul>
+<li></li>
+</ul>
+<p><code>ls test[!123]</code></p>
+<p><code>[^]</code>:同[!]</p>
+</blockquote>
+<h6 id="通配符执行命令" class="heading-element"><span>0.0.0.6.1  通配符执行命令</span>
+  <a href="#%e9%80%9a%e9%85%8d%e7%ac%a6%e6%89%a7%e8%a1%8c%e5%91%bd%e4%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>可以使用通配符匹配当前目录的文件名，注意是文件名</p>
+<p>如图</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271120555.png" alt="image-20230327112025400" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271120555.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271120555.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/pictures-master/202303271120555.png?size=large 2x" data-title="image-20230327112025400" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h5 id="常见参数" class="heading-element"><span>0.0.0.7  常见参数</span>
+  <a href="#%e5%b8%b8%e8%a7%81%e5%8f%82%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><blockquote>
+<ol>
+<li><code>-h</code>：显示帮助信息</li>
+<li><code>-v</code>：显示详细输出</li>
+<li><code>-f</code>：指定文件名或文件列表</li>
+<li><code>-i</code>：交互式操作</li>
+<li><code>-l</code>：显示长列表</li>
+<li><code>-a</code>：显示所有文件，包括隐藏文件</li>
+<li><code>-r</code>：递归地处理文件夹中的文件</li>
+<li><code>-n</code>：指定行数</li>
+<li><code>-q</code>：安静模式，不输出任何信息</li>
+</ol>
+</blockquote>
+<h5 id="其他常用命令" class="heading-element"><span>0.0.0.8  其他常用命令</span>
+  <a href="#%e5%85%b6%e4%bb%96%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><strong>==grep==</strong></p>
+<blockquote>
+<p><code>1.在文件中搜索模式</code></p>
+<p>要在文件中搜索模式，请使用以下命令：</p>
+<p>grep &ldquo;pattern&rdquo; filename</p>
+<p>其中，&ldquo;pattern&quot;是要搜索的模式，而filename是要搜索的文件的名称。例如，要在file.txt文件中搜索单词&quot;hello&rdquo;，可以使用以下命令：</p>
+<p><strong>grep &ldquo;hello&rdquo; file.txt</strong></p>
+<p><code>2.搜索多个文件</code></p>
+<p>要在多个文件中搜索模式，请使用以下命令：</p>
+<p>grep &ldquo;pattern&rdquo; file1 file2 file3</p>
+<p>其中，file1、file2和file3是要搜索的文件的名称。例如，要在file1.txt、file2.txt和file3.txt文件中搜索单词&quot;hello&rdquo;，可以使用以下命令：</p>
+<p><strong>grep &ldquo;hello&rdquo; file1.txt file2.txt file3.txt</strong></p>
+<p><code>3.搜索文件夹中的所有文件</code></p>
+<p>要搜索文件夹中的所有文件，请使用以下命令：</p>
+<p><strong>grep &ldquo;pattern&rdquo; folder/</strong>*</p>
+<p>其中，&ldquo;pattern&quot;是要搜索的模式，而folder是要搜索的文件夹的名称。例如，要在folder文件夹中搜索所有包含单词&quot;hello&quot;的文件，可以使用以下命令：</p>
+<p><strong>grep &ldquo;hello&rdquo; folder/</strong>*</p>
+<p><code>4.使用正则表达式搜索模式</code></p>
+<p>要使用正则表达式搜索模式，请使用以下命令：</p>
+<p><strong>grep &ldquo;regex&rdquo; filename</strong></p>
+<p>其中，&ldquo;regex&quot;是要搜索的正则表达式，而filename是要搜索的文件的名称。例如，要在file.txt文件中搜索所有以单词&quot;hello&quot;开头的行，可以使用以下命令：</p>
+<p><strong>grep &ldquo;^hello&rdquo; file.txt</strong></p>
+<p>这些是grep命令的一些基本用法。使用man grep命令可以查看更多关于grep命令的详细信息和选项。</p>
+</blockquote>
+<p>==mv==</p>
+<p>除了移动文件，当移动前后是同一个目录还可以重命名</p>
+<blockquote>
+<p>mv [option] [source] [destination]</p>
+<p>[option]</p>
+<ul>
+<li><code>-i</code>：在移动或重命名文件时，如果目标文件已经存在，则提示用户确认是否覆盖目标文件。</li>
+<li><code>-f</code>：强制移动或重命名文件或目录，如果目标文件已经存在，则覆盖它而不提示用户确认。</li>
+<li><code>-n</code>：不要覆盖目标文件或目录，如果文件或目录已经存在，则不移动或重命名它。</li>
+<li><code>-v</code>：显示详细输出，给出操作的进度和结果。</li>
+<li><code>-u</code>：只会在源文件比目标文件新或者目标文件不存在的情况下才会执行移动或重命名操作，否则不执行。</li>
+</ul>
+</blockquote>
+<p>==cp==</p>
+<p>作用是复制文件或目录</p>
+<blockquote>
+<p>cp [option] [source] [destination]</p>
+<p>[option]</p>
+<ul>
+<li><code>-i</code>：在复制文件或目录时，如果目标文件已经存在，则提示用户确认是否覆盖目标文件。</li>
+<li><code>-f</code>：强制复制文件或目录，如果目标文件已经存在，则覆盖它而不提示用户确认。</li>
+<li><code>-n</code>：不要覆盖目标文件或目录，如果文件或目录已经存在，则不复制它。</li>
+<li><code>-r</code>：复制目录及其所有内容。</li>
+<li><code>-v</code>：显示详细输出，给出操作的进度和结果。</li>
+</ul>
+</blockquote>
+<p>==tar==</p>
+<p>创建和管理 tar 归档文件</p>
+<blockquote>
+<p>tar [option] [archive-name] [file or directory to be archived]</p>
+<p><code>option</code> 是一些可选参数，<code>archive-name</code> 是要创建的 tar 归档文件的名称，<code>file or directory to be archived</code> 是要包含在归档文件中的文件或目录的路径。</p>
+<p>[option]</p>
+<ul>
+<li><code>-c</code>：创建归档文件。</li>
+<li><code>-t</code>：查看归档文件中的内容。</li>
+<li><code>-x</code>：从归档文件中提取内容。</li>
+<li><code>-v</code>：显示详细输出，给出操作的进度和结果。</li>
+<li><code>-f</code>：指定要操作的归档文件的名称。</li>
+</ul>
+</blockquote>
+<p>==zip==</p>
+<p>创建和管理 ZIP 压缩文件</p>
+<blockquote>
+<p>zip [option] [archive-name] [file or directory to be compressed]</p>
+<p>[option]</p>
+<ul>
+<li><code>-r</code>：递归地压缩目录和它们的子目录。</li>
+<li><code>-q</code>：不显示命令输出。</li>
+<li><code>-v</code>：显示详细输出，给出操作的进度和结果。</li>
+<li><code>-f</code>：指定要操作的 ZIP 文件的名称。</li>
+<li><code>-y</code>:不提示用户的情况下将所有文件包含在 ZIP 压缩文件中</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">压缩算法：</span><span style="color:#a6be9d">`tar`</span> <span style="color:#58a1dd">使用的是无损压缩算法（例如</span> <span style="color:#58a1dd">gzip</span> <span style="color:#58a1dd">或</span> <span style="color:#58a1dd">bzip2），而</span> <span style="color:#a6be9d">`zip`</span> <span style="color:#58a1dd">使用的是有损压缩算法（例如</span> <span style="color:#58a1dd">Deflate）。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">文件格式：</span><span style="color:#a6be9d">`tar`</span> <span style="color:#58a1dd">创建的是一个归档文件，而</span> <span style="color:#a6be9d">`zip`</span> <span style="color:#58a1dd">创建的是一个压缩文件。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">-</span> <span style="color:#58a1dd">归档文件：归档文件只是将多个文件和目录打包到一个文件中，不进行压缩。归档文件通常用于备份或迁移文件，因为它们可以保留文件属性和权限等元数据。</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">-</span> <span style="color:#58a1dd">压缩文件：压缩文件是将文件压缩到一个更小的文件中，以节省存储空间和传输时间。</span></span></span></code></pre></div><p>==sed==</p>
+<p>用于对文本文件进行替换、删除、插入、追加等操作</p>
+<blockquote>
+<p>sed [option] &lsquo;command&rsquo; file</p>
+<p><code>option</code> 是一些可选参数，<code>command</code> 是要执行的 sed 命令，<code>file</code> 是要处理的文件名或标准输入流</p>
+<ul>
+<li><code>-i</code>：直接修改原始文件，而不是输出到标准输出流。</li>
+<li><code>-e</code>：允许多个命令在同一行上执行。</li>
+<li><code>-n</code>：禁止输出，只有经过指定处理的行才会输出。</li>
+</ul>
+</blockquote>
+<p>==string==</p>
+<p>用于在二进制文件中查找 ASCII 和 Unicode 字符串</p>
+<blockquote>
+<p>string [option] [file(s)]</p>
+<p>[option]</p>
+<ul>
+<li><code>-a</code>：输出所有字符串，包括打印出来的字符串。</li>
+<li><code>-n length</code>：设置输出的字符串的最小长度。</li>
+<li><code>-t format</code>：设置输出的字符串的格式。可选的格式包括 ASCII、little-endian Unicode、big-endian Unicode 和 both-endian Unicode。</li>
+<li><code>-e</code>：仅输出找到的字符串的偏移量和长度，而不输出字符串本身。</li>
+</ul>
+</blockquote>
+<p>==expr==</p>
+<p>可以用来进行<code>数值运算</code>和<code>字符串操作</code></p>
+<p>查找字符串匹配到的位置</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ expr index <span style="color:#a6be9d">&#34;Hello World&#34;</span> <span style="color:#a6be9d">&#34;Wo&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">7</span>
+</span></span><span style="display:flex;"><span>$ expr <span style="color:#a6be9d">&#34;Hello World&#34;</span> : <span style="color:#a6be9d">&#34;Hello&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">5</span></span></span></code></pre></div><p>数值运算</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ expr <span style="color:#a6be9d">5</span> + <span style="color:#a6be9d">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">8</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ expr <span style="color:#a6be9d">10</span> - <span style="color:#a6be9d">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">6</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ expr <span style="color:#a6be9d">4</span> <span style="color:#a6be9d">\*</span> <span style="color:#a6be9d">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">12</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ expr <span style="color:#a6be9d">20</span> / <span style="color:#a6be9d">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4</span></span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-tag" title="Tags - 操作系统">操作系统</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/86/" class="post-nav-item" rel="prev" title="Linux-文本命令"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Linux-文本命令</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E7%B3%BB%E7%BB%9F/linux/88/" class="post-nav-item" rel="next" title="Linux-VIM编辑器">Linux-VIM编辑器<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

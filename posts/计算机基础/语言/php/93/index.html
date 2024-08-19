@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Php Socket学习 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='计算机基础, 语言' />
+  <meta itemprop="name" content="php socket学习">
+  <meta itemprop="datePublished" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T09:31:01+08:00">
+  <meta itemprop="wordCount" content="2246">
+  <meta itemprop="keywords" content="计算机基础,语言"><meta property="og:url" content="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/php/93/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="php socket学习">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T09:31:01+08:00">
+    <meta property="article:tag" content="计算机基础">
+    <meta property="article:tag" content="语言">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="php socket学习">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/%E8%AF%AD%E8%A8%80/php/93/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/%E6%9C%A8%E9%A9%AC%E5%BC%80%E5%8F%91/4/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E/28/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "php socket学习",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/php\/93\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "计算机基础, 语言","wordcount":  2246 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80\/%E8%AF%AD%E8%A8%80\/php\/93\/","datePublished": "2024-08-15T09:31:01+08:00","dateModified": "2024-08-15T09:31:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Php Socket学习</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Php Socket学习</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="Category - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 09:31:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="2246 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 2300 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>11 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h5 id="php-socket函数" class="heading-element"><span>0.0.0.1  php socket函数</span>
+  <a href="#php-socket%e5%87%bd%e6%95%b0" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><a href="https://www.php.net/manual/zh/ref.sockets.php"target="_blank" rel="external nofollow noopener noreferrer">https://www.php.net/manual/zh/ref.sockets.php</a></p>
+<ul>
+<li><a href="https://www.php.net/manual/zh/function.socket-accept.php"target="_blank" rel="external nofollow noopener noreferrer">socket_accept</a> — 接受套接字上的连接</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-addrinfo-bind.php"target="_blank" rel="external nofollow noopener noreferrer">socket_addrinfo_bind</a> — 从给定的 addrinfo 创建并绑定一个套接字</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-addrinfo-connect.php"target="_blank" rel="external nofollow noopener noreferrer">socket_addrinfo_connect</a> — 指定 addrinfo 创建并连接套接字</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-addrinfo-explain.php"target="_blank" rel="external nofollow noopener noreferrer">socket_addrinfo_explain</a> — 获取有关 addrinfo 的信息</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-addrinfo-lookup.php"target="_blank" rel="external nofollow noopener noreferrer">socket_addrinfo_lookup</a> — 获取数组，包含有关给定主机名的 getaddrinfo 内容</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-bind.php"target="_blank" rel="external nofollow noopener noreferrer">socket_bind</a> — 给套接字绑定名字</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-clear-error.php"target="_blank" rel="external nofollow noopener noreferrer">socket_clear_error</a> — 清除套接字或者最后的错误代码上的错误</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-close.php"target="_blank" rel="external nofollow noopener noreferrer">socket_close</a> — 关闭 Socket 实例</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-cmsg-space.php"target="_blank" rel="external nofollow noopener noreferrer">socket_cmsg_space</a> — Calculate message buffer size</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-connect.php"target="_blank" rel="external nofollow noopener noreferrer">socket_connect</a> — 开启一个套接字连接</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-create-listen.php"target="_blank" rel="external nofollow noopener noreferrer">socket_create_listen</a> — 在端口上打开一个套接字以接受连接</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-create-pair.php"target="_blank" rel="external nofollow noopener noreferrer">socket_create_pair</a> — 创建一对彼此连接的套接字，并用数组存储</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-create.php"target="_blank" rel="external nofollow noopener noreferrer">socket_create</a> — 创建一个套接字（通讯节点）</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-export-stream.php"target="_blank" rel="external nofollow noopener noreferrer">socket_export_stream</a> — Export a socket into a stream that encapsulates a socket</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-get-option.php"target="_blank" rel="external nofollow noopener noreferrer">socket_get_option</a> — 获取套接字的套接字选项</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-getopt.php"target="_blank" rel="external nofollow noopener noreferrer">socket_getopt</a> — 别名 socket_get_option</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-getpeername.php"target="_blank" rel="external nofollow noopener noreferrer">socket_getpeername</a> — 获取套接字远端名字，返回主机名和端口号或是 Unix 文件系统路径，具体取决于套接字类型</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-getsockname.php"target="_blank" rel="external nofollow noopener noreferrer">socket_getsockname</a> — 获取套接字本地端的名字，返回主机名和端口号或是 Unix 文件系统路径，具体取决于套接字类型</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-import-stream.php"target="_blank" rel="external nofollow noopener noreferrer">socket_import_stream</a> — 导入 stream</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-last-error.php"target="_blank" rel="external nofollow noopener noreferrer">socket_last_error</a> — 返回套接字上的最后一个错误</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-listen.php"target="_blank" rel="external nofollow noopener noreferrer">socket_listen</a> — 监听套接字的连接</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-read.php"target="_blank" rel="external nofollow noopener noreferrer">socket_read</a> — 从套接字中读取最大长度的数据</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-recv.php"target="_blank" rel="external nofollow noopener noreferrer">socket_recv</a> — 从已连接的 socket 接收数据</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-recvfrom.php"target="_blank" rel="external nofollow noopener noreferrer">socket_recvfrom</a> — 从套接字接收数据，无论它是否是面向连接的</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-recvmsg.php"target="_blank" rel="external nofollow noopener noreferrer">socket_recvmsg</a> — Read a message</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-select.php"target="_blank" rel="external nofollow noopener noreferrer">socket_select</a> — 从给定套接字数组运行带指定超时时间的 select() 系统调用</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-send.php"target="_blank" rel="external nofollow noopener noreferrer">socket_send</a> — 向已连接的套接字发送数据</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-sendmsg.php"target="_blank" rel="external nofollow noopener noreferrer">socket_sendmsg</a> — Send a message</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-sendto.php"target="_blank" rel="external nofollow noopener noreferrer">socket_sendto</a> — 向套接字发送消息，无论它是否已建立连接</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-set-block.php"target="_blank" rel="external nofollow noopener noreferrer">socket_set_block</a> — 设置套接字为阻塞模式</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-set-nonblock.php"target="_blank" rel="external nofollow noopener noreferrer">socket_set_nonblock</a> — 设置套接字为非阻塞模式</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-set-option.php"target="_blank" rel="external nofollow noopener noreferrer">socket_set_option</a> — 为套接字设置套接字选项</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-setopt.php"target="_blank" rel="external nofollow noopener noreferrer">socket_setopt</a> — 别名 socket_set_option</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-shutdown.php"target="_blank" rel="external nofollow noopener noreferrer">socket_shutdown</a> — 关闭套接字接收或发送，或两者都关闭</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-strerror.php"target="_blank" rel="external nofollow noopener noreferrer">socket_strerror</a> — 返回描述套接字错误的字符串</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-write.php"target="_blank" rel="external nofollow noopener noreferrer">socket_write</a> — 向套接字写数据</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-wsaprotocol-info-export.php"target="_blank" rel="external nofollow noopener noreferrer">socket_wsaprotocol_info_export</a> — 导出 WSAPROTOCOL_INFO 结构体</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-wsaprotocol-info-import.php"target="_blank" rel="external nofollow noopener noreferrer">socket_wsaprotocol_info_import</a> — 从另一个进程导入套接字</li>
+<li><a href="https://www.php.net/manual/zh/function.socket-wsaprotocol-info-release.php"target="_blank" rel="external nofollow noopener noreferrer">socket_wsaprotocol_info_release</a> — 释放已导出的 WSAPROTOCOL_INFO 结构体</li>
+</ul>
+<h5 id="简单的server" class="heading-element"><span>0.0.0.2  简单的server</span>
+  <a href="#%e7%ae%80%e5%8d%95%e7%9a%84server" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>netstat -an|grep <span style="color:#a6be9d">6001</span>
+</span></span><span style="display:flex;"><span>telnet 127.0.0.1 <span style="color:#a6be9d">6001</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET    IPv4网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET6   IPv6网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_UNIX    本地通讯协议，具有高性能和低成本的IPC（进程间通讯）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_STREAM TCP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_DGRAM  UDP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_TCP     TCP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_UDP     UDP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$socket1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_create</span>(<span style="color:#58a1dd">AF_INET</span>,<span style="color:#58a1dd">SOCK_STREAM</span>,<span style="color:#58a1dd">SOL_TCP</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_bind</span>(<span style="color:#58a1dd">$socket1</span>,<span style="color:#a6be9d">&#39;0.0.0.0&#39;</span>,<span style="color:#a6be9d">6001</span>); <span style="color:#828b96;font-style:italic">//想让局域网内其他主机连接到该socket，监听ip为0.0.0.0即可
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//socket1 负责监听
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">socket_listen</span>(<span style="color:#58a1dd">$socket1</span>,<span style="color:#a6be9d">3</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//socket2 负责处理通信（接收、发送）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$socket2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_accept</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//读取客户端发送的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$res</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">socket_read</span>(<span style="color:#58a1dd">$socket2</span>,<span style="color:#a6be9d">1024</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$res</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$socket2</span>,<span style="color:#a6be9d">&#39;hello client&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket2</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket1</span>);</span></span></code></pre></div><h5 id="简单的client" class="heading-element"><span>0.0.0.3  简单的client</span>
+  <a href="#%e7%ae%80%e5%8d%95%e7%9a%84client" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151216965.webp" alt="image-20230715121637803" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151216965.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151216965.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151216965.webp?size=large 2x" data-title="image-20230715121637803" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151216668.webp" alt="image-20230715121616175" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151216668.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151216668.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151216668.webp?size=large 2x" data-title="image-20230715121616175" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span> <span style="color:#828b96;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET    IPv4网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET6   IPv6网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_UNIX    本地通讯协议，具有高性能和低成本的IPC（进程间通讯）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_STREAM TCP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_DGRAM  UDP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_TCP     TCP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_UDP     UDP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$host</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;127.0.0.1&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//$host=&#39;192.168.0.102&#39;; //SocketTool
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$port</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">6001</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$sock</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> (<span style="color:#ff636f">!</span><span style="color:#58a1dd">$sock</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_create</span>(<span style="color:#58a1dd">AF_INET</span>, <span style="color:#58a1dd">SOCK_STREAM</span>, <span style="color:#58a1dd">SOL_TCP</span>)) { <span style="color:#828b96;font-style:italic">//创建socket
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;socket_create() failed ,reason:&#34;</span> <span style="color:#ff636f">.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">socket_strerror</span>(<span style="color:#58a1dd">socket_last_error</span>()) <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$con</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_connect</span>(<span style="color:#58a1dd">$sock</span>, <span style="color:#58a1dd">$host</span>, <span style="color:#58a1dd">$port</span>) <span style="color:#ff636f">===</span> <span style="color:#ff636f">false</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;connect fail&#39;</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span>;
+</span></span><span style="display:flex;"><span>} <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;connect success&#39;</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$message</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;hello server&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> (<span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$sock</span>, <span style="color:#58a1dd">$message</span>, <span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$message</span>)) <span style="color:#ff636f">===</span> <span style="color:#ff636f">false</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;fail to write&#39;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">socket_strerror</span>(<span style="color:#58a1dd">socket_last_error</span>());
+</span></span><span style="display:flex;"><span>} <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;client write success&#39;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">PHP_EOL</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">//读取服务端返回来的套接流信息
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#ff636f">while</span> (<span style="color:#58a1dd">$serverback</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_read</span>(<span style="color:#58a1dd">$sock</span>, <span style="color:#a6be9d">1024</span>)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;server return message is&#39;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">PHP_EOL</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$serverback</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h5 id="调试工具sockettool" class="heading-element"><span>0.0.0.4  调试工具：socketTool</span>
+  <a href="#%e8%b0%83%e8%af%95%e5%b7%a5%e5%85%b7sockettool" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>服务端测试</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151221409.webp" alt="image-20230715122100934" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151221409.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151221409.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151221409.webp?size=large 2x" data-title="image-20230715122100934" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>客户端测试</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151222298.webp" alt="image-20230715122227011" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151222298.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151222298.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151222298.webp?size=large 2x" data-title="image-20230715122227011" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h5 id="浏览器连接socket" class="heading-element"><span>0.0.0.5  浏览器连接socket</span>
+  <a href="#%e6%b5%8f%e8%a7%88%e5%99%a8%e8%bf%9e%e6%8e%a5socket" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>浏览器控制台：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#58a1dd">ws</span><span style="color:#ff636f">=</span><span style="color:#ff636f">new</span> <span style="color:#58a1dd">WebSocket</span>(<span style="color:#a6be9d">&#39;ws://192.168.0.102:6001&#39;</span>);</span></span></code></pre></div><p>浏览器结果</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151228280.webp" alt="image-20230715122824075" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151228280.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151228280.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151228280.webp?size=large 2x" data-title="image-20230715122824075" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>服务端结果</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151228592.webp" alt="image-20230715122845275" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151228592.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151228592.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151228592.webp?size=large 2x" data-title="image-20230715122845275" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这是因为服务端没有成功进行握手，我们需要对服务端代码进行改造</p>
+<h6 id="websocket01php" class="heading-element"><span>0.0.0.5.1  websocket01.php</span>
+  <a href="#websocket01php" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET    IPv4网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET6   IPv6网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_UNIX    本地通讯协议，具有高性能和低成本的IPC（进程间通讯）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_STREAM TCP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_DGRAM  UDP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_TCP     TCP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_UDP     UDP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$socket1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_create</span>(<span style="color:#58a1dd">AF_INET</span>,<span style="color:#58a1dd">SOCK_STREAM</span>,<span style="color:#58a1dd">SOL_TCP</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_bind</span>(<span style="color:#58a1dd">$socket1</span>,<span style="color:#a6be9d">&#39;0.0.0.0&#39;</span>,<span style="color:#a6be9d">6002</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//socket1 负责监听
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">socket_listen</span>(<span style="color:#58a1dd">$socket1</span>,<span style="color:#a6be9d">3</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//socket2 负责处理通信（接收、发送）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$socket2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_accept</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//读取客户端发送的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$res</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">socket_read</span>(<span style="color:#58a1dd">$socket2</span>,<span style="color:#a6be9d">1024</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$res</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">PHP_EOL</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">handshake</span>(<span style="color:#58a1dd">$res</span>,<span style="color:#58a1dd">$socket2</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$socket2</span>,<span style="color:#58a1dd">encode</span>(<span style="color:#a6be9d">&#39;hello client&#39;</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket2</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//websocket握手处理
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">handshake</span>(<span style="color:#58a1dd">$buffer</span>,<span style="color:#58a1dd">$client_socket</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">//截取Sec-WebSocket-Key的值并加密
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$temp_str</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>,<span style="color:#58a1dd">strpos</span>(<span style="color:#58a1dd">$buffer</span>,<span style="color:#a6be9d">&#39;Sec-WebSocket-Key&#39;</span>)<span style="color:#ff636f">+</span><span style="color:#a6be9d">18</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$client_key</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">trim</span>(<span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$temp_str</span>,<span style="color:#a6be9d">0</span>,<span style="color:#58a1dd">strpos</span>(<span style="color:#58a1dd">$temp_str</span>,<span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>)));
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$server_key</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">base64_encode</span>(<span style="color:#58a1dd">sha1</span>(<span style="color:#58a1dd">$client_key</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&#34;</span>,<span style="color:#ff636f">true</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;client_key[&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$client_key</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;]</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;server_key[&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$server_key</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;]</span><span style="color:#a6be9d">\n\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">//以下是响应包内容，浏览器会进行验证，成功后会建立连接
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$handshake_msg</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;HTTP/1.1 101 Switching Protocols</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$handshake_msg</span><span style="color:#ff636f">.=</span><span style="color:#a6be9d">&#34;Upgrade:websocket</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$handshake_msg</span><span style="color:#ff636f">.=</span><span style="color:#a6be9d">&#34;Sec-WebSocket-Version: 13</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$handshake_msg</span><span style="color:#ff636f">.=</span><span style="color:#a6be9d">&#34;Connection: Upgrade</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$handshake_msg</span><span style="color:#ff636f">.=</span><span style="color:#a6be9d">&#34;Sec-WebSocket-Accept: &#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$server_key</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\r\n\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$client_socket</span>,<span style="color:#58a1dd">$handshake_msg</span>,<span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$handshake_msg</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$handshake_msg</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//数据帧处理
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">encode</span>(<span style="color:#58a1dd">$buffer</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$len</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$buffer</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$len</span><span style="color:#ff636f">&lt;=</span><span style="color:#a6be9d">125</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\x81</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">chr</span>(<span style="color:#58a1dd">$len</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">$buffer</span>;
+</span></span><span style="display:flex;"><span>    }<span style="color:#ff636f">else</span> <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$len</span><span style="color:#ff636f">&lt;=</span><span style="color:#a6be9d">65535</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span>  <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\x81</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">chr</span>(<span style="color:#a6be9d">126</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">pack</span>(<span style="color:#a6be9d">&#34;n&#34;</span>,<span style="color:#58a1dd">$len</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">$buffer</span>;
+</span></span><span style="display:flex;"><span>    }<span style="color:#ff636f">else</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span>  <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\x81</span><span style="color:#a6be9d">&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">chr</span>(<span style="color:#a6be9d">127</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">pack</span>(<span style="color:#a6be9d">&#34;xxxxN&#34;</span>,<span style="color:#58a1dd">$len</span>)<span style="color:#ff636f">.</span><span style="color:#58a1dd">$buffer</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//数据帧处理
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">decode</span>(<span style="color:#58a1dd">$buffer</span>)  {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$len</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$masks</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$decoded</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$len</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ord</span>(<span style="color:#58a1dd">$buffer</span>[<span style="color:#a6be9d">1</span>]) <span style="color:#ff636f">&amp;</span> <span style="color:#a6be9d">127</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$len</span> <span style="color:#ff636f">===</span> <span style="color:#a6be9d">126</span>)  {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$masks</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">4</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">8</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span> <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$len</span> <span style="color:#ff636f">===</span> <span style="color:#a6be9d">127</span>)  {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$masks</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">10</span>, <span style="color:#a6be9d">4</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">14</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span>  {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$masks</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">4</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">6</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> (<span style="color:#58a1dd">$index</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span>; <span style="color:#58a1dd">$index</span> <span style="color:#ff636f">&lt;</span> <span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$data</span>); <span style="color:#58a1dd">$index</span><span style="color:#ff636f">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$decoded</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$data</span>[<span style="color:#58a1dd">$index</span>] <span style="color:#ff636f">^</span> <span style="color:#58a1dd">$masks</span>[<span style="color:#58a1dd">$index</span> <span style="color:#ff636f">%</span> <span style="color:#a6be9d">4</span>];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">$decoded</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>再浏览器输入</p>
+<pre tabindex="0"><code>ws=new WebSocket(&#39;ws://192.168.0.102:6002&#39;);</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151303243.webp" alt="image-20230715130307957" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151303243.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151303243.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151303243.webp?size=large 2x" data-title="image-20230715130307957" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这个时候没有报错了，说明浏览器已经校验通过了服务端发来的信息</p>
+<p>这里的问题是==服务器并没有保持监听而是断开了连接，我们需要再次修改服务端代码==</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151305984.webp" alt="image-20230715130546478" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151305984.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151305984.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307151305984.webp?size=large 2x" data-title="image-20230715130546478" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="websocket02php" class="heading-element"><span>0.0.0.5.2  websocket02.php</span>
+  <a href="#websocket02php" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>这个版本的服务端主要是解决了==持久连接的问题和多用户连接的问题==，注意这个版本不适配浏览器（搞定了持久化连接和诸多问题以后再去改成适配浏览器的版本）</p>
+<p>建议debug看一下代码执行流程</p>
+<p>注意这个<code>socket_select($read, $write, $except, null)</code>，三个变量只有$read不是null，他只会监测$read，一旦$read里面的套接字有发生了变化的就进入if，并且让$read只剩下发生了变化的套接字，而我们的第二个if <code>in_array($socket1, $read)</code>就限定了只监测接收我们的$socket1</p>
+<p>如果<code>socket_select($read, $write, $except, null)</code>没有监测到$read发生变化，就进入处理消息的那端代码了，就是说<code>if (socket_select($read, $write, $except, null) &gt; 0)</code>这段代码是管建立连接的，<code>if (count($read) &gt; 0)</code>这段代码是管处理消息的</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET    IPv4网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET6   IPv6网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_UNIX    本地通讯协议，具有高性能和低成本的IPC（进程间通讯）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_STREAM TCP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_DGRAM  UDP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_TCP     TCP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_UDP     UDP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$socket1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_create</span>(<span style="color:#58a1dd">AF_INET</span>, <span style="color:#58a1dd">SOCK_STREAM</span>, <span style="color:#58a1dd">SOL_TCP</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_bind</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#a6be9d">&#39;0.0.0.0&#39;</span>, <span style="color:#a6be9d">6003</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//socket1 负责监听
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">socket_listen</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#a6be9d">3</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$clients</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">array</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">while</span> (<span style="color:#a6be9d">1</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">//socket_select对读写套接字的数字是引用，为了保证clients不被改变，拷贝一份
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$read</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$clients</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$write</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$except</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">/*当read发生变化，说明：有客户端进行连接操作了，
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    $writr和$except均为null，所以只检测read数组的变化
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    socket_select的第四个参数null,表示阻塞，它会阻塞一直到发生变化，
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">                    0，表示为非阻塞，调用socket_select()后，立即返回，然后继续调用socket_select()不断循环
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    返回值是修改后的数组中包含套接字资源的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">socket_select</span>(<span style="color:#58a1dd">$read</span>, <span style="color:#58a1dd">$write</span>, <span style="color:#58a1dd">$except</span>, <span style="color:#ff636f">null</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">in_array</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#58a1dd">$read</span>)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">//socket2负责处理通信（接收、发送）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>            <span style="color:#58a1dd">$socket2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_accept</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">$clients</span>[] <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$socket2</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$socket2</span>, <span style="color:#a6be9d">&#39;You are&#39;</span> <span style="color:#ff636f">.</span> (<span style="color:#58a1dd">count</span>(<span style="color:#58a1dd">$clients</span>) <span style="color:#ff636f">-</span> <span style="color:#a6be9d">1</span>) <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;clients connect</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">socket_getpeername</span>(<span style="color:#58a1dd">$socket2</span>, <span style="color:#58a1dd">$ip</span>, <span style="color:#58a1dd">$port</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">new client[&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$ip</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;:&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$port</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;]</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">$key</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key</span>]);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">count</span>(<span style="color:#58a1dd">$read</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">foreach</span> (<span style="color:#58a1dd">$read</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$socket_item</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#828b96;font-style:italic">//读取客户端发来的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                <span style="color:#58a1dd">$msg</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_read</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#a6be9d">1024</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#828b96;font-style:italic">//发给自己：$socket_item
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                <span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#a6be9d">&#39;received&#39;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$msg</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">foreach</span> (<span style="color:#58a1dd">$clients</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$client_socket</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#828b96;font-style:italic">//发给别人（除去监听和自己）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$client_socket</span> <span style="color:#ff636f">!=</span> <span style="color:#58a1dd">$socket1</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">$client_socket</span> <span style="color:#ff636f">!=</span> <span style="color:#58a1dd">$socket_item</span>) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">sleep</span>(<span style="color:#a6be9d">1</span>);
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$msg</span>, <span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$msg</span>));
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307152208472.webp" alt="image-20230715220850020" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307152208472.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307152208472.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307152208472.webp?size=large 2x" data-title="image-20230715220850020" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这个服务端可以持久连接，但是还有一个新的问题，就是==有连接退出时我们没有进行处理，导致它会一直尝试连接==</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307152212350.webp" alt="image-20230715221254097" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307152212350.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307152212350.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307152212350.webp?size=large 2x" data-title="image-20230715221254097" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h6 id="websocket03php" class="heading-element"><span>0.0.0.5.3  websocket03.php</span>
+  <a href="#websocket03php" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>前面说上个版本的代码有连接退出时我们没有进行处理，导致它会一直尝试连接</p>
+<p>这个版本完成==监测客户端断开并处理==</p>
+<p>它做的事情就是给每次写数据都加了if，如果判断不通过就把这次不通过的套接字在数组里删掉</p>
+<p><code>if (socket_select($read, $write, $except, null) &gt; 0)</code>这段代码没变，<code>if (count($read) &gt; 0)</code>这段代码的foreach里面加了三个if</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET    IPv4网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET6   IPv6网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_UNIX    本地通讯协议，具有高性能和低成本的IPC（进程间通讯）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_STREAM TCP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_DGRAM  UDP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_TCP     TCP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_UDP     UDP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$socket1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_create</span>(<span style="color:#58a1dd">AF_INET</span>, <span style="color:#58a1dd">SOCK_STREAM</span>, <span style="color:#58a1dd">SOL_TCP</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_bind</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#a6be9d">&#39;0.0.0.0&#39;</span>, <span style="color:#a6be9d">6004</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//socket1 负责监听
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">socket_listen</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#a6be9d">3</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$clients</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">array</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">while</span> (<span style="color:#a6be9d">1</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">//socket_select对读写套接字的数字是引用，为了保证clients不被改变，拷贝一份
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$read</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$clients</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$write</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$except</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">/*当read发生变化，说明：有客户端进行连接操作了，
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    $write和$except均为null，所以只检测read数组的变化
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    socket_select的第四个参数null,表示阻塞，它会阻塞一直到发生变化，
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">                    0，表示为非阻塞，调用socket_select()后，立即返回，然后继续调用socket_select()不断循环
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    返回值是修改后的数组中包含套接字资源的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">socket_select</span>(<span style="color:#58a1dd">$read</span>, <span style="color:#58a1dd">$write</span>, <span style="color:#58a1dd">$except</span>, <span style="color:#ff636f">null</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">/*socket_select 接受三个套接字数组，分别检查数组中的套接字是否处于可以操作的状态(返回时只保留可操作的套接字)
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">        使用最多的是 $read，因此以读为例,在套接字数组 $read 中最初应保有一个服务端监听套接字,每当该套接字可读时，就表示有一个用户发起了连接。此时你需要对该连接创建一个套接字，并加入到 $read 数组中
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">        当然，并不只是服务端监听的套接字会变成可读的，用户套接字也会变成可读的，此时你就可以读取用户发来的数据了
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">        socket_select 只在套接字数组发生了变化时才返回。也就是说，一旦执行到 socket_select 的下一条语句，则必有一个套接字是需要你操作的*/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">in_array</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#58a1dd">$read</span>)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">//socket2负责处理通信（接收、发送）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>            <span style="color:#58a1dd">$socket2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_accept</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">$clients</span>[] <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$socket2</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$socket2</span>, <span style="color:#a6be9d">&#39;You are  &#39;</span> <span style="color:#ff636f">.</span> (<span style="color:#58a1dd">count</span>(<span style="color:#58a1dd">$clients</span>) <span style="color:#ff636f">-</span> <span style="color:#a6be9d">1</span>) <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;  clients connect</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">socket_getpeername</span>(<span style="color:#58a1dd">$socket2</span>, <span style="color:#58a1dd">$ip</span>, <span style="color:#58a1dd">$port</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">new client[&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$ip</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;:&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$port</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;]</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">$key</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key</span>]);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">count</span>(<span style="color:#58a1dd">$read</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">foreach</span> (<span style="color:#58a1dd">$read</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$socket_item</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#828b96;font-style:italic">//读取客户端发来的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                <span style="color:#ff636f">if</span> (<span style="color:#ff636f">false</span> <span style="color:#ff636f">===</span> <span style="color:#58a1dd">$msg</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">socket_read</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#a6be9d">1024</span>)) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket_item</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$key</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;READ ERROR client </span><span style="color:#a6be9d">$key</span><span style="color:#a6be9d"> is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#828b96;font-style:italic">//发给自己：$socket_item
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                <span style="color:#ff636f">if</span> (<span style="color:#ff636f">false</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#a6be9d">&#39;I post : &#39;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$msg</span>)) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket_item</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$key1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key1</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$key2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key2</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;MYclient </span><span style="color:#a6be9d">$key</span><span style="color:#a6be9d"> is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">foreach</span> (<span style="color:#58a1dd">$clients</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$client_socket</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#828b96;font-style:italic">//发给别人（除去监听和自己）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$client_socket</span> <span style="color:#ff636f">!=</span> <span style="color:#58a1dd">$socket1</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">$client_socket</span> <span style="color:#ff636f">!=</span> <span style="color:#58a1dd">$socket_item</span>) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">sleep</span>(<span style="color:#a6be9d">1</span>);
+</span></span><span style="display:flex;"><span>                        <span style="color:#828b96;font-style:italic">//socket_write($client_socket, $msg, strlen($msg));
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                        <span style="color:#ff636f">if</span> (<span style="color:#ff636f">false</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$msg</span>, <span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$msg</span>))) {
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$client_socket</span>);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">$key1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key1</span>]);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">$key2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key2</span>]);
+</span></span><span style="display:flex;"><span>                            <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;otherclient </span><span style="color:#a6be9d">$key</span><span style="color:#a6be9d"> is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>但是可以看到这种判断方法并不优雅，实际上有更好的解决方法</p>
+<h6 id="websocket04php" class="heading-element"><span>0.0.0.5.4  websocket04.php</span>
+  <a href="#websocket04php" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>socket_recv</p>
+<p><code>socket_recv()</code> 函数用于从一个已连接的 socket收数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">socket_recv</span>(<span style="color:#58a1dd">$socket</span>, <span style="color:#ff636f">&amp;</span><span style="color:#58a1dd">$buf</span>, $, <span style="color:#58a1dd">$flags</span>);</span></span></code></pre></div><p>参数说明：</p>
+<ul>
+<li><code>$socket</code>: 已连接的 socket 资源。</li>
+<li><code>&amp;$buf</code>: 接收到的数据将存储在该变量中。</li>
+<li><code>$len</code>: 期望接收的数据的最大字节数。</li>
+<li><code>$flags</code>：可选参数，用于指定接收操作的一些特殊选项。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>成功时，返回接收到的数据的字节数。</li>
+<li>失败时，返回 false，并且可以通过调用 <code>socket_last_error()</code> 函数获取错误码。</li>
+</ul>
+<p>示例代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">$socket</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">socket_create</span>(<span style="color:#58a1dd">AF_INET</span>, <span style="color:#58a1dd">SOCK_STREAM</span>, <span style="color:#58a1dd">SOL_TCP</span>);
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// 将 $socket 连接到服务器
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$buf</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;&#34;</span>; <span style="color:#828b96;font-style:italic">// 存储接收到的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$len</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">1024</span>; <span style="color:#828b96;font-style:italic">// 最大字节数
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">$flags</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span>; <span style="color:#828b96;font-style:italic">// 没有特殊选项
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$bytesReceived</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_recv</span>(<span style="color:#58a1dd">$socket</span>, <span style="color:#58a1dd">$buf</span>, <span style="color:#58a1dd">$len</span>, <span style="color:#58a1dd">$flags</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$bytesReceived</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">false</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;接收数据失败: &#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">socket_strerror</span>(<span style="color:#58a1dd">socket_last_error</span>()) <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>} <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;接收到的数据: &#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$buf</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;接收到的字节数：&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$bytesReceived</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket</span>);</span></span></code></pre></div><p>请注意，在使用 <code>之前，你需要先创建一个已连接的 socket，并且通过 </code>socket_connect()` 函数将其与远程服务器连接起来。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET    IPv4网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET6   IPv6网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_UNIX    本地通讯协议，具有高性能和低成本的IPC（进程间通讯）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_STREAM TCP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_DGRAM  UDP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_TCP     TCP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_UDP     UDP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$socket1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_create</span>(<span style="color:#58a1dd">AF_INET</span>, <span style="color:#58a1dd">SOCK_STREAM</span>, <span style="color:#58a1dd">SOL_TCP</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_bind</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#a6be9d">&#39;0.0.0.0&#39;</span>, <span style="color:#a6be9d">6005</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//socket1 负责监听
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">socket_listen</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#a6be9d">3</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$clients</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">array</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">while</span> (<span style="color:#a6be9d">1</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">//socket_select对读写套接字的数字是引用，为了保证clients不被改变，拷贝一份
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$read</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$clients</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$write</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$except</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">/*当read发生变化，说明：有客户端进行连接操作了，
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    $write和$except均为null，所以只检测read数组的变化
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    socket_select的第四个参数null,表示阻塞，它会阻塞一直到发生变化，
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">                    0，表示为非阻塞，调用socket_select()后，立即返回，然后继续调用socket_select()不断循环
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    返回值是修改后的数组中包含套接字资源的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">socket_select</span>(<span style="color:#58a1dd">$read</span>, <span style="color:#58a1dd">$write</span>, <span style="color:#58a1dd">$except</span>, <span style="color:#ff636f">null</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">/*socket_select 接受三个套接字数组，分别检查数组中的套接字是否处于可以操作的状态(返回时只保留可操作的套接字)
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">        使用最多的是 $read，因此以读为例,在套接字数组 $read 中最初应保有一个服务端监听套接字,每当该套接字可读时，就表示有一个用户发起了连接。此时你需要对该连接创建一个套接字，并加入到 $read 数组中
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">        当然，并不只是服务端监听的套接字会变成可读的，用户套接字也会变成可读的，此时你就可以读取用户发来的数据了
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">        socket_select 只在套接字数组发生了变化时才返回。也就是说，一旦执行到 socket_select 的下一条语句，则必有一个套接字是需要你操作的*/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">in_array</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#58a1dd">$read</span>)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">//socket2负责处理通信（接收、发送）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>            <span style="color:#58a1dd">$socket2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_accept</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">$clients</span>[] <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$socket2</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$socket2</span>, <span style="color:#a6be9d">&#39;You are  &#39;</span> <span style="color:#ff636f">.</span> (<span style="color:#58a1dd">count</span>(<span style="color:#58a1dd">$clients</span>) <span style="color:#ff636f">-</span> <span style="color:#a6be9d">1</span>) <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;  clients connect</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">socket_getpeername</span>(<span style="color:#58a1dd">$socket2</span>, <span style="color:#58a1dd">$ip</span>, <span style="color:#58a1dd">$port</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">new client[&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$ip</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;:&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$port</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;]</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">$key</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key</span>]);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">count</span>(<span style="color:#58a1dd">$read</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">foreach</span> (<span style="color:#58a1dd">$read</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$socket_item</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#828b96;font-style:italic">//读取客户端发来的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                <span style="color:#828b96;font-style:italic">//$msg = socket_read($socket_item, 1024);
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                <span style="color:#58a1dd">$result</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_recv</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$msg</span>, <span style="color:#a6be9d">1024</span>, <span style="color:#a6be9d">0</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$result</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">false</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#828b96;font-style:italic">//no data 客户端未发来消息
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;no data&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">PHP_EOL</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff636f">elseif</span> (<span style="color:#58a1dd">$result</span> <span style="color:#ff636f">===</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#828b96;font-style:italic">//socket closed 客户端断开
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket_item</span>); <span style="color:#828b96;font-style:italic">//关闭服务器的socket
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#828b96;font-style:italic">//清理已关闭的连接消息
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#58a1dd">$key1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key1</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$key2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key2</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;client [</span><span style="color:#a6be9d">$socket_item</span><span style="color:#a6be9d">] is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;Server receive success [&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$msg</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;]&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">time</span>() <span style="color:#ff636f">.</span> <span style="color:#58a1dd">PHP_EOL</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">foreach</span> (<span style="color:#58a1dd">$clients</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$client_socket</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#828b96;font-style:italic">//发给别人（除去监听和自己）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$client_socket</span> <span style="color:#ff636f">!=</span> <span style="color:#58a1dd">$socket1</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">$client_socket</span> <span style="color:#ff636f">!=</span> <span style="color:#58a1dd">$socket_item</span>) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">sleep</span>(<span style="color:#a6be9d">1</span>);
+</span></span><span style="display:flex;"><span>                        <span style="color:#828b96;font-style:italic">//socket_write($client_socket, $msg, strlen($msg));
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                        <span style="color:#ff636f">if</span> (<span style="color:#ff636f">false</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$msg</span>, <span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$msg</span>))) {
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$client_socket</span>);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">$key1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key1</span>]);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">$key2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key2</span>]);
+</span></span><span style="display:flex;"><span>                            <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;otherclient </span><span style="color:#a6be9d">$key</span><span style="color:#a6be9d"> is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>变化是</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span> <span style="color:#ff636f">if</span> (<span style="color:#ff636f">false</span> <span style="color:#ff636f">===</span> <span style="color:#58a1dd">$msg</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">socket_read</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#a6be9d">1024</span>)) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket_item</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$key</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;READ ERROR client </span><span style="color:#a6be9d">$key</span><span style="color:#a6be9d"> is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#828b96;font-style:italic">//发给自己：$socket_item
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                <span style="color:#ff636f">if</span> (<span style="color:#ff636f">false</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#a6be9d">&#39;I post : &#39;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$msg</span>)) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket_item</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$key1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key1</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$key2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key2</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;MYclient </span><span style="color:#a6be9d">$key</span><span style="color:#a6be9d"> is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>                }</span></span></code></pre></div><p>变成了</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">$result</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_recv</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$msg</span>, <span style="color:#a6be9d">1024</span>, <span style="color:#a6be9d">0</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$result</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">false</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#828b96;font-style:italic">//no data 客户端未发来消息
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;no data&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">PHP_EOL</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff636f">elseif</span> (<span style="color:#58a1dd">$result</span> <span style="color:#ff636f">===</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#828b96;font-style:italic">//socket closed 客户端断开
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket_item</span>); <span style="color:#828b96;font-style:italic">//关闭服务器的socket
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#828b96;font-style:italic">//清理已关闭的连接消息
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#58a1dd">$key1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key1</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$key2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key2</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;client [</span><span style="color:#a6be9d">$socket_item</span><span style="color:#a6be9d">] is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;Server receive success [&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$msg</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;]&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">time</span>() <span style="color:#ff636f">.</span> <span style="color:#58a1dd">PHP_EOL</span>;
+</span></span><span style="display:flex;"><span>                }</span></span></code></pre></div><p>发现失去了查看自己发送的消息的功能，我又给加上了</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET    IPv4网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_INET6   IPv6网络协议，TCP和UDP都可用此协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * AF_UNIX    本地通讯协议，具有高性能和低成本的IPC（进程间通讯）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_STREAM TCP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOCK_DGRAM  UDP协议套接字
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_TCP     TCP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> * SOL_UDP     UDP协议
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$socket1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_create</span>(<span style="color:#58a1dd">AF_INET</span>, <span style="color:#58a1dd">SOCK_STREAM</span>, <span style="color:#58a1dd">SOL_TCP</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_bind</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#a6be9d">&#39;0.0.0.0&#39;</span>, <span style="color:#a6be9d">6004</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//socket1 负责监听
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">socket_listen</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#a6be9d">3</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$clients</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">array</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">while</span> (<span style="color:#a6be9d">1</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">//socket_select对读写套接字的数字是引用，为了保证clients不被改变，拷贝一份
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$read</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$clients</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$write</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$except</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">/*当read发生变化，说明：有客户端进行连接操作了，
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    $write和$except均为null，所以只检测read数组的变化
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    socket_select的第四个参数null,表示阻塞，它会阻塞一直到发生变化，
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">                    0，表示为非阻塞，调用socket_select()后，立即返回，然后继续调用socket_select()不断循环
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    返回值是修改后的数组中包含套接字资源的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">    */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">socket_select</span>(<span style="color:#58a1dd">$read</span>, <span style="color:#58a1dd">$write</span>, <span style="color:#58a1dd">$except</span>, <span style="color:#ff636f">null</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">/*socket_select 接受三个套接字数组，分别检查数组中的套接字是否处于可以操作的状态(返回时只保留可操作的套接字)
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">        使用最多的是 $read，因此以读为例,在套接字数组 $read 中最初应保有一个服务端监听套接字,每当该套接字可读时，就表示有一个用户发起了连接。此时你需要对该连接创建一个套接字，并加入到 $read 数组中
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">        当然，并不只是服务端监听的套接字会变成可读的，用户套接字也会变成可读的，此时你就可以读取用户发来的数据了
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">        socket_select 只在套接字数组发生了变化时才返回。也就是说，一旦执行到 socket_select 的下一条语句，则必有一个套接字是需要你操作的*/</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">in_array</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#58a1dd">$read</span>)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">//socket2负责处理通信（接收、发送）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>            <span style="color:#58a1dd">$socket2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_accept</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">$clients</span>[] <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$socket2</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$socket2</span>, <span style="color:#a6be9d">&#39;You are  &#39;</span> <span style="color:#ff636f">.</span> (<span style="color:#58a1dd">count</span>(<span style="color:#58a1dd">$clients</span>) <span style="color:#ff636f">-</span> <span style="color:#a6be9d">1</span>) <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;  clients connect</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">socket_getpeername</span>(<span style="color:#58a1dd">$socket2</span>, <span style="color:#58a1dd">$ip</span>, <span style="color:#58a1dd">$port</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">new client[&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$ip</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;:&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$port</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;]</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">$key</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key</span>]);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">count</span>(<span style="color:#58a1dd">$read</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">foreach</span> (<span style="color:#58a1dd">$read</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$socket_item</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#828b96;font-style:italic">//读取客户端发来的数据
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                <span style="color:#828b96;font-style:italic">//$msg = socket_read($socket_item, 1024);
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                <span style="color:#58a1dd">$result</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_recv</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$msg</span>, <span style="color:#a6be9d">1024</span>, <span style="color:#a6be9d">0</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$result</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">false</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#828b96;font-style:italic">//no data 客户端未发来消息
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;no data&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">PHP_EOL</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff636f">elseif</span> (<span style="color:#58a1dd">$result</span> <span style="color:#ff636f">===</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#828b96;font-style:italic">//socket closed 客户端断开
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket_item</span>); <span style="color:#828b96;font-style:italic">//关闭服务器的socket
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#828b96;font-style:italic">//清理已关闭的连接消息
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#58a1dd">$key1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key1</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$key2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key2</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;client [</span><span style="color:#a6be9d">$socket_item</span><span style="color:#a6be9d">] is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;Server receive success [&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$msg</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;]&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">time</span>() <span style="color:#ff636f">.</span> <span style="color:#58a1dd">PHP_EOL</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">if</span> (<span style="color:#ff636f">false</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#a6be9d">&#39;I post : &#39;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$msg</span>)) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket_item</span>);
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">$key1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key1</span>]);
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">$key2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key2</span>]);
+</span></span><span style="display:flex;"><span>                        <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;MYclient </span><span style="color:#a6be9d">$key</span><span style="color:#a6be9d"> is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                        <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">foreach</span> (<span style="color:#58a1dd">$clients</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$client_socket</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#828b96;font-style:italic">//发给别人（除去监听和自己）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$client_socket</span> <span style="color:#ff636f">!=</span> <span style="color:#58a1dd">$socket1</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">$client_socket</span> <span style="color:#ff636f">!=</span> <span style="color:#58a1dd">$socket_item</span>) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">sleep</span>(<span style="color:#a6be9d">1</span>);
+</span></span><span style="display:flex;"><span>                        <span style="color:#828b96;font-style:italic">//socket_write($client_socket, $msg, strlen($msg));
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                        <span style="color:#ff636f">if</span> (<span style="color:#ff636f">false</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$msg</span>, <span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$msg</span>))) {
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$client_socket</span>);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">$key1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key1</span>]);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">$key2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key2</span>]);
+</span></span><span style="display:flex;"><span>                            <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;otherclient </span><span style="color:#a6be9d">$key</span><span style="color:#a6be9d"> is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h6 id="websocket05php" class="heading-element"><span>0.0.0.5.5  websocket05.php</span>
+  <a href="#websocket05php" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h6><p>解决了php socket通信的诸多问题，我们现在来完成websocket聊天室雏形！</p>
+<pre tabindex="0"><code>ws=new WebSocket(&#39;ws://192.168.10.106:6006&#39;);
+ws.onmessage=function(msg){console.log(msg.data)};
+ws.send(&#39;hello world!!&#39;);</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307160152408.webp" alt="image-20230716015221722" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307160152408.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307160152408.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202307160152408.webp?size=large 2x" data-title="image-20230716015221722" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>服务端代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$socket1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_create</span>(<span style="color:#58a1dd">AF_INET</span>, <span style="color:#58a1dd">SOCK_STREAM</span>, <span style="color:#58a1dd">SOL_TCP</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">socket_bind</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#a6be9d">&#39;0.0.0.0&#39;</span>, <span style="color:#a6be9d">6006</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//socket1 负责监听
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#58a1dd">socket_listen</span>(<span style="color:#58a1dd">$socket1</span>, <span style="color:#a6be9d">3</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$clients</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">array</span>(<span style="color:#58a1dd">$socket1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">while</span> (<span style="color:#ff636f">true</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">//socket_select对读写套接字的数字是引用，为了保证clients不被改变，拷贝一份
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$read</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$clients</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$write</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$except</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">socket_select</span>(<span style="color:#58a1dd">$read</span>, <span style="color:#58a1dd">$write</span>, <span style="color:#58a1dd">$except</span>, <span style="color:#ff636f">null</span>) <span style="color:#ff636f">&gt;</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">foreach</span> (<span style="color:#58a1dd">$read</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$socket_item</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$socket_item</span> <span style="color:#ff636f">==</span> <span style="color:#58a1dd">$socket1</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">if</span> (<span style="color:#ff636f">!</span><span style="color:#58a1dd">$socket_client</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket_accept</span>(<span style="color:#58a1dd">$socket_item</span>)) <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">$hello</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">socket_read</span>(<span style="color:#58a1dd">$socket_client</span>, <span style="color:#a6be9d">1024</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$hello</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">false</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket_client</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">handshake</span>(<span style="color:#58a1dd">$hello</span>, <span style="color:#58a1dd">$socket_client</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">socket_getpeername</span>(<span style="color:#58a1dd">$socket_client</span>, <span style="color:#58a1dd">$ip</span>, <span style="color:#58a1dd">$port</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$ip</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;:&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$port</span>] <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$socket_client</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;new client[&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$ip</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;:&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$port</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;]</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;hello msg [&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$hello</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;]</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">$result</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">socket_recv</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$msg</span>, <span style="color:#a6be9d">1024</span>, <span style="color:#a6be9d">0</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$result</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">false</span>) <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$result</span> <span style="color:#ff636f">===</span> <span style="color:#a6be9d">0</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$socket_item</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$key1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key1</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$key2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key2</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;client [</span><span style="color:#a6be9d">$socket_item</span><span style="color:#a6be9d">] is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$web_msg</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">decode</span>(<span style="color:#58a1dd">$msg</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$id</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">search</span>(<span style="color:#58a1dd">$socket_item</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;client [&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$id</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;] say:&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$web_msg</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">$broadcast</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">encode</span>(<span style="color:#58a1dd">$web_msg</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">foreach</span> (<span style="color:#58a1dd">$clients</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$client_socket</span>) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#828b96;font-style:italic">//发给别人（除去监听和自己）
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$client_socket</span> <span style="color:#ff636f">!=</span> <span style="color:#58a1dd">$socket1</span>) {
+</span></span><span style="display:flex;"><span>                            <span style="color:#828b96;font-style:italic">//socket_write($client_socket, $msg, strlen($msg));
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>                            <span style="color:#ff636f">if</span> (<span style="color:#ff636f">false</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">@</span><span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$broadcast</span>, <span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$broadcast</span>))) {
+</span></span><span style="display:flex;"><span>                                <span style="color:#58a1dd">socket_close</span>(<span style="color:#58a1dd">$client_socket</span>);
+</span></span><span style="display:flex;"><span>                                <span style="color:#58a1dd">$key1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$read</span>);
+</span></span><span style="display:flex;"><span>                                <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$read</span>[<span style="color:#58a1dd">$key1</span>]);
+</span></span><span style="display:flex;"><span>                                <span style="color:#58a1dd">$key2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$clients</span>);
+</span></span><span style="display:flex;"><span>                                <span style="color:#58a1dd">unset</span>(<span style="color:#58a1dd">$clients</span>[<span style="color:#58a1dd">$key2</span>]);
+</span></span><span style="display:flex;"><span>                                <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#34;otherclient [</span><span style="color:#a6be9d">$socket_item</span><span style="color:#a6be9d">] is closed!</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                            }<span style="color:#ff636f">else</span>{
+</span></span><span style="display:flex;"><span>                                <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;消息已发送给&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$client_socket</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>                            }
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">continue</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">handshake</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#58a1dd">$client_socket</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">//截取Sec-WebSocket-Key的值并加密
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$temp_str</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#58a1dd">strpos</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">&#39;Sec-WebSocket-Key&#39;</span>) <span style="color:#ff636f">+</span> <span style="color:#a6be9d">18</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$client_key</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">trim</span>(<span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$temp_str</span>, <span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">strpos</span>(<span style="color:#58a1dd">$temp_str</span>, <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>)));
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$server_key</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">base64_encode</span>(<span style="color:#58a1dd">sha1</span>(<span style="color:#58a1dd">$client_key</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&#34;</span>, <span style="color:#ff636f">true</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;client_key[&#39;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$client_key</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;]</span><span style="color:#a6be9d">\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#a6be9d">&#39;server_key[&#39;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$server_key</span> <span style="color:#ff636f">.</span> <span style="color:#a6be9d">&#34;]</span><span style="color:#a6be9d">\n\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$client_key</span> <span style="color:#ff636f">==</span> <span style="color:#a6be9d">&#39;&#39;</span>) <span style="color:#ff636f">return</span> <span style="color:#ff636f">false</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">//以下是响应包内容，浏览器会进行验证，成功后会建立连接
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">$handshake_msg</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;HTTP/1.1 101 Switching Protocols</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$handshake_msg</span> <span style="color:#ff636f">.=</span> <span style="color:#a6be9d">&#34;Upgrade: websocket</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$handshake_msg</span> <span style="color:#ff636f">.=</span> <span style="color:#a6be9d">&#34;Sec-WebSocket-Version: 13</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$handshake_msg</span> <span style="color:#ff636f">.=</span> <span style="color:#a6be9d">&#34;Connection: Upgrade</span><span style="color:#a6be9d">\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$handshake_msg</span> <span style="color:#ff636f">.=</span> <span style="color:#a6be9d">&#34;Sec-WebSocket-Accept: &#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$server_key</span> <span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\r\n\r\n</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">socket_write</span>(<span style="color:#58a1dd">$client_socket</span>, <span style="color:#58a1dd">$handshake_msg</span>, <span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$handshake_msg</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">echo</span> <span style="color:#58a1dd">$handshake_msg</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#ff636f">true</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//数据帧处理
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">encode</span>(<span style="color:#58a1dd">$buffer</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$len</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$buffer</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$len</span> <span style="color:#ff636f">&lt;=</span> <span style="color:#a6be9d">125</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\x81</span><span style="color:#a6be9d">&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">chr</span>(<span style="color:#58a1dd">$len</span>) <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$buffer</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span> <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$len</span> <span style="color:#ff636f">&lt;=</span> <span style="color:#a6be9d">65535</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\x81</span><span style="color:#a6be9d">&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">chr</span>(<span style="color:#a6be9d">126</span>) <span style="color:#ff636f">.</span> <span style="color:#58a1dd">pack</span>(<span style="color:#a6be9d">&#34;n&#34;</span>, <span style="color:#58a1dd">$len</span>) <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$buffer</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#a6be9d">&#34;</span><span style="color:#a6be9d">\x81</span><span style="color:#a6be9d">&#34;</span> <span style="color:#ff636f">.</span> <span style="color:#58a1dd">chr</span>(<span style="color:#a6be9d">127</span>) <span style="color:#ff636f">.</span> <span style="color:#58a1dd">pack</span>(<span style="color:#a6be9d">&#34;xxxxN&#34;</span>, <span style="color:#58a1dd">$len</span>) <span style="color:#ff636f">.</span> <span style="color:#58a1dd">$buffer</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">decode</span>(<span style="color:#58a1dd">$buffer</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$len</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$masks</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$decoded</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$len</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ord</span>(<span style="color:#58a1dd">$buffer</span>[<span style="color:#a6be9d">1</span>]) <span style="color:#ff636f">&amp;</span> <span style="color:#a6be9d">127</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$len</span> <span style="color:#ff636f">===</span> <span style="color:#a6be9d">126</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$masks</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">4</span>, <span style="color:#a6be9d">4</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">8</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span> <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$len</span> <span style="color:#ff636f">===</span> <span style="color:#a6be9d">127</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$masks</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">10</span>, <span style="color:#a6be9d">4</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">14</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$masks</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">2</span>, <span style="color:#a6be9d">4</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$data</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$buffer</span>, <span style="color:#a6be9d">6</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">for</span> (<span style="color:#58a1dd">$index</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">0</span>; <span style="color:#58a1dd">$index</span> <span style="color:#ff636f">&lt;</span> <span style="color:#58a1dd">strlen</span>(<span style="color:#58a1dd">$data</span>); <span style="color:#58a1dd">$index</span><span style="color:#ff636f">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$decoded</span> <span style="color:#ff636f">.=</span> <span style="color:#58a1dd">$data</span>[<span style="color:#58a1dd">$index</span>] <span style="color:#ff636f">^</span> <span style="color:#58a1dd">$masks</span>[<span style="color:#58a1dd">$index</span> <span style="color:#ff636f">%</span> <span style="color:#a6be9d">4</span>];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">$decoded</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">function</span> <span style="color:#58a1dd">search</span>(<span style="color:#58a1dd">$socket_client</span>, <span style="color:#58a1dd">$clients</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$search</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">array_search</span>(<span style="color:#58a1dd">$socket_client</span>, <span style="color:#58a1dd">$clients</span>, <span style="color:#ff636f">true</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">$search</span> <span style="color:#ff636f">===</span> <span style="color:#ff636f">null</span>) <span style="color:#58a1dd">$search</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">false</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">return</span> <span style="color:#58a1dd">$search</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>下面我们来搞一个客户端，主要就是javascript</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">&lt;!doctype html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">html</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">head</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#58a1dd">meta</span> <span style="color:#58a1dd">charset</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;utf-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#58a1dd">title</span>&gt;socket&lt;/<span style="color:#58a1dd">title</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#58a1dd">head</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">div</span> <span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;cc&#34;</span> <span style="color:#58a1dd">style</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;width:500px;&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#58a1dd">div</span> <span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;content&#34;</span> <span style="color:#58a1dd">style</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34; height:400px; overflow:auto; width:100%; border:1px solid #ccc;&#34;</span>&gt;&lt;/<span style="color:#58a1dd">div</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#58a1dd">form</span> <span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;form&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#58a1dd">textarea</span> <span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;text&#34;</span> <span style="color:#58a1dd">style</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;width:100%; height:200px;&#34;</span>&gt;&lt;/<span style="color:#58a1dd">textarea</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#58a1dd">input</span> <span style="color:#58a1dd">type</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;button&#34;</span> <span style="color:#58a1dd">onclick</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;ab();&#34;</span> <span style="color:#58a1dd">value</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;发送&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#58a1dd">form</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#58a1dd">div</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">p</span> <span style="color:#58a1dd">id</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;a&#34;</span>&gt;&lt;/<span style="color:#58a1dd">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">script</span> <span style="color:#58a1dd">src</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;https://code.jquery.com/jquery-2.1.3.min.js&#34;</span> <span style="color:#58a1dd">type</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;text/javascript&#34;</span>&gt;&lt;/<span style="color:#58a1dd">script</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#58a1dd">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#58a1dd">html</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#58a1dd">script</span>&gt;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">var</span> <span style="color:#58a1dd">wsServer</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;ws://192.168.111.1:6006&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">var</span> <span style="color:#58a1dd">websocket</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">WebSocket</span>(<span style="color:#58a1dd">wsServer</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">websocket</span>.<span style="color:#58a1dd">onopen</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">function</span> (<span style="color:#58a1dd">evt</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#34;Connected to WebSocket server.&#34;</span>);
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">websocket</span>.<span style="color:#58a1dd">onclose</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">function</span> (<span style="color:#58a1dd">evt</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#34;Disconnected&#34;</span>);
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">websocket</span>.<span style="color:#58a1dd">onmessage</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">function</span> (<span style="color:#58a1dd">evt</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$</span>(<span style="color:#a6be9d">&#39;#content&#39;</span>).<span style="color:#58a1dd">append</span>(<span style="color:#58a1dd">evt</span>.<span style="color:#58a1dd">data</span><span style="color:#ff636f">+</span><span style="color:#a6be9d">&#34;&lt;br&gt;&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">// document.getElementById(&#39;div&#39;).style.background = evt.data;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    <span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#39;Retrieved data from server: &#39;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">evt</span>.<span style="color:#58a1dd">data</span>);
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">websocket</span>.<span style="color:#58a1dd">onerror</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">function</span> (<span style="color:#58a1dd">evt</span>, <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">console</span>.<span style="color:#58a1dd">log</span>(<span style="color:#a6be9d">&#39;Error occured: &#39;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">evt</span>.<span style="color:#58a1dd">data</span>);
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>  <span style="color:#ff636f">function</span> <span style="color:#58a1dd">ab</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">var</span> <span style="color:#58a1dd">zhi</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$</span>(<span style="color:#a6be9d">&#39;#text&#39;</span>).<span style="color:#58a1dd">val</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">websocket</span>.<span style="color:#58a1dd">send</span>(<span style="color:#58a1dd">zhi</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">$</span>(<span style="color:#a6be9d">&#39;#text&#39;</span>).<span style="color:#58a1dd">val</span>(<span style="color:#a6be9d">&#39;&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#58a1dd">script</span>&gt;</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 09:31:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-tag" title="Tags - 计算机基础">计算机基础</a><a href="/tags/%E8%AF%AD%E8%A8%80/" class="post-tag" title="Tags - 语言">语言</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/%E6%9C%A8%E9%A9%AC%E5%BC%80%E5%8F%91/4/" class="post-nav-item" rel="prev" title="Php Webshell"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Php Webshell</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/php%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E/28/" class="post-nav-item" rel="next" title="Php Phar反序列化">Php Phar反序列化<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>
