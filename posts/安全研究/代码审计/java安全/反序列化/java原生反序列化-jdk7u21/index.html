@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Java原生反序列化 JDK7u21 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="java原生反序列化 JDK7u21">
+  <meta itemprop="datePublished" content="2024-08-15T10:15:01+08:00">
+  <meta itemprop="dateModified" content="2024-08-15T10:15:01+08:00">
+  <meta itemprop="wordCount" content="633">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/java%E5%8E%9F%E7%94%9F%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-jdk7u21/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="java原生反序列化 JDK7u21">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-15T10:15:01+08:00">
+    <meta property="article:modified_time" content="2024-08-15T10:15:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="java原生反序列化 JDK7u21">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/java%E5%8E%9F%E7%94%9F%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-jdk7u21/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/9/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/10/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "java原生反序列化 JDK7u21",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/java%E5%8E%9F%E7%94%9F%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-jdk7u21\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  633 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/java%E5%8E%9F%E7%94%9F%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-jdk7u21\/","datePublished": "2024-08-15T10:15:01+08:00","dateModified": "2024-08-15T10:15:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Java原生反序列化 JDK7u21</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Java原生反序列化 JDK7u21</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-08-15 10:15:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-08-15">2024-08-15</time></span>&nbsp;<span title="633 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 700 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#equalsimpl">equalsImpl</a></li>
+    <li><a href="#如何调用equalsimpl">如何调用equalsImpl</a></li>
+    <li><a href="#找到equals方法调用链">找到equals方法调用链</a></li>
+    <li><a href="#巧妙的magic-number">巧妙的Magic Number</a></li>
+    <li><a href="#调试">调试</a>
+      <ul>
+        <li><a href="#配置idea">配置idea</a></li>
+        <li><a href="#调试开始">调试开始</a></li>
+      </ul>
+    </li>
+    <li><a href="#修复">修复</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>影响范围：</p>
+<p>这条链子是java的原生反序列化链子，Java的版本是多个分支同时开发的，并不意味着JDK7的所有东西都一定比JDK6新，所以JDK6并非所有版本都受影响</p>
+<p>概是6u51的时候修复了这个漏洞，但是这个结论不能肯定，因为免费用户下载不到这个版本。</p>
+<p>JDK8在发布时，JDK7已经修复了这个问题，所以JDK8全版本都不受影响。</p>
+<p>Gadget</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">LinkedHashSet</span>.<span style="color:#58a1dd">readObject</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">LinkedHashSet</span>.<span style="color:#58a1dd">add</span>()
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">TemplatesImpl</span>.<span style="color:#58a1dd">hashCode</span>() (<span style="color:#58a1dd">X</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#58a1dd">LinkedHashSet</span>.<span style="color:#58a1dd">add</span>()
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">Proxy</span>(<span style="color:#58a1dd">Templates</span>).<span style="color:#58a1dd">hashCode</span>() (<span style="color:#58a1dd">X</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">AnnotationInvocationHandler</span>.<span style="color:#58a1dd">invoke</span>() (<span style="color:#58a1dd">X</span>)
+</span></span><span style="display:flex;"><span>          <span style="color:#58a1dd">AnnotationInvocationHandler</span>.<span style="color:#58a1dd">hashCodeImpl</span>() (<span style="color:#58a1dd">X</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">hashCode</span>() (<span style="color:#58a1dd">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">AnnotationInvocationHandler</span>.<span style="color:#58a1dd">memberValueHashCode</span>() (<span style="color:#58a1dd">X</span>)
+</span></span><span style="display:flex;"><span>              <span style="color:#58a1dd">TemplatesImpl</span>.<span style="color:#58a1dd">hashCode</span>() (<span style="color:#58a1dd">X</span>)
+</span></span><span style="display:flex;"><span>      <span style="color:#58a1dd">Proxy</span>(<span style="color:#58a1dd">Templates</span>).<span style="color:#58a1dd">equals</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">AnnotationInvocationHandler</span>.<span style="color:#58a1dd">invoke</span>()
+</span></span><span style="display:flex;"><span>          <span style="color:#58a1dd">AnnotationInvocationHandler</span>.<span style="color:#58a1dd">equalsImpl</span>()
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Method</span>.<span style="color:#58a1dd">invoke</span>()
+</span></span><span style="display:flex;"><span>              ...
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">TemplatesImpl</span>.<span style="color:#58a1dd">getOutputProperties</span>()
+</span></span><span style="display:flex;"><span>                  <span style="color:#58a1dd">TemplatesImpl</span>.<span style="color:#58a1dd">newTransformer</span>()
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">TemplatesImpl</span>.<span style="color:#58a1dd">getTransletInstance</span>()
+</span></span><span style="display:flex;"><span>                      <span style="color:#58a1dd">TemplatesImpl</span>.<span style="color:#58a1dd">defineTransletClasses</span>()
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">ClassLoader</span>.<span style="color:#58a1dd">defineClass</span>()
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">Class</span>.<span style="color:#58a1dd">newInstance</span>()
+</span></span><span style="display:flex;"><span>                          ...
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">MaliciousClass</span>.<span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">clinit</span><span style="color:#ff636f">&gt;</span>()
+</span></span><span style="display:flex;"><span>                              ...
+</span></span><span style="display:flex;"><span>                                <span style="color:#58a1dd">Runtime</span>.<span style="color:#58a1dd">exec</span>()</span></span></code></pre></div><h2 id="equalsimpl" class="heading-element"><span>equalsImpl</span>
+  <a href="#equalsimpl" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>JDK7u21的核心点就是<code>sun.reflect.annotation.AnnotationInvocationHandler</code>，没错就是之前CC1用到的那个入口。但当时只用到了这个类会触发Map#put 、Map#get 的特点。</p>
+<p>构造方法</p>
+<p>又贴了一次，记住这俩参数，一个是Class&lt;? extends Annotation&gt;一个是Map</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">private</span> <span style="color:#ff636f">final</span> <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?</span> <span style="color:#ff636f">extends</span> <span style="color:#58a1dd">Annotation</span><span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">type</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">private</span> <span style="color:#ff636f">final</span> <span style="color:#58a1dd">Map</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">String</span>, <span style="color:#58a1dd">Object</span><span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">memberValues</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">AnnotationInvocationHandler</span>(<span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?</span> <span style="color:#ff636f">extends</span> <span style="color:#58a1dd">Annotation</span><span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">type</span>, <span style="color:#58a1dd">Map</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">String</span>, <span style="color:#58a1dd">Object</span><span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">memberValues</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;[]</span> <span style="color:#58a1dd">superInterfaces</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">type</span>.<span style="color:#58a1dd">getInterfaces</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#ff636f">!</span><span style="color:#58a1dd">type</span>.<span style="color:#58a1dd">isAnnotation</span>() <span style="color:#ff636f">||</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">superInterfaces</span>.<span style="color:#58a1dd">length</span> <span style="color:#ff636f">!=</span> <span style="color:#58a1dd">1</span> <span style="color:#ff636f">||</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">superInterfaces</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">0</span><span style="color:#ff636f">]</span> <span style="color:#ff636f">!=</span> <span style="color:#58a1dd">java</span>.<span style="color:#58a1dd">lang</span>.<span style="color:#58a1dd">annotation</span>.<span style="color:#58a1dd">Annotation</span>.<span style="color:#58a1dd">class</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">throw</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">AnnotationFormatError</span>(<span style="color:#a6be9d">&#34;Attempt to create proxy for a non-annotation type.&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">type</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">type</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">memberValues</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">memberValues</span>;
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>这个equalsImpl是7u21的核心，就像上一次学的PQ一样</p>
+<p>下面看看源码</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">private</span> <span style="color:#58a1dd">Boolean</span> <span style="color:#58a1dd">equalsImpl</span>(<span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">o</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">o</span> <span style="color:#ff636f">==</span> <span style="color:#ff636f">this</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#ff636f">true</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#ff636f">!</span><span style="color:#58a1dd">type</span>.<span style="color:#58a1dd">isInstance</span>(<span style="color:#58a1dd">o</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#ff636f">false</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">for</span> (<span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">memberMethod</span> : <span style="color:#58a1dd">getMemberMethods</span>()) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">member</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">memberMethod</span>.<span style="color:#58a1dd">getName</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">ourValue</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">memberValues</span>.<span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">member</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">hisValue</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">AnnotationInvocationHandler</span> <span style="color:#58a1dd">hisHandler</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">asOneOfUs</span>(<span style="color:#58a1dd">o</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">hisHandler</span> <span style="color:#ff636f">!=</span> <span style="color:#ff636f">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">hisValue</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">hisHandler</span>.<span style="color:#58a1dd">memberValues</span>.<span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">member</span>);
+</span></span><span style="display:flex;"><span>            } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">hisValue</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">memberMethod</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">o</span>);
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">InvocationTargetException</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">return</span> <span style="color:#ff636f">false</span>;
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">IllegalAccessException</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">throw</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">AssertionError</span>(<span style="color:#58a1dd">e</span>);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#ff636f">!</span><span style="color:#58a1dd">memberValueEquals</span>(<span style="color:#58a1dd">ourValue</span>, <span style="color:#58a1dd">hisValue</span>))
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">return</span> <span style="color:#ff636f">false</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#ff636f">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">private</span> <span style="color:#58a1dd">Method</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">getMemberMethods</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">memberMethods</span> <span style="color:#ff636f">==</span> <span style="color:#ff636f">null</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">memberMethods</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">AccessController</span>.<span style="color:#58a1dd">doPrivileged</span>(
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">new</span> <span style="color:#58a1dd">PrivilegedAction</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">Method</span><span style="color:#ff636f">[]&gt;</span>() {
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">public</span> <span style="color:#58a1dd">Method</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">run</span>() {
+</span></span><span style="display:flex;"><span>                        <span style="color:#ff636f">final</span> <span style="color:#58a1dd">Method</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">mm</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">type</span>.<span style="color:#58a1dd">getDeclaredMethods</span>();
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">validateAnnotationMethods</span>(<span style="color:#58a1dd">mm</span>);
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">AccessibleObject</span>.<span style="color:#58a1dd">setAccessible</span>(<span style="color:#58a1dd">mm</span>, <span style="color:#ff636f">true</span>);
+</span></span><span style="display:flex;"><span>                        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">mm</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                });
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">memberMethods</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">private</span> <span style="color:#ff636f">transient</span> <span style="color:#ff636f">volatile</span> <span style="color:#58a1dd">Method</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">memberMethods</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;</span></span></code></pre></div><p>getMemberMethods函数是分开写的，作用就是反射获得this.type的所有方法，调用点是<code> for (Method memberMethod : getMemberMethods())</code></p>
+<p><code>AnnotationInvocationHandler hisHandler = asOneOfUs(o);</code>尝试将传入对象 <code>o</code> 转换为 <code>AnnotationInvocationHandler</code> 类型，以便直接获取其 <code>memberValues</code>。</p>
+<p>如果转换失败，通过反射调用该方法来获取 <code>hisValue</code>，这里的<code>hisValue = memberMethod.invoke(o);</code>就是我们的调用点</p>
+<blockquote>
+<p>假设this.type 是Templates类，则势必会调用到其中的newTransformer() 或getOutputProperties()方法，进而触发任意代码执行。</p>
+</blockquote>
+<p>所以这里构造的AnnotationInvocationHandler的this.type 是Templates类，还缺一个this.memberValues</p>
+<h2 id="如何调用equalsimpl" class="heading-element"><span>如何调用equalsImpl</span>
+  <a href="#%e5%a6%82%e4%bd%95%e8%b0%83%e7%94%a8equalsimpl" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>equalsImpl 是一个私有方法，在AnnotationInvocationHandler#invoke 中被调用，我们之前也利用过这个方法，在CC1 lazymap那个链里用动态代理。</p>
+<p>在使用java.reflect.Proxy 动态绑定一个接口时，如果调用该接口中任意一个方法，会执行到InvocationHandler#invoke 。执行invoke时，被传入的第一个参数是这个proxy对象，第二个参数是
+被执行的方法名，第三个参数是执行时的参数列表。</p>
+<p>我们看看它的invoke方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">proxy</span>, <span style="color:#58a1dd">Method</span> <span style="color:#58a1dd">method</span>, <span style="color:#58a1dd">Object</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">RuntimeException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">member</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">method</span>.<span style="color:#58a1dd">getName</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Class</span><span style="color:#ff636f">&lt;?&gt;[]</span> <span style="color:#58a1dd">paramTypes</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">method</span>.<span style="color:#58a1dd">getParameterTypes</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// Handle Object and Annotation methods</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">member</span>.<span style="color:#58a1dd">equals</span>(<span style="color:#a6be9d">&#34;equals&#34;</span>) <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">paramTypes</span>.<span style="color:#58a1dd">length</span> <span style="color:#ff636f">==</span> <span style="color:#58a1dd">1</span> <span style="color:#ff636f">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">paramTypes</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">0</span><span style="color:#ff636f">]</span> <span style="color:#ff636f">==</span> <span style="color:#58a1dd">Object</span>.<span style="color:#58a1dd">class</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#58a1dd">equalsImpl</span>(<span style="color:#58a1dd">args</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">0</span><span style="color:#ff636f">]</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">//</span>......</span></span></code></pre></div><p>可见，当方法名等于“equals”，且仅有一个Object类型参数时，会调用到equalImpl 方法。</p>
+<p>所以，现在的问题变成，我们需要找到一个方法，在反序列化时对proxy调用equals方法。</p>
+<h2 id="找到equals方法调用链" class="heading-element"><span>找到equals方法调用链</span>
+  <a href="#%e6%89%be%e5%88%b0equals%e6%96%b9%e6%b3%95%e8%b0%83%e7%94%a8%e9%93%be" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>比较Java对象时，我们常用到两个方法：</p>
+<ul>
+<li>equals</li>
+<li>compareTo</li>
+</ul>
+<p>任意Java对象都拥有equals 方法，它通常用于比较两个对象是否是同一个引用；</p>
+<p>一个常见的会调用equals的场景就是集合set。set中储存的对象不允许重复，所以在添加对象的时候，势必会涉及到比较操作。</p>
+<p>我们查看HashSet的readObject方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">private</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">readObject</span>(<span style="color:#58a1dd">java</span>.<span style="color:#58a1dd">io</span>.<span style="color:#58a1dd">ObjectInputStream</span> <span style="color:#58a1dd">s</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">java</span>.<span style="color:#58a1dd">io</span>.<span style="color:#58a1dd">IOException</span>, <span style="color:#58a1dd">ClassNotFoundException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// Read in any hidden serialization magic</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">s</span>.<span style="color:#58a1dd">defaultReadObject</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// Read in HashMap capacity and load factor and create backing HashMap</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">int</span> <span style="color:#58a1dd">capacity</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">s</span>.<span style="color:#58a1dd">readInt</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">float</span> <span style="color:#58a1dd">loadFactor</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">s</span>.<span style="color:#58a1dd">readFloat</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">map</span> <span style="color:#ff636f">=</span> (((<span style="color:#58a1dd">HashSet</span>)<span style="color:#ff636f">this</span>) <span style="color:#ff636f">instanceof</span> <span style="color:#58a1dd">LinkedHashSet</span> <span style="color:#ff636f">?</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#ff636f">new</span> <span style="color:#58a1dd">LinkedHashMap</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">E</span>,<span style="color:#58a1dd">Object</span><span style="color:#ff636f">&gt;</span>(<span style="color:#58a1dd">capacity</span>, <span style="color:#58a1dd">loadFactor</span>) :
+</span></span><span style="display:flex;"><span>               <span style="color:#ff636f">new</span> <span style="color:#58a1dd">HashMap</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">E</span>,<span style="color:#58a1dd">Object</span><span style="color:#ff636f">&gt;</span>(<span style="color:#58a1dd">capacity</span>, <span style="color:#58a1dd">loadFactor</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// Read in size</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">int</span> <span style="color:#58a1dd">size</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">s</span>.<span style="color:#58a1dd">readInt</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// Read in all elements in the proper order.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">for</span> (<span style="color:#ff636f">int</span> <span style="color:#58a1dd">i</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">0</span>; <span style="color:#58a1dd">i</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">size</span>; <span style="color:#58a1dd">i</span><span style="color:#ff636f">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">E</span> <span style="color:#58a1dd">e</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">E</span>) <span style="color:#58a1dd">s</span>.<span style="color:#58a1dd">readObject</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">map</span>.<span style="color:#58a1dd">put</span>(<span style="color:#58a1dd">e</span>, <span style="color:#58a1dd">PRESENT</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>这里使用了一个HashMap，将对象保存在HashMap的key处来做去重，这里是调用equal的关键。</p>
+<p>为了触发比较操作，我们需要让比较与被比较的两个对象的哈希相同，这样才能被连接到同一条链表上，才会进行比较。</p>
+<p>跟进下HashMap的put方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#58a1dd">V</span> <span style="color:#58a1dd">put</span>(<span style="color:#58a1dd">K</span> <span style="color:#58a1dd">key</span>, <span style="color:#58a1dd">V</span> <span style="color:#58a1dd">value</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">key</span> <span style="color:#ff636f">==</span> <span style="color:#ff636f">null</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#58a1dd">putForNullKey</span>(<span style="color:#58a1dd">value</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">int</span> <span style="color:#58a1dd">hash</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">hash</span>(<span style="color:#58a1dd">key</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">int</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">indexFor</span>(<span style="color:#58a1dd">hash</span>, <span style="color:#58a1dd">table</span>.<span style="color:#58a1dd">length</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">for</span> (<span style="color:#58a1dd">Entry</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">K</span>,<span style="color:#58a1dd">V</span><span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">e</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">table</span><span style="color:#ff636f">[</span><span style="color:#58a1dd">i</span><span style="color:#ff636f">]</span>; <span style="color:#58a1dd">e</span> <span style="color:#ff636f">!=</span> <span style="color:#ff636f">null</span>; <span style="color:#58a1dd">e</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">next</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">k</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">hash</span> <span style="color:#ff636f">==</span> <span style="color:#58a1dd">hash</span> <span style="color:#ff636f">&amp;&amp;</span> ((<span style="color:#58a1dd">k</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">key</span>) <span style="color:#ff636f">==</span> <span style="color:#58a1dd">key</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">key</span>.<span style="color:#58a1dd">equals</span>(<span style="color:#58a1dd">k</span>))) {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">V</span> <span style="color:#58a1dd">oldValue</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">value</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">value</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">value</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">recordAccess</span>(<span style="color:#ff636f">this</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">return</span> <span style="color:#58a1dd">oldValue</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">modCount</span><span style="color:#ff636f">++</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">addEntry</span>(<span style="color:#58a1dd">hash</span>, <span style="color:#58a1dd">key</span>, <span style="color:#58a1dd">value</span>, <span style="color:#58a1dd">i</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>变量i 就是这个所谓的“哈希”。两个不同的对象的i 相等时，才会执行到key.equals(k) ，触发前面说过的代码执行。</p>
+<p>也就是说：</p>
+<p>我们需要传入不小于两个对象(两个就行)，并且要有对象和先前传入的对象计算出的hash相同，这样才会调用key.equals(k)</p>
+<p>那么这两个对象咋搞呢？</p>
+<p>我们需要让proxy调用equals，并且proxy里的东西基本确定好了this.type是tempslate，还剩下this.memberValues，是一个Map</p>
+<p>那么问题就变成，==我们控制proxy的这个Map使第二个对象（就是proxy）的hash和传入的第一个东西的hash相等==</p>
+<p>这里要具体进去看hash是咋算的</p>
+<h2 id="巧妙的magic-number" class="heading-element"><span>巧妙的Magic Number</span>
+  <a href="#%e5%b7%a7%e5%a6%99%e7%9a%84magic-number" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>计算“哈希”的主要是下面这两行代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">int</span> <span style="color:#58a1dd">hash</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">hash</span>(<span style="color:#58a1dd">key</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">int</span> <span style="color:#58a1dd">i</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">indexFor</span>(<span style="color:#58a1dd">hash</span>, <span style="color:#58a1dd">table</span>.<span style="color:#58a1dd">length</span>);</span></span></code></pre></div><p>将其中的关键逻辑提权出来，可以得到下面这个函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">int</span> <span style="color:#58a1dd">hash</span>(<span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">key</span>) {
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">int</span> <span style="color:#58a1dd">h</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">0</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">h</span> <span style="color:#ff636f">^=</span> <span style="color:#58a1dd">key</span>.<span style="color:#58a1dd">hashCode</span>();
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">h</span> <span style="color:#ff636f">^=</span> (<span style="color:#58a1dd">h</span> <span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">20</span>) <span style="color:#ff636f">^</span> (<span style="color:#58a1dd">h</span> <span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">12</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">h</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">h</span> <span style="color:#ff636f">^</span> (<span style="color:#58a1dd">h</span> <span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">7</span>) <span style="color:#ff636f">^</span> (<span style="color:#58a1dd">h</span> <span style="color:#ff636f">&gt;&gt;&gt;</span> <span style="color:#58a1dd">4</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">return</span> <span style="color:#58a1dd">h</span> <span style="color:#ff636f">&amp;</span> <span style="color:#58a1dd">15</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>除了key.hashCode() 外再没有其他变量，所以proxy对象与TemplateImpl对象的“哈希”是否相等，仅取决于这两个对象的hashCode() 是否相等。TemplateImpl的hashCode() 是一个Native方法，每次运行都会发生变化，我们理论上是无法预测的，所以想让proxy的hashCode() 与之相等，只能寄希望于proxy.hashCode() 。</p>
+<p>proxy.hashCode() 仍然会调用到AnnotationInvocationHandler#invoke ，进而调用到AnnotationInvocationHandler#hashCodeImpl ，我们看看这个方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">private</span> <span style="color:#ff636f">int</span> <span style="color:#58a1dd">hashCodeImpl</span>() {
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">int</span> <span style="color:#58a1dd">result</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">0</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">for</span> (<span style="color:#58a1dd">Map</span>.<span style="color:#58a1dd">Entry</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">String</span>, <span style="color:#58a1dd">Object</span><span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">e</span> : <span style="color:#58a1dd">memberValues</span>.<span style="color:#58a1dd">entrySet</span>()) {
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">result</span> <span style="color:#ff636f">+=</span> (<span style="color:#58a1dd">127</span> <span style="color:#ff636f">*</span> <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">getKey</span>().<span style="color:#58a1dd">hashCode</span>()) <span style="color:#ff636f">^</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">memberValueHashCode</span>(<span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">getValue</span>());
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">return</span> <span style="color:#58a1dd">result</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><ul>
+<li>当memberValues 中只有一个key和一个value时，该哈希简化成(127 * key.hashCode()) ^value.hashCode()</li>
+<li>当key.hashCode() 等于0时，任何数异或0的结果仍是他本身，所以该哈希简化成value.hashCode() 。</li>
+<li>当value 就是TemplateImpl对象时，这两个哈希就变成完全相等</li>
+</ul>
+<p>最终Map里放置提前构造好的key：<code>map.put(zeroHashCodeStr, templates)</code>，对于 <code>0 ^ x</code>（<code>x</code> 是任意一个数）的异或运算，结果是 <code>x</code>（也就是这里的templates）。</p>
+<p>那么计算proxy对象的hash就是计算templates的hash，那我第一个对象也传这个templates，他俩就相等了。</p>
+<p>所以，整个利用的过程就清晰了，按照如下步骤来构造：</p>
+<p>首先生成恶意TemplateImpl 对象</p>
+<p>实例化AnnotationInvocationHandler 对象</p>
+<ul>
+<li>它的type属性是一个TemplateImpl类</li>
+<li>它的memberValues属性是一个Map，Map只有一个key和value，key是字符串f5a5a608 ，
+value是前面生成的恶意TemplateImpl对象</li>
+</ul>
+<p>对这个AnnotationInvocationHandler 对象做一层代理，生成proxy对象</p>
+<p>实例化一个HashSet，这个HashSet有两个元素，分别是：</p>
+<ul>
+<li>
+<p>TemplateImpl对象</p>
+</li>
+<li>
+<p>proxy对象</p>
+</li>
+</ul>
+<p>将HashSet对象进行序列化</p>
+<h2 id="调试" class="heading-element"><span>调试</span>
+  <a href="#%e8%b0%83%e8%af%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="配置idea" class="heading-element"><span>配置idea</span>
+  <a href="#%e9%85%8d%e7%bd%aeidea" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>首先配置idea jdk7u21的环境，下载jdk就不说了，项目结构里导入新的sdk，设置好语言级别</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301046869.webp" alt="image-20240830104603716" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301046869.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301046869.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301046869.webp?size=large 2x" data-title="image-20240830104603716" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301046114.webp" alt="image-20240830104619949" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301046114.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301046114.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301046114.webp?size=large 2x" data-title="image-20240830104619949" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>设置-java编译器里设置好字节码版本</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301045724.webp" alt="image-20240830104527483" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301045724.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301045724.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301045724.webp?size=large 2x" data-title="image-20240830104527483" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>接下来就可以调试了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301047334.webp" alt="image-20240830104720089" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301047334.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301047334.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301047334.webp?size=large 2x" data-title="image-20240830104720089" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="调试开始" class="heading-element"><span>调试开始</span>
+  <a href="#%e8%b0%83%e8%af%95%e5%bc%80%e5%a7%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>这样，反序列化触发代码执行的流程如下：</p>
+<p>触发HashSet的readObject方法，这个hashset我们丢进去两个对象，一个templates和一个proxy</p>
+<p>这里进行遍历，先把templates put进去</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301612296.webp" alt="image-20240830161209066" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301612296.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301612296.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301612296.webp?size=large 2x" data-title="image-20240830161209066" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>hash()函数计算hash，但是tempslate的hashCode是native的不能左右</p>
+<p>这里也不会进入那个for循环因为table里还没有东西，也就是table是null</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301617643.webp" alt="image-20240830161710372" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301617643.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301617643.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301617643.webp?size=large 2x" data-title="image-20240830161710372" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>第二次对我们传入的proxy进行put，计算hash</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301630661.webp" alt="image-20240830163048418" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301630661.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301630661.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301630661.webp?size=large 2x" data-title="image-20240830163048418" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><code>h ^= k.hashCode();</code>里k是proxy，所以调用它的hashcode方法依然会进入这个代理类的invoke</p>
+<p>调用它的hashCodeImpl函数</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301632121.webp" alt="image-20240830163238862" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301632121.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301632121.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301632121.webp?size=large 2x" data-title="image-20240830163238862" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里是我们提前构造好的key：<code>map.put(zeroHashCodeStr, templates)</code>，对于 <code>0 ^ x</code>（<code>x</code> 是任意一个数）的异或运算，结果是 <code>x</code>。</p>
+<p>所以这里我们传入的key的字符串算出来是0，异或得到的是tempslate，这就和第一步put进去的那个tempslate是一样的了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301634198.webp" alt="image-20240830163434939" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301634198.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301634198.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301634198.webp?size=large 2x" data-title="image-20240830163434939" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>去重时计算HashSet中的两个元素的hashCode() ，因为我们的静心构造二者相等，进而触发equals() 方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301648139.webp" alt="image-20240830164857885" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301648139.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301648139.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301648139.webp?size=large 2x" data-title="image-20240830164857885" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用到AnnotationInvocationHandler#invoke</p>
+<p>调用AnnotationInvocationHandler#equalsImpl 方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301649560.webp" alt="image-20240830164950326" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301649560.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301649560.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301649560.webp?size=large 2x" data-title="image-20240830164950326" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>equalsImpl 中遍历this.type 的每个方法并调用</p>
+<p>因为this.type 是TemplatesImpl类，所以触发了newTransform() 或getOutputProperties()方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301651748.webp" alt="image-20240830165135502" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301651748.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301651748.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202408301651748.webp?size=large 2x" data-title="image-20240830165135502" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>到这里就结束了</p>
+<h2 id="修复" class="heading-element"><span>修复</span>
+  <a href="#%e4%bf%ae%e5%a4%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>官方是这样修复的</p>
+<p><a href="https://github.com/openjdk/jdk7u/commit/b3dd6104b67d2a03b94a4a061f7a473bb0d2dc4e"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/openjdk/jdk7u/commit/b3dd6104b67d2a03b94a4a061f7a473bb0d2dc4e</a></p>
+<p>在sun.reflect.annotation.AnnotationInvocationHandler 类的readObject函数中，原本有一个对this.type 的检查（我们这篇文档的type是tempslate），在其不是AnnotationType的情况下，会抛出一个异常。但是，捕获到异常后没有做任何事情，只是将这个函数返回了，这样并不影响整个反序列化的执行过程。</p>
+<p>新版中，将return; 修改成throw new java.io.InvalidObjectException(&ldquo;Non-annotation typein annotation serial stream&rdquo;); ，这样，反序列化时会出现一个异常，导致整个过程停止</p>
+<p>这个修复方式看起来击中要害，实际上仍然存在问题，这也导致后面的另一条原生利用链JDK8u20。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-08-15 10:15:01">Updated on 2024-08-15&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/9/" class="post-nav-item" rel="prev" title="Java反序列化基础"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Java反序列化基础</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/10/" class="post-nav-item" rel="next" title="URLDNS链">URLDNS链<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>
